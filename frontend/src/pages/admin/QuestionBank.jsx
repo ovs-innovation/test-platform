@@ -278,6 +278,7 @@ export default function AdminQuestionBank() {
     'Cell: The Unit of Life',
     'Cell Cycle and Cell Division',
     'Photosynthesis in Higher Plants',
+    'Respiration in Plants',
     'Plant Growth and Development',
     'Sexual Reproduction in Flowering Plants',
     'Principles of Inheritance and Variation',
@@ -561,6 +562,22 @@ export default function AdminQuestionBank() {
         (Number(q.id) >= 15038 && Number(q.id) <= 15212) ||
         /plant\s*kingdom/i.test(raw)
       ) return 'Plant Kingdom';
+
+      if (
+        Number(q.chapter_id) === 261 ||
+        Number(q.chapter_id) === 172 ||
+        /photosynthesis/i.test(raw) ||
+        (q.chapter_name && /photosynthesis/i.test(q.chapter_name)) ||
+        (q.chapter && /photosynthesis/i.test(q.chapter))
+      ) return 'Photosynthesis in Higher Plants';
+
+      if (
+        Number(q.chapter_id) === 263 ||
+        Number(q.chapter_id) === 173 ||
+        /respiration\s*in\s*plants/i.test(raw) ||
+        (q.chapter_name && /respiration\s*in\s*plants/i.test(q.chapter_name)) ||
+        (q.chapter && /respiration\s*in\s*plants/i.test(q.chapter))
+      ) return 'Respiration in Plants';
 
       if (
         Number(q.chapter_id) === 225 ||

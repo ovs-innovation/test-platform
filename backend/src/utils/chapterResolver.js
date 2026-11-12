@@ -1843,6 +1843,8 @@ export const BOTANY_STANDARD = [
   'Anatomy of Flowering Plants',
   'Cell: The Unit of Life',
   'Cell Cycle and Cell Division',
+  'Photosynthesis in Higher Plants',
+  'Respiration in Plants',
   'Plant Growth and Development',
   'Sexual Reproduction in Flowering Plants',
   'Principles of Inheritance and Variation',
@@ -1909,6 +1911,22 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
     (questionId && Number(questionId) >= 14778 && Number(questionId) <= 15037)
   ) {
     return 'Biological Classification';
+  }
+
+  // 0. Botany: Photosynthesis in Higher Plants (Live chapter_id: 261, Local DB: 172)
+  if (
+    /photosynthesis/i.test(rawChapter) ||
+    /photosynthesis/i.test(rawTopic)
+  ) {
+    return 'Photosynthesis in Higher Plants';
+  }
+
+  // 0. Botany: Respiration in Plants (Live chapter_id: 263, Local DB: 173)
+  if (
+    /respiration\s*in\s*plants/i.test(rawChapter) ||
+    /respiration\s*in\s*plants/i.test(rawTopic)
+  ) {
+    return 'Respiration in Plants';
   }
 
   // 1. Direct match on standard Botany chapters (by rawChapter or strict rawTopic)

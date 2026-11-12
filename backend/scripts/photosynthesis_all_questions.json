@@ -1,0 +1,4098 @@
+[
+  {
+    "q_num": 1,
+    "text": "**[RE-NEET 2026]**\n\nHow many turns of Calvin cycle are required for the formation of three molecules of glucose?",
+    "options": [
+      {
+        "key": "A",
+        "text": "18"
+      },
+      {
+        "key": "B",
+        "text": "6"
+      },
+      {
+        "key": "C",
+        "text": "3"
+      },
+      {
+        "key": "D",
+        "text": "1"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) 18**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 2,
+    "text": "**[RE-NEET 2026]**\n\nPhotorespiration reaction catalyzed by RuBisCo is shown below :\n$$\\text{RuBP} + \\text{O}_2 \\rightarrow \\text{3-Phosphoglycerate} + X$$\n\nIdentify \" $X$ \" from the given options :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Malate"
+      },
+      {
+        "key": "B",
+        "text": "Phosphoenolpyruvate"
+      },
+      {
+        "key": "C",
+        "text": "2-Phosphoglycolate"
+      },
+      {
+        "key": "D",
+        "text": "Oxaloacetate"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) 2-Phosphoglycolate**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 3,
+    "text": "**[RE-NEET 2026]**\n\nWhich pigment has absorption peak at 700 nm in the photosynthetic reaction centre PS I (P700)?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Carotenoids"
+      },
+      {
+        "key": "B",
+        "text": "Chlorophyll b"
+      },
+      {
+        "key": "C",
+        "text": "Chlorophyll a"
+      },
+      {
+        "key": "D",
+        "text": "Xanthophylls"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Chlorophyll a**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 4,
+    "text": "**[RE-NEET 2026]**\n\nWhich of the following statements regarding photorespiration are correct?\n\n(a) Do not occur in $C_3$ plants\n(b) $\\text{CO}_2$ is consumed and $\\text{O}_2$ is generated\n(c) Phosphoglycolate is formed\n(d) No synthesis of ATP and NADPH\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "(a) and (b) only"
+      },
+      {
+        "key": "B",
+        "text": "(a) and (d) only"
+      },
+      {
+        "key": "C",
+        "text": "(c) and (d) only"
+      },
+      {
+        "key": "D",
+        "text": "(b) and (d) only"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) (c) and (d) only**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 5,
+    "text": "**[RE-NEET 2026]**\n\nSelect the correct sequence of experiments that led to a gradual understanding of photosynthesis in green plants.",
+    "options": [
+      {
+        "key": "A",
+        "text": "Production of glucose $\\rightarrow$ role of air $\\rightarrow$ release of oxygen $\\rightarrow$ absorption spectra of chlorophyll a and b"
+      },
+      {
+        "key": "B",
+        "text": "Absorption spectra of chlorophyll a and b $\\rightarrow$ production of glucose $\\rightarrow$ release of oxygen $\\rightarrow$ role of air"
+      },
+      {
+        "key": "C",
+        "text": "Role of air $\\rightarrow$ release of oxygen $\\rightarrow$ production of glucose $\\rightarrow$ absorption spectra of chlorophyll a and b"
+      },
+      {
+        "key": "D",
+        "text": "Release of oxygen $\\rightarrow$ production of glucose $\\rightarrow$ absorption spectra of chlorophyll a and b $\\rightarrow$ role of air"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Role of air $\\rightarrow$ release of oxygen $\\rightarrow$ production of glucose $\\rightarrow$ absorption spectra of chlorophyll a and b**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 6,
+    "text": "**[NEET 2026]**\n\nFind the incorrect statement(s) about photosynthesis from the following :\n\nA. The water splitting complex is associated with PSI.\nB. $C_4$ plants use the $C_3$ pathway of $\\text{CO}_2$ fixation as the main biosynthetic pathway.\nC. In $C_4$ plants, photorespiration does not occur.\nD. $C_3$ plants exhibit 'Kranz' anatomy.\nE. ATP synthesis in chloroplast occurs through chemiosmosis.\n\nChoose the answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "B and C only"
+      },
+      {
+        "key": "B",
+        "text": "B only"
+      },
+      {
+        "key": "C",
+        "text": "B and E only"
+      },
+      {
+        "key": "D",
+        "text": "A and D only"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) A and D only**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 7,
+    "text": "**[NEET 2026]**\n\nThe enzyme required for carboxylation in the Calvin cycle is",
+    "options": [
+      {
+        "key": "A",
+        "text": "Hexokinase"
+      },
+      {
+        "key": "B",
+        "text": "PEP carboxylase"
+      },
+      {
+        "key": "C",
+        "text": "RuBP carboxylase - oxygenase"
+      },
+      {
+        "key": "D",
+        "text": "Carboxypeptidase"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) RuBP carboxylase - oxygenase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 8,
+    "text": "**[NEET 2026]**\n\nHow many ATP and NADPH molecules are required to make one molecule of glucose through the\nCalvin pathway?",
+    "options": [
+      {
+        "key": "A",
+        "text": "18 ATP and 12 NADPH"
+      },
+      {
+        "key": "B",
+        "text": "12 ATP and 18 NADPH"
+      },
+      {
+        "key": "C",
+        "text": "24 ATP and 18 NADPH"
+      },
+      {
+        "key": "D",
+        "text": "6 ATP and 12 NADPH Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) 18 ATP and 12 NADPH**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 9,
+    "text": "**[NEET 2025]**\n\nWhich of the following statements about RuBisCO is true?",
+    "options": [
+      {
+        "key": "A",
+        "text": "It is an enzyme involved in the photolysis of water"
+      },
+      {
+        "key": "B",
+        "text": "It catalyzes the carboxylation of RuBP"
+      },
+      {
+        "key": "C",
+        "text": "It is active only in the dark"
+      },
+      {
+        "key": "D",
+        "text": "It has higher affinity for oxygen than carbon dioxide"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) It catalyzes the carboxylation of RuBP**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 10,
+    "text": "**[NEET 2025]**\n\nMatch List-I with List-II\n\n| List - I | List - II |\n| :--- | :--- |\n| **A.** Chlorophyll a | **I.** Yellow-green |\n| **B.** Chlorophyll b | **II.** Yellow |\n| **C.** Xanthophylls | **III.** Blue-green |\n| **D.** Carotenoids | **IV.** Yellow to Yellow-orange |\n\nChoose the option with all correct matches :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-I, B-II, C-IV, D-III"
+      },
+      {
+        "key": "B",
+        "text": "A-I, B-IV, C-III, D-II"
+      },
+      {
+        "key": "C",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "key": "D",
+        "text": "A-III, B-I, C-II, D-IV"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) A-III, B-I, C-II, D-IV**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 11,
+    "text": "**[NEET 2024 (Re-Examination)]**\n\nWhich of the following are required for the light reaction of Photosynthesis?\n\nA. $\\text{CO}_2$\nB. $\\text{O}_2$\nC. $\\text{H}_2\\text{O}$\nD. Chlorophyll\nE. Light\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A, C, D and E only"
+      },
+      {
+        "key": "B",
+        "text": "C, D and E only"
+      },
+      {
+        "key": "C",
+        "text": "A and B only"
+      },
+      {
+        "key": "D",
+        "text": "A, C and E only"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) C, D and E only**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 12,
+    "text": "**[NEET 2024 (Re-Examination)]**\n\nWhich one of the following products diffuses out of the chloroplast during photosynthesis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "ADP"
+      },
+      {
+        "key": "B",
+        "text": "NADPH"
+      },
+      {
+        "key": "C",
+        "text": "$\\text{O}_2$"
+      },
+      {
+        "key": "D",
+        "text": "ATP"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) $\\text{O}_2$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 13,
+    "text": "**[NEET 2024 (Re-Examination)]**\n\nObserve the given figure. Identify the different stages labelled with alphabets by selecting the correct option.\n\n![Calvin Cycle Diagram](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794469994/edvedum/questions/photosynthesis_in_higher_plants/photosynthesis_q_13.png)",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-Carboxylation, B-Regeneration, C-Reduction"
+      },
+      {
+        "key": "B",
+        "text": "A-Reduction, B-Decarboxylation, C-Regeneration"
+      },
+      {
+        "key": "C",
+        "text": "A-Carboxylation, B-Reduction, C-Regeneration"
+      },
+      {
+        "key": "D",
+        "text": "A-Reduction, B-Carboxylation, C-Regeneration"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) A-Carboxylation, B-Reduction, C-Regeneration**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794469994/edvedum/questions/photosynthesis_in_higher_plants/photosynthesis_q_13.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 14,
+    "text": "**[NEET 2024]**\n\nHow many molecules of ATP and NADPH are required for every molecule of $\\text{CO}_2$ fixed in the Calvin cycle?",
+    "options": [
+      {
+        "key": "A",
+        "text": "2 molecules of ATP and 3 molecules of NADPH"
+      },
+      {
+        "key": "B",
+        "text": "2 molecules of ATP and 2 molecules of NADPH"
+      },
+      {
+        "key": "C",
+        "text": "3 molecules of ATP and 3 molecules of NADPH"
+      },
+      {
+        "key": "D",
+        "text": "3 molecules of ATP and 2 molecules of NADPH"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) 3 molecules of ATP and 2 molecules of NADPH**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 15,
+    "text": "**[NEET 2024]**\n\nWhich of the following are required for the dark reaction of photosynthesis?\n\nA. Light\nB. Chlorophyll\nC. $\\text{CO}_2$\nD. ATP\nE. NADPH\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A, B and C only"
+      },
+      {
+        "key": "B",
+        "text": "B, C and D only"
+      },
+      {
+        "key": "C",
+        "text": "C, D and E only"
+      },
+      {
+        "key": "D",
+        "text": "D and E only"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) C, D and E only**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 16,
+    "text": "**[NEET 2024]**\n\nGiven below are two statements :\n\nStatement I : In $C_3$ plants, some $\\text{O}_2$ binds to RuBisCO, hence $\\text{CO}_2$ fixation is decreased.\nStatement II : In $C_4$ plants, mesophyll cells show very little photorespiration while bundle sheath cells do not show photorespiration.\n\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "key": "B",
+        "text": "Both Statement I and Statement II are false"
+      },
+      {
+        "key": "C",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "key": "D",
+        "text": "Statement I is false but Statement II is true"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Statement I is true but Statement II is false**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 17,
+    "text": "**[NEET 2023 Manipur]**\n\nMatch List - I with List - II.\n\n| List - I | List - II |\n| :--- | :--- |\n| **(A)** Chlorophyll a | **(I)** Yellow to yellow orange |\n| **(B)** Chlorophyll b | **(II)** Yellow green |\n| **(C)** Xanthophyll | **(III)** Blue green |\n| **(D)** Carotenoid | **(IV)** Yellow |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "-(IV),"
+      },
+      {
+        "key": "B",
+        "text": "-(III),"
+      },
+      {
+        "key": "C",
+        "text": "-(II),"
+      },
+      {
+        "key": "D",
+        "text": "-(I)"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) -(IV),**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 18,
+    "text": "**[NEET 2023 Manipur]**\n\nGiven below are two statements :\n\nStatement I : RuBisCO is the most abundant enzyme in the world.\nStatement II : Photorespiration does not occur in $C_4$ plants.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Statement I is correct but Statement II is incorrect"
+      },
+      {
+        "key": "B",
+        "text": "Statement I is incorrect but Statement II is correct"
+      },
+      {
+        "key": "C",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "key": "D",
+        "text": "Both Statement I and Statement II are incorrect"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Both Statement I and Statement II are correct**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 19,
+    "text": "**[NEET 2023 Manipur]**\n\nWhich out of the following statements is incorrect?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Grana lamellae have both PS I and PS II"
+      },
+      {
+        "key": "B",
+        "text": "Cyclic photophosphorylation involves both PS I and PS II"
+      },
+      {
+        "key": "C",
+        "text": "Both ATP and NADPH + H are synthesised during non-cyclic photophosphorylation."
+      },
+      {
+        "key": "D",
+        "text": "Stroma lamellae lack PS II and NADP reductase"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Cyclic photophosphorylation involves both PS I and PS II**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 20,
+    "text": "**[NEET 2023]**\n\nHow many ATP and NADPH 2   are required for the synthesis of one molecule of Glucose during\nCalvin cycle?",
+    "options": [
+      {
+        "key": "A",
+        "text": "18 ATP and 12 NADPH 2"
+      },
+      {
+        "key": "B",
+        "text": "12 ATP and 16 NADPH 2"
+      },
+      {
+        "key": "C",
+        "text": "18 ATP and 16 NADPH 2"
+      },
+      {
+        "key": "D",
+        "text": "12 ATP and 12 NADPH 2"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) 18 ATP and 12 NADPH 2**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 21,
+    "text": "**[NEET 2023]**\n\nThe reaction centre in PS II has an absorption maxima at",
+    "options": [
+      {
+        "key": "A",
+        "text": "700 nm"
+      },
+      {
+        "key": "B",
+        "text": "660 nm"
+      },
+      {
+        "key": "C",
+        "text": "780 nm"
+      },
+      {
+        "key": "D",
+        "text": "680 nm"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) 680 nm**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 22,
+    "text": "**[NEET 2023]**\n\nWhich of the following combinations is required for chemiosmosis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Membrane, proton pump, proton gradient, NADP synthase"
+      },
+      {
+        "key": "B",
+        "text": "Proton pump, electron gradient, ATP synthase"
+      },
+      {
+        "key": "C",
+        "text": "Proton pump, electron gradient, NADP synthase"
+      },
+      {
+        "key": "D",
+        "text": "Membrane, proton pump, proton gradient, ATP synthase"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Membrane, proton pump, proton gradient, ATP synthase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 23,
+    "text": "**[NEET 2022 Phase 2]**\n\nWhen one $\\text{CO}_2$ molecule is fixed as one molecule of triose phosphate, which of the following photochemically made, high energy chemical intermediates are used in the reduction phase?",
+    "options": [
+      {
+        "key": "A",
+        "text": "2 ATP + 2 NADPH"
+      },
+      {
+        "key": "B",
+        "text": "1 ATP + 1 NADPH"
+      },
+      {
+        "key": "C",
+        "text": "1 ATP + 2 NADPH"
+      },
+      {
+        "key": "D",
+        "text": "2 ATP + 1 NADPH"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) 2 ATP + 2 NADPH**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 24,
+    "text": "**[NEET 2022 Phase 2]**\n\nIdentify the correct statements regarding chemiosmotic hypothesis :\n\n(a) Splitting of the water molecule takes place on the inner side of the membrane.\n(b) Protons accumulate within the lumen of the thylakoids.\n(c) Primary acceptor of electron transfers the electrons to an electron carrier.\n(d) NADP reductase enzyme is located on the stroma side of the membrane.\n(e) Protons increase in number in stroma.\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "(b), (c) and (e)"
+      },
+      {
+        "key": "B",
+        "text": "(a), (b) and (e)"
+      },
+      {
+        "key": "C",
+        "text": "(a), (b) and (d)"
+      },
+      {
+        "key": "D",
+        "text": "(b), (c) and (d)"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) (a), (b) and (d)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 25,
+    "text": "**[NEET 2022 Phase 1]**\n\nGiven below are two statements :\n\nStatement I : The primary $\\text{CO}_2$ acceptor in $C_4$ plants is phosphoenolpyruvate and is found in the mesophyll cells.\nStatement II : Mesophyll cells of $C_4$ plants lack RuBisCo enzyme.\n\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "key": "B",
+        "text": "Both Statement I and Statement II are incorrect"
+      },
+      {
+        "key": "C",
+        "text": "Statement I is correct but Statement II is incorrect"
+      },
+      {
+        "key": "D",
+        "text": "Statement I is incorrect but Statement II is correct"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Both Statement I and Statement II are correct**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 26,
+    "text": "**[NEET 2022 Phase 1]**\n\nWhich one of the following is not true regarding the release of energy during ATP synthesis through\nchemiosmosis? It involves:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Breakdown of proton gradient"
+      },
+      {
+        "key": "B",
+        "text": "Breakdown of electron gradient"
+      },
+      {
+        "key": "C",
+        "text": "Movement of protons across the membrane to the stroma"
+      },
+      {
+        "key": "D",
+        "text": "Reduction of NADP to NADPH 2 on the stroma side of the membrane"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Breakdown of electron gradient**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 27,
+    "text": "**[NEET 2022 Phase 1]**\n\nWhat is the role of large bundle sheath cells found around the vascular bundles in $C_4$ plants?",
+    "options": [
+      {
+        "key": "A",
+        "text": "To provide the site for photorespiratory pathway"
+      },
+      {
+        "key": "B",
+        "text": "To increase the number of chloroplast for the operation of Calvin cycle"
+      },
+      {
+        "key": "C",
+        "text": "To enable the plant to tolerate high temperature"
+      },
+      {
+        "key": "D",
+        "text": "To protect the vascular tissue from high light intensity"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) To increase the number of chloroplast for the operation of Calvin cycle**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 28,
+    "text": "**[NEET 2021]**\n\nThe first stable product of $\\text{CO}_2$ fixation in Sorghum is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Phosphoglyceric acid"
+      },
+      {
+        "key": "B",
+        "text": "Pyruvic acid"
+      },
+      {
+        "key": "C",
+        "text": "Oxaloacetic acid"
+      },
+      {
+        "key": "D",
+        "text": "Succinic acid"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Oxaloacetic acid**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 29,
+    "text": "**[NEET 2021]**\n\nWhich of the following statements is incorrect?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cyclic photophosphorylation involves both PS I and PS II"
+      },
+      {
+        "key": "B",
+        "text": "+ Both ATP and NADPH + H are synthesized during non-cyclic photophosphorylation."
+      },
+      {
+        "key": "C",
+        "text": "Stoma lamellae have PS I only and lack NADP reductase"
+      },
+      {
+        "key": "D",
+        "text": "Grana lamellae have both PS I and PS II"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Cyclic photophosphorylation involves both PS I and PS II**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 30,
+    "text": "**[NEET 2020 Phase 2]**\n\nWhich of the following statements is incorrect?",
+    "options": [
+      {
+        "key": "A",
+        "text": "RuBisCO action requires ATP and NADPH"
+      },
+      {
+        "key": "B",
+        "text": "RuBisCO is a bifunctional enzyme"
+      },
+      {
+        "key": "C",
+        "text": "In $C_4$ plants, the site of RuBisCO activity is mesophyll cell"
+      },
+      {
+        "key": "D",
+        "text": "The substrate molecule for RuBisCO activity is a 5-carbon compound"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) In $C_4$ plants, the site of RuBisCO activity is mesophyll cell**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 31,
+    "text": "**[NEET 2020 Phase 2]**\n\nDuring non-cyclic photophosphorylation, when electrons are lost from the reaction centre at PS II,\nwhat is the source which replaces these electrons ?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Light"
+      },
+      {
+        "key": "B",
+        "text": "Oxygen"
+      },
+      {
+        "key": "C",
+        "text": "Water"
+      },
+      {
+        "key": "D",
+        "text": "Carbon dioxide"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Water**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 32,
+    "text": "**[NEET 2020 Phase 1]**\n\nIn light reaction, plastoquinone facilitates the transfer of electrons from",
+    "options": [
+      {
+        "key": "A",
+        "text": "PS-I to ATP synthase"
+      },
+      {
+        "key": "B",
+        "text": "Cytb 6 f complex to PS-I"
+      },
+      {
+        "key": "C",
+        "text": "+ PS-I to NADP"
+      },
+      {
+        "key": "D",
+        "text": "PS-II to Cytb 6 f complex"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) PS-II to Cytb 6 f complex**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 33,
+    "text": "**[NEET 2020 Phase 1]**\n\nThe oxygenation activity of RuBisCo enzyme in photorespiration leads to the formation of",
+    "options": [
+      {
+        "key": "A",
+        "text": "1 molecule of 3-C compound and 1 molecule of 2-C compound"
+      },
+      {
+        "key": "B",
+        "text": "1 molecule of 3-C compound"
+      },
+      {
+        "key": "C",
+        "text": "1 molecule of 6-C compound"
+      },
+      {
+        "key": "D",
+        "text": "2 molecules of 3-C compound Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) 1 molecule of 3-C compound and 1 molecule of 2-C compound**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 34,
+    "text": "**[NEET 2019 (Odisha)]**\n\nIn Hatch and Slack pathway, the primary $\\text{CO}_2$ acceptor is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Rubisco"
+      },
+      {
+        "key": "B",
+        "text": "Oxaloacetic acid"
+      },
+      {
+        "key": "C",
+        "text": "Phosphoglyceric acid"
+      },
+      {
+        "key": "D",
+        "text": "Phosphoenol pyruvate"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Phosphoenol pyruvate**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 35,
+    "text": "**[NEET 2019 (Odisha)]**\n\nOne scientist cultured  Cladophora   in a suspension of  Azotobacter   and illuminated the culture by\nsplitting light through a prism. He observed that bacteria accumulated mainly in the region of :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Blue and red light"
+      },
+      {
+        "key": "B",
+        "text": "Violet and green light"
+      },
+      {
+        "key": "C",
+        "text": "Indigo and green light"
+      },
+      {
+        "key": "D",
+        "text": "Orange and yellow light"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Blue and red light**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 36,
+    "text": "**[NEET 2018]**\n\nWhich of the following is not a product of light reaction of photosynthesis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Oxygen"
+      },
+      {
+        "key": "B",
+        "text": "NADH"
+      },
+      {
+        "key": "C",
+        "text": "ATP"
+      },
+      {
+        "key": "D",
+        "text": "NADPH"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) NADH**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 37,
+    "text": "**[NEET 2017]**\n\nWith reference to factors affecting the rate of photosynthesis, which of the following statements is not correct?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Increasing atmospheric $\\text{CO}_2$ concentration up to 0.05% can enhance $\\text{CO}_2$ fixation rate."
+      },
+      {
+        "key": "B",
+        "text": "$C_3$ plants respond to higher temperature with enhanced photosynthesis while $C_4$ plants have much lower temperature optimum."
+      },
+      {
+        "key": "C",
+        "text": "Tomato is a greenhouse crop which can be grown in $\\text{CO}_2$-enriched atmosphere for higher yield."
+      },
+      {
+        "key": "D",
+        "text": "Light saturation for $\\text{CO}_2$ fixation occurs at 10% of full sunlight."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) $C_3$ plants respond to higher temperature with enhanced photosynthesis while $C_4$ plants have much lower temperature optimum.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 38,
+    "text": "**[NEET 2017]**\n\nPhosphoenol pyruvate (PEP) is the primary $\\text{CO}_2$ acceptor in :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$C_4$ plants"
+      },
+      {
+        "key": "B",
+        "text": "$C_2$ plants"
+      },
+      {
+        "key": "C",
+        "text": "$C_3$ and $C_4$ plants"
+      },
+      {
+        "key": "D",
+        "text": "$C_3$ plants"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) $C_4$ plants**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 39,
+    "text": "**[NEET 2016 Phase 2]**\n\nThe process which makes major difference between $C_3$ and $C_4$ plants is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "glycolysis"
+      },
+      {
+        "key": "B",
+        "text": "Calvin cycle"
+      },
+      {
+        "key": "C",
+        "text": "photorespiration"
+      },
+      {
+        "key": "D",
+        "text": "respiration"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) photorespiration**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 40,
+    "text": "**[NEET 2016 Phase 1]**\n\nWater vapour comes out from the plant leaf through the stomatal opening. Through the same stomatal opening carbon dioxide diffuses into the plant during photosynthesis. Reason out the above statements using one of following options.",
+    "options": [
+      {
+        "key": "A",
+        "text": "The above processes happen only during night time."
+      },
+      {
+        "key": "B",
+        "text": "One process occurs during day time and the other at night."
+      },
+      {
+        "key": "C",
+        "text": "Both processes cannot happen simultaneously."
+      },
+      {
+        "key": "D",
+        "text": "Both processes can happen together because the diffusion coefficient of water and $\\text{CO}_2$ is different."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Both processes can happen together because the diffusion coefficient of water and $\\text{CO}_2$ is different.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 41,
+    "text": "**[NEET 2016 Phase 1]**\n\nIn a chloroplast the highest number of protons are found in",
+    "options": [
+      {
+        "key": "A",
+        "text": "intermembrane space"
+      },
+      {
+        "key": "B",
+        "text": "antennae complex"
+      },
+      {
+        "key": "C",
+        "text": "stroma"
+      },
+      {
+        "key": "D",
+        "text": "lumen of thylakoids."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) lumen of thylakoids.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 42,
+    "text": "**[NEET 2016 Phase 1]**\n\nEmerson's enhancement effect and Red drop have been instrumental in the discovery of",
+    "options": [
+      {
+        "key": "A",
+        "text": "photophosphorylation and cyclic electron transport"
+      },
+      {
+        "key": "B",
+        "text": "oxidative phosphorylation"
+      },
+      {
+        "key": "C",
+        "text": "photophosphorylation and non-cyclic electron transport"
+      },
+      {
+        "key": "D",
+        "text": "two photosystems operating simultaneously."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) two photosystems operating simultaneously.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 43,
+    "text": "**[NEET 2016 Phase 1]**\n\nA plant in your garden avoids photorespiratory losses, has improved water use efficiency, shows high rates of photosynthesis at high temperatures and has improved efficiency of nitrogen utilisation. In which of the following physiological groups would you assign this plant?",
+    "options": [
+      {
+        "key": "A",
+        "text": "CAM"
+      },
+      {
+        "key": "B",
+        "text": "Nitrogen fixer"
+      },
+      {
+        "key": "C",
+        "text": "$C_3$"
+      },
+      {
+        "key": "D",
+        "text": "$C_4$"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) $C_4$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 44,
+    "text": "**[NEET 2016 Phase 1]**\n\nWater soluble pigments found in plant cell vacuoles are",
+    "options": [
+      {
+        "key": "A",
+        "text": "carotenoids"
+      },
+      {
+        "key": "B",
+        "text": "anthocyanins"
+      },
+      {
+        "key": "C",
+        "text": "xanthophylls"
+      },
+      {
+        "key": "D",
+        "text": "chlorophylls."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) anthocyanins**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 45,
+    "text": "**[AIPMT 2015]**\n\nIn photosynthesis, the light-independent reactions take place at",
+    "options": [
+      {
+        "key": "A",
+        "text": "photosystem II"
+      },
+      {
+        "key": "B",
+        "text": "stromal matrix"
+      },
+      {
+        "key": "C",
+        "text": "thylakoid lumen"
+      },
+      {
+        "key": "D",
+        "text": "photosystem I. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) stromal matrix**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 46,
+    "text": "**[AIPMT 2015]**\n\nChromatophores take part in",
+    "options": [
+      {
+        "key": "A",
+        "text": "movement"
+      },
+      {
+        "key": "B",
+        "text": "respiration"
+      },
+      {
+        "key": "C",
+        "text": "photosynthesis"
+      },
+      {
+        "key": "D",
+        "text": "growth."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) photosynthesis**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 47,
+    "text": "**[NEET 2013 (Karnataka)]**\n\nBundle sheath cells :",
+    "options": [
+      {
+        "key": "A",
+        "text": "lack both RuBisCo and PEP carboxylase"
+      },
+      {
+        "key": "B",
+        "text": "are rich in PEP carboxylase"
+      },
+      {
+        "key": "C",
+        "text": "are rich in RuBisCo"
+      },
+      {
+        "key": "D",
+        "text": "lack RuBisCo"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) are rich in RuBisCo**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 48,
+    "text": "**[AIPMT 2012 Mains]**\n\nRead the following four statements (A – D) :\n\n(A) Both photophosphorylation and oxidative phosphorylation involve uphill transport of protons across the membrane.\n(B) In dicot stems, a new cambium originates from cells of pericycle at the time of secondary growth.\n(C) Stamens in flowers of Gloriosa and Petunia are polyandrous.\n(D) Symbiotic nitrogen fixers occur in free-living state also in soil.\n\nHow many of the above statements are right?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Two"
+      },
+      {
+        "key": "B",
+        "text": "Three"
+      },
+      {
+        "key": "C",
+        "text": "Four"
+      },
+      {
+        "key": "D",
+        "text": "One"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Two**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 49,
+    "text": "**[AIPMT 2012 Prelims]**\n\nA process that makes important difference between $C_3$ and $C_4$ plants is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "transpiration"
+      },
+      {
+        "key": "B",
+        "text": "glycolysis"
+      },
+      {
+        "key": "C",
+        "text": "photosynthesis"
+      },
+      {
+        "key": "D",
+        "text": "photorespiration"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) photorespiration**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 50,
+    "text": "**[AIPMT 2012 Prelims]**\n\nThe correct sequence of cell organelles during photorespiration is",
+    "options": [
+      {
+        "key": "A",
+        "text": "chloroplast, Golgi-bodies, mitochondria"
+      },
+      {
+        "key": "B",
+        "text": "chloroplast, rough endoplasmic reticulum, dictyosomes"
+      },
+      {
+        "key": "C",
+        "text": "chloroplast, peroxisome, mitochondria"
+      },
+      {
+        "key": "D",
+        "text": "Chloroplast, vacuole, peroxisome. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) chloroplast, peroxisome, mitochondria**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 51,
+    "text": "**[AIPMT 2011 Mains]**\n\nIn Kranz anatomy, the bundle sheath cells have",
+    "options": [
+      {
+        "key": "A",
+        "text": "thin walls, many intercellular spaces and no chloroplasts"
+      },
+      {
+        "key": "B",
+        "text": "thick walls, no intercellular spaces and large number of chloroplasts"
+      },
+      {
+        "key": "C",
+        "text": "thin walls, no intercellular spaces and several chloroplasts"
+      },
+      {
+        "key": "D",
+        "text": "thick walls, many intercellular spaces and few chloroplasts."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) thick walls, no intercellular spaces and large number of chloroplasts**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 52,
+    "text": "**[AIPMT 2011 Mains]**\n\nWhich one of the following is essential for photolysis of water?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Copper"
+      },
+      {
+        "key": "B",
+        "text": "Manganese"
+      },
+      {
+        "key": "C",
+        "text": "Boron"
+      },
+      {
+        "key": "D",
+        "text": "Zinc"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Manganese**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 53,
+    "text": "**[AIPMT 2011 Prelims]**\n\nCAM helps the plants in",
+    "options": [
+      {
+        "key": "A",
+        "text": "conserving water"
+      },
+      {
+        "key": "B",
+        "text": "secondary growth"
+      },
+      {
+        "key": "C",
+        "text": "disease resistance"
+      },
+      {
+        "key": "D",
+        "text": "reproduction."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) conserving water**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 54,
+    "text": "**[AIPMT 2010 Mains]**\n\nRead the following four statements, (i), (ii), (iii) and (iv) and select the right option having both correct statements.\n\n(i) Z scheme of light reaction takes place in presence of PSI only.\n(ii) Only PSI is functional in cyclic photophosphorylation.\n(iii) Cyclic photophosphorylation results into synthesis of ATP and $\\text{NADPH}_2$.\n(iv) Stroma lamellae lack PSII as well as NADP.",
+    "options": [
+      {
+        "key": "A",
+        "text": "(ii) and (iv)"
+      },
+      {
+        "key": "B",
+        "text": "(i) and (ii)"
+      },
+      {
+        "key": "C",
+        "text": "(ii) and (iii)"
+      },
+      {
+        "key": "D",
+        "text": "(iii) and (iv)"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) (ii) and (iv)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 55,
+    "text": "**[AIPMT 2010 Mains]**\n\nKranz anatomy is one of the characteristics of the leaves of",
+    "options": [
+      {
+        "key": "A",
+        "text": "potato"
+      },
+      {
+        "key": "B",
+        "text": "wheat"
+      },
+      {
+        "key": "C",
+        "text": "sugarcane"
+      },
+      {
+        "key": "D",
+        "text": "mustard. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) sugarcane**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 56,
+    "text": "**[AIPMT 2010 Mains]**\n\nStudy the pathway given below :\n\n![Hatch and Slack Pathway Diagram](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794469995/edvedum/questions/photosynthesis_in_higher_plants/photosynthesis_q_56.png)\n\nIn which of the following options correct words for all the three blanks A, B and C are indicated?",
+    "options": [
+      {
+        "key": "A",
+        "text": "A $\\rightarrow$ Fixation, B $\\rightarrow$ Transamination, C $\\rightarrow$ Regeneration"
+      },
+      {
+        "key": "B",
+        "text": "A $\\rightarrow$ Decarboxylation, B $\\rightarrow$ Reduction, C $\\rightarrow$ Regeneration"
+      },
+      {
+        "key": "C",
+        "text": "A $\\rightarrow$ Carboxylation, B $\\rightarrow$ Decarboxylation, C $\\rightarrow$ Reduction"
+      },
+      {
+        "key": "D",
+        "text": "A $\\rightarrow$ Fixation, B $\\rightarrow$ Decarboxylation, C $\\rightarrow$ Regeneration"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) A $\\rightarrow$ Fixation, B $\\rightarrow$ Decarboxylation, C $\\rightarrow$ Regeneration**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794469995/edvedum/questions/photosynthesis_in_higher_plants/photosynthesis_q_56.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 57,
+    "text": "**[AIPMT 2010 Prelims]**\n\nPGA as the first $\\text{CO}_2$ fixation product was discovered in photosynthesis of :",
+    "options": [
+      {
+        "key": "A",
+        "text": "bryophyte"
+      },
+      {
+        "key": "B",
+        "text": "gymnosperm"
+      },
+      {
+        "key": "C",
+        "text": "angiosperm"
+      },
+      {
+        "key": "D",
+        "text": "alga"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) alga**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 58,
+    "text": "**[AIPMT 2010 Prelims]**\n\n$C_4$ plants are more efficient in photosynthesis than $C_3$ plants due to :",
+    "options": [
+      {
+        "key": "A",
+        "text": "higher leaf area"
+      },
+      {
+        "key": "B",
+        "text": "presence of larger number of chloroplasts in the leaf cells"
+      },
+      {
+        "key": "C",
+        "text": "presence of thin cuticle"
+      },
+      {
+        "key": "D",
+        "text": "lower rate of photorespiration"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) lower rate of photorespiration**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 59,
+    "text": "**[AIPMT 2009]**\n\nCyclic photophosphorylation results in the formation of",
+    "options": [
+      {
+        "key": "A",
+        "text": "ATP and NADPH"
+      },
+      {
+        "key": "B",
+        "text": "ATP, NADPH and O 2"
+      },
+      {
+        "key": "C",
+        "text": "ATP"
+      },
+      {
+        "key": "D",
+        "text": "NADPH. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) ATP**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 60,
+    "text": "**[AIPMT 2009]**\n\nStroma in the chloroplasts of higher plants contains",
+    "options": [
+      {
+        "key": "A",
+        "text": "light-dependent reaction enzymes"
+      },
+      {
+        "key": "B",
+        "text": "ribosomes"
+      },
+      {
+        "key": "C",
+        "text": "chlorophyll"
+      },
+      {
+        "key": "D",
+        "text": "light-independent reaction enzymes."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) light-independent reaction enzymes.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 61,
+    "text": "**[AIPMT 2008]**\n\nElectrons from excited chlorophyll molecule of photosystem II are accepted first by",
+    "options": [
+      {
+        "key": "A",
+        "text": "quinone"
+      },
+      {
+        "key": "B",
+        "text": "ferredoxin"
+      },
+      {
+        "key": "C",
+        "text": "cytochrome- b"
+      },
+      {
+        "key": "D",
+        "text": "cytochrome- f ."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) quinone**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 62,
+    "text": "**[AIPMT 2008]**\n\nThe $C_4$ plants are photosynthetically more efficient than $C_3$ plants because :",
+    "options": [
+      {
+        "key": "A",
+        "text": "the $\\text{CO}_2$ efflux is not prevented"
+      },
+      {
+        "key": "B",
+        "text": "they have more chloroplasts"
+      },
+      {
+        "key": "C",
+        "text": "the $\\text{CO}_2$ compensation point is more"
+      },
+      {
+        "key": "D",
+        "text": "$\\text{CO}_2$ generated during photorespiration is trapped and recycled through PEP carboxylase."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) they have more chloroplasts**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 63,
+    "text": "**[AIPMT 2008]**\n\nIn leaves of $C_4$ plants malic acid synthesis during $\\text{CO}_2$ fixation occurs in :",
+    "options": [
+      {
+        "key": "A",
+        "text": "bundle sheath"
+      },
+      {
+        "key": "B",
+        "text": "guard cells"
+      },
+      {
+        "key": "C",
+        "text": "epidermal cells"
+      },
+      {
+        "key": "D",
+        "text": "mesophyll cells"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) mesophyll cells**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 64,
+    "text": "**[AIPMT 2007]**\n\nIn the leaves of $C_4$ plants, malic acid formation during $\\text{CO}_2$ fixation occurs in the cells of :",
+    "options": [
+      {
+        "key": "A",
+        "text": "bundle sheath"
+      },
+      {
+        "key": "B",
+        "text": "phloem"
+      },
+      {
+        "key": "C",
+        "text": "epidermis"
+      },
+      {
+        "key": "D",
+        "text": "mesophyll"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) mesophyll**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 65,
+    "text": "**[AIPMT 2007]**\n\nThe first acceptor of electrons from an excited chlorophyll molecule of photosystem II is",
+    "options": [
+      {
+        "key": "A",
+        "text": "iron-sulphur protein"
+      },
+      {
+        "key": "B",
+        "text": "ferredoxin"
+      },
+      {
+        "key": "C",
+        "text": "quinone"
+      },
+      {
+        "key": "D",
+        "text": "cytochrome."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) quinone**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 66,
+    "text": "**[AIPMT 2006]**\n\nDuring photorespiration, the oxygen consuming reaction(s) occur in",
+    "options": [
+      {
+        "key": "A",
+        "text": "stroma of chloroplasts"
+      },
+      {
+        "key": "B",
+        "text": "stroma of chloroplasts and mitochondria"
+      },
+      {
+        "key": "C",
+        "text": "stroma of chloroplasts and peroxisomes"
+      },
+      {
+        "key": "D",
+        "text": "grana of chloroplasts and peroxisomes. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) stroma of chloroplasts and peroxisomes**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 67,
+    "text": "**[AIPMT 2006]**\n\nIn photosystem I, the first electron acceptor is",
+    "options": [
+      {
+        "key": "A",
+        "text": "an iron-sulphur protein"
+      },
+      {
+        "key": "B",
+        "text": "ferredoxin"
+      },
+      {
+        "key": "C",
+        "text": "cytochrome"
+      },
+      {
+        "key": "D",
+        "text": "plastocyanin."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) an iron-sulphur protein**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 68,
+    "text": "**[AIPMT 2005]**\n\nAs compared to a $C_3$-plant, how many additional molecules of ATP are needed for net production of one molecule of hexose sugar by $C_4$-plants?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Two"
+      },
+      {
+        "key": "B",
+        "text": "Six"
+      },
+      {
+        "key": "C",
+        "text": "Twelve"
+      },
+      {
+        "key": "D",
+        "text": "Zero"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Twelve**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 69,
+    "text": "**[AIPMT 2005]**\n\nPhotosynthetic Active Radiation (PAR) has the following range of wavelengths.",
+    "options": [
+      {
+        "key": "A",
+        "text": "340-450 nm"
+      },
+      {
+        "key": "B",
+        "text": "400-700 nm"
+      },
+      {
+        "key": "C",
+        "text": "500-600 nm"
+      },
+      {
+        "key": "D",
+        "text": "450-950 nm"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) 400-700 nm**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 70,
+    "text": "**[AIPMT 2005]**\n\nPhotosynthesis in $C_4$ plants is relatively less limited by atmospheric $\\text{CO}_2$ levels because :",
+    "options": [
+      {
+        "key": "A",
+        "text": "effective pumping of $\\text{CO}_2$ into bundle sheath cells"
+      },
+      {
+        "key": "B",
+        "text": "RuBisCo in $C_4$ plants has higher affinity for $\\text{CO}_2$"
+      },
+      {
+        "key": "C",
+        "text": "four carbon acids are the primary initial $\\text{CO}_2$ fixation products"
+      },
+      {
+        "key": "D",
+        "text": "the primary fixation of $\\text{CO}_2$ is mediated via PEP carboxylase."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) the primary fixation of $\\text{CO}_2$ is mediated via PEP carboxylase.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 71,
+    "text": "**[AIPMT 2005]**\n\nChemiosmotic theory of ATP synthesis in the chloroplasts and mitochondria is based on",
+    "options": [
+      {
+        "key": "A",
+        "text": "Proton gradient"
+      },
+      {
+        "key": "B",
+        "text": "Membrane potential"
+      },
+      {
+        "key": "C",
+        "text": "+ Accumulation of Na ions"
+      },
+      {
+        "key": "D",
+        "text": "+ Accumulation of K ions"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Proton gradient**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 72,
+    "text": "**[AIPMT 2004]**\n\nIn $C_3$ plants, the first stable product of photosynthesis during the dark reaction is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "malic acid"
+      },
+      {
+        "key": "B",
+        "text": "oxaloacetic acid"
+      },
+      {
+        "key": "C",
+        "text": "3-phosphoglyceric acid"
+      },
+      {
+        "key": "D",
+        "text": "phosphoglyceraldehyde"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) 3-phosphoglyceric acid**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 73,
+    "text": "**[AIPMT 2004]**\n\nPlants adapted to low light intensity have",
+    "options": [
+      {
+        "key": "A",
+        "text": "larger photosynthetic unit size than the sun plants"
+      },
+      {
+        "key": "B",
+        "text": "higher rate of CO 2 fixation than the sun plants"
+      },
+      {
+        "key": "C",
+        "text": "more extended root system"
+      },
+      {
+        "key": "D",
+        "text": "leaves modified to spines."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) larger photosynthetic unit size than the sun plants**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 74,
+    "text": "**[AIPMT 2004]**\n\nPhotosynthetically Active Radiation (PAR) represents the following range of wavelength",
+    "options": [
+      {
+        "key": "A",
+        "text": "500-600 nm"
+      },
+      {
+        "key": "B",
+        "text": "450-950 nm"
+      },
+      {
+        "key": "C",
+        "text": "340-450 nm"
+      },
+      {
+        "key": "D",
+        "text": "400-700 nm"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) 400-700 nm**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 75,
+    "text": "**[AIPMT 2003]**\n\nWhich fractions of the visible spectrum of solar radiations are primarily absorbed by carotenoids of\nthe higher plants?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Blue and green"
+      },
+      {
+        "key": "B",
+        "text": "Green and red"
+      },
+      {
+        "key": "C",
+        "text": "Red and violet"
+      },
+      {
+        "key": "D",
+        "text": "Violet and blue."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Violet and blue.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 76,
+    "text": "**[AIPMT 2003]**\n\nWhich one of the following is wrong in relation to photorespiration?",
+    "options": [
+      {
+        "key": "A",
+        "text": "It occurs in chloroplast"
+      },
+      {
+        "key": "B",
+        "text": "It occurs in day time only"
+      },
+      {
+        "key": "C",
+        "text": "It is a characteristic of $C_4$ plants"
+      },
+      {
+        "key": "D",
+        "text": "It is a characteristic of $C_3$ plants"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) It is a characteristic of $C_4$ plants**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 77,
+    "text": "**[AIPMT 2003]**\n\nIn sugarcane plant $^{14}\\text{CO}_2$ is fixed to malic acid, in which the enzyme that fixes $\\text{CO}_2$ is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "ribulose biphosphate carboxylase"
+      },
+      {
+        "key": "B",
+        "text": "phosphoenal pyruvic acid carboxylase"
+      },
+      {
+        "key": "C",
+        "text": "ribulose phosphate kinase"
+      },
+      {
+        "key": "D",
+        "text": "fructose phosphate"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) phosphoenal pyruvic acid carboxylase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 78,
+    "text": "**[AIPMT 2003]**\n\nStomata of CAM plants",
+    "options": [
+      {
+        "key": "A",
+        "text": "are always open"
+      },
+      {
+        "key": "B",
+        "text": "open during the day and close at night"
+      },
+      {
+        "key": "C",
+        "text": "open during the night and close during the day"
+      },
+      {
+        "key": "D",
+        "text": "never open. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) open during the night and close during the day**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 79,
+    "text": "**[AIPMT 2003]**\n\nWhich element is located at the centre of the porphyrin ring in chlorophyll?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Calcium"
+      },
+      {
+        "key": "B",
+        "text": "Magnesium"
+      },
+      {
+        "key": "C",
+        "text": "potassium"
+      },
+      {
+        "key": "D",
+        "text": "Manganese"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Magnesium**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 80,
+    "text": "**[AIPMT 2003]**\n\nWhich one of the following concerns photophosphorylation?",
+    "options": [
+      {
+        "key": "A",
+        "text": "$\\text{ADP} + \\text{AMP} \\xrightarrow{\\text{Light energy}} \\text{ATP}$"
+      },
+      {
+        "key": "B",
+        "text": "$\\text{ADP} + \\text{Inorganic } \\text{PO}_4 \\xrightarrow{\\text{Light energy}} \\text{ATP}$"
+      },
+      {
+        "key": "C",
+        "text": "$\\text{ADP} + \\text{Inorganic } \\text{PO}_4 \\rightarrow \\text{ATP}$"
+      },
+      {
+        "key": "D",
+        "text": "$\\text{AMP} + \\text{Inorganic } \\text{PO}_4 \\xrightarrow{\\text{Light energy}} \\text{ATP}$"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) $\\text{ADP} + \\text{Inorganic } \\text{PO}_4 \\xrightarrow{\\text{Light energy}} \\text{ATP}$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 81,
+    "text": "**[AIPMT 2002]**\n\nWhich of the following absorbs light energy for photosynthesis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chlorophyll"
+      },
+      {
+        "key": "B",
+        "text": "Water molecule"
+      },
+      {
+        "key": "C",
+        "text": "O 2"
+      },
+      {
+        "key": "D",
+        "text": "RuBP"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Chlorophyll**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 82,
+    "text": "**[AIPMT 2002]**\n\nIn photosynthesis energy from light reaction to dark reaction is transferred in the form of",
+    "options": [
+      {
+        "key": "A",
+        "text": "ADP"
+      },
+      {
+        "key": "B",
+        "text": "ATP"
+      },
+      {
+        "key": "C",
+        "text": "RuDP"
+      },
+      {
+        "key": "D",
+        "text": "chlorophyll."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) ATP**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 83,
+    "text": "**[AIPMT 2002]**\n\nWhich pigment absorbs the red and far-red light?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cytochrome"
+      },
+      {
+        "key": "B",
+        "text": "Phytochrome"
+      },
+      {
+        "key": "C",
+        "text": "Carotenoids"
+      },
+      {
+        "key": "D",
+        "text": "Chlorophyll."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Phytochrome**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 84,
+    "text": "**[AIPMT 2001]**\n\nWhat is true for photolithotrophs?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Obtain energy from radiations and hydrogen from organic compounds"
+      },
+      {
+        "key": "B",
+        "text": "Obtain energy from radiations and hydrogen from inorganic compounds"
+      },
+      {
+        "key": "C",
+        "text": "Obtain energy from organic compounds"
+      },
+      {
+        "key": "D",
+        "text": "Obtain energy from inorganic compounds Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Obtain energy from radiations and hydrogen from inorganic compounds**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 85,
+    "text": "**[AIPMT 2001]**\n\nWhich pigment system is inactivated in red drop?",
+    "options": [
+      {
+        "key": "A",
+        "text": "PS-I and PS-II"
+      },
+      {
+        "key": "B",
+        "text": "PS-I"
+      },
+      {
+        "key": "C",
+        "text": "PS-II"
+      },
+      {
+        "key": "D",
+        "text": "None of the above"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) PS-II**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 86,
+    "text": "**[AIPMT 2001]**\n\nWhich pair is wrong?",
+    "options": [
+      {
+        "key": "A",
+        "text": "$C_3$-maize"
+      },
+      {
+        "key": "B",
+        "text": "$C_4$-kranz anatomy"
+      },
+      {
+        "key": "C",
+        "text": "Calvin cycle-PGA"
+      },
+      {
+        "key": "D",
+        "text": "Hatch and Slack cycle - OAA"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) $C_3$-maize**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 87,
+    "text": "**[AIPMT 2000]**\n\nWhich is the first $\\text{CO}_2$ acceptor enzyme in $C_4$ plants?",
+    "options": [
+      {
+        "key": "A",
+        "text": "RuDP carboxylase"
+      },
+      {
+        "key": "B",
+        "text": "Phosphoric acid"
+      },
+      {
+        "key": "C",
+        "text": "RuBisCO"
+      },
+      {
+        "key": "D",
+        "text": "PEP-carboxylase"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) PEP-carboxylase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 88,
+    "text": "**[AIPMT 2000]**\n\nFor assimilation of one $\\text{CO}_2$ molecule, the energy required in form of ATP and $\\text{NADPH}_2$ are :",
+    "options": [
+      {
+        "key": "A",
+        "text": "2 ATP and 2 $\\text{NADPH}_2$"
+      },
+      {
+        "key": "B",
+        "text": "5 ATP and 3 $\\text{NADPH}_2$"
+      },
+      {
+        "key": "C",
+        "text": "3 ATP and 2 $\\text{NADPH}_2$"
+      },
+      {
+        "key": "D",
+        "text": "18 ATP and 12 $\\text{NADPH}_2$"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) 3 ATP and 2 $\\text{NADPH}_2$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 89,
+    "text": "**[AIPMT 2000]**\n\nFor the synthesis of one glucose molecule the Calvin cycle operates for",
+    "options": [
+      {
+        "key": "A",
+        "text": "2 times"
+      },
+      {
+        "key": "B",
+        "text": "4 times"
+      },
+      {
+        "key": "C",
+        "text": "6 times"
+      },
+      {
+        "key": "D",
+        "text": "8 times"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) 6 times**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 90,
+    "text": "**[AIPMT 2000]**\n\nThe first step for initiation of photosynthesis will be",
+    "options": [
+      {
+        "key": "A",
+        "text": "photolysis of water"
+      },
+      {
+        "key": "B",
+        "text": "excitement of chlorophyll molecules due to absorption of ligtht"
+      },
+      {
+        "key": "C",
+        "text": "ATP formation"
+      },
+      {
+        "key": "D",
+        "text": "glucose formation Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) excitement of chlorophyll molecules due to absorption of ligtht**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 91,
+    "text": "**[AIPMT 2000]**\n\nPhotochemical reactions in the chloroplast are directly involved in",
+    "options": [
+      {
+        "key": "A",
+        "text": "photolysis of water and phosphorylation of ADP to ATP"
+      },
+      {
+        "key": "B",
+        "text": "formation of phosphoglyceric acid"
+      },
+      {
+        "key": "C",
+        "text": "synthesis of glucose and starch"
+      },
+      {
+        "key": "D",
+        "text": "fixation of carbon dioxide"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) photolysis of water and phosphorylation of ADP to ATP**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 92,
+    "text": "**[AIPMT 1999]**\n\nCarbon dioxide acceptor in $C_3$-plants is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "PGA"
+      },
+      {
+        "key": "B",
+        "text": "RuDP"
+      },
+      {
+        "key": "C",
+        "text": "PEP"
+      },
+      {
+        "key": "D",
+        "text": "none of these"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) RuDP**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 93,
+    "text": "**[AIPMT 1999]**\n\nThe rate of photosynthesis is higher in",
+    "options": [
+      {
+        "key": "A",
+        "text": "red light"
+      },
+      {
+        "key": "B",
+        "text": "blue light"
+      },
+      {
+        "key": "C",
+        "text": "green light"
+      },
+      {
+        "key": "D",
+        "text": "very high light"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) red light**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 94,
+    "text": "**[AIPMT 1997]**\n\nChlorophyll  a   molecule at its carbon atom 3 of the pyrrole ring II has one of the following",
+    "options": [
+      {
+        "key": "A",
+        "text": "carboxylic group"
+      },
+      {
+        "key": "B",
+        "text": "magnesium"
+      },
+      {
+        "key": "C",
+        "text": "aldehyde group"
+      },
+      {
+        "key": "D",
+        "text": "methyl group"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) methyl group**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 95,
+    "text": "**[AIPMT 1997]**\n\nThe core metal of chlorophyll is",
+    "options": [
+      {
+        "key": "A",
+        "text": "Ni"
+      },
+      {
+        "key": "B",
+        "text": "Cu"
+      },
+      {
+        "key": "C",
+        "text": "Fe"
+      },
+      {
+        "key": "D",
+        "text": "Mg"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Mg**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 96,
+    "text": "**[AIPMT 1997]**\n\n$\\text{NADPH}_2$ is generated through :",
+    "options": [
+      {
+        "key": "A",
+        "text": "photosystem II"
+      },
+      {
+        "key": "B",
+        "text": "anaerobic respiration"
+      },
+      {
+        "key": "C",
+        "text": "glycolysis"
+      },
+      {
+        "key": "D",
+        "text": "photosystem I"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) photosystem I**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 97,
+    "text": "**[AIPMT 1997]**\n\nThe mechanism of ATP formation both in chloroplast and mitochondria is explained by",
+    "options": [
+      {
+        "key": "A",
+        "text": "chemiosmotic theory"
+      },
+      {
+        "key": "B",
+        "text": "Munch's hypothesis (mass flow model)"
+      },
+      {
+        "key": "C",
+        "text": "relay pump theory of Godlewski"
+      },
+      {
+        "key": "D",
+        "text": "Cholodny-Wont's model Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) chemiosmotic theory**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 98,
+    "text": "**[AIPMT 1996]**\n\n'The law of limiting factors' was proposed by",
+    "options": [
+      {
+        "key": "A",
+        "text": "Leibig"
+      },
+      {
+        "key": "B",
+        "text": "Hatch and Slack"
+      },
+      {
+        "key": "C",
+        "text": "Blackman"
+      },
+      {
+        "key": "D",
+        "text": "Arnon"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Blackman**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 99,
+    "text": "**[AIPMT 1996]**\n\nWhat will be the number of Calvin cycles to generate one molecule of hexose?",
+    "options": [
+      {
+        "key": "A",
+        "text": "8"
+      },
+      {
+        "key": "B",
+        "text": "9"
+      },
+      {
+        "key": "C",
+        "text": "4"
+      },
+      {
+        "key": "D",
+        "text": "6"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) 6**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 100,
+    "text": "**[AIPMT 1996]**\n\nPhotorespiration is favoured by :",
+    "options": [
+      {
+        "key": "A",
+        "text": "high temperature and low $\\text{O}_2$"
+      },
+      {
+        "key": "B",
+        "text": "high humidity and temperature"
+      },
+      {
+        "key": "C",
+        "text": "high $\\text{O}_2$ and low $\\text{CO}_2$"
+      },
+      {
+        "key": "D",
+        "text": "high $\\text{CO}_2$ and low $\\text{O}_2$"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) high $\\text{O}_2$ and low $\\text{CO}_2$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 101,
+    "text": "**[AIPMT 1996]**\n\nIn $C_4$ plants, $\\text{CO}_2$ combines with :",
+    "options": [
+      {
+        "key": "A",
+        "text": "phosphoenol pyruvate"
+      },
+      {
+        "key": "B",
+        "text": "phosphoglyceraldehyde"
+      },
+      {
+        "key": "C",
+        "text": "phosphoglyceric acid"
+      },
+      {
+        "key": "D",
+        "text": "ribulose diphosphate"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) phosphoenol pyruvate**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 102,
+    "text": "**[AIPMT 1996]**\n\nIn $C_4$ plants, $\\text{CO}_2$ fixation is done by :",
+    "options": [
+      {
+        "key": "A",
+        "text": "sclerenchyma"
+      },
+      {
+        "key": "B",
+        "text": "chlorenchyma and hypodermis"
+      },
+      {
+        "key": "C",
+        "text": "mesophyll cells"
+      },
+      {
+        "key": "D",
+        "text": "guard cells"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) mesophyll cells**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 103,
+    "text": "**[AIPMT 1995]**\n\nThe primary acceptor, during $\\text{CO}_2$ fixation in $C_3$ plants, is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "phosphoenolpyruvate (PEP)"
+      },
+      {
+        "key": "B",
+        "text": "ribulose 1, 5-diphosphate (RuDP)"
+      },
+      {
+        "key": "C",
+        "text": "phosphoglyceric acid (PGA)"
+      },
+      {
+        "key": "D",
+        "text": "ribulose monophosphate (RMP)"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) ribulose 1, 5-diphosphate (RuDP)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 104,
+    "text": "**[AIPMT 1995]**\n\nThe $\\text{CO}_2$ fixation during $C_4$ pathway occurs in the chloroplast of :",
+    "options": [
+      {
+        "key": "A",
+        "text": "guard cells"
+      },
+      {
+        "key": "B",
+        "text": "bundle sheath cells"
+      },
+      {
+        "key": "C",
+        "text": "mesophyll cells"
+      },
+      {
+        "key": "D",
+        "text": "spongy parenchyma"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) mesophyll cells**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 105,
+    "text": "**[AIPMT 1994]**\n\nWhich of the following pigments acts as a reaction-centre during photosynthesis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Carotene"
+      },
+      {
+        "key": "B",
+        "text": "Phytochrome"
+      },
+      {
+        "key": "C",
+        "text": "$P_{700}$"
+      },
+      {
+        "key": "D",
+        "text": "Cytochrome"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) $P_{700}$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 106,
+    "text": "**[AIPMT 1994]**\n\nDuring light reaction of photosynthesis, which of the following phenomenon is observed during cyclic phosphorylation as well as non-cyclic phosphorylation?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Release of $\\text{O}_2$"
+      },
+      {
+        "key": "B",
+        "text": "Formation of ATP"
+      },
+      {
+        "key": "C",
+        "text": "Formation of NADPH"
+      },
+      {
+        "key": "D",
+        "text": "Involvement of PS I and PS II pigment systems"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Formation of ATP**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 107,
+    "text": "**[AIPMT 1993]**\n\nA photosynthesising plant is releasing $^{18}\\text{O}$ more than the normal. The plant must have been supplied with :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$\\text{O}_3$"
+      },
+      {
+        "key": "B",
+        "text": "$\\text{H}_2\\text{O}$ with $^{18}\\text{O}$"
+      },
+      {
+        "key": "C",
+        "text": "$\\text{CO}_2$ with $^{18}\\text{O}$"
+      },
+      {
+        "key": "D",
+        "text": "$\\text{C}_6\\text{H}_{12}\\text{O}_6$ with $^{18}\\text{O}$"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) $\\text{H}_2\\text{O}$ with $^{18}\\text{O}$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 108,
+    "text": "**[AIPMT 1993]**\n\nMaximum solar energy is trapped by",
+    "options": [
+      {
+        "key": "A",
+        "text": "planting trees"
+      },
+      {
+        "key": "B",
+        "text": "cultivating crops"
+      },
+      {
+        "key": "C",
+        "text": "growing algae in tanks"
+      },
+      {
+        "key": "D",
+        "text": "growing grasses"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) growing algae in tanks**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 109,
+    "text": "**[AIPMT 1993]**\n\nThe carbon dioxide acceptor in Calvin cycle/$C_3$-plants is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "phosphoenol pyruvate (PEP)"
+      },
+      {
+        "key": "B",
+        "text": "ribulose 1, 5-diphosphate (RuDP)"
+      },
+      {
+        "key": "C",
+        "text": "phosphoglyceric acid (PGA)"
+      },
+      {
+        "key": "D",
+        "text": "ribulose monophosphate (RMP)"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) ribulose 1, 5-diphosphate (RuDP)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 110,
+    "text": "**[AIPMT 1993]**\n\nWhich one is a $C_4$-plant?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Papaya"
+      },
+      {
+        "key": "B",
+        "text": "Pea"
+      },
+      {
+        "key": "C",
+        "text": "Potato"
+      },
+      {
+        "key": "D",
+        "text": "Maize/corn"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Maize/corn**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 111,
+    "text": "**[AIPMT 1992]**\n\nChlorophyll  a   occurs in",
+    "options": [
+      {
+        "key": "A",
+        "text": "all photosynthetic autotrophs"
+      },
+      {
+        "key": "B",
+        "text": "in all higher plants"
+      },
+      {
+        "key": "C",
+        "text": "all oxygen liberating autotrophs"
+      },
+      {
+        "key": "D",
+        "text": "all plants except fungi"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) all oxygen liberating autotrophs**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 112,
+    "text": "**[AIPMT 1992]**\n\nPhotosystem II occurs in",
+    "options": [
+      {
+        "key": "A",
+        "text": "stroma"
+      },
+      {
+        "key": "B",
+        "text": "cytochrome"
+      },
+      {
+        "key": "C",
+        "text": "grana"
+      },
+      {
+        "key": "D",
+        "text": "mitochondrial surface"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) grana**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 113,
+    "text": "**[AIPMT 1992]**\n\nThe enzyme that catalyses carbon dioxide fixation in $C_4$ plants is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "RuBP carboxylase"
+      },
+      {
+        "key": "B",
+        "text": "PEP carboxylase"
+      },
+      {
+        "key": "C",
+        "text": "carbonic anhydrase"
+      },
+      {
+        "key": "D",
+        "text": "carboxydismutase"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) PEP carboxylase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 114,
+    "text": "**[AIPMT 1992]**\n\nThe first carbon dioxide acceptor in $C_4$-plants is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "phosphoenol-pyruvate"
+      },
+      {
+        "key": "B",
+        "text": "ribulose 1, 5-diphosphate"
+      },
+      {
+        "key": "C",
+        "text": "oxaloacetic acid"
+      },
+      {
+        "key": "D",
+        "text": "phosphoglyceric acid"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) phosphoenol-pyruvate**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 115,
+    "text": "**[AIPMT 1992]**\n\nAt a temperature above $35^\\circ\\text{C}$ :",
+    "options": [
+      {
+        "key": "A",
+        "text": "rate of photosynthesis will decline earlier than that of respiration"
+      },
+      {
+        "key": "B",
+        "text": "rate of respiration will decline earlier than that of photosynthesis"
+      },
+      {
+        "key": "C",
+        "text": "there is no fixed pattern"
+      },
+      {
+        "key": "D",
+        "text": "both decline simultaneously"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) rate of photosynthesis will decline earlier than that of respiration**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 116,
+    "text": "**[AIPMT 1991]**\n\nFerredoxin is a constituent of :",
+    "options": [
+      {
+        "key": "A",
+        "text": "PS I"
+      },
+      {
+        "key": "B",
+        "text": "PS II"
+      },
+      {
+        "key": "C",
+        "text": "Hill reaction"
+      },
+      {
+        "key": "D",
+        "text": "$P_{680}$"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) PS I**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 117,
+    "text": "**[AIPMT 1991]**\n\nDuring monsoon, the rice crop of eastern states of India shows lesser yield due to limiting factor of :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$\\text{CO}_2$"
+      },
+      {
+        "key": "B",
+        "text": "light"
+      },
+      {
+        "key": "C",
+        "text": "temperature"
+      },
+      {
+        "key": "D",
+        "text": "water"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) light**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 118,
+    "text": "**[AIPMT 1991]**\n\nWhich technique has helped in investigation of Calvin cycle?",
+    "options": [
+      {
+        "key": "A",
+        "text": "X-ray crystallography"
+      },
+      {
+        "key": "B",
+        "text": "X-ray technique"
+      },
+      {
+        "key": "C",
+        "text": "Radioactive isotope technique"
+      },
+      {
+        "key": "D",
+        "text": "Intermittent light"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Radioactive isotope technique**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 119,
+    "text": "**[AIPMT 1991]**\n\nDark reactions of photosynthesis occur in",
+    "options": [
+      {
+        "key": "A",
+        "text": "granal thylakoid membranes"
+      },
+      {
+        "key": "B",
+        "text": "stromal lamella membranes"
+      },
+      {
+        "key": "C",
+        "text": "stroma outside photosynthetic lamellae"
+      },
+      {
+        "key": "D",
+        "text": "periplastidial space"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) stroma outside photosynthetic lamellae**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 120,
+    "text": "**[AIPMT 1991]**\n\nPhotosynthetic pigments found in the chloroplasts occur in",
+    "options": [
+      {
+        "key": "A",
+        "text": "thylakoid membranes"
+      },
+      {
+        "key": "B",
+        "text": "plastoglobules"
+      },
+      {
+        "key": "C",
+        "text": "matrix"
+      },
+      {
+        "key": "D",
+        "text": "chloroplast envelope"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) thylakoid membranes**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 121,
+    "text": "**[AIPMT 1990]**\n\nKranz anatomy is typical of :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$C_4$ plants"
+      },
+      {
+        "key": "B",
+        "text": "$C_3$ plants"
+      },
+      {
+        "key": "C",
+        "text": "$C_2$ plants"
+      },
+      {
+        "key": "D",
+        "text": "CAM plants"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) $C_4$ plants**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 122,
+    "text": "**[AIPMT 1990]**\n\nThe first carbon dioxide acceptor in $C_4$-plants is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "phosphoenol-pyruvate"
+      },
+      {
+        "key": "B",
+        "text": "ribulose 1, 5-diphosphate"
+      },
+      {
+        "key": "C",
+        "text": "oxaloacetic acid"
+      },
+      {
+        "key": "D",
+        "text": "phosphoglyceric acid"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) phosphoenol-pyruvate**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 123,
+    "text": "**[AIPMT 1989]**\n\nA very efficient converter of solar energy with net productivity of $204\\text{ kg}/\\text{m}^2$ or more is the crop :",
+    "options": [
+      {
+        "key": "A",
+        "text": "wheat"
+      },
+      {
+        "key": "B",
+        "text": "sugarcane"
+      },
+      {
+        "key": "C",
+        "text": "rice"
+      },
+      {
+        "key": "D",
+        "text": "bajra"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) sugarcane**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 124,
+    "text": "**[AIPMT 1989]**\n\nIn $C_4$ plants, Calvin cycle operates in :",
+    "options": [
+      {
+        "key": "A",
+        "text": "stroma of bundle sheath chloroplasts"
+      },
+      {
+        "key": "B",
+        "text": "grana of bundle sheath chloroplasts"
+      },
+      {
+        "key": "C",
+        "text": "grana of mesophyll chloroplasts"
+      },
+      {
+        "key": "D",
+        "text": "stroma of mesophyll chloroplasts"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) stroma of bundle sheath chloroplasts**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (A) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 125,
+    "text": "**[AIPMT 1989]**\n\nThe substrate for photorespiration is",
+    "options": [
+      {
+        "key": "A",
+        "text": "phosphoglyceric acid"
+      },
+      {
+        "key": "B",
+        "text": "glycolate"
+      },
+      {
+        "key": "C",
+        "text": "serine"
+      },
+      {
+        "key": "D",
+        "text": "glycine"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) glycolate**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (B) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 126,
+    "text": "**[AIPMT 1989]**\n\nThe size of chlorophyll molecule is",
+    "options": [
+      {
+        "key": "A",
+        "text": "head 15 × 15 Å, tail 25 Å"
+      },
+      {
+        "key": "B",
+        "text": "head 20 × 20 Å, tail 25 Å"
+      },
+      {
+        "key": "C",
+        "text": "head 15 × 15 Å, tail 20 Å"
+      },
+      {
+        "key": "D",
+        "text": "head 10 × 12 Å, tail 25 Å"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) head 15 × 15 Å, tail 20 Å**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (C) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 127,
+    "text": "**[AIPMT 1988]**\n\n$\\text{NADP}^+$ is reduced to NADPH in :",
+    "options": [
+      {
+        "key": "A",
+        "text": "PS I"
+      },
+      {
+        "key": "B",
+        "text": "PS II"
+      },
+      {
+        "key": "C",
+        "text": "Calvin cycle"
+      },
+      {
+        "key": "D",
+        "text": "noncyclic photophosphorylation"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) noncyclic photophosphorylation**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  },
+  {
+    "q_num": 128,
+    "text": "**[AIPMT 1988]**\n\nCarbon dioxide joins the photosynthetic pathway in",
+    "options": [
+      {
+        "key": "A",
+        "text": "PS I"
+      },
+      {
+        "key": "B",
+        "text": "PS II"
+      },
+      {
+        "key": "C",
+        "text": "light reaction"
+      },
+      {
+        "key": "D",
+        "text": "dark reaction Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) dark reaction Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Photosynthesis in Higher Plants), photosynthetic processes are divided into Light Reactions (photophosphorylation, electron transport, photolysis of water in thylakoids) and Dark Reactions / Carbon Fixation ($C_3$ Calvin Cycle and $C_4$ Hatch & Slack Pathway in stroma).\n- **Analysis of Options:** Option (D) accurately describes the physiological mechanism, enzyme, or photosynthetic stage.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Photosynthesis in Higher Plants"
+  }
+]
