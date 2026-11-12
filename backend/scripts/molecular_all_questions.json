@@ -1,0 +1,6632 @@
+[
+  {
+    "num": 1,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "Which of the following statements about lac-operon is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Galactose can act as an inducer of lac operon"
+      },
+      {
+        "id": "B",
+        "text": "Gene   is constitutively expressed"
+      },
+      {
+        "id": "C",
+        "text": "Lactose activates repressor to bind to the operator"
+      },
+      {
+        "id": "D",
+        "text": "Genes   and   share single common promoter"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 2,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "Which of the following enzymes synthesizes precursor mRNA?",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA polymerase"
+      },
+      {
+        "id": "B",
+        "text": "RNA polymerase I"
+      },
+      {
+        "id": "C",
+        "text": "RNA polymerase II"
+      },
+      {
+        "id": "D",
+        "text": "RNA polymerase III"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 3,
+    "page": 2,
+    "year": "NEET 2026",
+    "question": "In the lac operon, the   gene codes for",
+    "options": [
+      {
+        "id": "A",
+        "text": "permease"
+      },
+      {
+        "id": "B",
+        "text": "transacetylase"
+      },
+      {
+        "id": "C",
+        "text": "beta-galactosidase"
+      },
+      {
+        "id": "D",
+        "text": "the repressor of lac operon"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 4,
+    "page": 2,
+    "year": "NEET 2026",
+    "question": "Which of the following statements are correct with reference to a transcription unit? A. A transcription unit in DNA is defined primarily by three regions : promoter, structural gene and terminator. B. The promoter is said to be located towards the 5'-end of the structural gene. C. The promoter is a DNA sequence that provides binding site for RNA polymerase. D. The promoter defines the template and coding strands. E. The terminator is located towards the   -end   of the coding strand and it defines the end of the process of transcription. Choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A, B, C and D only"
+      },
+      {
+        "id": "B",
+        "text": "A, C, D and E only"
+      },
+      {
+        "id": "C",
+        "text": "B, C, D and E only"
+      },
+      {
+        "id": "D",
+        "text": "A, B, C, D and E Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 5,
+    "page": 3,
+    "year": "NEET 2026",
+    "question": "Arrange the following steps of DNA fingerprinting in a correct sequence:\nA. Isolation of DNA and its digestion by restriction endonucleases.\nB. Hybridisation using a labelled VNTR probe.\nC. Transferring of separated DNA fragments to synthetic membranes.\nD. Detection of hybridised DNA fragments by autoradiography.\nE. Separation of DNA fragments by electrophoresis.\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A, B, D, C, E"
+      },
+      {
+        "id": "B",
+        "text": "A, D, B, E, C"
+      },
+      {
+        "id": "C",
+        "text": "A, E, C, B, D"
+      },
+      {
+        "id": "D",
+        "text": "A, E, B, C, D"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe correct sequence of steps in DNA fingerprinting is:\n1. Isolation of DNA and digestion by restriction endonucleases (A)\n2. Separation of DNA fragments by electrophoresis (E)\n3. Transferring (blotting) of separated DNA fragments to synthetic membranes (such as nitrocellulose or nylon) (C)\n4. Hybridisation using labelled VNTR probe (B)\n5. Detection of hybridised DNA fragments by autoradiography (D)\n\nTherefore, the correct order is **A, E, C, B, D**."
+  },
+  {
+    "num": 6,
+    "page": 3,
+    "year": "NEET 2026",
+    "question": "Which of the following statements are correct with reference to packaging of DNA helix ? A. Histones are organized to form a unit of eight molecules called histone octamer. B. Histones are negatively charged basic proteins. C. Histones are rich in the basic amino acid residues - lysine and arginine. D. The positively charged DNA is wrapped around the histone octamer to form nucleosome. E. The packaging of chromatin at higher levels requires an additional set of proteins called non- histone chromosomal proteins. Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A, C and E only"
+      },
+      {
+        "id": "B",
+        "text": "B, D and E only"
+      },
+      {
+        "id": "C",
+        "text": "C, D and E only"
+      },
+      {
+        "id": "D",
+        "text": "A, B and D only"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 7,
+    "page": 3,
+    "year": "NEET 2026",
+    "question": "The sixth mutant codon of beta globin gene causing polymerization of Haemoglobin and change in RBC shape is",
+    "options": [
+      {
+        "id": "A",
+        "text": "GUG"
+      },
+      {
+        "id": "B",
+        "text": "AUG"
+      },
+      {
+        "id": "C",
+        "text": "GAG"
+      },
+      {
+        "id": "D",
+        "text": "CAG"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 8,
+    "page": 3,
+    "year": "NEET 2025",
+    "question": "Which chromosome in the human genome has the highest number of genes?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Chromosome 1"
+      },
+      {
+        "id": "B",
+        "text": "Chromosome 10"
+      },
+      {
+        "id": "C",
+        "text": "Chromosome X"
+      },
+      {
+        "id": "D",
+        "text": "Chromosome Y Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 9,
+    "page": 4,
+    "year": "NEET 2025",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| **A** Alfred Hershey and Martha Chase | **I** *Streptococcus pneumoniae* |\n| **B** Euchromatin | **II** Densely packed and dark-stained |\n| **C** Frederick Griffith | **III** Loosely packed and light-stained |\n| **D** Heterochromatin | **IV** DNA as genetic material confirmation |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-III, C-I, D-II"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-IV, C-I, D-III"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-II, C-I, D-III"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Alfred Hershey and Martha Chase**: Unequivocal proof that DNA is the genetic material (bacteriophage $T_2$ experiment) -> **IV**\n- **Euchromatin**: Loosely packed, light-stained, transcriptionally active chromatin -> **III**\n- **Frederick Griffith**: Transformation experiment using *Streptococcus pneumoniae* -> **I**\n- **Heterochromatin**: Densely packed, dark-stained, transcriptionally inactive chromatin -> **II**\n\nMatching: **A-IV, B-III, C-I, D-II**."
+  },
+  {
+    "num": 10,
+    "page": 4,
+    "year": "NEET 2025",
+    "question": "Which of the following are the post-transcriptional events in an eukaryotic cell? A. Transport of pre-mRNA to cytoplasm prior to splicing. B. Removal of introns and joining of exons. C. Addition of methyl group at 5' end of hnRNA. D. Addition of adenine residues at 3' end of hnRNA. E. Base pairing of two complementary RNAs. Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "B, C, E only"
+      },
+      {
+        "id": "B",
+        "text": "C, D, E only"
+      },
+      {
+        "id": "C",
+        "text": "A, B, C only"
+      },
+      {
+        "id": "D",
+        "text": "B, C, D only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 11,
+    "page": 4,
+    "year": "NEET 2025",
+    "question": "Given below are two statements: Statement I: In the RNA world, RNA is considered the first genetic material evolved to carry out essential life processes. RNA acts as a genetic material and also as a catalyst for some important biochemical reactions in living systems. Being reactive, RNA is unstable. Statement II: DNA evolved from RNA and is a more stable genetic material. Its double helical strands being complementary, resist changes by evolving repairing mechanism. In the light of the above statements, choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but statement II is incorrect"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but statement II is correct"
+      },
+      {
+        "id": "C",
+        "text": "Both statement I and statement II are correct"
+      },
+      {
+        "id": "D",
+        "text": "Both statement I and statement II are incorrect Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 12,
+    "page": 5,
+    "year": "NEET 2025",
+    "question": "Given below are two statements : Statement I : Transfer RNAs and ribosomal RNA do not interact with mRNA. Statement II : RNA interference (RNAi) takes place in all eukaryotic organisms as a method of cellular defence. In the light of the above statements, choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but statement II is incorrect"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but statement II is correct"
+      },
+      {
+        "id": "C",
+        "text": "Both statement I and statement II are correct"
+      },
+      {
+        "id": "D",
+        "text": "Both statement I and statement II are incorrect"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 13,
+    "page": 5,
+    "year": "NEET 2025",
+    "question": "Who proposed that the genetic code for amino acids should be made up of three nucleotides?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Jacque Monod"
+      },
+      {
+        "id": "B",
+        "text": "Franklin Stahl"
+      },
+      {
+        "id": "C",
+        "text": "George Gamow"
+      },
+      {
+        "id": "D",
+        "text": "Francis Crick"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 14,
+    "page": 5,
+    "year": "NEET 2025",
+    "question": "Histones are enriched with -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Phenylalanine & Leucine"
+      },
+      {
+        "id": "B",
+        "text": "Phenylalanine & Arginine"
+      },
+      {
+        "id": "C",
+        "text": "Lysine & Arginine"
+      },
+      {
+        "id": "D",
+        "text": "Leucine & Lysine"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 15,
+    "page": 5,
+    "year": "NEET 2025",
+    "question": "Which factor is important for termination of transcription in prokaryotes?",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\rho$ (rho)"
+      },
+      {
+        "id": "B",
+        "text": "$\\gamma$ (gamma)"
+      },
+      {
+        "id": "C",
+        "text": "$\\alpha$ (alpha)"
+      },
+      {
+        "id": "D",
+        "text": "$\\sigma$ (sigma)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn prokaryotes:\n- Initiation factor is **$\\sigma$ (sigma)** factor.\n- Termination factor is **$\\rho$ (rho)** factor."
+  },
+  {
+    "num": 16,
+    "page": 5,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "In a chromosome, there is a specific DNA sequence, responsible for initiating replication. It is called as:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Recognition sequence"
+      },
+      {
+        "id": "B",
+        "text": "Cloning site"
+      },
+      {
+        "id": "C",
+        "text": "Restriction site"
+      },
+      {
+        "id": "D",
+        "text": "ori site Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 17,
+    "page": 6,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Given below are two statements regarding RNA polymerase in prokaryotes. Statement I : In prokaryotes, RNA polymerase is capable of catalysing the process of elongation during transcription. Statement II : RNA polymerase associate transiently with ‘Rho’ factor to initiate transcription. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is false but Statement II is true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are false"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 18,
+    "page": 6,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Given below are two statements: Statement I: In eukaryotes there are three RNA polymerases in the nucleus in addition to the RNA polymerase found in the organelles. Statement II: All the three RNA polymerases in eukaryotic nucleus have different roles. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but Statement II is incorrect"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but Statement II is correct"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are incorrect"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 19,
+    "page": 6,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Given below are two statements : Statement I: In the lac operon, the z gene codes for beta-galactosidase which is primarily responsible for the hydrolysis of lactose into galactose and glucose. Statement II: In addition to lactose, glucose or galactose can also induce lac operon. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is false but Statement II is true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are false Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 20,
+    "page": 7,
+    "year": "NEET 2024",
+    "question": "The lactose present in the growth medium of bacteria is transported to the cell by the action of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Beta-galactosidase"
+      },
+      {
+        "id": "B",
+        "text": "Acetylase"
+      },
+      {
+        "id": "C",
+        "text": "Permease"
+      },
+      {
+        "id": "D",
+        "text": "Polymerase"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 21,
+    "page": 7,
+    "year": "NEET 2024",
+    "question": "A transcription unit in DNA is defined primarily by the three regions in DNA and these are with respect to upstream and down stream end;",
+    "options": [
+      {
+        "id": "A",
+        "text": "Repressor, Operator gene, Structural gene"
+      },
+      {
+        "id": "B",
+        "text": "Structural gene, Transposons, Operator gene"
+      },
+      {
+        "id": "C",
+        "text": "Inducer, Repressor, Structural gene"
+      },
+      {
+        "id": "D",
+        "text": "Promotor, Structural gene, Terminator"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 22,
+    "page": 7,
+    "year": "NEET 2024",
+    "question": "Which of the following statement is correct regarding the process of replication in E.coli?",
+    "options": [
+      {
+        "id": "A",
+        "text": "'The DNA dependent DNA polymerase catalyses polymerization in one direction that is   '"
+      },
+      {
+        "id": "B",
+        "text": "The DNA dependent RNA polymerase catalyses polymerization in one direction, that is"
+      },
+      {
+        "id": "C",
+        "text": "The DNA dependent DNA polymerase catalyses polymerization in 5'   3' as well as direction"
+      },
+      {
+        "id": "D",
+        "text": "The DNA dependent DNA polymerase catalyses polymerization in 5'   3' direction"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 23,
+    "page": 7,
+    "year": "NEET 2024",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| **A.** Frederick Griffith | **I.** Genetic code |\n| **B.** Francois Jacob & Jacques Monod | **II.** Semi-conservative mode of DNA replication |\n| **C.** Har Gobind Khorana | **III.** Transformation |\n| **D.** Meselson & Stahl | **IV.** Lac operon |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-II, C-II, D-III"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Frederick Griffith**: Transformation experiment (1928) -> **III**\n- **Francois Jacob & Jacques Monod**: Elucidated the Lac operon model -> **IV**\n- **Har Gobind Khorana**: Synthesized defined RNA polymers to decipher the genetic code -> **I**\n- **Meselson & Stahl**: Proved semi-conservative replication of DNA in *E. coli* -> **II**\n\nMatching: **A-III, B-IV, C-I, D-II**."
+  },
+  {
+    "num": 24,
+    "page": 8,
+    "year": "NEET 2024",
+    "question": "Which one is the correct product of DNA dependent RNA polymerase to the given template? 3'TACATGGCAAATATCCATTCA5'",
+    "options": [
+      {
+        "id": "A",
+        "text": "5'AUGUACCGUUUAUAGGUAAGU3'"
+      },
+      {
+        "id": "B",
+        "text": "5'AUGUAAAGUUUAUAGGUAAGU3'"
+      },
+      {
+        "id": "C",
+        "text": "5'AUGUACCGUUUAUAGGGAAGU3'"
+      },
+      {
+        "id": "D",
+        "text": "5'ATGTACCGTTTATAGGTAAGT3'"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 25,
+    "page": 8,
+    "year": "NEET 2024",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| **A.** RNA polymerase III | **I.** snRNPs |\n| **B.** Termination of transcription | **II.** Promoter |\n| **C.** Splicing of Exons | **III.** Rho factor |\n| **D.** TATA box | **IV.** 5S rRNA, tRNA, snRNA |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-IV, C-I, D-III"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-III, C-I, D-II"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **RNA polymerase III**: Transcribes tRNA, 5S rRNA, and snRNA -> **IV**\n- **Termination of transcription**: Mediated by Rho factor in bacteria -> **III**\n- **Splicing of Exons**: Carried out by spliceosome complex containing snRNPs -> **I**\n- **TATA box**: Conserved promoter sequence element -> **II**\n\nMatching: **A-IV, B-III, C-I, D-II**."
+  },
+  {
+    "num": 26,
+    "page": 8,
+    "year": "NEET 2023 Manipur",
+    "question": "The last chromosome sequenced in Human Genome Project was:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Chromosome 6"
+      },
+      {
+        "id": "B",
+        "text": "Chromosome 1"
+      },
+      {
+        "id": "C",
+        "text": "Chromosome 22"
+      },
+      {
+        "id": "D",
+        "text": "Chromosome 14"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 27,
+    "page": 8,
+    "year": "NEET 2023 Manipur",
+    "question": "Name the component that binds to the operator region of an operon and prevents RNA polymerase from transcribing the operon.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Promotor"
+      },
+      {
+        "id": "B",
+        "text": "Regulator protein"
+      },
+      {
+        "id": "C",
+        "text": "Repressor protein"
+      },
+      {
+        "id": "D",
+        "text": "Inducer Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 28,
+    "page": 9,
+    "year": "NEET 2023 Manipur",
+    "question": "Given below are two statements : Statement I : The process of copying genetic information from one strand of the DNA into RNA is termed as transcription. Statement II : A transcription unit in DNA is defined primarily by the three regions in the DNA i.e., a promotor, the structural gene and a terminator. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is false but Statement II is true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are false"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 29,
+    "page": 9,
+    "year": "NEET 2023 Manipur",
+    "question": "32 35 Which scientist conducted an experiment with   P and   S labelled phages for demonstrating that DNA is the genetic material?",
+    "options": [
+      {
+        "id": "A",
+        "text": "james D. Watson and F.H. C. Crick"
+      },
+      {
+        "id": "B",
+        "text": "A. D Hershey and M.J. Chase"
+      },
+      {
+        "id": "C",
+        "text": "F. Griffith"
+      },
+      {
+        "id": "D",
+        "text": "O.T. Avery, C.M. MacLeod and M. McCarty"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 30,
+    "page": 9,
+    "year": "NEET 2023 Manipur",
+    "question": "Given below are two statements : Statement I : RNA being unstable, mutate at a faster rate. Statement II : RNA can directly code for synthesis of proteins hence can easily express the characters. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but Statement II is false"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but Statement II is true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are false"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 31,
+    "page": 9,
+    "year": "NEET 2023 Manipur",
+    "question": "Which one of the following acts as an inducer for lac operon ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sucrose"
+      },
+      {
+        "id": "B",
+        "text": "Lactose"
+      },
+      {
+        "id": "C",
+        "text": "Glucose"
+      },
+      {
+        "id": "D",
+        "text": "Galactose Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 32,
+    "page": 10,
+    "year": "NEET 2023 Manipur",
+    "question": "With reference to Hershey and Chase experiments. Select the correct statements.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Viruses grown in the presence of radioactive phosphorus contained radioactive DNA."
+      },
+      {
+        "id": "B",
+        "text": "Viruses grown on radioactive sulphur contained radioactive proteins."
+      },
+      {
+        "id": "C",
+        "text": "Viruses grown on radioactive phosphorus contained radioactive protein."
+      },
+      {
+        "id": "D",
+        "text": "Viruses grown on radioactive sulphur contained radioactive DNA. (E) Viruses grown on radioactive protein contained radioactive DNA. Choose the most appropriate answer from the options given below : (A)   (D) and (E) only   (B)   (A) and (B) only   (C)   (A) and (C) only   (D)   (B) and (D) only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 33,
+    "page": 10,
+    "year": "NEET 2023 Manipur",
+    "question": "The salient features of genetic code are :",
+    "options": [
+      {
+        "id": "A",
+        "text": "The code is palindromic"
+      },
+      {
+        "id": "B",
+        "text": "UGA act as initiator codon"
+      },
+      {
+        "id": "C",
+        "text": "The code is unambiguous and specific"
+      },
+      {
+        "id": "D",
+        "text": "The code is nearly universal Choose the most appropriate answer from the options given below : (A)   (A) and (D) only   (B)   (B) and (C) only   (C)   (A) and (B) only   (D)   (C) and (D) only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 34,
+    "page": 10,
+    "year": "NEET 2023",
+    "question": "Unequivocal proof that DNA is the genetic material was first proposed by",
+    "options": [
+      {
+        "id": "A",
+        "text": "Alfred Hershey and Martha Chase"
+      },
+      {
+        "id": "B",
+        "text": "Avery, Macleoid and McCarthy"
+      },
+      {
+        "id": "C",
+        "text": "Wilkins and Franklin"
+      },
+      {
+        "id": "D",
+        "text": "Frederick Griffith"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 35,
+    "page": 10,
+    "year": "NEET 2023",
+    "question": "What is the role of RNA polymerase III in the process of transcription in Eukaryotes?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transcription of tRNA, 5S rRNA and snRNA"
+      },
+      {
+        "id": "B",
+        "text": "Transcription of precursor of mRNA"
+      },
+      {
+        "id": "C",
+        "text": "Transcription of only snRNAs"
+      },
+      {
+        "id": "D",
+        "text": "Transcription of rRNAs (28S, 18S and 5.8S) Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 36,
+    "page": 11,
+    "year": "NEET 2023",
+    "question": "Expressed Sequence Tags (ESTs) refers to",
+    "options": [
+      {
+        "id": "A",
+        "text": "All genes that are expressed as proteins."
+      },
+      {
+        "id": "B",
+        "text": "All genes whether expressed or unexpressed."
+      },
+      {
+        "id": "C",
+        "text": "Certain important expressed genes."
+      },
+      {
+        "id": "D",
+        "text": "All genes that are expressed as RNA."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 37,
+    "page": 11,
+    "year": "NEET 2023",
+    "question": "Match List I with List II:\n\n| List I (Lac Operon Gene) | List II (Product / Enzyme) |\n| :--- | :--- |\n| **(A)** Gene 'a' | **(I)** $\\beta$-galactosidase |\n| **(B)** Gene 'y' | **(II)** Transacetylase |\n| **(C)** Gene 'i' | **(III)** Permease |\n| **(D)** Gene 'z' | **(IV)** Repressor protein |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-I, C-IV, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-I, C-IV, D-III"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn the Lac operon:\n- **Gene 'i'**: Codes for the repressor protein -> **IV**\n- **Gene 'z'**: Codes for $\\beta$-galactosidase -> **I**\n- **Gene 'y'**: Codes for permease -> **III**\n- **Gene 'a'**: Codes for transacetylase -> **II**\n\nMatching: **A-II, B-III, C-IV, D-I**."
+  },
+  {
+    "num": 38,
+    "page": 11,
+    "year": "NEET 2023",
+    "question": "Given below are two statements: Statement I: RNA mutates at a faster rate. Statement II: Viruses having RNA genome and shorter life span mutate and evolve faster. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are false."
+      },
+      {
+        "id": "B",
+        "text": "Statement I is true but Statement II is false."
+      },
+      {
+        "id": "C",
+        "text": "Statement I is false but Statement II is true."
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are true. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 39,
+    "page": 12,
+    "year": "NEET 2023",
+    "question": "Given below are two statements: Statement I: In prokaryotes, the positively charged DNA is held with some negatively charged proteins in a region called nucleoid. Statement II: In eukaryotes, the negatively charged DNA is wrapped around the positively charged histone octamer to form nucleosome. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are false."
+      },
+      {
+        "id": "B",
+        "text": "Statement I is correct but Statement II is false."
+      },
+      {
+        "id": "C",
+        "text": "Statement I is incorrect but Statement II is true."
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are true."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 40,
+    "page": 12,
+    "year": "NEET 2023",
+    "question": "Which one of the following is the sequence on corresponding coding strand, if the sequence on mRNA formed is as follows 5’AUCGAUCGAUCGAUCGAUCGAUCGAUCG 3’?",
+    "options": [
+      {
+        "id": "A",
+        "text": "3’ UAGCUAGCUAGCUAGCUAGCUAGCUAGC 5’"
+      },
+      {
+        "id": "B",
+        "text": "5’ ATCGATCGATCGATCGATCGATCGATCG 3’"
+      },
+      {
+        "id": "C",
+        "text": "3’ ATCGATCGATCGATCGATCGATCGATCG 5’"
+      },
+      {
+        "id": "D",
+        "text": "5’ UAGCUAGCUAGCUAGCUAGCUAGCUAGC 3’"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 41,
+    "page": 12,
+    "year": "NEET 2022 Phase 2",
+    "question": "In lac operon, z gene codes for",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transacetylase"
+      },
+      {
+        "id": "B",
+        "text": "-galactosidase"
+      },
+      {
+        "id": "C",
+        "text": "Permease"
+      },
+      {
+        "id": "D",
+        "text": "Repressor"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 42,
+    "page": 12,
+    "year": "NEET 2022 Phase 2",
+    "question": "Given below are two statements Statement I : DNA polymerases catalyse polymerisation only in one direction, that is 5'   →   3'. Statement II : During replication of DNA, on one strand the replication is continuous while on other strand it is discontinuous. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is incorrect but Statement II is correct"
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are incorrect"
+      },
+      {
+        "id": "D",
+        "text": "Statement I is correct but Statement II is incorrect Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 43,
+    "page": 13,
+    "year": "NEET 2022 Phase 2",
+    "question": "Match List - I with List - II:\n\n| List - I (Lac Operon Gene) | List - II (Function / Product) |\n| :--- | :--- |\n| **(a)** In lac operon $i$ gene codes for | **(i)** transacetylase |\n| **(b)** In lac operon $z$ gene codes for | **(ii)** permease |\n| **(c)** In lac operon $y$ gene codes for | **(iii)** $\\beta$-galactosidase |\n| **(d)** In lac operon $a$ gene codes for | **(iv)** Repressor |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) - (iii), (b) - (i), (c) - (iv), (d) - (ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a) - (iii), (b) - (ii), (c) - (i), (d) - (iv)"
+      },
+      {
+        "id": "C",
+        "text": "(a) - (iv), (b) - (iii), (c) - (ii), (d) - (i)"
+      },
+      {
+        "id": "D",
+        "text": "(a) - (iv), (b) - (i), (c) - (iii), (d) - (ii)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- $i$ gene -> Repressor protein (iv)\n- $z$ gene -> $\\beta$-galactosidase (iii)\n- $y$ gene -> permease (ii)\n- $a$ gene -> transacetylase (i)\n\nMatching: **(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)**."
+  },
+  {
+    "num": 44,
+    "page": 13,
+    "year": "NEET 2022 Phase 2",
+    "question": "Match List-I with List-II:\n\n| List - I (Organism / Genetic Material) | List - II (Genome Size) |\n| :--- | :--- |\n| **(a)** Bacteriophage $\\phi \\times 174$ | **(i)** $48,502$ base pairs |\n| **(b)** Bacteriophage lambda | **(ii)** $5,386$ nucleotides |\n| **(c)** *Escherichia coli* | **(iii)** $3.3 \\times 10^9$ base pairs |\n| **(d)** Haploid content of human DNA | **(iv)** $4.6 \\times 10^6$ base pairs |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(i), (b)-(ii), (c)-(iv), (d)-(iii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(ii), (b)-(iv), (c)-(i), (d)-(iii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to NCERT Molecular Basis of Inheritance:\n- Bacteriophage $\\phi \\times 174$: **$5,386$ nucleotides** -> **(ii)**\n- Bacteriophage lambda: **$48,502$ base pairs** -> **(i)**\n- *Escherichia coli*: **$4.6 \\times 10^6$ base pairs** -> **(iv)**\n- Haploid content of human DNA: **$3.3 \\times 10^9$ base pairs** -> **(iii)**\n\nMatching: **(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)**."
+  },
+  {
+    "num": 45,
+    "page": 13,
+    "year": "NEET 2022 Phase 2",
+    "question": "If DNA contained sulfur instead of phosphorus and proteins contained phosphorus instead of sulfur, what would have been the outcome of Hershey and Chase experiment?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Radioactive phosphorus in bacterial cells"
+      },
+      {
+        "id": "B",
+        "text": "No radioactive sulfur in bacterial cells"
+      },
+      {
+        "id": "C",
+        "text": "Both radioactive sulfur and phosphorus in bacterial cells"
+      },
+      {
+        "id": "D",
+        "text": "Radioactive sulfur in bacterial cells Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 46,
+    "page": 14,
+    "year": "NEET 2022 Phase 2",
+    "question": "Against the codon 5' UAC 3', what would be the sequence of anticodon on tRNA?",
+    "options": [
+      {
+        "id": "A",
+        "text": "5' GUA 3'"
+      },
+      {
+        "id": "B",
+        "text": "5' AUG 3'"
+      },
+      {
+        "id": "C",
+        "text": "5' ATG 3'"
+      },
+      {
+        "id": "D",
+        "text": "5' GTA 3'"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 47,
+    "page": 14,
+    "year": "NEET 2022 Phase 2",
+    "question": "If A and C make 30% and 20% of DNA, respectively, what will be the percentage composition of T and G?",
+    "options": [
+      {
+        "id": "A",
+        "text": "T : 20%, G : 20%"
+      },
+      {
+        "id": "B",
+        "text": "T : 20%, G : 30%"
+      },
+      {
+        "id": "C",
+        "text": "T : 30%, G : 20%"
+      },
+      {
+        "id": "D",
+        "text": "T : 30%, G : 30%"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 48,
+    "page": 14,
+    "year": "NEET 2022 Phase 1",
+    "question": "The process of translation of mRNA to proteins begins as soon as:",
+    "options": [
+      {
+        "id": "A",
+        "text": "The small subunit of ribosome encounters mRNA"
+      },
+      {
+        "id": "B",
+        "text": "The larger subunit of ribosome encounters mRNA"
+      },
+      {
+        "id": "C",
+        "text": "Both the subunits join together to bind with mRNA"
+      },
+      {
+        "id": "D",
+        "text": "The tRNA is activated and the larger subunit of ribosome encounters mRNA"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 49,
+    "page": 14,
+    "year": "NEET 2022 Phase 1",
+    "question": "DNA polymorphism forms the basis of:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Genetic mapping"
+      },
+      {
+        "id": "B",
+        "text": "DNA finger printing"
+      },
+      {
+        "id": "C",
+        "text": "Both genetic mapping and DNA finger printing"
+      },
+      {
+        "id": "D",
+        "text": "Translation"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 50,
+    "page": 14,
+    "year": "NEET 2022 Phase 1",
+    "question": "Read the following statements and choose the set of correct statements: (a) Euchromatin is loosely packed chromatin (b) Heterochromatin is transcriptionally active (c) Histone octamer is wrapped by negatively charged DNA in nucleosome (d) Histones are rich in lysine and arginine (e) A typical nucleosome contains 400 bp of DNA helix Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(b), (d), (e) only"
+      },
+      {
+        "id": "B",
+        "text": "(a), (c), (d) only"
+      },
+      {
+        "id": "C",
+        "text": "(b), (e) only"
+      },
+      {
+        "id": "D",
+        "text": "(a), (c), (e) only Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 51,
+    "page": 15,
+    "year": "NEET 2022 Phase 1",
+    "question": "If a geneticist uses the blind approach for sequencing the whole genome of an organism, followed by assignment of function to different segments, the methodology adopted by him is called as :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sequence annotation"
+      },
+      {
+        "id": "B",
+        "text": "Gene mapping"
+      },
+      {
+        "id": "C",
+        "text": "Expressed sequence tags"
+      },
+      {
+        "id": "D",
+        "text": "Bioinformatics"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 52,
+    "page": 15,
+    "year": "NEET 2022 Phase 1",
+    "question": "If the length of a DNA molecule is 1.1 metres, what will be the approximate number of base pairs?",
+    "options": [
+      {
+        "id": "A",
+        "text": "9   3.3   bp"
+      },
+      {
+        "id": "B",
+        "text": "9   6   6   10 6.6   10 bp"
+      },
+      {
+        "id": "C",
+        "text": "3.3   10 bp"
+      },
+      {
+        "id": "D",
+        "text": "6.6   10 bp"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 53,
+    "page": 15,
+    "year": "NEET 2022 Phase 1",
+    "question": "In an E. Coli strain i gene gets mutated and its product can not bind the inducer molecule. If growth medium is provided with lactose, what will be the outcome?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Only z gene will get transcribed"
+      },
+      {
+        "id": "B",
+        "text": "z, y, a genes will be transcribed"
+      },
+      {
+        "id": "C",
+        "text": "z, y, a genes will not be translated"
+      },
+      {
+        "id": "D",
+        "text": "RNA polymerase will bind the promoter region"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 54,
+    "page": 15,
+    "year": "NEET 2022 Phase 1",
+    "question": "15 14 Ten E.coli cells with   N - dsDNA are incubated in medium containing   N nucleotide. After 60 15 minutes, how many E.coli cells will have DNA totally free from   N?",
+    "options": [
+      {
+        "id": "A",
+        "text": "20 cells"
+      },
+      {
+        "id": "B",
+        "text": "40 cells"
+      },
+      {
+        "id": "C",
+        "text": "60 cells"
+      },
+      {
+        "id": "D",
+        "text": "80 cells"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 55,
+    "page": 15,
+    "year": "NEET 2021",
+    "question": "Complete the flow chart on central dogma:\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794485421/edvedum/questions/molecular_basis_of_inheritance/mol_inh_q_55.png\" alt=\"Central Dogma Flow Chart\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) - Transduction; (b) - Translation; (c) - Replication; (d) - Protein"
+      },
+      {
+        "id": "B",
+        "text": "(a) - Replication; (b) - Transcription; (c) - Transduction; (d) - Protein"
+      },
+      {
+        "id": "C",
+        "text": "(a) - Translation; (b) - Replication; (c) - Transcription; (d) - Transduction"
+      },
+      {
+        "id": "D",
+        "text": "(a) - Replication; (b) - Transcription; (c) - Translation; (d) - Protein"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nIn the Central Dogma proposed by Francis Crick:\n- **(a)**: Self-duplication of DNA = **Replication**\n- **(b)**: Copying of genetic information from DNA to mRNA = **Transcription**\n- **(c)**: Decoding mRNA into polypeptide chain = **Translation**\n- **(d)**: End product of translation = **Protein**"
+  },
+  {
+    "num": 56,
+    "page": 16,
+    "year": "NEET 2021",
+    "question": "What is the role of RNA polymerase III in the process of transcription in eukaryotes?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transcribes only snRNAs"
+      },
+      {
+        "id": "B",
+        "text": "Transcribes rRNAs (28S, 18S and 5.8S)"
+      },
+      {
+        "id": "C",
+        "text": "Transcribes tRNA, 5s rRNA and snRNA"
+      },
+      {
+        "id": "D",
+        "text": "Transcribes precursor of mRNA"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 57,
+    "page": 16,
+    "year": "NEET 2021",
+    "question": "DNA fingerprinting involves identifying differences in some specific regions in DNA sequence, called as",
+    "options": [
+      {
+        "id": "A",
+        "text": "Polymorphic DNA"
+      },
+      {
+        "id": "B",
+        "text": "Satellite DNA"
+      },
+      {
+        "id": "C",
+        "text": "Repetitive DNA"
+      },
+      {
+        "id": "D",
+        "text": "Single nucleotides"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 58,
+    "page": 16,
+    "year": "NEET 2021",
+    "question": "Identify the correct statement.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Split gene arrangement is characteristic of prokaryotes"
+      },
+      {
+        "id": "B",
+        "text": "In capping, methyl guanosine triphosphate is added to the 3' end of hnRNA"
+      },
+      {
+        "id": "C",
+        "text": "RNA polymerase binds with Rho factor to terminate the process of transcription in bacteria"
+      },
+      {
+        "id": "D",
+        "text": "The coding strand in a transcription unit is copied to an mRNA"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 59,
+    "page": 16,
+    "year": "NEET 2021",
+    "question": "If Adenine makes 30% of the DNA molecule, what will be the percentage of Thymine, Guanine and Cytosine in it?",
+    "options": [
+      {
+        "id": "A",
+        "text": "T : 20 ; G : 25 ; C : 25"
+      },
+      {
+        "id": "B",
+        "text": "T : 20 ; G : 30 ; C : 20"
+      },
+      {
+        "id": "C",
+        "text": "T : 20 ; G : 20 ; C : 30"
+      },
+      {
+        "id": "D",
+        "text": "T : 30 ; G : 20 ; C : 20"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 60,
+    "page": 16,
+    "year": "NEET 2021",
+    "question": "Which of the following RNAs is not required for the synthesis of protein?",
+    "options": [
+      {
+        "id": "A",
+        "text": "siRNA"
+      },
+      {
+        "id": "B",
+        "text": "mRNA"
+      },
+      {
+        "id": "C",
+        "text": "tRNA"
+      },
+      {
+        "id": "D",
+        "text": "rRNA"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 61,
+    "page": 16,
+    "year": "NEET 2021",
+    "question": "Which is the \"Only enzyme\" that has \"Capability\" to catalyse Initiation, Elongation and Termination in the process of transcription in prokaryotes?",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNase"
+      },
+      {
+        "id": "B",
+        "text": "DNA dependent DNA polymerase"
+      },
+      {
+        "id": "C",
+        "text": "DNA dependent RNA polymerase"
+      },
+      {
+        "id": "D",
+        "text": "DNA Ligase Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 62,
+    "page": 17,
+    "year": "NEET 2021",
+    "question": "Which one of the following statements about histones is wrong?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Histones carry positive charge in the side chain"
+      },
+      {
+        "id": "B",
+        "text": "Histones are organized to form a unit of 8 molecules"
+      },
+      {
+        "id": "C",
+        "text": "The pH of histones is slightly acidic"
+      },
+      {
+        "id": "D",
+        "text": "Histones are rich in amino acids - Lysine and Arginine"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 63,
+    "page": 17,
+    "year": "NEET 2021",
+    "question": "Statement I : The codon 'AUG' codes for methionine and phenylalanine. Statement II : 'AAA' and 'AAG' both codons code for the amino acid lysine. In the light of the above statements, choose the correct answer from the options given below.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is incorrect but Statement II is true"
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are false"
+      },
+      {
+        "id": "D",
+        "text": "Statement I is correct but Statement II is false"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 64,
+    "page": 17,
+    "year": "NEET 2020 Phase 2",
+    "question": "In the polynucleotide chain of DNA, a nitrogenous base is linked to the   of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "pentose sugar"
+      },
+      {
+        "id": "B",
+        "text": "pentose sugar"
+      },
+      {
+        "id": "C",
+        "text": "pentose sugar"
+      },
+      {
+        "id": "D",
+        "text": "pentose sugar"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 65,
+    "page": 17,
+    "year": "NEET 2020 Phase 2",
+    "question": "The term 'Nuclein' for the genetic material was used by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mendel"
+      },
+      {
+        "id": "B",
+        "text": "Franklin"
+      },
+      {
+        "id": "C",
+        "text": "Meischer"
+      },
+      {
+        "id": "D",
+        "text": "Chargaff"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 66,
+    "page": 17,
+    "year": "NEET 2020 Phase 2",
+    "question": "Which is the basis of genetic mapping of human genome as well as DNA finger printing ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Polymorphism in RNA sequence"
+      },
+      {
+        "id": "B",
+        "text": "Polymorphism in DNA sequence"
+      },
+      {
+        "id": "C",
+        "text": "Single nucleotide polymorphism"
+      },
+      {
+        "id": "D",
+        "text": "Polymorphism in hnRNA sequence Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 67,
+    "page": 18,
+    "year": "NEET 2020 Phase 2",
+    "question": "E. Coli   has only   base pairs and completes the process of replication within 18 minutes; then the average rate of polymerisation is approximately -",
+    "options": [
+      {
+        "id": "A",
+        "text": "1000 base pairs/second"
+      },
+      {
+        "id": "B",
+        "text": "2000 base pairs/second"
+      },
+      {
+        "id": "C",
+        "text": "3000 base pairs/second"
+      },
+      {
+        "id": "D",
+        "text": "4000 base pairs/second"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 68,
+    "page": 18,
+    "year": "NEET 2020 Phase 1",
+    "question": "If the distance between two consecutive base pairs is 0.34 nm and the total number of base pairs of 9 a DNA double helix in a typical mammalian cell is 6.6 × 10 bp, then the length of the DNA is approximately",
+    "options": [
+      {
+        "id": "A",
+        "text": "2.7 meters"
+      },
+      {
+        "id": "B",
+        "text": "2.0 meters"
+      },
+      {
+        "id": "C",
+        "text": "2.5 meters"
+      },
+      {
+        "id": "D",
+        "text": "2.2 meters"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 69,
+    "page": 18,
+    "year": "NEET 2020 Phase 1",
+    "question": "Which of the following statements is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Adenine does not pair with thymine"
+      },
+      {
+        "id": "B",
+        "text": "Adenine pairs with thymine through one H-bond"
+      },
+      {
+        "id": "C",
+        "text": "Adenine pairs with thymine through two H-bonds"
+      },
+      {
+        "id": "D",
+        "text": "Adenine pairs with thymine through three H-bonds"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 70,
+    "page": 18,
+    "year": "NEET 2020 Phase 1",
+    "question": "The first phase of translation is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Recognition of an anti-codon"
+      },
+      {
+        "id": "B",
+        "text": "Recognition of DNA molecule"
+      },
+      {
+        "id": "C",
+        "text": "Binding of mRNA to ribosome"
+      },
+      {
+        "id": "D",
+        "text": "Aminoacylation of tRNA"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 71,
+    "page": 18,
+    "year": "NEET 2020 Phase 1",
+    "question": "Name the enzyme that facilitates opening of DNA helix during transcription.",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA polymerase"
+      },
+      {
+        "id": "B",
+        "text": "RNA polymerase"
+      },
+      {
+        "id": "C",
+        "text": "DNA helicase"
+      },
+      {
+        "id": "D",
+        "text": "DNA ligase"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 72,
+    "page": 18,
+    "year": "NEET 2019 (Odisha)",
+    "question": "From the following, identify the   correct combination   of salient features of Genetic Code -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Degenerate, Non-overlapping, Non-ambiguous"
+      },
+      {
+        "id": "B",
+        "text": "Universal, Non-ambiguous, Overlapping"
+      },
+      {
+        "id": "C",
+        "text": "Degenerate, Overlapping, Commaless"
+      },
+      {
+        "id": "D",
+        "text": "Universal, Ambiguous, Degenerate Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 73,
+    "page": 19,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Which scientist experimentally proved that DNA is the sole genetic material in bacteriophage?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Jacob and Monod"
+      },
+      {
+        "id": "B",
+        "text": "Beadle and Tautum"
+      },
+      {
+        "id": "C",
+        "text": "Messelson and Stahl"
+      },
+      {
+        "id": "D",
+        "text": "Hershey and Chase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 74,
+    "page": 19,
+    "year": "NEET 2019 (Odisha)",
+    "question": "In the process of transcription in Eukaryotes, the RNA polymerase I transcribes -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Precursor of mRNA, hnRNA"
+      },
+      {
+        "id": "B",
+        "text": "mRNA with additional processing, capping and tailing"
+      },
+      {
+        "id": "C",
+        "text": "tRNA, 5 srRNA and snRNAs"
+      },
+      {
+        "id": "D",
+        "text": "rRNAs – 28 S, 18 S and 5.8 S"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 75,
+    "page": 19,
+    "year": "NEET 2019 (Odisha)",
+    "question": "What initiation and termination factors are involved in transcription in prokaryotes/bacteria?",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\alpha$ and $\\sigma$, respectively"
+      },
+      {
+        "id": "B",
+        "text": "$\\sigma$ and $\\rho$, respectively"
+      },
+      {
+        "id": "C",
+        "text": "$\\alpha$ and $\\beta$, respectively"
+      },
+      {
+        "id": "D",
+        "text": "$\\beta$ and $\\gamma$, respectively"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn bacterial transcription:\n- RNA polymerase requires the **$\\sigma$ (sigma)** factor for initiation at the promoter.\n- It requires the **$\\rho$ (rho)** factor for termination at the terminator region."
+  },
+  {
+    "num": 76,
+    "page": 19,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Match the following RNA polymerases with their transcribed products:\n\n| Column I (RNA Polymerase) | Column II (Transcribed Product) |\n| :--- | :--- |\n| **(a)** RNA polymerase I | **(i)** tRNA |\n| **(b)** RNA polymerase II | **(ii)** rRNA ($28\\text{S}, 18\\text{S}, 5.8\\text{S}$) |\n| **(c)** RNA polymerase III | **(iii)** hnRNA |\n\nSelect the correct option from the following:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iii), (b)-(ii), (c)-(i)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(i), (b)-(iii), (c)-(ii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(i), (b)-(ii), (c)-(iii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(ii), (b)-(iii), (c)-(i)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **RNA polymerase I**: Transcribes rRNAs ($28\\text{S}, 18\\text{S}, 5.8\\text{S}$) -> **(ii)**\n- **RNA polymerase II**: Transcribes precursor of mRNA (hnRNA) -> **(iii)**\n- **RNA polymerase III**: Transcribes tRNA, $5\\text{S}$ rRNA, and snRNAs -> **(i)**\n\nMatching: **(a)-(ii), (b)-(iii), (c)-(i)**."
+  },
+  {
+    "num": 77,
+    "page": 19,
+    "year": "NEET 2019 (Odisha)",
+    "question": "What will be the sequence of mRNA produced by the following stretch of DNA? 3′ ATGCATGCATGCATG 5′ TEMPLATE STRAND 5′ TACGTACGTACGTAC 3′ CODING STRAND",
+    "options": [
+      {
+        "id": "A",
+        "text": "3′ AUGCAUGCAUGCAUG 3′"
+      },
+      {
+        "id": "B",
+        "text": "3′ AUGCAUGCAUGCAUG 5′"
+      },
+      {
+        "id": "C",
+        "text": "5′ UACGUACGUACGUAC 3′"
+      },
+      {
+        "id": "D",
+        "text": "3′ UACGUACGUACGUAC 5′ Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 78,
+    "page": 20,
+    "year": "NEET 2019",
+    "question": "Purines found both in DNA and RNA are:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Guanine and cytosine"
+      },
+      {
+        "id": "B",
+        "text": "Cytosine and thymine"
+      },
+      {
+        "id": "C",
+        "text": "Adenine and thymine"
+      },
+      {
+        "id": "D",
+        "text": "Adenine and guanine"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 79,
+    "page": 20,
+    "year": "NEET 2019",
+    "question": "Expressed Sequence Tags (ESTs) refers to :",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA polymorphism"
+      },
+      {
+        "id": "B",
+        "text": "Novel DNA sequences"
+      },
+      {
+        "id": "C",
+        "text": "Genes expressed as RNA"
+      },
+      {
+        "id": "D",
+        "text": "Polypeptide expression"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 80,
+    "page": 20,
+    "year": "NEET 2019",
+    "question": "Under which of the following conditions will there be no change in the reading frame of following mRNA? 5' AACAGCGGUGCUAUU 3'",
+    "options": [
+      {
+        "id": "A",
+        "text": "th   th   Insertion of A and G at 4 and 5 positions respectively"
+      },
+      {
+        "id": "B",
+        "text": "th th   th   Deletion of GGU from 7 , 8 and 9 positions"
+      },
+      {
+        "id": "C",
+        "text": "th   Insertion of G at 5 positions"
+      },
+      {
+        "id": "D",
+        "text": "th   Deletion of G from 5 positions"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 81,
+    "page": 20,
+    "year": "NEET 2019",
+    "question": "Which of the following features of genetic code does allow bacteria to produce human insulin by recombinant DNA technology?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Genetic code is nearly universal"
+      },
+      {
+        "id": "B",
+        "text": "Genetic code is specific"
+      },
+      {
+        "id": "C",
+        "text": "Genetic code is not ambiguous"
+      },
+      {
+        "id": "D",
+        "text": "Genetic code is redundant Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 82,
+    "page": 21,
+    "year": "NEET 2019",
+    "question": "Match the following genes of the Lac operon with their respective products:\n\n| Gene | Product / Function |\n| :--- | :--- |\n| **(a)** $i$ gene | **(i)** $\\beta$-galactosidase |\n| **(b)** $z$ gene | **(ii)** Permease |\n| **(c)** $a$ gene | **(iii)** Repressor |\n| **(d)** $y$ gene | **(iv)** Transacetylase |\n\nSelect the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(i), (b)-(iii), (c)-(ii), (d)-(iv)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iii), (b)-(i), (c)-(ii), (d)-(iv)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- $i$ gene codes for Repressor -> **(iii)**\n- $z$ gene codes for $\\beta$-galactosidase -> **(i)**\n- $a$ gene codes for Transacetylase -> **(iv)**\n- $y$ gene codes for Permease -> **(ii)**\n\nMatching: **(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)**."
+  },
+  {
+    "num": 83,
+    "page": 21,
+    "year": "NEET 2018",
+    "question": "Select the correct statement :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Franklin Stahl coined the term ‘‘linkage’’."
+      },
+      {
+        "id": "B",
+        "text": "Punnett square was developed by a British scientist."
+      },
+      {
+        "id": "C",
+        "text": "Spliceosomes take part in translation."
+      },
+      {
+        "id": "D",
+        "text": "Transduction was discovered by S. Altman"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 84,
+    "page": 21,
+    "year": "NEET 2018",
+    "question": "The experimental proof for semi-conservative replication of DNA was first shown in a",
+    "options": [
+      {
+        "id": "A",
+        "text": "fungus"
+      },
+      {
+        "id": "B",
+        "text": "bacterium"
+      },
+      {
+        "id": "C",
+        "text": "plant"
+      },
+      {
+        "id": "D",
+        "text": "virus. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 85,
+    "page": 22,
+    "year": "NEET 2018",
+    "question": "Select the correct match :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Alec Jeffreys - Streptococcus pneumoniae"
+      },
+      {
+        "id": "B",
+        "text": "Alfred Hershey and Martha Chase - TMV"
+      },
+      {
+        "id": "C",
+        "text": "Matthew Meselson and F. Stahl - Pisum sativum"
+      },
+      {
+        "id": "D",
+        "text": "Francois Jacob and Jacques Monod - Lac operon"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 86,
+    "page": 22,
+    "year": "NEET 2018",
+    "question": "Select the correct match :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ribozyme - Nucleic acid"
+      },
+      {
+        "id": "B",
+        "text": "F 2   Recessive parent - Dihybrid cross"
+      },
+      {
+        "id": "C",
+        "text": "T.H. Morgan - Transduction"
+      },
+      {
+        "id": "D",
+        "text": "G. Mendel - Transformation"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 87,
+    "page": 22,
+    "year": "NEET 2018",
+    "question": "Many ribosomes may associate with a single mRNA to form multiple copies of a polypeptide simultaneously. Such strings of ribosomes are termed as",
+    "options": [
+      {
+        "id": "A",
+        "text": "polysome"
+      },
+      {
+        "id": "B",
+        "text": "polyhedral bodies"
+      },
+      {
+        "id": "C",
+        "text": "plastidome"
+      },
+      {
+        "id": "D",
+        "text": "nucleosome"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 88,
+    "page": 22,
+    "year": "NEET 2018",
+    "question": "AGGTATCGCAT is a sequence from the coding strand of a gene. What will be the corresponding sequence of the transcribed mRNA?",
+    "options": [
+      {
+        "id": "A",
+        "text": "AGGUAUCGCAU"
+      },
+      {
+        "id": "B",
+        "text": "UGGTUTCGCAT"
+      },
+      {
+        "id": "C",
+        "text": "ACCUAUGCGAU"
+      },
+      {
+        "id": "D",
+        "text": "UCCAUAGCGUA"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 89,
+    "page": 22,
+    "year": "NEET 2018",
+    "question": "All of the following are part of an operon except",
+    "options": [
+      {
+        "id": "A",
+        "text": "an operator"
+      },
+      {
+        "id": "B",
+        "text": "structural genes"
+      },
+      {
+        "id": "C",
+        "text": "an enhancer"
+      },
+      {
+        "id": "D",
+        "text": "a promoter"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 90,
+    "page": 22,
+    "year": "NEET 2017",
+    "question": "DNA replication in bacteria occurs",
+    "options": [
+      {
+        "id": "A",
+        "text": "within nucleolus"
+      },
+      {
+        "id": "B",
+        "text": "prior to fission"
+      },
+      {
+        "id": "C",
+        "text": "just before transcription"
+      },
+      {
+        "id": "D",
+        "text": "during S phase Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 91,
+    "page": 23,
+    "year": "NEET 2017",
+    "question": "The final proof for DNA as the genetic material came from the experiments of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Griffith"
+      },
+      {
+        "id": "B",
+        "text": "Hargobind Khorana"
+      },
+      {
+        "id": "C",
+        "text": "Avery, Mcleod and McCarty"
+      },
+      {
+        "id": "D",
+        "text": "Hershey and chase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 92,
+    "page": 23,
+    "year": "NEET 2017",
+    "question": "If there are 999 bases in an RNA that codes for a protein with 333 amino acids, and the base at position 901 is deleted such that the length of the RNA becomes 998 bases, how many codons will be altered ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "1"
+      },
+      {
+        "id": "B",
+        "text": "11"
+      },
+      {
+        "id": "C",
+        "text": "333"
+      },
+      {
+        "id": "D",
+        "text": "33"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 93,
+    "page": 23,
+    "year": "NEET 2017",
+    "question": "During DNA replication, Okazaki fragments are used to elongate",
+    "options": [
+      {
+        "id": "A",
+        "text": "The leading strand away from replication fork"
+      },
+      {
+        "id": "B",
+        "text": "The lagging strand towards replication fork"
+      },
+      {
+        "id": "C",
+        "text": "The lagging strand away from the replication fork"
+      },
+      {
+        "id": "D",
+        "text": "The leading strand towards replication fork"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 94,
+    "page": 23,
+    "year": "NEET 2017",
+    "question": "Which of the following RNAs should be most abundant in animal cell ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "m-RNA"
+      },
+      {
+        "id": "B",
+        "text": "mi-RNA"
+      },
+      {
+        "id": "C",
+        "text": "r-RNA"
+      },
+      {
+        "id": "D",
+        "text": "t-RNA"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 95,
+    "page": 23,
+    "year": "NEET 2017",
+    "question": "Spliceosomes are not found in cells of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Bacteria"
+      },
+      {
+        "id": "B",
+        "text": "Plants"
+      },
+      {
+        "id": "C",
+        "text": "Animals"
+      },
+      {
+        "id": "D",
+        "text": "Fungi"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 96,
+    "page": 23,
+    "year": "NEET 2017",
+    "question": "The association of histone H 1   with a nucleosome indicates :",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA replication is occurring"
+      },
+      {
+        "id": "B",
+        "text": "Transcription is occurring"
+      },
+      {
+        "id": "C",
+        "text": "The DNA is condensed into a Chromatin Fibre"
+      },
+      {
+        "id": "D",
+        "text": "The DNA double helix is exposed Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 97,
+    "page": 24,
+    "year": "NEET 2016 Phase 2",
+    "question": "Taylor conducted the experiments to prove semiconservative mode of chromosome replication on",
+    "options": [
+      {
+        "id": "A",
+        "text": "Vicia faba"
+      },
+      {
+        "id": "B",
+        "text": "Drosophila melanogaster"
+      },
+      {
+        "id": "C",
+        "text": "Vinca rosea"
+      },
+      {
+        "id": "D",
+        "text": "E. coli"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 98,
+    "page": 24,
+    "year": "NEET 2016 Phase 2",
+    "question": "The equivalent of a structural gene is -",
+    "options": [
+      {
+        "id": "A",
+        "text": "cistron"
+      },
+      {
+        "id": "B",
+        "text": "recon"
+      },
+      {
+        "id": "C",
+        "text": "muton"
+      },
+      {
+        "id": "D",
+        "text": "operon"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 99,
+    "page": 24,
+    "year": "NEET 2016 Phase 2",
+    "question": "Which of the following rRNAs acts as structural RNA as well as ribozyme in bacteria ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "5.8 S rRNA"
+      },
+      {
+        "id": "B",
+        "text": "23 S rRNA"
+      },
+      {
+        "id": "C",
+        "text": "18 S rRNA"
+      },
+      {
+        "id": "D",
+        "text": "5 S rRNA"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 100,
+    "page": 24,
+    "year": "NEET 2016 Phase 2",
+    "question": "A molecule that can act as a genetic material must fulfill the traits given below, except",
+    "options": [
+      {
+        "id": "A",
+        "text": "it should be able to express itself in the form of ‘Mendelian characters’"
+      },
+      {
+        "id": "B",
+        "text": "it should be unstable structurally and chemically"
+      },
+      {
+        "id": "C",
+        "text": "it should provide the scope for slow changes that are required for evolution"
+      },
+      {
+        "id": "D",
+        "text": "it should be able to generate its replica"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 101,
+    "page": 24,
+    "year": "NEET 2016 Phase 2",
+    "question": "DNA-dependent RNA polymerase catalyzes transcription on one strand of the DNA which is called the",
+    "options": [
+      {
+        "id": "A",
+        "text": "coding strand"
+      },
+      {
+        "id": "B",
+        "text": "antistrand"
+      },
+      {
+        "id": "C",
+        "text": "template strand"
+      },
+      {
+        "id": "D",
+        "text": "alpha strand"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 102,
+    "page": 24,
+    "year": "NEET 2016 Phase 1",
+    "question": "Which one of the following is the starter codon ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "AUG"
+      },
+      {
+        "id": "B",
+        "text": "UAG"
+      },
+      {
+        "id": "C",
+        "text": "UAA"
+      },
+      {
+        "id": "D",
+        "text": "UGA"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 103,
+    "page": 24,
+    "year": "NEET 2016 Phase 1",
+    "question": "Which of the following is required as inducer(s) for the expression of Lac operon?",
+    "options": [
+      {
+        "id": "A",
+        "text": "lactose"
+      },
+      {
+        "id": "B",
+        "text": "lactose and galactose"
+      },
+      {
+        "id": "C",
+        "text": "glucose"
+      },
+      {
+        "id": "D",
+        "text": "galactose Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 104,
+    "page": 25,
+    "year": "NEET 2016 Phase 1",
+    "question": "A complex of ribosomes attached to a single strand of RNA is known as :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Polypeptide"
+      },
+      {
+        "id": "B",
+        "text": "Okazaki fragment"
+      },
+      {
+        "id": "C",
+        "text": "Polysome"
+      },
+      {
+        "id": "D",
+        "text": "Polymer"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 105,
+    "page": 25,
+    "year": "NEET 2016 Phase 1",
+    "question": "Which of the following is not required for any of the techniques of DNA fingerprinting available at present?",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA – DNA hybridization"
+      },
+      {
+        "id": "B",
+        "text": "Polymerase chain reaction"
+      },
+      {
+        "id": "C",
+        "text": "Zinc finger analysis"
+      },
+      {
+        "id": "D",
+        "text": "Restriction enzymes"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 106,
+    "page": 25,
+    "year": "AIPMT 2015",
+    "question": "Which one of the following is not applicable to RNA?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Complementary base pairing"
+      },
+      {
+        "id": "B",
+        "text": "5' phosphoryl and 3' hydroxyl ends"
+      },
+      {
+        "id": "C",
+        "text": "Heterocyclic nitrogenous bases"
+      },
+      {
+        "id": "D",
+        "text": "Chargaff's rule"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 107,
+    "page": 25,
+    "year": "AIPMT 2015",
+    "question": "Balbiani rings are sites of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Polysaccharide synthesis"
+      },
+      {
+        "id": "B",
+        "text": "Lipid synthesis"
+      },
+      {
+        "id": "C",
+        "text": "RNA and protein synthesis"
+      },
+      {
+        "id": "D",
+        "text": "Nucleotide synthesis"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 108,
+    "page": 25,
+    "year": "AIPMT 2015",
+    "question": "Identify the correct order of organisation of genetic material from largest to smallest :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Chromosome, genome, nucleotide, gene"
+      },
+      {
+        "id": "B",
+        "text": "Genome, chromosome, nucleotide, gene"
+      },
+      {
+        "id": "C",
+        "text": "Genome, chromosome, gene, nucleotide"
+      },
+      {
+        "id": "D",
+        "text": "Chromosome, gene, genome, nucleotide"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 109,
+    "page": 25,
+    "year": "AIPMT 2015",
+    "question": "Satellite DNA is important because it :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Shows high degree of polymorphism in population and also the same degree of polymorphism in an individual, which is heritable from parents to children."
+      },
+      {
+        "id": "B",
+        "text": "does not code for proteins and is same in all members of the population."
+      },
+      {
+        "id": "C",
+        "text": "codes for enzymes needed for DNA replication."
+      },
+      {
+        "id": "D",
+        "text": "codes for proteins needed in cell cycle. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 110,
+    "page": 26,
+    "year": "AIPMT 2015 Cancelled Paper",
+    "question": "Gene regulation governing lactose operon of E.coli that involves the lac I gene product is",
+    "options": [
+      {
+        "id": "A",
+        "text": "negative and inducible because repressor protein prevents transcription."
+      },
+      {
+        "id": "B",
+        "text": "positive and inducible because it can be induced by lactose"
+      },
+      {
+        "id": "C",
+        "text": "negative and repressible because repressor protein prevents transcription"
+      },
+      {
+        "id": "D",
+        "text": "feedback inhibition because excess of   -galactosidase   can switch off transcription"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 111,
+    "page": 26,
+    "year": "AIPMT 2015 Cancelled Paper",
+    "question": "In sea urchin DNA, which is double stranded, 17% of the bases were shown to be cytosine, The percentages of the other three bases expected to be present in this DNA are",
+    "options": [
+      {
+        "id": "A",
+        "text": "G 17%, A 16.5%, T 32.5%"
+      },
+      {
+        "id": "B",
+        "text": "G 17%, A 33%, T 33%"
+      },
+      {
+        "id": "C",
+        "text": "G 8.5%, A 50%, T 24.5%"
+      },
+      {
+        "id": "D",
+        "text": "G 34%, A 24.5%, T 24.5%"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 112,
+    "page": 26,
+    "year": "AIPMT 2014",
+    "question": "Transformation was discovered by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Griffith"
+      },
+      {
+        "id": "B",
+        "text": "Watson and Crick"
+      },
+      {
+        "id": "C",
+        "text": "Hershey and Chase"
+      },
+      {
+        "id": "D",
+        "text": "Meselson and Stahl"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 113,
+    "page": 26,
+    "year": "AIPMT 2014",
+    "question": "Select the correct option ;",
+    "options": [
+      {
+        "id": "A",
+        "text": "Direction of RNA synthesis 3’−5’, Direction of reading of the template DNA strand 5’−3’"
+      },
+      {
+        "id": "B",
+        "text": "Direction of RNA synthesis 5’−3’, Direction of reading of the template DNA strand 5’−3’"
+      },
+      {
+        "id": "C",
+        "text": "Direction of RNA synthesis 5’−3’, Direction of reading of the template DNA strand 3’−5’"
+      },
+      {
+        "id": "D",
+        "text": "Direction of RNA synthesis 3’−5’, Direction of reading of the template DNA strand 3’−5’ Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 114,
+    "page": 27,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "The figure gives an important concept in the genetic implication of DNA. Fill the blanks A, B and C:\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794485423/edvedum/questions/molecular_basis_of_inheritance/mol_inh_q_114.png\" alt=\"Genetic Implication of DNA\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "A - Erwin Chargaff, B - translation, C - replication"
+      },
+      {
+        "id": "B",
+        "text": "A - Maurice Wilkins, B - transcription, C - translation"
+      },
+      {
+        "id": "C",
+        "text": "A - Francis Crick, B - translation, C - transcription"
+      },
+      {
+        "id": "D",
+        "text": "A - James Watson, B - replication, C - extension"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn the Central Dogma scheme:\n- Proposed by **A**: **Francis Crick** (1958)\n- DNA to mRNA (**C**): **Transcription**\n- mRNA to protein (**B**): **Translation**"
+  },
+  {
+    "num": 115,
+    "page": 27,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Satellite RNA are present in some :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Prions"
+      },
+      {
+        "id": "B",
+        "text": "Bacteriophages"
+      },
+      {
+        "id": "C",
+        "text": "Plant viruses"
+      },
+      {
+        "id": "D",
+        "text": "Viroids"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 116,
+    "page": 27,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Which of the following is not a property of the genetic code ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ambiguous"
+      },
+      {
+        "id": "B",
+        "text": "Universal"
+      },
+      {
+        "id": "C",
+        "text": "Degeneracy"
+      },
+      {
+        "id": "D",
+        "text": "Non-overlapping"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 117,
+    "page": 27,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Genes of interest can be selected from a genomic library by using :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Restriction enzymes"
+      },
+      {
+        "id": "B",
+        "text": "Gene targets"
+      },
+      {
+        "id": "C",
+        "text": "Cloning vectors"
+      },
+      {
+        "id": "D",
+        "text": "DNA probes Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 118,
+    "page": 28,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "In an inducible operon, the genes are :",
+    "options": [
+      {
+        "id": "A",
+        "text": "usually expressed unless a signal turns them \"off\""
+      },
+      {
+        "id": "B",
+        "text": "always expressed"
+      },
+      {
+        "id": "C",
+        "text": "never expressed"
+      },
+      {
+        "id": "D",
+        "text": "usually not expressed unless a signal turns them \"on\""
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 119,
+    "page": 28,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "One of the most frequently used techniques in DNA fingerprinting is :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "SSCP"
+      },
+      {
+        "id": "B",
+        "text": "SCAR"
+      },
+      {
+        "id": "C",
+        "text": "VNTR"
+      },
+      {
+        "id": "D",
+        "text": "AFLP"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 120,
+    "page": 28,
+    "year": "NEET 2013",
+    "question": "The diagram shows an important concept in the genetic implication of DNA. Fill in the blanks A to C:\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794485424/edvedum/questions/molecular_basis_of_inheritance/mol_inh_q_120.png\" alt=\"Central Dogma Scheme\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "A - translation, B - extension, C - Rosalind Franklin"
+      },
+      {
+        "id": "B",
+        "text": "A - translation, B - transcription, C - Erwin Chargaff"
+      },
+      {
+        "id": "C",
+        "text": "A - transcription, B - translation, C - Francis Crick"
+      },
+      {
+        "id": "D",
+        "text": "A - transcription, B - replication, C - James Watson"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **A**: **Transcription** (DNA $\\rightarrow$ mRNA)\n- **B**: **Translation** (mRNA $\\rightarrow$ protein)\n- **C**: Proposed by **Francis Crick**"
+  },
+  {
+    "num": 121,
+    "page": 28,
+    "year": "NEET 2013",
+    "question": "Which enzyme will be produced in a cell in which there is a non-sense mutation in the lac Y gene ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transacetylase"
+      },
+      {
+        "id": "B",
+        "text": "Lactose permease and transacetylase"
+      },
+      {
+        "id": "C",
+        "text": "Lactose permease"
+      },
+      {
+        "id": "D",
+        "text": "-galactosidase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 122,
+    "page": 28,
+    "year": "AIPMT 2012 Mains",
+    "question": "Read the following four statements (A-D) :",
+    "options": [
+      {
+        "id": "A",
+        "text": "In transcription, adenosine pairs with uracil"
+      },
+      {
+        "id": "B",
+        "text": "Regulation of lac operon by repressor is referred to as positive regulation"
+      },
+      {
+        "id": "C",
+        "text": "The human genome has approximately 50,000 genes"
+      },
+      {
+        "id": "D",
+        "text": "Haemophilia is a sex-linked recessive disease How many of the above statements are right ? (A)   Four   (B)   Two   (C)   Three   (D)   One Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 123,
+    "page": 29,
+    "year": "AIPMT 2012 Mains",
+    "question": "What is it that forms the basis of DNA Fingerprinting ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The relative proportions of purines and pyrimidines in DNA"
+      },
+      {
+        "id": "B",
+        "text": "The relative amount of DNA in the ridges and grooves of the fingerprints"
+      },
+      {
+        "id": "C",
+        "text": "The relative difference in the DNA occurrence in blood, skin and saliva"
+      },
+      {
+        "id": "D",
+        "text": "Satellite DNA occurring as highly repeated short DNA segments"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 124,
+    "page": 29,
+    "year": "AIPMT 2012 Prelims",
+    "question": "Removal of introns and joining of exons in a defined order during transcription is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "Looping"
+      },
+      {
+        "id": "B",
+        "text": "Inducing"
+      },
+      {
+        "id": "C",
+        "text": "Slicing"
+      },
+      {
+        "id": "D",
+        "text": "Splicing"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 125,
+    "page": 29,
+    "year": "AIPMT 2012 Prelims",
+    "question": "If one strand of DNA has the nitrogenous base sequence as ATCTG, what would be the complementary RNA stand sequence",
+    "options": [
+      {
+        "id": "A",
+        "text": "ATCGU"
+      },
+      {
+        "id": "B",
+        "text": "UAGAC"
+      },
+      {
+        "id": "C",
+        "text": "AACTG"
+      },
+      {
+        "id": "D",
+        "text": "TTAGU"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 126,
+    "page": 29,
+    "year": "AIPMT 2012 Prelims",
+    "question": "Ribosomal RNA is actively synthesized in",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nucleolus"
+      },
+      {
+        "id": "B",
+        "text": "Ribosomes"
+      },
+      {
+        "id": "C",
+        "text": "Lysosomes"
+      },
+      {
+        "id": "D",
+        "text": "Nucleoplasm"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 127,
+    "page": 29,
+    "year": "AIPMT 2012 Prelims",
+    "question": "Which one of the following is not a part of a transcription unit in DNA ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The structural gene"
+      },
+      {
+        "id": "B",
+        "text": "the inducer"
+      },
+      {
+        "id": "C",
+        "text": "A terminator"
+      },
+      {
+        "id": "D",
+        "text": "A promoter"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 128,
+    "page": 29,
+    "year": "AIPMT 2012 Prelims",
+    "question": "Removal of RNA polymerase -III from nucleoplasm will affect the synthesis of",
+    "options": [
+      {
+        "id": "A",
+        "text": "tRNA"
+      },
+      {
+        "id": "B",
+        "text": "hnRNA"
+      },
+      {
+        "id": "C",
+        "text": "rRNA"
+      },
+      {
+        "id": "D",
+        "text": "mRNA"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 129,
+    "page": 29,
+    "year": "AIPMT 2011 Mains",
+    "question": "The unequivocal proof of DNA as the genetic material came from the studies on a :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Viroid"
+      },
+      {
+        "id": "B",
+        "text": "Bacterium"
+      },
+      {
+        "id": "C",
+        "text": "Fungus"
+      },
+      {
+        "id": "D",
+        "text": "Bacterial virus Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 130,
+    "page": 30,
+    "year": "AIPMT 2011 Mains",
+    "question": "In history of biology, human genome project led to the development of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Bioinformatics"
+      },
+      {
+        "id": "B",
+        "text": "Biosystematics"
+      },
+      {
+        "id": "C",
+        "text": "Biotechnology"
+      },
+      {
+        "id": "D",
+        "text": "Biomonitoring"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 131,
+    "page": 30,
+    "year": "AIPMT 2011 Prelims",
+    "question": "Which one of the following also acts as a catalyst in a bacterial cell?",
+    "options": [
+      {
+        "id": "A",
+        "text": "5S  r RNA"
+      },
+      {
+        "id": "B",
+        "text": "snRNA"
+      },
+      {
+        "id": "C",
+        "text": "hnRNA"
+      },
+      {
+        "id": "D",
+        "text": "23S  r RNA"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 132,
+    "page": 30,
+    "year": "AIPMT 2011 Prelims",
+    "question": "What are those structures that appear as 'beads-on-string' in the chromosomes when viewed under electron microscope ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nucleosomes"
+      },
+      {
+        "id": "B",
+        "text": "Genes"
+      },
+      {
+        "id": "C",
+        "text": "Nucleotides"
+      },
+      {
+        "id": "D",
+        "text": "Base pairs"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 133,
+    "page": 30,
+    "year": "AIPMT 2010 Mains",
+    "question": "The 3'-5' phosphodiester linkages inside a polynucleotide chain serve to join -",
+    "options": [
+      {
+        "id": "A",
+        "text": "One nucleotide with another nucleotide"
+      },
+      {
+        "id": "B",
+        "text": "One nitrogenous base with pentose sugar"
+      },
+      {
+        "id": "C",
+        "text": "One nucleoside with another nucleoside"
+      },
+      {
+        "id": "D",
+        "text": "One DNA strand with the other DNA strand"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 134,
+    "page": 30,
+    "year": "AIPMT 2010 Mains",
+    "question": "The lac Operon consists of -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Three regulatory genes and three structure genes"
+      },
+      {
+        "id": "B",
+        "text": "Four regulatory genes only"
+      },
+      {
+        "id": "C",
+        "text": "Two regulatory genes and two structural genes"
+      },
+      {
+        "id": "D",
+        "text": "One regulatory gene and three structural genes"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 135,
+    "page": 30,
+    "year": "AIPMT 2010 Mains",
+    "question": "In eukaryotic cell transcription, RNA splicing and RNA capping take place inside the -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Dictyosomes"
+      },
+      {
+        "id": "B",
+        "text": "Ribosomes"
+      },
+      {
+        "id": "C",
+        "text": "Nucleus"
+      },
+      {
+        "id": "D",
+        "text": "ER"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 136,
+    "page": 30,
+    "year": "AIPMT 2010 Mains",
+    "question": "Which one of the following statements about the particular entity is true ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nucleosome is formed of nucleotides"
+      },
+      {
+        "id": "B",
+        "text": "Centromere is found in animal cells, which produces aster during cell division"
+      },
+      {
+        "id": "C",
+        "text": "The gene for producing insulin is present in every body cell"
+      },
+      {
+        "id": "D",
+        "text": "DNA consists of a core of eight histones Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 137,
+    "page": 31,
+    "year": "AIPMT 2010 Prelims",
+    "question": "Which one of the following does not follow the central dogma of molecular biology ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mucor"
+      },
+      {
+        "id": "B",
+        "text": "HIV"
+      },
+      {
+        "id": "C",
+        "text": "Chlamydomonas"
+      },
+      {
+        "id": "D",
+        "text": "Pea"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 138,
+    "page": 31,
+    "year": "AIPMT 2010 Prelims",
+    "question": "The one aspect which is not a salient feature of genetic code, is its being –",
+    "options": [
+      {
+        "id": "A",
+        "text": "Specific"
+      },
+      {
+        "id": "B",
+        "text": "Degenerate"
+      },
+      {
+        "id": "C",
+        "text": "Ambiguous"
+      },
+      {
+        "id": "D",
+        "text": "Universal"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 139,
+    "page": 31,
+    "year": "AIPMT 2010 Prelims",
+    "question": "Select the two correct statements out of the four (a-d) statements given below about lac operon. (a) Glucose or galactose may bind with the repressor and inactivate it (b) In the absence of lactose the repressor binds with the operator region (c) The z-gene codes for permease (d) This was elucidated by Francois Jacob and Jacque Monod The correct statements are :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(b) and (d)"
+      },
+      {
+        "id": "B",
+        "text": "(a) and (b)"
+      },
+      {
+        "id": "C",
+        "text": "(b) and (c)"
+      },
+      {
+        "id": "D",
+        "text": "(a) and (c)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 140,
+    "page": 31,
+    "year": "AIPMT 2010 Prelims",
+    "question": "Satellite DNA is useful tool in",
+    "options": [
+      {
+        "id": "A",
+        "text": "Genetic engineering"
+      },
+      {
+        "id": "B",
+        "text": "Organ transplantation"
+      },
+      {
+        "id": "C",
+        "text": "Sex determination"
+      },
+      {
+        "id": "D",
+        "text": "Forensic science"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 141,
+    "page": 31,
+    "year": "AIPMT 2009",
+    "question": "Whose experiments cracked the DNA and discovered unequivocally that a genetic code is a \"triplet\" ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nirenberg and Mathaei"
+      },
+      {
+        "id": "B",
+        "text": "Morgan and Sturtevant"
+      },
+      {
+        "id": "C",
+        "text": "Hershey and Chase"
+      },
+      {
+        "id": "D",
+        "text": "Beadle and Tatum"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 142,
+    "page": 31,
+    "year": "AIPMT 2009",
+    "question": "Semi-conservative replication of DNA was first demonstrated in :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Drosophila melanogaster"
+      },
+      {
+        "id": "B",
+        "text": "Streptococcus pneumoniae"
+      },
+      {
+        "id": "C",
+        "text": "Salmonella typhimurium"
+      },
+      {
+        "id": "D",
+        "text": "Escherichia coli"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 143,
+    "page": 31,
+    "year": "AIPMT 2009",
+    "question": "Removal of introns and joining the exons in a defined order in a transcription unit is called :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transformation"
+      },
+      {
+        "id": "B",
+        "text": "Capping"
+      },
+      {
+        "id": "C",
+        "text": "Splicing"
+      },
+      {
+        "id": "D",
+        "text": "Tailing Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 144,
+    "page": 32,
+    "year": "AIPMT 2009",
+    "question": "What is not true for genetic code?",
+    "options": [
+      {
+        "id": "A",
+        "text": "It is nearly universal"
+      },
+      {
+        "id": "B",
+        "text": "A codon in mRNA is read in a noncontiguous fashion"
+      },
+      {
+        "id": "C",
+        "text": "It is degenerate"
+      },
+      {
+        "id": "D",
+        "text": "It is unambiguous"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 145,
+    "page": 32,
+    "year": "AIPMT 2008",
+    "question": "In the DNA molecule:",
+    "options": [
+      {
+        "id": "A",
+        "text": "the total amount of purine nucleotides and pyrimidine nucleotides is not always equal"
+      },
+      {
+        "id": "B",
+        "text": "there are two strands which run antiparallel one in 5' →   3' direction and other in 3' →   5'"
+      },
+      {
+        "id": "C",
+        "text": "there are two strands which run parallel in the 5' →   3' direction"
+      },
+      {
+        "id": "D",
+        "text": "the proportion of adenine in relation to thymine varies with the organism"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 146,
+    "page": 32,
+    "year": "AIPMT 2008",
+    "question": "Which one of the following pairs of nitrogenous bases of nucleic acids, is wrongly matched with the category mentioned against it?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Thymine, Uracil — Pyrimidines"
+      },
+      {
+        "id": "B",
+        "text": "Guanine, Adenine — Purines"
+      },
+      {
+        "id": "C",
+        "text": "Uracil, Cytosine — Pyrimidines"
+      },
+      {
+        "id": "D",
+        "text": "Adenine, Thymine — Purines"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 147,
+    "page": 32,
+    "year": "AIPMT 2008",
+    "question": "Polysome is formed by",
+    "options": [
+      {
+        "id": "A",
+        "text": "several ribosomes attached to a single mRNA"
+      },
+      {
+        "id": "B",
+        "text": "many ribosomes attached to a strand of endoplasmic reticulum"
+      },
+      {
+        "id": "C",
+        "text": "a ribosome with several subunits"
+      },
+      {
+        "id": "D",
+        "text": "ribosomes attached to each other in a linear arrangement"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 148,
+    "page": 32,
+    "year": "AIPMT 2008",
+    "question": "Which one of the following pairs of codons is correctly matched with their function or the signal for the particular amino acid ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "UUA, UCA — Leucine"
+      },
+      {
+        "id": "B",
+        "text": "AUG, ACG — Start/Methionine"
+      },
+      {
+        "id": "C",
+        "text": "UAG, UGA — Stop"
+      },
+      {
+        "id": "D",
+        "text": "GUU, GCU — Alanine Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 149,
+    "page": 33,
+    "year": "AIPMT 2007",
+    "question": "The Okazaki fragments in DNA chain growth",
+    "options": [
+      {
+        "id": "A",
+        "text": "polymerize in the 3′-to-5′ direction and form the replication fork"
+      },
+      {
+        "id": "B",
+        "text": "prove the semi-conservative nature of DNA replication"
+      },
+      {
+        "id": "C",
+        "text": "polymerize in the 5′-to-3′ direction and explain 3′-to-5′ DNA replication"
+      },
+      {
+        "id": "D",
+        "text": "result in transcription"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 150,
+    "page": 33,
+    "year": "AIPMT 2007",
+    "question": "The length of DNA molecule greatly exceeds the dimensions of the nucleus in eukaryotic cells. How is this DNA accommodated?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Super-coiling in nucleosomes"
+      },
+      {
+        "id": "B",
+        "text": "DNase digestion"
+      },
+      {
+        "id": "C",
+        "text": "Through elimination of repetitive DNA"
+      },
+      {
+        "id": "D",
+        "text": "Deletion of non-essential genes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 151,
+    "page": 33,
+    "year": "AIPMT 2007",
+    "question": "During transcription, RNA polymerase holoenzyme binds to a gene promoter and assumes a saddle- like structure. What is its DNA-binding sequence?",
+    "options": [
+      {
+        "id": "A",
+        "text": "AATT"
+      },
+      {
+        "id": "B",
+        "text": "CACC"
+      },
+      {
+        "id": "C",
+        "text": "TATA"
+      },
+      {
+        "id": "D",
+        "text": "TTAA"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 152,
+    "page": 33,
+    "year": "AIPMT 2007",
+    "question": "Differentiation of organs and tissues in a developing organism is associated with",
+    "options": [
+      {
+        "id": "A",
+        "text": "differential expression of genes"
+      },
+      {
+        "id": "B",
+        "text": "lethal mutations"
+      },
+      {
+        "id": "C",
+        "text": "deletion of genes"
+      },
+      {
+        "id": "D",
+        "text": "developmental mutations"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 153,
+    "page": 33,
+    "year": "AIPMT 2007",
+    "question": "One gene-one enzyme relationship was established for the first time in",
+    "options": [
+      {
+        "id": "A",
+        "text": "Salmonella typhimurium"
+      },
+      {
+        "id": "B",
+        "text": "Escherichia coli"
+      },
+      {
+        "id": "C",
+        "text": "Diplococcus pneumoniae"
+      },
+      {
+        "id": "D",
+        "text": "Neurospora crassa"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 154,
+    "page": 33,
+    "year": "AIPMT 2007",
+    "question": "Telomere repetitive DNA sequences control the function of eukaryotic chromosomes because they",
+    "options": [
+      {
+        "id": "A",
+        "text": "are RNA transcription initiator"
+      },
+      {
+        "id": "B",
+        "text": "help chromosome pairing"
+      },
+      {
+        "id": "C",
+        "text": "prevent chromosome loss"
+      },
+      {
+        "id": "D",
+        "text": "act as replicons"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 155,
+    "page": 33,
+    "year": "AIPMT 2007",
+    "question": "Molecular basis of organ differentiation depends on the modulation in transcription by",
+    "options": [
+      {
+        "id": "A",
+        "text": "ribosome"
+      },
+      {
+        "id": "B",
+        "text": "transcription factor"
+      },
+      {
+        "id": "C",
+        "text": "anticodon"
+      },
+      {
+        "id": "D",
+        "text": "RNA polymerase Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 156,
+    "page": 34,
+    "year": "AIPMT 2007",
+    "question": "The two polynucleotide chains in DNA are",
+    "options": [
+      {
+        "id": "A",
+        "text": "discontinuous"
+      },
+      {
+        "id": "B",
+        "text": "antiparallel"
+      },
+      {
+        "id": "C",
+        "text": "semiconservative"
+      },
+      {
+        "id": "D",
+        "text": "parallel"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 157,
+    "page": 34,
+    "year": "AIPMT 2006",
+    "question": "One turn of the helix in a B-form DNA is approximately -",
+    "options": [
+      {
+        "id": "A",
+        "text": "20 nm"
+      },
+      {
+        "id": "B",
+        "text": "3.4 nm"
+      },
+      {
+        "id": "C",
+        "text": "2 nm"
+      },
+      {
+        "id": "D",
+        "text": "0.34 nm"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 158,
+    "page": 34,
+    "year": "AIPMT 2006",
+    "question": "One gene-one enzyme hypothesis was postulated by -",
+    "options": [
+      {
+        "id": "A",
+        "text": "A.Garrod"
+      },
+      {
+        "id": "B",
+        "text": "Hershey and Chase"
+      },
+      {
+        "id": "C",
+        "text": "Beadle and Tatum"
+      },
+      {
+        "id": "D",
+        "text": "R. Franklin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 159,
+    "page": 34,
+    "year": "AIPMT 2006",
+    "question": "Antiparallel strands of a DNA molecule means that-",
+    "options": [
+      {
+        "id": "A",
+        "text": "The phosphate groups at the start of two DNA strands are in opposite position (pole)"
+      },
+      {
+        "id": "B",
+        "text": "One strand turns anti-clockwise"
+      },
+      {
+        "id": "C",
+        "text": "One strand turns clockwise"
+      },
+      {
+        "id": "D",
+        "text": "The phosphate groups of two DNA strands, at their ends, share the same position"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 160,
+    "page": 34,
+    "year": "AIPMT 2006",
+    "question": "Which antibiotic inhibits interaction between tRNA and mRNA during bacterial protein synthesis ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Neomycin"
+      },
+      {
+        "id": "B",
+        "text": "Erythromycin"
+      },
+      {
+        "id": "C",
+        "text": "Tetracycline"
+      },
+      {
+        "id": "D",
+        "text": "Streptomycin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 161,
+    "page": 34,
+    "year": "AIPMT 2006",
+    "question": "Amino acid sequence, in protein synthesis is decided by the sequence of -",
+    "options": [
+      {
+        "id": "A",
+        "text": "cDNA"
+      },
+      {
+        "id": "B",
+        "text": "mRNA"
+      },
+      {
+        "id": "C",
+        "text": "tRNA"
+      },
+      {
+        "id": "D",
+        "text": "rRNA Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 162,
+    "page": 35,
+    "year": "AIPMT 2005",
+    "question": "E. coli cells with a mutated z gene of the lac operon cannot grow in medium containing only lactose as the source of energy because -",
+    "options": [
+      {
+        "id": "A",
+        "text": "They cannot transport lactose from the medium into the cell"
+      },
+      {
+        "id": "B",
+        "text": "They cannot synthesize functional beta galactosidase"
+      },
+      {
+        "id": "C",
+        "text": "In the presence of glucose, E. coli cells do not utilize lactose"
+      },
+      {
+        "id": "D",
+        "text": "The lac operon is constitutively active in these cells"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 163,
+    "page": 35,
+    "year": "AIPMT 2005",
+    "question": "Telomerase is an enzyme which is a -",
+    "options": [
+      {
+        "id": "A",
+        "text": "RNA"
+      },
+      {
+        "id": "B",
+        "text": "Repetitive DNA"
+      },
+      {
+        "id": "C",
+        "text": "Simple protein"
+      },
+      {
+        "id": "D",
+        "text": "Ribonucleoprotein"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 164,
+    "page": 35,
+    "year": "AIPMT 2005",
+    "question": "Using imprints from a plate with complete medium and carrying bacterial colonies, you can select streptomycin resistant mutants and prove that such mutations do not originates as adaptation. These imprints need to be used -",
+    "options": [
+      {
+        "id": "A",
+        "text": "On plates with minimal medium"
+      },
+      {
+        "id": "B",
+        "text": "Only on plates with streptomycin"
+      },
+      {
+        "id": "C",
+        "text": "Only on plates without streptomycin"
+      },
+      {
+        "id": "D",
+        "text": "On plates with and without streptomycin"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 165,
+    "page": 35,
+    "year": "AIPMT 2005",
+    "question": "Protein synthesis in an animal cell occurs -",
+    "options": [
+      {
+        "id": "A",
+        "text": "On ribosomes present in the nucleolus as well as in cytoplasm"
+      },
+      {
+        "id": "B",
+        "text": "On ribosomes presents in cytoplasm as well as in mitochondria"
+      },
+      {
+        "id": "C",
+        "text": "Only on the ribosomes present in cytosol"
+      },
+      {
+        "id": "D",
+        "text": "Only on ribosomes attached to the nuclear envelope and endoplasmic reticulum"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 166,
+    "page": 35,
+    "year": "AIPMT 2005",
+    "question": "Which one of the following makes use of RNA as a template to synthesize DNA -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Reverse transcriptase"
+      },
+      {
+        "id": "B",
+        "text": "DNA dependant RNA polymerase"
+      },
+      {
+        "id": "C",
+        "text": "RNA polymerase"
+      },
+      {
+        "id": "D",
+        "text": "DNA polymerase"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 167,
+    "page": 35,
+    "year": "AIPMT 2005",
+    "question": "During transcription holoenzyme RNA polymerase binds to a DNA sequence and the DNA assumes a saddle like structure at the point. What is the sequence called ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "TATA box"
+      },
+      {
+        "id": "B",
+        "text": "GGTT box"
+      },
+      {
+        "id": "C",
+        "text": "CAAT box"
+      },
+      {
+        "id": "D",
+        "text": "AAAT box Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 168,
+    "page": 36,
+    "year": "AIPMT 2004",
+    "question": "During replication of a bacterial chromosome DNA synthesis starts from a replication origin site and",
+    "options": [
+      {
+        "id": "A",
+        "text": "RNA primers are involved"
+      },
+      {
+        "id": "B",
+        "text": "is facilitated by telomerase"
+      },
+      {
+        "id": "C",
+        "text": "moves in one direction of the site"
+      },
+      {
+        "id": "D",
+        "text": "moves in bi-directional way."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 169,
+    "page": 36,
+    "year": "AIPMT 2004",
+    "question": "After a mutation at a genetic locus the character of an organism changes due to the change in :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Protein synthesis pattern"
+      },
+      {
+        "id": "B",
+        "text": "RNA transcription pattern"
+      },
+      {
+        "id": "C",
+        "text": "DNA replication"
+      },
+      {
+        "id": "D",
+        "text": "Protein structure"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 170,
+    "page": 36,
+    "year": "AIPMT 2004",
+    "question": "Which form of RNA has a structure resembling clover leaf ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "r-RNA"
+      },
+      {
+        "id": "B",
+        "text": "m-RNA"
+      },
+      {
+        "id": "C",
+        "text": "t-RNA"
+      },
+      {
+        "id": "D",
+        "text": "hn-RNA"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 171,
+    "page": 36,
+    "year": "AIPMT 2004",
+    "question": "During transcription, if the nucleotide sequence of the DNA strand that is being coded is ATACG, then the nucleotide sequence in the mRNA would be -",
+    "options": [
+      {
+        "id": "A",
+        "text": "UAUGC"
+      },
+      {
+        "id": "B",
+        "text": "TCTGG"
+      },
+      {
+        "id": "C",
+        "text": "UATGC"
+      },
+      {
+        "id": "D",
+        "text": "TATGC"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 172,
+    "page": 36,
+    "year": "AIPMT 2004",
+    "question": "In a mutational event, when adenine is replaced by guanine, it is a case of -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Frameshift mutation"
+      },
+      {
+        "id": "B",
+        "text": "Transition"
+      },
+      {
+        "id": "C",
+        "text": "Transversion"
+      },
+      {
+        "id": "D",
+        "text": "Transcription"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 173,
+    "page": 36,
+    "year": "AIPMT 2004",
+    "question": "The following ratio is generally constant for a given species :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "A + C / T + G"
+      },
+      {
+        "id": "B",
+        "text": "G + C / A+ T"
+      },
+      {
+        "id": "C",
+        "text": "A + G / C +T"
+      },
+      {
+        "id": "D",
+        "text": "T + C / G + A"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 174,
+    "page": 36,
+    "year": "AIPMT 2004",
+    "question": "DNA fingerprinting refers to :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Techniques used for molecular analysis of different specimens of DNA"
+      },
+      {
+        "id": "B",
+        "text": "Anlysis of DNA samples using imprinting devices"
+      },
+      {
+        "id": "C",
+        "text": "Molecular analysis of profiles of DNA samples"
+      },
+      {
+        "id": "D",
+        "text": "Techniques used for identification of fingerprints of individuals Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 175,
+    "page": 37,
+    "year": "AIPMT 2003",
+    "question": "What would happen if in a gene encoding a polypeptide of 50 amino acids, 25th codon (UAU) is mutated to UAA ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "A polypeptide of 49 amino acids will be formed"
+      },
+      {
+        "id": "B",
+        "text": "A polypeptide of 25 amino acids will be formed"
+      },
+      {
+        "id": "C",
+        "text": "Two polypeptides of 24 and 25 amino acids will be formed"
+      },
+      {
+        "id": "D",
+        "text": "A polypeptide of 24 amino acids will be formed"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 176,
+    "page": 37,
+    "year": "AIPMT 2003",
+    "question": "What does \"lac\" refer to in what we call the lac operon ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The number 1,00,000"
+      },
+      {
+        "id": "B",
+        "text": "Lac insect"
+      },
+      {
+        "id": "C",
+        "text": "Lactase"
+      },
+      {
+        "id": "D",
+        "text": "Lactose"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 177,
+    "page": 37,
+    "year": "AIPMT 2003",
+    "question": "During translation initiation in prokaryotes, a GTP molecule is needed in : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Association of 30S mRNA with formy-lmet-tRNA"
+      },
+      {
+        "id": "B",
+        "text": "Formation of formyl-met-tRNA"
+      },
+      {
+        "id": "C",
+        "text": "Association of 50S subunit of ribosome with initiation complex"
+      },
+      {
+        "id": "D",
+        "text": "Binding of 30S subunit of ribosome with mRNA"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 178,
+    "page": 37,
+    "year": "AIPMT 2003",
+    "question": "Which one of the following triplet codes, is correctly matched with its specificity for an amino acid in protein synthesis or as 'start' or 'stop' codon ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "UUU – Stop"
+      },
+      {
+        "id": "B",
+        "text": "UAC – Tyrosine"
+      },
+      {
+        "id": "C",
+        "text": "UGU – Leucine"
+      },
+      {
+        "id": "D",
+        "text": "UCG – Start"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 179,
+    "page": 37,
+    "year": "AIPMT 2003",
+    "question": "During transcription, the DNA site at which RNA polymerase binds is called :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Receptor"
+      },
+      {
+        "id": "B",
+        "text": "Regulator"
+      },
+      {
+        "id": "C",
+        "text": "Enhancer"
+      },
+      {
+        "id": "D",
+        "text": "Promoter"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 180,
+    "page": 37,
+    "year": "AIPMT 2003",
+    "question": "Degeneration of a genetic code is attributed to the : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Second member of a codon"
+      },
+      {
+        "id": "B",
+        "text": "Third member of a codon"
+      },
+      {
+        "id": "C",
+        "text": "First member of a codon"
+      },
+      {
+        "id": "D",
+        "text": "Entire codon Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 181,
+    "page": 38,
+    "year": "AIPMT 2003",
+    "question": "In the genetic code dictionary, how many codons are used to code for all the 20 essential amino acids : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "64"
+      },
+      {
+        "id": "B",
+        "text": "20"
+      },
+      {
+        "id": "C",
+        "text": "60"
+      },
+      {
+        "id": "D",
+        "text": "61"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 182,
+    "page": 38,
+    "year": "AIPMT 2002",
+    "question": "In a DNA percentage of thymine is 20% then what is the percentage of guanine : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "40%"
+      },
+      {
+        "id": "B",
+        "text": "20%"
+      },
+      {
+        "id": "C",
+        "text": "30%"
+      },
+      {
+        "id": "D",
+        "text": "60%"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 183,
+    "page": 38,
+    "year": "AIPMT 2002",
+    "question": "Transformation experiment was first performed on which bacteria : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Diplococcus pneumoniae"
+      },
+      {
+        "id": "B",
+        "text": "Pasteurella pestis"
+      },
+      {
+        "id": "C",
+        "text": "E. coli"
+      },
+      {
+        "id": "D",
+        "text": "Salmonella"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 184,
+    "page": 38,
+    "year": "AIPMT 2002",
+    "question": "In E. Coli, during lactose metabolism repressor binds to : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Promoter gene"
+      },
+      {
+        "id": "B",
+        "text": "Operator gene"
+      },
+      {
+        "id": "C",
+        "text": "Structural gene"
+      },
+      {
+        "id": "D",
+        "text": "Regulator gene"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 185,
+    "page": 38,
+    "year": "AIPMT 2002",
+    "question": "Out of 64 codons, 61 codons code for 20 types of amino acid it is called : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Wobbling of codon"
+      },
+      {
+        "id": "B",
+        "text": "Universility of codons"
+      },
+      {
+        "id": "C",
+        "text": "Overlapping of gene"
+      },
+      {
+        "id": "D",
+        "text": "Degeneracy of genetic code"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 186,
+    "page": 38,
+    "year": "AIPMT 2002",
+    "question": "Which of the following reunites the exon segments after RNA splicing ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "RNA polymerase"
+      },
+      {
+        "id": "B",
+        "text": "RNA proteases"
+      },
+      {
+        "id": "C",
+        "text": "RNA primase"
+      },
+      {
+        "id": "D",
+        "text": "RNA ligase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 187,
+    "page": 38,
+    "year": "AIPMT 2002",
+    "question": "Which of the following enzymes are used to join bits of DNA ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Endonuclease"
+      },
+      {
+        "id": "B",
+        "text": "DNA polymerase"
+      },
+      {
+        "id": "C",
+        "text": "Ligase"
+      },
+      {
+        "id": "D",
+        "text": "Primase"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 188,
+    "page": 38,
+    "year": "AIPMT 2002",
+    "question": "Exon part of m-RNAs have code for : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Lipid"
+      },
+      {
+        "id": "B",
+        "text": "Protein"
+      },
+      {
+        "id": "C",
+        "text": "Phospholipid"
+      },
+      {
+        "id": "D",
+        "text": "Carbohydrate Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 189,
+    "page": 39,
+    "year": "AIPMT 2002",
+    "question": "Change in sequence of nucleotide in DNA is called as -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Recombination"
+      },
+      {
+        "id": "B",
+        "text": "Mutation"
+      },
+      {
+        "id": "C",
+        "text": "Mutagen"
+      },
+      {
+        "id": "D",
+        "text": "Translation"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 190,
+    "page": 39,
+    "year": "AIPMT 2001",
+    "question": "m-RNA is synthesised on DNA template in which direction : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Any"
+      },
+      {
+        "id": "B",
+        "text": "Both (c) and (d)"
+      },
+      {
+        "id": "C",
+        "text": "5'   →   3'"
+      },
+      {
+        "id": "D",
+        "text": "3'   →   5'"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 191,
+    "page": 39,
+    "year": "AIPMT 2001",
+    "question": "In Negative operon : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "cAMP has negative effect on lac operon"
+      },
+      {
+        "id": "B",
+        "text": "Co-repressor binds with inducer"
+      },
+      {
+        "id": "C",
+        "text": "Co-repressor binds with repressor"
+      },
+      {
+        "id": "D",
+        "text": "Co-repressor does not bind with repressor"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 192,
+    "page": 39,
+    "year": "AIPMT 2001",
+    "question": "Gene and cistron words are sometimes used synonymously because : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "One gene contains one cistron"
+      },
+      {
+        "id": "B",
+        "text": "One cistron contains many gene"
+      },
+      {
+        "id": "C",
+        "text": "One gene contains no cistron"
+      },
+      {
+        "id": "D",
+        "text": "One gene contains many cistrons"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 193,
+    "page": 39,
+    "year": "AIPMT 2001",
+    "question": "Types of RNA polymerase required in nucleus for RNA synthesis : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "2"
+      },
+      {
+        "id": "B",
+        "text": "3"
+      },
+      {
+        "id": "C",
+        "text": "1"
+      },
+      {
+        "id": "D",
+        "text": "4"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 194,
+    "page": 39,
+    "year": "AIPMT 2001",
+    "question": "Due to discovery of which of the following in 1980's the evolution was termed as RNA world?",
+    "options": [
+      {
+        "id": "A",
+        "text": "-RNA,   -RNA,   -RNA   synthesize proteins"
+      },
+      {
+        "id": "B",
+        "text": "In some viruses, RNA is genetic material"
+      },
+      {
+        "id": "C",
+        "text": "Some RNAs have enzymatic property"
+      },
+      {
+        "id": "D",
+        "text": "RNA is not found in all cells Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 195,
+    "page": 40,
+    "year": "AIPMT 2001",
+    "question": "E. coli   about to replicate was placed in a medium containing radioactive thymidine for five minutes. Then it was made to replicate in a normal medium. Which of the following observation shall be correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both the strands of DNA will be radioactive"
+      },
+      {
+        "id": "B",
+        "text": "One strand radioactive"
+      },
+      {
+        "id": "C",
+        "text": "Each strand half radioactive"
+      },
+      {
+        "id": "D",
+        "text": "None is radioactive"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 196,
+    "page": 40,
+    "year": "AIPMT 2001",
+    "question": "At the time of organogenesis, genes regulate the process at different levels and at different time due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "promoter"
+      },
+      {
+        "id": "B",
+        "text": "regulator"
+      },
+      {
+        "id": "C",
+        "text": "intron"
+      },
+      {
+        "id": "D",
+        "text": "exon"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 197,
+    "page": 40,
+    "year": "AIPMT 2000",
+    "question": "Method of DNA replication in which two strands of DNA separates and synthesize new strands",
+    "options": [
+      {
+        "id": "A",
+        "text": "Conservative"
+      },
+      {
+        "id": "B",
+        "text": "Non conservative"
+      },
+      {
+        "id": "C",
+        "text": "Dispersive"
+      },
+      {
+        "id": "D",
+        "text": "Semiconservative"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 198,
+    "page": 40,
+    "year": "AIPMT 2000",
+    "question": "Which of the following is initiation codon ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "AUC"
+      },
+      {
+        "id": "B",
+        "text": "CCU"
+      },
+      {
+        "id": "C",
+        "text": "UAG"
+      },
+      {
+        "id": "D",
+        "text": "AUG"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 199,
+    "page": 40,
+    "year": "AIPMT 2000",
+    "question": "Anticodon occurs in :",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA"
+      },
+      {
+        "id": "B",
+        "text": "r-RNA"
+      },
+      {
+        "id": "C",
+        "text": "t-RNA"
+      },
+      {
+        "id": "D",
+        "text": "m-RNA"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 200,
+    "page": 40,
+    "year": "AIPMT 2000",
+    "question": "Length of one loop of B- DNA :",
+    "options": [
+      {
+        "id": "A",
+        "text": "20 nm."
+      },
+      {
+        "id": "B",
+        "text": "10 nm."
+      },
+      {
+        "id": "C",
+        "text": "3.4 nm."
+      },
+      {
+        "id": "D",
+        "text": "0.34 nm."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 201,
+    "page": 40,
+    "year": "AIPMT 2000",
+    "question": "In three dimensional view the molecule of t-RNA is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "E-shaped"
+      },
+      {
+        "id": "B",
+        "text": "L-shaped"
+      },
+      {
+        "id": "C",
+        "text": "S-shaped"
+      },
+      {
+        "id": "D",
+        "text": "Y-shaped Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 202,
+    "page": 41,
+    "year": "AIPMT 2000",
+    "question": "Similarity in DNA and RNA :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both have similar sugar"
+      },
+      {
+        "id": "B",
+        "text": "Both are genetic material"
+      },
+      {
+        "id": "C",
+        "text": "Both have similar pyrimidine"
+      },
+      {
+        "id": "D",
+        "text": "Both are polymer of nucleotides"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 203,
+    "page": 41,
+    "year": "AIPMT 2000",
+    "question": "During organ differentiation in  Drosophila , an organ is modified to another organ (such as wings may be replaced by legs). Genes responsible for such metamorphosis are called",
+    "options": [
+      {
+        "id": "A",
+        "text": "double dominant genes"
+      },
+      {
+        "id": "B",
+        "text": "plastid genes"
+      },
+      {
+        "id": "C",
+        "text": "complementary genes"
+      },
+      {
+        "id": "D",
+        "text": "homeotic genes"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 204,
+    "page": 41,
+    "year": "AIPMT 1999",
+    "question": "The  Pneumococcus   experiment proves that :",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA is the genetic material"
+      },
+      {
+        "id": "B",
+        "text": "RNA sometime controls the production of DNA and proteins"
+      },
+      {
+        "id": "C",
+        "text": "bacteria undergo binary fission"
+      },
+      {
+        "id": "D",
+        "text": "bacteria do not reproduce sexually"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 205,
+    "page": 41,
+    "year": "AIPMT 1999",
+    "question": "In operon concept, regulator gene functions as :",
+    "options": [
+      {
+        "id": "A",
+        "text": "repressor"
+      },
+      {
+        "id": "B",
+        "text": "inhibitor"
+      },
+      {
+        "id": "C",
+        "text": "regulator"
+      },
+      {
+        "id": "D",
+        "text": "all of these"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 206,
+    "page": 41,
+    "year": "AIPMT 1999",
+    "question": "Initiation codon in eukaryotes is",
+    "options": [
+      {
+        "id": "A",
+        "text": "AUG"
+      },
+      {
+        "id": "B",
+        "text": "AGU"
+      },
+      {
+        "id": "C",
+        "text": "UAG"
+      },
+      {
+        "id": "D",
+        "text": "GAU"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 207,
+    "page": 41,
+    "year": "AIPMT 1999",
+    "question": "DNA is mainly found in :",
+    "options": [
+      {
+        "id": "A",
+        "text": "nucleus only"
+      },
+      {
+        "id": "B",
+        "text": "cytoplasm only"
+      },
+      {
+        "id": "C",
+        "text": "nucleus and cytoplasm"
+      },
+      {
+        "id": "D",
+        "text": "nucleolus"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 208,
+    "page": 41,
+    "year": "AIPMT 1999",
+    "question": "In DNA when AGCT occurs, their association is as per which of the following pair ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "AC-GT"
+      },
+      {
+        "id": "B",
+        "text": "AG-CT"
+      },
+      {
+        "id": "C",
+        "text": "AT-GC"
+      },
+      {
+        "id": "D",
+        "text": "All of these Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 209,
+    "page": 42,
+    "year": "AIPMT 1999",
+    "question": "The eukaryotic genome differs from the prokaryotic genome because",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA is complexed with histones in prokaryotes"
+      },
+      {
+        "id": "B",
+        "text": "repetitive sequences are present in eukaryotes"
+      },
+      {
+        "id": "C",
+        "text": "genes in the former cases are organised into operons"
+      },
+      {
+        "id": "D",
+        "text": "DNA is circular and single stranded in prokaryotes"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 210,
+    "page": 42,
+    "year": "AIPMT 1998",
+    "question": "Which base is responsible for hot spots for spontaneous point mutations?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Guanine"
+      },
+      {
+        "id": "B",
+        "text": "Adenine"
+      },
+      {
+        "id": "C",
+        "text": "5-bromouracil"
+      },
+      {
+        "id": "D",
+        "text": "5-methylcytosine"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 211,
+    "page": 42,
+    "year": "AIPMT 1998",
+    "question": "Genes that are involved in turning on or off the transcription of a set of structural genes are called",
+    "options": [
+      {
+        "id": "A",
+        "text": "polymorphic genes"
+      },
+      {
+        "id": "B",
+        "text": "operator genes"
+      },
+      {
+        "id": "C",
+        "text": "redundant genes"
+      },
+      {
+        "id": "D",
+        "text": "regulatory genes"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 212,
+    "page": 42,
+    "year": "AIPMT 1998",
+    "question": "DNA elements, which can switch their position, are called",
+    "options": [
+      {
+        "id": "A",
+        "text": "exons"
+      },
+      {
+        "id": "B",
+        "text": "introns"
+      },
+      {
+        "id": "C",
+        "text": "cistrons"
+      },
+      {
+        "id": "D",
+        "text": "transposons"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 213,
+    "page": 42,
+    "year": "AIPMT 1997",
+    "question": "Genes are packaged into a bacterial chromosome by",
+    "options": [
+      {
+        "id": "A",
+        "text": "acidic protein"
+      },
+      {
+        "id": "B",
+        "text": "actin"
+      },
+      {
+        "id": "C",
+        "text": "histones"
+      },
+      {
+        "id": "D",
+        "text": "basic protein"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 214,
+    "page": 42,
+    "year": "AIPMT 1997",
+    "question": "The codons causing chain termination are",
+    "options": [
+      {
+        "id": "A",
+        "text": "AGT, TAG, UGA"
+      },
+      {
+        "id": "B",
+        "text": "UAG, UGA, UAA"
+      },
+      {
+        "id": "C",
+        "text": "TAG, TAA, TGA"
+      },
+      {
+        "id": "D",
+        "text": "GAT, AAT, AGT"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 215,
+    "page": 42,
+    "year": "AIPMT 1997",
+    "question": "DNA synthesis can be specifically measured by estimating the incorporation of radio-labelled",
+    "options": [
+      {
+        "id": "A",
+        "text": "thymidine"
+      },
+      {
+        "id": "B",
+        "text": "deoxyribose sugar"
+      },
+      {
+        "id": "C",
+        "text": "uracil"
+      },
+      {
+        "id": "D",
+        "text": "adenine Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 216,
+    "page": 43,
+    "year": "AIPMT 1997",
+    "question": "The RNA that pick up specific amino acid from amino acid pool in the cytoplasm to ribosome during protein synthesis is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "r RNA"
+      },
+      {
+        "id": "B",
+        "text": "RNA"
+      },
+      {
+        "id": "C",
+        "text": "m RNA"
+      },
+      {
+        "id": "D",
+        "text": "t RNA"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 217,
+    "page": 43,
+    "year": "AIPMT 1997",
+    "question": "Which of the following step of translation does not consume a high energy phosphate bond?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Peptidyl transferase reaction"
+      },
+      {
+        "id": "B",
+        "text": "Aminoacyl  t RNA binding to A-site"
+      },
+      {
+        "id": "C",
+        "text": "Translocation"
+      },
+      {
+        "id": "D",
+        "text": "Amino acid activation"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 218,
+    "page": 43,
+    "year": "AIPMT 1996",
+    "question": "Which of the following serves as a terminal codon?",
+    "options": [
+      {
+        "id": "A",
+        "text": "UAG"
+      },
+      {
+        "id": "B",
+        "text": "AGA"
+      },
+      {
+        "id": "C",
+        "text": "AUG"
+      },
+      {
+        "id": "D",
+        "text": "GCG"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 219,
+    "page": 43,
+    "year": "AIPMT 1996",
+    "question": "The maximum formation of  m RNA occurs in",
+    "options": [
+      {
+        "id": "A",
+        "text": "ribosome"
+      },
+      {
+        "id": "B",
+        "text": "nucleoplasm"
+      },
+      {
+        "id": "C",
+        "text": "cytoplasm"
+      },
+      {
+        "id": "D",
+        "text": "nucleolus"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 220,
+    "page": 43,
+    "year": "AIPMT 1996",
+    "question": "Radio-tracer technique shows that DNA is in",
+    "options": [
+      {
+        "id": "A",
+        "text": "multi-helix stage"
+      },
+      {
+        "id": "B",
+        "text": "single-helix stage"
+      },
+      {
+        "id": "C",
+        "text": "double-helix stage"
+      },
+      {
+        "id": "D",
+        "text": "none of these"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 221,
+    "page": 43,
+    "year": "AIPMT 1995",
+    "question": "The wild type  E.coli   cells are growing in normal medium with glucose. They are transferred to a medium containing only lactose as sugar. Which of the following changes take place?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The  lac   operon is induced."
+      },
+      {
+        "id": "B",
+        "text": "E.coli   cells stop dividing."
+      },
+      {
+        "id": "C",
+        "text": "The  lac   operon is repressed."
+      },
+      {
+        "id": "D",
+        "text": "All operons are induced."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 222,
+    "page": 43,
+    "year": "AIPMT 1995",
+    "question": "The  lac   operon is an example of",
+    "options": [
+      {
+        "id": "A",
+        "text": "repressible operon"
+      },
+      {
+        "id": "B",
+        "text": "overlapping genes"
+      },
+      {
+        "id": "C",
+        "text": "arabinose operon"
+      },
+      {
+        "id": "D",
+        "text": "inducible operon Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 223,
+    "page": 44,
+    "year": "AIPMT 1995",
+    "question": "An environmental agent, which triggers transcription from an operon, is a",
+    "options": [
+      {
+        "id": "A",
+        "text": "depressor"
+      },
+      {
+        "id": "B",
+        "text": "controlling element"
+      },
+      {
+        "id": "C",
+        "text": "regulator"
+      },
+      {
+        "id": "D",
+        "text": "inducer"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 224,
+    "page": 44,
+    "year": "AIPMT 1995",
+    "question": "If the sequence of bases in DNA is ATTCGATG, then the sequence of bases in its transcript will be",
+    "options": [
+      {
+        "id": "A",
+        "text": "GUAGCUUA"
+      },
+      {
+        "id": "B",
+        "text": "AUUCGAUG"
+      },
+      {
+        "id": "C",
+        "text": "CAUCGAAU"
+      },
+      {
+        "id": "D",
+        "text": "UAAGCUAC"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 225,
+    "page": 44,
+    "year": "AIPMT 1995",
+    "question": "If the DNA codons are ATG ATG ATG and a cytosine base is inserted at the beginning, then which of the following will result?",
+    "options": [
+      {
+        "id": "A",
+        "text": "CAT GAT GATG"
+      },
+      {
+        "id": "B",
+        "text": "A non-sense mutation"
+      },
+      {
+        "id": "C",
+        "text": "C ATG ATG ATG"
+      },
+      {
+        "id": "D",
+        "text": "CA TGA TGA TG"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 226,
+    "page": 44,
+    "year": "AIPMT 1995",
+    "question": "In split genes, the coding sequences are called",
+    "options": [
+      {
+        "id": "A",
+        "text": "exons"
+      },
+      {
+        "id": "B",
+        "text": "cistrons"
+      },
+      {
+        "id": "C",
+        "text": "introns"
+      },
+      {
+        "id": "D",
+        "text": "operons"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 227,
+    "page": 44,
+    "year": "AIPMT 1995",
+    "question": "Anticodon is an unpaired triplet of bases in an exposed position of",
+    "options": [
+      {
+        "id": "A",
+        "text": "t RNA"
+      },
+      {
+        "id": "B",
+        "text": "m RNA"
+      },
+      {
+        "id": "C",
+        "text": "r RNA"
+      },
+      {
+        "id": "D",
+        "text": "both (b) and (c)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 228,
+    "page": 44,
+    "year": "AIPMT 1994",
+    "question": "Initiation codon in eukaryotes is",
+    "options": [
+      {
+        "id": "A",
+        "text": "GAU"
+      },
+      {
+        "id": "B",
+        "text": "AGU"
+      },
+      {
+        "id": "C",
+        "text": "AUG"
+      },
+      {
+        "id": "D",
+        "text": "UAG"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 229,
+    "page": 44,
+    "year": "AIPMT 1994",
+    "question": "‘ Lac   operon’ in  E. coli , is induced by",
+    "options": [
+      {
+        "id": "A",
+        "text": "‘I’ gene"
+      },
+      {
+        "id": "B",
+        "text": "promoter gene"
+      },
+      {
+        "id": "C",
+        "text": "-galactosidase"
+      },
+      {
+        "id": "D",
+        "text": "lactose Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 230,
+    "page": 45,
+    "year": "AIPMT 1994",
+    "question": "There are special proteins that help to open up DNA double helix in front of the replication fork. These proteins are",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA ligase"
+      },
+      {
+        "id": "B",
+        "text": "DNA topoisomerase I"
+      },
+      {
+        "id": "C",
+        "text": "DNA gyrase"
+      },
+      {
+        "id": "D",
+        "text": "DNA polymerase I"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 231,
+    "page": 45,
+    "year": "AIPMT 1994",
+    "question": "In protein synthesis, the polymerization of amino acids involves three steps. Which one of the following is not involved in the polymerisation of protein?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Termination"
+      },
+      {
+        "id": "B",
+        "text": "Initiation"
+      },
+      {
+        "id": "C",
+        "text": "Elongation"
+      },
+      {
+        "id": "D",
+        "text": "Transcription"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 232,
+    "page": 45,
+    "year": "AIPMT 1993",
+    "question": "Which is wrong about nucleic acids?",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA is single stranded in some viruses."
+      },
+      {
+        "id": "B",
+        "text": "RNA is double stranded occasionally."
+      },
+      {
+        "id": "C",
+        "text": "Length of one helix is 45 Å in B-DNA."
+      },
+      {
+        "id": "D",
+        "text": "One turn of Z-DNA has 12 bases."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 233,
+    "page": 45,
+    "year": "AIPMT 1993",
+    "question": "Binding of specific protein on regulatory DNA sequence can be studied by means of",
+    "options": [
+      {
+        "id": "A",
+        "text": "ultra centrifugation"
+      },
+      {
+        "id": "B",
+        "text": "electron microscope"
+      },
+      {
+        "id": "C",
+        "text": "light microscope"
+      },
+      {
+        "id": "D",
+        "text": "X-rays crystallography"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 234,
+    "page": 45,
+    "year": "AIPMT 1993",
+    "question": "Nucleosome core is made of:",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\text{H}_1\\text{, }\\text{H}_2\\text{A, }\\text{H}_2\\text{B and }\\text{H}_3$"
+      },
+      {
+        "id": "B",
+        "text": "$\\text{H}_1\\text{, }\\text{H}_2\\text{A, }\\text{H}_2\\text{B, }\\text{H}_4$"
+      },
+      {
+        "id": "C",
+        "text": "$\\text{H}_1\\text{, }\\text{H}_2\\text{A, }\\text{H}_2\\text{B, }\\text{H}_3\\text{ and }\\text{H}_4$"
+      },
+      {
+        "id": "D",
+        "text": "$\\text{H}_2\\text{A, }\\text{H}_2\\text{B, }\\text{H}_3\\text{ and }\\text{H}_4$"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe core particle of a nucleosome is an octamer composed of two molecules each of four core histones: $\\text{H}_2\\text{A}$, $\\text{H}_2\\text{B}$, $\\text{H}_3$, and $\\text{H}_4$. Histone $\\text{H}_1$ is a linker histone located outside the core."
+  },
+  {
+    "num": 235,
+    "page": 45,
+    "year": "AIPMT 1993",
+    "question": "Initiation codon of protein synthesis (in eukaryotes) is",
+    "options": [
+      {
+        "id": "A",
+        "text": "GUA"
+      },
+      {
+        "id": "B",
+        "text": "GCA"
+      },
+      {
+        "id": "C",
+        "text": "CCA"
+      },
+      {
+        "id": "D",
+        "text": "AUG"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 236,
+    "page": 45,
+    "year": "AIPMT 1993",
+    "question": "The transforming principle of  Pneumococcus   as found out by Avery, MacLeod and McCarty was",
+    "options": [
+      {
+        "id": "A",
+        "text": "m RNA"
+      },
+      {
+        "id": "B",
+        "text": "DNA"
+      },
+      {
+        "id": "C",
+        "text": "protein"
+      },
+      {
+        "id": "D",
+        "text": "polysaccharide Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 237,
+    "page": 46,
+    "year": "AIPMT 1993",
+    "question": "Who proved that DNA is basic genetic material?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Griffith"
+      },
+      {
+        "id": "B",
+        "text": "Watson"
+      },
+      {
+        "id": "C",
+        "text": "Boveri and Sutton"
+      },
+      {
+        "id": "D",
+        "text": "Hershey and Chase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 238,
+    "page": 46,
+    "year": "AIPMT 1993",
+    "question": "Because most of the amino acids are represented by more than one codon, the genetic code is",
+    "options": [
+      {
+        "id": "A",
+        "text": "overlapping"
+      },
+      {
+        "id": "B",
+        "text": "wobbling"
+      },
+      {
+        "id": "C",
+        "text": "degenerate"
+      },
+      {
+        "id": "D",
+        "text": "generate"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 239,
+    "page": 46,
+    "year": "AIPMT 1993",
+    "question": "During DNA replication, the strands separate by",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA polymerase"
+      },
+      {
+        "id": "B",
+        "text": "topoisomerase"
+      },
+      {
+        "id": "C",
+        "text": "unwindase/helicase"
+      },
+      {
+        "id": "D",
+        "text": "gyrase"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 240,
+    "page": 46,
+    "year": "AIPMT 1993",
+    "question": "The process of translation is",
+    "options": [
+      {
+        "id": "A",
+        "text": "ribosome synthesis"
+      },
+      {
+        "id": "B",
+        "text": "protein synthesis"
+      },
+      {
+        "id": "C",
+        "text": "DNA synthesis"
+      },
+      {
+        "id": "D",
+        "text": "RNA synthesis"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 241,
+    "page": 46,
+    "year": "AIPMT 1993",
+    "question": "A DNA with unequal nitrogen bases would most probably be",
+    "options": [
+      {
+        "id": "A",
+        "text": "single stranded"
+      },
+      {
+        "id": "B",
+        "text": "double stranded"
+      },
+      {
+        "id": "C",
+        "text": "triple stranded"
+      },
+      {
+        "id": "D",
+        "text": "four stranded"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 242,
+    "page": 46,
+    "year": "AIPMT 1993",
+    "question": "Nucleotide arrangement in DNA can be seen by",
+    "options": [
+      {
+        "id": "A",
+        "text": "X-ray crystallography"
+      },
+      {
+        "id": "B",
+        "text": "electron microscope"
+      },
+      {
+        "id": "C",
+        "text": "ultracentrifuge"
+      },
+      {
+        "id": "D",
+        "text": "light microscope"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 243,
+    "page": 46,
+    "year": "AIPMT 1992",
+    "question": "Experimental material in the study of DNA replication has been",
+    "options": [
+      {
+        "id": "A",
+        "text": "Escherichia coli"
+      },
+      {
+        "id": "B",
+        "text": "Neurospora crassa"
+      },
+      {
+        "id": "C",
+        "text": "Pneumococcus"
+      },
+      {
+        "id": "D",
+        "text": "Drosophila melanogaster Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 244,
+    "page": 47,
+    "year": "AIPMT 1992",
+    "question": "Khorana first deciphered the triplet codons of",
+    "options": [
+      {
+        "id": "A",
+        "text": "serine and isoleucine"
+      },
+      {
+        "id": "B",
+        "text": "cysteine and valine"
+      },
+      {
+        "id": "C",
+        "text": "tyrosine and tryptophan"
+      },
+      {
+        "id": "D",
+        "text": "phenylalanine and methinonine"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 245,
+    "page": 47,
+    "year": "AIPMT 1992",
+    "question": "Escherichia coli   fully labelled with   is allowed to grow in   medium. The two strands of DNA molecule of the first generation bacteria have",
+    "options": [
+      {
+        "id": "A",
+        "text": "different density and do not resemble parent DNA"
+      },
+      {
+        "id": "B",
+        "text": "different density but resemble parent DNA"
+      },
+      {
+        "id": "C",
+        "text": "same density and resemble parent DNA"
+      },
+      {
+        "id": "D",
+        "text": "same density but do not resemble parent DNA"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 246,
+    "page": 47,
+    "year": "AIPMT 1991",
+    "question": "A segment of DNA has 120 adenine and 120 cytosine bases. The total number of nucleotides present in the segment is",
+    "options": [
+      {
+        "id": "A",
+        "text": "120"
+      },
+      {
+        "id": "B",
+        "text": "240"
+      },
+      {
+        "id": "C",
+        "text": "60"
+      },
+      {
+        "id": "D",
+        "text": "480"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 247,
+    "page": 47,
+    "year": "AIPMT 1991",
+    "question": "The process of transfer of genetic information from DNA to RNA/formation of RNA from DNA",
+    "options": [
+      {
+        "id": "A",
+        "text": "transversion"
+      },
+      {
+        "id": "B",
+        "text": "transcription"
+      },
+      {
+        "id": "C",
+        "text": "translation"
+      },
+      {
+        "id": "D",
+        "text": "translocation"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 248,
+    "page": 47,
+    "year": "AIPMT 1990",
+    "question": "Which is not consistent with double helical structure of DNA?",
+    "options": [
+      {
+        "id": "A",
+        "text": "A = T, C = G"
+      },
+      {
+        "id": "B",
+        "text": "Density of DNA decreases on heating."
+      },
+      {
+        "id": "C",
+        "text": "A + T/C + G is not constant."
+      },
+      {
+        "id": "D",
+        "text": "Both (a) and (b)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 249,
+    "page": 47,
+    "year": "AIPMT 1990",
+    "question": "An octamer of 4 histones complexed with DNA forms",
+    "options": [
+      {
+        "id": "A",
+        "text": "endosome"
+      },
+      {
+        "id": "B",
+        "text": "nucleosome"
+      },
+      {
+        "id": "C",
+        "text": "mesosome"
+      },
+      {
+        "id": "D",
+        "text": "centromere Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 250,
+    "page": 48,
+    "year": "AIPMT 1990",
+    "question": "In the genetic dictionary, there are 64 codons as",
+    "options": [
+      {
+        "id": "A",
+        "text": "64 amino acids are to be coded"
+      },
+      {
+        "id": "B",
+        "text": "64 types of  t RNAs are present"
+      },
+      {
+        "id": "C",
+        "text": "there are 44 nonsense codons and 20 sense codons"
+      },
+      {
+        "id": "D",
+        "text": "genetic code is triplet"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 251,
+    "page": 48,
+    "year": "AIPMT 1989",
+    "question": "DNA replication is",
+    "options": [
+      {
+        "id": "A",
+        "text": "conservative and discontinuous"
+      },
+      {
+        "id": "B",
+        "text": "semi-conservative and semi-discontinuous"
+      },
+      {
+        "id": "C",
+        "text": "semi-conservative and discontinuous"
+      },
+      {
+        "id": "D",
+        "text": "conservative"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 252,
+    "page": 48,
+    "year": "AIPMT 1988",
+    "question": "In double helix of DNA, the two DNA strands are",
+    "options": [
+      {
+        "id": "A",
+        "text": "coiled around a common axis"
+      },
+      {
+        "id": "B",
+        "text": "coiled around each other"
+      },
+      {
+        "id": "C",
+        "text": "coiled differently"
+      },
+      {
+        "id": "D",
+        "text": "coiled over protein sheath"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 253,
+    "page": 48,
+    "year": "AIPMT 1988",
+    "question": "Genetic code consists of",
+    "options": [
+      {
+        "id": "A",
+        "text": "adenine and guanine"
+      },
+      {
+        "id": "B",
+        "text": "cytosine and uracil"
+      },
+      {
+        "id": "C",
+        "text": "cytosine and guanine"
+      },
+      {
+        "id": "D",
+        "text": "all the above MCQ (More than One Correct Answer)   2 questions"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 254,
+    "page": 48,
+    "year": "AIPMT 2014",
+    "question": "Which one of the following is wrongly matched?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transcription − Writing information from DNA to t−RNA"
+      },
+      {
+        "id": "B",
+        "text": "Operon − Structural genes, operator and promoter"
+      },
+      {
+        "id": "C",
+        "text": "Repressor protein − Binds to operator to stop enzyme synthesis"
+      },
+      {
+        "id": "D",
+        "text": "Translation − Using information in m−RNA to make protein."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nTranscription is the synthesis of RNA (principally mRNA for protein synthesis, as well as tRNA and rRNA) from a DNA template strand. In the context of the question, defining transcription simply as writing from DNA to tRNA is considered the wrongly matched option."
+  },
+  {
+    "num": 255,
+    "page": 48,
+    "year": "AIPMT 2002",
+    "question": "Jacob and Monod studied lactose metabolism in E. coli and proposed operon concept. Operon concept is applicable for:",
+    "options": [
+      {
+        "id": "A",
+        "text": "All prokaryotes and all eukaryotes"
+      },
+      {
+        "id": "B",
+        "text": "All prokaryotes and some protozoans"
+      },
+      {
+        "id": "C",
+        "text": "All prokaryotes"
+      },
+      {
+        "id": "D",
+        "text": "All prokaryotes and some eukaryotes"
+      }
+    ],
+    "correctOption": "C,D",
+    "explanation": "**Correct Option: C, D**\n\nAccording to official NEET keys:\nOperon systems of gene regulation were discovered and established in prokaryotes (*E. coli*), but operon-like polycistronic gene clusters have also been found in certain lower eukaryotes (e.g., *C. elegans*), making both options (C) and (D) recognized as correct answers."
+  }
+]
