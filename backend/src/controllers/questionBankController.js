@@ -307,6 +307,12 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
     }
   }
 
+  const isPyq = String(category || '').toUpperCase() === 'PYQ' || String(subject || '').toUpperCase() === 'PYQ';
+  const effectiveCategory = isPyq ? 'PYQ' : (category || subject);
+  const effectiveSubject = (subject && String(subject).toUpperCase() !== 'PYQ')
+    ? subject
+    : (effectiveCategory !== 'PYQ' ? effectiveCategory : null);
+
   const result = await query(
     `INSERT INTO question_bank (
        category, question_type, question_text, options, correct_index, correct_indices,
@@ -314,7 +320,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
        subject_id, chapter_id, difficulty, image_url, solution_image_url, chapter, topic, subject, status
      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21) RETURNING *`,
     [
-      category,
+      effectiveCategory,
       question_type || 'mcq',
       question_text,
       asJson(options, []),
@@ -333,7 +339,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
       solution_image_url || '',
       chapter || '',
       topic || '',
-      subject || category,
+      effectiveSubject || effectiveCategory,
       status || 'normal',
     ]
   );
@@ -375,7 +381,23 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
   let effectiveChapterId = chapter_id !== undefined ? (chapter_id || null) : q.chapter_id;
   const effectiveSubjectId = subject_id !== undefined ? (subject_id || null) : q.subject_id;
   const effectiveChapter = chapter !== undefined ? chapter : q.chapter;
-  const effectiveCategory = category !== undefined ? (category || q.category) : (subject || q.subject || q.category);
+  const isExistingPyq = String(q.category || '').toUpperCase() === 'PYQ';
+  const isIncomingPyq = String(category || '').toUpperCase() === 'PYQ';
+
+  let effectiveCategory = q.category;
+  if (isExistingPyq || isIncomingPyq) {
+    effectiveCategory = 'PYQ';
+  } else if (category !== undefined && category !== null && category !== '') {
+    effectiveCategory = category;
+  } else {
+    effectiveCategory = subject || q.subject || q.category;
+  }
+
+  const effectiveSubject = (subject !== undefined && subject !== null && String(subject).toUpperCase() !== 'PYQ')
+    ? subject
+    : (q.subject && String(q.subject).toUpperCase() !== 'PYQ'
+        ? q.subject
+        : (effectiveCategory !== 'PYQ' ? effectiveCategory : null));
   const effectiveStatus = status !== undefined ? status : (q.status || 'normal');
 
   if (!effectiveChapterId && effectiveSubjectId && effectiveChapter) {
@@ -443,7 +465,7 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       solution_image_url !== undefined ? solution_image_url : q.solution_image_url,
       effectiveChapter,
       topic !== undefined ? topic : q.topic,
-      subject !== undefined ? subject : q.subject,
+      effectiveSubject || q.subject,
       effectiveCategory,
       effectiveStatus,
       id
@@ -489,7 +511,7 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       solution_image_url !== undefined ? solution_image_url : q.solution_image_url,
       effectiveChapter,
       topic !== undefined ? topic : q.topic,
-      subject !== undefined ? subject : q.subject,
+      effectiveSubject || q.subject,
       effectiveCategory,
       id
     ]
@@ -506,7 +528,9 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
   await delCache('cache:qb:questions:all');
   await delCache('cache:qb:categories');
   const standardChapter = resolveStandardChapter(
-    result.rows[0].category || result.rows[0].subject || '',
+    (result.rows[0].category && String(result.rows[0].category).toUpperCase() !== 'PYQ')
+      ? (result.rows[0].category || result.rows[0].subject || '')
+      : (result.rows[0].subject || result.rows[0].category || ''),
     result.rows[0].topic || '',
     result.rows[0].question_text || '',
     result.rows[0].chapter_name || result.rows[0].chapter || '',

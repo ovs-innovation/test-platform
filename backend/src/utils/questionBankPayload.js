@@ -108,8 +108,29 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
     const fallbackIndex = Number.isFinite(Number(singleValue)) ? Number(singleValue) : (correctIndices[0] ?? 0);
     const normalizedIndex = isIntegerType ? null : (Number.isFinite(Number(fallbackIndex)) ? Number(fallbackIndex) : 0);
 
-    const category = (payload.category !== undefined || payload.subject !== undefined) ? (payload.category || payload.subject) : undefined;
-    const effectiveCategoryForChapter = category || 'Physics';
+    const isPyq = (payload.category && String(payload.category).toUpperCase() === 'PYQ') ||
+        (payload.subject && String(payload.subject).toUpperCase() === 'PYQ');
+
+    let category = undefined;
+    if (payload.category !== undefined && payload.category !== null && payload.category !== '') {
+        category = payload.category;
+    } else if (payload.subject !== undefined && payload.subject !== null && payload.subject !== '') {
+        category = payload.subject;
+    }
+
+    let subject = undefined;
+    if (payload.subject !== undefined && payload.subject !== null && String(payload.subject).toUpperCase() !== 'PYQ') {
+        subject = payload.subject;
+    } else if (payload.category !== undefined && payload.category !== null && String(payload.category).toUpperCase() !== 'PYQ') {
+        subject = payload.category;
+    } else if (isPyq && payload.subject) {
+        subject = payload.subject;
+    }
+
+    const effectiveCategoryForChapter = (category && String(category).toUpperCase() !== 'PYQ')
+        ? category
+        : (subject || 'Physics');
+
     const rawChapter = (payload.chapter || '').trim();
     const rawTopic = (payload.topic || '').trim();
     const resolvedChapter = resolveStandardChapter(effectiveCategoryForChapter, rawTopic, payload.question_text || '', rawChapter);
@@ -137,9 +158,7 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
         solution_image_url: payload.solution_image_url !== undefined ? payload.solution_image_url : undefined,
         chapter: resolvedChapter,
         topic: finalTopic,
-        ...(category !== undefined ? { subject: payload.subject || category } : {}),
+        ...(subject !== undefined ? { subject } : (category !== undefined ? { subject: category } : {})),
         ...(payload.status !== undefined ? { status: payload.status } : {}),
     };
 };
-
-

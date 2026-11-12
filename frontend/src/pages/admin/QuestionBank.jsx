@@ -1761,7 +1761,14 @@ export default function AdminQuestionBank() {
   const openAdd = () => {
     setEditing(null);
     setCustomChapterMode(false);
+    const isPyqTab = category === 'PYQ';
+    const initialSubject = isPyqTab
+      ? (pyqSubject && pyqSubject !== 'All' ? pyqSubject : '')
+      : (category && category !== 'All' ? category : '');
+    const initialChapter = (selectedChapter && selectedChapter !== 'all') ? selectedChapter : '';
+
     setForm({
+      category: isPyqTab ? 'PYQ' : (category && category !== 'All' ? category : ''),
       question_type: 'single_choice',
       status: 'normal',
       question_text: '',
@@ -1783,9 +1790,9 @@ export default function AdminQuestionBank() {
       image_url: '',
       solution_image_url: '',
       subject_id: null,
-      subject: category && category !== 'All' ? category : '',
+      subject: initialSubject,
       chapter_id: null,
-      chapter: '',
+      chapter: initialChapter,
       topic: '',
       difficulty: 'medium',
       marks: 4,
@@ -1821,7 +1828,16 @@ export default function AdminQuestionBank() {
     const chapterName = q.chapter || q.chapter_name || '';
     const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
 
+    const isPyq = (q.category && String(q.category).toUpperCase() === 'PYQ') || category === 'PYQ';
+    const qCategory = isPyq ? 'PYQ' : (q.category || q.subject || category || '');
+    const qSubject = (q.subject && String(q.subject).toUpperCase() !== 'PYQ')
+      ? q.subject
+      : (isPyq
+          ? (pyqSubject && pyqSubject !== 'All' ? pyqSubject : (q.category && String(q.category).toUpperCase() !== 'PYQ' ? q.category : ''))
+          : (q.category || ''));
+
     setForm({
+      category: qCategory,
       question_type: q.question_type || 'single_choice',
       status: q.status || 'normal',
       question_text: q.question_text || '',
@@ -1838,7 +1854,7 @@ export default function AdminQuestionBank() {
       image_url: q.image_url || '',
       solution_image_url: q.solution_image_url || '',
       subject_id: q.subject_id || null,
-      subject: q.subject || q.category || '',
+      subject: qSubject,
       chapter_id: q.chapter_id || null,
       chapter: chapterName,
       topic: hasTopic ? q.topic : '',
@@ -1935,9 +1951,21 @@ export default function AdminQuestionBank() {
           : (form.numeric_answer === '' ? null : 0))
         : null;
 
+      const isPyq = (
+        (editing?.category && String(editing.category).toUpperCase() === 'PYQ') ||
+        (form.category && String(form.category).toUpperCase() === 'PYQ') ||
+        category === 'PYQ'
+      );
+      const targetCategory = isPyq ? 'PYQ' : (form.category || form.subject || category);
+      const targetSubject = (form.subject && String(form.subject).toUpperCase() !== 'PYQ')
+        ? form.subject
+        : (editing?.subject && String(editing.subject).toUpperCase() !== 'PYQ'
+            ? editing.subject
+            : (category !== 'PYQ' && category !== 'All' ? category : (pyqSubject !== 'All' ? pyqSubject : '')));
+
       const payload = {
         ...form,
-        category: form.subject || category,
+        category: targetCategory,
         status: form.status || 'normal',
         question_type: form.question_type,
         question_text: form.question_text?.trim(),
@@ -1955,7 +1983,7 @@ export default function AdminQuestionBank() {
         subject_id: form.subject_id || null,
         chapter_id: form.chapter_id || null,
         chapter: (form.chapter || form.topic || '').trim(),
-        subject: form.subject || category,
+        subject: targetSubject,
         topic: (form.topic || form.chapter || '').trim(),
         difficulty: form.difficulty || 'medium',
       };
