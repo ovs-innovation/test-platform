@@ -1016,6 +1016,7 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
       chapter: bodyChapter,
       chapter_id: bodyChapterId,
       subject_id: bodySubjectId,
+      subject: bodySubject,
     } = req.body;
 
     const maxBytes = env.maxPdfUploadBytes || 100 * 1024 * 1024;
@@ -1232,12 +1233,53 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
     subjectMap.set(s.name.toLowerCase().trim(), s);
   });
 
+  const isPyqUpload = String(category || '').trim().toUpperCase() === 'PYQ';
+
   // Helper to normalize subject / category name
-  const resolveSubject = (qSubject, preferredCategory) => {
+  const resolveSubject = (qSubject, preferredCategory, preferredSubj) => {
+    if (isPyqUpload) {
+      if (preferredSubj && preferredSubj.toLowerCase() !== 'auto' && preferredSubj.toLowerCase() !== 'auto-detect') {
+        const match = subjectMap.get(preferredSubj.toLowerCase().trim());
+        return {
+          categoryName: 'PYQ',
+          subjectName: match ? match.name : preferredSubj,
+          subjectId: match ? match.id : null,
+        };
+      }
+      const candidate = (qSubject || '').trim().toLowerCase();
+      let detectedName = 'Botany';
+      let detectedId = subjectMap.get('botany')?.id || null;
+      if (candidate.includes('chem')) {
+        detectedName = subjectMap.get('chemistry')?.name || 'Chemistry';
+        detectedId = subjectMap.get('chemistry')?.id || null;
+      } else if (candidate.includes('botan')) {
+        detectedName = subjectMap.get('botany')?.name || 'Botany';
+        detectedId = subjectMap.get('botany')?.id || null;
+      } else if (candidate.includes('zool')) {
+        detectedName = subjectMap.get('zoology')?.name || 'Zoology';
+        detectedId = subjectMap.get('zoology')?.id || null;
+      } else if (candidate.includes('bio')) {
+        detectedName = subjectMap.get('botany')?.name || 'Botany';
+        detectedId = subjectMap.get('botany')?.id || null;
+      } else if (candidate.includes('math')) {
+        detectedName = subjectMap.get('mathematics')?.name || 'Mathematics';
+        detectedId = subjectMap.get('mathematics')?.id || null;
+      } else if (candidate.includes('physic')) {
+        detectedName = subjectMap.get('physics')?.name || 'Physics';
+        detectedId = subjectMap.get('physics')?.id || null;
+      }
+      return {
+        categoryName: 'PYQ',
+        subjectName: detectedName,
+        subjectId: detectedId,
+      };
+    }
+
     if (preferredCategory && preferredCategory.toLowerCase() !== 'auto' && preferredCategory.toLowerCase() !== 'auto-detect') {
       const match = subjectMap.get(preferredCategory.toLowerCase().trim());
       return {
         categoryName: match ? match.name : preferredCategory,
+        subjectName: match ? match.name : preferredCategory,
         subjectId: match ? match.id : null,
       };
     }
@@ -1245,38 +1287,38 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
     const candidate = (qSubject || '').trim().toLowerCase();
     if (candidate.includes('physic')) {
       const match = subjectMap.get('physics');
-      return { categoryName: match ? match.name : 'Physics', subjectId: match ? match.id : null };
+      return { categoryName: match ? match.name : 'Physics', subjectName: match ? match.name : 'Physics', subjectId: match ? match.id : null };
     }
     if (candidate.includes('chem')) {
       const match = subjectMap.get('chemistry');
-      return { categoryName: match ? match.name : 'Chemistry', subjectId: match ? match.id : null };
+      return { categoryName: match ? match.name : 'Chemistry', subjectName: match ? match.name : 'Chemistry', subjectId: match ? match.id : null };
     }
     if (candidate.includes('botan')) {
       const match = subjectMap.get('botany');
-      return { categoryName: match ? match.name : 'Botany', subjectId: match ? match.id : null };
+      return { categoryName: match ? match.name : 'Botany', subjectName: match ? match.name : 'Botany', subjectId: match ? match.id : null };
     }
     if (candidate.includes('zool')) {
       const match = subjectMap.get('zoology');
-      return { categoryName: match ? match.name : 'Zoology', subjectId: match ? match.id : null };
+      return { categoryName: match ? match.name : 'Zoology', subjectName: match ? match.name : 'Zoology', subjectId: match ? match.id : null };
     }
     if (candidate.includes('bio')) {
-      const match = subjectMap.get('biology');
-      return { categoryName: match ? match.name : 'Biology', subjectId: match ? match.id : null };
+      const match = subjectMap.get('biology') || subjectMap.get('botany');
+      return { categoryName: match ? match.name : 'Botany', subjectName: match ? match.name : 'Botany', subjectId: match ? match.id : null };
     }
     if (candidate.includes('math')) {
       const match = subjectMap.get('mathematics');
-      return { categoryName: match ? match.name : 'Mathematics', subjectId: match ? match.id : null };
+      return { categoryName: match ? match.name : 'Mathematics', subjectName: match ? match.name : 'Mathematics', subjectId: match ? match.id : null };
     }
 
     // Direct match against known subjects
     for (const [nameLower, sObj] of subjectMap.entries()) {
       if (candidate === nameLower) {
-        return { categoryName: sObj.name, subjectId: sObj.id };
+        return { categoryName: sObj.name, subjectName: sObj.name, subjectId: sObj.id };
       }
     }
 
     // Fallback to default
-    return { categoryName: 'Physics', subjectId: subjectMap.get('physics')?.id || null };
+    return { categoryName: 'Physics', subjectName: 'Physics', subjectId: subjectMap.get('physics')?.id || null };
   };
 
   // Resolve target subject and target chapter if specified by admin
@@ -1298,7 +1340,10 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
     }
   }
 
-  if (!targetSubjectId && category && category.toLowerCase() !== 'auto' && category.toLowerCase() !== 'auto-detect') {
+  if (!targetSubjectId && bodySubject && bodySubject.toLowerCase() !== 'auto' && bodySubject.toLowerCase() !== 'auto-detect') {
+    const match = subjectMap.get(bodySubject.toLowerCase().trim());
+    if (match?.id) targetSubjectId = match.id;
+  } else if (!targetSubjectId && category && category.toLowerCase() !== 'auto' && category.toLowerCase() !== 'auto-detect' && !isPyqUpload) {
     const match = subjectMap.get(category.toLowerCase().trim());
     if (match?.id) targetSubjectId = match.id;
   }
@@ -1342,7 +1387,7 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
       batch.map(async (q, bIdx) => {
         const idx = i + bIdx;
         try {
-          const { categoryName, subjectId } = resolveSubject(q.subject || q.bank_category, category);
+          const { categoryName, subjectName, subjectId } = resolveSubject(q.subject || q.bank_category, category, bodySubject);
 
           const qText = (q.question_text || q.questionText || q.question?.text || '').trim();
           if (!qText) return;
@@ -1370,7 +1415,7 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
           let resolvedChapterId = targetChapterId || null;
 
           if (!resolvedChapter || resolvedChapter.toLowerCase() === 'auto' || resolvedChapter.toLowerCase() === 'auto-detect') {
-            resolvedChapter = resolveStandardChapter(categoryName, rawTopic, qText, rawChapter);
+            resolvedChapter = resolveStandardChapter(isPyqUpload ? subjectName : categoryName, rawTopic, qText, rawChapter);
             if (subjectId && resolvedChapter) {
               const chMatch = await query(
                 'SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(TRIM(name)) = LOWER(TRIM($2)) LIMIT 1',
@@ -1400,7 +1445,7 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
             ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
             RETURNING id, category, question_text, question_type, marks, solution, subject, topic, chapter`,
             [
-              categoryName,
+              isPyqUpload ? 'PYQ' : categoryName,
               qType,
               qText,
               asJson(options, []),
@@ -1409,18 +1454,21 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
               numericAnswer,
               marks,
               solution,
-              subjectId,
+              subjectId || targetSubjectId || null,
               resolvedChapterId,
               difficulty || q.difficulty || 'medium',
               imageUrl,
-              categoryName,
+              subjectName || (isPyqUpload ? (bodySubject || 'Botany') : categoryName),
               finalTopic,
               resolvedChapter,
             ]
           );
           if (result.rows[0]) {
             createdQuestions.push(result.rows[0]);
-            affectedCategories.add(categoryName);
+            affectedCategories.add(isPyqUpload ? 'PYQ' : categoryName);
+            if (isPyqUpload && subjectName) {
+              affectedCategories.add(subjectName);
+            }
           }
         } catch (err) {
           console.error('[uploadPdfToQuestionBank] Insert error on question', idx + 1, err.message);

@@ -1444,6 +1444,7 @@ export default function AdminQuestionBank() {
   const [pdfFile, setPdfFile] = useState(null);
   const [answerKeyFile, setAnswerKeyFile] = useState(null);
   const [pdfCategory, setPdfCategory] = useState('auto');
+  const [pdfPyqSubject, setPdfPyqSubject] = useState('Botany');
   const [pdfSubjectId, setPdfSubjectId] = useState('');
   const [pdfChapter, setPdfChapter] = useState('auto');
   const [pdfChapterId, setPdfChapterId] = useState('');
@@ -1475,7 +1476,26 @@ export default function AdminQuestionBank() {
     setPdfProgressStatus('');
     setPdfSuccessData(null);
 
-    if (initialCat !== 'auto') {
+    if (initialCat === 'PYQ') {
+      const defaultSub = (pyqSubject && pyqSubject !== 'All') ? pyqSubject : 'Botany';
+      setPdfPyqSubject(defaultSub);
+      const matchSubj = subjectsList.find(s => s.name?.toLowerCase() === defaultSub.toLowerCase());
+      const targetSubId = matchSubj?.id || '';
+      setPdfSubjectId(targetSubId);
+      if (targetSubId) {
+        setPdfChaptersLoading(true);
+        adminService.chapters(targetSubId).then((data) => {
+          setPdfChaptersList(data || []);
+        }).catch(() => setPdfChaptersList([])).finally(() => setPdfChaptersLoading(false));
+      } else {
+        setPdfChaptersList([]);
+      }
+      if (selectedChapter && selectedChapter !== 'all') {
+        setPdfChapter(selectedChapter);
+      } else {
+        setPdfChapter('auto');
+      }
+    } else if (initialCat !== 'auto') {
       const matchSubj = subjectsList.find(s => s.name?.toLowerCase() === initialCat.toLowerCase());
       const targetSubId = matchSubj?.id || '';
       setPdfSubjectId(targetSubId);
@@ -1493,6 +1513,7 @@ export default function AdminQuestionBank() {
         setPdfChapter('auto');
       }
     } else {
+      setPdfPyqSubject('Botany');
       setPdfSubjectId('');
       setPdfChapter('auto');
       setPdfChapterId('');
@@ -1509,6 +1530,27 @@ export default function AdminQuestionBank() {
     setPdfCustomChapterMode(false);
     setPdfCustomChapter('');
 
+    if (val === 'PYQ') {
+      const defaultSub = (pyqSubject && pyqSubject !== 'All') ? pyqSubject : 'Botany';
+      setPdfPyqSubject(defaultSub);
+      const match = subjectsList.find((s) => s.name?.toLowerCase() === defaultSub.toLowerCase());
+      const targetSubjId = match?.id || '';
+      setPdfSubjectId(targetSubjId);
+      if (targetSubjId) {
+        setPdfChaptersLoading(true);
+        adminService.chapters(targetSubjId).then((data) => {
+          setPdfChaptersList(data || []);
+        }).catch(() => {
+          setPdfChaptersList([]);
+        }).finally(() => {
+          setPdfChaptersLoading(false);
+        });
+      } else {
+        setPdfChaptersList([]);
+      }
+      return;
+    }
+
     if (val === 'auto') {
       setPdfSubjectId('');
       setPdfChaptersList([]);
@@ -1522,6 +1564,44 @@ export default function AdminQuestionBank() {
           (s.id && String(s.id) === String(val)) ||
           (s.name && s.name.toLowerCase() === String(val).toLowerCase())
       );
+
+    const targetSubjId = match?.id || '';
+    setPdfSubjectId(targetSubjId);
+
+    if (targetSubjId) {
+      setPdfChaptersLoading(true);
+      adminService.chapters(targetSubjId).then((data) => {
+        setPdfChaptersList(data || []);
+      }).catch(() => {
+        setPdfChaptersList([]);
+      }).finally(() => {
+        setPdfChaptersLoading(false);
+      });
+    } else {
+      setPdfChaptersList([]);
+    }
+  };
+
+  const handlePdfPyqSubjectChange = (val, opt) => {
+    setPdfPyqSubject(val);
+    setPdfChapter('auto');
+    setPdfChapterId('');
+    setPdfCustomChapterMode(false);
+    setPdfCustomChapter('');
+
+    if (val === 'auto') {
+      setPdfSubjectId('');
+      setPdfChaptersList([]);
+      return;
+    }
+
+    const match = opt?.id
+      ? opt
+      : subjectsList.find(
+          (s) =>
+            (s.id && String(s.id) === String(val)) ||
+            (s.name && s.name.toLowerCase() === String(val).toLowerCase())
+        );
 
     const targetSubjId = match?.id || '';
     setPdfSubjectId(targetSubjId);
@@ -1618,6 +1698,9 @@ export default function AdminQuestionBank() {
         formData.append('answer_key', answerKeyFile);
       }
       formData.append('category', pdfCategory);
+      if (pdfCategory === 'PYQ' && pdfPyqSubject && pdfPyqSubject !== 'auto') {
+        formData.append('subject', pdfPyqSubject);
+      }
       if (pdfSubjectId) {
         formData.append('subject_id', pdfSubjectId);
       }
@@ -3693,7 +3776,12 @@ export default function AdminQuestionBank() {
               <button
                 type="button"
                 onClick={() => {
-                  if (pdfSuccessData.categories?.[0]) {
+                  if (pdfCategory === 'PYQ') {
+                    setCategory('PYQ');
+                    if (pdfPyqSubject && pdfPyqSubject !== 'auto') {
+                      setPyqSubject(pdfPyqSubject);
+                    }
+                  } else if (pdfSuccessData.categories?.[0]) {
                     setCategory(pdfSuccessData.categories[0]);
                   }
                   if (pdfSuccessData.chapter) {
@@ -3744,6 +3832,35 @@ export default function AdminQuestionBank() {
               />
             </div>
 
+            {/* PYQ Target Subject Selector */}
+            {pdfCategory === 'PYQ' && (
+              <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-extrabold text-amber-900 dark:text-amber-200 flex items-center gap-1.5">
+                    <BookOpen className="h-3.5 w-3.5 text-amber-500" /> Which Subject do you want to add this PYQ to? <span className="text-rose-500">*</span>
+                  </label>
+                  <span className="text-[11px] text-amber-700 dark:text-amber-300 font-semibold">
+                    Target Subject for PYQ
+                  </span>
+                </div>
+                <CustomSelectDropdown
+                  value={pdfPyqSubject}
+                  placeholder="Select PYQ Subject (Botany, Zoology, Chemistry, Physics, Mathematics)"
+                  options={[
+                    { value: 'auto', label: '✨ Auto-Detect Subject from questions' },
+                    ...subjectsList
+                      .filter((s) => s.name && s.name.toLowerCase() !== 'biology' && s.name.toUpperCase() !== 'PYQ')
+                      .map((s) => ({ value: s.name, label: s.name })),
+                  ]}
+                  onChange={handlePdfPyqSubjectChange}
+                  disabled={pdfUploading}
+                />
+                <p className="text-[11px] text-amber-800 dark:text-amber-300">
+                  Selected: <strong className="font-bold underline">{pdfPyqSubject === 'auto' ? 'Auto-Detect' : pdfPyqSubject}</strong>. This ensures questions appear in the <strong>PYQ → {pdfPyqSubject === 'auto' ? 'Auto-Detected Subject' : pdfPyqSubject}</strong> section!
+                </p>
+              </div>
+            )}
+
             {/* Target Chapter Selector */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
@@ -3782,12 +3899,12 @@ export default function AdminQuestionBank() {
                     type="text"
                     value={pdfCustomChapter}
                     onChange={(e) => setPdfCustomChapter(e.target.value)}
-                    placeholder="Enter chapter name (e.g., Hydrocarbons, Thermodynamics)..."
+                    placeholder="Enter chapter name (e.g., Hydrocarbons, Thermodynamics, Biological Classification)..."
                     disabled={pdfUploading}
                     className="w-full rounded-2xl border border-indigo-300 dark:border-indigo-800 bg-white dark:bg-slate-900/90 px-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                   <p className="text-[11px] text-indigo-600/90 dark:text-indigo-400/90 mt-1">
-                    All extracted questions from this PDF will be assigned to this chapter under {pdfCategory}.
+                    All extracted questions from this PDF will be assigned to this chapter under {pdfCategory === 'PYQ' ? `PYQ (${pdfPyqSubject})` : pdfCategory}.
                   </p>
                 </div>
               ) : (
@@ -3808,7 +3925,7 @@ export default function AdminQuestionBank() {
                       ]
                   }
                   onChange={handlePdfChapterChange}
-                  disabled={pdfUploading || pdfCategory === 'auto' || pdfChaptersLoading}
+                  disabled={pdfUploading || (pdfCategory === 'auto' && (!pdfPyqSubject || pdfPyqSubject === 'auto')) || pdfChaptersLoading}
                 />
               )}
 
@@ -3819,7 +3936,7 @@ export default function AdminQuestionBank() {
               )}
               {pdfCategory !== 'auto' && !pdfCustomChapterMode && pdfChaptersList.length === 0 && !pdfChaptersLoading && (
                 <p className="text-[11px] text-amber-600 dark:text-amber-400 mt-1">
-                  No existing chapters listed for {pdfCategory}. Choose "+ Enter New Chapter Name" to assign a custom chapter or keep Auto-Detect.
+                  No existing chapters listed for {pdfCategory === 'PYQ' ? pdfPyqSubject : pdfCategory}. Choose "+ Enter New Chapter Name" to assign a custom chapter or keep Auto-Detect.
                 </p>
               )}
             </div>
