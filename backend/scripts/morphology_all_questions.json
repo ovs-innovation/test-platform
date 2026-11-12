@@ -1,0 +1,3404 @@
+[
+  {
+    "q_num": 1,
+    "exam": "RE-NEET 2026",
+    "text": "Phyllotaxy is the pattern of arrangement of .",
+    "options": [
+      "sepals",
+      "leaves",
+      "flowers",
+      "fruits"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - leaves. Phyllotaxy is the pattern or arrangement of leaves on the stem or branch. It is typically of three types: alternate, opposite, and whorled.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 2,
+    "exam": "RE-NEET 2026",
+    "text": "Match List-I with List-II.\n\n| List-I | List-II |\n| :--- | :--- |\n| A. Marginal placentation | I. Argemone |\n| B. Axile placentation | II. Tomato |\n| C. Parietal placentation | III. Primrose |\n| D. Free central placentation | IV. Pea |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "A-IV, B-II, C-I, D-III",
+      "A-II, B-IV, C-I, D-III",
+      "A-IV, B-II, C-III, D-I",
+      "A-IV, B-III, C-I, D-II"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - A-IV, B-II, C-I, D-III. Marginal placentation is found in Pea (A-IV); Axile placentation in Tomato (B-II); Parietal placentation in Argemone/Mustard (C-I); Free central placentation in Primrose/Dianthus (D-III).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 3,
+    "exam": "RE-NEET 2026",
+    "text": "Which of the following are characteristic features of Solanaceae family? (a) Flowers are bisexual and actinomorphic (b) Calyx have five sepals and are united (c) Androecium have five stamens and are epipetalous (d) Ovary is inferior Choose the correct answer from the options given below :",
+    "options": [
+      "(b), (c) and (d) only",
+      "(a), (b) and (c) only",
+      "(d) only",
+      "(a) and (b) only"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (a), (b) and (c) only. Stems are modified into flattened photosynthetic structures in Opuntia (flattened cladode/phylloclade) and fleshy cylindrical structures in Euphorbia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 4,
+    "exam": "NEET 2026",
+    "text": "In angiosperms, root hairs arise from which one of the following regions of the root?",
+    "options": [
+      "The root cap zone",
+      "The region of meristematic activity",
+      "The region of elongation",
+      "The region of maturation"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - The region of maturation. In caryopsis (grain of maize/cereals), the fruit wall (pericarp) is fused with the seed coat. The seed has a large endosperm and a single shield-shaped cotyledon known as scutellum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 5,
+    "exam": "NEET 2026",
+    "text": "Which of the following floral formula is the correct floral formula of Solanaceae family? (Refer to the image options)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (B). The correct floral formula of Solanaceae is: ⊕ ⚥ K(5) C(5) A5 G(2) (bisexual, actinomorphic, calyx 5 united, corolla 5 united, epipetalous stamens 5, bicarpellary syncarpous superior ovary with oblique septum).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465798/edvedum/questions/morphology_flowering_plants/q5_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 6,
+    "exam": "NEET 2026",
+    "text": "In racemose inflorescence, .",
+    "options": [
+      "The main axis terminates in a flower",
+      "Flowers are solitary",
+      "The growth is limited",
+      "Flowers are borne in an acropetal succession"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Flowers are borne in an acropetal succession. In calotropis and guava, a pair of leaves arise at each node and lie opposite to each other, representing opposite phyllotaxy.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 7,
+    "exam": "NEET 2026",
+    "text": "Match List I with List II :\n\n| List I (Placentation) | List II (Example) |\n| :--- | :--- |\n| A. Marginal | I. Mustard |\n| B. Axile | II. Pea |\n| C. Parietal | III. Marigold |\n| D. Basal | IV. Lemon |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "A-II, B-IV, C-I, D-III",
+      "A-I, B-III, C-II, D-IV",
+      "A-III, B-I, C-IV, D-II",
+      "A-IV, B-II, C-I, D-III"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - A-II, B-IV, C-I, D-III. Marginal placentation: Pea (A-II); Axile placentation: Lemon/Tomato/China rose (B-IV); Parietal placentation: Mustard/Argemone (C-I); Basal placentation: Marigold/Sunflower (D-III).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 8,
+    "exam": "NEET 2025",
+    "text": "Which of the following is an example of a zygomorphic flower?",
+    "options": [
+      "Pea",
+      "Chilli",
+      "Petunia",
+      "Datura"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Pea. Potato tubers possess 'eyes' which are actually nodes bearing axillary buds with scale leaves.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 9,
+    "exam": "NEET 2025",
+    "text": "Given below are two statements: Statement I: In a floral formula stands for zygomorphic nature of the flower, and stands for inferior ovary. Open solution Statement II: In a floral formula stands for actinomorphic nature of the flower and stands for superior ovary. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      "Statement I is correct but Statement II is incorrect",
+      "Statement I is incorrect but Statement II is correct",
+      "Both Statement I and Statement II are correct",
+      "Both Statement I and Statement II are incorrect"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Statement I is incorrect but Statement II is correct. Free central placentation is seen in Dianthus and Primula (Primrose), where ovules are borne on a central axis without septa.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 10,
+    "exam": "NEET 2025",
+    "text": "In the seeds of cereals, the outer covering of endosperm separates the embryo by a protein-rich layer called:",
+    "options": [
+      "Integument",
+      "Aleurone layer",
+      "Coleoptile",
+      "Coleorhiza Open solution"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Aleurone layer. In monocot seeds (like cereals/maize), the outer covering of endosperm separates the embryo by a proteinaceous layer called the aleurone layer.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 11,
+    "exam": "NEET 2024 (Re-Examination)",
+    "text": "Match List-I with List-II :\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Vexillary aestivation | (I) Brinjal |\n| (B) Epipetalous stamens | (II) Peach |\n| (C) Epiphyllous stamens | (III) Pea |\n| (D) Perigynous flower | (IV) Lily |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "A-III, B-I, C-IV, D-II",
+      "A-III, B-IV, C-I, D-II",
+      "A-III, B-II, C-I, D-IV",
+      "A-II, B-I, C-IV, D-III"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - A-III, B-I, C-IV, D-II. Vexillary aestivation is seen in Pea (A-III); Epipetalous stamens in Brinjal/Solanaceae (B-I); Epiphyllous stamens in Lily (C-IV); Perigynous flower in Peach/Plum/Rose (D-II).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 12,
+    "exam": "NEET 2024 (Re-Examination)",
+    "text": "Match List-I with List-II :\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) China rose | (I) Free central |\n| (B) Mustard | (II) Basal |\n| (C) Primrose | (III) Axile |\n| (D) Marigold | (IV) Parietal |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "A-IV, B-III, C-II, D-I",
+      "A-II, B-III, C-IV, D-I",
+      "A-III, B-IV, C-I, D-II",
+      "A-III, B-IV, C-II, D-I"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - A-III, B-IV, C-I, D-II. China rose has axile placentation (A-III); Mustard has parietal placentation (B-IV); Primrose has free central placentation (C-I); Marigold has basal placentation (D-II).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 13,
+    "exam": "NEET 2024 (Re-Examination)",
+    "text": "Which of the following examples show monocarpellary, unilocular ovary with many ovules? A. Sesbania B. Brinjal C. Indigofera D. Tobacco E. Asparagus Choose the correct answer from the options given below :",
+    "options": [
+      "B and E only",
+      "C, D and E only",
+      "A, B and D only",
+      "A and C only"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - A and C only. Pneumatophores are respiratory roots found in halophytes like Rhizophora growing in swampy areas; they grow vertically upward to get oxygen for respiration.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 14,
+    "exam": "NEET 2024",
+    "text": "Which of the following is an example of actinomorphic flower?",
+    "options": [
+      "Datura",
+      "Cassia",
+      "Pisum",
+      "Sesbania"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Datura. Roots of ginger and turmeric are modified rhizomes (underground stem modifications). Sweet potato is a modified adventitious root, while potato is an underground stem (tuber).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 15,
+    "exam": "NEET 2024",
+    "text": "Identify the part of the seed from the given figure which is destined to form root when the seed germinates.",
+    "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - C. In a dicot embryo/seed, the radicle (labeled C) gives rise to the root system upon germination.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465789/edvedum/questions/morphology_flowering_plants/q15_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 16,
+    "exam": "NEET 2024",
+    "text": "Identify the type of flowers based on the position of calyx, corolla and androecium with respect to the ovary from the given figures (a) and (b) :",
+    "options": [
+      "(a) Epigynous; (b) Hypogynous",
+      "(a) Hypogynous; (b) Epigynous",
+      "(a) Perigynous; (b) Epigynous",
+      "(a) Perigynous; (b) Perigynous"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - (a) Perigynous; (b) Perigynous. In both figures (a) and (b), the gynoecium is situated in the center and other floral parts are located on the rim of the thalamus almost at the same level, which is characteristic of perigynous flowers (half-inferior ovary, as in Plum, Rose, Peach).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465791/edvedum/questions/morphology_flowering_plants/q16_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 17,
+    "exam": "NEET 2024",
+    "text": "Match List I with List II :\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Rose | I. Twisted aestivation |\n| B. Pea | II. Perigynous flower |\n| C. Cotton | III. Drupe |\n| D. Mango | IV. Marginal placentation |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "A-II, B-IV, C-I, D-III",
+      "A-I, B-II, C-III, D-IV",
+      "A-IV, B-III, C-II, D-I",
+      "A-II, B-III, C-IV, D-I"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - A-II, B-IV, C-I, D-III. Rose has a perigynous flower (A-II); Pea has marginal placentation (B-IV); Cotton has twisted aestivation (C-I); Mango is a drupe fruit (D-III).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 18,
+    "exam": "NEET 2024",
+    "text": "Match List I with List II :\n\n| List - I (Types of Stamens) | List - II (Example) |\n| :--- | :--- |\n| A. Monoadelphous | I. Citrus |\n| B. Diadelphous | II. Pea |\n| C. Polyadelphous | III. Lily |\n| D. Epiphyllous | IV. China-rose |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "A-IV, B-II, C-I, D-III",
+      "A-IV, B-I, C-II, D-III",
+      "A-I, B-II, C-IV, D-III",
+      "A-III, B-I, C-IV, D-II"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - A-IV, B-II, C-I, D-III. Monoadelphous stamens: China rose (A-IV); Diadelphous stamens: Pea (B-II); Polyadelphous stamens: Citrus (C-I); Epiphyllous stamens: Lily (D-III).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 19,
+    "exam": "NEET 2023 Manipur",
+    "text": "In Calotropis, aestivation is :",
+    "options": [
+      "Valvate",
+      "Vexillary",
+      "Imbricate",
+      "Twisted"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Valvate. In Fabaceae, the calyx has five sepals that are gamosepalous (united) with valvate or imbricate aestivation.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 20,
+    "exam": "NEET 2023 Manipur",
+    "text": "In a pea flower, five petals are arranged in a specialized manner with one posterior, two lateral and two anterior. These are named as ___________, __________ and _________ respectively.",
+    "options": [
+      "Keel, Wings and Standard",
+      "Vexillum, Keel and Standard",
+      "Keel, Standard and Carina",
+      "Standard, Wings and Keel"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Standard, Wings and Keel. In vexillary (papilionaceous) aestivation of pea/bean petals: the largest posterior petal is the standard (vexillum), two lateral petals are wings (alae), and the two smallest anterior united petals are the keel (carina).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 21,
+    "exam": "NEET 2023 Manipur",
+    "text": "Match the following :\n\n| Type of flower | Example |\n| :--- | :--- |\n| (A) Zygomorphic | (I) Mustard |\n| (B) Hypogynous | (II) Plum |\n| (C) Perigynous | (III) Cassia |\n| (D) Epigynous | (IV) Cucumber |\n\nSelect the correct option :",
+    "options": [
+      "(A)-(I), (B)-(II), (C)-(IV), (D)-(III)",
+      "(A)-(I), (B)-(II), (C)-(III), (D)-(IV)",
+      "(A)-(IV), (B)-(I), (C)-(III), (D)-(II)",
+      "(A)-(III), (B)-(I), (C)-(II), (D)-(IV)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - (A)-(III), (B)-(I), (C)-(II), (D)-(IV). Zygomorphic flower: Cassia/Pea/Gulmohar (A-III); Hypogynous flower: Mustard/China rose/Brinjal (B-I); Perigynous flower: Plum/Rose/Peach (C-II); Epigynous flower: Cucumber/Guava/Ray florets of sunflower (D-IV).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 22,
+    "exam": "NEET 2023",
+    "text": "Family Fabaceae differs from Solanaceae and Liliaceae. With respect to the stamens, pick out the characteristics specific to family Fabaceae but not found in Solanaceae or Liliaceae.",
+    "options": [
+      "Polyadelphous and epipetalous stamens",
+      "Monoadelphous and Monothecous anthers Open solution",
+      "Epiphyllous and Dithecous anthers",
+      "Diadelphous and Dithecous anthers"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Diadelphous and Dithecous anthers. Keel is the characteristic feature of the flower of family Fabaceae (e.g., Indigofera, Pea, Bean, Gram).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 23,
+    "exam": "NEET 2023",
+    "text": "Given below are two statements : One is labelled as Assertion A and the other is labelled as Reason R : Assertion A : A flower is defined as modified shoot wherein the shoot apical meristem changes to Open solution floral meristem. Reason R : Internode of the shoot gets condensed to produce different floral appendages laterally at successive node instead of leaves. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      "Both A and R are true but R is NOT the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+      "Both A and R are true and R is the correct explanation of A"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Both A and R are true and R is the correct explanation of A.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 24,
+    "exam": "NEET 2022 Phase 2",
+    "text": "Which of the following statement is not correct?",
+    "options": [
+      "The rhizome is thick, prostrate and branched",
+      "Rhizome is a condensed form of stem",
+      "The apical bud in rhizome always remains above the ground",
+      "The rhizome is aerial with no distinct nodes and internodes"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - The rhizome is aerial with no distinct nodes and internodes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 25,
+    "exam": "NEET 2022 Phase 2",
+    "text": "Match List - I with List - II :\n\n| List - I | List - II |\n| :--- | :--- |\n| (a) Imbricate | (i) Calotropis |\n| (b) Valvate | (ii) Cassia |\n| (c) Vexillary | (iii) Cotton |\n| (d) Twisted | (iv) Bean |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(a) - (i), (b) - (iii), (c) - (iv), (d) - (ii)",
+      "(a) - (ii), (b) - (i), (c) - (iii), (d) - (iv)",
+      "(a) - (ii), (b) - (i), (c) - (iv), (d) - (iii)",
+      "(a) - (ii), (b) - (iv), (c) - (iii), (d) - (i)"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - (a) - (ii), (b) - (i), (c) - (iv), (d) - (iii). Imbricate: Cassia/Gulmohar (a-ii); Valvate: Calotropis (b-i); Vexillary: Bean/Pea (c-iv); Twisted: Cotton/China rose/Lady's finger (d-iii).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 26,
+    "exam": "NEET 2022 Phase 2",
+    "text": "The Floral Diagram represents which one of the following families?",
+    "options": [
+      "Liliaceae",
+      "Fabaceae",
+      "Brassicaceae",
+      "Solanaceae"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Brassicaceae. The floral diagram shows tetramerous symmetry (K2+2 C4 A2+4 G(2)), which is characteristic of family Brassicaceae (Cruciferae, e.g., Brassica/Mustard).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465792/edvedum/questions/morphology_flowering_plants/q26_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 27,
+    "exam": "NEET 2022 Phase 1",
+    "text": "Identify the correct set of statements: (a) The leaflets are modified into pointed hard thorns in Citrus and Bougainvillea (b) Axillary buds form slender and spirally coiled tendrils in cucumber and pumpkin (c) Stem is flattened and fleshy in Opuntia and modified to perform the function of leaves (d) Rhizophora shows vertically upward growing roots that help to get oxygen for respiration (e) Subaerially growing stems in grasses and strawberry help in vegetative propagation Choose the correct answer from the options given below:",
+    "options": [
+      "(b) and (c) only",
+      "(a) and (d) only",
+      "(b), (c), (d) and (e) only",
+      "(a), (b), (d) and (e) only"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - (b), (c), (d) and (e) only.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 28,
+    "exam": "NEET 2022 Phase 1",
+    "text": "Which one of the following plants shows vexillary aestivation and diadelphous stamens?",
+    "options": [
+      "Colchicum autumnale",
+      "Pisum sativum",
+      "Allium cepa",
+      "Solanum nigrum"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Pisum sativum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 29,
+    "exam": "NEET 2022 Phase 1",
+    "text": "The flowers are Zygomorphic in : (a) Mustard (b) Gulmohar (c) Cassia (d) Datura (e) Chilly Choose the correct answer from the options given below :",
+    "options": [
+      "(a), (b) and (c) only",
+      "(b), (c) only",
+      "(d), (e) only",
+      "(c), (d), (e) only"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (b), (c) only.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 30,
+    "exam": "NEET 2021",
+    "text": "Diadelphous stamens are found in",
+    "options": [
+      "China rose and citrus",
+      "China rose",
+      "Citrus",
+      "Pea"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Pea.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 31,
+    "exam": "NEET 2021",
+    "text": "Match Column-I with Column-II (refer to the floral formulas given below):\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(a)-(iv), (b)-(ii), (c)-(i), (d)-(iii)",
+      "(a)-(iii), (b)-(iv), (c)-(ii), (d)-(i)",
+      "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)",
+      "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (a)-(iii), (b)-(iv), (c)-(ii), (d)-(i). The matching floral formulas represent: (a) Brassicaceae (Mustard), (b) Fabaceae (Pea), (c) Solanaceae (Tomato/Petunia), (d) Liliaceae (Lily/Allium).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465794/edvedum/questions/morphology_flowering_plants/q31_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 32,
+    "exam": "NEET 2020 Phase 2",
+    "text": "Which of the following is the correct floral formula of Liliaceae ? (Refer to the image options)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - (D). Floral formula of Liliaceae: Br ⊕ ⚥ P(3+3) A3+3 G(3) (tricarpellary syncarpous superior ovary with axile placentation).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465795/edvedum/questions/morphology_flowering_plants/q32_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 33,
+    "exam": "NEET 2020 Phase 2",
+    "text": "Correct position of floral parts over thalamus in mustard plant is -",
+    "options": [
+      "Gynoecium is situated in the centre, and other parts of the flower are located at the rim of the thalamus, at the same level.",
+      "Gynoecium occupies the highest position, while the other parts are situated below it.",
+      "Margin of the thalamus grows upward, enclosing the ovary completely, and other parts arise below the ovary.",
+      "Gynoecium is present in the centre and other parts cover it partially."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Gynoecium occupies the highest position, while the other parts are situated below it..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 34,
+    "exam": "NEET 2020 Phase 2",
+    "text": "Identify the correct features of Mango and Coconut fruits. (i) In both fruit is a drupe (ii) Endocarp is edible in both (iii) Mesocarp in Coconut is fibrous, and in Mango it is fleshy (iv) In both, fruit develops from monocarpellary ovary Select the correct option from below :",
+    "options": [
+      "(i) and (ii) only",
+      "(i), (iii) and (iv) only",
+      "(i), (ii) and (iii) only",
+      "(i) and (iv) only"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (i), (iii) and (iv) only.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 35,
+    "exam": "NEET 2020 Phase 1",
+    "text": "Ray florets have",
+    "options": [
+      "Superior ovary",
+      "Hypogynous ovary",
+      "Half inferior ovary",
+      "Inferior ovary"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Inferior ovary.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 36,
+    "exam": "NEET 2020 Phase 1",
+    "text": "The ovary is half inferior in:",
+    "options": [
+      "Mustard",
+      "Sunflower",
+      "Plum",
+      "Brinjal"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Plum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 37,
+    "exam": "NEET 2020 Phase 1",
+    "text": "The roots that originate from the base of the stem are",
+    "options": [
+      "Primary roots",
+      "Prop roots",
+      "Lateral roots",
+      "Fibrous roots"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Fibrous roots.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 38,
+    "exam": "NEET 2019 (Odisha)",
+    "text": "Match the placental types (column-I) with their examples (column-II) :\n\n| Column-I | Column-II |\n| :--- | :--- |\n| (a) Basal | (i) Mustard |\n| (b) Axile | (ii) China rose |\n| (c) Parietal | (iii) Dianthus |\n| (d) Free central | (iv) Sunflower |\n\nChoose the correct answer from the following options :",
+    "options": [
+      "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)",
+      "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)",
+      "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)",
+      "(a)-(iv), (b)-(ii), (c)-(i), (d)-(iii)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - (a)-(iv), (b)-(ii), (c)-(i), (d)-(iii). Basal: Sunflower/Marigold (a-iv); Axile: China rose/Tomato/Lemon (b-ii); Parietal: Mustard/Argemone (c-i); Free central: Dianthus/Primrose (d-iii).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 39,
+    "exam": "NEET 2019 (Odisha)",
+    "text": "Which of the following shows whorled phyllotaxy?",
+    "options": [
+      "Calotropis",
+      "Mustard",
+      "China rose",
+      "Alstonia"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Alstonia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 40,
+    "exam": "NEET 2019 (Odisha)",
+    "text": "Bicarpellary ovary with obliquely placed septum is seen in :",
+    "options": [
+      "Sesbania",
+      "Brassica",
+      "Aloe",
+      "Solanum"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Solanum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 41,
+    "exam": "NEET 2019",
+    "text": "Placentation, in which ovules develop on the inner wall of the ovary or in peripheral part, is :",
+    "options": [
+      "Parietal",
+      "Free central",
+      "Basal",
+      "Axile"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Parietal.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 42,
+    "exam": "NEET 2018",
+    "text": "Sweet potato is a modified",
+    "options": [
+      "adventitious root",
+      "rhizome",
+      "stem",
+      "taproot"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - adventitious root.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 43,
+    "exam": "NEET 2017",
+    "text": "Coconut fruit is a",
+    "options": [
+      "berry",
+      "nut",
+      "capsule",
+      "drupe."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - drupe..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 44,
+    "exam": "NEET 2017",
+    "text": "In Bougainvillea , throns are the modifications of",
+    "options": [
+      "adventitious root",
+      "stem",
+      "leaf",
+      "stipules."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - stem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 45,
+    "exam": "NEET 2017",
+    "text": "Root hairs develop from the region of :",
+    "options": [
+      "Meristematic activity",
+      "Root cap",
+      "Maturation",
+      "Elongation"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Maturation.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 46,
+    "exam": "NEET 2016 Phase 2",
+    "text": "The term 'polyadelphous' is related to",
+    "options": [
+      "gynoecium",
+      "androecium",
+      "corolla",
+      "calyx."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - androecium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 47,
+    "exam": "NEET 2016 Phase 2",
+    "text": "How many plants among Indigofera, Sesbania, Salvia, Allium, Aloe, mustard, groundnut, radish, gram and turnip have stamens with different lengths in their flowers?",
+    "options": [
+      "Three",
+      "Four",
+      "Five",
+      "Six Open solution"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Four.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 48,
+    "exam": "NEET 2016 Phase 2",
+    "text": "Radial symmetry is found in the flowers of",
+    "options": [
+      "Brassica",
+      "Trifolium",
+      "Pisum",
+      "Cassia."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Brassica.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 49,
+    "exam": "NEET 2016 Phase 2",
+    "text": "Free-central placentation is found in",
+    "options": [
+      "Dianthus",
+      "Argemone",
+      "Brassica",
+      "Citrus."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Dianthus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 50,
+    "exam": "NEET 2016 Phase 1",
+    "text": "Which of the following is not a stem modification?",
+    "options": [
+      "Tendrils of cucumber",
+      "Flattened structures of Opuntia",
+      "Pitcher of Nepenthes",
+      "Thorns of citrus"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Pitcher of Nepenthes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 51,
+    "exam": "NEET 2016 Phase 1",
+    "text": "Stems modified into flat green organs performing the functions of leaves are known as",
+    "options": [
+      "phylloclades",
+      "scales",
+      "cladodes",
+      "phyllodes."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - phylloclades.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 52,
+    "exam": "NEET 2016 Phase 1",
+    "text": "Cotyledon of maize grain is called",
+    "options": [
+      "coleoptile",
+      "scutellum",
+      "plumule",
+      "coleorhiza."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - scutellum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 53,
+    "exam": "NEET 2016 Phase 1",
+    "text": "Tricarpellary, syncarpous gynoecium is found in flowers of",
+    "options": [
+      "Fabaceae",
+      "Poaceae",
+      "Liliaceae",
+      "Solanaceae"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Liliaceae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 54,
+    "exam": "NEET 2016 Phase 1",
+    "text": "The standard petal of a papilionaceous corolla is also called",
+    "options": [
+      "vexillum",
+      "corona",
+      "carina",
+      "pappus."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - vexillum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 55,
+    "exam": "AIPMT 2015",
+    "text": "The wheat grain has an embryo with one large, shield shaped cotyledon known as",
+    "options": [
+      "scutellum",
+      "coleoptile",
+      "epiblast",
+      "coleorhiza."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - scutellum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 56,
+    "exam": "AIPMT 2015",
+    "text": "Among China rose, mustard, brinjal, potato, guava, cucumber, onion and tulip, how many plants have superior ovary?",
+    "options": [
+      "Three",
+      "Four",
+      "Five",
+      "Six"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Six.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 57,
+    "exam": "AIPMT 2015",
+    "text": "Axile placentation is present in",
+    "options": [
+      "pea",
+      "Argemone",
+      "Dianthus",
+      "lemon."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - lemon..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 58,
+    "exam": "AIPMT 2015",
+    "text": "Roots play insignificant role in absorption of water in",
+    "options": [
+      "pea",
+      "wheat",
+      "sunflower",
+      "Pistia."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Pistia..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 59,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "Perigynous flowers are found in",
+    "options": [
+      "China rose",
+      "rose",
+      "guava",
+      "cucumber."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - rose.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 60,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "Keel is the characteristic feature of flower of",
+    "options": [
+      "Aloe",
+      "tomato",
+      "tulip",
+      "Indigofera."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Indigofera..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 61,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "Leaves become modified into spines in",
+    "options": [
+      "onion",
+      "silk cotton",
+      "Opuntia",
+      "pea"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Opuntia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 62,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "The floral formula shown above is that of :",
+    "options": [
+      "Petunia",
+      "Brassica",
+      "Allium",
+      "Sesbania"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Petunia. The floral formula ⊕ ⚥ K(5) C(5) A5 G(2) is characteristic of family Solanaceae, which includes Petunia.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465799/edvedum/questions/morphology_flowering_plants/q62_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 63,
+    "exam": "AIPMT 2014",
+    "text": "Placenta and pericarp are both edible portions in",
+    "options": [
+      "apple",
+      "banana",
+      "tomato",
+      "potato"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - tomato.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 64,
+    "exam": "AIPMT 2014",
+    "text": "When the margins of sepals or petals overlap one another without any particular direction, the condition is termed as",
+    "options": [
+      "vexillary",
+      "imbricate",
+      "twisted",
+      "valvate."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - imbricate.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 65,
+    "exam": "AIPMT 2014",
+    "text": "Which one of the following statements is correct?",
+    "options": [
+      "The seed in grasses is not endospermic.",
+      "Mango is a parthenocarpic fruit.",
+      "A proteinaceous aleurone layer is present in maize grain.",
+      "A sterile pistil is called a staminode."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - A proteinaceous aleurone layer is present in maize grain..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 66,
+    "exam": "AIPMT 2014",
+    "text": "An example of edible underground stem is",
+    "options": [
+      "carrot",
+      "groundnut",
+      "sweet potato",
+      "potato."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - potato..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 67,
+    "exam": "AIPMT 2014",
+    "text": "An aggregate fruit is one which develops from",
+    "options": [
+      "multicarpellary syncarpous gynoecium",
+      "multicarpellary apocarpus gynoecium",
+      "complete inflorescence",
+      "multicarpellary superior ovary."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - multicarpellary apocarpus gynoecium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 68,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "Among flowers of Calotropis, tulip, Sesbania, Asparagus, Colchicum, sweet pea, Petunia, Indigofera, mustard, soybean, tobaco and groundnut, how many plants have corolla with valvate aestivation?",
+    "options": [
+      "Six",
+      "Seven",
+      "Eight",
+      "Five"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Seven.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 69,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "Inflorescence is racemose in",
+    "options": [
+      "brinjal",
+      "tulip",
+      "aloe",
+      "soybean."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - soybean..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 70,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "In a cymose inflorescence the main axis",
+    "options": [
+      "has unlimited growth",
+      "bears a solitary flower",
+      "has unlimited growth but lateral branches end in flowers",
+      "terminates in a flower."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - terminates in a flower..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 71,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "How many plants among China rose, Ocimum, sunflower, mustard, Alstonia , guava, Calotropis and Nerium (oleander) have opposite phyllotaxy?",
+    "options": [
+      "Three",
+      "Four",
+      "Five",
+      "Two"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Three.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 72,
+    "exam": "NEET 2013",
+    "text": "Among bitter gourd, mustard, brinjal, pumpkin, china rose, lupin, cucumber, sunhemp, gram, guava, bean, chilli, plum, petunia, tomato, rose, Withania , potato, onion, aloe and tulip how many plants have hypogynous flower? Open solution",
+    "options": [
+      "Fifteen",
+      "Eighteen",
+      "Six",
+      "Ten"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Fifteen.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 73,
+    "exam": "NEET 2013",
+    "text": "In China rose the flowers are",
+    "options": [
+      "zygomorphic, hypogynous with imbricate aestivation",
+      "zygomorphic, epigynous with twisted aestivation",
+      "actinomorphic, hypogynous with twisted aestivation",
+      "actinomorphic, epigynous with valvate aestivation"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - actinomorphic, hypogynous with twisted aestivation.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 74,
+    "exam": "AIPMT 2012 Mains",
+    "text": "Which one of the following organisms is correctly matched with its three characteristic?",
+    "options": [
+      "Pea: C 3 pathway, endospermic seed, vexillary aestivation",
+      "Tomato : twisted aestivation, axile placentation, berry",
+      "Onion : bulb, imbricate aestivation, axile placentation",
+      "Maize : C 3 pathway, closed vascular bundles, scutellum"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Onion : bulb, imbricate aestivation, axile placentation.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 75,
+    "exam": "AIPMT 2012 Mains",
+    "text": "How many plants in the list given below have marginal placentation? Mustard, Gram, Tulip, Asparagus , Arhar, Sun hemp, Chilli, Colchicum, Onion, Moong, Pea, Tobacco, Lupin Open solution",
+    "options": [
+      "Four",
+      "Five",
+      "Six",
+      "Three"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Six.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 76,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Placentation in tomato and lemon is",
+    "options": [
+      "parietal",
+      "free central",
+      "marginal",
+      "axile."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - axile..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 77,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Cymose inflorescence is present in",
+    "options": [
+      "Solanum",
+      "Sesbania",
+      "Trifolium",
+      "Brassica"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Solanum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 78,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Phyllode is present in",
+    "options": [
+      "Asparagus",
+      "Euphorbia",
+      "Australian Acacia",
+      "Opuntia ."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Australian Acacia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 79,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "The gynoecium consists of many free pistils in flowers of",
+    "options": [
+      "Aloe",
+      "tomato",
+      "Papaver",
+      "Michelia"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Michelia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 80,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "How many plants in the list given below have composite fruits that develop from an inflorescence? Walnut, poppy, radish, fig, pineapple, apple, tomato, mulberry.",
+    "options": [
+      "Four",
+      "Five",
+      "Two",
+      "Three"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Three.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 81,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "The coconut water and the edible part of coconut are equivalent to",
+    "options": [
+      "endosperm",
+      "endocarp",
+      "mesocarp",
+      "embryo"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - endosperm.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 82,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Vexillary aestivation is characteristic of the family",
+    "options": [
+      "Fabaceae",
+      "Asteraceae",
+      "Solanaceae",
+      "Brassicaceae."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Fabaceae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 83,
+    "exam": "AIPMT 2011 Mains",
+    "text": "Which one of the following pairs is wrongly matched while the remaining three are correct?",
+    "options": [
+      "Penicillium conidia",
+      "Water hyacinth runner",
+      "Bryophyllum leaf buds",
+      "Agave bulbils"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Water hyacinth runner.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 84,
+    "exam": "AIPMT 2011 Mains",
+    "text": "Whorled, simple leaves with reticulate venation are present in",
+    "options": [
+      "Calotropis",
+      "neem",
+      "China rose",
+      "Alstonia ."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Alstonia ..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 85,
+    "exam": "AIPMT 2011 Mains",
+    "text": "Sweet potato is homologous to",
+    "options": [
+      "potato",
+      "Colocasia",
+      "ginger",
+      "turnip."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - turnip..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 86,
+    "exam": "AIPMT 2011 Mains",
+    "text": "Which one of the following figures represents the placentation in Dianthus ? (Refer to the images below)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - (D). Free central placentation is present in Dianthus and Primrose, represented by ovules developing on the central axis and septa being absent.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465800/edvedum/questions/morphology_flowering_plants/q86_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 87,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "Which one of the following statements is correct?",
+    "options": [
+      "In tomato, fruit is a capsule.",
+      "Seeds of orchids have oil-rich endosperm.",
+      "Placentation in primose is basal.",
+      "Flower of tulip is a modified shoot."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Flower of tulip is a modified shoot..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 88,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "Flowers are zygomorphic in",
+    "options": [
+      "mustard",
+      "gulmohur",
+      "tomato",
+      "Datura ."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - gulmohur.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 89,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "The ovary is half inferior in flowers of",
+    "options": [
+      "peach",
+      "cucumber",
+      "cotton",
+      "guava."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - peach.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 90,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "A drupe develops in",
+    "options": [
+      "mango",
+      "wheat",
+      "pea",
+      "tomato."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - mango.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 91,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "The correct floral formula of chilli is : (Refer to the image options)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (B). Chilli belongs to family Solanaceae, whose floral formula is ⊕ ⚥ K(5) C(5) A5 G(2).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465801/edvedum/questions/morphology_flowering_plants/q91_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 92,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "The ''eyes'' of the potato tuber are",
+    "options": [
+      "root buds",
+      "flower buds",
+      "shoot buds",
+      "axillary buds."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - axillary buds..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 93,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "What would be the number of chromosomes of the aleurone cells of a plant with 42 chromosomes in its root tip cells?",
+    "options": [
+      "42",
+      "63",
+      "84",
+      "21"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - 63.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 94,
+    "exam": "AIPMT 2010 Mains",
+    "text": "Which one of the following is a xerophytic plant in which the stem is modified into the flat green and succulent structure?",
+    "options": [
+      "Opuntia",
+      "Casuarina",
+      "Hydrilla",
+      "Acacia"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Opuntia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 95,
+    "exam": "AIPMT 2010 Mains",
+    "text": "The correct floral formula of soyabean is : (Refer to the image options)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - (C). Soyabean belongs to family Fabaceae, with floral formula % ⚥ K(5) C1+2+(2) A(9)+1 G1.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465802/edvedum/questions/morphology_flowering_plants/q95_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 96,
+    "exam": "AIPMT 2010 Mains",
+    "text": "Consider the following four statements (i), (ii), (iii) and (iv) and select the right option for two correct statements.\n\nStatements :\n(i) In vexillary aestivation, the large posterior petal is called standard, two lateral ones are wings and two small anterior petals are termed keel.\n(ii) The floral formula for Liliaceae is shown above.\n(iii) In pea flower the stamens are monadelphous.\n(iv) The floral formula for Solanaceae is shown above.\n\nThe correct statements are :",
+    "options": [
+      "(i) and (iii)",
+      "(i) and (ii)",
+      "(ii) and (iii)",
+      "(iii) and (iv)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (i) and (ii). Statements (i) and (ii) are correct. In vexillary aestivation, large posterior petal is standard, two lateral are wings, two anterior are keel. The floral formula for Liliaceae is Br ⊕ ⚥ P(3+3) A3+3 G(3). Pea stamens are diadelphous (9)+1, not monadelphous.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465803/edvedum/questions/morphology_flowering_plants/q96_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 97,
+    "exam": "AIPMT 2010 Mains",
+    "text": "Aestivation of petals in the flower of cotton is correctly shown in : (Refer to the images below)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (B). Cotton has twisted aestivation of petals, where one margin of the appendage overlaps that of the next one in a regular clockwise or anti-clockwise direction.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465804/edvedum/questions/morphology_flowering_plants/q97_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 98,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "In unilocular ovary with a single ovule the placentation is",
+    "options": [
+      "Axile",
+      "Marginal",
+      "Basal",
+      "Free Central"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Basal.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 99,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "Keel is characteristic of the flowers of",
+    "options": [
+      "gulmohur",
+      "Cassia",
+      "Calotropis",
+      "bean"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - bean.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 100,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "Ovary is half-inferior in the flowers of",
+    "options": [
+      "guava",
+      "plum",
+      "brinjal",
+      "cucumber."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - plum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 101,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "The technical term used for the androecium in a flower of China rose (Hibiscus rosa sinensis) is",
+    "options": [
+      "monadelphous",
+      "diadelphous",
+      "polyandrous",
+      "polyadelphous."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - monadelphous.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 102,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "The scutellum observed in a grain of wheat or maize is comparable to which part of the seed in other monocotyledons?",
+    "options": [
+      "Cotyledon",
+      "Endosperm",
+      "Aleurone layer",
+      "Plumule"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Cotyledon.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 103,
+    "exam": "AIPMT 2009",
+    "text": "A fruit developed from hypanthodium inflorescence is called",
+    "options": [
+      "sorosis",
+      "syconus",
+      "caryopsis",
+      "hesperidium."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - syconus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 104,
+    "exam": "AIPMT 2009",
+    "text": "An example of axile placentation is",
+    "options": [
+      "Dianthus",
+      "lemon",
+      "marigold",
+      "Argemone."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - lemon.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 105,
+    "exam": "AIPMT 2009",
+    "text": "Cotyledons and testa respectively are edible parts in",
+    "options": [
+      "walnut and tamarind",
+      "french bean and coconut",
+      "cashew nut and litchi",
+      "groundnut and pomegranate."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - groundnut and pomegranate..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 106,
+    "exam": "AIPMT 2009",
+    "text": "An examples of a seed with endosperm, perisperm, and caruncle is",
+    "options": [
+      "coffee",
+      "lily",
+      "castor",
+      "cotton."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - castor.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 107,
+    "exam": "AIPMT 2009",
+    "text": "The floral formula shown above is that of :",
+    "options": [
+      "soybean",
+      "sunhemp",
+      "tobacco",
+      "tulip"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - tobacco. The floral formula ⊕ ⚥ K(5) C(5) A5 G(2) represents family Solanaceae, which includes tobacco (Nicotiana tabacum).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465778/edvedum/questions/morphology_flowering_plants/q107_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 108,
+    "exam": "AIPMT 2008",
+    "text": "The fleshy receptacle of syconus of fig encloses a number of",
+    "options": [
+      "berries",
+      "mericarps",
+      "achenes",
+      "samaras."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - achenes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 109,
+    "exam": "AIPMT 2008",
+    "text": "Dry indehiscent single-seeded fruit formed from bicarpellary syncarpous inferior ovary is",
+    "options": [
+      "berry",
+      "cremocarp",
+      "caryopsis",
+      "cypsella."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - cypsella..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 110,
+    "exam": "AIPMT 2008",
+    "text": "Replum is present in the ovary of flower of",
+    "options": [
+      "sun flower",
+      "pea",
+      "lemon",
+      "mustard"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - mustard.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 111,
+    "exam": "AIPMT 2008",
+    "text": "The fruit is chambered, developed from inferior ovary and has seeds with succulent testa in",
+    "options": [
+      "guava",
+      "cucumber",
+      "pomegranate",
+      "orange."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - pomegranate.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 112,
+    "exam": "AIPMT 2008",
+    "text": "Endosperm is consumed by developing embryo in the seed of",
+    "options": [
+      "pea",
+      "maize",
+      "coconut",
+      "castor."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - pea.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 113,
+    "exam": "AIPMT 2007",
+    "text": "Which of the following is a flowering plant with nodules containing filamentous nitrogen-fixing micro-organism?",
+    "options": [
+      "Crotalaria juncea",
+      "Cycas revoluta",
+      "Cicer arietinum",
+      "Casuarina equisetifolia"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Casuarina equisetifolia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 114,
+    "exam": "AIPMT 2006",
+    "text": "Pentamerous actinomorphic flowers, bicarpellary ovary with oblique septa, and fruit capsule or berry, are characteristic features of",
+    "options": [
+      "Liliaceae",
+      "Asteraceae",
+      "Brassicaceae",
+      "Solanaceae"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Solanaceae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 115,
+    "exam": "AIPMT 2006",
+    "text": "Pineapple (ananas) fruit develops from",
+    "options": [
+      "a multilocular monocarpellary flower",
+      "a unilocular polycarpellary flower",
+      "a multipistillate syncarpous flower",
+      "a cluster of compactly borne flowers on a common axis."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - a cluster of compactly borne flowers on a common axis..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 116,
+    "exam": "AIPMT 2006",
+    "text": "In which of the following fruits, the edible part is the aril ?",
+    "options": [
+      "Litchi",
+      "Custard apple",
+      "Promegranate",
+      "Orange"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Litchi.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 117,
+    "exam": "AIPMT 2006",
+    "text": "Long filamentous threads protruding at the end of a young cob of maize are",
+    "options": [
+      "hairs",
+      "anthers",
+      "styles",
+      "ovaries."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - styles.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 118,
+    "exam": "AIPMT 2006",
+    "text": "What type of placentation is seen in sweet pea?",
+    "options": [
+      "Basal",
+      "Axile",
+      "Free central",
+      "Marginal"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Marginal.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 119,
+    "exam": "AIPMT 2005",
+    "text": "Why is vivipary an undesirable character for annual crop plants?",
+    "options": [
+      "It reduces the vigour of the plant.",
+      "It adversely affects the fertility of the plant.",
+      "The seeds exhibit long dormancy.",
+      "The seeds cannot be stored under normal conditions for the next season."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - The seeds cannot be stored under normal conditions for the next season..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 120,
+    "exam": "AIPMT 2005",
+    "text": "Which of the following represents the edible part of the fruit of litchi?",
+    "options": [
+      "Mesocarp",
+      "Endocarp",
+      "Pericarp",
+      "Juicy aril"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Juicy aril.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 121,
+    "exam": "AIPMT 2004",
+    "text": "Edible part of mango is",
+    "options": [
+      "endocarp",
+      "receptacle",
+      "epicarp",
+      "mesocarp."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - mesocarp..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 122,
+    "exam": "AIPMT 2004",
+    "text": "In a longitudinal section of a root, starting from the tip upward, the four zones occur in the following order :-",
+    "options": [
+      "Cell division, cell enlargement, cell maturation, root cap",
+      "Root cap, cell division, cell enlargement, cell maturation",
+      "Root cap, cell division, cell maturation, cell enlargement",
+      "Celldivision,cell maturation, cell enlargement, root cap"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Root cap, cell division, cell enlargement, cell maturation.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 123,
+    "exam": "AIPMT 2003",
+    "text": "Juicy hair-like structures observed in the lemon fruit develop from",
+    "options": [
+      "exocarp",
+      "mesocarp",
+      "endocarp",
+      "mesocarp and endocarp."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - endocarp.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 124,
+    "exam": "AIPMT 2002",
+    "text": "Geocarpic fruit is",
+    "options": [
+      "potato",
+      "peanut",
+      "onion",
+      "garlic."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - peanut.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 125,
+    "exam": "AIPMT 2002",
+    "text": "Edible part in mango is",
+    "options": [
+      "mesocarp",
+      "epicarp",
+      "endocarp",
+      "epidermis"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - mesocarp.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 126,
+    "exam": "AIPMT 2001",
+    "text": "Bicarpellary gynoecium and oblique ovary occurs in",
+    "options": [
+      "mustard",
+      "banana",
+      "Pisum",
+      "brinjal"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - brinjal.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 127,
+    "exam": "AIPMT 2001",
+    "text": "Tetradynamous conditions occur in",
+    "options": [
+      "Cruciferae",
+      "Malvaceae",
+      "Solanaceae",
+      "Liliaceae."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Cruciferae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 128,
+    "exam": "AIPMT 2001",
+    "text": "What is the eye of potato?",
+    "options": [
+      "Axillary bud",
+      "Accessory bud",
+      "Adventitious bud",
+      "Apical bud"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Axillary bud.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 129,
+    "exam": "AIPMT 2001",
+    "text": "Edible part of banana is",
+    "options": [
+      "epicarp",
+      "mesocarp and less developed endocarp",
+      "endocarp and less developed mesocarp",
+      "epicarp and mesocarp."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - endocarp and less developed mesocarp.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 130,
+    "exam": "AIPMT 2001",
+    "text": "Which is correct pair for edible part?",
+    "options": [
+      "Tomato-thalamus",
+      "Maize-cotyledons",
+      "Guava-mesocarp",
+      "Date palm-mesocarp"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Date palm-mesocarp.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 131,
+    "exam": "AIPMT 2000",
+    "text": "Which is expressing right appropriate pairing?",
+    "options": [
+      "Brassicaceae - sunflower",
+      "Malvaceae - cotton",
+      "Papilionaceae - catechu",
+      "Liliaceae - wheat"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Malvaceae - cotton.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 132,
+    "exam": "AIPMT 2000",
+    "text": "Pneumatophores are found in",
+    "options": [
+      "the vegetation which is found in marshy and saline lake",
+      "the vegetation which found in acidic soil",
+      "xerophytes",
+      "epiphytes."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - the vegetation which is found in marshy and saline lake.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 133,
+    "exam": "AIPMT 2000",
+    "text": "Hair found in the inflorescence of Zea mays are the modification of",
+    "options": [
+      "style",
+      "stigma",
+      "spathe",
+      "filaments."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - style.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 134,
+    "exam": "AIPMT 2000",
+    "text": "Geocarpic fruits is",
+    "options": [
+      "carrot",
+      "radish",
+      "ground nut",
+      "turnip."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - ground nut.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 135,
+    "exam": "AIPMT 1999",
+    "text": "The plant which bears clinging roots is :",
+    "options": [
+      "Podostemon",
+      "Orchid",
+      "Trapa",
+      "Screw pine"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Orchid.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 136,
+    "exam": "AIPMT 1999",
+    "text": "A pair of insectivorous plants is :",
+    "options": [
+      "Venus fly trap and Rafflesia",
+      "Nepenthes and bladderwort",
+      "Drosera and Rafflesia",
+      "Dionaea and Viscum"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Nepenthes and bladderwort.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 137,
+    "exam": "AIPMT 1999",
+    "text": "Edible part of litchi is :",
+    "options": [
+      "pericarp",
+      "fleshy aril",
+      "mesocarp",
+      "endosperm"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - fleshy aril.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 138,
+    "exam": "AIPMT 1999",
+    "text": "The type of placentation in which ovary is syncarpous, unilocular and ovules on sutures is called",
+    "options": [
+      "marginal placentation",
+      "parietal placentation",
+      "axile placentation",
+      "superficial placentation"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - parietal placentation.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 139,
+    "exam": "AIPMT 1998",
+    "text": "The embryo in sunflower has",
+    "options": [
+      "no cotyledon",
+      "one cotyledon",
+      "two cotyledons",
+      "many cotyledons"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - two cotyledons.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 140,
+    "exam": "AIPMT 1997",
+    "text": "Which plant will lose its economic value, if its fruits are produced by induced parthenocarpy?",
+    "options": [
+      "Orange",
+      "Banana",
+      "Grape",
+      "Pomegranate"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Pomegranate.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 141,
+    "exam": "AIPMT 1996",
+    "text": "Which of the following is a ‘true fruit’?",
+    "options": [
+      "Banana",
+      "Fig",
+      "Apple",
+      "Pear"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Banana.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 142,
+    "exam": "AIPMT 1994",
+    "text": "A plant bears fruit, has a column of vascular tissue and a tap root system. This plant is a",
+    "options": [
+      "angiosperm and dicot",
+      "gymnosperm and dicot",
+      "angiosperm and monocot",
+      "gymnosperm and monocot"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - angiosperm and dicot.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 143,
+    "exam": "AIPMT 1994",
+    "text": "Hypanthodium is a specialised type of",
+    "options": [
+      "fruit",
+      "inflorescence",
+      "thalamus",
+      "ovary"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - inflorescence.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 144,
+    "exam": "AIPMT 1993",
+    "text": "Pulses are obtained from",
+    "options": [
+      "Fabaceae",
+      "Asteraceae",
+      "Poaceae",
+      "Solanaceae"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Fabaceae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 145,
+    "exam": "AIPMT 1992",
+    "text": "Epipetalous stamens with free filaments and fused anthers occur in",
+    "options": [
+      "Asteraceae",
+      "Solanaceae",
+      "Liliaceae",
+      "Poaceae"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Asteraceae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 146,
+    "exam": "AIPMT 1992",
+    "text": "Floral formula of tomato/tobacco is : (Refer to the image options)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - (D). Tomato and tobacco belong to Solanaceae. Floral formula: ⊕ ⚥ K(5) C(5) A5 G(2).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465784/edvedum/questions/morphology_flowering_plants/q146_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 147,
+    "exam": "AIPMT 1991",
+    "text": "Botanical name of cauliflower is",
+    "options": [
+      "Brassica oleracea var. capitata",
+      "Brassica compesteris",
+      "Brassica oleracea var. botrytis",
+      "Brassica oleracea var. gemmifera"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Brassica oleracea var. botrytis.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 148,
+    "exam": "AIPMT 1991",
+    "text": "Epipetalous and syngenesious stamens occur in",
+    "options": [
+      "Solanaceae",
+      "Brassicaceae",
+      "Fabaceae",
+      "Asteraceae"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Asteraceae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 149,
+    "exam": "AIPMT 1991",
+    "text": "Fruit of Mangifera indica is",
+    "options": [
+      "berry",
+      "drupe",
+      "capsule",
+      "siliqua"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - drupe.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 150,
+    "exam": "AIPMT 1991",
+    "text": "A family delimited by type of inflorescence is",
+    "options": [
+      "Fabaceae",
+      "Asteraceae",
+      "Solanaceae",
+      "Liliaceae"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Asteraceae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 151,
+    "exam": "AIPMT 1991",
+    "text": "Syngenesious condition is found in",
+    "options": [
+      "Asteraceae",
+      "Labiatae",
+      "Solanaceae",
+      "Fabaceae"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Asteraceae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 152,
+    "exam": "AIPMT 1991",
+    "text": "Velamen is found in",
+    "options": [
+      "roots of screwpine",
+      "aerial and terrestrial roots of orchids",
+      "leaves of Ficus elastica",
+      "aerial roots of orchids"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - aerial roots of orchids.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 153,
+    "exam": "AIPMT 1991",
+    "text": "The floral formula shown above is floral formula of :",
+    "options": [
+      "Liliaceae",
+      "Solanaceae",
+      "Asteraceae",
+      "Fabaceae"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Solanaceae. The floral formula ⊕ ⚥ K(5) C(5) A5 G(2) belongs to family Solanaceae.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465785/edvedum/questions/morphology_flowering_plants/q153_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 154,
+    "exam": "AIPMT 1990",
+    "text": "In groundnut the food/oil reserve is present in",
+    "options": [
+      "epicarp",
+      "mesocarp",
+      "endosperm",
+      "cotyledons"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - cotyledons.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 155,
+    "exam": "AIPMT 1990",
+    "text": "Tegmen develops from",
+    "options": [
+      "funiculus",
+      "chalaza",
+      "inner integument",
+      "outer integument"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - inner integument.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 156,
+    "exam": "AIPMT 1990",
+    "text": "Oil reserve of groundnut is present in",
+    "options": [
+      "embryo",
+      "cotyledons",
+      "endosperm",
+      "underground tubers"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - cotyledons.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 157,
+    "exam": "AIPMT 1990",
+    "text": "New banana plants develop from",
+    "options": [
+      "rhizome",
+      "sucker",
+      "stolon",
+      "seed"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - sucker.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 158,
+    "exam": "AIPMT 1989",
+    "text": "Mango juice is obtained from",
+    "options": [
+      "epicarp",
+      "mesocarp",
+      "endocarp",
+      "pericarp and thalamus"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - mesocarp.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 159,
+    "exam": "AIPMT 1989",
+    "text": "Floral formula of tomato/tobacco is : (Refer to the image options)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - (D). Tomato and tobacco belong to Solanaceae. Floral formula: ⊕ ⚥ K(5) C(5) A5 G(2).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794465787/edvedum/questions/morphology_flowering_plants/q159_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 160,
+    "exam": "AIPMT 1988",
+    "text": "Which one yields fibres?",
+    "options": [
+      "Coconut",
+      "Oak",
+      "Teak",
+      "Sisso"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Coconut.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 161,
+    "exam": "AIPMT 1988",
+    "text": "Micropyle of seed is involved in the passage of",
+    "options": [
+      "male gamete",
+      "pollen tube",
+      "water",
+      "gases"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - water.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  },
+  {
+    "q_num": 162,
+    "exam": "AIPMT 1988",
+    "text": "Fruit of groundnut is",
+    "options": [
+      "legume",
+      "caryopsis",
+      "berry",
+      "nut"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - legume.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Morphology of Flowering Plants"
+  }
+]

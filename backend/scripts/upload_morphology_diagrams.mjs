@@ -1,38 +1,49 @@
-import { v2 as cloudinary } from 'cloudinary';
-import dotenv from 'dotenv';
 import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { uploadImageToCloudinary } from '../src/services/cloudinaryService.js';
 
-dotenv.config({ path: 'backend/.env' });
-if (!process.env.CLOUDINARY_CLOUD_NAME) {
-  dotenv.config({ path: '.env' });
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'fyxpnmdh',
-  api_key: process.env.CLOUDINARY_API_KEY || '519659357635739',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'Z7wFq9zH8b8bI2L-wN7v3u7k2d0'
-});
+const DIAGRAMS_DIR = './backend/scripts/morphology_diagrams';
 
 async function main() {
-  const dir = 'uploads/morphology/diagrams';
-  const files = fs.readdirSync(dir).filter(f => f.endsWith('.png'));
-
-  const map = {};
-
-  for (const f of files) {
-    const id = f.replace('.png', '');
-    console.log(`Uploading ${f}...`);
-    const res = await cloudinary.uploader.upload(`${dir}/${f}`, {
-      folder: 'edvedum_botany/morphology',
-      public_id: id
-    });
-    map[id] = res.secure_url;
-    console.log(`${id} -> ${res.secure_url}`);
+  const urlFile = './backend/scripts/morphology_diagram_urls.json';
+  let urls = {};
+  if (fs.existsSync(urlFile)) {
+    urls = JSON.parse(fs.readFileSync(urlFile, 'utf8'));
   }
 
-  fs.writeFileSync('scripts/morphology_diagrams_map.json', JSON.stringify(map, null, 2));
-  console.log('Saved scripts/morphology_diagrams_map.json');
+  const files = fs.readdirSync(DIAGRAMS_DIR).filter(f => f.endsWith('.png'));
+  console.log(`Found ${files.length} images to upload...`);
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const key = path.basename(file, '.png');
+    if (urls[key]) {
+      console.log(`[${i+1}/${files.length}] Already uploaded: ${key} -> ${urls[key]}`);
+      continue;
+    }
+
+    const filePath = path.join(DIAGRAMS_DIR, file);
+    try {
+      const res = await uploadImageToCloudinary(filePath, {
+        folder: 'edvedum/questions/morphology_flowering_plants',
+        public_id: key,
+        overwrite: true
+      });
+      urls[key] = res.secure_url;
+      fs.writeFileSync(urlFile, JSON.stringify(urls, null, 2));
+      console.log(`[${i+1}/${files.length}] Uploaded: ${key} -> ${res.secure_url}`);
+    } catch (err) {
+      console.error(`Error uploading ${key}:`, err.message);
+    }
+  }
+
+  console.log('Upload complete. Total URLs:', Object.keys(urls).length);
 }
 
 main().catch(console.error);
-
