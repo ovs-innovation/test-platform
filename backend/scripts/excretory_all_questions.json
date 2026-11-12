@@ -1,0 +1,1874 @@
+[
+  {
+    "num": 1,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "Which of the following statements about the reabsorption process in Henle's loop are correct?\n(a) The descending limb of Henle's loop is permeable to water but almost impermeable to electrolytes.\n(b) Urine gets concentrated in Henle's loop.\n(c) Reabsorption of $\\text{Na}^+$ and water takes place in Henle's loop.\n(d) Active or passive transport of electrolytes occurs in the ascending limb of Henle's loop.\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a), (b) and (d) only"
+      },
+      {
+        "id": "B",
+        "text": "(a) and (b) only"
+      },
+      {
+        "id": "C",
+        "text": "(b), (c) and (d) only"
+      },
+      {
+        "id": "D",
+        "text": "(a), (b) and (c) only"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- (a) is correct: The descending limb of loop of Henle is permeable to water but almost impermeable to electrolytes.\n- (b) is correct: As filtrate flows down the descending limb, water moves out, concentrating the filtrate.\n- (c) is incorrect: In Henle's loop, water is reabsorbed in the descending limb and $\\text{Na}^+$ (electrolytes) in the ascending limb, but reabsorption of water does NOT occur in the ascending limb, and electrolytes are not reabsorbed in descending limb.\n- (d) is correct: The ascending limb allows transport of electrolytes actively or passively into medullary interstitium.\nHence, statements (a), (b) and (d) only are correct."
+  },
+  {
+    "num": 2,
+    "page": 2,
+    "year": "NEET 2026",
+    "question": "Arrange the following events occuring in Renin-Angiotensin mechanism in the correct order:\nA. Increase in blood pressure and Glomerular filtration rate\nB. Reabsorption of $\\text{Na}^+$ and water from distal parts of tubule due to Aldosterone\nC. Fall in Glomerular filtration rate\nD. Vasoconstriction by Angiotensin II and release of Aldosterone.\nE. Renin converts Angiotensinogen into Angiotensin I, followed by Angiotensin II.\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A, C, E, B, D"
+      },
+      {
+        "id": "B",
+        "text": "C, A, B, D, E"
+      },
+      {
+        "id": "C",
+        "text": "A, D, B, E, C"
+      },
+      {
+        "id": "D",
+        "text": "C, E, D, B, A"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe correct sequence of the Renin-Angiotensin-Aldosterone System (RAAS) is:\n1. (C) A fall in GFR / glomerular blood flow / blood pressure activates JG cells.\n2. (E) JG cells release renin which converts angiotensinogen to angiotensin I and subsequently to angiotensin II.\n3. (D) Angiotensin II, a powerful vasoconstrictor, activates adrenal cortex to release aldosterone.\n4. (B) Aldosterone causes reabsorption of $\\text{Na}^+$ and water from distal parts of tubule.\n5. (A) This leads to an increase in blood pressure and GFR.\nHence: C, E, D, B, A."
+  },
+  {
+    "num": 3,
+    "page": 2,
+    "year": "NEET 2026",
+    "question": "The JGA (Juxta Glomerular Apparatus) is a special sensitive region formed by cellular modifications\nin\nrelated to the same nephron.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Distal convoluted tubule and efferent renal arteriole"
+      },
+      {
+        "id": "B",
+        "text": "Proximal convoluted tubule and efferent renal arteriole"
+      },
+      {
+        "id": "C",
+        "text": "Proximal convoluted tubule and afferent renal arteriole"
+      },
+      {
+        "id": "D",
+        "text": "Distal convoluted tubule and afferent renal arteriole P Y Q P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Distal convoluted tubule and afferent renal arteriole P Y Q P D F\" is correct."
+  },
+  {
+    "num": 4,
+    "page": 3,
+    "year": "NEET 2025",
+    "question": "Which of the following diagrams is correct with regard to the proximal ($P$) and distal ($D$) tubule of the Nephron?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Diagram (A): <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794499536/edvedum/questions/excretory_products_and_their_elimination/excretory_q_4_a.png\" alt=\"Option A diagram\" style=\"max-height:120px;\" />"
+      },
+      {
+        "id": "B",
+        "text": "Diagram (B): <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794499538/edvedum/questions/excretory_products_and_their_elimination/excretory_q_4_b.png\" alt=\"Option B diagram\" style=\"max-height:120px;\" />"
+      },
+      {
+        "id": "C",
+        "text": "Diagram (C): <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794499539/edvedum/questions/excretory_products_and_their_elimination/excretory_q_4_c.png\" alt=\"Option C diagram\" style=\"max-height:120px;\" />"
+      },
+      {
+        "id": "D",
+        "text": "Diagram (D): <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794499541/edvedum/questions/excretory_products_and_their_elimination/excretory_q_4_d.png\" alt=\"Option D diagram\" style=\"max-height:120px;\" />"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to NCERT (Fig. 19.5):\n- Proximal Convoluted Tubule (PCT): Reabsorbs $\\text{HCO}_3^-$, $\\text{NaCl}$, and $\\text{H}_2\\text{O}$ into surrounding peritubular capillaries; selectively secretes $\\text{H}^+$ and $\\text{NH}_3$ into the filtrate.\n- Distal Convoluted Tubule (DCT): Reabsorbs $\\text{NaCl}$, $\\text{H}_2\\text{O}$, and $\\text{HCO}_3^-$; selectively secretes $\\text{K}^+$ and $\\text{H}^+$ into the tubular lumen to maintain pH and ionic balance.\nThis matches Diagram (D)."
+  },
+  {
+    "num": 5,
+    "page": 3,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Diuresis is prevented by:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Renin from JG cell via switching off the osmoreceptors"
+      },
+      {
+        "id": "B",
+        "text": "ANF from atria of the heart"
+      },
+      {
+        "id": "C",
+        "text": "Aldosterone from adrenal medulla"
+      },
+      {
+        "id": "D",
+        "text": "Vasopressin from Neurohypophysis P Y Q P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Vasopressin from Neurohypophysis P Y Q P D F\" is correct."
+  },
+  {
+    "num": 6,
+    "page": 4,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Given below are two statements:\nStatement I: Concentrated urine is formed due to counter current mechanism in nephron.\nStatement II: Counter current mechanism helps to maintain osmotic gradient in the medullary\ninterstitium.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but Statement II is incorrect."
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but Statement II is correct."
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are correct."
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are incorrect."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Both Statement I and Statement II are correct.\" is correct."
+  },
+  {
+    "num": 7,
+    "page": 4,
+    "year": "NEET 2024",
+    "question": "Given below are two statements :\nStatement I : In the nephron, the descending limb of loop of Henle is impermeable to water and\npermeable to electrolytes.\nStatement II : The proximal convoluted tubule is lined by simple columnar brush border epithelium\nand increases the surface area for reabsorption.\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are false"
+      },
+      {
+        "id": "C",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "id": "D",
+        "text": "Statement I is false but Statement II is true"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"Both Statement I and Statement II are false\" is correct."
+  },
+  {
+    "num": 8,
+    "page": 4,
+    "year": "NEET 2024",
+    "question": "Choose the correct statement given below regarding juxta medullary nephron.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Juxta medullary nephrons are located in the columns of Bertini."
+      },
+      {
+        "id": "B",
+        "text": "Renal corpuscle of juxta medullary nephron lies in the outer portion of the renal medulla."
+      },
+      {
+        "id": "C",
+        "text": "Loop of Henle of juxta medullary nephron runs deep into medulla."
+      },
+      {
+        "id": "D",
+        "text": "Juxta medullary nephrons outnumber the cortical nephrons. P Y Q P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Loop of Henle of juxta medullary nephron runs deep into medulla.\" is correct."
+  },
+  {
+    "num": 9,
+    "page": 5,
+    "year": "NEET 2023 Manipur",
+    "question": "Given below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason (R)\nAssertion (A) : Ascending limb of loop of Henle is impermeable to water and allows transport of electrolytes actively or passively.\nReason (R) : Dilution of filtrate takes place due to efflux of electrolytes in the medullary fluid.\n\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A) is true but (R) is false"
+      },
+      {
+        "id": "B",
+        "text": "(A) is false but (R) is true"
+      },
+      {
+        "id": "C",
+        "text": "Both (A) and (R) are true and (R) is the correct explanation of (A)"
+      },
+      {
+        "id": "D",
+        "text": "Both (A) and (R) are true and (R) is not the correct explanation of (A)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- Assertion (A) is true: The ascending limb of loop of Henle is impermeable to water and allows transport of electrolytes actively or passively.\n- Reason (R) is true: As the concentrated filtrate passes upward through the ascending limb, dilution of filtrate occurs due to the efflux of electrolytes into the medullary interstitium.\n- Reason (R) correctly explains Assertion (A)."
+  },
+  {
+    "num": 10,
+    "page": 5,
+    "year": "NEET 2023 Manipur",
+    "question": "Arrange the events of Renin - Angiotensin mechanism in correct sequence.\n(A) Activation of JG cells and release of renin.\n(B) Angiotensin II activates release of aldosterone.\n(C) Fall in glomerular blood pressure.\n(D) Reabsorption of $\\text{Na}^+$ and water from distal convoluted tubule.\n(E) Angiotensinogen is converted to Angiotensin I and then to Angiotensin II.\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(C), (A), (E), (B), (D)"
+      },
+      {
+        "id": "B",
+        "text": "(A), (D), (E), (C), (B)"
+      },
+      {
+        "id": "C",
+        "text": "(A), (D), (C), (B), (E)"
+      },
+      {
+        "id": "D",
+        "text": "(B), (A), (E), (D), (C)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nCorrect sequence:\n1. (C) Fall in glomerular blood pressure / GFR\n2. (A) Activation of JG cells and release of renin\n3. (E) Angiotensinogen is converted to Angiotensin I and then to Angiotensin II\n4. (B) Angiotensin II activates release of aldosterone\n5. (D) Reabsorption of $\\text{Na}^+$ and water from distal convoluted tubule\nHence, (C), (A), (E), (B), (D)."
+  },
+  {
+    "num": 11,
+    "page": 5,
+    "year": "NEET 2023",
+    "question": "Given below are two statements: one is labelled as Assertion A and the other is labelled as Reason\nR.\nAssertion A : Nephrons are of two types: Cortical & Juxta medullary, based on their relative position\nin cortex and medulla.\nReason R : Juxta medullary nephrons have short loop of Henle whereas, cortical nephrons have\nlonger loop of Henle.\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both A and R are true but R is NOT the correct explanation of A."
+      },
+      {
+        "id": "B",
+        "text": "A is true but R is false."
+      },
+      {
+        "id": "C",
+        "text": "A is false but R is true."
+      },
+      {
+        "id": "D",
+        "text": "Both A and R are true and R is the correct explanation of A. P Y Q P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"A is true but R is false.\" is correct."
+  },
+  {
+    "num": 12,
+    "page": 6,
+    "year": "NEET 2023",
+    "question": "Match List I with List II.\n\n| List I | List II |\n| :--- | :--- |\n| (A) Taenia | (I) Nephridia |\n| (B) Paramoecium | (II) Contractile vacuole |\n| (C) Periplaneta | (III) Flame cells |\n| (D) Pheretima | (IV) Urecose gland |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-I, B-II, C-IV, D-III"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-I, C-IV, D-III"
+      },
+      {
+        "id": "D",
+        "text": "A-I, B-II, C-III, D-IV"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- Taenia (Platyhelminthes): Flame cells / protonephridia (A-III)\n- Paramoecium (Protozoa): Contractile vacuole for osmoregulation (B-II)\n- Periplaneta (Cockroach): Urecose glands / Malpighian tubules (C-IV)\n- Pheretima (Earthworm): Nephridia (D-I)"
+  },
+  {
+    "num": 13,
+    "page": 6,
+    "year": "NEET 2023",
+    "question": "Which of the following statements are correct?\nA. An excessive loss of body fluid from the body switches off osmoreceptors.\nB. ADH facilitates water reabsorption to prevent diuresis.\nC. ANF causes vasodilation.\nD. ADH causes increase in blood pressure.\nE. ADH is responsible for decrease in GFR.\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "B, C and D only"
+      },
+      {
+        "id": "B",
+        "text": "A, B and E only"
+      },
+      {
+        "id": "C",
+        "text": "C, D and E only"
+      },
+      {
+        "id": "D",
+        "text": "A and B only"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"B, C and D only\" is correct."
+  },
+  {
+    "num": 14,
+    "page": 6,
+    "year": "NEET 2022 Phase 2",
+    "question": "Select the correct statements.\n(a) Angiotensin II activates the cortex of adrenal gland to release aldosterone.\n(b) Aldosterone leads to increase in blood pressure.\n(c) ANF acts as a check on renin-angiotensin mechanism.\n(d) ADH causes vasodilation.\n(e) Vasopressin is released from adenohypophysis.\nChoose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a), (b) and (c) only"
+      },
+      {
+        "id": "B",
+        "text": "(a), (b) and (e) only"
+      },
+      {
+        "id": "C",
+        "text": "(c), (d) and (e) only"
+      },
+      {
+        "id": "D",
+        "text": "(b), (c) and (d) only P Y Q P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"(a), (b) and (c) only\" is correct."
+  },
+  {
+    "num": 15,
+    "page": 7,
+    "year": "NEET 2022 Phase 1",
+    "question": "Nitrogenous waste is excreted in the form of pellet or paste by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ornithorhynchus"
+      },
+      {
+        "id": "B",
+        "text": "Salamandra"
+      },
+      {
+        "id": "C",
+        "text": "Hippocampus"
+      },
+      {
+        "id": "D",
+        "text": "Pavo"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Pavo\" is correct."
+  },
+  {
+    "num": 16,
+    "page": 7,
+    "year": "NEET 2020 Phase 2",
+    "question": "The increase in osmolarity from outer to inner medullary interstitium is maintained due to :\n(i) Close proximity between Henle's loop and vasa recta\n(ii) Counter current mechanism\n(iii) Selective secretion of $\\text{HCO}_3^-$ and hydrogen ions in PCT\n(iv) Higher blood pressure in glomerular capillaries",
+    "options": [
+      {
+        "id": "A",
+        "text": "(i) and (ii)"
+      },
+      {
+        "id": "B",
+        "text": "Only (ii)"
+      },
+      {
+        "id": "C",
+        "text": "(iii) and (iv)"
+      },
+      {
+        "id": "D",
+        "text": "(i), (ii) and (iii)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe proximity between the Henle's loop and vasa recta, as well as the counter current in them, help in maintaining an increasing osmolarity towards the inner medullary interstitium (from 300 mOsmol/L in cortex to about 1200 mOsmol/L in inner medulla). Hence, statements (i) and (ii) are correct."
+  },
+  {
+    "num": 17,
+    "page": 7,
+    "year": "NEET 2020 Phase 2",
+    "question": "Select the correct statement :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Reduction in Glomerular Filtration Rate activates JG cells to release renin."
+      },
+      {
+        "id": "B",
+        "text": "Atrial Natriuretic Factor increases the blood pressure."
+      },
+      {
+        "id": "C",
+        "text": "Angiotensin II is a powerful vasodilator."
+      },
+      {
+        "id": "D",
+        "text": "Counter current pattern of blood flow is not observed in vasa recta."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Reduction in Glomerular Filtration Rate activates JG cells to release renin.\" is correct."
+  },
+  {
+    "num": 18,
+    "page": 7,
+    "year": "NEET 2020 Phase 1",
+    "question": "Presence of which of the following conditions in urine are indicative of Diabetes Mellitus?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ketonuria and Glycosuria"
+      },
+      {
+        "id": "B",
+        "text": "Uremia and Renal Calculi"
+      },
+      {
+        "id": "C",
+        "text": "Uremia and Ketonuria"
+      },
+      {
+        "id": "D",
+        "text": "Renal calculi and Hyperglycaemia"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Ketonuria and Glycosuria\" is correct."
+  },
+  {
+    "num": 19,
+    "page": 7,
+    "year": "NEET 2020 Phase 1",
+    "question": "Which of the following would help in prevention of diuresis?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Decrease in secretion of renin by JG cells"
+      },
+      {
+        "id": "B",
+        "text": "More water reabsorption due to undersecretion of ADH"
+      },
+      {
+        "id": "C",
+        "text": "Reabsorption of $\\text{Na}^+$ and water from renal tubules due to aldosterone"
+      },
+      {
+        "id": "D",
+        "text": "Atrial natriuretic factor causes vasoconstriction"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAldosterone acts mainly at the renal tubules and stimulates the reabsorption of $\\text{Na}^+$ and water, and excretion of $\\text{K}^+$ and phosphate ions. This conserves water in the body and prevents diuresis."
+  },
+  {
+    "num": 20,
+    "page": 8,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Match the following parts of a nephron with their function:\n\n| Part of Nephron | Function |\n| :--- | :--- |\n| (a) Descending limb of Henle's loop | (i) Reabsorption of salts only |\n| (b) Proximal convoluted tubule | (ii) Reabsorption of water only |\n| (c) Ascending limb of Henle's loop | (iii) Conditional reabsorption of sodium ions and water |\n| (d) Distal convoluted tubule | (iv) Reabsorption of ions, water and organic nutrients |\n\nSelect the correct option from the following:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iv), (b)-(i), (c)-(iii), (d)-(ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(i), (b)-(iii), (c)-(ii), (d)-(iv)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(ii), (b)-(iv), (c)-(i), (d)-(iii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(i), (b)-(iv), (c)-(ii), (d)-(iii)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- (a) Descending limb of Henle's loop: Permeable to water but impermeable to electrolytes, so reabsorption of water only occurs here (a-ii).\n- (b) Proximal convoluted tubule (PCT): Reabsorbs nearly 70-80% of electrolytes, water, and essential organic nutrients (b-iv).\n- (c) Ascending limb of Henle's loop: Impermeable to water, permeable to electrolytes (reabsorption of salts only) (c-i).\n- (d) Distal convoluted tubule (DCT): Conditional reabsorption of $\\text{Na}^+$ and water (d-iii)."
+  },
+  {
+    "num": 21,
+    "page": 8,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Match the items in Column-I with those in Column-II :\n\n| Column-I | Column-II |\n| :--- | :--- |\n| (a) Podocytes | (i) Crystallised oxalates |\n| (b) Protonephridia | (ii) Annelids |\n| (c) Nephridia | (iii) Amphioxus |\n| (d) Renal calculi | (iv) Filtration slits |\n\nSelect the correct option from the following:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iv), (b)-(ii), (c)-(iii), (d)-(i)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iii), (b)-(iv), (c)-(ii), (d)-(i)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iii), (b)-(ii), (c)-(iv), (d)-(i)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- Podocytes: Epithelial cells of Bowman's capsule arranged in an intricate manner leaving minute spaces called filtration slits or slit pores (a-iv).\n- Protonephridia: Excretory structures in cephalochordates like Amphioxus (b-iii).\n- Nephridia: Tubular excretory structures in annelids like earthworm (c-ii).\n- Renal calculi: Insoluble mass of crystallised salts (oxalates, etc.) formed within kidney (d-i)."
+  },
+  {
+    "num": 22,
+    "page": 8,
+    "year": "NEET 2019",
+    "question": "Which of the following factors is responsible for the formation of concentrated urine?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Secretion of erythropoietin by Juxtaglomerular complex."
+      },
+      {
+        "id": "B",
+        "text": "Hydrostatic pressure during glomerular filtration."
+      },
+      {
+        "id": "C",
+        "text": "Low levels of antidiuretic hormone."
+      },
+      {
+        "id": "D",
+        "text": "Maintaining hyperosmolarity towards inner medullary interstitium in the kidneys P Y Q P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Maintaining hyperosmolarity towards inner medullary interstitium in the kidneys P Y Q P D F\" is correct."
+  },
+  {
+    "num": 23,
+    "page": 9,
+    "year": "NEET 2019",
+    "question": "Use of an artificial kidney during hemodialysis may result in :\n(a) Nitrogenous waste build-up in the body\n(b) Non –elimination of excess potassium ions\n(c) Reduced absorption of calcium ions from gastro-intestinal tract\n(d) Reduced RBC production\nWhich of the following options is the most   appropriate ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "(c) and (d) are correct"
+      },
+      {
+        "id": "B",
+        "text": "(a) and (d) are correct"
+      },
+      {
+        "id": "C",
+        "text": "(a) and (b) are correct"
+      },
+      {
+        "id": "D",
+        "text": "(b) and (c) are correct"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"(c) and (d) are correct\" is correct."
+  },
+  {
+    "num": 24,
+    "page": 9,
+    "year": "NEET 2018",
+    "question": "Match the items given in column I with those in column II and select the correct option given below.\n\n| Column I | Column II |\n| :--- | :--- |\n| A. Glycosuria | (i) Accumulation of uric acid in joints |\n| B. Gout | (ii) Mass of crystallised salts within the kidney |\n| C. Renal calculi | (iii) Inflammation in glomeruli |\n| D. Glomerular nephritis | (iv) Presence of glucose in urine |",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-(iv), B-(i), C-(ii), D-(iii)"
+      },
+      {
+        "id": "B",
+        "text": "A-(ii), B-(iii), C-(i), D-(iv)"
+      },
+      {
+        "id": "C",
+        "text": "A-(iii), B-(ii), C-(iv), D-(i)"
+      },
+      {
+        "id": "D",
+        "text": "A-(i), B-(ii), C-(iii), D-(iv)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- Glycosuria: Presence of glucose in urine, indicative of diabetes mellitus (A-iv).\n- Gout: Inflammation of joints due to accumulation of uric acid crystals (B-i).\n- Renal calculi: Stone or insoluble mass of crystallised salts formed within the kidney (C-ii).\n- Glomerulonephritis: Inflammation of glomeruli of kidney (D-iii)."
+  },
+  {
+    "num": 25,
+    "page": 10,
+    "year": "NEET 2018",
+    "question": "Match the items given in column I with those in column II and select the correct option given below.\n\n| Column I (Function) | Column II (Part of excretory system) |\n| :--- | :--- |\n| A. Ultrafiltration | (i) Henle’s loop |\n| B. Concentration of urine | (ii) Ureter |\n| C. Transport of urine | (iii) Urinary bladder |\n| D. Storage of urine | (iv) Malpighian corpuscle |\n| | (v) Proximal convoluted tubule |",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-(iv), B-(i), C-(ii), D-(iii)"
+      },
+      {
+        "id": "B",
+        "text": "A-(iv), B-(v), C-(ii), D-(iii)"
+      },
+      {
+        "id": "C",
+        "text": "A-(v), B-(iv), C-(i), D-(iii)"
+      },
+      {
+        "id": "D",
+        "text": "A-(v), B-(iv), C-(i), D-(ii)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- Ultrafiltration: Malpighian corpuscle (glomerulus + Bowman's capsule) (A-iv).\n- Concentration of urine: Henle's loop and vasa recta (counter-current system) (B-i).\n- Transport of urine: Ureter (conducts urine from pelvis to urinary bladder) (C-ii).\n- Storage of urine: Urinary bladder (D-iii)."
+  },
+  {
+    "num": 26,
+    "page": 10,
+    "year": "NEET 2017",
+    "question": "A decrease in blood pressure/volume will not cause the release of",
+    "options": [
+      {
+        "id": "A",
+        "text": "atrial natriuretic factor"
+      },
+      {
+        "id": "B",
+        "text": "aldosterone"
+      },
+      {
+        "id": "C",
+        "text": "ADH"
+      },
+      {
+        "id": "D",
+        "text": "renin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"atrial natriuretic factor\" is correct."
+  },
+  {
+    "num": 27,
+    "page": 10,
+    "year": "NEET 2017",
+    "question": "Which of the following statements is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The descending limb of loop of Henle is impermeable to water"
+      },
+      {
+        "id": "B",
+        "text": "The ascending limb of loop of Henle is permeable to water."
+      },
+      {
+        "id": "C",
+        "text": "The descending limb of loop of Henle is permeable to electrolytes."
+      },
+      {
+        "id": "D",
+        "text": "The ascending limb of loop of Henle is impermeable to water."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"The ascending limb of loop of Henle is impermeable to water.\" is correct."
+  },
+  {
+    "num": 28,
+    "page": 10,
+    "year": "NEET 2016 Phase 2",
+    "question": "The part of nephron involved in active reabsorption of sodium is",
+    "options": [
+      {
+        "id": "A",
+        "text": "distal convoluted tubule"
+      },
+      {
+        "id": "B",
+        "text": "proximal convoluted tubule"
+      },
+      {
+        "id": "C",
+        "text": "Bowman's capsule"
+      },
+      {
+        "id": "D",
+        "text": "descending limb of Henle's loop"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"proximal convoluted tubule\" is correct."
+  },
+  {
+    "num": 29,
+    "page": 10,
+    "year": "NEET 2016 Phase 1",
+    "question": "In mammals, which blood vessel would normally carry largest amount of urea?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Hepatic Vein"
+      },
+      {
+        "id": "B",
+        "text": "Hepatic Portal Vein"
+      },
+      {
+        "id": "C",
+        "text": "Renal Vein"
+      },
+      {
+        "id": "D",
+        "text": "Dorsal Aorta P Y Q P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Hepatic Vein\" is correct."
+  },
+  {
+    "num": 30,
+    "page": 11,
+    "year": "AIPMT 2015",
+    "question": "Human urine is usually acidic because",
+    "options": [
+      {
+        "id": "A",
+        "text": "potassium and sodium exchange generates acidity"
+      },
+      {
+        "id": "B",
+        "text": "hydrogen ions are actively secreted into the filtrate"
+      },
+      {
+        "id": "C",
+        "text": "the sodium transporter exchanges one hydrogen ion for each sodium ion, in peritubular capillaries."
+      },
+      {
+        "id": "D",
+        "text": "excreted plasma proteins are acidic"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"hydrogen ions are actively secreted into the filtrate\" is correct."
+  },
+  {
+    "num": 31,
+    "page": 11,
+    "year": "AIPMT 2015 Cancelled Paper",
+    "question": "Which of the following does not favour the formation of large quantities of dilute urine?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Renin"
+      },
+      {
+        "id": "B",
+        "text": "Atrial natriuretic factor"
+      },
+      {
+        "id": "C",
+        "text": "Alcohol"
+      },
+      {
+        "id": "D",
+        "text": "Caffeine"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Renin\" is correct."
+  },
+  {
+    "num": 32,
+    "page": 11,
+    "year": "AIPMT 2015 Cancelled Paper",
+    "question": "Removal of proximal convoluated tubule from the nephron will result in",
+    "options": [
+      {
+        "id": "A",
+        "text": "no change in quality and quantity of urine"
+      },
+      {
+        "id": "B",
+        "text": "no urine formation"
+      },
+      {
+        "id": "C",
+        "text": "more diluted urine"
+      },
+      {
+        "id": "D",
+        "text": "more concentrated urine."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"more diluted urine\" is correct."
+  },
+  {
+    "num": 33,
+    "page": 11,
+    "year": "AIPMT 2014",
+    "question": "Which of the following causes an increase in sodium reabsorption in the distal convoluted tubule?",
+    "options": [
+      {
+        "id": "A",
+        "text": "increase in aldosterone levels"
+      },
+      {
+        "id": "B",
+        "text": "Increase in antidiuretic hormone levels"
+      },
+      {
+        "id": "C",
+        "text": "Decrease in aldosterone levels"
+      },
+      {
+        "id": "D",
+        "text": "Decrease in antidiuretic hormone levels P Y Q P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"increase in aldosterone levels\" is correct."
+  },
+  {
+    "num": 34,
+    "page": 12,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Select the option which shows correct matching of animal with its excretory organ and excretory product.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Animal: Labeo (Rohu) | Excretory organ: Nephridial tubes | Excretory product: Ammonia"
+      },
+      {
+        "id": "B",
+        "text": "Animal: Salamander | Excretory organ: Kidneys | Excretory product: Urea"
+      },
+      {
+        "id": "C",
+        "text": "Animal: Peacock | Excretory organ: Kidneys | Excretory product: Urea"
+      },
+      {
+        "id": "D",
+        "text": "Animal: Housefly | Excretory organ: Renal tubules | Excretory product: Uric acid"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- Salamander (Amphibian): Excretes urea (ureotelic) through mesonephric kidneys.\n- Labeo (Bony fish): Excretes ammonia (ammonotelic) mainly through gills, not nephridial tubes.\n- Peacock (Bird): Excretes uric acid (uricotelic), not urea.\n- Housefly (Insect): Excretes uric acid via Malpighian tubules, not renal tubules."
+  },
+  {
+    "num": 35,
+    "page": 12,
+    "year": "NEET 2013",
+    "question": "Figure shows human urinary system with structures labelled A to D. Select option which correctly identifies them and gives their characteristic and/or functions.",
+    "options": [
+      {
+        "id": "A",
+        "text": "A - Adrenal gland - located at the anterior part of kidney. Secrete catecholamines which stimulate glycogen breakdown."
+      },
+      {
+        "id": "B",
+        "text": "C - Medulla - inner zone of kidney and contains complete nephrons."
+      },
+      {
+        "id": "C",
+        "text": "B - Pelvis - broad funnel shaped space inner to hilum, directly connected to loops of Henle."
+      },
+      {
+        "id": "D",
+        "text": "D - Cortex - outer part of kidney and do not contain any part of nephrons."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn the given figure of the human urinary system:\n- A represents the adrenal gland, situated at the superior/anterior pole of each kidney; its medulla secretes catecholamines (adrenaline and noradrenaline) which stimulate glycogen breakdown.\n- B represents the renal pelvis (funnel-shaped cavity).\n- C represents renal medulla (medullary pyramids).\n- D represents the renal cortex, which contains Malpighian corpuscles, PCT, and DCT."
+  },
+  {
+    "num": 36,
+    "page": 13,
+    "year": "AIPMT 2012 Mains",
+    "question": "Which one of the following options gives the correct categorization of six animals according to the type of nitrogenous waste they give out?\n\n| Option | Ammonotelic | Ureotelic | Uricotelic |\n| :--- | :--- | :--- | :--- |\n| (A) | Pigeon, Humans | Aquatic amphibia, lizards | Cockroach, frog |\n| (B) | Frog, lizards | Aquatic amphibia, humans | Cockroach, pigeon |\n| (C) | Aquatic amphibia | Frog, humans | Pigeon, lizards, Cockroach |\n| (D) | Aquatic amphibia | Cockroach, humans | Frog, pigeon, lizards |",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ammonotelic: Pigeon, Humans; Ureotelic: Aquatic amphibia, lizards; Uricotelic: Cockroach, frog"
+      },
+      {
+        "id": "B",
+        "text": "Ammonotelic: Frog, lizards; Ureotelic: Aquatic amphibia, humans; Uricotelic: Cockroach, pigeon"
+      },
+      {
+        "id": "C",
+        "text": "Ammonotelic: Aquatic amphibia; Ureotelic: Frog, humans; Uricotelic: Pigeon, lizards, Cockroach"
+      },
+      {
+        "id": "D",
+        "text": "Ammonotelic: Aquatic amphibia; Ureotelic: Cockroach, humans; Uricotelic: Frog, pigeon, lizards"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- Ammonotelic: Aquatic amphibians (tadpoles/adults in water), bony fishes, and aquatic insects.\n- Ureotelic: Terrestrial amphibians (adult frog) and mammals (humans).\n- Uricotelic: Reptiles (lizards), birds (pigeon), and terrestrial insects (cockroach)."
+  },
+  {
+    "num": 37,
+    "page": 13,
+    "year": "AIPMT 2012 Mains",
+    "question": "A fall in glomerular filtration rate (GFR) activates",
+    "options": [
+      {
+        "id": "A",
+        "text": "juxtaglomerular cells to release renin"
+      },
+      {
+        "id": "B",
+        "text": "adrenal cortex to release aldosterone"
+      },
+      {
+        "id": "C",
+        "text": "adrenal medulla to release adrenaline"
+      },
+      {
+        "id": "D",
+        "text": "posterior pituitary to release vasopressin."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"juxtaglomerular cells to release renin\" is correct."
+  },
+  {
+    "num": 38,
+    "page": 13,
+    "year": "AIPMT 2012 Mains",
+    "question": "Which one of the following characteristics is common both in humans and adult frogs?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Four chambered heart"
+      },
+      {
+        "id": "B",
+        "text": "Internal fertilization"
+      },
+      {
+        "id": "C",
+        "text": "Nucleated RBCs"
+      },
+      {
+        "id": "D",
+        "text": "Ureotelic mode of excretion"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Ureotelic mode of excretion\" is correct."
+  },
+  {
+    "num": 39,
+    "page": 13,
+    "year": "AIPMT 2012 Prelims",
+    "question": "The maximum amount of electrolytes and water (70   80 percent) from the glomerular filtrate is\nreabsorbed in which part of the nephron?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ascending limb of loop of Henle"
+      },
+      {
+        "id": "B",
+        "text": "Distal convoluted tubule"
+      },
+      {
+        "id": "C",
+        "text": "Proximal convoluted tubule"
+      },
+      {
+        "id": "D",
+        "text": "Descending limb of loop of Henle P Y Q P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Proximal convoluted tubule\" is correct."
+  },
+  {
+    "num": 40,
+    "page": 14,
+    "year": "AIPMT 2011 Prelims",
+    "question": "Which one of the following is not a part of a renal pyramid?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Peritubular capillaries"
+      },
+      {
+        "id": "B",
+        "text": "Convoluted tubules"
+      },
+      {
+        "id": "C",
+        "text": "Collecting ducts"
+      },
+      {
+        "id": "D",
+        "text": "Loop of Henle"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"Convoluted tubules\" is correct."
+  },
+  {
+    "num": 41,
+    "page": 14,
+    "year": "AIPMT 2011 Prelims",
+    "question": "Which one of the following correctly explains the function of a specific part of the human nephron?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Podocytes : create minute spaces (slit pores) for the filtration of blood into the Bowman's capsule"
+      },
+      {
+        "id": "B",
+        "text": "Henle's loop : most reabsorption of the major substances from the glomerular filtrate"
+      },
+      {
+        "id": "C",
+        "text": "Distal convoluted tubule : reabsorption of $\\text{K}^+$ ions into the surrounding blood capillaries"
+      },
+      {
+        "id": "D",
+        "text": "Afferent arteriole : carries the blood away from the glomerulus towards renal vein."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe epithelial cells of Bowman's capsule, called podocytes, are arranged in an intricate manner so as to leave some minute spaces called filtration slits or slit pores through which blood is filtered into the lumen of Bowman's capsule."
+  },
+  {
+    "num": 42,
+    "page": 14,
+    "year": "AIPMT 2011 Prelims",
+    "question": "Which one of the following statements is correct with respect to kidney function regulation?",
+    "options": [
+      {
+        "id": "A",
+        "text": "When someone drinks lot of water, ADH release is suppressed."
+      },
+      {
+        "id": "B",
+        "text": "Exposure to cold temperature stimulates ADH release."
+      },
+      {
+        "id": "C",
+        "text": "An increase in glomerular blood flow stimulates formation of angiotensin II."
+      },
+      {
+        "id": "D",
+        "text": "During summer when body loses lot of water by evaporation, the release of ADH is suppressed."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"When someone drinks lot of water, ADH release is suppressed.\" is correct."
+  },
+  {
+    "num": 43,
+    "page": 14,
+    "year": "AIPMT 2010 Prelims",
+    "question": "Which one of the following statements in regard to the excretion by the human kidneys is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Descending limb of loop of Henle is impermeable to water."
+      },
+      {
+        "id": "B",
+        "text": "Distal convoluted tubule is incapable of reabsorbing $\\text{HCO}_3^-$"
+      },
+      {
+        "id": "C",
+        "text": "Nearly 99 per cent of the glomerular filtrate is reabsorbed by the renal tubules."
+      },
+      {
+        "id": "D",
+        "text": "Ascending limb of loop of Henle is impermeable to electrolytes."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nA comparison of the volume of the filtrate formed per day (180 litres per day) with that of the urine released (1.5 litres) suggests that nearly 99 percent of the filtrate has to be reabsorbed by the renal tubules."
+  },
+  {
+    "num": 44,
+    "page": 14,
+    "year": "AIPMT 2010 Prelims",
+    "question": "The principal nitrogenous excretory compound in humans is synthesised",
+    "options": [
+      {
+        "id": "A",
+        "text": "in kidneys but eliminated mostly through liver"
+      },
+      {
+        "id": "B",
+        "text": "in kidneys as well as eliminated by kidneys"
+      },
+      {
+        "id": "C",
+        "text": "in liver and also eliminated by the same through bile"
+      },
+      {
+        "id": "D",
+        "text": "in the liver, but eliminated mostly through kidneys. P Y Q P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"in the liver, but eliminated mostly through kidneys. P Y Q P D F\" is correct."
+  },
+  {
+    "num": 45,
+    "page": 15,
+    "year": "AIPMT 2009",
+    "question": "What will happen if the stretch receptors of the urinary bladder wall are totally removed?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Micturition will continue"
+      },
+      {
+        "id": "B",
+        "text": "Urine will continue to collect normally in the bladder"
+      },
+      {
+        "id": "C",
+        "text": "There will be no micturition"
+      },
+      {
+        "id": "D",
+        "text": "Urine will not collect in the bladder"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"There will be no micturition\" is correct."
+  },
+  {
+    "num": 46,
+    "page": 15,
+    "year": "AIPMT 2009",
+    "question": "Uric acid is the chief nitrogenous component of the excretory products of",
+    "options": [
+      {
+        "id": "A",
+        "text": "earthworm"
+      },
+      {
+        "id": "B",
+        "text": "cockroach"
+      },
+      {
+        "id": "C",
+        "text": "frog"
+      },
+      {
+        "id": "D",
+        "text": "man."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"cockroach\" is correct."
+  },
+  {
+    "num": 47,
+    "page": 15,
+    "year": "AIPMT 2007",
+    "question": "A person who is on a long hunger strike and is surviving only on water, will have",
+    "options": [
+      {
+        "id": "A",
+        "text": "less amino acids in his urine"
+      },
+      {
+        "id": "B",
+        "text": "more glucose in his blood"
+      },
+      {
+        "id": "C",
+        "text": "less urea in his urine"
+      },
+      {
+        "id": "D",
+        "text": "more sodium in his urine."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"less urea in his urine\" is correct."
+  },
+  {
+    "num": 48,
+    "page": 15,
+    "year": "AIPMT 2006",
+    "question": "Angiotensinogen is a protein produced and secreted by",
+    "options": [
+      {
+        "id": "A",
+        "text": "juxtaglomerular (JG) cells"
+      },
+      {
+        "id": "B",
+        "text": "macula densa cells"
+      },
+      {
+        "id": "C",
+        "text": "endothelial cells (cells lining the blood vessels)"
+      },
+      {
+        "id": "D",
+        "text": "liver cells."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"liver cells.\" is correct."
+  },
+  {
+    "num": 49,
+    "page": 15,
+    "year": "AIPMT 2005",
+    "question": "In ornithine cycle, which of the following wastes are removed from the blood?",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\text{CO}_2$ and urea"
+      },
+      {
+        "id": "B",
+        "text": "Ammonia and urea"
+      },
+      {
+        "id": "C",
+        "text": "$\\text{CO}_2$ and ammonia"
+      },
+      {
+        "id": "D",
+        "text": "Urea and urine"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn the liver, the ornithine cycle (urea cycle) converts toxic ammonia and $\\text{CO}_2$ into urea ($2\\text{NH}_3 + \\text{CO}_2 \\rightarrow \\text{NH}_2\\text{CONH}_2 + \\text{H}_2\\text{O}$), removing $\\text{CO}_2$ and ammonia from the blood."
+  },
+  {
+    "num": 50,
+    "page": 15,
+    "year": "AIPMT 2005",
+    "question": "The net pressure gradient that causes the fluid to filter out of the glomeruli into the capsule is",
+    "options": [
+      {
+        "id": "A",
+        "text": "50 mm Hg"
+      },
+      {
+        "id": "B",
+        "text": "75 mm Hg"
+      },
+      {
+        "id": "C",
+        "text": "20 mm Hg"
+      },
+      {
+        "id": "D",
+        "text": "30 mm Hg P Y Q P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"20 mm Hg\" is correct."
+  },
+  {
+    "num": 51,
+    "page": 16,
+    "year": "AIPMT 2005",
+    "question": "A person is undergoing prolonged fasting. His urine will be found to contain abnormal quantities of",
+    "options": [
+      {
+        "id": "A",
+        "text": "fats"
+      },
+      {
+        "id": "B",
+        "text": "amino acids"
+      },
+      {
+        "id": "C",
+        "text": "glucose"
+      },
+      {
+        "id": "D",
+        "text": "ketones."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"ketones.\" is correct."
+  },
+  {
+    "num": 52,
+    "page": 16,
+    "year": "AIPMT 2004",
+    "question": "A terrestrial animal must be able to",
+    "options": [
+      {
+        "id": "A",
+        "text": "excrete large amounts of water in urine"
+      },
+      {
+        "id": "B",
+        "text": "conserve water"
+      },
+      {
+        "id": "C",
+        "text": "actively pump salts out through the skin"
+      },
+      {
+        "id": "D",
+        "text": "excrete large amounts of salts in urine"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"conserve water\" is correct."
+  },
+  {
+    "num": 53,
+    "page": 16,
+    "year": "AIPMT 2003",
+    "question": "If Henle's loop were absent from mammalian nephron, which one of the following is to be expected?",
+    "options": [
+      {
+        "id": "A",
+        "text": "There will be no urine formation."
+      },
+      {
+        "id": "B",
+        "text": "There will be hardly any change in the quality and quantity of urine formed."
+      },
+      {
+        "id": "C",
+        "text": "The urine will be more concentrated,"
+      },
+      {
+        "id": "D",
+        "text": "The urine will be more dilute."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"The urine will be more dilute.\" is correct."
+  },
+  {
+    "num": 54,
+    "page": 16,
+    "year": "AIPMT 2000",
+    "question": "Conversion of ammonia to urea is done by",
+    "options": [
+      {
+        "id": "A",
+        "text": "ornithine cycle"
+      },
+      {
+        "id": "B",
+        "text": "arginine cycle"
+      },
+      {
+        "id": "C",
+        "text": "fumaric cycle"
+      },
+      {
+        "id": "D",
+        "text": "citrulline cycle."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"ornithine cycle\" is correct."
+  },
+  {
+    "num": 55,
+    "page": 16,
+    "year": "AIPMT 2000",
+    "question": "Concentration of urine depends upon which organ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Bowman's capsule"
+      },
+      {
+        "id": "B",
+        "text": "Length of Henle's loop"
+      },
+      {
+        "id": "C",
+        "text": "PCT"
+      },
+      {
+        "id": "D",
+        "text": "Network of capillaries arising from glomerulus"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"Length of Henle's loop\" is correct."
+  },
+  {
+    "num": 56,
+    "page": 16,
+    "year": "AIPMT 1999",
+    "question": "Aquatic reptiles are",
+    "options": [
+      {
+        "id": "A",
+        "text": "ammonotelic"
+      },
+      {
+        "id": "B",
+        "text": "ureotelic"
+      },
+      {
+        "id": "C",
+        "text": "ureotelic in water"
+      },
+      {
+        "id": "D",
+        "text": "ureotelic over land P Y Q P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"ureotelic\" is correct."
+  },
+  {
+    "num": 57,
+    "page": 17,
+    "year": "AIPMT 1998",
+    "question": "A condition of failure of kidney to form urine is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "deamination"
+      },
+      {
+        "id": "B",
+        "text": "entropy"
+      },
+      {
+        "id": "C",
+        "text": "anuria"
+      },
+      {
+        "id": "D",
+        "text": "none of these"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"anuria\" is correct."
+  },
+  {
+    "num": 58,
+    "page": 17,
+    "year": "AIPMT 1997",
+    "question": "The basic functional unit of human kidney is",
+    "options": [
+      {
+        "id": "A",
+        "text": "nephridia"
+      },
+      {
+        "id": "B",
+        "text": "Henle's loop"
+      },
+      {
+        "id": "C",
+        "text": "nephron"
+      },
+      {
+        "id": "D",
+        "text": "pyramid"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"nephron\" is correct."
+  },
+  {
+    "num": 59,
+    "page": 17,
+    "year": "AIPMT 1997",
+    "question": "In ureotelic animals, urea is formed by",
+    "options": [
+      {
+        "id": "A",
+        "text": "Krebs' cycle"
+      },
+      {
+        "id": "B",
+        "text": "EM pathway"
+      },
+      {
+        "id": "C",
+        "text": "Ornithine cycle"
+      },
+      {
+        "id": "D",
+        "text": "Cori cycle"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Ornithine cycle\" is correct."
+  },
+  {
+    "num": 60,
+    "page": 17,
+    "year": "AIPMT 1996",
+    "question": "The nephridia in earthworm are analogous to",
+    "options": [
+      {
+        "id": "A",
+        "text": "nematoblasts of Hydra"
+      },
+      {
+        "id": "B",
+        "text": "flame cells of Planaria"
+      },
+      {
+        "id": "C",
+        "text": "gills of prawn"
+      },
+      {
+        "id": "D",
+        "text": "trachea of insects"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"flame cells of Planaria\" is correct."
+  },
+  {
+    "num": 61,
+    "page": 17,
+    "year": "AIPMT 1996",
+    "question": "The ornithine cycle removes two waste products from the blood in liver. These products are",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\text{CO}_2$ and ammonia"
+      },
+      {
+        "id": "B",
+        "text": "ammonia and uric acid"
+      },
+      {
+        "id": "C",
+        "text": "$\\text{CO}_2$ and urea"
+      },
+      {
+        "id": "D",
+        "text": "ammonia and urea"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe ornithine cycle removes ammonia and $\\text{CO}_2$ from blood in the liver by converting them into less toxic urea."
+  },
+  {
+    "num": 62,
+    "page": 17,
+    "year": "AIPMT 1994",
+    "question": "Two examples in which the nitrogenous wastes are excreted from body in the form of uric acid are",
+    "options": [
+      {
+        "id": "A",
+        "text": "birds and lizards"
+      },
+      {
+        "id": "B",
+        "text": "frogs and cartilaginous fish"
+      },
+      {
+        "id": "C",
+        "text": "insects and bony fish"
+      },
+      {
+        "id": "D",
+        "text": "mammals and molluscs"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"birds and lizards\" is correct."
+  },
+  {
+    "num": 63,
+    "page": 17,
+    "year": "AIPMT 1994",
+    "question": "Which one of the four parts mentioned below does not constitute a part of single uriniferous tubule?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Distal convoluted tubule"
+      },
+      {
+        "id": "B",
+        "text": "Collecting duct"
+      },
+      {
+        "id": "C",
+        "text": "Bowman's capsule"
+      },
+      {
+        "id": "D",
+        "text": "Loop of Henle P Y Q P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"Collecting duct\" is correct."
+  },
+  {
+    "num": 64,
+    "page": 18,
+    "year": "AIPMT 1994",
+    "question": "If excess water passes out from the tissue without being restored by the kidneys, the cells would",
+    "options": [
+      {
+        "id": "A",
+        "text": "burst open and die"
+      },
+      {
+        "id": "B",
+        "text": "take water from the plasma"
+      },
+      {
+        "id": "C",
+        "text": "not be affected at all"
+      },
+      {
+        "id": "D",
+        "text": "shrivel and die"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"shrivel and die\" is correct."
+  },
+  {
+    "num": 65,
+    "page": 18,
+    "year": "AIPMT 1993",
+    "question": "Glucose is taken back from glomerular filtrate through",
+    "options": [
+      {
+        "id": "A",
+        "text": "active transport"
+      },
+      {
+        "id": "B",
+        "text": "passive transport"
+      },
+      {
+        "id": "C",
+        "text": "osmosis"
+      },
+      {
+        "id": "D",
+        "text": "diffusion"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"active transport\" is correct."
+  },
+  {
+    "num": 66,
+    "page": 18,
+    "year": "AIPMT 1991",
+    "question": "Nitrogenous waste products are eliminated mainly as",
+    "options": [
+      {
+        "id": "A",
+        "text": "urea in tadpole and ammonia in adult frog"
+      },
+      {
+        "id": "B",
+        "text": "ammonia in tadpole and urea in adult frog"
+      },
+      {
+        "id": "C",
+        "text": "urea in both tadpole and adult frog"
+      },
+      {
+        "id": "D",
+        "text": "urea in tadpole and uric acid in adult frog"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"ammonia in tadpole and urea in adult frog\" is correct."
+  },
+  {
+    "num": 67,
+    "page": 18,
+    "year": "AIPMT 1991",
+    "question": "Under normal conditions which one is completely reabsorbed in the renal tubule?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Urea"
+      },
+      {
+        "id": "B",
+        "text": "Uric acid"
+      },
+      {
+        "id": "C",
+        "text": "Salts"
+      },
+      {
+        "id": "D",
+        "text": "Glucose"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Glucose\" is correct."
+  },
+  {
+    "num": 68,
+    "page": 18,
+    "year": "AIPMT 1990",
+    "question": "Malpighian tubules are",
+    "options": [
+      {
+        "id": "A",
+        "text": "excretory organs of insects"
+      },
+      {
+        "id": "B",
+        "text": "excretory organs of annelids"
+      },
+      {
+        "id": "C",
+        "text": "respiratory organs of insects"
+      },
+      {
+        "id": "D",
+        "text": "respiratory organs of annelids"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"excretory organs of insects\" is correct."
+  },
+  {
+    "num": 69,
+    "page": 18,
+    "year": "AIPMT 1990",
+    "question": "Proximal and distal convoluted tubules are parts of",
+    "options": [
+      {
+        "id": "A",
+        "text": "seminiferous tubules"
+      },
+      {
+        "id": "B",
+        "text": "nephron"
+      },
+      {
+        "id": "C",
+        "text": "oviduct"
+      },
+      {
+        "id": "D",
+        "text": "vas deferens"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"nephron\" is correct."
+  },
+  {
+    "num": 70,
+    "page": 18,
+    "year": "AIPMT 1990",
+    "question": "Brush border is characteristic of",
+    "options": [
+      {
+        "id": "A",
+        "text": "neck of nephron"
+      },
+      {
+        "id": "B",
+        "text": "collecting tube"
+      },
+      {
+        "id": "C",
+        "text": "proximal convoluted tubule"
+      },
+      {
+        "id": "D",
+        "text": "all of the above P Y Q P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"proximal convoluted tubule\" is correct."
+  },
+  {
+    "num": 71,
+    "page": 19,
+    "year": "AIPMT 1989",
+    "question": "Reabsorption of useful substances from glomerular filtrate occurs in",
+    "options": [
+      {
+        "id": "A",
+        "text": "collecting tube"
+      },
+      {
+        "id": "B",
+        "text": "loop of Henle"
+      },
+      {
+        "id": "C",
+        "text": "proximal convoluted tubule"
+      },
+      {
+        "id": "D",
+        "text": "distal convoluted tubule"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"proximal convoluted tubule\" is correct."
+  },
+  {
+    "num": 72,
+    "page": 19,
+    "year": "AIPMT 1988",
+    "question": "Presence of RBC in urine is",
+    "options": [
+      {
+        "id": "A",
+        "text": "alkaptonuria"
+      },
+      {
+        "id": "B",
+        "text": "urothiasis"
+      },
+      {
+        "id": "C",
+        "text": "hematuria"
+      },
+      {
+        "id": "D",
+        "text": "proteinuria"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"hematuria\" is correct."
+  }
+]
