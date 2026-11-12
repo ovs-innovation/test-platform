@@ -1,0 +1,2030 @@
+[
+  {
+    "num": 1,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "Which of the following represents the correct sequence of arrangement of bones in the lower limb\nof humans?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Femur-tarsal-patella-tibia"
+      },
+      {
+        "id": "B",
+        "text": "Femur-tibia-patella-tarsal"
+      },
+      {
+        "id": "C",
+        "text": "Patella-femur-tibia-tarsal"
+      },
+      {
+        "id": "D",
+        "text": "Femur-patella-tibia-tarsal"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Femur-patella-tibia-tarsal\" is correct."
+  },
+  {
+    "num": 2,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "The number of vertebrae in a human is   .",
+    "options": [
+      {
+        "id": "A",
+        "text": "206"
+      },
+      {
+        "id": "B",
+        "text": "7"
+      },
+      {
+        "id": "C",
+        "text": "12"
+      },
+      {
+        "id": "D",
+        "text": "26"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"26\" is correct."
+  },
+  {
+    "num": 3,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "Muscle contraction is initiated by a signal sent by the central nervous system by the release of\n.",
+    "options": [
+      {
+        "id": "A",
+        "text": "cyclic adenine monophosphate"
+      },
+      {
+        "id": "B",
+        "text": "acetyl choline"
+      },
+      {
+        "id": "C",
+        "text": "acetyl coenzyme A"
+      },
+      {
+        "id": "D",
+        "text": "cyclic guanine monophosphate"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"acetyl choline\" is correct."
+  },
+  {
+    "num": 4,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "Which of the following is the correct order of arrangement of vertebral column from the head to toe?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cervical vertebra, thoracic vertebra, lumbar vertebra, sacrum"
+      },
+      {
+        "id": "B",
+        "text": "Cervical vertebra, thoracic vertebra, sacrum, lumbar vertebra"
+      },
+      {
+        "id": "C",
+        "text": "Sacrum, lumbar vertebra, thoracic vertebra, cervical vertebra"
+      },
+      {
+        "id": "D",
+        "text": "Cervical vertebra, lumbar vertebra, thoracic vertebra, sacrum P Y Q P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Cervical vertebra, thoracic vertebra, lumbar vertebra, sacrum\" is correct."
+  },
+  {
+    "num": 5,
+    "page": 3,
+    "year": "NEET 2026",
+    "question": "Choose the correct statements regarding muscle contraction.\nA. A motor neuron carries a signal sent by the Central Nervous System (CNS) to the sarcolemma of the muscle fibre.\nB. The neural signal generates an action potential which causes the release of $\\text{Ca}^{++}$ into sarcoplasm.\nC. Increase in $\\text{Ca}^{++}$ inactivates the actin for breaking cross bridges.\nD. Actin binds to the myosin head to form a cross bridge.\nE. Shortening of sarcomere takes place, by pulling actin filaments towards the centre of 'A' band.\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "C and D only"
+      },
+      {
+        "id": "B",
+        "text": "A and B only"
+      },
+      {
+        "id": "C",
+        "text": "C and E only"
+      },
+      {
+        "id": "D",
+        "text": "A, B, D and E only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- Statement A is correct: Motor neurons carry CNS signals to muscle fiber sarcolemma.\n- Statement B is correct: Action potential in sarcolemma spreads to sarcoplasmic reticulum releasing $\\text{Ca}^{++}$ into sarcoplasm.\n- Statement C is incorrect: $\\text{Ca}^{++}$ binds to troponin on actin, removing tropomyosin masking, activating actin to bind with myosin head (does not inactivate actin).\n- Statement D is correct: Active sites exposed on actin bind to myosin head forming cross bridges.\n- Statement E is correct: Sliding pulls actin filaments towards the centre of 'A' band, shortening the sarcomere.\nHence, statements A, B, D and E only are correct."
+  },
+  {
+    "num": 6,
+    "page": 3,
+    "year": "NEET 2026",
+    "question": "Which of the following statements are correct with reference to human endoskeleton?\nA. Human skull is monocondylic.\nB. The joint between any two adjoining vertebrae is a cartilaginous joint.\nC. In human beings, the number of cervical vertebrae is seven.\nD. All ribs except the last 2 pairs are bicephalic.\nE. The occipital bone of skull is articulated with atlas vertebra.\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "B and E only"
+      },
+      {
+        "id": "B",
+        "text": "B, C and E only"
+      },
+      {
+        "id": "C",
+        "text": "C, D and E only"
+      },
+      {
+        "id": "D",
+        "text": "A, B and D only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"B, C and E only\" is correct."
+  },
+  {
+    "num": 7,
+    "page": 3,
+    "year": "NEET 2026",
+    "question": "Match List I with List II related to muscular/skeletal system:\n\n| List I | List II |\n| :--- | :--- |\n| A. Tetany | I. Inflammation of joints |\n| B. Arthritis | II. Autoimmune disorder affecting neuromuscular junction |\n| C. Myasthenia gravis | III. Wild contraction in muscle due to low $\\text{Ca}^{++}$ in body fluid |\n| D. Muscular dystrophy | IV. Progressive degeneration of skeletal muscle |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-I, C-II, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-II, C-I, D-IV"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- Tetany: Rapid spasms (wild contractions) in muscle due to low $\\text{Ca}^{++}$ in body fluid (A-III).\n- Arthritis: Inflammation of joints (B-I).\n- Myasthenia gravis: Autoimmune disorder affecting neuromuscular junction leading to fatigue, weakening and paralysis (C-II).\n- Muscular dystrophy: Progressive degeneration of skeletal muscle, mostly genetic (D-IV)."
+  },
+  {
+    "num": 8,
+    "page": 4,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II:\n\n| List - I (Location of Joint) | List - II (Type of Joint) |\n| :--- | :--- |\n| (A) Joint between humerus and pectoral girdle | (I) Gliding joint |\n| (B) Knee joint | (II) Ball and Socket joint |\n| (C) Joint between atlas and axis | (III) Hinge joint |\n| (D) Joint between carpals | (IV) Pivot joint |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-I, B-IV, C-III, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-I, C-III, D-IV"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- Joint between humerus and pectoral girdle (glenoid cavity): Ball and socket joint (A-II).\n- Knee joint: Hinge joint (B-III).\n- Joint between atlas and axis: Pivot joint (C-IV).\n- Joint between carpals: Gliding joint (D-I)."
+  },
+  {
+    "num": 9,
+    "page": 4,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Select the correct statements regarding mechanism of muscle contraction.\nA. It is initiated by a signal sent by CNS via sensory neuron.\nB. Neurotransmitter generates action potential in the sarcolemma.\nC. Increased $\\text{Ca}^{++}$ level leads to the binding of calcium with troponin on actin filaments.\nD. Masking of active site for actin is activated.\nE. Utilising the energy from ATP hydrolysis to form cross bridge.\n\nChoose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "B, C and E only"
+      },
+      {
+        "id": "B",
+        "text": "C, D and E only"
+      },
+      {
+        "id": "C",
+        "text": "A and D only"
+      },
+      {
+        "id": "D",
+        "text": "B, D and E only"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- A is incorrect: Initiated by CNS signal sent via a motor neuron (not sensory neuron).\n- B is correct: Acetylcholine release generates action potential in sarcolemma.\n- C is correct: Release of $\\text{Ca}^{++}$ leads to binding of calcium with troponin on actin filaments.\n- D is incorrect: Binding of $\\text{Ca}^{++}$ removes (unmasks) the active site on actin (unmasking, not masking).\n- E is correct: Myosin head hydrolyzes ATP ($ADP + P_i$) and uses this energy to bind actin and form cross bridge.\nHence, statements B, C and E only are correct."
+  },
+  {
+    "num": 10,
+    "page": 5,
+    "year": "NEET 2024",
+    "question": "Three types of muscles are given as a, b and c in the figure. Identify the correct matching pair along with their location in human body:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) Smooth - Toes (b) Skeletal - Legs (c) Cardiac - Heart"
+      },
+      {
+        "id": "B",
+        "text": "(a) Skeletal - Triceps (b) Smooth - Stomach (c) Cardiac - Heart"
+      },
+      {
+        "id": "C",
+        "text": "(a) Skeletal - Biceps (b) Involuntary - Intestine (c) Smooth - Heart"
+      },
+      {
+        "id": "D",
+        "text": "(a) Involuntary - Nose tip (b) Skeletal - Bone (c) Cardiac - Heart"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn the given figure:\n- (a) shows striated, unbranched, cylindrical muscle fibers with peripheral nuclei, representing skeletal muscle (e.g. Triceps/Biceps).\n- (b) shows spindle-shaped (fusiform), unstriated fibers with central nuclei, representing smooth/involuntary muscle (e.g. wall of Stomach/Intestine).\n- (c) shows striated, branched fibers with intercalated discs and uninucleate cells, representing cardiac muscle (Heart)."
+  },
+  {
+    "num": 11,
+    "page": 5,
+    "year": "NEET 2024",
+    "question": "Match List I with List II :\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Fibrous joints | I. Adjacent vertebrae, limited movement |\n| B. Cartilaginous joints | II. Humerus and Pectoral girdle, rotational movement |\n| C. Hinge joints | III. Skull, don't allow any movement |\n| D. Ball and socket joints | IV. Knee, help in locomotion |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-III, C-II, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-I, C-IV, D-II"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- Fibrous joints: Immovable joints, present between flat skull bones (sutures) (A-III).\n- Cartilaginous joints: Permit limited movement, found between adjacent vertebrae in vertebral column (B-I).\n- Hinge joints: Movement in one plane, e.g. knee joint, helps in locomotion (C-IV).\n- Ball and socket joints: Allow 360-degree rotational movement, e.g. between humerus and glenoid cavity of pectoral girdle (D-II)."
+  },
+  {
+    "num": 12,
+    "page": 6,
+    "year": "NEET 2023 Manipur",
+    "question": "Match List-I with List-II.\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Palm bones | (I) Phalanges |\n| (B) Wrist bones | (II) Metacarpals |\n| (C) Ankle bones | (III) Carpals |\n| (D) Digit bones | (IV) Tarsals |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A)-(II), (B)-(III), (C)-(I), (D)-(IV)"
+      },
+      {
+        "id": "B",
+        "text": "(A)-(IV), (B)-(I), (C)-(II), (D)-(III)"
+      },
+      {
+        "id": "C",
+        "text": "(A)-(III), (B)-(IV), (C)-(I), (D)-(II)"
+      },
+      {
+        "id": "D",
+        "text": "(A)-(II), (B)-(III), (C)-(IV), (D)-(I)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- Palm bones: Metacarpals (5 in each hand) (A-II).\n- Wrist bones: Carpals (8 in each wrist) (B-III).\n- Ankle bones: Tarsals (7 in each ankle) (C-IV).\n- Digit bones: Phalanges (14 in each limb) (D-I)."
+  },
+  {
+    "num": 13,
+    "page": 6,
+    "year": "NEET 2023",
+    "question": "Match List I with List II.\n\n| List I (Type of Joint) | List II (Found between) |\n| :--- | :--- |\n| (A) Cartilaginous Joint | (I) Between flat skull bones |\n| (B) Ball and Socket Joint | (II) Between adjacent vertebrae in vertebral column |\n| (C) Fibrous Joint | (III) Between carpal and metacarpal of thumb |\n| (D) Saddle joint | (IV) Between Humerus and Pectoral girdle |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-IV, C-I, D-III"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-IV, C-III, D-II"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-IV, C-III, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-I, C-II, D-IV"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- Cartilaginous joint: Found between adjacent vertebrae in the vertebral column (A-II).\n- Ball and socket joint: Found between humerus and pectoral girdle (A-IV).\n- Fibrous joint: Found between flat skull bones (sutures) (C-I).\n- Saddle joint: Found between carpal and metacarpal of thumb (D-III)."
+  },
+  {
+    "num": 14,
+    "page": 6,
+    "year": "NEET 2023",
+    "question": "Which of the following statements are correct regarding skeletal muscle?\nA. Muscle bundles are held together by collagenous connective tissue layer called fascicle.\nB. Sarcoplasmic reticulum of muscle fibre is a store house of calcium ions.\nC. Striated appearance of skeletal muscle fibre is due to distribution pattern of actin and myosin\nproteins.\nD. M line is considered as functional unit of contraction called sarcomere.\nChoose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "B and C only"
+      },
+      {
+        "id": "B",
+        "text": "A, C and D only"
+      },
+      {
+        "id": "C",
+        "text": "C and D only"
+      },
+      {
+        "id": "D",
+        "text": "A, B and C only P Y Q P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"B and C only\" is correct."
+  },
+  {
+    "num": 15,
+    "page": 7,
+    "year": "NEET 2022 Phase 2",
+    "question": "According to the sliding filament theory:",
+    "options": [
+      {
+        "id": "A",
+        "text": "The actin filaments slide away from A-band resulting in shortening of sarcomere."
+      },
+      {
+        "id": "B",
+        "text": "Actin and myosin filaments slide over each other to increase the length of the sarcomere."
+      },
+      {
+        "id": "C",
+        "text": "Length of A-band does not change"
+      },
+      {
+        "id": "D",
+        "text": "I-band increases in length."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Length of A-band does not change\" is correct."
+  },
+  {
+    "num": 16,
+    "page": 7,
+    "year": "NEET 2022 Phase 2",
+    "question": "Gout is a type of disorder which leads to:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Weakening of bones due to low calcium level"
+      },
+      {
+        "id": "B",
+        "text": "Inflammation of joints due to accumulation of uric acid crystals"
+      },
+      {
+        "id": "C",
+        "text": "Weakening of bones due to decreased bone mass"
+      },
+      {
+        "id": "D",
+        "text": "Inflammation of joints due to cartilage degeneration"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"Inflammation of joints due to accumulation of uric acid crystals\" is correct."
+  },
+  {
+    "num": 17,
+    "page": 7,
+    "year": "NEET 2022 Phase 1",
+    "question": "Given below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason (R).\nAssertion (A) : Osteoporosis is characterised by decreased bone mass and increased chance of fractures.\nReason (R) : Common cause of osteoporosis is increased levels of estrogen.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)"
+      },
+      {
+        "id": "B",
+        "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A)"
+      },
+      {
+        "id": "C",
+        "text": "(A) is correct but (R) is not correct"
+      },
+      {
+        "id": "D",
+        "text": "(A) is not correct but (R) is correct"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- Assertion (A) is correct: Osteoporosis is an age-related disorder characterised by decreased bone mass and increased chance of fractures.\n- Reason (R) is incorrect: Common cause of osteoporosis is *decreased* (deficiency of) estrogen levels after menopause.\nHence, (A) is correct but (R) is not correct."
+  },
+  {
+    "num": 18,
+    "page": 7,
+    "year": "NEET 2022 Phase 1",
+    "question": "Which of the following is a correct match for disease and its symptoms?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Arthritis - Inflammed joints"
+      },
+      {
+        "id": "B",
+        "text": "2+ Tetany - High Ca level causing rapid spasms"
+      },
+      {
+        "id": "C",
+        "text": "Myasthenia gravis - Genetic disorder resulting in weakening and paralysis of skeletal muscle"
+      },
+      {
+        "id": "D",
+        "text": "Muscular dystrophy - An auto immune disorder causing progressive degeneration of skeletal muscle P Y Q P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Arthritis - Inflammed joints\" is correct."
+  },
+  {
+    "num": 19,
+    "page": 8,
+    "year": "NEET 2021",
+    "question": "Chronic auto immune disorder affecting neuro muscular junction leading to fatigue, weakening and\nparalysis of skeletal muscle is called as :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Gout"
+      },
+      {
+        "id": "B",
+        "text": "Arthritis"
+      },
+      {
+        "id": "C",
+        "text": "Muscular dystrophy"
+      },
+      {
+        "id": "D",
+        "text": "Myasthenia gravis"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Myasthenia gravis\" is correct."
+  },
+  {
+    "num": 20,
+    "page": 8,
+    "year": "NEET 2021",
+    "question": "Match List-I with List-II :\n\n| List-I | List-II |\n| :--- | :--- |\n| (a) Scapula | (i) Cartilaginous joints |\n| (b) Cranium | (ii) Flat bone |\n| (c) Sternum | (iii) Fibrous joints |\n| (d) Vertebral column | (iv) Triangular flat bone |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(i), (b)-(iii), (c)-(ii), (d)-(iv)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iv), (b)-(ii), (c)-(iii), (d)-(i)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- Scapula: Large triangular flat bone situated on dorsal part of thorax (a-iv).\n- Cranium: Bones joined by immovable fibrous joints (sutures) (b-iii).\n- Sternum: Flat bone on the ventral midline of thorax (c-ii).\n- Vertebral column: Adjacent vertebrae joined by cartilaginous joints (d-i)."
+  },
+  {
+    "num": 21,
+    "page": 9,
+    "year": "NEET 2021",
+    "question": "During muscular contraction which of the following events occur?\n(1) 'H' zone disappears\n(2) 'A' band widens\n(3) 'I' band reduces in width\n(4) Myosine hydrolyzes ATP, releasing the ADP and Pi.\n(5) Z-lines attached to actins are pulled inwards.\nChoose the correct answer from the options given below.",
+    "options": [
+      {
+        "id": "A",
+        "text": "(2), (4), (5), (1) only"
+      },
+      {
+        "id": "B",
+        "text": "(1), (3), (4), (5) only"
+      },
+      {
+        "id": "C",
+        "text": "(1), (2), (3), (4) only"
+      },
+      {
+        "id": "D",
+        "text": "(2), (3), (4), (5) only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"(1), (3), (4), (5) only\" is correct."
+  },
+  {
+    "num": 22,
+    "page": 9,
+    "year": "NEET 2020 Phase 2",
+    "question": "Match the following columns and select the correct option :\n\n| Column - I | Column - II |\n| :--- | :--- |\n| (a) Gout | (i) Decreased levels of estrogen |\n| (b) Osteoporosis | (ii) Low $\\text{Ca}^{++}$ ions in the blood |\n| (c) Tetany | (iii) Accumulation of uric acid crystals |\n| (d) Muscular dystrophy | (iv) Auto immune disorder |\n| | (v) Genetic disorder |",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(ii), (b)-(i), (c)-(iii), (d)-(iv)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iii), (b)-(i), (c)-(ii), (d)-(v)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iv), (b)-(v), (c)-(i), (d)-(ii)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- Gout: Inflammation of joints due to accumulation of uric acid crystals (a-iii).\n- Osteoporosis: Age-related decrease in bone mass caused commonly by decreased levels of estrogen in elderly women (b-i).\n- Tetany: Wild muscle contractions due to low $\\text{Ca}^{++}$ in blood (c-ii).\n- Muscular dystrophy: Progressive degeneration of skeletal muscles, mostly a genetic disorder (d-v)."
+  },
+  {
+    "num": 23,
+    "page": 10,
+    "year": "NEET 2020 Phase 1",
+    "question": "Match the following columns and select the correct option.\n\n| Column-I | Column-II |\n| :--- | :--- |\n| (a) Floating Ribs | (i) Located between second and seventh ribs |\n| (b) Acromion | (ii) Head of the Humerus |\n| (c) Scapula | (iii) Clavicle |\n| (d) Glenoid cavity | (iv) Do not connect with the sternum |",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A)-(ii), (B)-(iv), (C)-(i), (D)-(iii)"
+      },
+      {
+        "id": "B",
+        "text": "(A)-(i), (B)-(iii), (C)-(ii), (D)-(iv)"
+      },
+      {
+        "id": "C",
+        "text": "(A)-(iv), (B)-(iii), (C)-(i), (D)-(ii)"
+      },
+      {
+        "id": "D",
+        "text": "(A)-(iii), (B)-(ii), (C)-(iv), (D)-(i)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- Floating ribs (11th and 12th pairs): Not connected ventrally to the sternum (a-iv).\n- Acromion: Expanded process on spine of scapula articulating with clavicle (b-iii).\n- Scapula: Large triangular flat bone located between second and seventh ribs dorsally (c-i).\n- Glenoid cavity: Depression on scapula which articulates with head of the humerus (d-ii)."
+  },
+  {
+    "num": 24,
+    "page": 10,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Match the following joints with the bones involved:\n\n| Joint | Bones Involved |\n| :--- | :--- |\n| (a) Gliding joint | (i) Between carpal and metacarpal of thumb |\n| (b) Hinge joint | (ii) Between Atlas and Axis |\n| (c) Pivot joint | (iii) Between the Carpals |\n| (d) Saddle joint | (iv) Between Humerus and Ulna |\n\nSelect the correct option from the following:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(i), (b)-(iii), (c)-(ii), (d)-(iv)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iii), (b)-(iv), (c)-(ii), (d)-(i)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iv), (b)-(ii), (c)-(iii), (d)-(i)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- Gliding joint: Between the carpals (a-iii).\n- Hinge joint: Between humerus and ulna (elbow joint) (b-iv).\n- Pivot joint: Between atlas and axis (c-ii).\n- Saddle joint: Between carpal and metacarpal of thumb (d-i)."
+  },
+  {
+    "num": 25,
+    "page": 10,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Which of the following diseases is an autoimmune disorder?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Gout"
+      },
+      {
+        "id": "B",
+        "text": "Myasthenia gravis"
+      },
+      {
+        "id": "C",
+        "text": "Arthritis"
+      },
+      {
+        "id": "D",
+        "text": "Osteoporosis"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"Myasthenia gravis\" is correct."
+  },
+  {
+    "num": 26,
+    "page": 10,
+    "year": "NEET 2019",
+    "question": "Select the correct option :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Each rib is a flat thin bone and all the ribs are connected dorsally to the thoracic vertebrae and ventrally to the sternum"
+      },
+      {
+        "id": "B",
+        "text": "There are seven pairs of vertebrosternal, three pairs of vertebrochondral and two pairs of vertebral ribs"
+      },
+      {
+        "id": "C",
+        "text": "th th th 8 , 9 and 10 pairs of ribs articulate directly with the sternum"
+      },
+      {
+        "id": "D",
+        "text": "th th 11 and 12 pairs of ribs are connected to the sternum with the help of hyaline cartilage. P Y Q P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"There are seven pairs of vertebrosternal, three pairs of vertebrochondral and two pairs of vertebral ribs\" is correct."
+  },
+  {
+    "num": 27,
+    "page": 11,
+    "year": "NEET 2019",
+    "question": "Which of the following muscular disorders is inherited?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Myasthenia gravis"
+      },
+      {
+        "id": "B",
+        "text": "Botulism"
+      },
+      {
+        "id": "C",
+        "text": "Tetany"
+      },
+      {
+        "id": "D",
+        "text": "Muscular dystrophy"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Muscular dystrophy\" is correct."
+  },
+  {
+    "num": 28,
+    "page": 11,
+    "year": "NEET 2018",
+    "question": "Calcium is important in skeletal muscle contraction because it",
+    "options": [
+      {
+        "id": "A",
+        "text": "detaches the myosin head from the actin filament"
+      },
+      {
+        "id": "B",
+        "text": "binds to troponin to remove the masking of active sites on actin for myosin"
+      },
+      {
+        "id": "C",
+        "text": "prevents the formation of bonds between the myosin cross bridges and the actin filament."
+      },
+      {
+        "id": "D",
+        "text": "activates the myosin ATPase by binding to it"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"binds to troponin to remove the masking of active sites on actin for myosin\" is correct."
+  },
+  {
+    "num": 29,
+    "page": 11,
+    "year": "NEET 2017",
+    "question": "The pivot joint between atlas and axis is a type of",
+    "options": [
+      {
+        "id": "A",
+        "text": "cartilaginous joint"
+      },
+      {
+        "id": "B",
+        "text": "synovial joint"
+      },
+      {
+        "id": "C",
+        "text": "saddle joint"
+      },
+      {
+        "id": "D",
+        "text": "fibrous joint."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"synovial joint\" is correct."
+  },
+  {
+    "num": 30,
+    "page": 11,
+    "year": "NEET 2017",
+    "question": "Out of 'X' pairs of ribs in humans only 'Y' pairs are true ribs. Select the option that correctly represents values of X and Y and provides their explanation.\n\n| Option | Values | Explanation |\n| :--- | :--- | :--- |\n| (A) | $X=12, Y=5$ | True ribs are attached dorsally to vertebral column and sternum on the two ends |\n| (B) | $X=24, Y=2$ | The true ribs are dorsally attached to vertebral column but are free on ventral side |\n| (C) | $X=24, Y=12$ | True ribs are dorsally attached to vertebral column but are free on ventral side |\n| (D) | $X=12, Y=7$ | True ribs are attached dorsally to vertebral column and ventrally to the sternum |",
+    "options": [
+      {
+        "id": "A",
+        "text": "$X=12, Y=5$: True ribs are attached dorsally to vertebral column and sternum on the two ends"
+      },
+      {
+        "id": "B",
+        "text": "$X=24, Y=2$: The true ribs are dorsally attached to vertebral column but are free on ventral side"
+      },
+      {
+        "id": "C",
+        "text": "$X=24, Y=12$: True ribs are dorsally attached to vertebral column but are free on ventral side"
+      },
+      {
+        "id": "D",
+        "text": "$X=12, Y=7$: True ribs are attached dorsally to vertebral column and ventrally to the sternum"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThere are 12 pairs of ribs in humans ($X = 12$). The first 7 pairs ($1^{\\text{st}}$ to $7^{\\text{th}}$) are called true ribs ($Y = 7$) because they are attached dorsally to thoracic vertebrae and connected ventrally to the sternum via hyaline cartilages."
+  },
+  {
+    "num": 31,
+    "page": 12,
+    "year": "NEET 2016 Phase 2",
+    "question": "Name the ion responsible for unmasking of active sites for myosin for cross-bridge activity during\nmuscle contraction.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Calcium"
+      },
+      {
+        "id": "B",
+        "text": "Magnesium"
+      },
+      {
+        "id": "C",
+        "text": "Sodium"
+      },
+      {
+        "id": "D",
+        "text": "Potassium"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Calcium\" is correct."
+  },
+  {
+    "num": 32,
+    "page": 12,
+    "year": "NEET 2016 Phase 2",
+    "question": "Osteoporosis, an age-related disease of skeletal system, may occur due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "immune disorder affecting neuromuscular junction leading to fatigue"
+      },
+      {
+        "id": "B",
+        "text": "++ + high concentration of Ca and Na"
+      },
+      {
+        "id": "C",
+        "text": "decreased level of estrogen"
+      },
+      {
+        "id": "D",
+        "text": "accumulation of uric acid leading to inflammation of joints."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"decreased level of estrogen\" is correct."
+  },
+  {
+    "num": 33,
+    "page": 12,
+    "year": "NEET 2016 Phase 1",
+    "question": "Lack of relaxation between successive stimuli in sustained muscle contraction is known as",
+    "options": [
+      {
+        "id": "A",
+        "text": "tetanus"
+      },
+      {
+        "id": "B",
+        "text": "tonus"
+      },
+      {
+        "id": "C",
+        "text": "spasm"
+      },
+      {
+        "id": "D",
+        "text": "fatigue."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"tetanus\" is correct."
+  },
+  {
+    "num": 34,
+    "page": 12,
+    "year": "AIPMT 2015",
+    "question": "Which of the following is not a function of the skeletal system?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Production of body heat"
+      },
+      {
+        "id": "B",
+        "text": "Locomotion"
+      },
+      {
+        "id": "C",
+        "text": "Production of erythrocytes"
+      },
+      {
+        "id": "D",
+        "text": "Storage of minerals"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Production of body heat\" is correct."
+  },
+  {
+    "num": 35,
+    "page": 12,
+    "year": "AIPMT 2015",
+    "question": "Which of the following joints would allow no movements?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Synovial joint"
+      },
+      {
+        "id": "B",
+        "text": "Ball and Socket joint"
+      },
+      {
+        "id": "C",
+        "text": "Fibrous joint"
+      },
+      {
+        "id": "D",
+        "text": "Cartilaginous joint"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Fibrous joint\" is correct."
+  },
+  {
+    "num": 36,
+    "page": 12,
+    "year": "AIPMT 2015 Cancelled Paper",
+    "question": "Sliding filament theory can be best explained as",
+    "options": [
+      {
+        "id": "A",
+        "text": "actin and myosin filaments do not shorten but rather slide pass each other"
+      },
+      {
+        "id": "B",
+        "text": "when myofilaments slide pass each other, myosin filaments shorten while actin filaments do not shorten"
+      },
+      {
+        "id": "C",
+        "text": "when myofilaments slide pass each other actin filaments shorten while myosin filaments do not shorten"
+      },
+      {
+        "id": "D",
+        "text": "actin and myosin filaments shorten and slide pass each other. P Y Q P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"actin and myosin filaments do not shorten but rather slide pass each other\" is correct."
+  },
+  {
+    "num": 37,
+    "page": 13,
+    "year": "AIPMT 2015 Cancelled Paper",
+    "question": "Glenoid cavity articulates",
+    "options": [
+      {
+        "id": "A",
+        "text": "clavicle with scapula"
+      },
+      {
+        "id": "B",
+        "text": "humerus with scapula"
+      },
+      {
+        "id": "C",
+        "text": "clavicle with acromion"
+      },
+      {
+        "id": "D",
+        "text": "scapula with acromion."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"humerus with scapula\" is correct."
+  },
+  {
+    "num": 38,
+    "page": 13,
+    "year": "AIPMT 2014",
+    "question": "Select the correct matching of the type of the joint with the example in human skeletal system.\n\n| Option | Type of joint | Example |\n| :--- | :--- | :--- |\n| (A) | Cartilaginous | Between frontal and parietal |\n| (B) | Pivot joint | Between third and fourth cervical |\n| (C) | Hinge joint | Between humerus and pectoral girdle |\n| (D) | Gliding joint | Between carpals |",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cartilaginous - Between frontal and parietal"
+      },
+      {
+        "id": "B",
+        "text": "Pivot joint - Between third and fourth cervical"
+      },
+      {
+        "id": "C",
+        "text": "Hinge joint - Between humerus and pectoral girdle"
+      },
+      {
+        "id": "D",
+        "text": "Gliding joint - Between carpals"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- Gliding joint is found between the carpals (intercarpal joints).\n- Frontal and parietal bones are joined by fibrous joints (sutures).\n- Pivot joint is between atlas and axis (first and second cervical vertebrae).\n- Joint between humerus and pectoral girdle is a ball and socket joint."
+  },
+  {
+    "num": 39,
+    "page": 13,
+    "year": "AIPMT 2014",
+    "question": "Stimulation of a muscle fiber by a motor neuron occurs at",
+    "options": [
+      {
+        "id": "A",
+        "text": "the neuromuscular junction"
+      },
+      {
+        "id": "B",
+        "text": "the transverse tubules"
+      },
+      {
+        "id": "C",
+        "text": "the myofibril"
+      },
+      {
+        "id": "D",
+        "text": "the sacroplasmic reticulum."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"the neuromuscular junction\" is correct."
+  },
+  {
+    "num": 40,
+    "page": 13,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "During muscle contraction in humans, the",
+    "options": [
+      {
+        "id": "A",
+        "text": "sarcomere does not shorten"
+      },
+      {
+        "id": "B",
+        "text": "A band remains same"
+      },
+      {
+        "id": "C",
+        "text": "A, H and I bands shorten"
+      },
+      {
+        "id": "D",
+        "text": "actin filaments shorten."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"A band remains same\" is correct."
+  },
+  {
+    "num": 41,
+    "page": 13,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Select the correct statement with respect to disorders of muscles in humans.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Failure of neuromuscular transmission in myasthenia gravis can prevent normal swallowing."
+      },
+      {
+        "id": "B",
+        "text": "Accumulation of urea and creatine in the joints causes their inflammation."
+      },
+      {
+        "id": "C",
+        "text": "An overdose of vitamin D causes osteoporosis."
+      },
+      {
+        "id": "D",
+        "text": "Rapid contractions of skeletal muscles cause muscle dystrophy. P Y Q P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Failure of neuromuscular transmission in myasthenia gravis can prevent normal swallowing.\" is correct."
+  },
+  {
+    "num": 42,
+    "page": 14,
+    "year": "NEET 2013",
+    "question": "Select the correct statement with respect to locomotion in humans.",
+    "options": [
+      {
+        "id": "A",
+        "text": "The vertebral column has 10 thoracic vertebrae."
+      },
+      {
+        "id": "B",
+        "text": "The joint between adjacent vertebrae is a fibrous joint."
+      },
+      {
+        "id": "C",
+        "text": "A decreased level of progesterone causes osteoporosis in old people."
+      },
+      {
+        "id": "D",
+        "text": "Accumulation of uric acid crystals in joints causes their inflammation."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Accumulation of uric acid crystals in joints causes their inflammation.\" is correct."
+  },
+  {
+    "num": 43,
+    "page": 14,
+    "year": "NEET 2013",
+    "question": "The H-zone in the skeletal muscle fibre is due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "the central gap between actin filaments extending through myosin filaments in the A-band"
+      },
+      {
+        "id": "B",
+        "text": "extension of myosin filaments in the central portion of the A-band"
+      },
+      {
+        "id": "C",
+        "text": "the absence of myofibrils in the central portion of A-band"
+      },
+      {
+        "id": "D",
+        "text": "the central gap between myosin filaments in the A-band."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"the central gap between actin filaments extending through myosin filaments in the A-band\" is correct."
+  },
+  {
+    "num": 44,
+    "page": 14,
+    "year": "NEET 2013",
+    "question": "The characteristic and an example of a synovial joint in humans is:\n\n| Option | Characteristics | Examples |\n| :--- | :--- | :--- |\n| (A) | Fluid filled synovial cavity between two bones | Joint between atlas and axis |\n| (B) | Lymph filled between two bones, limited movement | Gliding joint between carpals |\n| (C) | Fluid cartilage between two bones, limited movements | Knee joint |\n| (D) | Fluid filled between two joints, provides cushion | Skull bones |",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fluid filled synovial cavity between two bones - Joint between atlas and axis"
+      },
+      {
+        "id": "B",
+        "text": "Lymph filled between two bones, limited movement - Gliding joint between carpals"
+      },
+      {
+        "id": "C",
+        "text": "Fluid cartilage between two bones, limited movements - Knee joint"
+      },
+      {
+        "id": "D",
+        "text": "Fluid filled between two joints, provides cushion - Skull bones"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nSynovial joints are characterized by the presence of a fluid-filled synovial cavity between the articulating surfaces of two bones, which allows considerable movement. An example is the pivot joint between atlas and axis."
+  },
+  {
+    "num": 45,
+    "page": 14,
+    "year": "AIPMT 2012 Mains",
+    "question": "Which one of the following pairs of chemical substances, is correctly categorised ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Secretin and rhodopsin - Polypeptide hormones"
+      },
+      {
+        "id": "B",
+        "text": "Pepsin and prolactin - Two digestive enzymes secreted in stomach"
+      },
+      {
+        "id": "C",
+        "text": "Troponin and myosin - Complex proteins in striated muscles"
+      },
+      {
+        "id": "D",
+        "text": "Calcitonin and thymosin - Thyroid hormones P Y Q P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Troponin and myosin - Complex proteins in striated muscles\" is correct."
+  },
+  {
+    "num": 46,
+    "page": 15,
+    "year": "AIPMT 2012 Prelims",
+    "question": "Select the correct statement regarding the specific disorder of muscular or skeletal system.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Muscular dystrophy Age related shortening of muscles"
+      },
+      {
+        "id": "B",
+        "text": "Osteoporosis Decrease in bone mass and higher chances of fractures with advancing age"
+      },
+      {
+        "id": "C",
+        "text": "Myasthenia gravis Autoimmune disorder which inhibits sliding of myosin filaments"
+      },
+      {
+        "id": "D",
+        "text": "Gout Inflammation of joints due to extra deposition of calcium"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"Osteoporosis Decrease in bone mass and higher chances of fractures with advancing age\" is correct."
+  },
+  {
+    "num": 47,
+    "page": 15,
+    "year": "AIPMT 2011 Mains",
+    "question": "The type of muscles present in our",
+    "options": [
+      {
+        "id": "A",
+        "text": "heart is involuntary and unstriated smooth muscles"
+      },
+      {
+        "id": "B",
+        "text": "intestine is striated and involuntary"
+      },
+      {
+        "id": "C",
+        "text": "thigh is striated and voluntary"
+      },
+      {
+        "id": "D",
+        "text": "upper arm is smooth muscle and fusiform in shape."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"thigh is striated and voluntary\" is correct."
+  },
+  {
+    "num": 48,
+    "page": 15,
+    "year": "AIPMT 2011 Mains",
+    "question": "Three of the following pairs of the human skeletal parts are correctly matched with their respective\ninclusive skeletal category and one pair is not matched. Identify the   non-matching   pair.\nPairs of skeletal parts – Category",
+    "options": [
+      {
+        "id": "A",
+        "text": "Humerus and ulna – Appendicular skeleton"
+      },
+      {
+        "id": "B",
+        "text": "Malleus and stapes – Ear ossicles"
+      },
+      {
+        "id": "C",
+        "text": "Sternum and Ribs – Axial skeleton"
+      },
+      {
+        "id": "D",
+        "text": "Clavicle and Glenoid cavity – Pelvic girdle"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Clavicle and Glenoid cavity – Pelvic girdle\" is correct."
+  },
+  {
+    "num": 49,
+    "page": 15,
+    "year": "AIPMT 2011 Prelims",
+    "question": "Three of the following pairs of the human skeletal parts are correctly matched with their respective inclusive skeletal category and one pair is not matched. Identify the non-matching pair.\n\n| Option | Pair of skeletal parts | Category |\n| :--- | :--- | :--- |\n| (A) | Sternum and ribs | Axial skeleton |\n| (B) | Clavicle and glenoid | Pelvic girdle |\n| (C) | Humerus and ulna | Appendicular skeleton |\n| (D) | Malleus and stapes | Ear ossicles |",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sternum and ribs - Axial skeleton"
+      },
+      {
+        "id": "B",
+        "text": "Clavicle and glenoid - Pelvic girdle"
+      },
+      {
+        "id": "C",
+        "text": "Humerus and ulna - Appendicular skeleton"
+      },
+      {
+        "id": "D",
+        "text": "Malleus and stapes - Ear ossicles"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nClavicle and glenoid cavity (on scapula) belong to the pectoral girdle (not pelvic girdle). Pelvic girdle consists of two coxal bones (ilium, ischium, and pubis)."
+  },
+  {
+    "num": 50,
+    "page": 16,
+    "year": "AIPMT 2010 Mains",
+    "question": "Which one of the following is the correct description of a certain part of a normal human skeleton?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Parietal bone and the temporal bone of the skull are joined by fibrous joint."
+      },
+      {
+        "id": "B",
+        "text": "First vertebra is axis which articulates with the occipital condyles."
+      },
+      {
+        "id": "C",
+        "text": "th th The 9 and 10 pairs of ribs are called the floating ribs ."
+      },
+      {
+        "id": "D",
+        "text": "Glenoid cavity is a depression to which the thigh bone articulates."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Parietal bone and the temporal bone of the skull are joined by fibrous joint.\" is correct."
+  },
+  {
+    "num": 51,
+    "page": 16,
+    "year": "AIPMT 2010 Mains",
+    "question": "Which one of the following pairs of structures is correctly matched with their corrected description ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Structure Tibia and fibula, Description Both form parts of knee joint"
+      },
+      {
+        "id": "B",
+        "text": "Structure Shoulder joint and elbow joint, Description Ball and socket type of joint"
+      },
+      {
+        "id": "C",
+        "text": "Structure Cartilage and cornea, Description No blood supply but do require oxygen for respiratory need"
+      },
+      {
+        "id": "D",
+        "text": "Structure Premolars and molars, Description 20 in all and 3- rooted"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Structure Cartilage and cornea, Description No blood supply but do require oxygen for respiratory need\" is correct."
+  },
+  {
+    "num": 52,
+    "page": 16,
+    "year": "AIPMT 2010 Prelims",
+    "question": "++\nLow Ca in the body fluid may be the cause of",
+    "options": [
+      {
+        "id": "A",
+        "text": "tetany"
+      },
+      {
+        "id": "B",
+        "text": "anaemia"
+      },
+      {
+        "id": "C",
+        "text": "angina pectoris"
+      },
+      {
+        "id": "D",
+        "text": "gout."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"tetany\" is correct."
+  },
+  {
+    "num": 53,
+    "page": 16,
+    "year": "AIPMT 2009",
+    "question": "Which one of the following is the correct matching of three items and their grouping category?\n\n| Option | Items | Group |\n| :--- | :--- | :--- |\n| (A) | Ilium, ischium, pubis | Coxal bones of pelvic girdle |\n| (B) | Actin, myosin, rhodopsin | Muscle proteins |\n| (C) | Cytosine, uracil, thiamine | Pyrimidines |\n| (D) | Malleus, incus, cochlea | Ear ossicles |",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ilium, ischium, pubis - Coxal bones of pelvic girdle"
+      },
+      {
+        "id": "B",
+        "text": "Actin, myosin, rhodopsin - Muscle proteins"
+      },
+      {
+        "id": "C",
+        "text": "Cytosine, uracil, thiamine - Pyrimidines"
+      },
+      {
+        "id": "D",
+        "text": "Malleus, incus, cochlea - Ear ossicles"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- Each coxal bone of the pelvic girdle is formed by the fusion of three bones: ilium, ischium, and pubis.\n- Rhodopsin is a visual pigment of retina (not muscle protein).\n- Thiamine is vitamin B1 (thymine is pyrimidine).\n- Cochlea is part of internal ear (ear ossicles are malleus, incus, stapes)."
+  },
+  {
+    "num": 54,
+    "page": 17,
+    "year": "AIPMT 2009",
+    "question": "Elbow joint is an example of",
+    "options": [
+      {
+        "id": "A",
+        "text": "hinge joint"
+      },
+      {
+        "id": "B",
+        "text": "gliding joint"
+      },
+      {
+        "id": "C",
+        "text": "ball and socket joint"
+      },
+      {
+        "id": "D",
+        "text": "pivot joint."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"hinge joint\" is correct."
+  },
+  {
+    "num": 55,
+    "page": 17,
+    "year": "AIPMT 2008",
+    "question": "Which one of the following items gives its correct total number?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Types of diabetes-3"
+      },
+      {
+        "id": "B",
+        "text": "Cervical vertebrae in humans-8"
+      },
+      {
+        "id": "C",
+        "text": "Floating ribs in humans-4"
+      },
+      {
+        "id": "D",
+        "text": "Amino acids found in proteins-16"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Floating ribs in humans-4\" is correct."
+  },
+  {
+    "num": 56,
+    "page": 17,
+    "year": "AIPMT 2007",
+    "question": "In human body, which one of the following is anatomically correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Collar bones - 3 pairs"
+      },
+      {
+        "id": "B",
+        "text": "Salivary glands - 1 pair"
+      },
+      {
+        "id": "C",
+        "text": "Cranial nerves - 10 pairs"
+      },
+      {
+        "id": "D",
+        "text": "Floating ribs - 2 pairs"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Floating ribs - 2 pairs\" is correct."
+  },
+  {
+    "num": 57,
+    "page": 17,
+    "year": "AIPMT 2006",
+    "question": "The contractile protein of skeletal muscle involving ATPase activity is",
+    "options": [
+      {
+        "id": "A",
+        "text": "troponin"
+      },
+      {
+        "id": "B",
+        "text": "tropomyosin"
+      },
+      {
+        "id": "C",
+        "text": "myosin"
+      },
+      {
+        "id": "D",
+        "text": "$\\alpha$-actinin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nEach myosin head functions as an active ATPase enzyme and has binding sites for ATP and active sites for actin. Troponin, tropomyosin, and $\\alpha$-actinin do not have ATPase catalytic activity."
+  },
+  {
+    "num": 58,
+    "page": 17,
+    "year": "AIPMT 2005",
+    "question": "An acromian process is characteristically found in the",
+    "options": [
+      {
+        "id": "A",
+        "text": "pelvic girdle of mammals"
+      },
+      {
+        "id": "B",
+        "text": "pectoral girdle of mammals"
+      },
+      {
+        "id": "C",
+        "text": "skull of frog"
+      },
+      {
+        "id": "D",
+        "text": "sperm of mammals."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"pectoral girdle of mammals\" is correct."
+  },
+  {
+    "num": 59,
+    "page": 17,
+    "year": "AIPMT 2005",
+    "question": "Which of the following pairs is correctly matched?\n\n| Option | Joint | Location |\n| :--- | :--- | :--- |\n| (A) | Hinge joint | Between vertebrae |\n| (B) | Gliding joint | Between zygapophyses of the successive vertebrae |\n| (C) | Cartilaginous joint | Skull bones |\n| (D) | Fibrous joint | Between phalanges |",
+    "options": [
+      {
+        "id": "A",
+        "text": "Hinge joint - Between vertebrae"
+      },
+      {
+        "id": "B",
+        "text": "Gliding joint - Between zygapophyses of the successive vertebrae"
+      },
+      {
+        "id": "C",
+        "text": "Cartilaginous joint - Skull bones"
+      },
+      {
+        "id": "D",
+        "text": "Fibrous joint - between phalanges"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe articular processes (zygapophyses) of adjacent vertebrae form gliding joints (plane synovial joints) with each other."
+  },
+  {
+    "num": 60,
+    "page": 18,
+    "year": "AIPMT 2004",
+    "question": "ATPase enzyme needed for muscle contraction is located in",
+    "options": [
+      {
+        "id": "A",
+        "text": "actinin"
+      },
+      {
+        "id": "B",
+        "text": "troponin"
+      },
+      {
+        "id": "C",
+        "text": "myosin"
+      },
+      {
+        "id": "D",
+        "text": "actin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"myosin\" is correct."
+  },
+  {
+    "num": 61,
+    "page": 18,
+    "year": "AIPMT 2002",
+    "question": "What will happen if ligaments are torn?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Bones will move freely at joint and no pain."
+      },
+      {
+        "id": "B",
+        "text": "Bone less movable at joint and pain."
+      },
+      {
+        "id": "C",
+        "text": "Bone will become unfixed."
+      },
+      {
+        "id": "D",
+        "text": "Bone will become fixed."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"Bone less movable at joint and pain.\" is correct."
+  },
+  {
+    "num": 62,
+    "page": 18,
+    "year": "AIPMT 2001",
+    "question": "What is sarcomere?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Part between two H-line"
+      },
+      {
+        "id": "B",
+        "text": "Part between two A-line"
+      },
+      {
+        "id": "C",
+        "text": "Part between two I-band"
+      },
+      {
+        "id": "D",
+        "text": "Part between two Z-line"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"Part between two Z-line\" is correct."
+  },
+  {
+    "num": 63,
+    "page": 18,
+    "year": "AIPMT 2000",
+    "question": "Bone related with skull is",
+    "options": [
+      {
+        "id": "A",
+        "text": "coracoid"
+      },
+      {
+        "id": "B",
+        "text": "arytenoid"
+      },
+      {
+        "id": "C",
+        "text": "pterygoid"
+      },
+      {
+        "id": "D",
+        "text": "atlas."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"pterygoid\" is correct."
+  },
+  {
+    "num": 64,
+    "page": 18,
+    "year": "AIPMT 2000",
+    "question": "What is the name of joint between ribs and sternum?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cartilaginous joint"
+      },
+      {
+        "id": "B",
+        "text": "Angular joint"
+      },
+      {
+        "id": "C",
+        "text": "Gliding joint"
+      },
+      {
+        "id": "D",
+        "text": "Fibrous joint"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"Cartilaginous joint\" is correct."
+  },
+  {
+    "num": 65,
+    "page": 18,
+    "year": "AIPMT 1999",
+    "question": "The joint between atlas and axis is called :",
+    "options": [
+      {
+        "id": "A",
+        "text": "pivot joint"
+      },
+      {
+        "id": "B",
+        "text": "hinge joint"
+      },
+      {
+        "id": "C",
+        "text": "saddle joint"
+      },
+      {
+        "id": "D",
+        "text": "angular joint"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"pivot joint\" is correct."
+  },
+  {
+    "num": 66,
+    "page": 18,
+    "year": "AIPMT 1998",
+    "question": "Which of the following is the contractile protein of a muscle?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Tubulin"
+      },
+      {
+        "id": "B",
+        "text": "Myosin"
+      },
+      {
+        "id": "C",
+        "text": "Tropomyosin"
+      },
+      {
+        "id": "D",
+        "text": "All of these P Y Q P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"Myosin\" is correct."
+  },
+  {
+    "num": 67,
+    "page": 19,
+    "year": "AIPMT 1998",
+    "question": "Total number of bones in the hind limb of a man is",
+    "options": [
+      {
+        "id": "A",
+        "text": "14"
+      },
+      {
+        "id": "B",
+        "text": "21"
+      },
+      {
+        "id": "C",
+        "text": "24"
+      },
+      {
+        "id": "D",
+        "text": "30"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"30\" is correct."
+  },
+  {
+    "num": 68,
+    "page": 19,
+    "year": "AIPMT 1998",
+    "question": "The functional unit of contractile system in striated muscle is",
+    "options": [
+      {
+        "id": "A",
+        "text": "cross bridge"
+      },
+      {
+        "id": "B",
+        "text": "myofibril"
+      },
+      {
+        "id": "C",
+        "text": "sarcomere"
+      },
+      {
+        "id": "D",
+        "text": "Z-band"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"sarcomere\" is correct."
+  },
+  {
+    "num": 69,
+    "page": 19,
+    "year": "AIPMT 1996",
+    "question": "When a muscle bends one part upon the other, it is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "abductor"
+      },
+      {
+        "id": "B",
+        "text": "regulator"
+      },
+      {
+        "id": "C",
+        "text": "extremor"
+      },
+      {
+        "id": "D",
+        "text": "flexor"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"flexor\" is correct."
+  },
+  {
+    "num": 70,
+    "page": 19,
+    "year": "AIPMT 1995",
+    "question": "The number of floating ribs in the human body is",
+    "options": [
+      {
+        "id": "A",
+        "text": "3 pairs"
+      },
+      {
+        "id": "B",
+        "text": "2 pairs"
+      },
+      {
+        "id": "C",
+        "text": "6 pairs"
+      },
+      {
+        "id": "D",
+        "text": "5 pairs"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"2 pairs\" is correct."
+  },
+  {
+    "num": 71,
+    "page": 19,
+    "year": "AIPMT 1994",
+    "question": "Which of the following components is a part of the pectoral girdle?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sternum"
+      },
+      {
+        "id": "B",
+        "text": "Acetabulum"
+      },
+      {
+        "id": "C",
+        "text": "Glenoid cavity"
+      },
+      {
+        "id": "D",
+        "text": "Ilium"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"Glenoid cavity\" is correct."
+  },
+  {
+    "num": 72,
+    "page": 19,
+    "year": "AIPMT 1994",
+    "question": "The type of joint between the human skull bones is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "cartilaginous joint"
+      },
+      {
+        "id": "B",
+        "text": "hinge joint"
+      },
+      {
+        "id": "C",
+        "text": "fibrous joint"
+      },
+      {
+        "id": "D",
+        "text": "synovial joint"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"fibrous joint\" is correct."
+  },
+  {
+    "num": 73,
+    "page": 19,
+    "year": "AIPMT 1993",
+    "question": "The cervical vertebrae in human is",
+    "options": [
+      {
+        "id": "A",
+        "text": "same as in whale"
+      },
+      {
+        "id": "B",
+        "text": "more than that in rabbit"
+      },
+      {
+        "id": "C",
+        "text": "double than that of horse"
+      },
+      {
+        "id": "D",
+        "text": "less than that in giraffe P Y Q P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET answer key, option (A) \"same as in whale\" is correct."
+  },
+  {
+    "num": 74,
+    "page": 20,
+    "year": "AIPMT 1993",
+    "question": "Long bones function in",
+    "options": [
+      {
+        "id": "A",
+        "text": "support"
+      },
+      {
+        "id": "B",
+        "text": "support, erythrocyte and leucocyte synthesis"
+      },
+      {
+        "id": "C",
+        "text": "support and erythrocyte synthesis"
+      },
+      {
+        "id": "D",
+        "text": "erythrocyte formation"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET answer key, option (B) \"support, erythrocyte and leucocyte synthesis\" is correct."
+  },
+  {
+    "num": 75,
+    "page": 20,
+    "year": "AIPMT 1993",
+    "question": "Number of cervical vertebrae in camel is",
+    "options": [
+      {
+        "id": "A",
+        "text": "more than that of rabbit"
+      },
+      {
+        "id": "B",
+        "text": "less than that of rabbit"
+      },
+      {
+        "id": "C",
+        "text": "same as that of whale"
+      },
+      {
+        "id": "D",
+        "text": "more than that of horse"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"same as that of whale\" is correct."
+  },
+  {
+    "num": 76,
+    "page": 20,
+    "year": "AIPMT 1990",
+    "question": "A deltoid ridge occurs in",
+    "options": [
+      {
+        "id": "A",
+        "text": "radius"
+      },
+      {
+        "id": "B",
+        "text": "ulna"
+      },
+      {
+        "id": "C",
+        "text": "femur"
+      },
+      {
+        "id": "D",
+        "text": "humerus"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET answer key, option (D) \"humerus\" is correct."
+  },
+  {
+    "num": 77,
+    "page": 20,
+    "year": "AIPMT 1988",
+    "question": "Intercostal muscles occur in",
+    "options": [
+      {
+        "id": "A",
+        "text": "abdomen"
+      },
+      {
+        "id": "B",
+        "text": "thigh"
+      },
+      {
+        "id": "C",
+        "text": "ribs"
+      },
+      {
+        "id": "D",
+        "text": "diaphragm"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) \"ribs\" is correct."
+  },
+  {
+    "num": 78,
+    "page": 20,
+    "year": "AIPMT 2001",
+    "question": "Which statement is correct for muscle contraction?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Length of H-zone decreases"
+      },
+      {
+        "id": "B",
+        "text": "Length of A-band remains constant"
+      },
+      {
+        "id": "C",
+        "text": "Length of I-band increases"
+      },
+      {
+        "id": "D",
+        "text": "Length of two Z-line increases"
+      }
+    ],
+    "correctOption": "A,B",
+    "explanation": "**Correct Options: A, B**\n\nDuring muscle contraction:\n- The actin filaments slide over myosin filaments toward the center of the sarcomere.\n- The 'I' band shortens.\n- The 'H' zone reduces / decreases and may disappear.\n- The 'A' band retains its length (remains constant).\n- The distance between two Z-lines decreases (sarcomere shortens).\nHence, both statements (A) and (B) are correct."
+  }
+]
