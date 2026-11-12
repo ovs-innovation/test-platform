@@ -1,29 +1,49 @@
-import { v2 as cloudinary } from 'cloudinary';
-import dotenv from 'dotenv';
+import fs from 'fs';
 import path from 'path';
+import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
+import { uploadImageToCloudinary } from '../src/services/cloudinaryService.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
+const DIAGRAMS_DIR = './backend/scripts/cell_diagrams';
 
-async function upload() {
-  const q175 = await cloudinary.uploader.upload('backend/scripts/cell_q175_chloroplast.png', {
-    folder: 'edvedum_botany/cell_unit_of_life',
-    public_id: 'q175_chloroplast_diagram'
-  });
-  console.log('Q175 URL:', q175.secure_url);
+async function main() {
+  const urlFile = './backend/scripts/cell_diagram_urls.json';
+  let urls = {};
+  if (fs.existsSync(urlFile)) {
+    urls = JSON.parse(fs.readFileSync(urlFile, 'utf8'));
+  }
 
-  const q189 = await cloudinary.uploader.upload('backend/scripts/cell_q189_mitochondrion.png', {
-    folder: 'edvedum_botany/cell_unit_of_life',
-    public_id: 'q189_mitochondrion_diagram'
-  });
-  console.log('Q189 URL:', q189.secure_url);
+  const files = fs.readdirSync(DIAGRAMS_DIR).filter(f => f.endsWith('.png'));
+  console.log(`Found ${files.length} images to upload...`);
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const key = path.basename(file, '.png');
+    if (urls[key]) {
+      console.log(`[${i+1}/${files.length}] Already uploaded: ${key} -> ${urls[key]}`);
+      continue;
+    }
+
+    const filePath = path.join(DIAGRAMS_DIR, file);
+    try {
+      const res = await uploadImageToCloudinary(filePath, {
+        folder: 'edvedum/questions/cell_unit_of_life',
+        public_id: key,
+        overwrite: true
+      });
+      urls[key] = res.secure_url;
+      fs.writeFileSync(urlFile, JSON.stringify(urls, null, 2));
+      console.log(`[${i+1}/${files.length}] Uploaded: ${key} -> ${res.secure_url}`);
+    } catch (err) {
+      console.error(`Error uploading ${key}:`, err.message);
+    }
+  }
+
+  console.log('Upload complete. Total URLs:', Object.keys(urls).length);
 }
 
-upload().catch(console.error);
+main().catch(console.error);
