@@ -1,0 +1,4077 @@
+[
+  {
+    "_source_num": 1,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which of the following plants produces non-albuminous seeds?",
+    "options": [
+      "Pea",
+      "Wheat",
+      "Maize",
+      "Barley"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Pea**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 2,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which of the following in female gametophyte of an angiosperm helps in guiding the pollen tube for fertilizing the eggs?",
+    "options": [
+      "Polar nucleus",
+      "Antipodals",
+      "Synergids",
+      "Central cells"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Synergids**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 3,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "If the diploid chromosome number of typical angiosperm is 36 , what would be the chromosome number in its endosperm?",
+    "options": [
+      "72",
+      "18",
+      "36",
+      "54"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **54**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 4,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "How many theca are present in each lobe of a typical bilobed angiosperm anther ?",
+    "options": [
+      "12",
+      "2",
+      "6",
+      "8"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **2**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 5,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Arrange the following in the correct developmental sequence related to microsporogenesis :\nA. Microspore tetrads\nB. Sporogenous tissue\nC. Pollen grains\nD. Pollen mother cells\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "D, A, C, B",
+      "B, D, A, C",
+      "B, D, C, A",
+      "A, D, C, B"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "During microsporogenesis inside the anther:\n1. As the anther develops, the cells of the **sporogenous tissue** (B) undergo mitotic divisions.\n2. Each sporogenous cell is capable of giving rise to a **pollen mother cell (PMC)** (D).\n3. Each PMC undergoes meiosis to form a cluster of four cells called **microspore tetrads** (A).\n4. As the anthers mature and dehydrate, the microspores dissociate from each other and develop into **pollen grains** (C).\nTherefore, the correct developmental sequence is **B, D, A, C**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 6,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is a triploid cell?",
+    "options": [
+      "Synergid",
+      "Central cell",
+      "Zygote",
+      "Primary endosperm cell Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Primary endosperm cell Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 7,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following types of pollination brings genetically different types of pollen grains to the stigma?",
+    "options": [
+      "Autogamy",
+      "Xenogamy",
+      "Geitonogamy",
+      "Cleistogamy"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Xenogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 8,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Given below are two statements : One is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A) : A typical unfertilised, angiosperm embryo sac at maturity is 8 nucleate and 7-celled.\nReason (R) : The egg apparatus has 2 polar nuclei.\n\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      "(A) is true but (R) is false",
+      "(A) is false but (R) is true",
+      "Both (A) and (R) are true and (R) is the correct explanation of (A)",
+      "Both (A) and (R) are true but (R) is NOT the correct explanation of (A)"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "• **Assertion (A)** is true: A typical mature angiosperm female gametophyte (embryo sac) is 8-nucleate and 7-celled (3 antipodals, 2 synergids, 1 egg cell, and 1 large central cell with 2 polar nuclei).\n• **Reason (R)** is false: The egg apparatus consists of three cells grouped together at the micropylar end—two synergids and one egg cell. The 2 polar nuclei are located in the large central cell below the egg apparatus, not inside it.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 9,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Given below are two statements: One is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A) : Both wind and water pollinated flowers are not very colourful and do not produce nectar.\nReason (R) : The flowers produce enormous amount of pollen grains in wind and water pollinated flowers.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      "(A) is true but (R) is false",
+      "(A) is false but (R) is true",
+      "Both (A) and (R) are true and (R) is the correct explanation of (A)",
+      "Both (A) and (R) are true but (R) is NOT the correct explanation of (A)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "• **Assertion (A)** is true: Wind and water-pollinated flowers do not need to attract biotic pollinators (insects, birds), so they are small, inconspicuous, devoid of bright colour, scent, or nectar.\n• **Reason (R)** is true: To compensate for uncertainties and passive loss of pollen during transit via abiotic wind/water, flowers produce enormous amounts of pollen grains.\n• However, producing enormous pollen grains is an adaptation to compensate for pollen loss, not the explanation for why flowers lack colour and nectar. Hence, both are true but (R) is not the correct explanation of (A).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 10,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "How many meiotic and mitotic divisions need to occur for the development of a mature female gametophyte from the megaspore mother cell in an angiosperm plant?",
+    "options": [
+      "1 Meiosis and 3 Mitosis",
+      "No Meiosis and 2 Mitosis",
+      "2 Meiosis and 3 Mitosis",
+      "1 Meiosis and 2 Mitosis Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **1 Meiosis and 3 Mitosis**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 11,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Given below are two statements : One is labelled as Assertion (A) and other is labelled as Reason (R).\n\nAssertion (A) : Cells of the tapetum possess dense cytoplasm and generally have more than one nucleus.\nReason (R) : Presence of more than one nucleus in the tapetum increases the efficiency of nourishing the developing microspore mother cells.\n\nIn light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      "(A) is true but (R) is false",
+      "(A) is false but (R) is true",
+      "Both (A) and (R) are true and (R) is the correct explanation of (A)",
+      "Both (A) and (R) are true but (R) is NOT the correct explanation of (A)"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "• **Assertion (A)** is true: Cells of the tapetum, the innermost anther wall layer, possess dense cytoplasm and often become binucleate or multinucleate through endomitosis.\n• **Reason (R)** is true: Tapetal cells are highly metabolically active and multinucleation provides increased transcriptional machinery and enzymatic/nutritive efficiency to nourish the developing microspores and pollen grains.\nTherefore, both (A) and (R) are true and (R) is the correct explanation of (A).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 12,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Match List I with List II :\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Scutellum | I. Persistent nucellus |\n| B. Non-albuminous seed | II. Cotyledon of Monocot seed |\n| C. Epiblast | III. Groundnut |\n| D. Perisperm | IV. Rudimentary cotyledon |\n\nChoose the option with all correct matches:",
+    "options": [
+      "A-IV, B-III, C-I, D-II",
+      "A-II, B-IV, C-III, D-I",
+      "A-II, B-III, C-IV, D-I",
+      "A-IV, B-III, C-II, D-I"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "• **Scutellum**: The single large, shield-shaped cotyledon of a monocot (grass) embryo (A-II).\n• **Non-albuminous seed**: Seeds that have no residual endosperm as it is completely consumed during embryo development, e.g., Groundnut, Pea, Bean (B-III).\n• **Epiblast**: The rudimentary second cotyledon found in some grass embryos (C-IV).\n• **Perisperm**: Persistent remnant of nucellus in mature seeds, e.g., Black pepper, Beet (D-I).\nHence, the correct match is **A-II, B-III, C-IV, D-I**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 13,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which part of the ovule stores reserve food materials?",
+    "options": [
+      "Nucellus",
+      "Integument",
+      "Placenta",
+      "Funicle"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Nucellus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 14,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Pollen grains remain preserved as fossils due to the presence of :",
+    "options": [
+      "Epidermal layer",
+      "Tapetum",
+      "Exine layer",
+      "Intine layer Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Exine layer**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 15,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The part marked as 'x' in the given figure is",
+    "options": [
+      "Endosperm",
+      "Thalamus",
+      "Endocarp",
+      "Mesocarp"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "In false fruits like strawberry, the flesh that is eaten is the enlarged, fleshy **thalamus** (receptacle), marked as 'x'. The actual fruits are the tiny seed-like achenes embedded on its surface.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794473882/edvedum/questions/sexual_reproduction_in_flowering_plants/sexual_repro_q_15.png"
+  },
+  {
+    "_source_num": 16,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Identify the set of correct statements: A. The flowers of Vallisneria are colourful and produce nectar. B. The flowers of water lily are not pollinated by water. C. In most of water-pollinated species, the pollen grains are protected from wetting. D. Pollen grains of some hydrophytes are long and ribbon like. E. In some hydrophytes, the pollen grains are carried passively inside water. Choose the correct answer from the options given below.",
+    "options": [
+      "C, D and E only",
+      "A, B, C and D only",
+      "A, C, D and E only",
+      "B, C, D and E only Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **B, C, D and E only Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 17,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Identify the correct description about the given figure :",
+    "options": [
+      "Wind pollinated plant inflorescence showing flowers with well exposed stamens.",
+      "Water pollinated flowers showing stamens with mucilaginous covering.",
+      "Cleistogamous flowers showing autogamy.",
+      "Compact inflorescence showing complete autogamy"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "The figure illustrates a **wind-pollinated plant inflorescence** (such as grasses or maize) characterized by well-exposed stamens so that pollens are easily dispersed into wind currents, and feathery stigmas to easily trap airborne pollen grains.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794473885/edvedum/questions/sexual_reproduction_in_flowering_plants/sexual_repro_q_17.png"
+  },
+  {
+    "_source_num": 18,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In which of the following sets of families, the pollen grains are viable for months?",
+    "options": [
+      "Solanaceae, Poaceae and Liliaceae",
+      "Brassicaceae, Liliaceae and Poaceae",
+      "Rosaceae, Liliaceae and Poaceae",
+      "Leguminosae, Solanaceae and Rosaceae"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Leguminosae, Solanaceae and Rosaceae**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 19,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Transfer of pollen grains from anther to stigma of another flower of same plant is known as :",
+    "options": [
+      "Geitonogamy",
+      "Xenogamy",
+      "Autogamy",
+      "Cleistogamy Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Geitonogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 20,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In angiosperms the correct sequence of events in formation of female gametophyte in the ovule is :",
+    "options": [
+      "3 successive free nuclear divisions in functional megaspore.",
+      "Degeneration of 3 megaspores.",
+      "Meiotic division in megaspore mother cell.",
+      "Migration of 3 nuclei towards each pole. (E) Formation of wall resulting in seven celled embryosac. Choose the correct answer from the options given below : (A) (A), (B), (C), (D), (E) (B) (C), (E), (A), (D), (B) (C) (B), (C), (A), (D), (E) (D) (C), (B), (A), (D), (E)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Migration of 3 nuclei towards each pole. (E) Formation of wall resulting in seven celled embryosac. Choose the correct answer from the options given below : (A) (A), (B), (C), (D), (E) (B) (C), (E), (A), (D), (B) (C) (B), (C), (A), (D), (E) (D) (C), (B), (A), (D), (E)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 21,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "What is the function of tassels in the corn cob?",
+    "options": [
+      "To trap pollen grains",
+      "To disperse pollen grains",
+      "To protect seeds",
+      "To attract insects"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **To disperse pollen grains**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 22,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Large, colourful, fragrant flowers with nectar are seen in",
+    "options": [
+      "Bird pollinated plants",
+      "Bat pollinated plants",
+      "Wind pollinated plants",
+      "Insect pollinated plants"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Insect pollinated plants**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 23,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In angiosperm, the haploid, diploid and triploid structures of a fertilized embryo sac sequentially are :",
+    "options": [
+      "Antipodals, synergids, and primary endosperm nucleus",
+      "Synergids, Zygote and Primary endosperm nucleus",
+      "Synergids, antipodals and Polar nuclei",
+      "Synergids, Primary endosperm nucleus and zygote"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Synergids, Zygote and Primary endosperm nucleus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 24,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The residual persistent part which forms the perisperm in the seeds of beet is",
+    "options": [
+      "Integument",
+      "Calyx",
+      "Endosperm",
+      "Nucellus Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Nucellus Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 25,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "To ensure that only the desired pollens fall on the stigma in artificial hybridization process (a) the female flower buds of plant producing unisexual flowers need not be bagged. (b) there is no need to emasculate unisexual flowers of selected female parent (c) emasculated flowers are to be bagged immediately after cross pollination (d) emasculated flowers are to be bagged after removal of anthers (e) bisexual flowers, showing protogyny are never selected for cross Choose the correct answer from the options given belows",
+    "options": [
+      "(a), (d) and (e) only",
+      "(a), (b) and (c) only",
+      "(b), (c) and (d) only",
+      "(b), (c) and (e) only"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **(b), (c) and (d) only**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 26,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In general the egg apparatus of embryo sac in angiosperm consists of",
+    "options": [
+      "One egg cell, two synergids, two antipodal cells, two Polar nuclei",
+      "One egg cell, two synergids, three antipodal cells, two Polar nuclei",
+      "One egg cell, two synergids, two antipodal cells, three Polar nuclei",
+      "One egg cell, three synergids, two antipodal cells, two Polar nuclei"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **One egg cell, two synergids, three antipodal cells, two Polar nuclei**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 27,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Given below are two statements:\nStatement I : Cleistogamous flowers are invariably autogamous\nStatement II : Cleistogamy is disadvantageous as there is no chance for cross pollination\n\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      "Both Statement I and Statement II are correct",
+      "Both Statement I and Statement II are incorrect",
+      "Statement I is correct but Statement II is incorrect",
+      "Statement I is incorrect but Statement II is correct"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "• **Statement I is correct**: Cleistogamous flowers do not open at all; hence autogamy is the only possible method of pollination.\n• **Statement II is correct**: Because cleistogamous flowers never open, there is zero opportunity for cross-pollination, preventing genetic recombination and new variations, which can lead to inbreeding depression.\nThus, both Statement I and Statement II are correct.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 28,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Identify the incorrect statement related to Pollination:",
+    "options": [
+      "Pollination by water is quite rare in flowering plants",
+      "Pollination by wind is more common amongst abiotic pollination",
+      "Flowers produce foul odours to attract flies and beetles to get pollinated",
+      "Moths and butterflies are the most dominant pollinating agents among insects Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Moths and butterflies are the most dominant pollinating agents among insects Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 29,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which part of the fruit, labelled in the given figure makes it a false fruit?",
+    "options": [
+      "A $\\rightarrow$ Mesocarp",
+      "B $\\rightarrow$ Endocarp",
+      "C $\\rightarrow$ Thalamus",
+      "D $\\rightarrow$ Seed"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "In apple (a pome/false fruit), the bulk of the fleshy edible fruit develops from the **thalamus** (labeled C), rather than the ovary alone. Hence, **C $\\rightarrow$ Thalamus** makes it a false fruit.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794473886/edvedum/questions/sexual_reproduction_in_flowering_plants/sexual_repro_q_29.png"
+  },
+  {
+    "_source_num": 30,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The term used for transfer of pollen grains from anthers of one plant to stigma of a different plant which, during pollination, brings genetically different types of pollen grains to stigma, is :",
+    "options": [
+      "Cleistogamy",
+      "Xenogamy",
+      "Geitonogamy",
+      "Chasmogamy"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Xenogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 31,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "A typical angiosperm embryo sac at maturity is :",
+    "options": [
+      "8-nucleate and 8-celled",
+      "8-nucleate and 7-celled",
+      "7-nucleate and 8-celled",
+      "7-nucleate and 7-celled"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **8-nucleate and 7-celled**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 32,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In some members of which of the following pairs of families, pollen grains retain their viability for months after release?",
+    "options": [
+      "Rosaceae : Leguminosae",
+      "Poaceae : Rosaceae",
+      "Poaceae : Leguminosae",
+      "Poaceae : Solanaceae"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Rosaceae : Leguminosae**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 33,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In some plants thalamus contributes to fruit formation. Such fruits are termed as :",
+    "options": [
+      "Parthenocarpic fruit",
+      "False fruits",
+      "Aggregate fruits",
+      "True fruits Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **False fruits**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 34,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which of the following is incorrect for wind-pollinated plants ?",
+    "options": [
+      "Pollen grains are light and non-sticky",
+      "Well exposed stamens and stigma",
+      "Many ovules in each ovary",
+      "Flowers are small and not brightly coloured"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Many ovules in each ovary**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 35,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The body of the ovule is fused within the funicle at",
+    "options": [
+      "Chalaza",
+      "Hilum",
+      "Micropyle",
+      "Nucellus"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Hilum**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 36,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The plant parts which consist of two generations - one within the other (i) Pollen grains inside the anther (ii) Germinated pollen grain with two male gametes (iii) Seed inside the fruit (iv) Embryo sac inside the ovule",
+    "options": [
+      "(i) and (iv)",
+      "(i) only",
+      "(i), (ii) and (iii)",
+      "(iii) and (iv)"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **(i) and (iv)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 37,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which is the most common type of embryo sac in angiosperms?",
+    "options": [
+      "Bisporic with two sequential mitotic divisions",
+      "Tetrasporic with one mitotic stage of divisions",
+      "Monosporic with three sequential mitotic divisions",
+      "Monosporic with two sequential mitotic divisions"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Monosporic with three sequential mitotic divisions**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 38,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "What type of pollination takes place in Vallisneria ?",
+    "options": [
+      "Male flowers are carried by water currents to female flowers at surface of water.",
+      "Pollination occurs in submerged condition by water.",
+      "Flowers emerge above surface of water and pollination occurs by insects.",
+      "Flowers emerge above water surface and pollen is carried by wind. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Male flowers are carried by water currents to female flowers at surface of water.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 39,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In which one of the following, both autogamy and geitonogamy are prevented?",
+    "options": [
+      "Maize",
+      "Wheat",
+      "Papaya",
+      "Castor"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Papaya**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 40,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In some plants, the female gamete develops into embryo without fertilization. This phenomenon is known as :",
+    "options": [
+      "Syngamy",
+      "Parthenocarpy",
+      "Parthenogenesis",
+      "Autogamy"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Parthenogenesis**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 41,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following statements regarding post-fertilization development in flowering plants is incorrect?",
+    "options": [
+      "Central cell develops into endosperm",
+      "Ovules develop into embryo sac",
+      "Ovary develops into fruit",
+      "Zygote develops into embryo"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Ovules develop into embryo sac**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 42,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Persistent nucellus in the seed is known as",
+    "options": [
+      "Hilum",
+      "Tegmen",
+      "Chalaza",
+      "Perisperm"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Perisperm**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 43,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "What is the fate of the male gametes discharged in the synergid?",
+    "options": [
+      "One fuses with the egg, other (s) fuse (s) with synergid nucleus.",
+      "One fuses with the egg and other fuses with central cell nuclei.",
+      "One fuses with the egg, other (s) degenerate (s) in the synergid.",
+      "All fuse with the egg."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **One fuses with the egg and other fuses with central cell nuclei.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 44,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which of the following has proved helpful in preserving pollen as fossils?",
+    "options": [
+      "Pollenkitt",
+      "Cellulosic intine",
+      "Oil content",
+      "Sporopollenin Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Sporopollenin Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 45,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Double fertilization is",
+    "options": [
+      "fusion of two male gametes of a pollen tube with two different eggs",
+      "fusion of one male gamete with two polar nuclei",
+      "fusion of two male gametes with one egg",
+      "syngamy and triple fusion"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **syngamy and triple fusion**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 46,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Pollen grains can be stored for several years in liquid nitrogen having a temperature of",
+    "options": [
+      "$-120^\\circ\\text{C}$",
+      "$-80^\\circ\\text{C}$",
+      "$-196^\\circ\\text{C}$",
+      "$-160^\\circ\\text{C}$"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "Pollen grains can be preserved for long periods in pollen banks using cryopreservation in liquid nitrogen at **$-196^\\circ\\text{C}$**, maintaining their viability for future crop breeding programs.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 47,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The morphological nature of the edible part of coconut is",
+    "options": [
+      "cotyledon",
+      "endosperm",
+      "pericarp",
+      "perisperm."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **endosperm**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 48,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Functional megaspore in an angiosperm develops into an",
+    "options": [
+      "endosperm",
+      "embryo sac",
+      "embryo",
+      "ovule."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **embryo sac**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 49,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Attractants and rewards are required for",
+    "options": [
+      "entomophily",
+      "hydrophily",
+      "cleistogamy",
+      "anemophily."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **entomophily**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 50,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Flowers which have single ovule in the ovary and are packed into inflorescence are usually pollinated by",
+    "options": [
+      "bee",
+      "wind",
+      "bat",
+      "water"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **wind**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 51,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "A dioecious flowering plant prevents both",
+    "options": [
+      "autogamy and geitonogamy",
+      "geitonogamy and xenogamy",
+      "cleistogamy and xenogamy",
+      "autogamy and xenogamy. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **autogamy and geitonogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 52,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Double fertilisation is exhibited by",
+    "options": [
+      "algae",
+      "fungi",
+      "angiosperms",
+      "gymnosperms."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **angiosperms**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 53,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In majority of angiosperms",
+    "options": [
+      "egg has a filiform apparatus",
+      "there are numerous antipodal cells",
+      "reduction division occurs in the megaspore mother cells",
+      "a small central cell is present in that embryo sac."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **reduction division occurs in the megaspore mother cells**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 54,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Pollination in water hyacinth and water lily is brought about by the agency of",
+    "options": [
+      "water",
+      "insects or wind",
+      "birds",
+      "bats."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **insects or wind**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 55,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The ovule of an angiosperm is technically equivalent to",
+    "options": [
+      "megasporangium",
+      "megasporophyll",
+      "megaspore mother cell",
+      "megaspore."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **megasporangium**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 56,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The coconut water from tender coconut represents",
+    "options": [
+      "free nuclear proembryo",
+      "free nuclear endosperm",
+      "endocarp",
+      "fleshy mesocarp."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **free nuclear endosperm**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 57,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following statements is not true?",
+    "options": [
+      "Pollen grains of many species cause severe allergies.",
+      "Stored pollen in liquid nitrogen can be used in the crop breeding programmes.",
+      "Tapetum helps in the dehiscence of anther.",
+      "Exine of pollen grains is made up of sporopollenin. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Tapetum helps in the dehiscence of anther.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 58,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Seed formation without fertilisation in flowering plants involves the process of",
+    "options": [
+      "somatic hybridisation",
+      "apomixis",
+      "sporulation",
+      "budding."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **apomixis**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 59,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Proximal end of the filament of stamen is attached to the",
+    "options": [
+      "Placenta",
+      "thalamus or petal",
+      "anther",
+      "connective."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **thalamus or petal**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 60,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which of the following statements is not correct?",
+    "options": [
+      "Pollen germination and pollen tube growth are regulated by chemical components of pollen interacting with those of the pistil.",
+      "Some reptiles have also been reported as pollinators in some plant species.",
+      "Pollen grains of many species can germinate on the stigma of a flower, but only one pollen tube of the same species grows into the style.",
+      "Insects that consume pollen or nectar without bringing about pollination are called pollen/ nectar robbers."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Pollen grains of many species can germinate on the stigma of a flower, but only one pollen tube of the same species grows into the style.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 61,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Filiform apparatus is characteristic feature of",
+    "options": [
+      "aleurone cell",
+      "synergids",
+      "generative cell",
+      "nucellar embryo."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **synergids**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 62,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In angiosperms, microsporogenesis and mega-sporogenesis",
+    "options": [
+      "involve meiosis",
+      "occur in ovule",
+      "occur in anther",
+      "form gametes without further divisions."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **involve meiosis**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 63,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Flowers are unisexual in",
+    "options": [
+      "China rose",
+      "onion",
+      "pea",
+      "cucumber. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **cucumber. Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 64,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Coconut water from a tender coconut is",
+    "options": [
+      "innermost layers of the seed coat",
+      "degenerated nucellus",
+      "immature embryo",
+      "free nuclear endosperm."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **free nuclear endosperm.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 65,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following fruits is parthenocarpic?",
+    "options": [
+      "Jackfruit",
+      "Banana",
+      "Brinjal",
+      "Apple"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Banana**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 66,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Male gametophyte in angiosperms produces",
+    "options": [
+      "single sperm and two vegetative cells",
+      "three sperms",
+      "two sperms and a vegetative cell",
+      "single sperm and a vegetative cell."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **two sperms and a vegetative cell**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 67,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which of the following are the important floral rewards to the animal pollinators ?",
+    "options": [
+      "Floral fragrance and calcium crystals",
+      "Protein pellicle and stigmatic exudates",
+      "Colour and large size of flower",
+      "Nectar and pollen grains"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Nectar and pollen grains**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 68,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following may require pollinators, but is genetically similar to autogamy?",
+    "options": [
+      "Apogamy",
+      "Cleistogamy",
+      "Geitonogamy",
+      "Xenogamy"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Geitonogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 69,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following statements is not true?",
+    "options": [
+      "The flowers pollinated by flies and bats secrete foul odour to attract them.",
+      "Honey is made by bees by digesting pollen collected from flowers.",
+      "Pollen grains are rich in nutrients and they are used in the form of tablets and syrups.",
+      "Pollen grains of some plants cause severe allergies and bronchial afflictions in some people."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Honey is made by bees by digesting pollen collected from flowers.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 70,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Transmission tissue is characteristic feature of",
+    "options": [
+      "dry stigma",
+      "wet stigma",
+      "hollow style",
+      "solid style. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **solid style. Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 71,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The hilum is a scar on the",
+    "options": [
+      "seed, where funicle was attached",
+      "fruit, where style was present",
+      "fruit, where it was attached to pedicel",
+      "seed, where micropyle was present"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **seed, where funicle was attached**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 72,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Geitonogamy involves",
+    "options": [
+      "fertilization of a flower by the pollen from another flower of the same plant",
+      "fertilization of a flower by the pollen from the same flower",
+      "fertilization of a flower by the pollen from a flower of another plant in the same population",
+      "fertilization of a flower by the pollen from a flower of another plant belonging to a distant population."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **fertilization of a flower by the pollen from another flower of the same plant**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 73,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Pollen tablets are available in the market for",
+    "options": [
+      "in vitro fertilization",
+      "breeding programmes",
+      "supplementing food",
+      "ex situ conservation."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **supplementing food**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 74,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Function of filiform apparatus is to",
+    "options": [
+      "recognize the suitable pollen at stigma",
+      "stimulate division of generative cell",
+      "produce nectar",
+      "guide the entry of pollen tube."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **guide the entry of pollen tube.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 75,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Non-albuminous seed is produced in",
+    "options": [
+      "maize",
+      "castor",
+      "wheat",
+      "pea."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **pea.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 76,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Animal vectors are required for pollination in",
+    "options": [
+      "Vallisneria",
+      "mulberry",
+      "cucumber",
+      "maize."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **cucumber**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 77,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Albuminous seeds store their reserve food mainly in",
+    "options": [
+      "endosperm",
+      "cotyledons",
+      "hypocotyl",
+      "perisperm. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **endosperm**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 78,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Megaspores are produced from the megaspore mother cells after",
+    "options": [
+      "mitotic division",
+      "formation of thick wall",
+      "differentiation",
+      "meiotic division."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **meiotic division.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 79,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following statements is correct?",
+    "options": [
+      "Cleistogamous flowers are always autogamous.",
+      "Xenogamy occurs only by wind pollination.",
+      "Chasmogamous flowers do not open at all.",
+      "Geiotonogamy involves the pollen and stigma of flowers of different plants."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Cleistogamous flowers are always autogamous.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 80,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which of the following statements is correct?",
+    "options": [
+      "Sporopollenin can be degraded by enzymes.",
+      "Sporopollenin is made up of inorganic materials.",
+      "Sporopollenin can withstand high temperatures as well as strong acids and alkalis.",
+      "Sporopollenin can withstand high temperatures but not strong acids."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Sporopollenin can withstand high temperatures as well as strong acids and alkalis.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 81,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Meiosis takes place in",
+    "options": [
+      "gemmule",
+      "megaspore",
+      "meiocyte",
+      "conidia."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **meiocyte**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 82,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Seed coat is not thin, membranous in",
+    "options": [
+      "groundnut",
+      "gram",
+      "maize",
+      "coconut."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **coconut.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 83,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Perisperm differs from endosperm in",
+    "options": [
+      "being a diploid tissue",
+      "its formation by fusion of secondary nucleus with several sperms",
+      "being a haploid tissue",
+      "having no reserve food. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **being a diploid tissue**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 84,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Advantage of cleistogamy is",
+    "options": [
+      "no dependence on pollinators",
+      "vivipary",
+      "higher genetic variability",
+      "more vigorous offspring."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **no dependence on pollinators**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 85,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Megasporangium is equivalent to",
+    "options": [
+      "nucellus",
+      "ovule",
+      "embryo sac",
+      "fruit."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **ovule**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 86,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following statements is correct?",
+    "options": [
+      "Endothecium produces the microspores.",
+      "Tapetum nourishes the developing pollen.",
+      "Hard outer layer of pollen is called intine.",
+      "Sporogenous tissue is haploid."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Tapetum nourishes the developing pollen.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 87,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Product of sexual reproduction generally generates",
+    "options": [
+      "new genetic combination leading to variation",
+      "large biomass",
+      "longer viability of seeds",
+      "prolonged dormancy."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **new genetic combination leading to variation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 88,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "What is the function of germ pore?",
+    "options": [
+      "Emergence of radicle",
+      "Absorption of water for seed germination",
+      "Initiation of pollen tube",
+      "Release of male gametes"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Initiation of pollen tube**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 89,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following statements is wrong?",
+    "options": [
+      "When pollen is shed at two-celled stage, double fertilization does not take place.",
+      "Vegetative cell is larger than generative cell.",
+      "Pollen grains in some plants remain viable for months.",
+      "Intine is made up of cellulose and pectin. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **When pollen is shed at two-celled stage, double fertilization does not take place.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 90,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Plants with ovaries having only one or a few ovules, are generally pollinated by",
+    "options": [
+      "bees",
+      "butterflies",
+      "birds",
+      "wind."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **wind.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 91,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Both, autogamy and geitonogamy are prevented in",
+    "options": [
+      "Papaya",
+      "cucumber",
+      "castor",
+      "maize."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Papaya**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 92,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "An organic substance that can withstand environmental extremes and cannot be degraded by any enzyme is",
+    "options": [
+      "cuticle",
+      "sporopollenin",
+      "lignin",
+      "cellulose."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **sporopollenin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 93,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is correctly matched?",
+    "options": [
+      "Onion Bulb",
+      "Ginger Sucker",
+      "Chlamydomonas Conidia",
+      "Yeast Zoospores"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Onion Bulb**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 94,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Even in absence of pollinating agents seed-setting is assured in",
+    "options": [
+      "Commelina",
+      "Zostera",
+      "Salvia",
+      "fig."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Commelina**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 95,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In angiosperms, functional megaspore develops into",
+    "options": [
+      "embryo sac",
+      "ovule",
+      "endosperm",
+      "pollen sac."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **embryo sac**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 96,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "What is common between vegetative reproduction and apomixis?",
+    "options": [
+      "Both are applicable to only dicot plants",
+      "Both bypass the flowering phase",
+      "Both occur round the year",
+      "Both produce progeny identical to the parent. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Both produce progeny identical to the parent. Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 97,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Filiform apparatus is a characteristic feature of",
+    "options": [
+      "suspensor",
+      "egg",
+      "synergid",
+      "zygote."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **synergid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 98,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Nucellar polyembryony is reported in species of",
+    "options": [
+      "Citrus",
+      "Gossypium",
+      "Triticum",
+      "Brassica."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Citrus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 99,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following pollinations is autogamous?",
+    "options": [
+      "Geitonogamy",
+      "Xenogamy",
+      "Chasmogamy",
+      "Cleistogamy"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Cleistogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 100,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Wind pollination is common in",
+    "options": [
+      "legumes",
+      "lilies",
+      "grasses",
+      "orchids."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **grasses**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 101,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Vegetative propagation in Pistia occurs by",
+    "options": [
+      "stolon",
+      "offset",
+      "runner",
+      "sucker. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **offset**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 102,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Examine the figures (A-D) given below and select the right option out of (a – d), in which all the four structures A, B, C and D are identified correctly.",
+    "options": [
+      "A $\\rightarrow$ offset, B $\\rightarrow$ Antheridiophore, C $\\rightarrow$ Antipodals, D $\\rightarrow$ Oogonium",
+      "A $\\rightarrow$ Rhizome, B $\\rightarrow$ Sporangiophore, C $\\rightarrow$ Polar cell, D $\\rightarrow$ Globule",
+      "A $\\rightarrow$ Sucker, B $\\rightarrow$ Seta, C $\\rightarrow$ Megaspore mother cell , D $\\rightarrow$ Gemma cup",
+      "A $\\rightarrow$ Runner, B $\\rightarrow$ Archegoniophore, C $\\rightarrow$ Synergid, D $\\rightarrow$ Antheridium"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "In the diagrams from NCERT Reproduction in Organisms / Plant Reproduction:\n• Figure A shows vegetative propagule offset (*Pistia/Eichhornia*).\n• Figure B shows *Marchantia* antheridiophore bearing antheridia.\n• Figure C shows antipodal cells of female gametophyte.\n• Figure D shows the upper female reproductive structure (nucule/oogonium) of *Chara*.\nTherefore, option (A) is correct.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794473888/edvedum/questions/sexual_reproduction_in_flowering_plants/sexual_repro_q_102.png"
+  },
+  {
+    "_source_num": 103,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Apomictic embryos in Citrus arise form",
+    "options": [
+      "synergids",
+      "maternal sporophytic tissue in ovule",
+      "antipodal cells",
+      "diploid egg."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **maternal sporophytic tissue in ovule**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 104,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Transfer of pollen grains from the anther to the stigma of another flower of the same plant is called",
+    "options": [
+      "xenogamy",
+      "geitonogamy",
+      "karyogamy",
+      "autogamy."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **geitonogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 105,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Wind pollinated flowers are",
+    "options": [
+      "small, brightly coloured, producing large number of pollen grains",
+      "small, producing large number of dry pollen grains",
+      "large producing abundant nectar and pollen",
+      "small, producing nectar and dry pollen. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **small, producing large number of dry pollen grains**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 106,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Vegetative propagation in mint occurs by",
+    "options": [
+      "offset",
+      "rhizome",
+      "sucker",
+      "runner."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **sucker**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 107,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following pairs of plant structures has haploid number of chromosomes ?",
+    "options": [
+      "Nucellus and antipodal cells",
+      "Egg nucleus and secondary nucleus",
+      "Megaspore mother cell and antipodal cells",
+      "Egg cell and antipodal cells"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Egg cell and antipodal cells**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 108,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "What does the filiform apparatus do at the entrance into ovule?",
+    "options": [
+      "It brings about opening of the pollen tube.",
+      "It guides pollen tube from a synergid to egg.",
+      "It helps in the entry of pollen tube into a synergid.",
+      "It prevents entry of more than one pollen tube into the embryo sac."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **It helps in the entry of pollen tube into a synergid.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 109,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Unisexuality of flowers prevents",
+    "options": [
+      "geitonogamy, but not xenogamy",
+      "autogamy and geitonogamy",
+      "autogamy, but not geitonogamy",
+      "both geitonogamy and xenogamy."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **autogamy, but not geitonogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 110,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is resistant to enzyme action?",
+    "options": [
+      "Pollen exine",
+      "Leaf cuticle",
+      "Cork",
+      "Wood fibre"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Pollen exine**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 111,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Male gametes in angiosperms are formed by the division of",
+    "options": [
+      "generative cell",
+      "vegetative cell",
+      "microspore mother cell",
+      "microspore. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **generative cell**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 112,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Two plants can be conclusively said to belong to the same species if they",
+    "options": [
+      "have more than 90 percent similar genes",
+      "look similar and possess identical secondary metabolites",
+      "have same number of chromosomes",
+      "can reproduce freely with each other and form seeds."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **can reproduce freely with each other and form seeds.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 113,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is surrounded by a callose wall?",
+    "options": [
+      "Male gamete",
+      "Egg",
+      "Pollen grain",
+      "Microspore mother cell"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Microspore mother cell**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 114,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In a cereal grain the single cotyledon of embryo is represented by",
+    "options": [
+      "coleoptile",
+      "coleorhiza",
+      "scutellum",
+      "prophyll."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **scutellum**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 115,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The arrangement of the nuclei in a normal embryo sac in the dicot plants is",
+    "options": [
+      "3 + 3 +2",
+      "2 + 4 + 2",
+      "3 + 2 + 3",
+      "2 + 3 + 3"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **3 + 2 + 3**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 116,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "What would be the number of chromosomes in the cells of the aleurone layer in a plant species with 8 chromosomes in its synergids?",
+    "options": [
+      "16",
+      "24",
+      "32",
+      "8"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **24**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 117,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In a type of apomixis known as adventive embryony, embryos develop directly from the",
+    "options": [
+      "nucellus or integuments",
+      "zygote",
+      "synergids or antipodals in an embryo sac",
+      "accessory embryo sacs in the ovule."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **nucellus or integuments**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 118,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which one of the following represents an ovule, where the embryo sac becomes horse-shoe shaped and the funiculus and micropyle are close to each other?",
+    "options": [
+      "Amphitropous",
+      "Circinotropous",
+      "Atropous",
+      "Anatropous Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **Amphitropous**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 119,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Through which cell of the embryo sac, does the pollen tube enter the embryo sac?",
+    "options": [
+      "Egg cell",
+      "Persistent synergid",
+      "Degenerated synergids",
+      "Central cell"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Degenerated synergids**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 120,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "When a diploid female plant is crossed with a tetraploid male, the ploidy of endosperm cells in the resulting seed is",
+    "options": [
+      "tetraploidy",
+      "pentaploidy",
+      "diploidy",
+      "triploidy"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **tetraploidy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 121,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "An ovule which becomes curved so that the nucellus and embryo sac lie at right angles to the funicle is",
+    "options": [
+      "hemitropous",
+      "campylotropous",
+      "anatropous",
+      "orthotropous."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **hemitropous**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 122,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Anthesis is a phenomenon which refers to",
+    "options": [
+      "reception of pollen by stigma",
+      "formation of pollen",
+      "development of anther",
+      "opening of flower bud."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **opening of flower bud.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 123,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In a flowering plant, archesporium gives rise to",
+    "options": [
+      "only the wall of the sporangium",
+      "both wall and the sporogenous cells",
+      "wall and the tapetum",
+      "only tapetum and sporogenous cells."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **both wall and the sporogenous cells**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 124,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In angiosperms pollen tube liberate their male gametes into the",
+    "options": [
+      "central cell",
+      "antipodal cells",
+      "egg cell",
+      "synergids."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **synergids.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 125,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In angiosperm all the four microspores of tetrad are covered by a layer which is formed by",
+    "options": [
+      "pectocellulose",
+      "callose",
+      "cellulose",
+      "sporopollenin. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **callose**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 126,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "What is the direction of micropyle in anatropous ovule?",
+    "options": [
+      "Upwards",
+      "Downward",
+      "Right",
+      "Left"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Downward**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 127,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Adventive embryony in Citrus is due to",
+    "options": [
+      "nucellus",
+      "integuments",
+      "zygotic embryo",
+      "fertilized egg."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **nucellus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 128,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In grasses what happens in microspore mother cell for the formation of mature pollen grains?",
+    "options": [
+      "One meiotic and two mitotic divisions",
+      "One meiotic and one mitotic divisions",
+      "One meiotic",
+      "One Mitotic division"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **One meiotic and two mitotic divisions**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 129,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Anemophily type of pollination is found in",
+    "options": [
+      "Salvia",
+      "bottle brush",
+      "Vallisneria",
+      "coconut."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **coconut.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 130,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Endosperm is formed during the double fertilization by",
+    "options": [
+      "two polar nuclei and one male gamete",
+      "one polar nuclei and one male gamete",
+      "ovum and male gamete",
+      "two polar nuclei and two male gametes."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **two polar nuclei and one male gamete**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 131,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Eight nucleated embryo sac is",
+    "options": [
+      "only monosporic",
+      "only bisporic",
+      "only tetrasporic",
+      "any of these."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **any of these.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 132,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "An interesting modification of flower shape for insect pollination occurs in some orchids in which a male insect mistakes the pattern on the orchid flower for the female species and tries to copulate with it, thereby pollinating the flower. This phenomenon is called",
+    "options": [
+      "mimicry",
+      "pseudocopulation",
+      "pseudopollination",
+      "pseudoparthenocarpy Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **pseudocopulation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 133,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The role of double fertilization in angiosperms is to produce",
+    "options": [
+      "endosperm",
+      "integuments",
+      "cotyledons",
+      "endocarp"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **endosperm**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 134,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "If an angiospermic male plant is diploid and female plant tetraploid, the ploidy level of endosperm will be",
+    "options": [
+      "tetraploid",
+      "pentaploid",
+      "haploid",
+      "triploid"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **pentaploid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 135,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The role of double fertilization in angiosperms is to produce",
+    "options": [
+      "cotyledons",
+      "endocarp",
+      "endosperm",
+      "integuments"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **endosperm**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 136,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "If there are 4 cells in anthers, what will be the number of pollen grains?",
+    "options": [
+      "16",
+      "12",
+      "8",
+      "4"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **16**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 137,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The anthesis is a phenomenon, which refers to",
+    "options": [
+      "development of anthers",
+      "opening of flower bud",
+      "stigma receptors",
+      "all of these"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **opening of flower bud**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 138,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "In an angiosperm, how many microspore mother cells are required to produce 100 pollen grains?",
+    "options": [
+      "75",
+      "100",
+      "25",
+      "50"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **25**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 139,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "The polyembryony commonly occurs in",
+    "options": [
+      "tomato",
+      "potato",
+      "Citrus",
+      "turmeric"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **Citrus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 140,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "When pollen of a flower is transferred to the stigma of another flower of the same plant, the pollination is referred to as",
+    "options": [
+      "autogamy",
+      "geitonogamy",
+      "xenogamy",
+      "allogamy Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **geitonogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 141,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Embryo sac represents",
+    "options": [
+      "megaspore",
+      "megagametophyte",
+      "megasporophyll",
+      "megagamete"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **megagametophyte**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 142,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Number of meiotic divisions required to produce 200/400 seeds of pea would be",
+    "options": [
+      "200/400",
+      "400/800",
+      "300/600",
+      "250/500"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **250/500**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 143,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Double fertilization is characteristic of",
+    "options": [
+      "angiosperms",
+      "anatropous",
+      "gymnosperms",
+      "bryophytes"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **angiosperms**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 144,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Ovule is straight with funiculus, embryo sac, chalaza and micropyle lying on one straight line. It is",
+    "options": [
+      "orthotropous",
+      "anatropous",
+      "campylotropous",
+      "amphitropous"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **orthotropous**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 145,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Study of formation, growth and development of new individual from an egg is",
+    "options": [
+      "apomixis",
+      "embryology",
+      "embryogeny",
+      "cytology"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **embryology**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 146,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Meiosis is best observed in dividing",
+    "options": [
+      "cells of apical meristem",
+      "cells of lateral meristem",
+      "microspores and anther wall",
+      "microsporocytes"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **microsporocytes**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 147,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Double fertilization is fusion of",
+    "options": [
+      "two eggs",
+      "two eggs and polar nuclei with pollen nuclei",
+      "one male gamete with egg and other with synergid",
+      "one male gamete with egg and other with secondary nucleus Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **one male gamete with egg and other with secondary nucleus Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 148,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Point out the odd one.",
+    "options": [
+      "Nucellus",
+      "Embryo sac",
+      "Micropyle",
+      "Pollen grain"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **Pollen grain**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 149,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Which of the following pair have haploid structures?",
+    "options": [
+      "Nucellus and antipodal cells",
+      "Antipodal cells and egg cell",
+      "Antipodal cells and megaspore mother cell",
+      "Nucellus and primary endosperm nucleus"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Antipodal cells and egg cell**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 150,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Embryo sac occurs in",
+    "options": [
+      "embryo",
+      "axis part of embryo",
+      "ovule",
+      "endosperm"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **ovule**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 151,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Pollination occurs in",
+    "options": [
+      "bryophytes and angiosperms",
+      "pteridophytes and angiosperms",
+      "angiosperms and gymnosperms",
+      "angiosperms and fungi"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **angiosperms and gymnosperms**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 152,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Entry of pollen tube through micropyle is",
+    "options": [
+      "chalazogamy",
+      "mesogamy",
+      "porogamy",
+      "pseudogamy"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **porogamy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 153,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Sperm and egg nuclei fuse due to",
+    "options": [
+      "base pairing of their DNA and RNA",
+      "formation of hydrogen bonds",
+      "mutual attraction due to differences in electrical charges",
+      "attraction of their protoplasts Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **attraction of their protoplasts Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 154,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Female gametophyte of angiosperms is represented by",
+    "options": [
+      "ovule",
+      "megaspore mother cell",
+      "embryo sac",
+      "nucellus"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **embryo sac**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 155,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Male gametophyte of angiosperms/monocots is",
+    "options": [
+      "microsporangium",
+      "nucellus",
+      "microspore",
+      "stamen"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **microspore**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 156,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Generative cell was destroyed by laser but a normal pollen tube was still formed because",
+    "options": [
+      "vegetative cell is not damaged",
+      "contents of killed generative cell stimulate pollen growth",
+      "laser beam stimulates growth of pollen tube",
+      "the region of emergence of pollen tube is not harmed"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **vegetative cell is not damaged**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 157,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Nucellar embryo is",
+    "options": [
+      "amphimictic haploid",
+      "amphimictic diploid",
+      "apomictic haploid",
+      "apomictic diploid"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (D): **apomictic diploid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 158,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Perisperm is",
+    "options": [
+      "remnant of endosperm",
+      "persistent nucellus",
+      "peripheral part of endosperm",
+      "disintegrated secondary nucleus"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **persistent nucellus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 159,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Double fertilization and triple fusion were discovered by",
+    "options": [
+      "Hofmeister",
+      "Nawaschin and Guignard",
+      "Leeuwenhoek",
+      "Strasburger"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **Nawaschin and Guignard**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 160,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Perisperm is",
+    "options": [
+      "remnant of endosperm",
+      "persistent nucellus",
+      "peripheral part of endosperm",
+      "disintegrated secondary nucleus Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **persistent nucellus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 161,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Total number of meiotic divisions required for forming 100 zygotes/100 grains of wheat is",
+    "options": [
+      "100",
+      "75",
+      "125",
+      "50"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (C): **125**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 162,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Male gametophyte of angiosperms is shed at",
+    "options": [
+      "four celled pollen grain",
+      "three celled pollen grain",
+      "microspore mother cell",
+      "anther"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (B): **three celled pollen grain**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 163,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Sexual Reproduction in Flowering Plants",
+    "chapter_id": 215,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "question_type": "mcq",
+    "question_text": "Formation of gametophyte directly from sporophyte without meiosis is",
+    "options": [
+      "apospory",
+      "apogamy",
+      "parthenogenesis",
+      "amphimixis"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Sexual Reproduction in Flowering Plants, the correct answer is option (A): **apospory**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  }
+]
