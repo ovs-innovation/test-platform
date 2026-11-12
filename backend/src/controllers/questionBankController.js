@@ -75,6 +75,7 @@ export const listCategories = asyncHandler(async (req, res) => {
  * GET /api/question-bank?category=Physics
  */
 export const listBankQuestions = asyncHandler(async (req, res) => {
+  res.setHeader('X-Accel-Buffering', 'no');
   const { category, chapter, subject, skip_cache, refresh } = req.query;
   const isBypass = skip_cache === 'true' || refresh === 'true' || req.headers['cache-control'] === 'no-cache';
   const cacheKey = `cache:qb:list:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
@@ -618,6 +619,7 @@ export const deleteAllBankQuestions = asyncHandler(async (req, res) => {
  * GET /api/question-bank/export?category=JavaScript
  */
 export const exportBankQuestions = asyncHandler(async (req, res) => {
+  res.setHeader('X-Accel-Buffering', 'no');
   const { category } = req.query;
   let sql = 'SELECT * FROM question_bank';
   const params = [];
