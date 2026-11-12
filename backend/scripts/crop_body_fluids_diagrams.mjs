@@ -1,39 +1,39 @@
 import sharp from 'sharp';
+import fs from 'fs';
 
-async function cropPrecise() {
-  const p245 = 'backend/uploads/body_fluids/pages_clean/page_245.png';
-  // Q22: ECG wave
-  await sharp(p245)
-    .extract({ left: 70, top: 90, width: 450, height: 180 })
-    .toFile('backend/uploads/body_fluids/diagrams/q22_ecg.png');
+const outDir = './backend/scripts/body_fluids_diagrams';
+if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
-  // Q25: schematic plan of circulation
-  await sharp(p245)
-    .extract({ left: 60, top: 1420, width: 450, height: 420 })
-    .toFile('backend/uploads/body_fluids/diagrams/q25_circulation.png');
+async function cropAll() {
+  // Q43 (Page 12)
+  await sharp('./backend/scripts/body_fluids_rendered_pages/page_12.png')
+    .extract({ left: 60, top: 490, width: 600, height: 400 })
+    .toFile(`${outDir}/q_43.png`);
+  console.log('Cropped Q43');
 
-  // Q29: liver portal system
-  await sharp(p245)
-    .extract({ left: 700, top: 1150, width: 550, height: 380 })
-    .toFile('backend/uploads/body_fluids/diagrams/q29_portal_system.png');
+  // Q44 (Page 13)
+  await sharp('./backend/scripts/body_fluids_rendered_pages/page_13.png')
+    .extract({ left: 60, top: 240, width: 450, height: 250 })
+    .toFile(`${outDir}/q_44.png`);
+  console.log('Cropped Q44');
 
-  // Page 247: Q48
-  const p247 = 'backend/uploads/body_fluids/pages_clean/page_247.png';
-  await sharp(p247)
-    .extract({ left: 780, top: 1410, width: 450, height: 180 })
-    .toFile('backend/uploads/body_fluids/diagrams/q48_ecg.png');
+  // Q45 (Page 13)
+  await sharp('./backend/scripts/body_fluids_rendered_pages/page_13.png')
+    .extract({ left: 60, top: 770, width: 750, height: 330 })
+    .toFile(`${outDir}/q_45.png`);
+  console.log('Cropped Q45');
 
-  // Page 254: Q109 & Q118
-  const p254 = 'backend/uploads/body_fluids/pages_clean/page_254.png';
-  await sharp(p254)
-    .extract({ left: 95, top: 245, width: 560, height: 345 })
-    .toFile('backend/uploads/body_fluids/diagrams/q109_wbc.png');
+  // Q46 (Page 14)
+  await sharp('./backend/scripts/body_fluids_rendered_pages/page_14.png')
+    .extract({ left: 60, top: 230, width: 600, height: 400 })
+    .toFile(`${outDir}/q_46.png`);
+  console.log('Cropped Q46');
 
-  await sharp(p254)
-    .extract({ left: 750, top: 1110, width: 500, height: 800 })
-    .toFile('backend/uploads/body_fluids/diagrams/q118_ecg_traces.png');
-
-  console.log('Precise cropping complete!');
+  // Q49 (Page 15)
+  await sharp('./backend/scripts/body_fluids_rendered_pages/page_15.png')
+    .extract({ left: 60, top: 230, width: 750, height: 370 })
+    .toFile(`${outDir}/q_49.png`);
+  console.log('Cropped Q49');
 }
 
-cropPrecise().catch(console.error);
+cropAll().catch(console.error);
