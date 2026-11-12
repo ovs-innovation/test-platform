@@ -1,0 +1,3377 @@
+[
+  {
+    "_source_num": 1,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which of the following plant growth regulators promotes internode elongation prior to flowering in cabbage?",
+    "options": [
+      "Ethephon",
+      "Abscisic acid",
+      "Gibberellin",
+      "Indole butyric acid"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Gibberellin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 2,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which of the following plant growth regulators is used as herbicide?",
+    "options": [
+      "Gibberellin",
+      "2, 4 - D",
+      "Kinetin",
+      "Abscisic acid"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "2,4-D (2,4-dichlorophenoxyacetic acid) is a synthetic auxin widely used as a selective herbicide to kill broad-leaved (dicotyledonous) weeds in lawns and cereal crops without affecting mature monocotyledonous plants.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 3,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Length of the stem at time 0 is $20\\text{ cm}$. The arithmetic growth rate is $30\\text{ cm per day}$. What is the length of the stem at the end of the $7^\\text{th}$ day?",
+    "options": [
+      "460 cm",
+      "50 cm",
+      "170 cm",
+      "230 cm"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "In arithmetic growth, the length at time $t$ is given by the linear equation:\n$$L_t = L_0 + rt$$\nHere, initial length $L_0 = 20\\text{ cm}$, growth rate $r = 30\\text{ cm/day}$, and time $t = 7\\text{ days}$.\n$$L_7 = 20 + (30 \\times 7) = 20 + 210 = 230\\text{ cm}$$.\nHence, option (D) is correct.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 4,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is not a characteristic of plant cells in the phase of elongation?",
+    "options": [
+      "New cell wall deposition",
+      "Cell enlargement",
+      "Increased vacuolation",
+      "Large conspicuous nuclei"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **Large conspicuous nuclei**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 5,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Match List-I with List-II:\n\n| List-I (Growth Regulator) | List-II (Function/Effect) |\n| :--- | :--- |\n| A. 2,4-D | I. Brewing industry |\n| B. $\\text{GA}_3$ | II. Stimulation of stomatal closure |\n| C. Kinetin | III. Herbicide |\n| D. ABA | IV. Nutrient mobilisation |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "A-III, B-I, C-IV, D-II",
+      "A-IV, B-III, C-II, D-I",
+      "A-I, B-IV, C-III, D-II",
+      "A-I, B-II, C-IV, D-III"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "• **2,4-D** (Auxin) is used as a weedicide/herbicide (A-III).\n• **$\\text{GA}_3$** speeds up the malting process in the brewing industry (B-I).\n• **Kinetin** (Cytokinin) promotes nutrient mobilisation and delays leaf senescence (C-IV).\n• **ABA** (Abscisic acid) stimulates stomatal closure during water stress (D-II).\nTherefore, the correct matching is A-III, B-I, C-IV, D-II.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 6,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Heterophyllous development in response to environment is an example of which of the following phenomena?",
+    "options": [
+      "Redifferentiation",
+      "Elasticity",
+      "Dedifferentiation",
+      "Plasticity"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **Plasticity**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 7,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Read the following statements on plant growth and development.",
+    "options": [
+      "Parthenocarpy can be induced by auxins.",
+      "Plant growth regulators can be involved in promotion as well as inhibition of growth.",
+      "Dedifferentiation is a pre-requisite for re-differentiation.",
+      "Abscisic acid is a plant growth promoter. (E) Apical dominance promotes the growth of lateral buds. Choose the option with all correct statements. (A)   A, D, E only   (B)   B, D, E only   (C)   A, B, C only   (D)   A, C, E only"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Dedifferentiation is a pre-requisite for re-differentiation.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 8,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which one of the following phytohormones promotes nutrient mobilization which helps in the delay of leaf senescence in plants?",
+    "options": [
+      "Gibberellin",
+      "Cytokinin",
+      "Ethylene",
+      "Abscisic acid"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **Cytokinin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 9,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Abscisic acid | (I) Promotes female flowers in cucumber |\n| (B) Ethylene | (II) Helps seeds to withstand desiccation |\n| (C) Gibberellin | (III) Helps in nutrient mobilisation |\n| (D) Cytokinin | (IV) Promotes bolting in beet, cabbage etc. |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "A-II, B-III, C-IV, D-I",
+      "A-III, B-II, C-I, D-IV",
+      "A-II, B-I, C-IV, D-III",
+      "A-II, B-I, C-III, D-IV"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "• **Abscisic acid (ABA)** induces seed dormancy and helps seeds withstand desiccation (A-II).\n• **Ethylene** promotes female flowers in cucumbers, increasing yield (B-I).\n• **Gibberellin** promotes bolting (internode elongation prior to flowering) in beet, cabbage, etc. (C-IV).\n• **Cytokinin** helps in nutrient mobilisation, delaying leaf senescence (D-III).\nHence, the correct option is (C): A-II, B-I, C-IV, D-III.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 10,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "F. Skoog observed that callus proliferated from the internodal segments of tobacco stem when auxin was supplied with one of the following except :",
+    "options": [
+      "Extract of Vascular tissues",
+      "Coconut milk",
+      "Abscisic acid",
+      "Yeast Extract"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Abscisic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 11,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Given below are some statements about plant growth regulators. A. All GAs are acidic in nature. B. Auxins are antagonists to GAs. C. Zeatin was isolated from coconut milk. D. Ethylene induces flowering in Mango. E. Abscisic acid induces parthenocarpy. Choose the correct set of statements from the options given below :",
+    "options": [
+      "A, C, D",
+      "B, E",
+      "A, B, C",
+      "B, D, E"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **A, C, D**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 12,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Auxin is used by gardeners to prepare weed-free lawns. But no damage is caused to grass as auxin",
+    "options": [
+      "promotes apical dominance.",
+      "promotes abscission of mature leaves only.",
+      "does not affect mature monocotyledonous plants.",
+      "can help in cell division in grasses, to produce growth."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **does not affect mature monocotyledonous plants.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 13,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Formation of interfascicular cambium from fully developed parenchyma cells is an example for",
+    "options": [
+      "Differentiation",
+      "Redifferentiation",
+      "Dedifferentiation",
+      "Maturation"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Dedifferentiation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 14,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Spraying sugarcane crop with which of the following plant growth regulators, increases the length of stem, thus, increasing the yield?",
+    "options": [
+      "Auxin",
+      "Gibberellin",
+      "Cytokinin",
+      "Abscisic acid"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **Gibberellin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 15,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The phenomenon which is influenced by auxin and also played a major role in its discovery :",
+    "options": [
+      "Phototropism",
+      "Root initiation",
+      "Gravitropism",
+      "Apical Dominance Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **Phototropism**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 16,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Match List - I with List - II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Auxin | (I) Promotes female flower formation in cucumber |\n| (B) Gibberellin | (II) Overcoming apical dominance |\n| (C) Cytokinin | (III) Increase in the length of grape stalks |\n| (D) Ethylene | (IV) Promotes flowering in pineapple |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "(A)-(II), (B)-(I), (C)-(IV), (D)-(III)",
+      "(A)-(IV), (B)-(III), (C)-(II), (D)-(I)",
+      "(A)-(I), (B)-(III), (C)-(IV), (D)-(II)",
+      "(A)-(III), (B)-(II), (C)-(I), (D)-(IV)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "• **Auxin** initiates rooting in stem cuttings and promotes flowering in pineapple (A-IV).\n• **Gibberellins** cause increase in the length of grape stalks (B-III).\n• **Cytokinins** help overcome apical dominance by promoting lateral bud growth (C-II).\n• **Ethylene** promotes female flower formation in cucumber (D-I).\nThus, (A)-(IV), (B)-(III), (C)-(II), (D)-(I) is the correct match.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 17,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which of the following statements is not correct ?",
+    "options": [
+      "Phase of cell elongation of plant cells is characterized by increased vacuolation.",
+      "Cells in the meristematic phase of growth exhibit abundant plasmodesmatal connections.",
+      "Plant growth is generally determinate.",
+      "Plant growth is measurable."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Plant growth is generally determinate.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 18,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Spraying of which of the following phytohormone on juvenile conifers helps hastening the maturity period, that leads early seed production?",
+    "options": [
+      "Gibberellic Acid",
+      "Zeatin",
+      "Abscisic Acid",
+      "Indole-3-butyric Acid"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **Gibberellic Acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 19,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which hormone promotes internode/petiole elongation in deep water rice?",
+    "options": [
+      "Kinetin",
+      "Ethylene",
+      "2, 4-D",
+      "GA 3"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **Ethylene**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 20,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "In tissue culture experiments, leaf mesophyll cells are put in a culture medium to form callus. This phenomenon may be called as",
+    "options": [
+      "Dedifferentiation",
+      "Development",
+      "Senescence",
+      "Differentiation Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **Dedifferentiation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 21,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The ability of plants to follow different pathways in response to environment leading to formation of different kinds of structures is called",
+    "options": [
+      "Differentiation",
+      "Redifferentiation",
+      "Development",
+      "Plasticity"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **Plasticity**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 22,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which of the following growth regulators is an adenine derivative?",
+    "options": [
+      "Abscisic acid",
+      "Auxin",
+      "Cytokinin",
+      "Ethylene"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Cytokinin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 23,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The Phenomenon by which the undividing parenchyma cells start to divide mitotically during plant tissue culture is called as",
+    "options": [
+      "Secondary growth",
+      "Differentiation",
+      "Dedifferentiation",
+      "Redifferentiation"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Dedifferentiation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 24,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which one of the following plants does not show plasticity?",
+    "options": [
+      "Cotton",
+      "Coriander",
+      "Buttercup",
+      "Maize"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **Maize**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 25,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The gaseous plant growth regulator is used in plants to:",
+    "options": [
+      "speed up the malting process",
+      "promote root growth and roothair formation to increase the absorption surface",
+      "help overcome apical dominance",
+      "kill dicotyledonous weeds in the fields"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **promote root growth and roothair formation to increase the absorption surface**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 26,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Production of Cucumber has increased manifold in recent years. Application of which of the following phytohormones has resulted in this increased yield as the hormone is known to produce",
+    "options": [
+      "ABA",
+      "Gibberellin",
+      "Ethylene",
+      "Cytokinin Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Ethylene**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 27,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Plants follow different pathways in response to environment of phases of life to form different kinds of structures. This ability is called",
+    "options": [
+      "Maturity",
+      "Elasticity",
+      "Flexibility",
+      "Plasticity"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **Plasticity**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 28,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The plant hormone used to destroy weeds in a field",
+    "options": [
+      "IBA",
+      "IAA",
+      "NAA",
+      "2, 4-D"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **2, 4-D**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 29,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Inhibitory substances in dormant seeds cannot be removed by subjecting seeds to :",
+    "options": [
+      "Chilling conditions",
+      "Gibberellic acid",
+      "Nitrate",
+      "Ascorbic acid"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **Ascorbic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 30,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Match the following concerning the activity/function and the phytohormone involved:\n\n| List-I (Activity/Function) | List-II (Phytohormone) |\n| :--- | :--- |\n| (a) Fruit ripener | (i) Abscisic acid |\n| (b) Herbicide | (ii) $\\text{GA}_3$ |\n| (c) Bolting agent | (iii) 2, 4-D |\n| (d) Stress hormone | (iv) Ethephon |\n\nSelect the correct option from following:",
+    "options": [
+      "(a)-(iv), (b)-(ii), (c)-(i), (d)-(iii)",
+      "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)",
+      "(a)-(iii), (b)-(iv), (c)-(ii), (d)-(i)",
+      "(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "• Fruit ripener is **Ethephon** (source of ethylene) ((a)-(iv)).\n• Herbicide is **2, 4-D** ((b)-(iii)).\n• Bolting agent is **$\\text{GA}_3$** ((c)-(ii)).\n• Stress hormone is **Abscisic acid (ABA)** ((d)-(i)).\nHence, (a)-(iv), (b)-(iii), (c)-(ii), (d)-(i) is the correct option.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 31,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Who coined the term 'Kinetin' ?",
+    "options": [
+      "Kurosawa",
+      "Skoog and Miller",
+      "Darwin",
+      "Went"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **Skoog and Miller**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 32,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which of the following is not an inhibitory substance governing seed dormancy?",
+    "options": [
+      "Para-ascorbic acid",
+      "Abscisic acid",
+      "Gibberellic acid",
+      "Phenolic acid Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Gibberellic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 33,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Name the plant growth regulator which upon spraying on sugarcane crop, increases the length of stem, thus increasing the yield of sugarcane crop",
+    "options": [
+      "Abscisic acid",
+      "Cytokinin",
+      "Gibberellin",
+      "Ethylene"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Gibberellin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 34,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The process of growth is maximum during",
+    "options": [
+      "Log phase",
+      "Lag phase",
+      "Dormancy",
+      "Senescence"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **Log phase**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 35,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Removal of shoot tips is a very useful technique to boost the production of tea-leaves. This is because :",
+    "options": [
+      "Gibberellins delay senescence of leaves.",
+      "Gibberellins prevent bolting and are inactivated.",
+      "Auxins prevent leaf drop at early stages.",
+      "Effect of auxins is removed and growth of lateral buds is enhanced."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "Decapitation (removal of shoot apex/apical bud) removes apical dominance maintained by auxins produced in the tip. In the absence of apical dominance, lateral/axillary buds grow rapidly, producing bushy growth with numerous new tea leaves (flush).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 36,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "In order to increase the yield of sugarcane crop, which of the following plant growth regulators should be sprayed?",
+    "options": [
+      "Cytokinins",
+      "Ethylene",
+      "Auxins",
+      "Gibberellins"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **Gibberellins**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 37,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "It takes very long time for pineapple plants to produce flowers. Which combination of hormones can be applied to artificially induce flowering in pineapple plants throughout the year to increase yield?",
+    "options": [
+      "Gibberellin and Abscisic acid",
+      "Cytokinin and Abscisic acid",
+      "Auxin and Ethylene",
+      "Gibberellin and Cytokinin"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Auxin and Ethylene**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 38,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Fruit and leaf drop at early stages can be prevented by the application of",
+    "options": [
+      "ethylene",
+      "auxins",
+      "gibberellic acid",
+      "cytokinins. Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **auxins**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 39,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "You are given a tissue with its potential for differentiation in an artificial culture. Which of the following pairs of hormones would you add to the medium to secure shoots as well as roots?",
+    "options": [
+      "IAA and gibberellin",
+      "Auxin and cytokinin",
+      "Auxin and abscisic acid",
+      "Gibberellin and abscisic acid"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **Auxin and cytokinin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 40,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The  Avena   curvature is used for bioassay of",
+    "options": [
+      "IAA",
+      "ethylene",
+      "ABA",
+      "GA 3 ."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **IAA**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 41,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Auxin can be bioassayed by",
+    "options": [
+      "potometer",
+      "lettuce hypocotyl elongation",
+      "Avena   coleoptile curvature",
+      "hydroponics."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Avena   coleoptile curvature**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 42,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "What causes a green plant exposed to the light, on only one side, to bend towards the source of light as it grows?",
+    "options": [
+      "Light stimulates plant cells on the lighted side to grow faster.",
+      "Auxin accumulates on the shaded side, stimulating greater cell elongation there.",
+      "Green plants need light to perform photosynthesis.",
+      "Green plants seek light because they are photoreopic."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **Auxin accumulates on the shaded side, stimulating greater cell elongation there.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 43,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Typical growth curve in plants is",
+    "options": [
+      "stair-steps shaped",
+      "parabolic",
+      "sigmoid",
+      "linear."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **sigmoid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 44,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Dr. F. Went noted that if coleoptile tips were removed and placed on agar for one hour, the agar would produce a bending when placed on one side of freshly-cut coleoptile stumps. Of what",
+    "options": [
+      "It made possible the isolation and exact identification of auxin.",
+      "It is the basis for quantitative determination of small amounts of growth-promoting substances.",
+      "It supports the hypothesis that IAA is auxin.",
+      "It demonstrated polar movement of auxins. Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **It is the basis for quantitative determination of small amounts of growth-promoting substances.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 45,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "A few normal seedlings of tomato were kept in a dark room. After a few days they were found to have become white -coloured like albinos. Which of the following terms will you use to describe",
+    "options": [
+      "Mutated",
+      "Embolised",
+      "Etiolated",
+      "Defoliated"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Etiolated**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 46,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which one of the following growth regulators is known as 'stress hormone'?",
+    "options": [
+      "Abscisic acid",
+      "Ethylene",
+      "GA 3",
+      "Indole acetic acid"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **Abscisic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 47,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The pineapple which under natural condition is difficult to blossom has been made to produce fruits throughout the year by application of",
+    "options": [
+      "NAA, 2, 4-D",
+      "Phenyl acetic acid",
+      "Cytokinin",
+      "IAA, IBA."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **NAA, 2, 4-D**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 48,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "During seed germination its stored food is mobilized by",
+    "options": [
+      "ABA",
+      "gibberellin",
+      "ethylene",
+      "cytokinin."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **gibberellin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 49,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Through their effects on plant growth regulators, what do the temperature and light control in the plants?",
+    "options": [
+      "Apical dominance",
+      "flowering",
+      "Closure of stomata",
+      "Fruit elongation"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **flowering**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 50,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which one of the following generally acts as an antagonist to gibberellins?",
+    "options": [
+      "Zeatin",
+      "Ethylene",
+      "ABA",
+      "IAA"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **ABA**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 51,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "One of the commonly used plant growth hormone in tea plantations is",
+    "options": [
+      "ethylene",
+      "abscisic acid",
+      "Zeatin",
+      "indole-3-acetic acid. Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **indole-3-acetic acid. Exam GOAL P Y Q   P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 52,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Root development is promoted by",
+    "options": [
+      "abscisic acid",
+      "auxin",
+      "gibberellin",
+      "ethylene."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **ethylene.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 53,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Phototropic curvature is the result of uneven distribution of",
+    "options": [
+      "gibberellin",
+      "phytochrome",
+      "cytokinins",
+      "auxin."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **auxin.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 54,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Coiling of garden pea tendrils around any support is an example of",
+    "options": [
+      "thigmotaxis",
+      "thigmonasty",
+      "thigmotropism",
+      "thermotaxis."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **thigmotropism**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 55,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which one of the following acids is a derivative of carotenoids?",
+    "options": [
+      "Indole-3-acetic acid",
+      "Gibberellic acid",
+      "Abscisic acid",
+      "Indole butyric acid"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Abscisic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 56,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Senescence as an active developmental cellular process in growth and functioning of a flowering plant, is indicated in",
+    "options": [
+      "annual plants",
+      "floral parts",
+      "vessels and tracheid differentiation",
+      "leaf abscission."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **vessels and tracheid differentiation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 57,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which one of the following pairs, is not correctly matched?",
+    "options": [
+      "Gibberellic acid - Leaf fall",
+      "Cytokinin - Cell division",
+      "IAA - Cell wall elongation",
+      "Abscissic acid - Stomatal closure"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **Gibberellic acid - Leaf fall**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 58,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Opening of floral buds into flowers, is a type of",
+    "options": [
+      "autonomic movement of variation",
+      "paratonic movement of growth",
+      "autonomic movement of growth",
+      "autonomic movement of locomotion. Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **autonomic movement of growth**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 59,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "\"Foolish seedling\" disease of rice led to the discovery of",
+    "options": [
+      "ABA",
+      "2,4-D",
+      "IAA",
+      "GA"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **GA**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 60,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "An enzyme that can stimulate germination of barley seeds is",
+    "options": [
+      "invertase",
+      "-amylase",
+      "lipase",
+      "protease"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **-amylase**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 61,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Farmers in a particular region were concerned that pre-mature yellowing of leaves of a pulse crop might cause decrease in the yield. Which treatment could be most beneficial to obtain maximum",
+    "options": [
+      "Application of iron and magnesium to promote synthesis of chlorophyll",
+      "Frequent irrigation of the crop",
+      "Treatment of the plants with cytokinins along with a small dose of nitrogenous fertilizer",
+      "Removal of all yellow leaves and spraying the remaining green leaves with 2, 4, 5- trichlorophenoxy acetic acid"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Treatment of the plants with cytokinins along with a small dose of nitrogenous fertilizer**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 62,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "How does pruning help in making the hedge dense?",
+    "options": [
+      "It releases wound hormones.",
+      "It induces the differentiation of new shoots from the rootstock.",
+      "It frees axillary buds from apical dominance.",
+      "The apical shoot grows faster after pruning."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **It frees axillary buds from apical dominance.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 63,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Treatment of seeds at low temperature under moist conditions to break its dormancy is called",
+    "options": [
+      "stratification",
+      "scarification",
+      "vernalization",
+      "chelation."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **stratification**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 64,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Parthenocarpic tomato fruits can be produced by",
+    "options": [
+      "treating the plants with phenylmercuric acetate",
+      "removing androecium of flowers before pollen grains are released",
+      "treating the plants with low concentrations of gibberellic acid and auxins",
+      "raising the plants from vernalized seeds. Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **treating the plants with low concentrations of gibberellic acid and auxins**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 65,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The ability of the Venus Flytrap to capture insects is due to",
+    "options": [
+      "specialized ''muscle-like'' cells",
+      "chemical stimulation by the prey",
+      "a passive process requiring no special ability on the part of the plant",
+      "rapid turgor pressure changes."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **rapid turgor pressure changes.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 66,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Cell elongation in internodal regions of the green plants takes place due to",
+    "options": [
+      "indole acetic acid",
+      "cytokinins",
+      "gibberellins",
+      "ethylene."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **gibberellins**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 67,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Plants deficient of element zinc, show its effect on the biosynthesis of plant growth hormone",
+    "options": [
+      "auxin",
+      "cytokinin",
+      "ethylene",
+      "abscisic acid."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **auxin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 68,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Differentiation of shoot is controlled by",
+    "options": [
+      "high auxin : cytokinin ratio",
+      "high cytokinin : auxin ratio",
+      "high gibberellin : auxin ratio",
+      "high gibberellin : cytokinin ratio."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **high cytokinin : auxin ratio**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 69,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Cellular totipotency is demonstrated by :-",
+    "options": [
+      "All eukaryotic cells",
+      "Only gymnosperm cells",
+      "Only bacterial cells",
+      "All plant cells"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **All plant cells**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 70,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Coconut milk factor is",
+    "options": [
+      "abscisic acid",
+      "an auxin",
+      "a gibberellin",
+      "cytokinin"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **cytokinin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 71,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Seed dormancy is due to the",
+    "options": [
+      "ethylene",
+      "abscisic acid",
+      "IAA",
+      "starch. Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **abscisic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 72,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "What is the reason of formation of embryoid from pollen grain in tissue culture medium ?",
+    "options": [
+      "Double fertilization",
+      "Test tube culture",
+      "Cellular totipotency",
+      "Organogenesis"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Cellular totipotency**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 73,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which of the following prevents the fall of fruits?",
+    "options": [
+      "GA 3",
+      "NAA",
+      "Ethylene",
+      "Zeatin"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **NAA**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 74,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Hormone responsible for senescence is",
+    "options": [
+      "ABA",
+      "auxin",
+      "GA",
+      "cytokinin"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **ABA**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 75,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which hormone breaks dormancy of potato tuber?",
+    "options": [
+      "Gibberellin",
+      "IAA",
+      "ABA",
+      "Zeatin"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **Gibberellin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 76,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "If the apical bud has been removed then we observe",
+    "options": [
+      "more lateral branches",
+      "more axillary buds",
+      "plant growing stops",
+      "flowering stops."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **more lateral branches**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 77,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "By which action a seed coat becomes permeable to water",
+    "options": [
+      "scarification",
+      "stratification",
+      "vernalization",
+      "all of the above."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **scarification**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 78,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which hormone is responsible for fruit ripening?",
+    "options": [
+      "Ethylene",
+      "Auxin",
+      "Ethyl chloride",
+      "Cyctokinin Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **Ethylene**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 79,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "ABA is involved in :",
+    "options": [
+      "dormancy of seeds",
+      "increased cell division",
+      "root elongation",
+      "shoot elongation"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **dormancy of seeds**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 80,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The closing and opening of the leaves of  Mimosa pudica   is due to",
+    "options": [
+      "chemonastic movement",
+      "thermonastic movement",
+      "seismonastic movement",
+      "hydrotropic movement"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **seismonastic movement**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 81,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "A plant hormone used for inducing morphogenesis in plant tissue culture is",
+    "options": [
+      "abscisic acid",
+      "gibberellins",
+      "cytokinins",
+      "ethylene"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **cytokinins**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 82,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which combination of gases is suitable for fruit ripening?",
+    "options": [
+      "80% $\\text{C}_2\\text{H}_4$ and 20% $\\text{CO}_2$",
+      "80% $\\text{CO}_2$ and 20% $\\text{CH}_2$",
+      "80% $\\text{CH}_4$ and 20% $\\text{CO}_2$",
+      "80% $\\text{CO}_2$ and 20% $\\text{O}_2$"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "Ethylene ($\\text{C}_2\\text{H}_4$) is a gaseous hormone that promotes fruit ripening. A combination of $80\\%\\ \\text{C}_2\\text{H}_4$ and $20\\%\\ \\text{CO}_2$ provides an effective atmosphere for artificial ripening of fruits.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 83,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which one among the following chemicals is used for causing defoliation of forest trees?",
+    "options": [
+      "Amo-1618",
+      "Phosphon-D",
+      "Maleic hydrazide",
+      "2, 4-D"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **2, 4-D**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 84,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Gibberellic acid induces flowering",
+    "options": [
+      "in short day plants under long day conditions",
+      "in day-neutral plants under dark conditions",
+      "in some gymnospermic plants only",
+      "in long day plants under short day conditions"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **in long day plants under short day conditions**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 85,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The twining of tendrils around a support is a good example of",
+    "options": [
+      "phototropism",
+      "chemotropism",
+      "nastic movements",
+      "thigmotropism Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **thigmotropism Exam GOAL P Y Q   P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 86,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The closure of lid of pitcher in pitcher plant, is due to",
+    "options": [
+      "paratonic movement",
+      "autonomous movement",
+      "turgor movement",
+      "tropic movement"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **paratonic movement**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 87,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The movement of auxin is largely",
+    "options": [
+      "centripetal",
+      "basipetal",
+      "acropetal",
+      "both (a) and (c)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **basipetal**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 88,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "If the growing plant is decapitated, then",
+    "options": [
+      "its growth stops",
+      "leaves become yellow and fall down",
+      "axillary buds are inactivated",
+      "axillary buds are activated"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **axillary buds are activated**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 89,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Removal of apical bud results in",
+    "options": [
+      "formation of new apical bud",
+      "elongation of main stem",
+      "death of plant",
+      "formation of lateral branching"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **formation of lateral branching**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 90,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The regulator which retards ageing/senescence of plant parts is",
+    "options": [
+      "cytokinin",
+      "auxin",
+      "gibberellin",
+      "abscisic acid"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **cytokinin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 91,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The hormone produced during adverse environmental conditions is",
+    "options": [
+      "benzyl aminopurine",
+      "bichlorophenoxy acetic acid",
+      "ethylene",
+      "abscisic acid"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **abscisic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 92,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Klinostat is employed in the study of",
+    "options": [
+      "osmosis",
+      "growth movements",
+      "photosynthesis",
+      "respiration Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **growth movements**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 93,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which is produced during water stress that brings stomatal closure?",
+    "options": [
+      "Ethylene",
+      "Abscisic acid",
+      "Ferulic acid",
+      "Coumarin"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **Abscisic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 94,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Dwarfness can be controlled by treating the plant with",
+    "options": [
+      "cytokinin",
+      "gibberellic acid",
+      "auxin",
+      "antigibberellin"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **gibberellic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 95,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Bananas can be prevented from over-ripening by",
+    "options": [
+      "maintaining them at room temperature",
+      "refrigeration",
+      "dipping in ascorbic acid solution",
+      "storing in a freezer"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **dipping in ascorbic acid solution**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 96,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Apical dominance is caused by",
+    "options": [
+      "abscisic acid in lateral bud",
+      "cytokinin in leaf tip",
+      "gibberellin in lateral buds",
+      "auxin in shoot tip"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **auxin in shoot tip**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 97,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Cytokinins",
+    "options": [
+      "promote abscission",
+      "influence water movement",
+      "help retain chlorophyll",
+      "inhibit protoplasmic streaming"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **help retain chlorophyll**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 98,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which is employed for artificial ripening of banana fruits?",
+    "options": [
+      "Auxin",
+      "Coumarin",
+      "Ethylene",
+      "Cytokinin"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Ethylene**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 99,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Abscisic acid causes",
+    "options": [
+      "stomatal closure",
+      "stem elongation",
+      "leaf expansion",
+      "root elongation Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **stomatal closure**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 100,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The hormone responsible for apical dominance is",
+    "options": [
+      "IAA",
+      "GA",
+      "ABA",
+      "Florigen"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **IAA**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 101,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Twining of tendrils is due to",
+    "options": [
+      "thigmotropism",
+      "seismonasty",
+      "heliotropism",
+      "diageotropism"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **thigmotropism**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 102,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Hormone primarily connected with cell division is",
+    "options": [
+      "IAA",
+      "NAA",
+      "cytokinin/zeatin",
+      "gibberellic acid"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **cytokinin/zeatin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 103,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Highest auxin concentration occurs",
+    "options": [
+      "in growing tips",
+      "in leaves",
+      "at base of plant organs",
+      "in xylem and phloem"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **in growing tips**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 104,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Phytohormones are",
+    "options": [
+      "chemical regulating flowering",
+      "chemical regulating secondary growth",
+      "hormones regulating growth from seed to adulthood",
+      "regulators synthesised by plants and influencing physiological processes"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **regulators synthesised by plants and influencing physiological processes**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 105,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Abscisic acid controls",
+    "options": [
+      "cell division",
+      "leaf fall and dormancy",
+      "shoot elongation",
+      "cell elongation and wall formation"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **leaf fall and dormancy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 106,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Phototropic and geotropic movements are linked to",
+    "options": [
+      "gibberellins",
+      "enzymes",
+      "auxin",
+      "cytokinins Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **auxin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 107,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which of the following movement is not related to auxin level?",
+    "options": [
+      "Bending of shoot towards light",
+      "Movement of root towards soil",
+      "Nyctinastic leaf movements",
+      "Movement of sunflower head tracking the sun"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Nyctinastic leaf movements**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 108,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Leaf fall can be prevented with the help of",
+    "options": [
+      "abscisic acid",
+      "auxins",
+      "florigen",
+      "cytokinins"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **cytokinins**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 109,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Mowing grass lawn facilitates better maintenance because",
+    "options": [
+      "wounding stimulates regeneration",
+      "removal of apical dominance and stimulation of intercalary meristem",
+      "removal of apical dominance",
+      "removal of apical dominance and promotion of lateral meristem"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **removal of apical dominance and stimulation of intercalary meristem**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 110,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Which one increases in the absence of light?",
+    "options": [
+      "Uptake of minerals",
+      "Uptake of water",
+      "Elongation of internodes",
+      "Ascent of sap"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Elongation of internodes**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 111,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Hormone primarily connected with cell division is",
+    "options": [
+      "IAA",
+      "NAA",
+      "cytokinin/zeatin",
+      "gibberellic acid"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **cytokinin/zeatin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 112,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Cut or excised leaves remain green for long if induced to root or dipped in",
+    "options": [
+      "gibberellins",
+      "cytokinins",
+      "auxins",
+      "ethylene"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **cytokinins**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 113,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Gibberellins promote",
+    "options": [
+      "seed germination",
+      "seed dormancy",
+      "leaf fall",
+      "root elongation Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **seed germination**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 114,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "Movement of leaves of sensitive plant,  Mimosa pudica   are due to",
+    "options": [
+      "thermonasty",
+      "seismonasty",
+      "hydrotropism",
+      "chemonasty"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **seismonasty**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 115,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "One of the synthetic auxin is",
+    "options": [
+      "IAA",
+      "GA",
+      "IBA",
+      "NAA"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **NAA**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 116,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "Leaf",
+      "Shoot apex",
+      "Stem",
+      "Axillary bud"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **Leaf**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 117,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "Shoot apex",
+      "Leaves",
+      "Lateral buds",
+      "Pulvinus"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **Leaves**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 118,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "flavoprotein",
+      "glycoprotein",
+      "lipoprotein",
+      "chromoprotein"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **chromoprotein**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 119,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "zamikand",
+      "turmeric",
+      "carrot",
+      "ginger."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **carrot**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 120,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "tobacco",
+      "potato",
+      "tomato",
+      "cotton. Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **tobacco**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 121,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "cotton",
+      "Petunia",
+      "Lemna",
+      "tobacco."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **tobacco.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 122,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "The wavelength of light absorbed by $P_r$ form of phytochrome is",
+    "options": [
+      "680 nm",
+      "720 nm",
+      "620 nm",
+      "640 nm"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "Phytochrome exists in two interconvertible forms:\n1. $P_r$ (inactive form) absorbs red light at $660-680\\text{ nm}$ and is converted into the $P_{fr}$ form.\n2. $P_{fr}$ (active form) absorbs far-red light at $730\\text{ nm}$ and is converted back into $P_r$.\nHence, $680\\text{ nm}$ is absorbed by the $P_r$ form.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 123,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "while in the other set night phase was interrupted by flash of light and it did not produce flower.",
+    "options": [
+      "Long day",
+      "Darkness neutral",
+      "Day neutral",
+      "Short day"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **Short day**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 124,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "Tobacco",
+      "Glycine max",
+      "Mirabilis jalapa",
+      "Spinach"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **Spinach**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 125,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "Carotenoids",
+      "Phytochrome",
+      "Chlorophyll",
+      "Anthocyanin"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **Phytochrome**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 126,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "phototaxis",
+      "phototropism",
+      "vernalization",
+      "photoperiodism"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **photoperiodism**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 127,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "green light",
+      "blue light",
+      "red light",
+      "none of these"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **red light**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 128,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "cytochrome",
+      "xanthophyll",
+      "phytochrome",
+      "carotene Exam GOAL P Y Q   P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **phytochrome**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 129,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "Phytochrome synthesis will increase",
+      "Level of phytochrome will decrease",
+      "Phytochrome will be destroyed",
+      "First (b) then (a)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **First (b) then (a)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 130,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "photo and thermo-insensitive",
+      "photo and thermo-sensitive",
+      "photosensitive but thermo-insensitive",
+      "thermosensitive but photo-insensitive"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (A): **photo and thermo-insensitive**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 131,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "cryotherapy",
+      "cryogenics",
+      "cryoscopy",
+      "vernalisation"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (D): **vernalisation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 132,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "photoperiod less than 12 hours",
+      "photoperiod below a critical length and uninterrupted long night",
+      "long night",
+      "short photoperiod and interrupted long night"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (B): **photoperiod below a critical length and uninterrupted long night**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 133,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "gibberellin",
+      "kinetin",
+      "florigen",
+      "IBA"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **florigen**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 134,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "Auxin",
+      "Cytokinin",
+      "Gibberellins",
+      "Ethylene"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **Gibberellins**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 135,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 10,
+    "chapter": "Plant Growth and Development",
+    "chapter_id": 255,
+    "topic": "Plant Growth and Development",
+    "question_type": "mcq",
+    "question_text": "",
+    "options": [
+      "phototropism",
+      "photorespiration",
+      "photoperiodism",
+      "geotropism"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Plant Growth and Development, the correct answer is option (C): **photoperiodism**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  }
+]
