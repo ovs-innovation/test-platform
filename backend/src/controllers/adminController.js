@@ -452,13 +452,24 @@ export const createCandidate = asyncHandler(async (req, res) => {
     try {
       const origin = req.headers.origin || 'https://edvedum.com';
       const loginUrl = `${origin.replace(/\/$/, '')}/student-login`;
-      await sendStudentIdEmail({
-        to: normalizedEmail,
-        name,
-        email: normalizedEmail,
-        studentId,
-        loginUrl,
-      });
+      if (plainPassword) {
+        await sendStudentCredentialsEmail({
+          to: normalizedEmail,
+          name,
+          email: normalizedEmail,
+          studentId,
+          password: plainPassword,
+          loginUrl,
+        });
+      } else {
+        await sendStudentIdEmail({
+          to: normalizedEmail,
+          name,
+          email: normalizedEmail,
+          studentId,
+          loginUrl,
+        });
+      }
       emailSent = true;
     } catch (mailErr) {
       console.warn('[createCandidate] Email student ID delivery error:', mailErr.message);
@@ -490,7 +501,8 @@ export const updateCandidate = asyncHandler(async (req, res) => {
     student_id,
     roll_number,
     institution_id,
-  } = req.body;
+    send_credentials = false,
+  } = req.body || {};
 
   const userRes = await query('SELECT id, password_hash, roll_number FROM users WHERE id = $1 AND role = $2', [candidateId, 'candidate']);
   if (userRes.rowCount === 0) throw ApiError.notFound('Candidate not found');
@@ -513,7 +525,10 @@ export const updateCandidate = asyncHandler(async (req, res) => {
 
   let password_hash = userRes.rows[0].password_hash;
   let rawPasswordToSave = null;
-  if (password && password.trim().length >= 6) {
+  if (password && password.trim().length > 0) {
+    if (password.trim().length < 6) {
+      throw ApiError.badRequest('Password must be at least 6 characters long.');
+    }
     password_hash = await hashPassword(password.trim());
     rawPasswordToSave = password.trim();
   }
@@ -533,7 +548,7 @@ export const updateCandidate = asyncHandler(async (req, res) => {
          institution_id = $6
        WHERE id = $7 AND role = 'candidate'
        RETURNING id, name, email, role, roll_number, institution_id, raw_password, created_at`,
-      [name, email ? email.trim() : null, password_hash, rawPasswordToSave, finalStudentId, formattedInstId, candidateId]
+      [name ? name.trim() : null, email ? email.trim() : null, password_hash, rawPasswordToSave, finalStudentId || null, formattedInstId, candidateId]
     );
     const u = uRes.rows[0];
 
@@ -556,7 +571,11 @@ export const updateCandidate = asyncHandler(async (req, res) => {
     return { ...u, ...profile, student_id: u.roll_number, raw_password: u.raw_password || profile.raw_password };
   });
 
+  await invalidateUserAuthCache(candidateId).catch(() => {});
+
   // Optional: Send credentials email if admin checked send_credentials and changed password
+  let emailSent = false;
+  let emailError = null;
   if (send_credentials && rawPasswordToSave) {
     try {
       const origin = req.headers.origin || 'https://edvedum.com';
@@ -569,12 +588,14 @@ export const updateCandidate = asyncHandler(async (req, res) => {
         password: rawPasswordToSave,
         loginUrl,
       });
+      emailSent = true;
     } catch (mailErr) {
       console.warn('[updateCandidate] Failed to send updated credentials email:', mailErr.message);
+      emailError = mailErr.message;
     }
   }
 
-  res.json({ candidate: updatedCandidate });
+  res.json({ candidate: updatedCandidate, emailSent, emailError });
 });
 
 export const sendCandidateCredentials = asyncHandler(async (req, res) => {

@@ -244,10 +244,20 @@ export default function AdminCandidates() {
         }
       } else {
         const payload = { ...form };
-        if (!payload.password) delete payload.password;
+        if (!payload.password || !payload.password.trim()) {
+          delete payload.password;
+        } else if (payload.password.trim().length < 6) {
+          toast.error('Password must be at least 6 characters long.');
+          setSubmitting(false);
+          return;
+        }
         if (!payload.institution_id) payload.institution_id = null;
-        await adminService.updateCandidate(selectedCandidate.id, payload);
-        toast.success('Student details updated!');
+        const res = await adminService.updateCandidate(selectedCandidate.id, payload);
+        if (res?.emailSent) {
+          toast.success('Student details updated & new credentials emailed!');
+        } else {
+          toast.success('Student details updated!');
+        }
       }
       setModalOpen(false);
       load();
@@ -691,13 +701,21 @@ export default function AdminCandidates() {
                       <label className="label !mb-0">
                         {modalMode === 'create' ? 'Initial Password' : 'Change Password'}
                       </label>
-                      <span className="text-[10px] text-slate-400 font-semibold">
-                        {modalMode === 'create' ? 'Auto-generated if blank' : 'Leave blank to keep unchanged'}
-                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const randPass = `Edv@${Math.floor(1000 + Math.random() * 9000)}`;
+                          setForm({ ...form, password: randPass, send_credentials: true });
+                        }}
+                        className="text-[11px] font-bold text-blue-600 hover:text-blue-700 dark:text-blue-400 hover:underline cursor-pointer flex items-center gap-1"
+                      >
+                        <KeyRound className="h-3 w-3" />
+                        Auto-Generate
+                      </button>
                     </div>
                     <PasswordInput
                       className="input"
-                      placeholder={modalMode === 'create' ? "Min 6 characters (or auto-generate)" : "Enter new password or leave blank"}
+                      placeholder={modalMode === 'create' ? "Min 6 characters (or auto-generate)" : "Enter new password (min 6 chars)"}
                       value={form.password}
                       onChange={(e) => setForm({ ...form, password: e.target.value })}
                     />
@@ -712,7 +730,11 @@ export default function AdminCandidates() {
                       <p className="text-[11px] text-slate-400 mt-1">
                         Leave blank to auto-generate a secure password
                       </p>
-                    ) : null}
+                    ) : (
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Leave blank to keep current password unchanged
+                      </p>
+                    )}
                   </div>
 
                   {/* Mobile Number */}
@@ -784,7 +806,7 @@ export default function AdminCandidates() {
                   </div>
 
                   {/* Email Login Credentials to Student Checkbox Banner */}
-                  {modalMode === 'create' && (
+                  {(modalMode === 'create' || (modalMode === 'edit' && form.password)) && (
                     <div className="md:col-span-2 rounded-2xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/70 dark:bg-blue-950/20 p-4 transition-all">
                       <label className="flex items-start gap-3 cursor-pointer select-none">
                         <input
@@ -796,10 +818,12 @@ export default function AdminCandidates() {
                         <div className="text-xs">
                           <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                             <Mail className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                            Email Login Credentials to Student
+                            Email {modalMode === 'create' ? 'Login' : 'Updated'} Credentials to Student
                           </span>
                           <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5 leading-relaxed">
-                            Automatically sends an onboarding email containing their Student ID, registered email, and password so they can log in immediately.
+                            {modalMode === 'create'
+                              ? 'Automatically sends an onboarding email containing their Student ID, registered email, and password so they can log in immediately.'
+                              : 'Sends an official email to the student with their new password and Student ID.'}
                           </p>
                         </div>
                       </label>
