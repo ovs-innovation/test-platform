@@ -36,3 +36,4 @@ for (let q = 1; q <= 81; q++) {
 
 console.log(`Found markers for ${qPositions.length} / 81 questions.`);
 fs.writeFileSync('./backend/scripts/biomolecules_q_positions.json', JSON.stringify(qPositions, null, 2));
+

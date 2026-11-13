@@ -33,3 +33,4 @@ async function scanDiagrams() {
 }
 
 scanDiagrams().catch(console.error);
+

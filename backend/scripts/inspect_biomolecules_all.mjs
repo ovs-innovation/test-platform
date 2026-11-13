@@ -19,3 +19,4 @@ for (let q = 1; q <= 81; q++) {
 
 fs.writeFileSync('./backend/scripts/biomolecules_raw_inspect.txt', output);
 console.log('Saved inspection to backend/scripts/biomolecules_raw_inspect.txt');
+

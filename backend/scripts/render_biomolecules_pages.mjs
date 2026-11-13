@@ -1,42 +1,30 @@
 import fs from 'fs';
-import path from 'path';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { createCanvas } from '@napi-rs/canvas';
-import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs';
 
-const PDF_PATH = 'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1794417992433_bbb7f18e.pdf';
-const OUTPUT_DIR = './backend/scripts/biomolecules_pages';
+const pdfPath = 'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1794547157278_0f6e9a06.pdf';
+const renderedDir = './scripts/biomolecules_rendered_pages';
+const diagramsDir = './scripts/biomolecules_diagrams';
 
-if (!fs.existsSync(OUTPUT_DIR)) {
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-}
+if (!fs.existsSync(renderedDir)) fs.mkdirSync(renderedDir, { recursive: true });
+if (!fs.existsSync(diagramsDir)) fs.mkdirSync(diagramsDir, { recursive: true });
 
-async function renderPages() {
-  const data = new Uint8Array(fs.readFileSync(PDF_PATH));
-  const doc = await pdfjs.getDocument({ data }).promise;
-  console.log(`Rendering ${doc.numPages} pages...`);
+async function main() {
+  const data = new Uint8Array(fs.readFileSync(pdfPath));
+  const doc = await pdfjsLib.getDocument({ data }).promise;
 
-  // Render question pages 2 to 18
-  for (let pageNum = 2; pageNum <= 18; pageNum++) {
+  for (const pageNum of [4, 6, 17, 19, 21, 22, 23, 24, 25]) {
     const page = await doc.getPage(pageNum);
-    const viewport = page.getViewport({ scale: 2.0 }); // 2x scale
+    const viewport = page.getViewport({ scale: 2.0 });
     const canvas = createCanvas(viewport.width, viewport.height);
     const ctx = canvas.getContext('2d');
 
-    await page.render({
-      canvasContext: ctx,
-      viewport: viewport
-    }).promise;
+    await page.render({ canvasContext: ctx, viewport }).promise;
 
-    const buffer = canvas.toBuffer('image/png');
-    const outPath = path.join(OUTPUT_DIR, `page_${pageNum}.png`);
-    fs.writeFileSync(outPath, buffer);
-    console.log(`Rendered page ${pageNum} (${viewport.width}x${viewport.height}) -> ${outPath}`);
+    const outPath = `${renderedDir}/page_${pageNum}.png`;
+    fs.writeFileSync(outPath, canvas.toBuffer('image/png'));
+    console.log(`Rendered page ${pageNum} to ${outPath} (${viewport.width}x${viewport.height})`);
   }
-
-  console.log('Finished rendering pages 2 to 18.');
 }
 
-renderPages().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+main().catch(console.error);

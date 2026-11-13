@@ -7,3 +7,4 @@ for (let q = 1; q <= 10; q++) {
   console.log(`--- Q${q} ---`);
   console.log(qItems[q]);
 }
+

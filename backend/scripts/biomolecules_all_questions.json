@@ -1,0 +1,3694 @@
+[
+  {
+    "num": 1,
+    "exam": "RE-NEET 2026",
+    "question": "Match List-I with List-II:\n\n| List-I | List-II |\n| :--- | :--- |\n| A. Starch | I. Fights infection |\n| B. Antibody | II. Energy storage |\n| C. Concanavalin A | III. Glucose transport |\n| D. Glut-4 | IV. Lectin |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-II, C-IV, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-I, C-IV, D-III"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-I, C-III, D-IV"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Starch**: Acts as energy storage in plants (A-II).\n- **Antibody**: Fights infectious agents (B-I).\n- **Concanavalin A**: A plant lectin (secondary metabolite) (C-IV).\n- **GLUT-4**: Enables insulin-mediated glucose transport into cells (D-III).",
+    "image": ""
+  },
+  {
+    "num": 2,
+    "exam": "RE-NEET 2026",
+    "question": "Arrange the following elements in descending order of their contribution to percentage weight of the human body. (a) Oxygen (b) Carbon (c) Hydrogen (d) Nitrogen Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(b), (a), (c), (d)"
+      },
+      {
+        "id": "B",
+        "text": "(a), (b), (c), (d)"
+      },
+      {
+        "id": "C",
+        "text": "(c), (a), (b), (d)"
+      },
+      {
+        "id": "D",
+        "text": "(b), (c), (d), (a)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**(a), (b), (c), (d)** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 3,
+    "exam": "NEET 2026",
+    "question": "Alpha-helix is found in which level of protein structure?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Secondary structure"
+      },
+      {
+        "id": "B",
+        "text": "Tertiary structure"
+      },
+      {
+        "id": "C",
+        "text": "Primary structure"
+      },
+      {
+        "id": "D",
+        "text": "Quaternary structure Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Secondary structure** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 4,
+    "exam": "NEET 2026",
+    "question": "Identify the correct statements about biomolecules. A. Lipids are generally water soluble. B. Proteins are polypeptides. C. Polysaccharides are long chains of sugars. D. Adenine and guanine are substituted pyrimidines. E. Almost all enzymes are proteins. Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "B, D and E only"
+      },
+      {
+        "id": "B",
+        "text": "B, C and E only"
+      },
+      {
+        "id": "C",
+        "text": "A, B and C only"
+      },
+      {
+        "id": "D",
+        "text": "C, D and E only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**B, C and E only** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 5,
+    "exam": "NEET 2026",
+    "question": "Which of the following statements are correct regarding amino acids? A. They are substituted methanes. B. Serine is an aromatic amino acid. C. Valine is a neutral amino acid. D. Lysine is an acidic amino acid. Choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "C and D only"
+      },
+      {
+        "id": "B",
+        "text": "B and C only"
+      },
+      {
+        "id": "C",
+        "text": "A and C only"
+      },
+      {
+        "id": "D",
+        "text": "A and B only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**A and C only** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 6,
+    "exam": "NEET 2026",
+    "question": "Match List I with List II :\n\n| List I | List II |\n| :--- | :--- |\n| A. Trypsin | I. Intercellular ground substance |\n| B. Morphine | II. Lectin |\n| C. Concanavalin A | III. Enzyme |\n| D. Collagen | IV. Alkaloid |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-II, C-IV, D-I"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Trypsin**: Proteolytic enzyme (A-III).\n- **Morphine**: Alkaloid secondary metabolite (B-IV).\n- **Concanavalin A**: Lectin (C-II).\n- **Collagen**: Intercellular ground substance protein (D-I).",
+    "image": ""
+  },
+  {
+    "num": 7,
+    "exam": "NEET 2026",
+    "question": "The following reaction depicts the activity of a particular class of enzymes :\n\nIdentify the enzymes class '$E$' from the following options :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transferases"
+      },
+      {
+        "id": "B",
+        "text": "Isomerases"
+      },
+      {
+        "id": "C",
+        "text": "Lyases"
+      },
+      {
+        "id": "D",
+        "text": "Ligases"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nLyases are enzymes that catalyse the removal of groups from substrates by mechanisms other than hydrolysis, leaving double bonds: $X-C-C-Y \\xrightarrow{E} X-Y + C=C$.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547654/edvedum/questions/biomolecules/biomolecules_q_7.png"
+  },
+  {
+    "num": 8,
+    "exam": "NEET 2025",
+    "question": "The protein portion of an enzyme is called:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Apoenzyme"
+      },
+      {
+        "id": "B",
+        "text": "Prosthetic group"
+      },
+      {
+        "id": "C",
+        "text": "Cofactor"
+      },
+      {
+        "id": "D",
+        "text": "Coenzyme"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Apoenzyme** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 9,
+    "exam": "NEET 2025",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Adenosine | I. Nitrogen base |\n| B. Adenylic acid | II. Nucleotide |\n| C. Adenine | III. Nucleoside |\n| D. Alanine | IV. Amino acid |\n\nChoose the option with all correct matches:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-II, C-IV, D-I"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Adenosine**: Nitrogen base attached to a sugar (nucleoside) (A-III).\n- **Adenylic acid**: Nucleoside with a phosphate group (nucleotide) (B-II).\n- **Adenine**: Purine nitrogenous base (C-I).\n- **Alanine**: Simplest amino acid with methyl side chain (D-IV).",
+    "image": ""
+  },
+  {
+    "num": 10,
+    "exam": "NEET 2025",
+    "question": "Which one of the following statements refers to Reductionist Biology?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Chemical approach to study and understand living organisms"
+      },
+      {
+        "id": "B",
+        "text": "Behavioural approach to study and understand living organisms"
+      },
+      {
+        "id": "C",
+        "text": "Physico-chemical approach to study and understand living organisms"
+      },
+      {
+        "id": "D",
+        "text": "Physiological approach to study and understand living organisms Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Physico-chemical approach to study and understand living organisms** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 11,
+    "exam": "NEET 2025",
+    "question": "Which one of the following enzymes contains 'Haem' as the prosthetic group?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Succinate dehydrogenase"
+      },
+      {
+        "id": "B",
+        "text": "Catalase"
+      },
+      {
+        "id": "C",
+        "text": "RuBisCo"
+      },
+      {
+        "id": "D",
+        "text": "Carbonic anhydrase"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Catalase** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 12,
+    "exam": "NEET 2025",
+    "question": "Name the class of enzyme that usually catalyze the following reaction :\n$$S - G + S^\\# \\rightarrow S + S^\\# - G$$\nWhere, $G \\rightarrow$ a group other than hydrogen, $S \\rightarrow$ a substrate, $S^\\# \\rightarrow$ another substrate",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transferase"
+      },
+      {
+        "id": "B",
+        "text": "Ligase"
+      },
+      {
+        "id": "C",
+        "text": "Hydrolase"
+      },
+      {
+        "id": "D",
+        "text": "Lyase"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nTransferases catalyze the transfer of a functional group $G$ (other than hydrogen) between a pair of substrates $S$ and $S^\\#$.",
+    "image": ""
+  },
+  {
+    "num": 13,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Which of the following is a nucleotide?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Uridine"
+      },
+      {
+        "id": "B",
+        "text": "Adenylic acid"
+      },
+      {
+        "id": "C",
+        "text": "Guanine"
+      },
+      {
+        "id": "D",
+        "text": "Guanosine"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Adenylic acid** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 14,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Ligases is a class of enzymes responsible for catalysing the linking together of two compounds. Which of the following bonds is not catalysed by it?",
+    "options": [
+      {
+        "id": "A",
+        "text": "C – C"
+      },
+      {
+        "id": "B",
+        "text": "P – O"
+      },
+      {
+        "id": "C",
+        "text": "C – O"
+      },
+      {
+        "id": "D",
+        "text": "C – N"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**C – C** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 15,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Which of the following are not fatty acids? A. Glutamic acid B. Arachidonic acid C. Palmitic acid D. Lecithin E. Aspartic acid Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "C, D and E only"
+      },
+      {
+        "id": "B",
+        "text": "A and B only"
+      },
+      {
+        "id": "C",
+        "text": "A, D and E only"
+      },
+      {
+        "id": "D",
+        "text": "B and C only Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**A, D and E only** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 16,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Which of the following graphs depicts the effect of substrate concentration on velocity of enzyme catalysed reaction?",
+    "options": [
+      {
+        "id": "A",
+        "text": "![Graph A](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547649/edvedum/questions/biomolecules/biomolecules_q_16_a.png)"
+      },
+      {
+        "id": "B",
+        "text": "![Graph B](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547650/edvedum/questions/biomolecules/biomolecules_q_16_b.png)"
+      },
+      {
+        "id": "C",
+        "text": "![Graph C](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547651/edvedum/questions/biomolecules/biomolecules_q_16_c.png)"
+      },
+      {
+        "id": "D",
+        "text": "![Graph D](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547651/edvedum/questions/biomolecules/biomolecules_q_16_d.png)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nWith the increase in substrate concentration, the velocity of the enzymatic reaction rises initially until it reaches a maximum velocity ($V_\\text{max}$), forming a rectangular hyperbola (Graph A). Once all enzyme active sites are saturated, further increases in substrate concentration do not increase velocity.",
+    "image": ""
+  },
+  {
+    "num": 17,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Enzymes that catalyse the removal of groups from substrates by mechanisms other than hydrolysis leaving double bonds, are known as :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transferases"
+      },
+      {
+        "id": "B",
+        "text": "Oxidoreductases"
+      },
+      {
+        "id": "C",
+        "text": "Dehydrogenases"
+      },
+      {
+        "id": "D",
+        "text": "Lyases Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Lyases Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 18,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Primary structure of protein | (I) Human haemoglobin |\n| (B) Secondary structure of protein | (II) Disulphide bonds |\n| (C) Tertiary structure of protein | (III) Polypeptide chain |\n| (D) Quaternary structure of protein | (IV) Alpha helix and $\\beta$ sheet |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-I, B-III, C-II, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-III, C-II, D-I"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Primary structure**: Positional sequence of amino acids in a polypeptide chain (A-III).\n- **Secondary structure**: Folding of polypeptide into $\\alpha$-helix or $\\beta$-pleated sheets stabilized by hydrogen bonds (B-IV).\n- **Tertiary structure**: Three-dimensional conformation stabilized by hydrophobic interactions, ionic bonds, and disulphide bonds (C-II).\n- **Quaternary structure**: Assembly of multiple polypeptide subunits (e.g., adult human haemoglobin with 4 subunits) (D-I).",
+    "image": ""
+  },
+  {
+    "num": 19,
+    "exam": "NEET 2024",
+    "question": "Lecithin, a small molecular weight organic compound found in living tissues, is an example of:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Amino acids"
+      },
+      {
+        "id": "B",
+        "text": "Phospholipids"
+      },
+      {
+        "id": "C",
+        "text": "Glycerides"
+      },
+      {
+        "id": "D",
+        "text": "Carbohydrates"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Phospholipids** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 20,
+    "exam": "NEET 2024",
+    "question": "The cofactor of the enzyme carboxypeptidase is:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Zinc"
+      },
+      {
+        "id": "B",
+        "text": "Niacin"
+      },
+      {
+        "id": "C",
+        "text": "Flavin"
+      },
+      {
+        "id": "D",
+        "text": "Haem"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Zinc** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 21,
+    "exam": "NEET 2024",
+    "question": "Inhibition of Succinic dehydrogenase enzyme by malonate is a classical example of:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cofactor inhibition"
+      },
+      {
+        "id": "B",
+        "text": "Feedback inhibition"
+      },
+      {
+        "id": "C",
+        "text": "Competitive inhibition"
+      },
+      {
+        "id": "D",
+        "text": "Enzyme activation Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Competitive inhibition** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 22,
+    "exam": "NEET 2024",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. GLUT-4 | I. Hormone |\n| B. Insulin | II. Enzyme |\n| C. Trypsin | III. Intercellular ground substance |\n| D. Collagen | IV. Enables glucose transport into cells |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-I, C-II, D-III"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-IV, C-I, D-II"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **GLUT-4**: Enables glucose transport into cells (A-IV).\n- **Insulin**: Peptide hormone (B-I).\n- **Trypsin**: Proteolytic digestive enzyme (C-II).\n- **Collagen**: Intercellular ground substance (D-III).",
+    "image": ""
+  },
+  {
+    "num": 23,
+    "exam": "NEET 2024",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Lipase | I. Peptide bond |\n| B. Nuclease | II. Ester bond |\n| C. Protease | III. Glycosidic bond |\n| D. Amylase | IV. Phosphodiester bond |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-IV, C-I, D-III"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-I, C-III, D-II"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Lipase**: Hydrolyses ester bonds in triglycerides (A-II).\n- **Nuclease**: Hydrolyses phosphodiester bonds in nucleic acids (B-IV).\n- **Protease**: Hydrolyses peptide bonds in proteins (C-I).\n- **Amylase**: Hydrolyses glycosidic bonds in carbohydrates like starch (D-III).",
+    "image": ""
+  },
+  {
+    "num": 24,
+    "exam": "NEET 2024",
+    "question": "Regarding catalytic cycle of an enzyme action, select the correct sequential steps : A. Substrate enzyme complex formation. B. Free enzyme ready to bind with another substrate. C. Release of products. D. Chemical bonds of the substrate broken. E. Substrate binding to active site. Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "E, A, D, C, B"
+      },
+      {
+        "id": "B",
+        "text": "A, E, B, D, C"
+      },
+      {
+        "id": "C",
+        "text": "B, A, C, D, E"
+      },
+      {
+        "id": "D",
+        "text": "E, D, C, B, A Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**E, A, D, C, B** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 25,
+    "exam": "NEET 2023 Manipur",
+    "question": "Match List - I with List - II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Protein | (I) C=C double bonds |\n| (B) Unsaturated fatty acid | (II) Phosphodiester bond |\n| (C) Nucleic acid | (III) Glycosidic bonds |\n| (D) Polysaccharide | (IV) Peptide bonds |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A)-(II), (B)-(I), (C)-(IV), (D)-(III)"
+      },
+      {
+        "id": "B",
+        "text": "(A)-(IV), (B)-(III), (C)-(I), (D)-(II)"
+      },
+      {
+        "id": "C",
+        "text": "(A)-(IV), (B)-(I), (C)-(II), (D)-(III)"
+      },
+      {
+        "id": "D",
+        "text": "(A)-(I), (B)-(IV), (C)-(III), (D)-(II)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Protein**: Polymers of amino acids linked by peptide bonds (A-IV).\n- **Unsaturated fatty acid**: Possesses one or more C=C double bonds (B-I).\n- **Nucleic acid**: Nucleotides linked by $3'-5'$ phosphodiester bonds (C-II).\n- **Polysaccharide**: Monosaccharides joined by glycosidic bonds (D-III).",
+    "image": ""
+  },
+  {
+    "num": 26,
+    "exam": "NEET 2023 Manipur",
+    "question": "Inulin is a polymer of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fructose"
+      },
+      {
+        "id": "B",
+        "text": "Galactose"
+      },
+      {
+        "id": "C",
+        "text": "Amino acids"
+      },
+      {
+        "id": "D",
+        "text": "Glucose"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Fructose** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 27,
+    "exam": "NEET 2023 Manipur",
+    "question": "Which of the following is not a secondary metabolite?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Curcumin"
+      },
+      {
+        "id": "B",
+        "text": "Morphine"
+      },
+      {
+        "id": "C",
+        "text": "Anthocyanin"
+      },
+      {
+        "id": "D",
+        "text": "Lecithin"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Lecithin** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 28,
+    "exam": "NEET 2023 Manipur",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Terpenoids | (I) Codeine |\n| (B) Lectins | (II) Diterpenes |\n| (C) Alkaloids | (III) Ricin |\n| (D) Toxins | (IV) Concanavalin A |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-(II), B-(IV), C-(III), D-(I)"
+      },
+      {
+        "id": "B",
+        "text": "A-(II), B-(I), C-(IV), D-(III)"
+      },
+      {
+        "id": "C",
+        "text": "A-(II), B-(III), C-(I), D-(IV)"
+      },
+      {
+        "id": "D",
+        "text": "A-(II), B-(IV), C-(I), D-(III)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Terpenoids**: Monoterpenes, Diterpenes (A-II).\n- **Lectins**: Concanavalin A (B-IV).\n- **Alkaloids**: Morphine, Codeine (C-I).\n- **Toxins**: Abrin, Ricin (D-III).",
+    "image": ""
+  },
+  {
+    "num": 29,
+    "exam": "NEET 2023",
+    "question": "Cellulose does not form blue colour with Iodine because",
+    "options": [
+      {
+        "id": "A",
+        "text": "It is a helical molecule"
+      },
+      {
+        "id": "B",
+        "text": "It does not contain complex helices and hence cannot hold iodine molecules"
+      },
+      {
+        "id": "C",
+        "text": "It breaks down when iodine reacts with it"
+      },
+      {
+        "id": "D",
+        "text": "It is a disaccharide"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**It does not contain complex helices and hence cannot hold iodine molecules** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 30,
+    "exam": "NEET 2023",
+    "question": "Malonate inhibits the growth of pathogenic bacteria by inhibiting the activity of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Amylase"
+      },
+      {
+        "id": "B",
+        "text": "Lipase"
+      },
+      {
+        "id": "C",
+        "text": "Dinitrogenase"
+      },
+      {
+        "id": "D",
+        "text": "Succinic dehydrogenase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Succinic dehydrogenase** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 31,
+    "exam": "NEET 2023",
+    "question": "Given below are two statements:\nStatement I: A protein is imagined as a line, the left end represented by first amino acid (C-terminal) and the right end represented by last amino acid (N-terminal).\nStatement II: Adult human haemoglobin, consists of 4 subunits (two subunits of $\\alpha$ type and two subunits of $\\beta$ type.)\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are false."
+      },
+      {
+        "id": "B",
+        "text": "Statement I is true but Statement II is false."
+      },
+      {
+        "id": "C",
+        "text": "Statement I is false but Statement II is true."
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are true."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Statement I is false**: In a protein line diagram, the left end is the N-terminal (first amino acid with free amino group) and the right end is the C-terminal (last amino acid with free carboxyl group).\n- **Statement II is true**: Adult human haemoglobin ($HbA$) has quaternary structure consisting of 4 subunits ($2\\alpha$ and $2\\beta$).",
+    "image": ""
+  },
+  {
+    "num": 32,
+    "exam": "NEET 2023",
+    "question": "Given below are two statements : Statement I : Low temperature preserves the enzyme in a temporarily inactive state whereas high temperature destroys enzymatic activity because proteins are denatured by heat. Statement II : When the inhibitor closely resembles the substrate in its molecular structure and inhibits the activity of the enzyme, it is known as competitive inhibitor. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are false."
+      },
+      {
+        "id": "B",
+        "text": "Statement I is true but Statement II is false."
+      },
+      {
+        "id": "C",
+        "text": "Statement I is false but Statement II is true."
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are true. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Both Statement I and Statement II are true. Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 33,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Match List-I with List-II:\n\n| List-I | List-II |\n| :--- | :--- |\n| (a) Adenine | (i) Pigment |\n| (b) Anthocyanin | (ii) Polysaccharide |\n| (c) Chitin | (iii) Alkaloid |\n| (d) Codeine | (iv) Purine |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) - (i), (b) - (iv), (c) - (iii), (d) - (ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a) - (iv), (b) - (i), (c) - (ii), (d) - (iii)"
+      },
+      {
+        "id": "C",
+        "text": "(a) - (iv), (b) - (iii), (c) - (ii), (d) - (i)"
+      },
+      {
+        "id": "D",
+        "text": "(a) - (iii), (b) - (i), (c) - (iv), (d) - (ii)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Adenine**: Purine nitrogenous base (a-iv).\n- **Anthocyanin**: Secondary metabolite pigment (b-i).\n- **Chitin**: Complex nitrogen-containing polysaccharide (c-ii).\n- **Codeine**: Plant alkaloid (d-iii).",
+    "image": ""
+  },
+  {
+    "num": 34,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Primary proteins are also called as polypeptides because :",
+    "options": [
+      {
+        "id": "A",
+        "text": "They can assume many conformations"
+      },
+      {
+        "id": "B",
+        "text": "They are linear chains"
+      },
+      {
+        "id": "C",
+        "text": "They are polymers of peptide monomers"
+      },
+      {
+        "id": "D",
+        "text": "Successive amino acids are joined by peptide bonds"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Successive amino acids are joined by peptide bonds** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 35,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Given below are two statements:\nStatement I : Amino acids have a property of ionizable nature of $-\\text{NH}_2$ and $-\\text{COOH}$ groups, hence have different structures at different pH.\nStatement-II : Amino acids can exist as Zwitterionic form at acidic and basic pH.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is incorrect but Statement II is correct"
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are incorrect"
+      },
+      {
+        "id": "D",
+        "text": "Statement I is correct but Statement II is incorrect"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Statement I is correct**: Due to the ionizable nature of $-\\text{NH}_2$ and $-\\text{COOH}$ groups, the structure of amino acids changes at different pH.\n- **Statement II is incorrect**: At a specific pH called the isoelectric point (pI), amino acids exist as a dipolar Zwitterion (neutral net charge). At acidic pH, they exist as cations ($-\\text{NH}_3^+$), and at basic pH, as anions ($-\\text{COO}^-$).",
+    "image": ""
+  },
+  {
+    "num": 36,
+    "exam": "NEET 2022 Phase 2",
+    "question": "In the enzyme which catalyses the breakdown of:\n$$2\\text{H}_2\\text{O}_2 \\rightarrow 2\\text{H}_2\\text{O} + \\text{O}_2$$\nthe prosthetic group is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Niacin"
+      },
+      {
+        "id": "B",
+        "text": "Nicotinamide adenine dinucleotide"
+      },
+      {
+        "id": "C",
+        "text": "Haem"
+      },
+      {
+        "id": "D",
+        "text": "Zinc"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nCatalase and peroxidase catalyze the breakdown of hydrogen peroxide to water and oxygen. The prosthetic group present in these enzymes is **Haem**, an iron-porphyrin complex.",
+    "image": ""
+  },
+  {
+    "num": 37,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Read the following statements on lipids and find out correct set of statements : (a) Lecithin found in the plasma membrane is a glycolipid (b) Saturated fatty acids possess one or more c = c bonds (c) Gingely oil has lower melting point, hence remains as oil in winter (d) Lipids are generally insoluble in water but soluble in some organic solvents (e) When fatty acid is esterified with glycerol, monoglycerides are formed Choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a), (b) and (c) only"
+      },
+      {
+        "id": "B",
+        "text": "(a), (d) and (e) only"
+      },
+      {
+        "id": "C",
+        "text": "(c), (d) and (e) only"
+      },
+      {
+        "id": "D",
+        "text": "(a), (b) and (d) only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**(c), (d) and (e) only** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 38,
+    "exam": "NEET 2022 Phase 1",
+    "question": "A dehydration reaction links two glucose molecules to product maltose. If the formula for glucose is $\\text{C}_6\\text{H}_{12}\\text{O}_6$ then what is the formula for maltose?",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\text{C}_{12}\\text{H}_{20}\\text{O}_{10}$"
+      },
+      {
+        "id": "B",
+        "text": "$\\text{C}_{12}\\text{H}_{24}\\text{O}_{12}$"
+      },
+      {
+        "id": "C",
+        "text": "$\\text{C}_{12}\\text{H}_{22}\\text{O}_{11}$"
+      },
+      {
+        "id": "D",
+        "text": "$\\text{C}_{12}\\text{H}_{24}\\text{O}_{11}$"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nWhen two glucose molecules ($\\,2 \\times \\text{C}_6\\text{H}_{12}\\text{O}_6 = \\text{C}_{12}\\text{H}_{24}\\text{O}_{12}$) combine with the removal of one water molecule ($\\text{H}_2\\text{O}$), the formula of the resulting disaccharide maltose is:\n$$\\text{C}_{12}\\text{H}_{24}\\text{O}_{12} - \\text{H}_2\\text{O} = \\text{C}_{12}\\text{H}_{22}\\text{O}_{11}$$",
+    "image": ""
+  },
+  {
+    "num": 39,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Match List-I with List-II:\n\n| List - I (Biological Molecules) | List - II (Biological functions) |\n| :--- | :--- |\n| (a) Glycogen | (i) Hormone |\n| (b) Globulin | (ii) Biocatalyst |\n| (c) Steroids | (iii) Antibody |\n| (d) Thrombin | (iv) Storage product |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iii), (b)-(ii), (c)-(iv), (d)-(i)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iv), (b)-(ii), (c)-(i), (d)-(iii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(ii), (b)-(iv), (c)-(iii), (d)-(i)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iv), (b)-(iii), (c)-(i), (d)-(ii)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Glycogen**: Storage polysaccharide in animals and fungi (a-iv).\n- **Globulin**: Serum globulins include immunoglobulins (antibodies) (b-iii).\n- **Steroids**: Sex hormones and adrenal cortex hormones (c-i).\n- **Thrombin**: Proteolytic biocatalyst (enzyme) that converts fibrinogen to fibrin (d-ii).",
+    "image": ""
+  },
+  {
+    "num": 40,
+    "exam": "NEET 2021",
+    "question": "Which of the following are not secondary metabolites in plants?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Rubber, gums"
+      },
+      {
+        "id": "B",
+        "text": "Morphine, codeine"
+      },
+      {
+        "id": "C",
+        "text": "Amino acids, glucose"
+      },
+      {
+        "id": "D",
+        "text": "Vinblastin, curcumin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Amino acids, glucose** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 41,
+    "exam": "NEET 2021",
+    "question": "Match List-I with List-II:\n\n| List-I | List-II |\n| :--- | :--- |\n| (a) Protein | (i) C = C double bonds |\n| (b) Unsaturated fatty acid | (ii) Phosphodiester bonds |\n| (c) Nucleic acid | (iii) Glycosidic bonds |\n| (d) Polysaccharide | (iv) Peptide bonds |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iv), (b)-(iii), (c)-(i), (d)-(ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(i), (b)-(iv), (c)-(iii), (d)-(ii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Protein**: Formed of amino acids linked by peptide bonds (a-iv).\n- **Unsaturated fatty acid**: Contains carbon-carbon double bonds (C=C) (b-i).\n- **Nucleic acid**: Nucleotides joined by phosphodiester bonds (c-ii).\n- **Polysaccharide**: Monosaccharide units joined by glycosidic bonds (d-iii).",
+    "image": ""
+  },
+  {
+    "num": 42,
+    "exam": "NEET 2021",
+    "question": "Identify the incorrect pair",
+    "options": [
+      {
+        "id": "A",
+        "text": "Drugs - Ricin"
+      },
+      {
+        "id": "B",
+        "text": "Alkaloids - Codeine"
+      },
+      {
+        "id": "C",
+        "text": "Toxin - Abrin"
+      },
+      {
+        "id": "D",
+        "text": "Lectins - Concanavalin A Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Drugs - Ricin** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 43,
+    "exam": "NEET 2021",
+    "question": "Following are the statements with reference to 'lipids'. (1) Lipids having only single bonds are called unsaturated fatty acids (2) Lecithin is a phospholipid. (3) Trihydroxy propane is glycerol (4) Palmitic acid has 20 carbon atoms including carboxyl carbon. (5) Arachidonic acid has 16 carbon atoms. Choose the correct answer from the options given below.",
+    "options": [
+      {
+        "id": "A",
+        "text": "(2) and (5) only"
+      },
+      {
+        "id": "B",
+        "text": "(1) and (2) only"
+      },
+      {
+        "id": "C",
+        "text": "(3) and (4) only"
+      },
+      {
+        "id": "D",
+        "text": "(2) and (3) only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**(2) and (3) only** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 44,
+    "exam": "NEET 2020 Phase 2",
+    "question": "Identify the statement which is   incorrect .",
+    "options": [
+      {
+        "id": "A",
+        "text": "Tyrosine possesses aromatic ring in its structure."
+      },
+      {
+        "id": "B",
+        "text": "Sulphur is an integral part of cysteine."
+      },
+      {
+        "id": "C",
+        "text": "Glycine is an example of lipids."
+      },
+      {
+        "id": "D",
+        "text": "Lecithin contains phosphorus atom in its structure."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Glycine is an example of lipids.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 45,
+    "exam": "NEET 2020 Phase 2",
+    "question": "Match the following :\n\n| Column I | Column II |\n| :--- | :--- |\n| (a) Aquaporin | (i) Amide |\n| (b) Asparagine | (ii) Polysaccharide |\n| (c) Abscisic acid | (iii) Polypeptide |\n| (d) Chitin | (iv) Carotenoids |\n\nSelect the correct option :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iii), (b)-(i), (c)-(ii), (d)-(iv)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Aquaporin**: Water channel protein/polypeptide (a-iii).\n- **Asparagine**: Amide derived from aspartic acid (b-i).\n- **Abscisic acid**: Phytohormone derived from carotenoids / sesquiterpenes (c-iv).\n- **Chitin**: Complex polysaccharide of N-acetylglucosamine (d-ii).",
+    "image": ""
+  },
+  {
+    "num": 46,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Identify the substances having glycosidic bond and peptide bond, respectively in their structure",
+    "options": [
+      {
+        "id": "A",
+        "text": "Glycerol, trypsin"
+      },
+      {
+        "id": "B",
+        "text": "Cellulose, lecithin"
+      },
+      {
+        "id": "C",
+        "text": "Inulin, insulin"
+      },
+      {
+        "id": "D",
+        "text": "Chitin, cholesterol Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Inulin, insulin** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 47,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Which one of the following is the most abundant protein in the animals?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Collagen"
+      },
+      {
+        "id": "B",
+        "text": "Lectin"
+      },
+      {
+        "id": "C",
+        "text": "Insulin"
+      },
+      {
+        "id": "D",
+        "text": "Haemoglobin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Collagen** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 48,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Match the following:\n\n| Column I | Column II |\n| :--- | :--- |\n| (a) Inhibitor of catalytic activity | (i) Ricin |\n| (b) Possess peptide bonds | (ii) Malonate |\n| (c) Cell wall material in fungi | (iii) Chitin |\n| (d) Secondary metabolite | (iv) Collagen |\n\nChoose the correct option from the following:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A) (ii), (B) (iii), (C) (i), (D) (iv)"
+      },
+      {
+        "id": "B",
+        "text": "(A) (iii), (B) (i), (C) (iv), (D) (ii)"
+      },
+      {
+        "id": "C",
+        "text": "(A) (ii), (B) (iv), (C) (iii), (D) (i)"
+      },
+      {
+        "id": "D",
+        "text": "(A) (iii), (B) (iv), (C) (i), (D) (ii)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Inhibitor of catalytic activity**: Malonate inhibits succinate dehydrogenase (a-ii).\n- **Possess peptide bonds**: Collagen is a structural protein (b-iv).\n- **Cell wall material in fungi**: Chitin (c-iii).\n- **Secondary metabolite**: Ricin is a toxin (d-i).",
+    "image": ""
+  },
+  {
+    "num": 49,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Identify the basic amino acid from the following",
+    "options": [
+      {
+        "id": "A",
+        "text": "Valine"
+      },
+      {
+        "id": "B",
+        "text": "Lysine"
+      },
+      {
+        "id": "C",
+        "text": "Tyrosine"
+      },
+      {
+        "id": "D",
+        "text": "Glutamic Acid"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Lysine** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 50,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Prosthetic groups differ from co-enzymes in that-",
+    "options": [
+      {
+        "id": "A",
+        "text": "They can serve as co-factors in a number of enzyme - catalyzed reactions"
+      },
+      {
+        "id": "B",
+        "text": "They require metal ions for their activity"
+      },
+      {
+        "id": "C",
+        "text": "They (prosthetic groups) are tightly bound to apoenzymes"
+      },
+      {
+        "id": "D",
+        "text": "Their association with apoenzymes is transient"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**They (prosthetic groups) are tightly bound to apoenzymes** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 51,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "\"Ramachandran plot\" is used to confirm the structure of",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA"
+      },
+      {
+        "id": "B",
+        "text": "RNA"
+      },
+      {
+        "id": "C",
+        "text": "Proteins"
+      },
+      {
+        "id": "D",
+        "text": "Triacylglycerides Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Proteins** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 52,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Which of the following organic compounds is the main constituent of Lecithin?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Phosphoprotein"
+      },
+      {
+        "id": "B",
+        "text": "Arachidonic acid"
+      },
+      {
+        "id": "C",
+        "text": "Phospholipid"
+      },
+      {
+        "id": "D",
+        "text": "Cholesterol"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Phospholipid** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 53,
+    "exam": "NEET 2019",
+    "question": "Concanavalin A is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "a lectin"
+      },
+      {
+        "id": "B",
+        "text": "a pigment"
+      },
+      {
+        "id": "C",
+        "text": "an alkaloid"
+      },
+      {
+        "id": "D",
+        "text": "an essential oil"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**a lectin** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 54,
+    "exam": "NEET 2019",
+    "question": "Consider the following statements :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Coenzyme or metal ion that is tightly bound to enzyme protein is called prosthetic group."
+      },
+      {
+        "id": "B",
+        "text": "A complete catalytic active enzyme with its bound prosthetic group is called apoenzyme Select the   correct   option (A)   Both (A) and (B) are false   (B)   (A) is false but (B) is true"
+      },
+      {
+        "id": "C",
+        "text": "Both (A) and (B) are true"
+      },
+      {
+        "id": "D",
+        "text": "(A) is true but (B) is false"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**(A) is true but (B) is false** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 55,
+    "exam": "NEET 2018",
+    "question": "The two functional groups characteristic of sugars are",
+    "options": [
+      {
+        "id": "A",
+        "text": "carbonyl and methyl"
+      },
+      {
+        "id": "B",
+        "text": "carbonyl and hydroxyl."
+      },
+      {
+        "id": "C",
+        "text": "hydroxyl and methyl"
+      },
+      {
+        "id": "D",
+        "text": "carbonyl and phosphate"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**carbonyl and hydroxyl.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 56,
+    "exam": "NEET 2017",
+    "question": "Which of the following statements is correct with reference to enzymes?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Holoenzyme = Apoenzyme + Coenzyme"
+      },
+      {
+        "id": "B",
+        "text": "Coenzyme = Apoenzyme + Holoenzyme"
+      },
+      {
+        "id": "C",
+        "text": "Holoenzyme = Coenzyme + Co-factor"
+      },
+      {
+        "id": "D",
+        "text": "Apoenzyme = Holoenzyme + Coenzyme"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Holoenzyme = Apoenzyme + Coenzyme** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 57,
+    "exam": "NEET 2017",
+    "question": "Which of the following are not polymeric?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Proteins"
+      },
+      {
+        "id": "B",
+        "text": "Polysaccharides"
+      },
+      {
+        "id": "C",
+        "text": "Lipids"
+      },
+      {
+        "id": "D",
+        "text": "Nucleic acids Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Lipids** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 58,
+    "exam": "NEET 2016 Phase 2",
+    "question": "A non-proteinaceous enzyme is",
+    "options": [
+      {
+        "id": "A",
+        "text": "lysozyme"
+      },
+      {
+        "id": "B",
+        "text": "ribozyme"
+      },
+      {
+        "id": "C",
+        "text": "ligase"
+      },
+      {
+        "id": "D",
+        "text": "deoxyribonuclease."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**ribozyme** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 59,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Which of the following is the least likely to be involved in establishing the three-dimensional folding of most proteins?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Hydrogen bonds"
+      },
+      {
+        "id": "B",
+        "text": "Electrostatic interaction"
+      },
+      {
+        "id": "C",
+        "text": "Hydrophobic interaction"
+      },
+      {
+        "id": "D",
+        "text": "Ester bonds"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Ester bonds** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 60,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Which of the following describes the given graph correctly?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Endothermic reaction with energy A in presence of enzyme and B in absence of enzyme."
+      },
+      {
+        "id": "B",
+        "text": "Exothermic reaction with energy A in presence of enzyme and B in absence of enzyme."
+      },
+      {
+        "id": "C",
+        "text": "Endothermic reaction with energy A in absence of enzyme and B in presence of enzyme."
+      },
+      {
+        "id": "D",
+        "text": "Exothermic reaction with energy A in absence of enzyme and B in presence of enzyme."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn the graph, the potential energy of the product is lower than that of the substrate, which indicates an **exothermic reaction**. Activation energy required in the presence of enzyme is lower (A), and activation energy in the absence of enzyme is higher (B).",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547652/edvedum/questions/biomolecules/biomolecules_q_60.png"
+  },
+  {
+    "num": 61,
+    "exam": "NEET 2016 Phase 1",
+    "question": "A typical fat molecule is made up of",
+    "options": [
+      {
+        "id": "A",
+        "text": "one glycerol and one fatty acid molecule"
+      },
+      {
+        "id": "B",
+        "text": "three glycerol and three fatty acid molecules"
+      },
+      {
+        "id": "C",
+        "text": "three glycerol molecules and one fatty acid molecule"
+      },
+      {
+        "id": "D",
+        "text": "one glycerol and three fatty acid molecules. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**one glycerol and three fatty acid molecules. Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 62,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Which one of the following statements is wrong?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Uracil is a pyrimidine."
+      },
+      {
+        "id": "B",
+        "text": "Glycine is a sulphur containing amino acid."
+      },
+      {
+        "id": "C",
+        "text": "Sucrose is a disaccharide."
+      },
+      {
+        "id": "D",
+        "text": "Cellulose is a polysaccharide."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Glycine is a sulphur containing amino acid.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 63,
+    "exam": "AIPMT 2015",
+    "question": "The chitinous exoskeleton of arthropods is formed by the polymerisation of",
+    "options": [
+      {
+        "id": "A",
+        "text": "N - acetyl glucosamine"
+      },
+      {
+        "id": "B",
+        "text": "lipoglycans"
+      },
+      {
+        "id": "C",
+        "text": "keratin sulphate and chondrotin sulphate"
+      },
+      {
+        "id": "D",
+        "text": "D - glucosamine."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**N - acetyl glucosamine** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 64,
+    "exam": "AIPMT 2015",
+    "question": "Which of the following biomolecules does have a phosphodiester bond?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Amino acids in a polypeptide"
+      },
+      {
+        "id": "B",
+        "text": "Nucleic acids in a nucleotide"
+      },
+      {
+        "id": "C",
+        "text": "Fatty acids in a diglyceride"
+      },
+      {
+        "id": "D",
+        "text": "Monosaccharides in a polysaccharide"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Nucleic acids in a nucleotide** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 65,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "Which one of the following statements is incorrect?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The compettive inhibitor does not affect the rate of breakdown of the enzyme -substrate complex."
+      },
+      {
+        "id": "B",
+        "text": "The presence of the competitive inhibitor decreases the K m   of the enzyme for the substrate"
+      },
+      {
+        "id": "C",
+        "text": "A competitive inhibitor reacts reversibly with the enzyme to form and enzyme-inhibitor complex."
+      },
+      {
+        "id": "D",
+        "text": "In competitive inhibition, the inhibitor molecules is not chemically changed by the enzyme."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**The presence of the competitive inhibitor decreases the K m   of the enzyme for the substrate** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 66,
+    "exam": "AIPMT 2014",
+    "question": "Select the option which is not correct with respect to enzyme action.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Substrate binds with enzyme at its active site."
+      },
+      {
+        "id": "B",
+        "text": "Addition of lot of succinate does not reverse the inhibition of succinic dehydrogenase by malonate."
+      },
+      {
+        "id": "C",
+        "text": "A non-competitive inhibitor binds the enzyme at a site distinct from that which binds the substrate."
+      },
+      {
+        "id": "D",
+        "text": "Malonate is a competitive inhibitor of succinic dehydrogenase. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Addition of lot of succinate does not reverse the inhibition of succinic dehydrogenase by malonate.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 67,
+    "exam": "AIPMT 2014",
+    "question": "Which one of the following is a non - reducing carbohydrate?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Maltose"
+      },
+      {
+        "id": "B",
+        "text": "Sucrose"
+      },
+      {
+        "id": "C",
+        "text": "Lactose"
+      },
+      {
+        "id": "D",
+        "text": "Ribose 5-phosphate"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Sucrose** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 68,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Which of the following statements about enzymes is wrong?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Enzymes are denaturated at high temperatures."
+      },
+      {
+        "id": "B",
+        "text": "Enzymes are mostly proteins but some are lipids also."
+      },
+      {
+        "id": "C",
+        "text": "Enzymes are highly specific."
+      },
+      {
+        "id": "D",
+        "text": "Enzymes require optimum pH and temperature for maximum activity."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Enzymes are mostly proteins but some are lipids also.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 69,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Uridine, present only in RNA is a",
+    "options": [
+      {
+        "id": "A",
+        "text": "nucleoside"
+      },
+      {
+        "id": "B",
+        "text": "nucleotide"
+      },
+      {
+        "id": "C",
+        "text": "purine"
+      },
+      {
+        "id": "D",
+        "text": "pyrimidine."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**nucleoside** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 70,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "The figure shows a hypothetical tetrapeptide portion of a protein with parts labelled A - D. Which one of the following options is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "D is an acidic amino acid-glutamic acid."
+      },
+      {
+        "id": "B",
+        "text": "C is an aromatic amino acid-tryptophan."
+      },
+      {
+        "id": "C",
+        "text": "A is the C-terminal amino acid and D is N-terminal amino acid."
+      },
+      {
+        "id": "D",
+        "text": "A is a sulphur containing amino acid methionine."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn the tetrapeptide:\n- A has side chain $-\\text{CH}_2\\text{OH}$ (Serine, not methionine).\n- B has side chain $-\\text{CH}_2-\\text{SH}$ (Cysteine).\n- C has side chain $-\\text{CH}_2-\\text{C}_6\\text{H}_4\\text{OH}$ (Tyrosine, not tryptophan).\n- D has side chain $-\\text{CH}_2-\\text{CH}_2-\\text{COOH}$ (Glutamic acid, which is an acidic amino acid).\nHence, option (A) is correct.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547654/edvedum/questions/biomolecules/biomolecules_q_70.png"
+  },
+  {
+    "num": 71,
+    "exam": "NEET 2013",
+    "question": "A phosphoglyceride is always made up of",
+    "options": [
+      {
+        "id": "A",
+        "text": "a saturated or unsaturated fatty acid esterified to glycerol molecule to which a phosphate group is also attached."
+      },
+      {
+        "id": "B",
+        "text": "a saturated or unsaturated fatty acid esterified to a phosphate group which is also attached to a glycerol molecule."
+      },
+      {
+        "id": "C",
+        "text": "only a saturated fatty acid esterified to a glycerol molecule to which a phosphate group is also attached."
+      },
+      {
+        "id": "D",
+        "text": "only an unsaturated fatty acid esterified to a glycerol molecule to which a phosphate group is also attached."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**a saturated or unsaturated fatty acid esterified to glycerol molecule to which a phosphate group is also attached.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 72,
+    "exam": "NEET 2013",
+    "question": "Macromolecule chitin is",
+    "options": [
+      {
+        "id": "A",
+        "text": "sulphur containing polysaccharide"
+      },
+      {
+        "id": "B",
+        "text": "simple polysaccharide"
+      },
+      {
+        "id": "C",
+        "text": "nitrogen containing polysaccharide"
+      },
+      {
+        "id": "D",
+        "text": "phosphorous containing polysaccharide."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**nitrogen containing polysaccharide** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 73,
+    "exam": "NEET 2013",
+    "question": "Transition state structure of the substrate formed during an enzymatic reaction is",
+    "options": [
+      {
+        "id": "A",
+        "text": "transient and unstable"
+      },
+      {
+        "id": "B",
+        "text": "permanent and stable"
+      },
+      {
+        "id": "C",
+        "text": "transient but stable"
+      },
+      {
+        "id": "D",
+        "text": "permanent but unstable."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**transient and unstable** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 74,
+    "exam": "NEET 2013",
+    "question": "The essential chemical components of many coenzymes are",
+    "options": [
+      {
+        "id": "A",
+        "text": "carbohydrates"
+      },
+      {
+        "id": "B",
+        "text": "vitamins"
+      },
+      {
+        "id": "C",
+        "text": "proteins"
+      },
+      {
+        "id": "D",
+        "text": "nucleic acids."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**vitamins** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 75,
+    "exam": "AIPMT 2012 Mains",
+    "question": "Which one of the following biomolecules is correctly characterized?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Lecithin - a phosphorylated glyceride found in cell membrane."
+      },
+      {
+        "id": "B",
+        "text": "Palmitic acid - an unsaturated fatty acid with 18 carbon atoms."
+      },
+      {
+        "id": "C",
+        "text": "Adenylic acid - adenosine with a glucose phosphate molecule."
+      },
+      {
+        "id": "D",
+        "text": "Alanine amino acid - contains an amino group and an acidic group anywhere in the molecule. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Lecithin - a phosphorylated glyceride found in cell membrane.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 76,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Which one out of A - D given below correctly represents the structural formula of the basic amino acid?",
+    "options": [
+      {
+        "id": "A",
+        "text": "C"
+      },
+      {
+        "id": "B",
+        "text": "D"
+      },
+      {
+        "id": "C",
+        "text": "A"
+      },
+      {
+        "id": "D",
+        "text": "B"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nStructure D represents **Lysine**, which has an additional $-\\text{NH}_2$ group in its side chain ($-\\text{CH}_2-\\text{CH}_2-\\text{CH}_2-\\text{CH}_2-\\text{NH}_2$), making it a basic amino acid.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547655/edvedum/questions/biomolecules/biomolecules_q_76.png"
+  },
+  {
+    "num": 77,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Which one is the most abundant protein in the animal world?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Trypsin"
+      },
+      {
+        "id": "B",
+        "text": "Haemoglobin"
+      },
+      {
+        "id": "C",
+        "text": "Collagen"
+      },
+      {
+        "id": "D",
+        "text": "Insulin Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Collagen** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 78,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "The given diagrammatic representation shows one of the categories of small molecular weight organic compounds in the living tissues. Identify the category shown and the one blank component 'X' in it.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Category: Cholesterol | Component: Guanine"
+      },
+      {
+        "id": "B",
+        "text": "Category: Amino acid | Component: $\\text{NH}_2$"
+      },
+      {
+        "id": "C",
+        "text": "Category: Nucleotide | Component: Adenine"
+      },
+      {
+        "id": "D",
+        "text": "Category: Nucleoside | Component: Uracil"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe diagram depicts a **nucleoside** composed of a pentose sugar (ribose) linked to a nitrogenous base 'X'. Since Uracil linked to ribose forms the nucleoside Uridine (without a phosphate group), option (D) is correct.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547656/edvedum/questions/biomolecules/biomolecules_q_78.png"
+  },
+  {
+    "num": 79,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Which one of the following is wrong statement?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Anabaena   and  Nostoc   are capable of fixing nitrogen in free-living state also"
+      },
+      {
+        "id": "B",
+        "text": "Root nodule forming nitrogen fixers live as aerobes under free-living conditions."
+      },
+      {
+        "id": "C",
+        "text": "Phosphorus is a constituent of cell membranes, certain nucleic acids and all proteins."
+      },
+      {
+        "id": "D",
+        "text": "Nitrosomonas   and  Nitrobacter   are chemo-autotrophs. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Phosphorus is a constituent of cell membranes, certain nucleic acids and all proteins.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 80,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "The curve given below shows enzymatic activity in relation to three conditions (pH, temperature and substrate concentration). What do the two axes (x and y) represent?",
+    "options": [
+      {
+        "id": "A",
+        "text": "x-axis: enzymatic activity | y-axis: pH"
+      },
+      {
+        "id": "B",
+        "text": "x-axis: temperature | y-axis: enzyme activity"
+      },
+      {
+        "id": "C",
+        "text": "x-axis: substrate concentration | y-axis: enzymatic activity"
+      },
+      {
+        "id": "D",
+        "text": "x-axis: enzymatic activity | y-axis: temperature"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe bell-shaped curve indicates that enzyme activity increases up to an optimum value of temperature (or pH) and declines thereafter due to denaturation. Thus, x-axis represents temperature (or pH) and y-axis represents enzyme activity.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547657/edvedum/questions/biomolecules/biomolecules_q_80.png"
+  },
+  {
+    "num": 81,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "Which one of the following structural formulae of two organic compounds is correctly identified along with its related function?",
+    "options": [
+      {
+        "id": "A",
+        "text": "B : Adenine - A nucleotide that makes up nucleic acids"
+      },
+      {
+        "id": "B",
+        "text": "A : Triglyceride - Major source of energy"
+      },
+      {
+        "id": "C",
+        "text": "B : Uracil - A component of DNA"
+      },
+      {
+        "id": "D",
+        "text": "A : Lecithin - A component of cell membrane"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nCompound A is **Lecithin** (a phospholipid with a choline group attached to the phosphate), an essential component of the cell membrane. Compound B is **Adenine**, which is a nitrogenous base (purine), not a nucleotide.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547658/edvedum/questions/biomolecules/biomolecules_q_81.png"
+  },
+  {
+    "num": 82,
+    "exam": "AIPMT 2010 Mains",
+    "question": "Three of the following statements about enzymes are correct and one is wrong. Which one is wrong?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Enzymes require optimum pH for maximal activity."
+      },
+      {
+        "id": "B",
+        "text": "Enzymes are denatured at high temperature but in certain exceptional organisms they are o   o effective even at temperatures 80 - 90 C."
+      },
+      {
+        "id": "C",
+        "text": "Enzymes are highly specific."
+      },
+      {
+        "id": "D",
+        "text": "Most enzymes are proteins but some are lipids. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Most enzymes are proteins but some are lipids. Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 83,
+    "exam": "AIPMT 2010 Mains",
+    "question": "The figure given below shows the conversion of a substrate into product by an enzyme. In which one of the four options (a-d) the components of reaction labelled as A, B, C and D are identified correctly?",
+    "options": [
+      {
+        "id": "A",
+        "text": "A: Potential energy | B: Transition state | C: Activation energy | D: Activation energy without enzyme"
+      },
+      {
+        "id": "B",
+        "text": "A: Transition state | B: Potential energy | C: Activation energy without enzyme | D: Activation energy with enzyme"
+      },
+      {
+        "id": "C",
+        "text": "A: Potential energy | B: Transition state | C: Activation energy with enzyme | D: Activation energy without enzyme"
+      },
+      {
+        "id": "D",
+        "text": "A: Activation energy with enzyme | B: Transition state | C: Activation energy without enzyme | D: Potential energy"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn the reaction coordinate diagram:\n- **A**: Transition state (peak of the energy barrier)\n- **B**: Potential energy (y-axis)\n- **C**: Activation energy without enzyme (higher peak)\n- **D**: Activation energy with enzyme (lower peak).",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794547659/edvedum/questions/biomolecules/biomolecules_q_83.png"
+  },
+  {
+    "num": 84,
+    "exam": "AIPMT 2008",
+    "question": "Carbohydrates are commonly found as starch in plant storage organs. Which of the following five properties of starch (1   5) make it useful as a storage material? (1) Easily translocated (2) Chemically non-reactive (3) Easily digested by animals (4) Osmotically inactive (5) Synthesized during photosynthesis The useful properties are",
+    "options": [
+      {
+        "id": "A",
+        "text": "(1), (3) and (5)"
+      },
+      {
+        "id": "B",
+        "text": "(1) and (5)"
+      },
+      {
+        "id": "C",
+        "text": "(2) and (3)"
+      },
+      {
+        "id": "D",
+        "text": "(2) and (4)."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**(2) and (4).** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 85,
+    "exam": "AIPMT 2008",
+    "question": "A competitive inhibitor of succinic dehydrogenase is",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\alpha$-ketoglutarate"
+      },
+      {
+        "id": "B",
+        "text": "Malate"
+      },
+      {
+        "id": "C",
+        "text": "malonate"
+      },
+      {
+        "id": "D",
+        "text": "oxaloacetate."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Malonate** closely resembles succinate in molecular structure and acts as a classical competitive inhibitor of the enzyme succinate dehydrogenase.",
+    "image": ""
+  },
+  {
+    "num": 86,
+    "exam": "AIPMT 2008",
+    "question": "Modern detergents contain enzyme preparations of",
+    "options": [
+      {
+        "id": "A",
+        "text": "thermoacidophiles"
+      },
+      {
+        "id": "B",
+        "text": "thermophiles"
+      },
+      {
+        "id": "C",
+        "text": "acidophiles"
+      },
+      {
+        "id": "D",
+        "text": "alkaliphiles."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**alkaliphiles.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 87,
+    "exam": "AIPMT 2007",
+    "question": "About 98 percent of the mass of every living organism is composed of just six elements including carbon, hydrogen, nitrogen, oxygen and",
+    "options": [
+      {
+        "id": "A",
+        "text": "sulphur and magnesium"
+      },
+      {
+        "id": "B",
+        "text": "magnesium and sodium"
+      },
+      {
+        "id": "C",
+        "text": "calcium and phosphorus"
+      },
+      {
+        "id": "D",
+        "text": "phosphorus and sulphur."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**phosphorus and sulphur.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 88,
+    "exam": "AIPMT 2006",
+    "question": "An organic substance bound to an enzyme and essential for its activity is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "isoenzyme"
+      },
+      {
+        "id": "B",
+        "text": "coenzyme"
+      },
+      {
+        "id": "C",
+        "text": "holoenzyme"
+      },
+      {
+        "id": "D",
+        "text": "apoenzyme."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**coenzyme** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 89,
+    "exam": "AIPMT 2005",
+    "question": "The catalytic efficiency of two different enzymes can be compared by the",
+    "options": [
+      {
+        "id": "A",
+        "text": "formation of the product"
+      },
+      {
+        "id": "B",
+        "text": "pH of optimum value"
+      },
+      {
+        "id": "C",
+        "text": "K m   value"
+      },
+      {
+        "id": "D",
+        "text": "molecular size of the enzyme. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**K m   value** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 90,
+    "exam": "AIPMT 2005",
+    "question": "Which one of the following statements regarding enzyme inhibition is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Competitive inhibition is seen when a substrate competes with an enzyme for binding to an inhibitor protein."
+      },
+      {
+        "id": "B",
+        "text": "Competitive inhibition is seen when the substrate and the inhibitor compete for the active site on the enzyme."
+      },
+      {
+        "id": "C",
+        "text": "Non-competitive inhibition of an enzyme can be overcome by adding large amount of substrate."
+      },
+      {
+        "id": "D",
+        "text": "Non-competitive inhibitors often bind to the enzyme irreversibly."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Competitive inhibition is seen when the substrate and the inhibitor compete for the active site on the enzyme.** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 91,
+    "exam": "AIPMT 2005",
+    "question": "Enzymes, vitamins and hormones can be classified into a single category of biological chemicals, because all of these",
+    "options": [
+      {
+        "id": "A",
+        "text": "help in regulating metabolism"
+      },
+      {
+        "id": "B",
+        "text": "are exclusively synthesized in the body of a living organism as at present"
+      },
+      {
+        "id": "C",
+        "text": "are conjugated proteins"
+      },
+      {
+        "id": "D",
+        "text": "enhance oxidative metabolism."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**help in regulating metabolism** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 92,
+    "exam": "AIPMT 2005",
+    "question": "Which of the following is the simplest amino acid?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Alanine"
+      },
+      {
+        "id": "B",
+        "text": "Asparagine"
+      },
+      {
+        "id": "C",
+        "text": "Glycine"
+      },
+      {
+        "id": "D",
+        "text": "Tyrosine"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Glycine** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 93,
+    "exam": "AIPMT 2005",
+    "question": "Nucleotides are building blocks of nucleic acids. Each nucleotide is a composite molecule formed by",
+    "options": [
+      {
+        "id": "A",
+        "text": "base-sugar-phosphate"
+      },
+      {
+        "id": "B",
+        "text": "base-sugar-OH"
+      },
+      {
+        "id": "C",
+        "text": "(base-sugar-phosphate) n"
+      },
+      {
+        "id": "D",
+        "text": "sugar-phosphate"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**base-sugar-phosphate** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 94,
+    "exam": "AIPMT 2005",
+    "question": "Carbohydrates, the most abundant biomolecule on earth, are produced by",
+    "options": [
+      {
+        "id": "A",
+        "text": "some bacteria, algae and green plant cells"
+      },
+      {
+        "id": "B",
+        "text": "fungi, algae and green plant cells"
+      },
+      {
+        "id": "C",
+        "text": "all bacteria, fungi and algae"
+      },
+      {
+        "id": "D",
+        "text": "viruses, fungi and bacteria. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**some bacteria, algae and green plant cells** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 95,
+    "exam": "AIPMT 2005",
+    "question": "An important step in the manufacture of pulp for paper industry from the woody tissues of plants is the",
+    "options": [
+      {
+        "id": "A",
+        "text": "preparation of pure cellulose by removing lignin"
+      },
+      {
+        "id": "B",
+        "text": "removal of oils present in the wood by treatment with suitable chemicals"
+      },
+      {
+        "id": "C",
+        "text": "removal of water from the wood by prolonged heating at approximately"
+      },
+      {
+        "id": "D",
+        "text": "treatment of wood with chemical that breakdown cellulose"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**preparation of pure cellulose by removing lignin** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 96,
+    "exam": "AIPMT 2004",
+    "question": "Which one of the following enzymes, is copper necessarily associated as an activator?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Carbonic anhydrase"
+      },
+      {
+        "id": "B",
+        "text": "Tryptophanase"
+      },
+      {
+        "id": "C",
+        "text": "Lactic dehydrogenase"
+      },
+      {
+        "id": "D",
+        "text": "Tyrosinase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Tyrosinase** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 97,
+    "exam": "AIPMT 2004",
+    "question": "Which one of the following is the correct matching of a vitamin, its nature and its deficiency disease?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Vitamin A — Fat soluble — Night blindness"
+      },
+      {
+        "id": "B",
+        "text": "Vitamin K — Fat soluble — Beri-beri"
+      },
+      {
+        "id": "C",
+        "text": "Vitamin A — Fat soluble — Beri-beri"
+      },
+      {
+        "id": "D",
+        "text": "Vitamin K — Water soluble — Pellagra"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Vitamin A — Fat soluble — Night blindness** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 98,
+    "exam": "AIPMT 2003",
+    "question": "The major role of minor elements inside living organisms is to act as",
+    "options": [
+      {
+        "id": "A",
+        "text": "co-factors of enzymes"
+      },
+      {
+        "id": "B",
+        "text": "building blocks of important amino acids"
+      },
+      {
+        "id": "C",
+        "text": "constituent of hormones"
+      },
+      {
+        "id": "D",
+        "text": "binder of cell structure."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**co-factors of enzymes** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 99,
+    "exam": "AIPMT 2002",
+    "question": "Lipids are insoluble in water because lipid molecules are",
+    "options": [
+      {
+        "id": "A",
+        "text": "hydrophilic"
+      },
+      {
+        "id": "B",
+        "text": "hydrophobic"
+      },
+      {
+        "id": "C",
+        "text": "neutral"
+      },
+      {
+        "id": "D",
+        "text": "zwitter ions."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**hydrophobic** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 100,
+    "exam": "AIPMT 2002",
+    "question": "Which of the following is a reducing sugar?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Galactose"
+      },
+      {
+        "id": "B",
+        "text": "Gluconic acid"
+      },
+      {
+        "id": "C",
+        "text": "$\\beta$-methyl galactoside"
+      },
+      {
+        "id": "D",
+        "text": "Sucrose"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Galactose** is an aldohexose monosaccharide possessing a free anomeric aldehyde group, which reduces Fehling's and Benedict's solutions; hence it is a reducing sugar.",
+    "image": ""
+  },
+  {
+    "num": 101,
+    "exam": "AIPMT 2001",
+    "question": "Enzyme first used for nitrogen fixation",
+    "options": [
+      {
+        "id": "A",
+        "text": "nitrogenase"
+      },
+      {
+        "id": "B",
+        "text": "nitroreductase"
+      },
+      {
+        "id": "C",
+        "text": "transferase"
+      },
+      {
+        "id": "D",
+        "text": "transaminase"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**nitrogenase** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 102,
+    "exam": "AIPMT 2001",
+    "question": "Most abundant organic compound on earth is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cellulose"
+      },
+      {
+        "id": "B",
+        "text": "Steroids"
+      },
+      {
+        "id": "C",
+        "text": "Protein"
+      },
+      {
+        "id": "D",
+        "text": "Lipids"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Cellulose** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 103,
+    "exam": "AIPMT 2000",
+    "question": "Role of enzyme in reactions is to/as",
+    "options": [
+      {
+        "id": "A",
+        "text": "decrease activation energy"
+      },
+      {
+        "id": "B",
+        "text": "increase activation energy"
+      },
+      {
+        "id": "C",
+        "text": "inorganic catalyst"
+      },
+      {
+        "id": "D",
+        "text": "none of the above."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**decrease activation energy** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 104,
+    "exam": "AIPMT 2000",
+    "question": "Which factor is responsible for inhibition of enzymatic process during feedback?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Substrate"
+      },
+      {
+        "id": "B",
+        "text": "enzymes"
+      },
+      {
+        "id": "C",
+        "text": "End product"
+      },
+      {
+        "id": "D",
+        "text": "Temperature"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**End product** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 105,
+    "exam": "AIPMT 2000",
+    "question": "Enzymes are not found in",
+    "options": [
+      {
+        "id": "A",
+        "text": "fungi"
+      },
+      {
+        "id": "B",
+        "text": "algae"
+      },
+      {
+        "id": "C",
+        "text": "virus"
+      },
+      {
+        "id": "D",
+        "text": "cyanobacteria."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**virus** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 106,
+    "exam": "AIPMT 2000",
+    "question": "ATP is",
+    "options": [
+      {
+        "id": "A",
+        "text": "nucleotide"
+      },
+      {
+        "id": "B",
+        "text": "nucleoside"
+      },
+      {
+        "id": "C",
+        "text": "nucleic acid"
+      },
+      {
+        "id": "D",
+        "text": "vitamin."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**nucleotide** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 107,
+    "exam": "AIPMT 2000",
+    "question": "Which of the following have carbohydrate as prosthetic group?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Glycoprotein"
+      },
+      {
+        "id": "B",
+        "text": "Chromoprotein"
+      },
+      {
+        "id": "C",
+        "text": "Lipoprotein"
+      },
+      {
+        "id": "D",
+        "text": "Nucleoprotein"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Glycoprotein** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 108,
+    "exam": "AIPMT 2000",
+    "question": "In a person of advanced age, the hair become thinner gradually. It happens because of decrease in",
+    "options": [
+      {
+        "id": "A",
+        "text": "synthesis of glucose"
+      },
+      {
+        "id": "B",
+        "text": "synthesis of proteins"
+      },
+      {
+        "id": "C",
+        "text": "energy availability"
+      },
+      {
+        "id": "D",
+        "text": "blood supply Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**synthesis of proteins** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 109,
+    "exam": "AIPMT 1998",
+    "question": "Cellulose, the most important constituent of plant cell wall is made up of",
+    "options": [
+      {
+        "id": "A",
+        "text": "branched chain of glucose molecules linked by $\\alpha$-1,6 glycosidic bond at the site of branching"
+      },
+      {
+        "id": "B",
+        "text": "unbranched chain of glucose molecules linked by $\\alpha$-1,4 glycosidic bond"
+      },
+      {
+        "id": "C",
+        "text": "branched chain of glucose molecules linked by $\\beta$-1,4 glycosidic bond in straight chain and $\\alpha$-1,6 glycosidic bond at the site of branching"
+      },
+      {
+        "id": "D",
+        "text": "unbranched chain of glucose molecules linked by $\\beta$-1,4 glycosidic bond"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nCellulose is a linear, unbranched homopolysaccharide of $\\beta$-D-glucose units linked exclusively by **$\\beta$-1,4-glycosidic bonds**.",
+    "image": ""
+  },
+  {
+    "num": 110,
+    "exam": "AIPMT 1998",
+    "question": "Lactose is composed of",
+    "options": [
+      {
+        "id": "A",
+        "text": "glucose + fructose"
+      },
+      {
+        "id": "B",
+        "text": "glucose + glucose"
+      },
+      {
+        "id": "C",
+        "text": "glucose + galactose"
+      },
+      {
+        "id": "D",
+        "text": "fructose + galactose"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**glucose + galactose** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 111,
+    "exam": "AIPMT 1998",
+    "question": "Which one of the following statements about cytochrome $\\text{P}_{450}$ is wrong?",
+    "options": [
+      {
+        "id": "A",
+        "text": "It has an important role in metabolism"
+      },
+      {
+        "id": "B",
+        "text": "It contains iron"
+      },
+      {
+        "id": "C",
+        "text": "It is a coloured cell"
+      },
+      {
+        "id": "D",
+        "text": "It is an enzyme involved in oxidation reactions"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nCytochrome $\\text{P}_{450}$ is a family of **heme-containing enzymes** (proteins) involved in cellular oxidation and drug detoxification, **not a cell**.",
+    "image": ""
+  },
+  {
+    "num": 112,
+    "exam": "AIPMT 1997",
+    "question": "Co-factor (prosthetic group) is a part of holoenzyme. It is",
+    "options": [
+      {
+        "id": "A",
+        "text": "loosely attached organic part"
+      },
+      {
+        "id": "B",
+        "text": "loosely attached inorganic part"
+      },
+      {
+        "id": "C",
+        "text": "accessory non-protein substance attached firmly"
+      },
+      {
+        "id": "D",
+        "text": "none of these"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**accessory non-protein substance attached firmly** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 113,
+    "exam": "AIPMT 1996",
+    "question": "Which is a typical example of 'feedback inhibition'?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cyanide and cytochrome reaction"
+      },
+      {
+        "id": "B",
+        "text": "Sulpha drugs and folic acid synthesizer bacteria"
+      },
+      {
+        "id": "C",
+        "text": "Allosteric inhibition of hexokinase by glucose 6-phosphate"
+      },
+      {
+        "id": "D",
+        "text": "Reaction between succinic dehydrogenase and succinic acid Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Allosteric inhibition of hexokinase by glucose 6-phosphate** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 114,
+    "exam": "AIPMT 1996",
+    "question": "In which of the following groups are all polysaccharides?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sucrose, glucose and fructose"
+      },
+      {
+        "id": "B",
+        "text": "Maltose, lactose and fructose"
+      },
+      {
+        "id": "C",
+        "text": "Glycogen, sucrose and maltose"
+      },
+      {
+        "id": "D",
+        "text": "Glycogen, cellulose and starch"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Glycogen, cellulose and starch** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 115,
+    "exam": "AIPMT 1996",
+    "question": "What are the most diverse molecules in the cell?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Lipids"
+      },
+      {
+        "id": "B",
+        "text": "Mineral salts"
+      },
+      {
+        "id": "C",
+        "text": "Proteins"
+      },
+      {
+        "id": "D",
+        "text": "Carbohydrates"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Proteins** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 116,
+    "exam": "AIPMT 1996",
+    "question": "Which purine base is found in RNA?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Thymine"
+      },
+      {
+        "id": "B",
+        "text": "Uracil"
+      },
+      {
+        "id": "C",
+        "text": "Cytosine"
+      },
+      {
+        "id": "D",
+        "text": "Guanine"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Guanine** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 117,
+    "exam": "AIPMT 1995",
+    "question": "A polysaccharide which is synthesized and stored in liver cells is",
+    "options": [
+      {
+        "id": "A",
+        "text": "arabinose"
+      },
+      {
+        "id": "B",
+        "text": "glycogen"
+      },
+      {
+        "id": "C",
+        "text": "lactose"
+      },
+      {
+        "id": "D",
+        "text": "galactose"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**glycogen** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 118,
+    "exam": "AIPMT 1994",
+    "question": "Which of the following nucleotide sequences contains 4 pyrimidine bases?",
+    "options": [
+      {
+        "id": "A",
+        "text": "GATCAATGC"
+      },
+      {
+        "id": "B",
+        "text": "GCUAGACAA"
+      },
+      {
+        "id": "C",
+        "text": "UAGCGGUAA"
+      },
+      {
+        "id": "D",
+        "text": "Both (b) and (c)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**GATCAATGC** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 119,
+    "exam": "AIPMT 1994",
+    "question": "The four elements that make up 99% of all elements found in a living system are",
+    "options": [
+      {
+        "id": "A",
+        "text": "C, H, O and P"
+      },
+      {
+        "id": "B",
+        "text": "C, N, O and P"
+      },
+      {
+        "id": "C",
+        "text": "H, O, C and N"
+      },
+      {
+        "id": "D",
+        "text": "C, H, O and S"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**H, O, C and N** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 120,
+    "exam": "AIPMT 1994",
+    "question": "The 1992 Nobel Prize for medicine was awarded to Edmond H. Fischer and Edwin J. Krebs for their work concerning",
+    "options": [
+      {
+        "id": "A",
+        "text": "reversible protein phosphorylation as a biological regulation mechanism"
+      },
+      {
+        "id": "B",
+        "text": "isolation of the gene for a human disease"
+      },
+      {
+        "id": "C",
+        "text": "human genome project"
+      },
+      {
+        "id": "D",
+        "text": "drug designing involving inhibition of DNA synthesis of the pathogen Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**reversible protein phosphorylation as a biological regulation mechanism** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 121,
+    "exam": "AIPMT 1993",
+    "question": "Glycogen is a polymer of",
+    "options": [
+      {
+        "id": "A",
+        "text": "galactose"
+      },
+      {
+        "id": "B",
+        "text": "glucose"
+      },
+      {
+        "id": "C",
+        "text": "fructose"
+      },
+      {
+        "id": "D",
+        "text": "sucrose"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**glucose** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 122,
+    "exam": "AIPMT 1992",
+    "question": "In RNA, thymine is replaced by",
+    "options": [
+      {
+        "id": "A",
+        "text": "adenine"
+      },
+      {
+        "id": "B",
+        "text": "guanine"
+      },
+      {
+        "id": "C",
+        "text": "cytosine"
+      },
+      {
+        "id": "D",
+        "text": "uracil"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**uracil** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 123,
+    "exam": "AIPMT 1992",
+    "question": "Which is distributed more widely in a cell?",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA"
+      },
+      {
+        "id": "B",
+        "text": "RNA"
+      },
+      {
+        "id": "C",
+        "text": "Chloroplasts"
+      },
+      {
+        "id": "D",
+        "text": "Sphaerosomes"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**RNA** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 124,
+    "exam": "AIPMT 1992",
+    "question": "Living cell contains 60 – 95% water. Water present in human body is",
+    "options": [
+      {
+        "id": "A",
+        "text": "60 – 65%"
+      },
+      {
+        "id": "B",
+        "text": "50 – 55%"
+      },
+      {
+        "id": "C",
+        "text": "75 – 80%"
+      },
+      {
+        "id": "D",
+        "text": "65 – 70%"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**65 – 70%** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 125,
+    "exam": "AIPMT 1992",
+    "question": "Adenine is",
+    "options": [
+      {
+        "id": "A",
+        "text": "purine"
+      },
+      {
+        "id": "B",
+        "text": "pyrimidine"
+      },
+      {
+        "id": "C",
+        "text": "nucleoside"
+      },
+      {
+        "id": "D",
+        "text": "nucleotide"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**purine** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 126,
+    "exam": "AIPMT 1991",
+    "question": "Enzymes having slightly different molecular structure but performing identical activity are",
+    "options": [
+      {
+        "id": "A",
+        "text": "holoenzymes"
+      },
+      {
+        "id": "B",
+        "text": "isoenzymes"
+      },
+      {
+        "id": "C",
+        "text": "apoenzymes"
+      },
+      {
+        "id": "D",
+        "text": "coenzymes"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**isoenzymes** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 127,
+    "exam": "AIPMT 1991",
+    "question": "A nucleotide is formed of",
+    "options": [
+      {
+        "id": "A",
+        "text": "purine, pyrimidine and phosphate"
+      },
+      {
+        "id": "B",
+        "text": "purine, sugar and phosphate"
+      },
+      {
+        "id": "C",
+        "text": "nitrogen base, sugar and phosphate"
+      },
+      {
+        "id": "D",
+        "text": "pyrimidine, sugar and phosphate"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**nitrogen base, sugar and phosphate** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 128,
+    "exam": "AIPMT 1991",
+    "question": "DNA is composed of repeating units of",
+    "options": [
+      {
+        "id": "A",
+        "text": "ribonucleosides"
+      },
+      {
+        "id": "B",
+        "text": "deoxyribonucleosides"
+      },
+      {
+        "id": "C",
+        "text": "ribonucleotides"
+      },
+      {
+        "id": "D",
+        "text": "deoxyribonucleotides Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**deoxyribonucleotides Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 129,
+    "exam": "AIPMT 1991",
+    "question": "The basic unit of nucleic acid is",
+    "options": [
+      {
+        "id": "A",
+        "text": "pentose sugar"
+      },
+      {
+        "id": "B",
+        "text": "nucleoid"
+      },
+      {
+        "id": "C",
+        "text": "nucleoside"
+      },
+      {
+        "id": "D",
+        "text": "nucleotide"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**nucleotide** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 130,
+    "exam": "AIPMT 1988",
+    "question": "RNA does not possess",
+    "options": [
+      {
+        "id": "A",
+        "text": "uracil"
+      },
+      {
+        "id": "B",
+        "text": "thymine"
+      },
+      {
+        "id": "C",
+        "text": "adenine"
+      },
+      {
+        "id": "D",
+        "text": "cytosine"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**thymine** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 131,
+    "exam": "AIPMT 2012 Mains",
+    "question": "For its activity, carboxypeptidase requires",
+    "options": [
+      {
+        "id": "A",
+        "text": "Zinc"
+      },
+      {
+        "id": "B",
+        "text": "iron"
+      },
+      {
+        "id": "C",
+        "text": "niacin"
+      },
+      {
+        "id": "D",
+        "text": "copper."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Zinc** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 132,
+    "exam": "AIPMT 1999",
+    "question": "To which of the following family do folic acid and pantothenic acid belong?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Vitamin C"
+      },
+      {
+        "id": "B",
+        "text": "Vitamin K"
+      },
+      {
+        "id": "C",
+        "text": "Vitamin A"
+      },
+      {
+        "id": "D",
+        "text": "Vitamin B complex"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Vitamin B complex** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 133,
+    "exam": "AIPMT 1999",
+    "question": "Which of the following is mismatched ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Vitamin K—beri-beri"
+      },
+      {
+        "id": "B",
+        "text": "Vitamin D—rickets"
+      },
+      {
+        "id": "C",
+        "text": "Vitamin C—scurvy"
+      },
+      {
+        "id": "D",
+        "text": "Vitamin A—xerophthalmia"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Vitamin K—beri-beri** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 134,
+    "exam": "AIPMT 1997",
+    "question": "Which one of the following vitamins can be synthesized by bacteria inside the gut?",
+    "options": [
+      {
+        "id": "A",
+        "text": "D"
+      },
+      {
+        "id": "B",
+        "text": "K"
+      },
+      {
+        "id": "C",
+        "text": ""
+      },
+      {
+        "id": "D",
+        "text": "C"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET answer key, option (C) is correct.",
+    "image": ""
+  },
+  {
+    "num": 135,
+    "exam": "AIPMT 1996",
+    "question": "Pellagra disease is caused by the deficiency of",
+    "options": [
+      {
+        "id": "A",
+        "text": "niacin"
+      },
+      {
+        "id": "B",
+        "text": "tocopherol"
+      },
+      {
+        "id": "C",
+        "text": "riboflavin"
+      },
+      {
+        "id": "D",
+        "text": "folic acid Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**niacin** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 136,
+    "exam": "AIPMT 1996",
+    "question": "High cholesterol patients are advised to use",
+    "options": [
+      {
+        "id": "A",
+        "text": "ghee, butter and oils"
+      },
+      {
+        "id": "B",
+        "text": "groundnut oil, margarine and vegetable oils"
+      },
+      {
+        "id": "C",
+        "text": "fatty oil and butter"
+      },
+      {
+        "id": "D",
+        "text": "cheese, dalda and ghee"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**groundnut oil, margarine and vegetable oils** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 137,
+    "exam": "AIPMT 1995",
+    "question": "The haemorrhagic disease of new born is caused due to the deficiency of",
+    "options": [
+      {
+        "id": "A",
+        "text": "vitamin K"
+      },
+      {
+        "id": "B",
+        "text": "vitamin"
+      },
+      {
+        "id": "C",
+        "text": "vitamin A"
+      },
+      {
+        "id": "D",
+        "text": "vitamin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**vitamin K** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 138,
+    "exam": "AIPMT 1995",
+    "question": "The vitamin C or ascorbic acid prevents",
+    "options": [
+      {
+        "id": "A",
+        "text": "scurvy"
+      },
+      {
+        "id": "B",
+        "text": "antibody synthesis"
+      },
+      {
+        "id": "C",
+        "text": "rickets"
+      },
+      {
+        "id": "D",
+        "text": "pellagra"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**scurvy** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 139,
+    "exam": "AIPMT 1994",
+    "question": "Calcium deficiency in the body occurs in the absence of",
+    "options": [
+      {
+        "id": "A",
+        "text": "vitamin C"
+      },
+      {
+        "id": "B",
+        "text": "vitamin D"
+      },
+      {
+        "id": "C",
+        "text": "vitamin B"
+      },
+      {
+        "id": "D",
+        "text": "vitamin E"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**vitamin D** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 140,
+    "exam": "AIPMT 1994",
+    "question": "Prolonged deficiency of nicotinic acid causes",
+    "options": [
+      {
+        "id": "A",
+        "text": "pellagra"
+      },
+      {
+        "id": "B",
+        "text": "xerophthalmia"
+      },
+      {
+        "id": "C",
+        "text": "osteomalacia"
+      },
+      {
+        "id": "D",
+        "text": "anaemia"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**pellagra** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 141,
+    "exam": "AIPMT 1993",
+    "question": "Which of the following pair is characterised by swollen lips, thick pigmented skin of hands and legs and irritability?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Thiamine – Beri-beri"
+      },
+      {
+        "id": "B",
+        "text": "Protein – Kwashiorkor"
+      },
+      {
+        "id": "C",
+        "text": "Nicotinamide – Pellagra"
+      },
+      {
+        "id": "D",
+        "text": "Iodine – Goitre"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Nicotinamide – Pellagra** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  },
+  {
+    "num": 142,
+    "exam": "AIPMT 1993",
+    "question": "Vitamin K is required for",
+    "options": [
+      {
+        "id": "A",
+        "text": "change of prothrombin into thrombin"
+      },
+      {
+        "id": "B",
+        "text": "synthesis of prothrombin"
+      },
+      {
+        "id": "C",
+        "text": "change of fibrinogen to fibrin"
+      },
+      {
+        "id": "D",
+        "text": "formation of thromboplastin"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**synthesis of prothrombin** is the correct answer according to the official NEET answer key and NCERT Biomolecules syllabus.",
+    "image": ""
+  }
+]

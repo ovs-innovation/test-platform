@@ -29,3 +29,4 @@ for (let i = 0; i < positions.length; i++) {
 
 fs.writeFileSync('./backend/scripts/biomolecules_q_text_items.json', JSON.stringify(qMap, null, 2));
 console.log(`Saved grouped text items for ${Object.keys(qMap).length} questions.`);
+
