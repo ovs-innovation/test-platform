@@ -1,0 +1,2836 @@
+[
+  {
+    "num": 1,
+    "exam": "RE-NEET 2026",
+    "question": "Which of the following statements related to pituitary gland are correct? (a) It is divided anatomically into adenohypophysis and neurohypophysis (b) It secretes follicle stimulating hormone (c) It secretes melanocyte stimulating hormone (d) It does not secrete prolactin Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(b) and (c) only"
+      },
+      {
+        "id": "B",
+        "text": "(a) and (b) only"
+      },
+      {
+        "id": "C",
+        "text": "(a), (b) and (c) only"
+      },
+      {
+        "id": "D",
+        "text": "(c) and (d) only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**(a), (b) and (c) only** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 2,
+    "exam": "RE-NEET 2026",
+    "question": "Which one of the following statements is incorrect?",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\beta$-cells of pancreas secrete insulin"
+      },
+      {
+        "id": "B",
+        "text": "$\\alpha$-cells of pancreas secrete glucagon"
+      },
+      {
+        "id": "C",
+        "text": "$\\alpha$-cells of pancreas secrete insulin"
+      },
+      {
+        "id": "D",
+        "text": "Glucagon stimulates glycogenolysis"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- Statement C is incorrect: In the Islets of Langerhans, **$\\alpha$-cells secrete glucagon** and **$\\beta$-cells secrete insulin** (not $\\alpha$-cells secreting insulin).\n- Glucagon stimulates glycogenolysis (breakdown of glycogen into glucose) and gluconeogenesis, resulting in hyperglycemia.",
+    "image": ""
+  },
+  {
+    "num": 3,
+    "exam": "RE-NEET 2026",
+    "question": "Match List-I with List-II:\n\n| List-I | List-II |\n| :--- | :--- |\n| (A) Excess growth hormone | (I) Reabsorption of water and electrolytes in kidney |\n| (B) Luteinizing hormone | (II) Contraction of uterus during child birth |\n| (C) Vasopressin | (III) Acromegaly |\n| (D) Oxytocin | (IV) Ovulation |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-III, C-I, D-II"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-IV, C-I, D-III"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Excess growth hormone**: In adults causes severe disfigurement known as Acromegaly (A-III).\n- **Luteinizing hormone (LH)**: Induces ovulation of fully mature follicles (graafian follicles) in females (B-IV).\n- **Vasopressin (ADH)**: Stimulates reabsorption of water and electrolytes by the distal tubules of the kidney (C-I).\n- **Oxytocin**: Acts on the smooth muscles of the uterus and causes strong uterine contractions during parturition (childbirth) (D-II).",
+    "image": ""
+  },
+  {
+    "num": 4,
+    "exam": "NEET 2026",
+    "question": "Match List I with List II:\n\n| List I | List II |\n| :--- | :--- |\n| A. Cortisol | I. Stimulates the formation of alveoli in mammary glands |\n| B. Aldosterone | II. Produces anti-inflammatory reactions |\n| C. Cholecystokinin | III. Stimulates reabsorption of $\\text{Na}^+$ and water from renal tubule |\n| D. Progesterone | IV. Stimulates secretion of pancreatic enzymes and bile juice |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-II, C-I, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-III, C-I, D-IV"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Cortisol**: Glucocorticoid that produces anti-inflammatory reactions and suppresses the immune response (A-II).\n- **Aldosterone**: Mineralocorticoid acting on renal tubules to stimulate reabsorption of $\\text{Na}^+$ and water (B-III).\n- **Cholecystokinin (CCK)**: Acts on both pancreas and gall bladder, stimulating secretion of pancreatic enzymes and bile juice (C-IV).\n- **Progesterone**: Acts on mammary glands and stimulates the formation of alveoli (sac-like structures that store milk) and milk secretion (D-I).",
+    "image": ""
+  },
+  {
+    "num": 5,
+    "exam": "NEET 2025",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Progesterone | I. Pars intermedia |\n| B. Relaxin | II. Ovary |\n| C. Melanocyte stimulating hormone | III. Adrenal Medulla |\n| D. Catecholamines | IV. Corpus luteum |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-IV, C-I, D-III"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-II, C-I, D-III"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-II, C-III, D-I"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Progesterone**: Secreted in large amounts by the corpus luteum to maintain endometrium (A-IV).\n- **Relaxin**: Secreted by the ovary in the later stages of pregnancy (B-II).\n- **Melanocyte stimulating hormone (MSH)**: Secreted by pars intermedia of pituitary gland (C-I).\n- **Catecholamines (Adrenaline & Noradrenaline)**: Secreted by adrenal medulla during emergency situations (D-III).",
+    "image": ""
+  },
+  {
+    "num": 6,
+    "exam": "NEET 2025",
+    "question": "Consider the following statements regarding function of adrenal medullary hormones:",
+    "options": [
+      {
+        "id": "A",
+        "text": "It causes pupilary constriction."
+      },
+      {
+        "id": "B",
+        "text": "It is a hyperglycemic hormone."
+      },
+      {
+        "id": "C",
+        "text": "It causes piloerection."
+      },
+      {
+        "id": "D",
+        "text": "It increases strength of heart contraction. Choose the correct answer from the options given below : (A)   A, C and D only   (B)   D only   (C)   C and D only   (D)   B, C and D only Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**It increases strength of heart contraction. Choose the correct answer from the options given below : (A)   A, C and D only   (B)   D only   (C)   C and D only   (D)   B, C and D only Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 7,
+    "exam": "NEET 2025",
+    "question": "Which of the following hormones released from the pituitary is actually synthesized in the hypothalamus?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Follicle-stimulating hormone (FSH)"
+      },
+      {
+        "id": "B",
+        "text": "Adrenocorticotropic hormone (ACTH)"
+      },
+      {
+        "id": "C",
+        "text": "Luteinizing hormone (LH)"
+      },
+      {
+        "id": "D",
+        "text": "Anti-diuretic hormone (ADH)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Anti-diuretic hormone (ADH)** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 8,
+    "exam": "NEET 2025",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Heart | I. Erythropoietin |\n| B. Kidney | II. Aldosterone |\n| C. Gastro-intestinal tract | III. Atrial natriuretic factor |\n| D. Adrenal Cortex | IV. Secretin |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-I, B-III, C-IV, D-II"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-I, C-IV, D-II"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-I, C-III, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-III, C-II, D-I"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Heart**: The atrial wall secretes Atrial Natriuretic Factor (ANF) when blood pressure increases (A-III).\n- **Kidney**: Juxtaglomerular cells produce Erythropoietin which stimulates erythropoiesis (A-I).\n- **Gastro-intestinal tract**: Secretes peptide hormones including Secretin, gastrin, CCK, and GIP (C-IV).\n- **Adrenal Cortex**: Secretes mineralocorticoids like Aldosterone (D-II).",
+    "image": ""
+  },
+  {
+    "num": 9,
+    "exam": "NEET 2025",
+    "question": "Why can't insulin be given orally to diabetic patients?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Because of structural variation"
+      },
+      {
+        "id": "B",
+        "text": "Its bioavailability will be increased"
+      },
+      {
+        "id": "C",
+        "text": "Human body will elicit strong immune response"
+      },
+      {
+        "id": "D",
+        "text": "It will be digested in Gastro-Intestinal (GI) tract"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**It will be digested in Gastro-Intestinal (GI) tract** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 10,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Epinephrine | (I) Hyperglycemia |\n| (B) Thyroxine | (II) Smooth muscle contraction |\n| (C) Oxytocin | (III) Basal metabolic rate |\n| (D) Glucagon | (IV) Emergency hormone |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-I, C-IV, D-III"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-I, B-IV, C-III, D-II"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Epinephrine**: Emergency hormone secreted during stress/fight-or-flight conditions (A-IV).\n- **Thyroxine**: Regulates the basal metabolic rate (BMR) (B-III).\n- **Oxytocin**: Stimulates vigorous contraction of smooth muscles of the uterus (C-II).\n- **Glucagon**: Hyperglycemic hormone that raises blood glucose levels (D-I).",
+    "image": ""
+  },
+  {
+    "num": 11,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Identify the wrong statements : A. Erythropoietin is produced by juxtaglomerular cells of the kidney B. Leydig cells produce Androgens C. Atrial Natriuretic factor, a peptide hormone is secreted by the seminiferous tubules of the testes D. Cholecystokinin is produced by gastrointestinal tract E. Gastrin acts on intestinal wall and helps in the production of pepsinogen Choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "D and E only"
+      },
+      {
+        "id": "B",
+        "text": "A and B only"
+      },
+      {
+        "id": "C",
+        "text": "C and E only"
+      },
+      {
+        "id": "D",
+        "text": "A and C only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**C and E only** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 12,
+    "exam": "NEET 2024",
+    "question": "Which of the following is not a steroid hormone?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cortisol"
+      },
+      {
+        "id": "B",
+        "text": "Testosterone"
+      },
+      {
+        "id": "C",
+        "text": "Progesterone"
+      },
+      {
+        "id": "D",
+        "text": "Glucagon"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Glucagon** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 13,
+    "exam": "NEET 2024",
+    "question": "Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R : Assertion A : FSH acts upon ovarian follicles in female and Leydig cells in male. Reason R : Growing ovarian follicles secrete estrogen in female while interstitial cells secrete androgen in male human being. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both A and R are true and R is the correct explanation of A"
+      },
+      {
+        "id": "B",
+        "text": "Both A and R are true but R is NOT the correct explanation of A"
+      },
+      {
+        "id": "C",
+        "text": "A is true but R is false"
+      },
+      {
+        "id": "D",
+        "text": "A is false but R is true Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**A is false but R is true Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 14,
+    "exam": "NEET 2024",
+    "question": "Match List I with List II :\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Exophthalmic goiter | I. Excess secretion of cortisol, moon face & hyperglycemia. |\n| B. Acromegaly | II. Hypo-secretion of thyroid hormone and stunted growth. |\n| C. Cushing's syndrome | III. Hyper secretion of thyroid hormone & protruding eye balls. |\n| D. Cretinism | IV. Excessive secretion of growth hormone. |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-I, B-III, C-II, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-II, C-I, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-IV, C-I, D-II"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Exophthalmic goiter (Graves' disease)**: Form of hyperthyroidism characterized by enlargement of thyroid gland, protrusion of eyeballs, increased BMR (A-III).\n- **Acromegaly**: Caused by hypersecretion of growth hormone in adults, causing disfigurement especially of the face (B-IV).\n- **Cushing's syndrome**: Caused by hypersecretion of cortisol from adrenal cortex (A-I).\n- **Cretinism**: Hypothyroidism during pregnancy causing defective development and stunted growth of baby (D-II).",
+    "image": ""
+  },
+  {
+    "num": 15,
+    "exam": "NEET 2023 Manipur",
+    "question": "Which of the following statements are correct with respect to the hormone and its function?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Thyrocalcitonin (TCT) regulates the blood calcium level."
+      },
+      {
+        "id": "B",
+        "text": "In males, FSH and androgens regulate spermatogenesis."
+      },
+      {
+        "id": "C",
+        "text": "Hyperthyroidism can lead to goitre."
+      },
+      {
+        "id": "D",
+        "text": "Glucocorticoids are secreted in Adrenal Medulla. (E) Parathyroid hormone is regulated by circulating levels of sodium ions. Choose the most appropriate answer from the options given below : (A)   (C) and (E) only   (B)   (A) and (B) only   (C)   (B) and (C) only   (D)   (A) and (D) only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**In males, FSH and androgens regulate spermatogenesis.** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 16,
+    "exam": "NEET 2023 Manipur",
+    "question": "Given below are two statements : Statement I : Parathyroid hormone acts on bones and stimulates the process of bone resorption. Statement II : Parathyroid hormone along with Thyrocalcitonin plays a significant role in carbohydrate metabolism. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but Statement II is false"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but Statement II is true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are true."
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are false. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Statement I is correct but Statement II is false** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 17,
+    "exam": "NEET 2023",
+    "question": "Which of the following are NOT under the control of thyroid hormone? A. Maintenance of water and electrolyte balance B. Regulation of basal metabolic rate C. Normal rhythm of sleep-wake cycle D. Development of immune system E. Support the process of RBCs formation Choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "B and C only"
+      },
+      {
+        "id": "B",
+        "text": "C and D only"
+      },
+      {
+        "id": "C",
+        "text": "D and E only"
+      },
+      {
+        "id": "D",
+        "text": "A and D only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**C and D only** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 18,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Give below are two statements: one is labelled as Assertion",
+    "options": [
+      {
+        "id": "A",
+        "text": "and the other is labelled as Reason (R). Assertion (A): FSH which interacts with membrane bound receptors does not enter the target cell. Reason (R): Binding of FSH to its receptors generates second messenger (cyclic AMP) for its biochemical and physiological responses. In the light of the above statements, choose the most appropriate answer from the options given below (A)   (A) is not correct but (R) is correct"
+      },
+      {
+        "id": "B",
+        "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)"
+      },
+      {
+        "id": "C",
+        "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A)"
+      },
+      {
+        "id": "D",
+        "text": "(A) is correct but (R) is not correct"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Both (A) and (R) are correct but (R) is not the correct explanation of (A)** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 19,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Which of the following are not the effects of Parathyroid hormone?\n(a) Stimulates the process of bone resorption\n(b) Decreases $\\text{Ca}^{2+}$ level in blood\n(c) Reabsorption of $\\text{Ca}^{2+}$ by renal tubules\n(d) Decreases the absorption of $\\text{Ca}^{2+}$ from digested food\n(e) Increases metabolism of carbohydrates\n\nChoose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) and (c) only"
+      },
+      {
+        "id": "B",
+        "text": "(b), (d) and (e) only"
+      },
+      {
+        "id": "C",
+        "text": "(a) and (e) only"
+      },
+      {
+        "id": "D",
+        "text": "(b) and (c) only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- Parathyroid hormone (PTH) is a hypercalcemic hormone that **increases blood $\\text{Ca}^{2+}$ levels** by stimulating bone resorption, reabsorption of $\\text{Ca}^{2+}$ by renal tubules, and increasing $\\text{Ca}^{2+}$ absorption from digested food.\n- Therefore, statements (b) decreases $\\text{Ca}^{2+}$ level, (d) decreases absorption of $\\text{Ca}^{2+}$, and (e) increases metabolism of carbohydrates are NOT effects of PTH.",
+    "image": ""
+  },
+  {
+    "num": 20,
+    "exam": "NEET 2021",
+    "question": "Erythropoietin hormone which stimulates R.B.C formation is produced by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Juxtaglomerular cells of the kidney"
+      },
+      {
+        "id": "B",
+        "text": "Alpha cells of pancreas"
+      },
+      {
+        "id": "C",
+        "text": "The cells of rostral adenohypophysis"
+      },
+      {
+        "id": "D",
+        "text": "The cells of bone marrow"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Juxtaglomerular cells of the kidney** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 21,
+    "exam": "NEET 2020 Phase 2",
+    "question": "Hormones stored and released from neurohypophysis are :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Prolactin and Vasopressin"
+      },
+      {
+        "id": "B",
+        "text": "Thyroid stimulating hormone and Oxytocin"
+      },
+      {
+        "id": "C",
+        "text": "Oxytocin and Vasopressin"
+      },
+      {
+        "id": "D",
+        "text": "Follicle stimulating hormone and Leutinizing hormone"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Oxytocin and Vasopressin** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 22,
+    "exam": "NEET 2020 Phase 2",
+    "question": "Match the following columns and select the correct option :\n\n| Column - I | Column - II |\n| :--- | :--- |\n| (a) Ovary | (i) Human chorionic Gonadotropin |\n| (b) Placenta | (ii) Estrogen & Progesterone |\n| (c) Corpus luteum | (iii) Androgens |\n| (d) Leydig cells | (iv) Progesterone only |\n\nChoose the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(i), (b)-(iii), (c)-(ii), (d)-(iv)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Ovary**: Produces primary female sex hormones, estrogen and progesterone (a-ii).\n- **Placenta**: Produces hormones including hCG (human chorionic gonadotropin), hPL, estrogen, progesterone (b-i).\n- **Corpus luteum**: Primarily secretes large amounts of progesterone to maintain pregnancy (c-iv).\n- **Leydig cells (interstitial cells)**: Produce androgens, principally testosterone (d-iii).",
+    "image": ""
+  },
+  {
+    "num": 23,
+    "exam": "NEET 2020 Phase 2",
+    "question": "Match the following columns and select the correct option :\n\n| Column - I | Column - II |\n| :--- | :--- |\n| (a) Pituitary hormone | (i) Steroid |\n| (b) Epinephrine | (ii) Neuropeptides |\n| (c) Endorphins | (iii) Peptides, proteins |\n| (d) Cortisol | (iv) Biogenic amines |\n\nChoose the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iii), (b)-(iv), (c)-(ii), (d)-(i)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iv), (b)-(iii), (c)-(i), (d)-(ii)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Pituitary hormones**: Peptide and protein hormones (a-iii).\n- **Epinephrine**: Amino acid derivative / biogenic amine derived from tyrosine (b-iv).\n- **Endorphins**: Neuropeptides that act as endogenous analgesics (c-ii).\n- **Cortisol**: Glucocorticoid steroid hormone synthesized from cholesterol (d-i).",
+    "image": ""
+  },
+  {
+    "num": 24,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Match the following columns and select the correct option:\n\n| Column-I | Column-II |\n| :--- | :--- |\n| (a) Pituitary gland | (i) Grave's disease |\n| (b) Thyroid gland | (ii) Diabetes mellitus |\n| (c) Adrenal gland | (iii) Diabetes insipidus |\n| (d) Pancreas | (iv) Addison's disease |\n\nChoose the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A) (iii), (B) (ii), (C) (i), (D) (iv)"
+      },
+      {
+        "id": "B",
+        "text": "(A) (iv), (B) (iii), (C) (i), (D) (ii)"
+      },
+      {
+        "id": "C",
+        "text": "(A) (ii), (B) (i), (C) (iv), (D) (iii)"
+      },
+      {
+        "id": "D",
+        "text": "(A) (iii), (B) (i), (C) (iv), (D) (ii)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Pituitary gland**: Deficiency of ADH (vasopressin) causes Diabetes insipidus (a-iii).\n- **Thyroid gland**: Hyperthyroidism with toxic diffuse goiter causes Grave's disease (b-i).\n- **Adrenal gland**: Hyposecretion of adrenal cortex hormones causes Addison's disease (c-iv).\n- **Pancreas**: Deficiency of insulin causes Diabetes mellitus (d-ii).",
+    "image": ""
+  },
+  {
+    "num": 25,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Select the correct statement",
+    "options": [
+      {
+        "id": "A",
+        "text": "Glucagon is associated with hypoglycemia."
+      },
+      {
+        "id": "B",
+        "text": "Glucocorticoids stimulate gluconeogenesis"
+      },
+      {
+        "id": "C",
+        "text": "Insulin acts on pancreatic cells and adipocytes."
+      },
+      {
+        "id": "D",
+        "text": "Insulin is associated with hyperglycemia."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Glucocorticoids stimulate gluconeogenesis** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 26,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Identify A, B and C in the diagrammatic representation of the mechanism of hormone action.\n\nSelect the correct option from the following:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A = Protein Hormone; B = Cyclic AMP; C = Hormone-receptor Complex"
+      },
+      {
+        "id": "B",
+        "text": "A = Steroid Hormone; B = Hormone-receptor Complex; C = Protein"
+      },
+      {
+        "id": "C",
+        "text": "A = Protein Hormone; B = Receptor; C = Cyclic AMP"
+      },
+      {
+        "id": "D",
+        "text": "A = Steroid Hormone; B = Receptor; C = Second Messenger"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn the mechanism of action of water-soluble protein/peptide hormones (e.g., FSH):\n- **A**: **Protein Hormone** (first messenger) that interacts with membrane-bound receptor.\n- **B**: **Membrane-bound Receptor** on the target cell ovarian membrane.\n- **C**: **Generation of second messenger** (e.g., **Cyclic AMP** or $\\text{Ca}^{2+}$) which regulates cellular biochemical metabolism and results in physiological responses.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794539506/edvedum/questions/chemical_coordination_and_integration/chemical_q_26.png"
+  },
+  {
+    "num": 27,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Artificial light, extended work-time and reduced sleep-time disrupt the activity of –",
+    "options": [
+      {
+        "id": "A",
+        "text": "Posterior pituitary gland"
+      },
+      {
+        "id": "B",
+        "text": "Thymus gland"
+      },
+      {
+        "id": "C",
+        "text": "Pineal gland"
+      },
+      {
+        "id": "D",
+        "text": "Adrenal gland"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Pineal gland** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 28,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Which of the following conditions will stimulate parathyroid gland to release parathyroid hormone?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Rise in blood $\\text{Ca}^{+2}$ levels"
+      },
+      {
+        "id": "B",
+        "text": "Fall in active Vitamin D levels"
+      },
+      {
+        "id": "C",
+        "text": "Fall in blood $\\text{Ca}^{+2}$ levels"
+      },
+      {
+        "id": "D",
+        "text": "Fall in bone $\\text{Ca}^{+2}$ levels"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nParathyroid hormone (PTH) secretion is stimulated by a **fall in blood calcium ($\\text{Ca}^{2+}$) levels** (hypocalcemia). PTH acts to raise circulating blood $\\text{Ca}^{2+}$ back to normal levels.",
+    "image": ""
+  },
+  {
+    "num": 29,
+    "exam": "NEET 2019",
+    "question": "Match the following hormones with the respective disease :\n\n| Column I (Hormone) | Column II (Disease) |\n| :--- | :--- |\n| (a) Insulin | (i) Addison's disease |\n| (b) Thyroxin | (ii) Diabetes insipidus |\n| (c) Corticoids | (iii) Acromegaly |\n| (d) Growth Hormones | (iv) Goitre |\n| | (v) Diabetes mellitus |\n\nSelect the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(v), (b)-(iv), (c)-(i), (d)-(iii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(ii), (b)-(iv), (c)-(i), (d)-(iii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(v), (b)-(i), (c)-(ii), (d)-(iii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(ii), (b)-(iv), (c)-(iii), (d)-(i)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Insulin**: Deficiency leads to Diabetes mellitus (a-v).\n- **Thyroxin**: Deficiency leads to simple Goitre (b-iv).\n- **Corticoids**: Hyposecretion leads to Addison's disease (c-i).\n- **Growth Hormones**: Hypersecretion in adults leads to Acromegaly (d-iii).",
+    "image": ""
+  },
+  {
+    "num": 30,
+    "exam": "NEET 2019",
+    "question": "How does steroid hormone influence the cellular activities?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Activating cyclic AMP located on the cell membrane"
+      },
+      {
+        "id": "B",
+        "text": "Using aquaporin channels as second messenger"
+      },
+      {
+        "id": "C",
+        "text": "Changing the permeability of the cell membrane"
+      },
+      {
+        "id": "D",
+        "text": "Binding to DNA and forming a gene-hormone complex"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Binding to DNA and forming a gene-hormone complex** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 31,
+    "exam": "NEET 2019",
+    "question": "Which of the following glucose transporters is insulin-dependent?",
+    "options": [
+      {
+        "id": "A",
+        "text": "GLUT III"
+      },
+      {
+        "id": "B",
+        "text": "GLUT IV"
+      },
+      {
+        "id": "C",
+        "text": "GLUT I"
+      },
+      {
+        "id": "D",
+        "text": "GLUT II"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**GLUT IV** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 32,
+    "exam": "NEET 2018",
+    "question": "Which of the following is an amino acid derived hormone?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ecdysone"
+      },
+      {
+        "id": "B",
+        "text": "Estriol"
+      },
+      {
+        "id": "C",
+        "text": "Epinephrine"
+      },
+      {
+        "id": "D",
+        "text": "Estradiol"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Epinephrine** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 33,
+    "exam": "NEET 2018",
+    "question": "Which of the following hormones can play a significant role in osteoporosis?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Estrogen and parathyroid hormone"
+      },
+      {
+        "id": "B",
+        "text": "Aldosterone and prolactin"
+      },
+      {
+        "id": "C",
+        "text": "Progesterone and aldosterone"
+      },
+      {
+        "id": "D",
+        "text": "Parathyroid hormone and prolactin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Estrogen and parathyroid hormone** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 34,
+    "exam": "NEET 2017",
+    "question": "GnRH, a hypothalamic hormone, needed in reproduction, acts on",
+    "options": [
+      {
+        "id": "A",
+        "text": "anterior pituitary gland and stimulates secretion of LH and FSH"
+      },
+      {
+        "id": "B",
+        "text": "posterior pituitary gland and stimulates secretion of oxytocin and FSH"
+      },
+      {
+        "id": "C",
+        "text": "posterior pituitary gland and stimulates secretion of LH and relaxin"
+      },
+      {
+        "id": "D",
+        "text": "anterior pituitary gland and stimulates secretion of LH and oxytocin."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**anterior pituitary gland and stimulates secretion of LH and FSH** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 35,
+    "exam": "NEET 2017",
+    "question": "Hypersecretion of growth hormone in adults does not cause further increase in height, because",
+    "options": [
+      {
+        "id": "A",
+        "text": "epiphyseal plates close after adolescence"
+      },
+      {
+        "id": "B",
+        "text": "bones loose their sensitivity to growth hormone in adults"
+      },
+      {
+        "id": "C",
+        "text": "muscle fibres do not grow in size after birth"
+      },
+      {
+        "id": "D",
+        "text": "growth hormone becomes inactive in adults. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**epiphyseal plates close after adolescence** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 36,
+    "exam": "NEET 2017",
+    "question": "A temporary endocrine gland in the human body is",
+    "options": [
+      {
+        "id": "A",
+        "text": "corpus cardiacum"
+      },
+      {
+        "id": "B",
+        "text": "corpus luteum"
+      },
+      {
+        "id": "C",
+        "text": "corpus allatum"
+      },
+      {
+        "id": "D",
+        "text": "pineal gland."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**corpus luteum** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 37,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Graves' disease is caused due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "hyposecretion of thyroid gland"
+      },
+      {
+        "id": "B",
+        "text": "hypersecretion of thyroid gland"
+      },
+      {
+        "id": "C",
+        "text": "hyposecretion of adrenal gland"
+      },
+      {
+        "id": "D",
+        "text": "hypersecretion of adrenal gland."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**hypersecretion of thyroid gland** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 38,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Name a peptide hormone which acts mainly on hepatocytes, adipocytes and enhances cellular glucose uptake and utilisation.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Insulin"
+      },
+      {
+        "id": "B",
+        "text": "Glucagon"
+      },
+      {
+        "id": "C",
+        "text": "Secretin"
+      },
+      {
+        "id": "D",
+        "text": "Gastrin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Insulin** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 39,
+    "exam": "NEET 2016 Phase 2",
+    "question": "The posterior pituitary gland is not a 'true' endocrine gland because",
+    "options": [
+      {
+        "id": "A",
+        "text": "it is provided with a duct"
+      },
+      {
+        "id": "B",
+        "text": "it only stores and releases hormones"
+      },
+      {
+        "id": "C",
+        "text": "it is under the regulation of hypothalamus"
+      },
+      {
+        "id": "D",
+        "text": "it secretes enzymes."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**it only stores and releases hormones** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 40,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Which of the following pairs of hormones are not antagonistic (having opposite effects) to each other?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Aldosterone   -   Atrial Natriuretic Factor"
+      },
+      {
+        "id": "B",
+        "text": "Relaxin   -   Inhibin"
+      },
+      {
+        "id": "C",
+        "text": "Parathormone   -   Calcitonin"
+      },
+      {
+        "id": "D",
+        "text": "Insulin   -   Glucagon"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Relaxin   -   Inhibin** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 41,
+    "exam": "NEET 2016 Phase 1",
+    "question": "The amino acid tryptophan is the precursor for the synthesis of",
+    "options": [
+      {
+        "id": "A",
+        "text": "estrogen and progesterone"
+      },
+      {
+        "id": "B",
+        "text": "cortisol and cortisone"
+      },
+      {
+        "id": "C",
+        "text": "melatonin and serotonin"
+      },
+      {
+        "id": "D",
+        "text": "thyroxine and triiodothyronine. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**melatonin and serotonin** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 42,
+    "exam": "AIPMT 2015",
+    "question": "Which one of the following hormones is not involved in sugar metabolism?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Insulin"
+      },
+      {
+        "id": "B",
+        "text": "Glucagon"
+      },
+      {
+        "id": "C",
+        "text": "Cortisone"
+      },
+      {
+        "id": "D",
+        "text": "Aldosterone"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Aldosterone** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 43,
+    "exam": "AIPMT 2015",
+    "question": "Which one of the following hormones though synthesised elsewhere, is stored and released by the master gland?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Prolactin"
+      },
+      {
+        "id": "B",
+        "text": "Melanocyte stimulating hormone"
+      },
+      {
+        "id": "C",
+        "text": "Antidiuretic hormone"
+      },
+      {
+        "id": "D",
+        "text": "Luteinising hormone"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Antidiuretic hormone** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 44,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "A chemical signal that has both endocrine and neural roles is",
+    "options": [
+      {
+        "id": "A",
+        "text": "epinephrine"
+      },
+      {
+        "id": "B",
+        "text": "cortisol"
+      },
+      {
+        "id": "C",
+        "text": "melatonin"
+      },
+      {
+        "id": "D",
+        "text": "calcitonin."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**epinephrine** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 45,
+    "exam": "AIPMT 2014",
+    "question": "Identify the hormone with its correct matching of source and function.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Oxytocin - posterior pituitary, growth and maintenance of mammary glands."
+      },
+      {
+        "id": "B",
+        "text": "Melatonin - pineal gland, regulates the normal rhythm of sleep-wake cycle."
+      },
+      {
+        "id": "C",
+        "text": "Progesterone - corpus luteum, stimulation of growth and activities of female secondary sex organs."
+      },
+      {
+        "id": "D",
+        "text": "Atrial natriuretic factor - ventricular wall, increases the blood pressure."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Melatonin - pineal gland, regulates the normal rhythm of sleep-wake cycle.** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 46,
+    "exam": "AIPMT 2014",
+    "question": "Fight-or-flight reactions cause activation of",
+    "options": [
+      {
+        "id": "A",
+        "text": "the parathyroid glands, leading to increased metabolic rate"
+      },
+      {
+        "id": "B",
+        "text": "the kidney, leading to suppression of renin-angiotensin-aldosterone pathway"
+      },
+      {
+        "id": "C",
+        "text": "the adrenal medulla, leading to increased secretion of epinephrine and norepinephrine"
+      },
+      {
+        "id": "D",
+        "text": "the pancreas leading to a reduction in the blood sugar levels. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**the adrenal medulla, leading to increased secretion of epinephrine and norepinephrine** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 47,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Select the option which correctly matches the endocrine gland with its hormone and its function.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Placenta | Estrogen | Initiates secretion of the milk"
+      },
+      {
+        "id": "B",
+        "text": "Corpus luteum | Estrogen | Essential for maintenance of endometrium"
+      },
+      {
+        "id": "C",
+        "text": "Leydig's cells | Androgen | Initiates the production of sperms"
+      },
+      {
+        "id": "D",
+        "text": "Ovary | FSH | Stimulates follicular development and the secretion of estrogens"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Option C is correct**: Leydig cells (interstitial cells) secrete androgens (primarily testosterone) which stimulate and initiate spermatogenesis.\n- Option A is incorrect: Milk secretion is stimulated by prolactin and ejected by oxytocin.\n- Option B is incorrect: Maintenance of endometrium is primarily by progesterone.\n- Option D is incorrect: FSH is secreted by anterior pituitary, not ovary.",
+    "image": ""
+  },
+  {
+    "num": 48,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Norepinephrine (i) is released by sympathetic fibres (ii) is released by parasympathetic fibers (iii) increases the heart rate (iv) decreases blood pressure. Which of the above statements are correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "(i) and (iii)"
+      },
+      {
+        "id": "B",
+        "text": "(ii) and (iii)"
+      },
+      {
+        "id": "C",
+        "text": "(ii) and (iv)"
+      },
+      {
+        "id": "D",
+        "text": "(i) and (iv) Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**(i) and (iii)** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 49,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Which of the following represents the action of insulin?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Increases blood glucose level by stimulating glucagon production."
+      },
+      {
+        "id": "B",
+        "text": "Decreases blood glucose levels by forming glycogen."
+      },
+      {
+        "id": "C",
+        "text": "Increases blood glucose levels by promoting cellular uptake of glucose."
+      },
+      {
+        "id": "D",
+        "text": "Increases blood glucose levels by hydrolysis of glycogen."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Decreases blood glucose levels by forming glycogen.** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 50,
+    "exam": "NEET 2013",
+    "question": "A pregnant female delivers a baby who suffers from stunted growth, mental retardation, low intelligence quotient and abnormal skin. This is the result of",
+    "options": [
+      {
+        "id": "A",
+        "text": "cancer of the thyroid gland"
+      },
+      {
+        "id": "B",
+        "text": "oversecretion of pars distalis"
+      },
+      {
+        "id": "C",
+        "text": "deficiency of iodine in diet"
+      },
+      {
+        "id": "D",
+        "text": "low secretionn of growth hormone."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**deficiency of iodine in diet** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 51,
+    "exam": "NEET 2013",
+    "question": "Which of the following statements is correct in relation to the endocrine system?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Non-nutrient chemicals produced by the body in trace amounts that act as intercellular messenger are known as hormones."
+      },
+      {
+        "id": "B",
+        "text": "Releasing and inhibitory hormones are produced by the pituitary gland."
+      },
+      {
+        "id": "C",
+        "text": "Adenohypophysis is under direct neural regulation of the hypothalamus."
+      },
+      {
+        "id": "D",
+        "text": "Organs in the body like gastrointestinal tract, heart, kidney and liver do not produce any hormones. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Non-nutrient chemicals produced by the body in trace amounts that act as intercellular messenger are known as hormones.** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 52,
+    "exam": "NEET 2013",
+    "question": "Select the answer which correctly matches the endocrine gland with the hormone it secretes and its function/deficiency symptom.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Thyroid gland | Thyroxine | Lack of iodine in diet results in goitre"
+      },
+      {
+        "id": "B",
+        "text": "Corpus luteum | Testosterone | Stimulates spermatogenesis"
+      },
+      {
+        "id": "C",
+        "text": "Anterior pituitary | Oxytocin | Stimulates uterine contraction during child birth"
+      },
+      {
+        "id": "D",
+        "text": "Posterior pituitary | Growth hormone (GH) | Oversecretion stimulates abnormal growth"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Option A is correct**: Dietary deficiency of iodine impairs thyroxine synthesis, causing enlargement of the thyroid gland known as simple goitre.\n- Option B is incorrect: Corpus luteum secretes progesterone, not testosterone.\n- Option C is incorrect: Oxytocin is released from posterior pituitary, not anterior pituitary.\n- Option D is incorrect: Growth hormone is secreted by anterior pituitary, not posterior pituitary.",
+    "image": ""
+  },
+  {
+    "num": 53,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "A person entering an empty room suddenly finds a snake right in front on opening the door. Which one of the following is likely to happen in his neuro-hormonal control system?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sympathetic nervous system is activated releasing epinephrine and norepinephrine from adrenal medulla."
+      },
+      {
+        "id": "B",
+        "text": "Neurotransmitters diffuse rapidly across the cleft and transmit a nerve impulse."
+      },
+      {
+        "id": "C",
+        "text": "Hypothalamus activates the parasympathetic division of brain."
+      },
+      {
+        "id": "D",
+        "text": "Sympathetic nervous system is activated releasing epinephrine and nore pinephrine from adrenal cortex. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Sympathetic nervous system is activated releasing epinephrine and norepinephrine from adrenal medulla.** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 54,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Which one of the following pairs of hormones are the examples of those that can easily pass through the cell membrane of the target cell and bind to a receptor inside it (mostly in the nucleus)?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Insulin, glucagon"
+      },
+      {
+        "id": "B",
+        "text": "Thyroxine, insulin"
+      },
+      {
+        "id": "C",
+        "text": "Somatostatin, oxytocin"
+      },
+      {
+        "id": "D",
+        "text": "Cortisol, testosterone"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Cortisol, testosterone** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 55,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "What is correct to say about the hormone action in humans?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Glucagon is secreted by $\\beta$-cells of islets of Langerhans and stimulates glycogenolysis."
+      },
+      {
+        "id": "B",
+        "text": "Secretion of thymosins is stimulated with aging."
+      },
+      {
+        "id": "C",
+        "text": "In females, FSH first binds with specific receptors on ovarian cell membrane."
+      },
+      {
+        "id": "D",
+        "text": "FSH stimulates the secretion of estrogen and progesterone."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Option C is correct**: Being a peptide hormone, FSH cannot cross the lipid bilayer and binds with specific extracellular membrane receptors on the ovarian cell membrane.\n- Option A is incorrect: Glucagon is secreted by $\\alpha$-cells, not $\\beta$-cells.\n- Option B is incorrect: Thymus degenerates with aging, decreasing thymosin secretion.\n- Option D is incorrect: Progesterone is primarily stimulated by LH acting on corpus luteum.",
+    "image": ""
+  },
+  {
+    "num": 56,
+    "exam": "AIPMT 2011 Mains",
+    "question": "The 24 hour (diurnal) rhythm of our body such as the sleep-wake cycle is regulated by the hormone",
+    "options": [
+      {
+        "id": "A",
+        "text": "calcitonin"
+      },
+      {
+        "id": "B",
+        "text": "prolactin"
+      },
+      {
+        "id": "C",
+        "text": "adrenaline"
+      },
+      {
+        "id": "D",
+        "text": "melatonin"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**melatonin** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 57,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "Match the source gland with its respective hormone and function and select the correct option.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Anterior pituitary | Oxytocin | Contraction of uterus muscles during child birth"
+      },
+      {
+        "id": "B",
+        "text": "Posterior pituitary | Vasopressin | Stimulates reabsorption of water in the distal tubules in the nephron"
+      },
+      {
+        "id": "C",
+        "text": "Corpus luteum | Estrogen | Supports pregnancy"
+      },
+      {
+        "id": "D",
+        "text": "Thyroid | Thyroxine | Regulates blood calcium level"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Option B is correct**: Vasopressin (ADH) is released from the posterior pituitary and acts mainly at the DCT and collecting duct of the kidney to stimulate reabsorption of water.\n- Option A is incorrect: Oxytocin is released by posterior pituitary.\n- Option C is incorrect: Corpus luteum secretes progesterone to support pregnancy.\n- Option D is incorrect: Blood calcium is regulated by calcitonin (TCT) and parathyroid hormone.",
+    "image": ""
+  },
+  {
+    "num": 58,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "Given below is an incomplete table on hormones, their source glands and one major effect of each on human body. Identify the option representing correct grouping of hormone its gland and effect.\n\n| Gland | Secretion | Effect on body |\n| :--- | :--- | :--- |\n| A | Estrogen | Maintenance of secondary sexual characters |\n| Alpha cells of Islets of Langerhans | B | Raises blood sugar level |\n| Anterior pituitary | C | Over secretion leads to gigantism |",
+    "options": [
+      {
+        "id": "A",
+        "text": "A: Ovary, B: Glucagon, C: Growth hormone"
+      },
+      {
+        "id": "B",
+        "text": "A: Placenta, B: Insulin, C: Vasopressin"
+      },
+      {
+        "id": "C",
+        "text": "A: Ovary, B: Insulin, C: Calcitonin"
+      },
+      {
+        "id": "D",
+        "text": "A: Placenta, B: Glucagon, C: Calcitonin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **A**: Ovary secretes estrogen for maintenance of secondary sexual characters in females.\n- **B**: Alpha cells of islets of Langerhans secrete glucagon which raises blood sugar level.\n- **C**: Anterior pituitary secretes growth hormone; hypersecretion during childhood leads to gigantism.",
+    "image": ""
+  },
+  {
+    "num": 59,
+    "exam": "AIPMT 2010 Mains",
+    "question": "Select the correct matching of a hormone, its source and function.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Vasopressin | Posterior pituitary | Increases loss of water through urine"
+      },
+      {
+        "id": "B",
+        "text": "Norepinephrine | Adrenal medulla | Increases heart beat, rate of respiration and alertness"
+      },
+      {
+        "id": "C",
+        "text": "Glucagon | Beta-cells of Islets of Langerhans | Stimulates glycogenolysis"
+      },
+      {
+        "id": "D",
+        "text": "Prolactin | Posterior pituitary | Regulates growth of mammary glands and milk formation in females"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Option B is correct**: Norepinephrine (noradrenaline) is secreted by adrenal medulla and increases heartbeat, strength of heart contraction, respiratory rate, and alertness.\n- Option A is incorrect: Vasopressin prevents water loss (anti-diuretic).\n- Option C is incorrect: Glucagon is produced by alpha-cells.\n- Option D is incorrect: Prolactin is secreted by anterior pituitary.",
+    "image": ""
+  },
+  {
+    "num": 60,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Injury to adrenal cortex is not likely to affect the secretion of which one of the following?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Aldosterone"
+      },
+      {
+        "id": "B",
+        "text": "Both androstenedione and dehydroepiandrosterone"
+      },
+      {
+        "id": "C",
+        "text": "Adrenaline"
+      },
+      {
+        "id": "D",
+        "text": "Cortisol"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Adrenaline** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 61,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Which one of the following pairs is incorrectly matched?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Glucagon   Beta cells (source)"
+      },
+      {
+        "id": "B",
+        "text": "Somatostatin   Delta cells (source)"
+      },
+      {
+        "id": "C",
+        "text": "Corpus luteum   Relaxin (secretion)"
+      },
+      {
+        "id": "D",
+        "text": "Insulin   Diabetes mellitus (disease)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Glucagon   Beta cells (source)** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 62,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Toxic agents present in food which interfere with thyroxine synthesis lead to the development of",
+    "options": [
+      {
+        "id": "A",
+        "text": "toxic goitre"
+      },
+      {
+        "id": "B",
+        "text": "cretinism"
+      },
+      {
+        "id": "C",
+        "text": "simple goitre"
+      },
+      {
+        "id": "D",
+        "text": "thyrotoxicosis. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**simple goitre** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 63,
+    "exam": "AIPMT 2009",
+    "question": "A health disorder that results from the deficiency of thyroxine in adults and characterised by (i) a low metabolic rate, (ii) increase in body weight and (iii) tendency to retain water in tissues is",
+    "options": [
+      {
+        "id": "A",
+        "text": "simple goitre"
+      },
+      {
+        "id": "B",
+        "text": "myxoedema"
+      },
+      {
+        "id": "C",
+        "text": "cretinism"
+      },
+      {
+        "id": "D",
+        "text": "hypothyroidism."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**myxoedema** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 64,
+    "exam": "AIPMT 2008",
+    "question": "Which one of the following pair of organs includes only the endocrine glands?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Thymus and testes"
+      },
+      {
+        "id": "B",
+        "text": "Adrenal and ovary"
+      },
+      {
+        "id": "C",
+        "text": "Parathyroid and adrenal"
+      },
+      {
+        "id": "D",
+        "text": "Pancreas and parathyroid"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Parathyroid and adrenal** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 65,
+    "exam": "AIPMT 2008",
+    "question": "The blood calcium level is lowered by the deficiency of",
+    "options": [
+      {
+        "id": "A",
+        "text": "both calcitonin and parathormone"
+      },
+      {
+        "id": "B",
+        "text": "calcitonin"
+      },
+      {
+        "id": "C",
+        "text": "parathormone"
+      },
+      {
+        "id": "D",
+        "text": "thyroxine."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**parathormone** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 66,
+    "exam": "AIPMT 2007",
+    "question": "Feeling the tremors of an earthquake a scared resident of seventh floor of a multistoryed building starts climbing down the stairs rapidly. Which hormone initiated this action?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Adrenaline"
+      },
+      {
+        "id": "B",
+        "text": "Glucagon"
+      },
+      {
+        "id": "C",
+        "text": "Gastrian"
+      },
+      {
+        "id": "D",
+        "text": "Thyroxine"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Adrenaline** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 67,
+    "exam": "AIPMT 2007",
+    "question": "A person is having problems with calcium and phosphorus metabolism in his body. Which one of the following glands may not be functioning properly?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Parotid"
+      },
+      {
+        "id": "B",
+        "text": "Pancreas"
+      },
+      {
+        "id": "C",
+        "text": "Thyroid"
+      },
+      {
+        "id": "D",
+        "text": "Parathyroid"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Parathyroid** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 68,
+    "exam": "AIPMT 2007",
+    "question": "A sequential expression of a set of human genes occurs when a steroid molecule binds to the",
+    "options": [
+      {
+        "id": "A",
+        "text": "messenger RNA"
+      },
+      {
+        "id": "B",
+        "text": "DNA sequence"
+      },
+      {
+        "id": "C",
+        "text": "ribosome"
+      },
+      {
+        "id": "D",
+        "text": "transfer RNA"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**DNA sequence** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 69,
+    "exam": "AIPMT 2006",
+    "question": "Which hormone causes dilation of blood vessels, increased oxygen consumption and glucogenesis?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Glucagon"
+      },
+      {
+        "id": "B",
+        "text": "ACTH"
+      },
+      {
+        "id": "C",
+        "text": "Insulin"
+      },
+      {
+        "id": "D",
+        "text": "Adrenaline Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Adrenaline Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 70,
+    "exam": "AIPMT 2006",
+    "question": "Which of the following is an accumulation and release center of neurohormones?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Anterior pituitary lobe"
+      },
+      {
+        "id": "B",
+        "text": "Posterior pituitary lobe"
+      },
+      {
+        "id": "C",
+        "text": "Intermediate lobe of the pituitary"
+      },
+      {
+        "id": "D",
+        "text": "Hypothalamus"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Posterior pituitary lobe** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 71,
+    "exam": "AIPMT 2006",
+    "question": "A steroid hormone which regulates glucose metabolism is",
+    "options": [
+      {
+        "id": "A",
+        "text": "cortisone"
+      },
+      {
+        "id": "B",
+        "text": "cortisol"
+      },
+      {
+        "id": "C",
+        "text": "corticosterone"
+      },
+      {
+        "id": "D",
+        "text": "11-deoxycorticosterone."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**cortisol** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 72,
+    "exam": "AIPMT 2006",
+    "question": "Which one of the following is not a secondary messenger in hormone action?",
+    "options": [
+      {
+        "id": "A",
+        "text": "cAMP"
+      },
+      {
+        "id": "B",
+        "text": "cGMP"
+      },
+      {
+        "id": "C",
+        "text": "Calcium"
+      },
+      {
+        "id": "D",
+        "text": "Sodium"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Sodium** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 73,
+    "exam": "AIPMT 2006",
+    "question": "Which one of the following statements is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Endocrine glands regulate neural activity, but not  vice versa."
+      },
+      {
+        "id": "B",
+        "text": "Neurons regulate endocrine activity, but not  vice versa."
+      },
+      {
+        "id": "C",
+        "text": "Endocrine glands regulate neural activity, and nervous system regulates endocrine glands."
+      },
+      {
+        "id": "D",
+        "text": "Neither hormones control neural activity nor the neurons control endocrime activity."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Endocrine glands regulate neural activity, and nervous system regulates endocrine glands.** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 74,
+    "exam": "AIPMT 2004",
+    "question": "Which one of the following hormones is modified amino acid?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Epinephrine"
+      },
+      {
+        "id": "B",
+        "text": "Progesterone"
+      },
+      {
+        "id": "C",
+        "text": "Prostaglandin"
+      },
+      {
+        "id": "D",
+        "text": "Estrogen"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Epinephrine** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 75,
+    "exam": "AIPMT 2004",
+    "question": "Which one of the following pairs correctly matches a hormone with a disease resulting from its deficiency?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Luteinizing hormone   -   Failure of ovulation"
+      },
+      {
+        "id": "B",
+        "text": "Insulin   -   Diabetes insipidus"
+      },
+      {
+        "id": "C",
+        "text": "Thyroxine   -   Tetany"
+      },
+      {
+        "id": "D",
+        "text": "Parathyroid   -   Diabetes mellitus Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Luteinizing hormone   -   Failure of ovulation** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 76,
+    "exam": "AIPMT 2004",
+    "question": "Chemically hormones are",
+    "options": [
+      {
+        "id": "A",
+        "text": "biogenic amines only"
+      },
+      {
+        "id": "B",
+        "text": "proteins, steroids and biogenic amines"
+      },
+      {
+        "id": "C",
+        "text": "proteins only"
+      },
+      {
+        "id": "D",
+        "text": "steroids only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**proteins, steroids and biogenic amines** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 77,
+    "exam": "AIPMT 2003",
+    "question": "Which one of the following pairs correctly matches a hormone with a disease resulting from its deficiency?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Relaxin   Gigantism"
+      },
+      {
+        "id": "B",
+        "text": "Prolactin   Cretinism"
+      },
+      {
+        "id": "C",
+        "text": "Parathyroid hormone   Tetany"
+      },
+      {
+        "id": "D",
+        "text": "Insulin   Diabetes insipidus"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Parathyroid hormone   Tetany** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 78,
+    "exam": "AIPMT 2002",
+    "question": "Acromegaly is caused by",
+    "options": [
+      {
+        "id": "A",
+        "text": "excess of STH"
+      },
+      {
+        "id": "B",
+        "text": "excess of thyroxine"
+      },
+      {
+        "id": "C",
+        "text": "deficiency of thyroxine"
+      },
+      {
+        "id": "D",
+        "text": "excess of adrenaline."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**excess of STH** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 79,
+    "exam": "AIPMT 2002",
+    "question": "Adrenaline directly affects on",
+    "options": [
+      {
+        "id": "A",
+        "text": "S.A. node"
+      },
+      {
+        "id": "B",
+        "text": "$\\beta$-cells of Langerhans"
+      },
+      {
+        "id": "C",
+        "text": "dorsal root of spinal nerve"
+      },
+      {
+        "id": "D",
+        "text": "epithelial cells of stomach."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAdrenaline acts directly on adrenergic receptors of the sinoatrial (S.A.) node in the heart, increasing the rate of heart contractions (tachycardia) and cardiac output.",
+    "image": ""
+  },
+  {
+    "num": 80,
+    "exam": "AIPMT 2002",
+    "question": "When both ovaries are removed from rat then which hormone is decreased in blood?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Oxytocin"
+      },
+      {
+        "id": "B",
+        "text": "Prolactin"
+      },
+      {
+        "id": "C",
+        "text": "Estrogen"
+      },
+      {
+        "id": "D",
+        "text": "Gonadotropin releasing factor"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Estrogen** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 81,
+    "exam": "AIPMT 2002",
+    "question": "Mainly which type of hormones control the menstrual cycle in human beings?",
+    "options": [
+      {
+        "id": "A",
+        "text": "FSH"
+      },
+      {
+        "id": "B",
+        "text": "LH"
+      },
+      {
+        "id": "C",
+        "text": "FSH, LH, estrogen"
+      },
+      {
+        "id": "D",
+        "text": "progesterone"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**FSH, LH, estrogen** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 82,
+    "exam": "AIPMT 2000",
+    "question": "Melatonin is secreted by",
+    "options": [
+      {
+        "id": "A",
+        "text": "pineal body"
+      },
+      {
+        "id": "B",
+        "text": "skin"
+      },
+      {
+        "id": "C",
+        "text": "pituitary gland"
+      },
+      {
+        "id": "D",
+        "text": "thyroid. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**pineal body** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 83,
+    "exam": "AIPMT 2000",
+    "question": "Which gland secretes odorous secretion in mammals?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Bartholins"
+      },
+      {
+        "id": "B",
+        "text": "Prostate"
+      },
+      {
+        "id": "C",
+        "text": "Anal gland"
+      },
+      {
+        "id": "D",
+        "text": "Liver"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Anal gland** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 84,
+    "exam": "AIPMT 2000",
+    "question": "MSH is secreted by",
+    "options": [
+      {
+        "id": "A",
+        "text": "anterior lobe of pituitary"
+      },
+      {
+        "id": "B",
+        "text": "middle lobe of pituitary"
+      },
+      {
+        "id": "C",
+        "text": "posterior lobe of pituitary"
+      },
+      {
+        "id": "D",
+        "text": "endostyle."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**middle lobe of pituitary** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 85,
+    "exam": "AIPMT 1999",
+    "question": "Cholecystokinin and duocrinin are secreted by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "adrenal cortex"
+      },
+      {
+        "id": "B",
+        "text": "thyroid gland"
+      },
+      {
+        "id": "C",
+        "text": "pancreas"
+      },
+      {
+        "id": "D",
+        "text": "intestine"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**intestine** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 86,
+    "exam": "AIPMT 1999",
+    "question": "The function of oxytocin is to help in",
+    "options": [
+      {
+        "id": "A",
+        "text": "growth"
+      },
+      {
+        "id": "B",
+        "text": "lactation"
+      },
+      {
+        "id": "C",
+        "text": "child birth"
+      },
+      {
+        "id": "D",
+        "text": "gametogenesis"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**child birth** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 87,
+    "exam": "AIPMT 1999",
+    "question": "The gonadotropic hormones are produced in",
+    "options": [
+      {
+        "id": "A",
+        "text": "interstitial cells of testes"
+      },
+      {
+        "id": "B",
+        "text": "adrenal cortex"
+      },
+      {
+        "id": "C",
+        "text": "adenohypophysis of pituitary"
+      },
+      {
+        "id": "D",
+        "text": "posterior part of thyroid"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**adenohypophysis of pituitary** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 88,
+    "exam": "AIPMT 1999",
+    "question": "Diabetes is due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "iodine deficiency"
+      },
+      {
+        "id": "B",
+        "text": "hormonal deficiency"
+      },
+      {
+        "id": "C",
+        "text": "$\\text{Na}^+$ deficiency"
+      },
+      {
+        "id": "D",
+        "text": "enzyme deficiency"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nDiabetes (both diabetes mellitus due to insulin deficiency and diabetes insipidus due to ADH deficiency) is caused by a **hormonal deficiency**.",
+    "image": ""
+  },
+  {
+    "num": 89,
+    "exam": "AIPMT 1998",
+    "question": "Calcitonin is a thyroid hormone which",
+    "options": [
+      {
+        "id": "A",
+        "text": "elevates potassium level in blood"
+      },
+      {
+        "id": "B",
+        "text": "lowers calcium level in blood"
+      },
+      {
+        "id": "C",
+        "text": "elevates calcium level in blood"
+      },
+      {
+        "id": "D",
+        "text": "has no effect on calcium Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**lowers calcium level in blood** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 90,
+    "exam": "AIPMT 1998",
+    "question": "The hormone that stimulates the stomach to secrete gastric juice is",
+    "options": [
+      {
+        "id": "A",
+        "text": "gastrin"
+      },
+      {
+        "id": "B",
+        "text": "renin"
+      },
+      {
+        "id": "C",
+        "text": "enterokinase"
+      },
+      {
+        "id": "D",
+        "text": "enterogastrone"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**gastrin** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 91,
+    "exam": "AIPMT 1998",
+    "question": "The contraction of gall bladder is due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "gastrin"
+      },
+      {
+        "id": "B",
+        "text": "secretin"
+      },
+      {
+        "id": "C",
+        "text": "cholecystokinin"
+      },
+      {
+        "id": "D",
+        "text": "enterogastrone"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**cholecystokinin** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 92,
+    "exam": "AIPMT 1998",
+    "question": "The hormone which regulates the basal metabolism in our body is secreted from",
+    "options": [
+      {
+        "id": "A",
+        "text": "pituitary"
+      },
+      {
+        "id": "B",
+        "text": "thyroid"
+      },
+      {
+        "id": "C",
+        "text": "adrenal cortex"
+      },
+      {
+        "id": "D",
+        "text": "pancreas"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**thyroid** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 93,
+    "exam": "AIPMT 1997",
+    "question": "Hormones thyroxine, adrenaline and the pigment melanin are formed from",
+    "options": [
+      {
+        "id": "A",
+        "text": "tyrosine"
+      },
+      {
+        "id": "B",
+        "text": "proline"
+      },
+      {
+        "id": "C",
+        "text": "tryptophan"
+      },
+      {
+        "id": "D",
+        "text": "glycine"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**tyrosine** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 94,
+    "exam": "AIPMT 1996",
+    "question": "Which hormone stimulates the secretion of milk from female?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Oxytocin"
+      },
+      {
+        "id": "B",
+        "text": "Progesterone"
+      },
+      {
+        "id": "C",
+        "text": "LH"
+      },
+      {
+        "id": "D",
+        "text": "Prolactin"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Prolactin** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 95,
+    "exam": "AIPMT 1995",
+    "question": "Which one of the following endocrine glands stores its secretion in the extracellular space before discharging it into the blood?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Testis"
+      },
+      {
+        "id": "B",
+        "text": "Thyroid"
+      },
+      {
+        "id": "C",
+        "text": "Pancreas"
+      },
+      {
+        "id": "D",
+        "text": "Adrenal"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Thyroid** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 96,
+    "exam": "AIPMT 1995",
+    "question": "According to the accepted concept of hormone action, if receptor molecules are removed from target organs, then the target organ will",
+    "options": [
+      {
+        "id": "A",
+        "text": "continue to respond to the hormone without any difference"
+      },
+      {
+        "id": "B",
+        "text": "not respond to the hormone"
+      },
+      {
+        "id": "C",
+        "text": "continue to respond to the hormone but will require higher concentration"
+      },
+      {
+        "id": "D",
+        "text": "continue to respond to the hormone but in the opposite way Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**not respond to the hormone** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 97,
+    "exam": "AIPMT 1994",
+    "question": "Which of the following is the function of enterogastrone?",
+    "options": [
+      {
+        "id": "A",
+        "text": "It inhibits the secretion of gastric juice."
+      },
+      {
+        "id": "B",
+        "text": "It stimulates the secretion of digestive juices in the stomach."
+      },
+      {
+        "id": "C",
+        "text": "It stimulates the flow of pancreatic juice."
+      },
+      {
+        "id": "D",
+        "text": "It regulates the flow of bile."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**It inhibits the secretion of gastric juice.** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 98,
+    "exam": "AIPMT 1993",
+    "question": "Testosterone is produced by",
+    "options": [
+      {
+        "id": "A",
+        "text": "sertoli cells"
+      },
+      {
+        "id": "B",
+        "text": "Leydig's cells"
+      },
+      {
+        "id": "C",
+        "text": "oxyntic cells"
+      },
+      {
+        "id": "D",
+        "text": "pituitary gland"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Leydig's cells** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 99,
+    "exam": "AIPMT 1993",
+    "question": "Gastric secretion is stopped by hormone",
+    "options": [
+      {
+        "id": "A",
+        "text": "enterogastrone"
+      },
+      {
+        "id": "B",
+        "text": "gastrin"
+      },
+      {
+        "id": "C",
+        "text": "pancreozymin"
+      },
+      {
+        "id": "D",
+        "text": "cholecystokinin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**enterogastrone** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 100,
+    "exam": "AIPMT 1991",
+    "question": "ADH or vasopressin is",
+    "options": [
+      {
+        "id": "A",
+        "text": "enzyme that hydrolyses peptides"
+      },
+      {
+        "id": "B",
+        "text": "hormone secreted by pituitary that promotes reabsorption of water from glomerular filtrate"
+      },
+      {
+        "id": "C",
+        "text": "hormone that promotes glycogenolysis"
+      },
+      {
+        "id": "D",
+        "text": "energy rich compound connected with muscle contraction"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**hormone secreted by pituitary that promotes reabsorption of water from glomerular filtrate** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 101,
+    "exam": "AIPMT 1991",
+    "question": "Occurrence of Leydig's cells and their secretion is",
+    "options": [
+      {
+        "id": "A",
+        "text": "ovary and estrogen"
+      },
+      {
+        "id": "B",
+        "text": "liver and cholesterol"
+      },
+      {
+        "id": "C",
+        "text": "pancreas and glucagon"
+      },
+      {
+        "id": "D",
+        "text": "testis and testosterone"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**testis and testosterone** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 102,
+    "exam": "AIPMT 1990",
+    "question": "Secretin stimulates production of",
+    "options": [
+      {
+        "id": "A",
+        "text": "saliva"
+      },
+      {
+        "id": "B",
+        "text": "gastric juice"
+      },
+      {
+        "id": "C",
+        "text": "bile"
+      },
+      {
+        "id": "D",
+        "text": "pancreatic juice"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**pancreatic juice** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 103,
+    "exam": "AIPMT 1990",
+    "question": "Insulin is a",
+    "options": [
+      {
+        "id": "A",
+        "text": "vitamin"
+      },
+      {
+        "id": "B",
+        "text": "lipid"
+      },
+      {
+        "id": "C",
+        "text": "hormone"
+      },
+      {
+        "id": "D",
+        "text": "enzyme Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**hormone** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 104,
+    "exam": "AIPMT 1990",
+    "question": "Addition of a trace of thyroxine or iodine in water containing tadpoles will",
+    "options": [
+      {
+        "id": "A",
+        "text": "keep them in larval stage"
+      },
+      {
+        "id": "B",
+        "text": "hasten their metamorphosis"
+      },
+      {
+        "id": "C",
+        "text": "slow down their metamorphosis"
+      },
+      {
+        "id": "D",
+        "text": "kill the tadpoles"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**hasten their metamorphosis** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 105,
+    "exam": "AIPMT 1989",
+    "question": "Release of pancreatic juice is stimulated by",
+    "options": [
+      {
+        "id": "A",
+        "text": "enterokinase"
+      },
+      {
+        "id": "B",
+        "text": "cholecystokinin"
+      },
+      {
+        "id": "C",
+        "text": "trypsinogen"
+      },
+      {
+        "id": "D",
+        "text": "secretin"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**cholecystokinin** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 106,
+    "exam": "AIPMT 1988",
+    "question": "Which hormone possesses anti-insulin effect?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cortisol"
+      },
+      {
+        "id": "B",
+        "text": "Calcitonin"
+      },
+      {
+        "id": "C",
+        "text": "Oxytocin"
+      },
+      {
+        "id": "D",
+        "text": "Aldosterone"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Cortisol** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 107,
+    "exam": "AIPMT 1988",
+    "question": "MSH of pars intermedia of middle pituitary is responsible for",
+    "options": [
+      {
+        "id": "A",
+        "text": "darkening of skin in lower vertebrates"
+      },
+      {
+        "id": "B",
+        "text": "light colouration of skin in lower vertebrates"
+      },
+      {
+        "id": "C",
+        "text": "both A and B"
+      },
+      {
+        "id": "D",
+        "text": "darkening of skin in human beings"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**darkening of skin in lower vertebrates** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  },
+  {
+    "num": 108,
+    "exam": "NEET 2023",
+    "question": "Match List I with List II:\n\n| List I | List II |\n| :--- | :--- |\n| (A) CCK | (I) Kidney |\n| (B) GIP | (II) Heart |\n| (C) ANF | (III) Gastric gland |\n| (D) ADH | (IV) Pancreas |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-II, B-IV, C-I, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-III, C-II, D-I"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **CCK (Cholecystokinin)**: Acts on the pancreas and gallbladder (A-IV).\n- **GIP (Gastric Inhibitory Peptide)**: Inhibits gastric secretion and motility in the gastric glands (B-III).\n- **ANF (Atrial Natriuretic Factor)**: Secreted by atrial wall of the heart (C-II).\n- **ADH (Antidiuretic Hormone)**: Acts on kidney tubules to promote water reabsorption (D-I).",
+    "image": ""
+  },
+  {
+    "num": 109,
+    "exam": "AIPMT 1999",
+    "question": "Which part of body secretes the hormone secretin?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Oesophagus"
+      },
+      {
+        "id": "B",
+        "text": "Duodenum"
+      },
+      {
+        "id": "C",
+        "text": "Stomach"
+      },
+      {
+        "id": "D",
+        "text": "Ileum"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Duodenum** is the correct answer according to the official NEET answer key and NCERT Chemical Coordination and Integration syllabus.",
+    "image": ""
+  }
+]
