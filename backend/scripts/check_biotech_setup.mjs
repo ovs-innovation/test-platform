@@ -1,28 +1,20 @@
-import dotenv from 'dotenv';
 import pg from 'pg';
-dotenv.config({ path: 'backend/.env' });
+const { Pool } = pg;
 
-const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({
+  connectionString: 'postgresql://neondb_owner:npg_pnKv5TdUQ7fg@ep-weathered-heart-aqvw9ylo-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require'
+});
 
 async function main() {
-  const subs = await pool.query('SELECT id, name FROM subjects ORDER BY id');
-  console.log('Subjects:', subs.rows);
-  
-  const zoologySub = subs.rows.find(s => s.name.toLowerCase().includes('zool'));
-  console.log('Zoology subject in Neon DB:', zoologySub);
-  
-  if (zoologySub) {
-    const chs = await pool.query('SELECT id, name FROM chapters WHERE subject_id = $1 ORDER BY id', [zoologySub.id]);
-    console.log('Zoology chapters in Neon DB:');
-    for (const c of chs.rows) {
-      console.log(`  id=${c.id}: "${c.name}"`);
-    }
-    
-    // Check if any Biotechnology exists
-    const biotech = chs.rows.filter(c => c.name.toLowerCase().includes('biotech'));
-    console.log('Biotech matches in Neon DB:', biotech);
-  }
-  
+  const chRes = await pool.query(`
+    SELECT c.id, c.name, c.subject_id, s.name as subject_name
+    FROM chapters c
+    JOIN subjects s ON c.subject_id = s.id
+    WHERE s.name ILIKE '%zoology%' OR c.name ILIKE '%biotechnolog%'
+    ORDER BY c.subject_id, c.name
+  `);
+  console.log('Chapters found:');
+  console.table(chRes.rows);
   await pool.end();
 }
 

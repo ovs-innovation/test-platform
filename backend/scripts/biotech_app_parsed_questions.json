@@ -1,0 +1,1190 @@
+[
+  {
+    "qNum": 1,
+    "examTag": "RE-NEET 2026",
+    "question_text": "The inactive form of Bt toxin is converted to the active form in the insect gut",
+    "options": [
+      "by nucleases",
+      "due to alkaline pH",
+      "due to acidic pH",
+      "by proteases"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 2,
+    "examTag": "NEET 2026",
+    "question_text": "Exploring molecular, genetic and species-level diversity for products of economic importance is\ncalled",
+    "options": [
+      "Biofortification",
+      "Bioremediation",
+      "Bioprospecting",
+      "Biomagnification"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 3,
+    "examTag": "NEET 2026",
+    "question_text": "The human protein named $\\alpha$-1-antitrypsin, obtained from transgenic animals, is used for the\ntreatment of .",
+    "options": [
+      "Emphysema",
+      "Alzheimer's disease",
+      "Rheumatoid arthritis",
+      "Cystic fibrosis"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 4,
+    "examTag": "NEET 2026",
+    "question_text": "The toxin proteins isolated from Bacillus thuringiensis, coded by which of the following genes would\ncontrol cotton bollworms and corn borer, respectively?",
+    "options": [
+      "cryIAc and cryIAb",
+      "cryIAc and cryIIAb",
+      "cryIIAb and cryIAc",
+      "cryIAc and cryIIIAb"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 5,
+    "examTag": "NEET 2025",
+    "question_text": "Which of the following genetically engineered organisms was used by Eli Lilly to prepare human\ninsulin?",
+    "options": [
+      "Virus",
+      "Phage",
+      "Bacterium",
+      "Yeast"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 6,
+    "examTag": "NEET 2025",
+    "question_text": "Silencing of specific mRNA is possible via RNAi because of",
+    "options": [
+      "Complementary tRNA",
+      "Non-complementary ssRNA",
+      "Complementary dsRNA",
+      "Inhibitory ssRNA"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 7,
+    "examTag": "NEET 2024 (Re-Examination)",
+    "question_text": "Given below are two statements:\nStatement I : The Indian Government has set up GEAC, which will make decisions regarding the\nvalidity of GM research.\nStatement II : Biopiracy is the term used to refer to the use of bio-resources by native people.\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      "Statement I is true but Statement II is false",
+      "Statement I is false but Statement II is true",
+      "Both Statement I and Statement II are true",
+      "Both Statement I and Statement II are false"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 8,
+    "examTag": "NEET 2024 (Re-Examination)",
+    "question_text": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Genetically engineered Human Insulin | (I) Gene therapy |\n| (B) GM Cotton | (II) E. coli |\n| (C) ADA Deficiency | (III) Antigen-antibody interaction |\n| (D) ELISA | (IV) Bacillus thuringiensis |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "A-III, B-II, C-IV, D-I",
+      "A-II, B-I, C-IV, D-III",
+      "A-IV, B-III, C-I, D-II",
+      "A-II, B-IV, C-I, D-III"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 9,
+    "examTag": "NEET 2024 (Re-Examination)",
+    "question_text": "The Bt toxin in genetically engineered Bt cotton kills the pest by:",
+    "options": [
+      "Creating pores in the midgut",
+      "Damaging the respiratory system",
+      "Degenerating the nervous system",
+      "Altering the pH of body fluids"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 10,
+    "examTag": "NEET 2024 (Re-Examination)",
+    "question_text": "Following are the steps involved in action of toxin in Bt. Cotton\nA. The inactive toxin converted into active form due to alkaline pH of gut of insect.\nB. Bacillus thuringiensis produces crystals with toxic insecticidal proteins.\nC. The alkaline pH solubilises the crystals.\nD. The activated toxin binds to the surface of midgut cells, creates pores and causes death of the\ninsect.\nE. The toxin proteins exist as inactive protoxins in bacteria.\nChoose the correct sequence of steps from the options given below:",
+    "options": [
+      "E -> C -> B -> A -> D",
+      "B -> C -> A -> E -> D",
+      "A -> E -> B -> D -> C",
+      "B -> E -> C -> A -> D"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 11,
+    "examTag": "NEET 2024 (Re-Examination)",
+    "question_text": "Given below are two statements :\nStatement I : RNA interference takes place in all Eukaryotic organisms as method of cellular\ndefense.\nStatement II : RNAi involves the silencing of a specific mRNA due to a complementary single-\nstranded RNA molecule that binds and prevents translation of mRNA\nIn the light of the above statements, choose the correct answer from the options given below.",
+    "options": [
+      "Statement I is true but Statement II is false.",
+      "Statement I is false but Statement II is true.",
+      "Both Statement I and Statement II are true.",
+      "Both Statement I and Statement II are false."
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 12,
+    "examTag": "NEET 2024",
+    "question_text": "The capacity to generate a whole plant from any cell of the plant is called:",
+    "options": [
+      "Totipotency",
+      "Micropropagation",
+      "Differentiation",
+      "Somatic hybridization"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 13,
+    "examTag": "NEET 2024",
+    "question_text": "Given below are two statements:\nStatement I : Bt toxins are insect group specific and coded by a gene cry IAc.\nStatement II : Bt toxin exists as inactive protoxin in B. thuringiensis. However, after ingestion by the\ninsect the inactive protoxin gets converted into active form due to acidic of the insect gut.\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      "Both Statement I and Statement II are true",
+      "Both Statement I and Statement II are false",
+      "Statement I is true but Statement II is false",
+      "Statement I is false but Statement II is true"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 14,
+    "examTag": "NEET 2024",
+    "question_text": "Which of the following are fused in somatic hybridization involving two varieties of plants?",
+    "options": [
+      "Callus",
+      "Somatic embryos",
+      "Protoplasts",
+      "Pollens"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 15,
+    "examTag": "NEET 2024",
+    "question_text": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) $\\alpha$-1-antitrypsin | (I) Cotton bollworm |\n| (B) Cry IAb | (II) ADA deficiency |\n| (C) Cry IAc | (III) Emphysema |\n| (D) Enzyme replacement therapy | (IV) Corn borer |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "A-II, B-I, C-IV, D-III",
+      "A-III, B-I, C-II, D-IV",
+      "A-III, B-IV, C-I, D-II",
+      "A-II, B-IV, C-I, D-III"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 16,
+    "examTag": "NEET 2023 Manipur",
+    "question_text": "Select incorrect statement, regarding chemical structure of insulin.",
+    "options": [
+      "Mature insulin molecule consists of three polypeptide chains-A, B and C.",
+      "Insulin is synthesized as prohormone which contains extra stretch of C-peptide.",
+      "C-peptide is not present in mature insulin molecule.",
+      "Polypeptide chains A and B are linked by disulphide bridges."
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 17,
+    "examTag": "NEET 2023 Manipur",
+    "question_text": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Gene therapy | (I) Separation of DNA fragments |\n| (B) RNA interference | (II) Diagnostic test for AIDS |\n| (C) ELISA | (III) Cellular defence |\n| (D) Gel Electrophoresis | (IV) Allows correction of a gene defect |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "(A)-(IV), (B)-(I), (C)-(II), (D)-(III)",
+      "(A)-(IV), (B)-(II), (C)-(III), (D)-(I)",
+      "(A)-(IV), (B)-(III), (C)-(II), (D)-(I)",
+      "(A)-(IV), (B)-(III), (C)-(I), (D)-(II)"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 18,
+    "examTag": "NEET 2023",
+    "question_text": "Which one of the following techniques does not serve the purpose of early diagnosis of a disease\nfor its early treatment?",
+    "options": [
+      "Serum and Urine analysis",
+      "Polymerase Chain Reaction (PCR) technique",
+      "Enzyme Linked Immuno-Sorbent Assay (ELISA) technique",
+      "Recombinant DNA Technology"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 19,
+    "examTag": "NEET 2022 Phase 2",
+    "question_text": "Milk of transgenic ‘Cow Rosie’ was nutritionally more balanced product for human babies than\nnatural cow milk because it contained:",
+    "options": [
+      "Human enzyme Adenosine Deaminase (ADA)",
+      "Human protein $\\alpha$-1-antitrypsin",
+      "Human alpha-lactalbumin",
+      "Human insulin-like growth factor"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 20,
+    "examTag": "NEET 2022 Phase 1",
+    "question_text": "Transposons can be used during which one of the following?",
+    "options": [
+      "Polymerase Chain Reaction",
+      "Gene Silencing",
+      "Autoradiography",
+      "Gene sequencing"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 21,
+    "examTag": "NEET 2022 Phase 1",
+    "question_text": "In gene therapy of Adenosine Deaminase (ADA) deficiency, the patient requires periodic infusion of\ngenetically engineered lymphocytes because:",
+    "options": [
+      "Retroviral vector is introduced into these lymphocytes.",
+      "Gene isolated from marrow cells producing ADA is introduced into cells at embryonic stages",
+      "Lymphocytes from patient's blood are grown in culture, outside the body",
+      "Genetically engineered lymphocytes are not immortal cells."
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 22,
+    "examTag": "NEET 2022 Phase 1",
+    "question_text": "Statements related to human Insulin are given below.\nWhich statements is/are correct about genetically engineered Insulin?\n(a) Pro-hormone insulin contain extra stretch of C-peptide\n(b) A-peptide and B-peptide chains of insulin were produced separately in E.coli, extracted and\ncombined by creating disulphide bond between them.\n(c) Insulin used for treating Diabetes was extracted from Cattles and Pigs.\n(d) Pro-hormone Insulin needs to be processed for converting into a mature and functional\nhormone.\n(e) Some patients develop allergic reactions to the foreign insulin.\nChoose the most appropriate answer from the options given below :",
+    "options": [
+      "(a), (b) and (d) only",
+      "(b) only",
+      "(c) and (d) only",
+      "(c), (d) and (e) only"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 23,
+    "examTag": "NEET 2021",
+    "question_text": "When gene targetting involving gene amplification is attempted in an individual's tissue to treat\ndisease, it is known as :",
+    "options": [
+      "Safety testing",
+      "Biopiracy",
+      "Gene therapy",
+      "Molecular diagnosis"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 24,
+    "examTag": "NEET 2021",
+    "question_text": "Now-a-days it is possible to detect the mutated gene causing cancer by allowing radioactive probe\nto hybridise to its complementary DNA in a clone of cells, followed by its detection using\nautoradiography because:",
+    "options": [
+      "mutated gene does not appear on photographic film as the probe has complementarity with it",
+      "mutated gene partially appears on a photographic film",
+      "mutated gene completely and clearly appears on a photographic film",
+      "mutated gene does not appear on a photographic film as the probe has no complementarity with it"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 25,
+    "examTag": "NEET 2021",
+    "question_text": "With regard to insulin choose correct options.\n(1) C-peptide is not present in mature insulin.\n(2) The insulin produced by rDNA technology has C-peptide.\n(3) The pro-insulin has C-peptide\n(4) A-peptide and B-peptide of insulin are interconnected by disulphide bridges.\nChoose the correct answer from the options given below.",
+    "options": [
+      "(1) and (4) only",
+      "(2) and (4) only",
+      "(2) and (3) only",
+      "(1), (3) and (4) only"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 26,
+    "examTag": "NEET 2021",
+    "question_text": "For effective treatment of the disease, early diagnosis and understanding its pathophysiology is\nvery important. Which of the following molecular diagnostic techniques is very useful for early\ndetection?",
+    "options": [
+      "Hybridization Technique",
+      "Western Blotting Technique",
+      "Southern Blotting Technique",
+      "ELISA Technique"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 27,
+    "examTag": "NEET 2021",
+    "question_text": "The Adenosine deaminase deficiency results into",
+    "options": [
+      "Addison's disease",
+      "Dysfunction of immune system",
+      "Parkinson's disease",
+      "Digestive disorder"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 28,
+    "examTag": "NEET 2020 Phase 2",
+    "question_text": "The laws and rules to prevent unauthorised exploitation of bio-resources are termed as -",
+    "options": [
+      "Biopiracy",
+      "Biopatenting",
+      "Bioethics",
+      "Bioengineering"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 29,
+    "examTag": "NEET 2020 Phase 2",
+    "question_text": "RNA interference is used for which of the following purposes in the field of biotechnology ?",
+    "options": [
+      "to reduce post harvest losses",
+      "to develop a plant tolerant to abiotic stresses",
+      "to develop a pest resistant plant against infestation by nematode",
+      "to enhance the mineral usage by the plant"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 30,
+    "examTag": "NEET 2020 Phase 1",
+    "question_text": "Bt cotton variety that was developed by the introduction of toxin gene of Bacillus thuringiensis (Bt)\nis resistant to",
+    "options": [
+      "Insect predators",
+      "Insect pests",
+      "Fungal diseases",
+      "Plant nematodes"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 31,
+    "examTag": "NEET 2020 Phase 1",
+    "question_text": "Which of the following statements is not correct?",
+    "options": [
+      "In man insulin is synthesised as a proinsulin",
+      "The proinsulin has an extra peptide called C-peptide.",
+      "Genetically engineered insulin is produced in E.Coli.",
+      "The functional insulin has A and B chains linked together by hydrogen bonds."
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 32,
+    "examTag": "NEET 2020 Phase 1",
+    "question_text": "Match the following columns and select the correct option:\n\n| Column - I | Column - II |\n| :--- | :--- |\n| (a) Bt cotton | (i) Gene therapy |\n| (b) Adenosine deaminase deficiency | (ii) Cellular defence |\n| (c) RNAi | (iii) Detection of HIV infection |\n| (d) PCR | (iv) Bacillus thuringiensis |\n\nSelect the correct option:",
+    "options": [
+      "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)",
+      "(a)-(iii), (b)-(ii), (c)-(i), (d)-(iv)",
+      "(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)",
+      "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 33,
+    "examTag": "NEET 2019 (Odisha)",
+    "question_text": "In RNAi, the genes are silenced using :",
+    "options": [
+      "ds - DNA",
+      "ds - RNA",
+      "ss - DNA",
+      "ss - RNA"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 34,
+    "examTag": "NEET 2019 (Odisha)",
+    "question_text": "Exploitation of bioresources of a nation by multinational companies without authorization from the\nconcerned country is referred to as",
+    "options": [
+      "Biowar",
+      "Bioweapon",
+      "Biopiracy",
+      "Bioethics"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 35,
+    "examTag": "NEET 2019",
+    "question_text": "What triggers activation of protoxin to active Bt toxin of Bacillus thuringiensis in boll worm?",
+    "options": [
+      "Acidic pH of stomach",
+      "Body temperature",
+      "Alkaline pH of gut",
+      "Moist surface of midgut"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 36,
+    "examTag": "NEET 2018",
+    "question_text": "Which of the following is commonly used as a vector for introducing a DNA fragment in human\nlymphocytes?",
+    "options": [
+      "Retrovirus",
+      "Ti plasmid",
+      "$\\lambda$ phage",
+      "pBR322"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 37,
+    "examTag": "NEET 2018",
+    "question_text": "In India, the organisation responsible for assessing the safety of introducing genetically modified\norganisms for public use is",
+    "options": [
+      "Indian Council of Medical Research (ICMR)",
+      "Council for Scientific and Industrial Research (CSIR)",
+      "Research Committee on Genetic Manipulation (RCGM)",
+      "Genetic Engineering Appraisal Committee (GEAC)"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 38,
+    "examTag": "NEET 2018",
+    "question_text": "A 'new' variety of rice was patented by a foreign company, though such varieties have been present\nin India for a long time. This is related to",
+    "options": [
+      "Co-667",
+      "Sharbati Sonora",
+      "Lerma Rojo",
+      "Basmati"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 39,
+    "examTag": "NEET 2018",
+    "question_text": "Use of bioresources by multinational companies and organisations without authorisation from the\nconcerned country and its people is called",
+    "options": [
+      "bio-infringement",
+      "biodegradation",
+      "biopiracy",
+      "bioexploitation"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 40,
+    "examTag": "NEET 2016 Phase 2",
+    "question_text": "Which kind of therapy was given in 1990 to a four-year-old girl with adenosine deaminase [ADA]\ndeficiency ?",
+    "options": [
+      "Radiation therapy",
+      "Immunotherapy",
+      "Gene therapy",
+      "Chemotherapy"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 41,
+    "examTag": "NEET 2016 Phase 1",
+    "question_text": "The two polypeptides of human insulin are linked together by",
+    "options": [
+      "Hydrogen bonds",
+      "Covalent bond",
+      "Disulphide bridges",
+      "Phosphodiester bond"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 42,
+    "examTag": "NEET 2016 Phase 1",
+    "question_text": "Which part of the tobacco plant is infected by Meloidogyne incognita ?",
+    "options": [
+      "Flower",
+      "Stem",
+      "Leaf",
+      "Root"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 43,
+    "examTag": "AIPMT 2015",
+    "question_text": "Golden rice is a genetically modified crop plant where the incorporated gene is meant for\nbiosynthesis of -",
+    "options": [
+      "Vitamin C",
+      "Omega 3",
+      "Vitamin A",
+      "Vitamin B"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 44,
+    "examTag": "AIPMT 2015",
+    "question_text": "The introduction of t-DNA into plants involves -",
+    "options": [
+      "Altering the pH of the soil, then heat-shocking the plants",
+      "Infection of the plant by Agrobacterium tumefaciens",
+      "Exposing the plants to cold for a brief period",
+      "Allowing the plant roots to stand in water"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 45,
+    "examTag": "AIPMT 2015 Cancelled Paper",
+    "question_text": "In Bt cotton, the Bt toxin present in plant tissue as pro - toxin is converted into active toxin due to :",
+    "options": [
+      "action of gut micro-organisms",
+      "presence of conversion factors in insect gut",
+      "alkaline pH of the insect gut",
+      "acidic pH of the insect gut"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 46,
+    "examTag": "AIPMT 2015 Cancelled Paper",
+    "question_text": "Which body of the Government of India regulates GM research and safety of introducing GM\norganisms for public services ?",
+    "options": [
+      "Research Committee on Genetic Manipulation",
+      "Genetic Engineering Approval Committee",
+      "Indian Council of Agricultural Research",
+      "Bio - safety committee"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 47,
+    "examTag": "AIPMT 2015 Cancelled Paper",
+    "question_text": "The crops engineered for glyphosate are resistant/ tolerant to :",
+    "options": [
+      "Bacteria",
+      "Herbicides",
+      "Fungi",
+      "Insects"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 48,
+    "examTag": "AIPMT 2014",
+    "question_text": "To obtain virus−free healthy plants from a diseased one by tissue culture technique, which\npart/parts of the diseased plant will be taken ?",
+    "options": [
+      "Epidermis only",
+      "Palisade parenchyma",
+      "Both apical and axillary meristems",
+      "Apical meristem only"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 49,
+    "examTag": "AIPMT 2014",
+    "question_text": "The first human hormone produced by recombinant DNA technology is :",
+    "options": [
+      "Estrogen",
+      "Insulin",
+      "Thyroxin",
+      "Progesterone"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 50,
+    "examTag": "NEET 2013 (Karnataka)",
+    "question_text": "Tissue culture technique can produce infinite number of new plants from a small parental tissue.\nThe economic importance of the technique is in raising:",
+    "options": [
+      "development of new species",
+      "genetically uniform population identical to the original parent",
+      "variants through picking up somaclonal variations",
+      "homozygous diploid plants"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 51,
+    "examTag": "NEET 2013 (Karnataka)",
+    "question_text": "Which of the following statements is not true about somatic embryogenesis ?",
+    "options": [
+      "Somatic embryos can develop from microspores",
+      "Somatic embryo is induced usually by an auxin such as 2, 4–D",
+      "The pattern of development of a somatic embryo is comparable to that of a zygotic embryo",
+      "A somatic embryo develops from a somatic cell"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 52,
+    "examTag": "NEET 2013 (Karnataka)",
+    "question_text": "RNA interference involves :-",
+    "options": [
+      "Interference of RNA in synthesis of DNA",
+      "Synthesis of cDNA from RNA using reverse transcriptase",
+      "Synthesis of mRNA from DNA",
+      "Silencing of specific mRNA due to complementary RNA"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 53,
+    "examTag": "NEET 2013 (Karnataka)",
+    "question_text": "Which one of the following vectors is used to replace the defective gene in gene therapy ?",
+    "options": [
+      "Ti plasmid",
+      "Cosmid",
+      "Ri plasmid",
+      "Adenovirus"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 54,
+    "examTag": "NEET 2013",
+    "question_text": "Which of the following Bt crops is being grown in India by the farmers ?",
+    "options": [
+      "Soybean",
+      "Cotton",
+      "Brinjal",
+      "Maize"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 55,
+    "examTag": "AIPMT 2012 Mains",
+    "question_text": "Tobacco plants resistant to a nematode have been developed by the introduction of DNA that\nproduced (in the host cells) :",
+    "options": [
+      "An antifeedant",
+      "A toxic protein",
+      "Both sense and anti-sense RNA",
+      "A particular hormone"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 56,
+    "examTag": "AIPMT 2012 Mains",
+    "question_text": "The first clinical gene therapy was given for treating -",
+    "options": [
+      "Rheumatoid arthritis",
+      "Adenosine deaminase deficiency",
+      "Diabetes mellitus",
+      "Chicken pox"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 57,
+    "examTag": "AIPMT 2012 Prelims",
+    "question_text": "Which one of the following is a case of wrong matching ?",
+    "options": [
+      "Somatic hybridization - Fusion of two diverse cells",
+      "Callus - Unorganised mass of cells produced in tissue culture",
+      "Vector DNA - site for tRNA synthesis",
+      "Micropropagation - In vitro production of plants in large numbers"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 58,
+    "examTag": "AIPMT 2012 Prelims",
+    "question_text": "Which part would be most suitable for raising virus free plants for microporpagation ?",
+    "options": [
+      "Vascular tissue",
+      "Node",
+      "Bark",
+      "Meristem"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 59,
+    "examTag": "AIPMT 2012 Prelims",
+    "question_text": "A single strand of nucleic acid tagged with a radioactive molecule is called",
+    "options": [
+      "Probe",
+      "Selectable marker",
+      "Vector",
+      "Plasmid"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 60,
+    "examTag": "AIPMT 2012 Prelims",
+    "question_text": "Consumption of which one of the following foods can prevent the kind of blindness associated with\nvitamin 'A' deficiency",
+    "options": [
+      "Flaver Savr Tomato",
+      "Canolla",
+      "Bt- Brinjal",
+      "Golden rice"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 61,
+    "examTag": "AIPMT 2011 Mains",
+    "question_text": "Bacillus thuringiensis forms protein crystals which contain insecticidal protein. This protein :",
+    "options": [
+      "is activated by acid pH of the foregut of the insect pest.",
+      "binds with epithelial cells of midgut of the insect pest ultimately killing it",
+      "is coded by several genes including the gene cry",
+      "does not kill the carrier bacterium which is itself resistant to this toxin"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 62,
+    "examTag": "AIPMT 2011 Mains",
+    "question_text": "Silencing of mRNA has been used in producing transgenic plants resistant to :",
+    "options": [
+      "White rusts",
+      "Nematodes",
+      "Bacterial blights",
+      "Bollworms"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 63,
+    "examTag": "AIPMT 2011 Mains",
+    "question_text": "Read the following four statements (A-D) about certain mistakes in two of them :",
+    "options": [
+      "The first transgenic buffalo, Rosie produced milk which was human alpha-lactalbumin enriched.",
+      "Restriction enzymes are used in isolation of DNA from other macro-molecules",
+      "Downstream processing is one of the steps of R-DNA technology",
+      "Disarmed pathogen vectors are also used in transfer of R-DNA into the host Which are the two statements having mistakes ? (A) Statements (B) and (C) (B) Statements (A) and (C) (C) Statements (A) and (B) (D) Statements (C) and (D)"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 64,
+    "examTag": "AIPMT 2011 Prelims",
+    "question_text": "Maximum number of existing transgenic animals is of :",
+    "options": [
+      "Mice",
+      "Cow",
+      "Pig",
+      "Fish"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 65,
+    "examTag": "AIPMT 2011 Prelims",
+    "question_text": "The process of RNA interference has been used in the development of plants resistant to :",
+    "options": [
+      "Nematodes",
+      "Fungi",
+      "Viruses",
+      "Insects"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 66,
+    "examTag": "AIPMT 2010 Mains",
+    "question_text": "Which one of the following is now being commercially produced by biotechnological procedures ?",
+    "options": [
+      "Insulin",
+      "Morphine",
+      "Nicotine",
+      "Quinine"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 67,
+    "examTag": "AIPMT 2010 Prelims",
+    "question_text": "Breeding of crops with high levels of minerals, vitamins and proteins is called –",
+    "options": [
+      "Biofortification",
+      "Biomagnification",
+      "Micorpropagation",
+      "Somatic hybridisation"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 68,
+    "examTag": "AIPMT 2010 Prelims",
+    "question_text": "DNA or RNA segment tagged with a radioactive moleculer is called –",
+    "options": [
+      "Clone",
+      "Probe",
+      "Plasmid",
+      "Vector"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 69,
+    "examTag": "AIPMT 2010 Prelims",
+    "question_text": "The genetically-modified (GM) brinjal in India has been developed for:",
+    "options": [
+      "Enhancing shelf life",
+      "Insect-resistance",
+      "Drought-resistance",
+      "Enhancing mineral content"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 70,
+    "examTag": "AIPMT 2010 Prelims",
+    "question_text": "Genetic engineering has been successfully used for producing –",
+    "options": [
+      "transgenic models for studying new treatments for certain cardiac disease",
+      "Animals like bulls for farm work as they have super power",
+      "transgenic mice for testing safety of polio vaccine before use in humans",
+      "transgenic Cow-Rosie which produces high fat milk for making ghee"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 71,
+    "examTag": "AIPMT 2010 Prelims",
+    "question_text": "Some of the characteristics of Bt cotton are –",
+    "options": [
+      "High yield and production of toxic protein crystals which kill dipteran pests",
+      "High yield and resistance to bollworms",
+      "Long fibre and resistance to aphids",
+      "Medium yield, long fibre and resistance to beetle pests"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 72,
+    "examTag": "AIPMT 2010 Prelims",
+    "question_text": "An improved variety of transgenic basmati rice",
+    "options": [
+      "gives high yield but has no characteristic aroma",
+      "Does not require chemical fertilizers and growth hormones",
+      "is completely resistant to all insect pests and disease of paddy",
+      "gives high yield and is rich in vitamin A"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 73,
+    "examTag": "AIPMT 2009",
+    "question_text": "The genetic defect-adenosine deaminase (ADA) deficiency may be cured permanently by",
+    "options": [
+      "Introducing bone marrow cells producing ADA into cells at early embryonic stages",
+      "Periodic infusion of genetically engineered lymphocytes having functional ADA cDNA",
+      "Administering adenosine deaminase activators",
+      "Enzyme replacement therapy"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 74,
+    "examTag": "AIPMT 2009",
+    "question_text": "Polyethylene glycol method is used for :",
+    "options": [
+      "Biodiesel production",
+      "Seedless fruit production",
+      "Energy production from sewage",
+      "Gene transfer without a vector"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 75,
+    "examTag": "AIPMT 2009",
+    "question_text": "Somaclones are obtained by : -",
+    "options": [
+      "Tissue culture",
+      "Plant breeding",
+      "Genetic engineering",
+      "Irradiation Genetic engineering"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 76,
+    "examTag": "AIPMT 2009",
+    "question_text": "What is true about Bt toxin ?",
+    "options": [
+      "The activated toxin enters the ovaries of the pest to sterilise it and thus prevent its multiplication.",
+      "Bt protein exists as active toxin in the Bacillus",
+      "The concerned Bacillus has antitoxins",
+      "The inactive protoxin gets converted into active form in the insect gut"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 77,
+    "examTag": "AIPMT 2009",
+    "question_text": "Transgenic plants are the ones -",
+    "options": [
+      "Produced after protoplast fusion in artifical medium",
+      "Produced by a somatic embryo in artificial medium",
+      "Generated by introducing foreign DNA in to a cell and regenerating a plant from that cell",
+      "Grown in artificial medium after hybridization in the field"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 78,
+    "examTag": "AIPMT 2009",
+    "question_text": "The bacterium Bacillus thuringiensis is widely used in contemporary biology as -",
+    "options": [
+      "Indicator of water pollution",
+      "Agent for production of dairy products",
+      "Source of industrial enzyme",
+      "Insecticide"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 79,
+    "examTag": "AIPMT 2008",
+    "question_text": "What is antisense technology?",
+    "options": [
+      "RNA polymerase producing DNA",
+      "Production of somaclonal variants in tissue cultures",
+      "When a piece of RNA that is complementary in sequence is used to stop expression of a specific gene",
+      "A cell displaying a foreign antigen used for synthesis of antigens"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 80,
+    "examTag": "AIPMT 2008",
+    "question_text": "Cry I endotoxins obtained from Bacillus thuringiensis are effective against:",
+    "options": [
+      "Mosquitoes",
+      "Flies",
+      "Nematodes",
+      "Boll worms"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 81,
+    "examTag": "AIPMT 2008",
+    "question_text": "Main objective of production/use of herbicide resistant GM crops is to:",
+    "options": [
+      "eliminate weeds from the field without the use of manual labour",
+      "eliminate weeds from the field without the use of herbicides",
+      "encourage eco-friendly herbicides",
+      "reduce herbicide accumulation in food articles for health safety"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 82,
+    "examTag": "AIPMT 2008",
+    "question_text": "Human insulin is being commercially produced from a transgenic species of:",
+    "options": [
+      "Escherichia",
+      "Mycobacterium",
+      "Rhizobium",
+      "Saccharomyces"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 83,
+    "examTag": "AIPMT 2008",
+    "question_text": "A transgenic food crop which may help in solving the problem of night blindness in developing\ncountries is",
+    "options": [
+      "Flavr Savr tomatoes",
+      "Bt soybean",
+      "Starlink maize.",
+      "Golden rice"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 84,
+    "examTag": "AIPMT 2007",
+    "question_text": "A genetically engineered micro-organism used successfully in bioremediation of oil spills is a\nspecies of-",
+    "options": [
+      "Trichoderma",
+      "Xanthomonas",
+      "Bacillus",
+      "Pseudomonas"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 85,
+    "examTag": "AIPMT 2006",
+    "question_text": "Golden rice is a promising transgenic crop. When released for cultivation, it will help in",
+    "options": [
+      "Herbicide tolerance",
+      "Alleviation of vitamin A deficiency",
+      "Producing a petrol-like fuel from rice",
+      "Pest resistance"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 86,
+    "examTag": "AIPMT 2005",
+    "question_text": "Bacillus thuringiensis (Bt) strains have been used for designing novel -",
+    "options": [
+      "Bio-metallurgical techniques",
+      "Biofertilizers",
+      "Bioinsecticidal plants",
+      "Bio-mineralization processes"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 87,
+    "examTag": "AIPMT 2005",
+    "question_text": "Production of a human protein in bacteria by genetic engineering is possible because",
+    "options": [
+      "The human chromosome can replicate in bacterial cell",
+      "The genetic code is universal",
+      "Bacterial cell can carry out the RNA splicing reactions",
+      "The mechanism of gene regulation is identical in humans and bacteria"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 88,
+    "examTag": "AIPMT 2005",
+    "question_text": "Golden rice is a transgenic crop of the future with the following improved trait -",
+    "options": [
+      "High lysine (essential amino acid) content",
+      "High protein content",
+      "Insect resistance",
+      "High vitamin – A content"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 89,
+    "examTag": "AIPMT 2004",
+    "question_text": "ELISA is used to detect viruses, wherethe key reagent is :-",
+    "options": [
+      "Catalase",
+      "Southern",
+      "DNA probes",
+      "Alkaline phosphatase"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 90,
+    "examTag": "AIPMT 2003",
+    "question_text": "ELISA is used to detect viruses, where the key reagent is :-",
+    "options": [
+      "Alkaline phosphatase",
+      "Southern",
+      "DNA probes",
+      "Catalase"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 91,
+    "examTag": "AIPMT 2002",
+    "question_text": "Nucleus of a donor embryonal cell/somatic cell is transferred to an enucleated egg cell. Then after\nthe formation of organism, what shall be true?",
+    "options": [
+      "Organism will have extra-nuclear genes of the donor cell",
+      "Organism will have extra-nuclear genes of recipient cell",
+      "Organism will have extra-nuclear genes of both donor and recipient cell",
+      "Organism will have nuclear genes of recipient cell"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 92,
+    "examTag": "AIPMT 2002",
+    "question_text": "Introduction of food plants developed by genetic engineering is not desirable because",
+    "options": [
+      "economy of developing countries may suffer",
+      "these products are less tasty as compared to the already existing products",
+      "this method is costly",
+      "there is danger of introduction of viruses and toxins with introduced crop"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 93,
+    "examTag": "AIPMT 2000",
+    "question_text": "The first successfully cloned mammals (animal) that gained worldwide publicity was",
+    "options": [
+      "Molly (a sheep)",
+      "Polly (a sheep)",
+      "Chance (a bull)",
+      "Dolly (a sheep)"
+    ],
+    "correct_option": "D"
+  },
+  {
+    "qNum": 94,
+    "examTag": "AIPMT 2000",
+    "question_text": "Producing a giant mouse in the laboratory was possible through",
+    "options": [
+      "gene mutation",
+      "gene manipulation",
+      "gene synthesis",
+      "gene duplication"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 95,
+    "examTag": "AIPMT 1999",
+    "question_text": "Hybridoma cells are :",
+    "options": [
+      "product of spore formation in bacteria",
+      "hybrid cells resulting from myeloma cells",
+      "nervous cells of frog",
+      "only cells having oncogenes"
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 96,
+    "examTag": "AIPMT 1999",
+    "question_text": "The term 'humulin' is used for",
+    "options": [
+      "human insulin",
+      "powerful antibiotic",
+      "isoenzyme",
+      "hydrolytic enzyme"
+    ],
+    "correct_option": "A"
+  },
+  {
+    "qNum": 97,
+    "examTag": "AIPMT 1999",
+    "question_text": "The first transgenic crop was",
+    "options": [
+      "cotton",
+      "pea",
+      "tobacco",
+      "flax"
+    ],
+    "correct_option": "C"
+  },
+  {
+    "qNum": 98,
+    "examTag": "AIPMT 1996",
+    "question_text": "When scientists make an animal superior by view of genotype, introducing some foreign genes in it,\nis called",
+    "options": [
+      "immunization",
+      "genetic engineering",
+      "tissue culture",
+      "biotechnology."
+    ],
+    "correct_option": "B"
+  },
+  {
+    "qNum": 99,
+    "examTag": "AIPMT 1995",
+    "question_text": "The transgenic animals are those which have",
+    "options": [
+      "foreign RNA in all its cells",
+      "foreign DNA in some of its cells",
+      "foreign DNA in all its cells",
+      "both (a) and (b)."
+    ],
+    "correct_option": "C"
+  }
+]
