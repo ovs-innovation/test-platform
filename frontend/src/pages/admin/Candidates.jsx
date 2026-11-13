@@ -37,6 +37,8 @@ export default function AdminCandidates() {
   const [credentialsModalOpen, setCredentialsModalOpen] = useState(false);
   const [candidateForCredentials, setCandidateForCredentials] = useState(null);
   const [credentialsCustomStudentId, setCredentialsCustomStudentId] = useState('');
+  const [credentialsCustomPassword, setCredentialsCustomPassword] = useState('');
+  const [credentialsSendEmail, setCredentialsSendEmail] = useState(true);
   const [sendingCredentials, setSendingCredentials] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
   const [showPasswords, setShowPasswords] = useState({});
@@ -107,9 +109,18 @@ export default function AdminCandidates() {
     setTimeout(() => setCopiedPasswordId(null), 2000);
   };
 
+  const generateRandomPassword = () => {
+    const randomDigits = Math.floor(1000 + Math.random() * 9000);
+    const pass = `Edu@${randomDigits}`;
+    setCredentialsCustomPassword(pass);
+    toast.info(`Generated password: ${pass}`);
+  };
+
   const handleOpenSendCredentials = (c) => {
     setCandidateForCredentials(c);
     setCredentialsCustomStudentId(c.student_id || c.roll_number || '');
+    setCredentialsCustomPassword(c.raw_password || '');
+    setCredentialsSendEmail(true);
     setCredentialsModalOpen(true);
   };
 
@@ -120,19 +131,21 @@ export default function AdminCandidates() {
     try {
       const res = await adminService.sendCandidateCredentials(candidateForCredentials.id, {
         student_id: credentialsCustomStudentId.trim() || undefined,
+        password: credentialsCustomPassword.trim() || undefined,
+        send_email: credentialsSendEmail,
       });
       if (res?.emailSent) {
-        toast.success(`Student ID (${res.student_id}) sent to ${candidateForCredentials.email}!`);
+        toast.success(`Credentials sent to ${candidateForCredentials.email} successfully!`);
       } else if (res?.emailError) {
-        toast.warning(`Updated Student ID to ${res.student_id}, but email delivery failed: ${res.emailError}`);
+        toast.warning(`Credentials saved, but email delivery failed: ${res.emailError}`);
       } else {
-        toast.success(`Student ID updated to ${res.student_id}!`);
+        toast.success(`Credentials updated successfully!`);
       }
       setCredentialsModalOpen(false);
       setCandidateForCredentials(null);
       load();
     } catch (err) {
-      toast.error(err.message || 'Failed to send Student ID');
+      toast.error(err.message || 'Failed to update credentials');
     } finally {
       setSendingCredentials(false);
     }
@@ -411,11 +424,11 @@ export default function AdminCandidates() {
                       <p className="text-[11px] text-slate-400 mt-0.5">{c.phone || 'No mobile'}</p>
                     </Td>
                     <Td>
-                      <div className="flex items-center gap-1.5 whitespace-nowrap">
-                        <span className="font-mono text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-800 select-all tracking-wider">
-                          {showPasswords[c.id] ? (c.raw_password || '••••••••') : '••••••••'}
-                        </span>
-                        {c.raw_password ? (
+                      {c.raw_password ? (
+                        <div className="flex items-center gap-1.5 whitespace-nowrap">
+                          <span className="font-mono text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-800 select-all tracking-wider">
+                            {showPasswords[c.id] ? c.raw_password : '••••••••'}
+                          </span>
                           <div className="flex items-center gap-0.5">
                             <button
                               type="button"
@@ -434,10 +447,18 @@ export default function AdminCandidates() {
                               {copiedPasswordId === c.id ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
                             </button>
                           </div>
-                        ) : (
-                          <span className="text-[10px] text-slate-400 italic font-medium">Not recorded</span>
-                        )}
-                      </div>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => handleOpenSendCredentials(c)}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition cursor-pointer"
+                          title="Click to set password and email credentials to student"
+                        >
+                          <KeyRound className="h-3 w-3" />
+                          <span>Set Password</span>
+                        </button>
+                      )}
                     </Td>
                     <Td>
                       <div className="flex flex-col gap-1">
@@ -471,8 +492,8 @@ export default function AdminCandidates() {
                         <ActionDropdown
                           items={[
                             {
-                              label: 'Send Student ID',
-                              icon: Mail,
+                              label: 'Manage Credentials / Password',
+                              icon: KeyRound,
                               onClick: () => handleOpenSendCredentials(c),
                               color: 'text-indigo-600 dark:text-indigo-400 font-semibold',
                             },
@@ -924,11 +945,11 @@ export default function AdminCandidates() {
         </div>
       </Modal>
 
-      {/* Send Student ID Modal */}
+      {/* Send Student ID & Password Modal */}
       <Modal
         open={credentialsModalOpen}
         onClose={() => !sendingCredentials && setCredentialsModalOpen(false)}
-        title="Send Student ID to Student"
+        title="Manage Student Credentials & Password"
         size="sm"
       >
         <form onSubmit={handleSendCredentials} className="space-y-4">
@@ -949,7 +970,7 @@ export default function AdminCandidates() {
             </div>
             {candidateForCredentials?.raw_password && (
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 dark:text-slate-400">Password:</span>
+                <span className="text-slate-500 dark:text-slate-400">Current Password:</span>
                 <span className="font-mono font-bold text-slate-800 dark:text-slate-200 bg-slate-200/60 dark:bg-slate-800 px-2 py-0.5 rounded select-all">
                   {candidateForCredentials.raw_password}
                 </span>
@@ -957,6 +978,7 @@ export default function AdminCandidates() {
             )}
           </div>
 
+          {/* Student ID */}
           <div>
             <label className="label">
               Student ID / Roll Number <span className="text-slate-400 font-normal">(Leave blank to keep / auto-generate)</span>
@@ -970,11 +992,51 @@ export default function AdminCandidates() {
             />
           </div>
 
-          <div className="rounded-xl bg-blue-50/70 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900/50 p-3 text-xs text-blue-700 dark:text-blue-300">
-            <p className="font-semibold mb-1">Student Password Policy:</p>
-            <p className="text-[11px] leading-relaxed">
-              Passwords are created exclusively by students during registration. Admin only assigns or verifies the <strong>Student ID</strong>. The student will use this ID along with their registration password to sign in.
+          {/* Password */}
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="label !mb-0">
+                Student Password
+              </label>
+              <button
+                type="button"
+                onClick={generateRandomPassword}
+                className="text-[11px] font-bold text-blue-600 hover:text-blue-700 dark:text-blue-400 hover:underline cursor-pointer flex items-center gap-1"
+              >
+                <KeyRound className="h-3 w-3" />
+                Auto-Generate
+              </button>
+            </div>
+            <PasswordInput
+              className="input w-full"
+              placeholder={candidateForCredentials?.raw_password ? "Enter new password to change" : "Enter password or click Auto-Generate (min 6 chars)"}
+              value={credentialsCustomPassword}
+              onChange={(e) => setCredentialsCustomPassword(e.target.value)}
+            />
+            <p className="text-[11px] text-slate-400 mt-1">
+              Minimum 6 characters. Leave blank to keep existing password unchanged.
             </p>
+          </div>
+
+          {/* Email Credentials Checkbox */}
+          <div className="rounded-2xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/70 dark:bg-blue-950/20 p-3.5 transition-all">
+            <label className="flex items-start gap-3 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                className="checkbox mt-0.5"
+                checked={credentialsSendEmail}
+                onChange={(e) => setCredentialsSendEmail(e.target.checked)}
+              />
+              <div className="text-xs">
+                <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                  <Mail className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  Email Credentials to Student
+                </span>
+                <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5 leading-relaxed">
+                  Sends an official onboarding/credentials email containing their Student ID and login password to <strong>{candidateForCredentials?.email}</strong>.
+                </p>
+              </div>
+            </label>
           </div>
 
           <div className="mt-5 flex justify-end gap-2.5 border-t border-slate-200 dark:border-slate-800 pt-4">
@@ -994,12 +1056,12 @@ export default function AdminCandidates() {
               {sendingCredentials ? (
                 <>
                   <span className="inline-block animate-spin h-3.5 w-3.5 border-2 border-white border-t-transparent rounded-full mr-1" />
-                  Sending Email…
+                  Saving & Dispatching…
                 </>
               ) : (
                 <>
-                  <Mail className="h-3.5 w-3.5" />
-                  Send Student ID Email
+                  <KeyRound className="h-3.5 w-3.5" />
+                  {credentialsSendEmail ? 'Save & Send Email' : 'Save Credentials'}
                 </>
               )}
             </button>

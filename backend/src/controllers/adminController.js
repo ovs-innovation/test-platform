@@ -556,15 +556,33 @@ export const updateCandidate = asyncHandler(async (req, res) => {
     return { ...u, ...profile, student_id: u.roll_number, raw_password: u.raw_password || profile.raw_password };
   });
 
+  // Optional: Send credentials email if admin checked send_credentials and changed password
+  if (send_credentials && rawPasswordToSave) {
+    try {
+      const origin = req.headers.origin || 'https://edvedum.com';
+      const loginUrl = `${origin.replace(/\/$/, '')}/student-login`;
+      await sendStudentCredentialsEmail({
+        to: updatedCandidate.email,
+        name: updatedCandidate.name,
+        email: updatedCandidate.email,
+        studentId: updatedCandidate.student_id,
+        password: rawPasswordToSave,
+        loginUrl,
+      });
+    } catch (mailErr) {
+      console.warn('[updateCandidate] Failed to send updated credentials email:', mailErr.message);
+    }
+  }
+
   res.json({ candidate: updatedCandidate });
 });
 
 export const sendCandidateCredentials = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { student_id } = req.body || {};
+  const { student_id, password, send_email = true } = req.body || {};
 
   const userRes = await query(
-    `SELECT u.id, u.name, u.email, u.roll_number, sp.phone, sp.roll_number as sp_roll_number
+    `SELECT u.id, u.name, u.email, u.roll_number, u.raw_password, sp.phone, sp.roll_number as sp_roll_number, sp.raw_password as sp_raw_password
      FROM users u
      LEFT JOIN student_profiles sp ON sp.user_id = u.id
      WHERE u.id = $1 AND u.role = 'candidate'`,
@@ -584,32 +602,53 @@ export const sendCandidateCredentials = asyncHandler(async (req, res) => {
     await query('UPDATE student_profiles SET roll_number = $1 WHERE user_id = $2', [studentId, u.id]).catch(() => {});
   }
 
-  // NOTE: Password is created by the student during registration. Admin only sends/updates Student ID.
+  let finalPassword = u.raw_password || u.sp_raw_password || null;
+  if (password && password.trim().length >= 6) {
+    finalPassword = password.trim();
+    const password_hash = await hashPassword(finalPassword);
+    await query('UPDATE users SET password_hash = $1, raw_password = $2 WHERE id = $3', [password_hash, finalPassword, u.id]);
+    await query('UPDATE student_profiles SET raw_password = $1 WHERE user_id = $2', [finalPassword, u.id]).catch(() => {});
+  }
 
   let emailSent = false;
   let emailError = null;
-  try {
-    const origin = req.headers.origin || 'https://edvedum.com';
-    const loginUrl = `${origin.replace(/\/$/, '')}/student-login`;
-    await sendStudentIdEmail({
-      to: u.email,
-      name: u.name,
-      email: u.email,
-      studentId,
-      loginUrl,
-    });
-    emailSent = true;
-  } catch (err) {
-    console.warn('[sendCandidateCredentials] Email send failed:', err.message);
-    emailError = err.message;
+  if (send_email !== false) {
+    try {
+      const origin = req.headers.origin || 'https://edvedum.com';
+      const loginUrl = `${origin.replace(/\/$/, '')}/student-login`;
+      if (finalPassword) {
+        await sendStudentCredentialsEmail({
+          to: u.email,
+          name: u.name,
+          email: u.email,
+          studentId,
+          password: finalPassword,
+          loginUrl,
+        });
+      } else {
+        await sendStudentIdEmail({
+          to: u.email,
+          name: u.name,
+          email: u.email,
+          studentId,
+          loginUrl,
+        });
+      }
+      emailSent = true;
+    } catch (err) {
+      console.warn('[sendCandidateCredentials] Email send failed:', err.message);
+      emailError = err.message;
+    }
   }
 
   res.json({
     success: true,
     message: emailSent
-      ? `Student ID (${studentId}) sent to ${u.email} successfully!`
-      : `Student ID updated to ${studentId}. (Email delivery notice: ${emailError || 'SMTP pending'})`,
+      ? `Credentials (Student ID: ${studentId}${finalPassword ? ' & Password' : ''}) sent to ${u.email} successfully!`
+      : `Credentials updated for ${studentId}.`,
     studentId,
+    password: finalPassword,
+    raw_password: finalPassword,
     email: u.email,
     emailSent,
     emailError,
