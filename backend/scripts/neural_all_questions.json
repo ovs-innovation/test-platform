@@ -1,0 +1,2134 @@
+[
+  {
+    "num": 1,
+    "exam": "RE-NEET 2026",
+    "question": "Which of the following is not a part of human central neural system?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Pericardium"
+      },
+      {
+        "id": "B",
+        "text": "Arachnoid"
+      },
+      {
+        "id": "C",
+        "text": "Dura mater"
+      },
+      {
+        "id": "D",
+        "text": "Pia mater"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Pericardium** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 2,
+    "exam": "NEET 2026",
+    "question": "The specific receptors for neurotransmitters in a synapse are present on   .",
+    "options": [
+      {
+        "id": "A",
+        "text": "Schwann cell"
+      },
+      {
+        "id": "B",
+        "text": "Pre-synaptic membrane"
+      },
+      {
+        "id": "C",
+        "text": "Myelin sheath"
+      },
+      {
+        "id": "D",
+        "text": "Post-synaptic membrane"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Post-synaptic membrane** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 3,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List -II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Schwann cells | (I) Neurotransmitter |\n| (B) Synaptic knob | (II) Cerebral cortex |\n| (C) Bipolar neurons | (III) Myelin sheath |\n| (D) Multipolar neurons | (IV) Retina |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-I, C-IV, D-II"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-IV, C-II, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-III, C-I, D-IV"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Schwann cells**: Envelope nerve fibres and form myelin sheath in the peripheral nervous system (A-III).\n- **Synaptic knob**: Bulb-like structure at axon terminal possessing synaptic vesicles filled with neurotransmitters (B-I).\n- **Bipolar neurons**: Possess one axon and one dendrite, typically found in the retina of the eye (C-IV).\n- **Multipolar neurons**: Possess one axon and two or more dendrites, typically found in the cerebral cortex (D-II).",
+    "image": ""
+  },
+  {
+    "num": 4,
+    "exam": "NEET 2024",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Pons | I. Provides additional space for Neurons, regulates posture and balance. |\n| B. Hypothalamus | II. Controls respiration and gastric secretions. |\n| C. Medulla | III. Connects different regions of the brain. |\n| D. Cerebellum | IV. Neuro secretory cells |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-I, B-III, C-II, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-I, C-III, D-IV"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Pons**: Consists of fibre tracts that interconnect different regions of the brain (A-III).\n- **Hypothalamus**: Contains several groups of neurosecretory cells called hypothalamic nuclei which produce releasing and inhibiting hormones (B-IV).\n- **Medulla**: Contains reflex centres that control respiration, cardiovascular reflexes, and gastric secretions (C-II).\n- **Cerebellum**: Has a convoluted surface to provide additional space for many neurons; coordinates muscular movements, maintains posture and equilibrium (D-I).",
+    "image": ""
+  },
+  {
+    "num": 5,
+    "exam": "NEET 2024",
+    "question": "Given below are two statements:\nStatement I: The cerebral hemispheres are connected by nerve tract known as corpus callosum.\nStatement II: The brain stem consists of the medulla oblongata, pons and cerebrum.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are correct."
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are incorrect."
+      },
+      {
+        "id": "C",
+        "text": "Statement I is correct but Statement II is incorrect."
+      },
+      {
+        "id": "D",
+        "text": "Statement I is incorrect but Statement II is correct."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Statement I is correct**: The left and right cerebral hemispheres are connected by a wide, flat tract of myelinated nerve fibres called the **corpus callosum**.\n- **Statement II is incorrect**: The brain stem consists of three parts: **midbrain, pons, and medulla oblongata** (it does not include the cerebrum).",
+    "image": ""
+  },
+  {
+    "num": 6,
+    "exam": "NEET 2023 Manipur",
+    "question": "Brainstem of human brain consists of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mid-brain, Pons and Medulla Oblongata"
+      },
+      {
+        "id": "B",
+        "text": "Forebrain, Cerebellum and Pons"
+      },
+      {
+        "id": "C",
+        "text": "Thalamus, Hypothalamus and Corpora quadrigemina"
+      },
+      {
+        "id": "D",
+        "text": "Amygdala, Hippocampus and Corpus Callosum"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Mid-brain, Pons and Medulla Oblongata** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 7,
+    "exam": "NEET 2023",
+    "question": "The parts of human brain that helps in regulation of sexual behaviour, expression of excitement, pleasure, rage, fear etc. are:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Corpora quadrigemina and hippocampus"
+      },
+      {
+        "id": "B",
+        "text": "Brain stem and epithalamus"
+      },
+      {
+        "id": "C",
+        "text": "Corpus callosum and thalamus"
+      },
+      {
+        "id": "D",
+        "text": "Limbic system and hypothalamus Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Limbic system and hypothalamus Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 8,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Match List-I with List - II :\n\n| List - I | List - II |\n| :--- | :--- |\n| (a) Multipolar neuron | (i) Somatic neural system |\n| (b) Bipolar neuron | (ii) Cerebral cortex |\n| (c) Myelinated nerve fibre | (iii) Retina of Eye |\n| (d) Unmyelinated nerve fibre | (iv) Spinal nerves |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) - (ii), (b) - (iii), (c) - (iv), (d) - (i)"
+      },
+      {
+        "id": "B",
+        "text": "(a) - (iii), (b) - (i), (c) - (iv), (d) - (ii)"
+      },
+      {
+        "id": "C",
+        "text": "(a) - (ii), (b) - (iv), (c) - (iii), (d) - (i)"
+      },
+      {
+        "id": "D",
+        "text": "(a) - (ii), (b) - (iii), (c) - (i), (d) - (iv)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Multipolar neuron**: Found in the cerebral cortex (a-ii).\n- **Bipolar neuron**: Found in the retina of the eye (b-iii).\n- **Myelinated nerve fibre**: Enclosed by Schwann cells producing myelin sheath, commonly found in cranial and spinal nerves (c-iv).\n- **Unmyelinated nerve fibre**: Enclosed by Schwann cells without myelin sheath, commonly found in autonomous and somatic neural systems (d-i).",
+    "image": ""
+  },
+  {
+    "num": 9,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Select the incorrect statement regarding synapses :",
+    "options": [
+      {
+        "id": "A",
+        "text": "The membranes of presynaptic and postsynaptic neurons are in close proximity in an electrical synapse."
+      },
+      {
+        "id": "B",
+        "text": "Electrical current can flow directly from one neuron into the other across the electrical synapse."
+      },
+      {
+        "id": "C",
+        "text": "Chemical synapses use neurotransmitters"
+      },
+      {
+        "id": "D",
+        "text": "Impulse transmission across a chemical synapse is always faster than that across an electrical synapse."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Impulse transmission across a chemical synapse is always faster than that across an electrical synapse.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 10,
+    "exam": "NEET 2019",
+    "question": "Which part of the brain is responsible for thermoregulation?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Corpus callosum"
+      },
+      {
+        "id": "B",
+        "text": "Medulla oblongata"
+      },
+      {
+        "id": "C",
+        "text": "Cerebrum"
+      },
+      {
+        "id": "D",
+        "text": "Hypothalamus"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Hypothalamus** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 11,
+    "exam": "NEET 2018",
+    "question": "Nissl’s bodies are mainly composed of",
+    "options": [
+      {
+        "id": "A",
+        "text": "free ribosomes and RER"
+      },
+      {
+        "id": "B",
+        "text": "proteins and lipids"
+      },
+      {
+        "id": "C",
+        "text": "DNA and RNA"
+      },
+      {
+        "id": "D",
+        "text": "nucleic acids and SER Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**free ribosomes and RER** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 12,
+    "exam": "NEET 2018",
+    "question": "Which of the following structures or regions is incorrectly paired with its functions?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Medulla oblongata : Controls respiration and cardiovascular reflexes"
+      },
+      {
+        "id": "B",
+        "text": "Corpus callosum : Band of fibers connecting left and right cerebral hemispheres"
+      },
+      {
+        "id": "C",
+        "text": "Hypothalamus : Production of releasing hormones and regulation of temperature, hunger and thirst"
+      },
+      {
+        "id": "D",
+        "text": "Limbic system : Consists of fibre tracts that interconnect different regions of brain controlsmovement"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Limbic system : Consists of fibre tracts that interconnect different regions of brain controlsmovement** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 13,
+    "exam": "NEET 2017",
+    "question": "Myelin sheath is produced by",
+    "options": [
+      {
+        "id": "A",
+        "text": "astrocytes and Schwann cell"
+      },
+      {
+        "id": "B",
+        "text": "oligodendrocytes and osteoclasts"
+      },
+      {
+        "id": "C",
+        "text": "osteoclasts and astrocytes"
+      },
+      {
+        "id": "D",
+        "text": "Schwann cells and oligodendrocytes."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Schwann cells and oligodendrocytes.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 14,
+    "exam": "NEET 2017",
+    "question": "Receptor sites for neurotransmitters are present on",
+    "options": [
+      {
+        "id": "A",
+        "text": "pre-synaptic membrane"
+      },
+      {
+        "id": "B",
+        "text": "tips of axons"
+      },
+      {
+        "id": "C",
+        "text": "post-synaptic membrane"
+      },
+      {
+        "id": "D",
+        "text": "membranees of synaptic vesicles."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**post-synaptic membrane** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 15,
+    "exam": "AIPMT 2015",
+    "question": "Destruction of the anterior horn cells of the spinal cord would result in loss of",
+    "options": [
+      {
+        "id": "A",
+        "text": "commissural impulses"
+      },
+      {
+        "id": "B",
+        "text": "integrating impulses"
+      },
+      {
+        "id": "C",
+        "text": "sensory impulses"
+      },
+      {
+        "id": "D",
+        "text": "voluntary motor impulses."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**voluntary motor impulses.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 16,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "Which of the following regions of the brain is incorrectly paired with its function?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Corpus callosum - communication between the left and right cerebral cortices"
+      },
+      {
+        "id": "B",
+        "text": "Cerebrum - calculation and contemplation"
+      },
+      {
+        "id": "C",
+        "text": "Medulla oblongata - homeostatic control"
+      },
+      {
+        "id": "D",
+        "text": "Cerebellum - language comprehension Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Cerebellum - language comprehension Exam GOAL P Y Q   P D F** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 17,
+    "exam": "AIPMT 2014",
+    "question": "Injury localized to the hypothalamus would most likely disrupt",
+    "options": [
+      {
+        "id": "A",
+        "text": "short - term memory"
+      },
+      {
+        "id": "B",
+        "text": "co-ordination during locomotion"
+      },
+      {
+        "id": "C",
+        "text": "executive functions, such as decision making"
+      },
+      {
+        "id": "D",
+        "text": "regulation of body temperature."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**regulation of body temperature.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 18,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "The figure shows an axon terminal and synapse. Select the option giving correct identification of labels A-D.",
+    "options": [
+      {
+        "id": "A",
+        "text": "C-Receptor, D-Synaptic vesicles"
+      },
+      {
+        "id": "B",
+        "text": "A-Axon terminal, B- Serotonin complex"
+      },
+      {
+        "id": "C",
+        "text": "A-Action potential, C-Neurotransmitter"
+      },
+      {
+        "id": "D",
+        "text": "B-Neurotransmitter, D- Receptor capsules"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn the given diagram of the chemical synapse:\n- **A**: Axon terminal / Pre-synaptic membrane\n- **B**: Synaptic cleft\n- **C**: Post-synaptic receptors (specific protein receptors on the post-synaptic membrane)\n- **D**: Synaptic vesicles (membrane-bound spheres storing neurotransmitters).\nTherefore, **C-Receptor, D-Synaptic vesicles** is the correct identification.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794538436/edvedum/questions/neural_control_and_coordination/neural_q_18.png"
+  },
+  {
+    "num": 19,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "A sagittal section of human brain is shown here. Identify at least two labels from A-D.",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-Cerebral hemispheres, B-Cerebellum"
+      },
+      {
+        "id": "B",
+        "text": "B-Corpus callosum, D-Medulla"
+      },
+      {
+        "id": "C",
+        "text": "C-Mid brain, D-Cerebellum"
+      },
+      {
+        "id": "D",
+        "text": "A-Cerebrum, C-Pons"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nIn the sagittal section of the human brain:\n- **A**: Cerebrum (cerebral cortex)\n- **B**: Thalamus / Corpus callosum\n- **C**: Pons varolii\n- **D**: Cerebellum.\nHence, option (D) correctly identifies A as Cerebrum and C as Pons.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794538437/edvedum/questions/neural_control_and_coordination/neural_q_19.png"
+  },
+  {
+    "num": 20,
+    "exam": "NEET 2013",
+    "question": "The most abundant intracellular cation is",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\text{H}^+$"
+      },
+      {
+        "id": "B",
+        "text": "$\\text{K}^+$"
+      },
+      {
+        "id": "C",
+        "text": "$\\text{Na}^+$"
+      },
+      {
+        "id": "D",
+        "text": "$\\text{Ca}^{++}$"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n$\\text{K}^+$ (potassium ion) is the principal and most abundant intracellular cation in human cells and axoplasm, whereas $\\text{Na}^+$ is the principal extracellular cation.",
+    "image": ""
+  },
+  {
+    "num": 21,
+    "exam": "NEET 2013",
+    "question": "A diagram showing axon terminal and synapse is given. Identify correctly at least two of A - D.",
+    "options": [
+      {
+        "id": "A",
+        "text": "A - Receptor, C - Synaptic vesicles"
+      },
+      {
+        "id": "B",
+        "text": "A - Neurotransmitter, B - Synaptic cleft"
+      },
+      {
+        "id": "C",
+        "text": "C - Neurotransmitter, D - $\\text{Ca}^{++}$"
+      },
+      {
+        "id": "D",
+        "text": "B - Synaptic connection, D - $\\text{K}^+$"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn the synapse diagram:\n- **A**: Specific receptors on the post-synaptic membrane\n- **B**: Synaptic cleft\n- **C**: Synaptic vesicles carrying neurotransmitters in the presynaptic terminal\n- **D**: Neurotransmitter molecules released into the cleft.\nHence, **A - Receptor, C - Synaptic vesicles** is correctly matched.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794538438/edvedum/questions/neural_control_and_coordination/neural_q_21.png"
+  },
+  {
+    "num": 22,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "The human hind brain comprises three parts, one of which is",
+    "options": [
+      {
+        "id": "A",
+        "text": "spinal cord"
+      },
+      {
+        "id": "B",
+        "text": "corpus callosum"
+      },
+      {
+        "id": "C",
+        "text": "cerebellum"
+      },
+      {
+        "id": "D",
+        "text": "hypothalamus."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**cerebellum** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 23,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "When a neuron is in resting state i.e., not conducting any impulse, the axonal membrane is",
+    "options": [
+      {
+        "id": "A",
+        "text": "comparatively more permeable to $\\text{Na}^+$ ions and nearly impermeable to $\\text{K}^+$ ions"
+      },
+      {
+        "id": "B",
+        "text": "equally permeable to both $\\text{Na}^+$ and $\\text{K}^+$ ions"
+      },
+      {
+        "id": "C",
+        "text": "impermeable to both $\\text{Na}^+$ and $\\text{K}^+$ ions"
+      },
+      {
+        "id": "D",
+        "text": "comparatively more permeable to $\\text{K}^+$ ions and nearly impermeable to $\\text{Na}^+$ ions."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nWhen a neuron is in a resting state (polarized), the axonal membrane is comparatively **more permeable to $\\text{K}^+$ ions** and **nearly impermeable to $\\text{Na}^+$ ions**, and completely impermeable to negatively charged proteins present in the axoplasm.",
+    "image": ""
+  },
+  {
+    "num": 24,
+    "exam": "AIPMT 2010 Mains",
+    "question": "Select the answer with correct matching of the structure, its location and function.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Eustachian tube | Anterior part of internal ear | Equalizes air pressure on either sides of tympanic membrane"
+      },
+      {
+        "id": "B",
+        "text": "Cerebellum | Mid Brain | Controls respiration and gastric secretions"
+      },
+      {
+        "id": "C",
+        "text": "Hypothalamus | Fore Brain | Controls body temperature, urge for eating and drinking"
+      },
+      {
+        "id": "D",
+        "text": "Blind spot | Near the place where optic nerve leaves the eye | Rods and cones are present but inactive here"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Option C is correct**: The **hypothalamus** lies at the base of the thalamus in the **forebrain** and contains centres controlling body temperature, urge for eating (hunger), and drinking (thirst).\n- **Option A is incorrect**: The Eustachian tube connects the middle ear cavity with the pharynx (not anterior part of internal ear).\n- **Option B is incorrect**: Cerebellum is part of the hindbrain (not midbrain), and respiratory/gastric secretions are regulated by the medulla.\n- **Option D is incorrect**: Photoreceptor cells (rods and cones) are completely absent at the blind spot.",
+    "image": ""
+  },
+  {
+    "num": 25,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "The nerve centres which control the body temperature and the urge for eating are contained in",
+    "options": [
+      {
+        "id": "A",
+        "text": "hypothalamus"
+      },
+      {
+        "id": "B",
+        "text": "pons"
+      },
+      {
+        "id": "C",
+        "text": "cerebellum"
+      },
+      {
+        "id": "D",
+        "text": "thalamus."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**hypothalamus** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 26,
+    "exam": "AIPMT 2009",
+    "question": "Alzheimer's disease in humans is associated with the deficiency of",
+    "options": [
+      {
+        "id": "A",
+        "text": "glutamic acid"
+      },
+      {
+        "id": "B",
+        "text": "acetylcholine"
+      },
+      {
+        "id": "C",
+        "text": "gamma aminobutyric acid (GABA)"
+      },
+      {
+        "id": "D",
+        "text": "dopamine."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**acetylcholine** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 27,
+    "exam": "AIPMT 2009",
+    "question": "Which part of human brain is concerned with the regulation of body temperature?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cerebellum"
+      },
+      {
+        "id": "B",
+        "text": "Cerebrum"
+      },
+      {
+        "id": "C",
+        "text": "Hypothalamus"
+      },
+      {
+        "id": "D",
+        "text": "Medulla oblongata Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Hypothalamus** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 28,
+    "exam": "AIPMT 2008",
+    "question": "During the propagation of a nerve impulse, the action potential results from the movement of",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\text{K}^+$ ions from intracellular fluid to extracellular fluid"
+      },
+      {
+        "id": "B",
+        "text": "$\\text{Na}^+$ ions from extracellular fluid to intracellular fluid"
+      },
+      {
+        "id": "C",
+        "text": "$\\text{K}^+$ ions from extracellular fluid to extracellular fluid"
+      },
+      {
+        "id": "D",
+        "text": "$\\text{Na}^+$ ions from intracellular fluid to extracellular fluid."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nWhen a stimulus is applied at a site on the polarized membrane, the membrane becomes freely permeable to $\\text{Na}^+$. This leads to a rapid **influx of $\\text{Na}^+$ ions from extracellular fluid to intracellular fluid**, causing depolarization and generating an action potential.",
+    "image": ""
+  },
+  {
+    "num": 29,
+    "exam": "AIPMT 2007",
+    "question": "During the transmission of nerve impulse through a nerve fibre, the potential on the inner side of the plasma membrane has which type of electric change?",
+    "options": [
+      {
+        "id": "A",
+        "text": "First positive, then negative and continue to be negative"
+      },
+      {
+        "id": "B",
+        "text": "First negative, then positive and continue to be positive"
+      },
+      {
+        "id": "C",
+        "text": "First positive, then negative and again back to positive"
+      },
+      {
+        "id": "D",
+        "text": "First negative, then positive and again back to negative."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**First negative, then positive and again back to negative.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 30,
+    "exam": "AIPMT 2006",
+    "question": "Which one of the following does not act as a neurotransmitter?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cortisone"
+      },
+      {
+        "id": "B",
+        "text": "Acetylcholine"
+      },
+      {
+        "id": "C",
+        "text": "Epinephrine"
+      },
+      {
+        "id": "D",
+        "text": "Norepinephrine"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Cortisone** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 31,
+    "exam": "AIPMT 2005",
+    "question": "Which one of the following is the example of the action of the autonomous nervous system?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Swallowing of food"
+      },
+      {
+        "id": "B",
+        "text": "Pupillary reflex"
+      },
+      {
+        "id": "C",
+        "text": "Peristalsis of the intestine"
+      },
+      {
+        "id": "D",
+        "text": "Knee-jerk response"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Peristalsis of the intestine** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 32,
+    "exam": "AIPMT 2005",
+    "question": "In a man, abducens nerve is injured. Which one of the following functions will be affected?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Movement of the eyeball"
+      },
+      {
+        "id": "B",
+        "text": "Movement of the tongue"
+      },
+      {
+        "id": "C",
+        "text": "Swallowing"
+      },
+      {
+        "id": "D",
+        "text": "Movement of the neck"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Movement of the eyeball** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 33,
+    "exam": "AIPMT 2005",
+    "question": "Parkinson's disease (characterized by tremors and progressive rigidity of limbs) is caused by degeneration of brain neurons that are involved in movement control and make use of neurotransmitter",
+    "options": [
+      {
+        "id": "A",
+        "text": "acetylcholine"
+      },
+      {
+        "id": "B",
+        "text": "norepinephrine"
+      },
+      {
+        "id": "C",
+        "text": "dopamine"
+      },
+      {
+        "id": "D",
+        "text": "norepinephrine Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**dopamine** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 34,
+    "exam": "AIPMT 2004",
+    "question": "In the resting state of the neural membrane, diffusion due to concentration gradients, if allowed, would drive",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\text{K}^+$ into the cell"
+      },
+      {
+        "id": "B",
+        "text": "$\\text{K}^+$ and $\\text{Na}^+$ out of the cell"
+      },
+      {
+        "id": "C",
+        "text": "$\\text{Na}^+$ into the cell"
+      },
+      {
+        "id": "D",
+        "text": "$\\text{Na}^+$ out of the cell."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn the resting state, the concentration of $\\text{Na}^+$ is significantly higher outside the cell than inside. Therefore, passive diffusion along the chemical concentration gradient would drive **$\\text{Na}^+$ into the cell**.",
+    "image": ""
+  },
+  {
+    "num": 35,
+    "exam": "AIPMT 2004",
+    "question": "Injury to vagus nerve in humans is not likely to affect",
+    "options": [
+      {
+        "id": "A",
+        "text": "tongue movements"
+      },
+      {
+        "id": "B",
+        "text": "gastrointestinal movements"
+      },
+      {
+        "id": "C",
+        "text": "pancreatic secretion"
+      },
+      {
+        "id": "D",
+        "text": "cardiac movements."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**tongue movements** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 36,
+    "exam": "AIPMT 2003",
+    "question": "What used to be described as Nissl's granules in a nerve cell are now identified as",
+    "options": [
+      {
+        "id": "A",
+        "text": "cell metabolites"
+      },
+      {
+        "id": "B",
+        "text": "fat granules"
+      },
+      {
+        "id": "C",
+        "text": "ribosomes"
+      },
+      {
+        "id": "D",
+        "text": "mitochondria."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**ribosomes** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 37,
+    "exam": "AIPMT 2002",
+    "question": "Which of the following statement is correct for node of Ranvier of nerve?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Neurilemma is discontinuous"
+      },
+      {
+        "id": "B",
+        "text": "Myelin sheath is discontinuous"
+      },
+      {
+        "id": "C",
+        "text": "Both neurilemma and myelin sheath are discontinuous"
+      },
+      {
+        "id": "D",
+        "text": "Covered by myelin sheath"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Myelin sheath is discontinuous** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 38,
+    "exam": "AIPMT 2000",
+    "question": "Depolarization of axolema during nerve conduction takes place because of",
+    "options": [
+      {
+        "id": "A",
+        "text": "equal amount of $\\text{Na}^+$ and $\\text{K}^+$ move out across axolema"
+      },
+      {
+        "id": "B",
+        "text": "$\\text{Na}^+$ move inside and $\\text{K}^+$ move more outside."
+      },
+      {
+        "id": "C",
+        "text": "more $\\text{Na}^+$ outside"
+      },
+      {
+        "id": "D",
+        "text": "none of these"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nDepolarization is initiated by the rapid movement of $\\text{Na}^+$ inside the axoplasm through voltage-gated sodium channels, accompanied by subsequent movement of $\\text{K}^+$ outside during the repolarization phase.",
+    "image": ""
+  },
+  {
+    "num": 39,
+    "exam": "AIPMT 1999",
+    "question": "Which cranial nerve has the highest number of branches?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Facial nerve"
+      },
+      {
+        "id": "B",
+        "text": "Trigeminal"
+      },
+      {
+        "id": "C",
+        "text": "Vagus nerve"
+      },
+      {
+        "id": "D",
+        "text": "None of these Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Vagus nerve** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 40,
+    "exam": "AIPMT 1999",
+    "question": "Sympathetic nervous system induces :",
+    "options": [
+      {
+        "id": "A",
+        "text": "heart-beat"
+      },
+      {
+        "id": "B",
+        "text": "secretion of digestive juices"
+      },
+      {
+        "id": "C",
+        "text": "secretion of saliva"
+      },
+      {
+        "id": "D",
+        "text": "all of the above"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**heart-beat** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 41,
+    "exam": "AIPMT 1999",
+    "question": "The junction between the axon of one neuron and the dendrite of the next is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "junction point"
+      },
+      {
+        "id": "B",
+        "text": "a synapse"
+      },
+      {
+        "id": "C",
+        "text": "a joint"
+      },
+      {
+        "id": "D",
+        "text": "constant bridge"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**a synapse** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 42,
+    "exam": "AIPMT 1999",
+    "question": "Which of the following is regarded as a unit of nervous tissue?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Myelin sheath"
+      },
+      {
+        "id": "B",
+        "text": "Axons"
+      },
+      {
+        "id": "C",
+        "text": "Dendrites"
+      },
+      {
+        "id": "D",
+        "text": "Neurons"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Neurons** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 43,
+    "exam": "AIPMT 1997",
+    "question": "The Nissl's granules of nerves cell are made up of",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA"
+      },
+      {
+        "id": "B",
+        "text": "RNA"
+      },
+      {
+        "id": "C",
+        "text": "ribosome"
+      },
+      {
+        "id": "D",
+        "text": "protein"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**ribosome** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 44,
+    "exam": "AIPMT 1997",
+    "question": "The vagus nerve is the cranial nerve numbering",
+    "options": [
+      {
+        "id": "A",
+        "text": "7"
+      },
+      {
+        "id": "B",
+        "text": "5"
+      },
+      {
+        "id": "C",
+        "text": "10"
+      },
+      {
+        "id": "D",
+        "text": "9"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**10** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 45,
+    "exam": "AIPMT 1996",
+    "question": "By which nervous system and of what type, the blood is supplied into visceral organs?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both SNS and PNS, involuntary"
+      },
+      {
+        "id": "B",
+        "text": "Para-sympathetic nervous system involuntary"
+      },
+      {
+        "id": "C",
+        "text": "Sympathetic nervous system, involuntary"
+      },
+      {
+        "id": "D",
+        "text": "Sympathetic nervous system, voluntary"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Both SNS and PNS, involuntary** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 46,
+    "exam": "AIPMT 1995",
+    "question": "The sympathetic nerves, in mammals, arise from",
+    "options": [
+      {
+        "id": "A",
+        "text": "sacral nerves"
+      },
+      {
+        "id": "B",
+        "text": "$3^\\text{rd}, 7^\\text{th}, 9^\\text{th}$ and $10^\\text{th}$ cranial nerves"
+      },
+      {
+        "id": "C",
+        "text": "thoraco-lumbar nerves"
+      },
+      {
+        "id": "D",
+        "text": "cervical nerves"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe sympathetic nervous system exhibits a **thoraco-lumbar outflow**, arising from the lateral horn of spinal cord segments $T_1$ through $L_2/L_3$. In contrast, the parasympathetic nervous system has a cranio-sacral outflow.",
+    "image": ""
+  },
+  {
+    "num": 47,
+    "exam": "AIPMT 1992",
+    "question": "Afferent nerve fibres carry impulses from",
+    "options": [
+      {
+        "id": "A",
+        "text": "effector organs to CNS"
+      },
+      {
+        "id": "B",
+        "text": "receptors to CNS"
+      },
+      {
+        "id": "C",
+        "text": "CNS to receptors"
+      },
+      {
+        "id": "D",
+        "text": "CNS to muscles"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**receptors to CNS** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 48,
+    "exam": "AIPMT 1992",
+    "question": "Vagus nerve is",
+    "options": [
+      {
+        "id": "A",
+        "text": "X"
+      },
+      {
+        "id": "B",
+        "text": "IX"
+      },
+      {
+        "id": "C",
+        "text": "VII"
+      },
+      {
+        "id": "D",
+        "text": "V"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**X** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 49,
+    "exam": "AIPMT 1990",
+    "question": "Third ventricle of brain is also known as",
+    "options": [
+      {
+        "id": "A",
+        "text": "metacoel"
+      },
+      {
+        "id": "B",
+        "text": "rhinocoel"
+      },
+      {
+        "id": "C",
+        "text": "paracoel"
+      },
+      {
+        "id": "D",
+        "text": "diacoel"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**diacoel** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 50,
+    "exam": "AIPMT 1990",
+    "question": "One function of parasympathetic nervous system is",
+    "options": [
+      {
+        "id": "A",
+        "text": "contraction of hair muscles"
+      },
+      {
+        "id": "B",
+        "text": "stimulation of sweat glands"
+      },
+      {
+        "id": "C",
+        "text": "acceleration of heart beat"
+      },
+      {
+        "id": "D",
+        "text": "constriction of pupil"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**constriction of pupil** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 51,
+    "exam": "AIPMT 1989",
+    "question": "Which of the following cranial nerves can regulate heart beat?",
+    "options": [
+      {
+        "id": "A",
+        "text": "X"
+      },
+      {
+        "id": "B",
+        "text": "IX"
+      },
+      {
+        "id": "C",
+        "text": "VIII"
+      },
+      {
+        "id": "D",
+        "text": "VII Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**X** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 52,
+    "exam": "NEET 2023 Manipur",
+    "question": "Given below are two statements :\nStatement I :- The nose contains mucus – coated receptors which are specialised for receiving the sense of smell and are called olfactory receptors.\nStatement II :- Wall of the eye ball has three layers. The external layer is called choroid (dense connective tissue), middle layer is sclera (thin pigmented layer) and internal layer is retina (ganglion cells, bipolar cells and photoreceptor cells).\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is true but statement II is false"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is false but Statement II is true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are false."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Statement I is true**: The olfactory epithelium in the nose contains specialised mucus-coated bipolar sensory cells called olfactory receptor cells.\n- **Statement II is false**: The external layer is the **sclera** (composed of dense connective tissue), the middle layer is the **choroid** (thin, vascular, pigmented layer), and the inner layer is the **retina**.",
+    "image": ""
+  },
+  {
+    "num": 53,
+    "exam": "NEET 2023",
+    "question": "Match List I with List II with respect to human eye:\n\n| List I | List II |\n| :--- | :--- |\n| (A) Fovea | (I) Visible coloured portion of eye that regulates diameter of pupil. |\n| (B) Iris | (II) External layer of eye formed of dense connective tissue. |\n| (C) Blind spot | (III) Point of greatest visual acuity or resolution. |\n| (D) Sclera | (IV) Point where optic nerve leaves the eyeball and photoreceptor cells are absent. |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-IV, C-III, D-II"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-I, C-III, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-I, C-IV, D-II"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Fovea**: The central pit in the macula lutea where only cones are densely packed, providing maximum visual acuity (A-III).\n- **Iris**: Opaque, pigmented extension of ciliary body that regulates pupil diameter (B-I).\n- **Blind spot**: Area where optic nerve exits the eyeball and retinal blood vessels enter; photoreceptors are absent (C-IV).\n- **Sclera**: External tough white coat composed of dense connective tissue (D-II).",
+    "image": ""
+  },
+  {
+    "num": 54,
+    "exam": "NEET 2020 Phase 2",
+    "question": "Match the following columns and select the correct option :\n\n| Column - I | Column - II |\n| :--- | :--- |\n| (a) Rods and Cones | (i) Absence of photoreceptor cells |\n| (b) Blind Spot | (ii) Cones are densely packed |\n| (c) Fovea | (iii) Photoreceptor cells |\n| (d) Iris | (iv) Visible coloured portion of the eye |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(ii), (b)-(iv), (c)-(iii), (d)-(i)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iii), (b)-(i), (c)-(ii), (d)-(iv)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(ii), (b)-(iii), (c)-(i), (d)-(iv)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iii), (b)-(iv), (c)-(ii), (d)-(i)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Rods and Cones**: The photoreceptor cells of the retina (a-iii).\n- **Blind Spot**: Region devoid of photoreceptor cells where the optic nerve leaves (b-i).\n- **Fovea**: Area where cones are densely packed for high resolution (c-ii).\n- **Iris**: Visible pigmented anterior portion of the eye regulating light entry (d-iv).",
+    "image": ""
+  },
+  {
+    "num": 55,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Match the following columns and select the correct option.\n\n| Column-I | Column-II |\n| :--- | :--- |\n| (a) Organ of Corti | (i) Connects middle ear and pharynx |\n| (b) Cochlea | (ii) Coiled part of the labyrinth |\n| (c) Eustachian tube | (iii) Attached to the oval window |\n| (d) Stapes | (iv) Located on the basilar membrane |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A) (ii), (B) (iii), (C) (i), (D) (iv)"
+      },
+      {
+        "id": "B",
+        "text": "(A) (iv), (B) (ii), (C) (i), (D) (iii)"
+      },
+      {
+        "id": "C",
+        "text": "(A) (iii), (B) (i), (C) (iv), (D) (ii)"
+      },
+      {
+        "id": "D",
+        "text": "(A) (i), (B) (ii), (C) (iv), (D) (iii)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Organ of Corti**: Sensory structure for hearing situated on the basilar membrane containing auditory hair cells (a-iv).\n- **Cochlea**: Coiled, fluid-filled snail-like portion of the inner ear labyrinth (b-ii).\n- **Eustachian tube**: Canal connecting middle ear cavity with the nasopharynx to balance pressure (c-i).\n- **Stapes**: Smallest ear ossicle fitted onto the oval window (fenestra ovalis) of cochlea (d-iii).",
+    "image": ""
+  },
+  {
+    "num": 56,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Which of the following statements is   not   correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "In the knee-jerk reflex, stimulus is the stretching of muscle and response is its contraction"
+      },
+      {
+        "id": "B",
+        "text": "An action potential in an axon does not move backward because the segment behind is in a refractory phase"
+      },
+      {
+        "id": "C",
+        "text": "Depolarisation of hair cells of cochlea results in the opening of the mechanically gated potassium-ion channels"
+      },
+      {
+        "id": "D",
+        "text": "Rods are very sensitive and contribute to daylight vision"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Rods are very sensitive and contribute to daylight vision** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 57,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Which of the following receptors are specifically responsible for maintenance of balance of body and posture?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Crista ampullaris and macula"
+      },
+      {
+        "id": "B",
+        "text": "Basilar membrane and otoliths"
+      },
+      {
+        "id": "C",
+        "text": "Hair cells and organ of corti"
+      },
+      {
+        "id": "D",
+        "text": "Tectorial membrane and macula"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Crista ampullaris and macula** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 58,
+    "exam": "NEET 2019",
+    "question": "Which of the following statements is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cornea is convex, transparent layer which is highly vascularised"
+      },
+      {
+        "id": "B",
+        "text": "Cornea consists of dense matrix of collagen and is the most sensitive portion of the eye."
+      },
+      {
+        "id": "C",
+        "text": "Cornea is an external, Transparent and protective proteinaceous covering of the eye-ball"
+      },
+      {
+        "id": "D",
+        "text": "Cornea consists of dense connective tissue of elastin and can repair itself. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Cornea is an external, Transparent and protective proteinaceous covering of the eye-ball** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 59,
+    "exam": "NEET 2018",
+    "question": "The transparent lens in the human eye is held in its place by",
+    "options": [
+      {
+        "id": "A",
+        "text": "smooth muscles attached to the ciliary body."
+      },
+      {
+        "id": "B",
+        "text": "ligaments attached to the ciliary body"
+      },
+      {
+        "id": "C",
+        "text": "ligaments attached to the iris"
+      },
+      {
+        "id": "D",
+        "text": "smooth muscles attached to the iris"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**ligaments attached to the ciliary body** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 60,
+    "exam": "NEET 2017",
+    "question": "Good vision depends on adequate intake of carotene rich food.\nSelect the best option from the following statements:\n(1) Vitamin A derivatives are formed from carotene.\n(2) The photopigments are embedded in the membrane discs of the inner segment.\n(3) Retinal is a derivative of vitamin A.\n(4) Retinal is a light absorbing part of all the visual photopigments.",
+    "options": [
+      {
+        "id": "A",
+        "text": "(1), (3) and (4)"
+      },
+      {
+        "id": "B",
+        "text": "(1) and (3)"
+      },
+      {
+        "id": "C",
+        "text": "(2), (3) and (4)"
+      },
+      {
+        "id": "D",
+        "text": "(1) and (2)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Statement (1) is correct**: Ingested beta-carotenes from plants are cleaved in intestinal mucosa to yield retinal/retinol (vitamin A).\n- **Statement (2) is incorrect**: Photopigments (rhodopsin/iodopsin) are embedded in the membrane discs of the **outer segment** of photoreceptors (not the inner segment).\n- **Statement (3) is correct**: Retinal is an aldehyde derivative of vitamin A (retinol).\n- **Statement (4) is correct**: Retinal serves as the chromophore that absorbs light energy across visual photopigments.\nTherefore, statements (1), (3), and (4) are correct.",
+    "image": ""
+  },
+  {
+    "num": 61,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Choose the correct statement.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nociceptors respond to changes in pressure."
+      },
+      {
+        "id": "B",
+        "text": "Meissner's corpuscles are thermoreceptors."
+      },
+      {
+        "id": "C",
+        "text": "Photoreceptors in the human eye are depolarised during darkness and become hyperpolarised in response to the light stimulus."
+      },
+      {
+        "id": "D",
+        "text": "Receptors do not produce graded potentials."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Photoreceptors in the human eye are depolarised during darkness and become hyperpolarised in response to the light stimulus.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 62,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Photosensitive compound in human eye is made up of",
+    "options": [
+      {
+        "id": "A",
+        "text": "opsin and retinol"
+      },
+      {
+        "id": "B",
+        "text": "transducin and retinene"
+      },
+      {
+        "id": "C",
+        "text": "guanosine and retinol"
+      },
+      {
+        "id": "D",
+        "text": "opsin and retinal."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**opsin and retinal.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 63,
+    "exam": "AIPMT 2015",
+    "question": "In mammalian eye, the 'fovea' is the center of the visual field, where",
+    "options": [
+      {
+        "id": "A",
+        "text": "only rods are present"
+      },
+      {
+        "id": "B",
+        "text": "more rods than cones are found"
+      },
+      {
+        "id": "C",
+        "text": "high density of cones occur, but has no rods"
+      },
+      {
+        "id": "D",
+        "text": "the optic nerve leaves the eye. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**high density of cones occur, but has no rods** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 64,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "A gymnast is able to balance his body upside down even in the total darkness because of",
+    "options": [
+      {
+        "id": "A",
+        "text": "tectorial membrane"
+      },
+      {
+        "id": "B",
+        "text": "organ of corti"
+      },
+      {
+        "id": "C",
+        "text": "cochlea"
+      },
+      {
+        "id": "D",
+        "text": "vestibular apparatus."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**vestibular apparatus.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 65,
+    "exam": "AIPMT 2014",
+    "question": "Which one of the following statements is not correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Retinal is the light absorbing portion of visual photo pigments."
+      },
+      {
+        "id": "B",
+        "text": "In retina the rods have the photopigment rhodopsin while cones have three different photopigments."
+      },
+      {
+        "id": "C",
+        "text": "Retinal is a derivative of vitamin C."
+      },
+      {
+        "id": "D",
+        "text": "Rhodopsin is the purplish red protein present in rods only."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Retinal is a derivative of vitamin C.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 66,
+    "exam": "NEET 2013",
+    "question": "Parts A, B, C and D of the human eye are shown in the diagram. Select the option which gives correct identification along with its functions/ characteristics.",
+    "options": [
+      {
+        "id": "A",
+        "text": "B - Blind spot - Has only a few rods and cones."
+      },
+      {
+        "id": "B",
+        "text": "A - Retina - Contains photoreceptors, i.e., rods and cones."
+      },
+      {
+        "id": "C",
+        "text": "C - Aqueous chamber - Reflects the light which does not pass through the lens."
+      },
+      {
+        "id": "D",
+        "text": "D - Choroid - Its anterior part forms ciliary body."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn the eye diagram:\n- **A**: **Retina**, the innermost sensitive layer containing photoreceptors (rods and cones), bipolar cells, and ganglion cells.\n- **B**: Blind spot (completely lacks photoreceptors, does not have 'a few rods and cones').\n- **C**: Aqueous chamber containing aqueous humor that nourishes lens and cornea (does not reflect light).\n- **D**: Sclera (the outer fibrous layer).\nHence, option (B) is accurate.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794538439/edvedum/questions/neural_control_and_coordination/neural_q_66.png"
+  },
+  {
+    "num": 67,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Which part of the human ear plays no role in hearing as such but is otherwise very much required?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Eustachian tube"
+      },
+      {
+        "id": "B",
+        "text": "Organ of Corti"
+      },
+      {
+        "id": "C",
+        "text": "Vestibular apparatus"
+      },
+      {
+        "id": "D",
+        "text": "Ear ossicles Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Vestibular apparatus** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 68,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "The purplish red pigment rhodopsin contained in the rods type of photoreceptor cells of the human eye, is a derivative of",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\text{vitamin B}_1$"
+      },
+      {
+        "id": "B",
+        "text": "vitamin C"
+      },
+      {
+        "id": "C",
+        "text": "vitamin D"
+      },
+      {
+        "id": "D",
+        "text": "vitamin A."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nRhodopsin (visual purple) is a conjugated protein composed of opsin (protein) and **retinal** (aldehyde of **vitamin A**). Deficiency of vitamin A leads to impaired rhodopsin regeneration and night blindness (nyctalopia).",
+    "image": ""
+  },
+  {
+    "num": 69,
+    "exam": "AIPMT 2008",
+    "question": "Cornea transplant in humans is almost never rejected. This is because",
+    "options": [
+      {
+        "id": "A",
+        "text": "it is composed of enucleated cells"
+      },
+      {
+        "id": "B",
+        "text": "it is a non-living layer"
+      },
+      {
+        "id": "C",
+        "text": "its cells are least penetrable by bacteria"
+      },
+      {
+        "id": "D",
+        "text": "it has no blood supply."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**it has no blood supply.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 70,
+    "exam": "AIPMT 2008",
+    "question": "Which one of the following is the correct difference between rod cells and cone cells of our retina?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Overall function: Rod cells - Vision in poor light; Cone cells - Colour vision and detailed vision in bright light"
+      },
+      {
+        "id": "B",
+        "text": "Distribution: Rod cells - More concentrated in centre of retina; Cone cells - Evenly distributed all over retina"
+      },
+      {
+        "id": "C",
+        "text": "Visual acuity: Rod cells - High; Cone cells - Low"
+      },
+      {
+        "id": "D",
+        "text": "Visual pigment contained: Rod cells - Iodopsin; Cone cells - Rhodopsin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Option A is correct**: Rods mediate twilight/scotopic vision (sensitive in low light), while cones mediate photopic/daylight vision and color discrimination.\n- **Option B is incorrect**: Cones are concentrated in the fovea (center), while rods are more abundant in the periphery.\n- **Option C is incorrect**: Cones provide high visual acuity, whereas rods provide lower acuity due to greater convergence.\n- **Option D is incorrect**: Rods contain rhodopsin; cones contain iodopsin / photopsin.",
+    "image": ""
+  },
+  {
+    "num": 71,
+    "exam": "AIPMT 2008",
+    "question": "Given below is a diagrammatic cross section of a single loop of human cochlea.\n\nWhich one of the following options correctly represents the names of three different parts?",
+    "options": [
+      {
+        "id": "A",
+        "text": "B : Tectorial membrane, C : Perilymph, D: secretory cells"
+      },
+      {
+        "id": "B",
+        "text": "A : Perilymph, B : Tectorial membrane, C: Endolymph"
+      },
+      {
+        "id": "C",
+        "text": "C : Endolymph, D : Sensory hair cells, A : Serum"
+      },
+      {
+        "id": "D",
+        "text": "D : Sensory hair cells, A : Endolymph B : Tectorial membrane."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn the transverse section of the cochlea:\n- **A**: Scala vestibuli / scala tympani filled with **Perilymph**\n- **B**: **Tectorial membrane** overlying the sensory hair cells of the organ of Corti\n- **C**: Scala media filled with **Endolymph**\n- **D**: Basilar membrane supporting hair cells.\nTherefore, **A : Perilymph, B : Tectorial membrane, C: Endolymph** is correctly represented.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794538440/edvedum/questions/neural_control_and_coordination/neural_q_71.png"
+  },
+  {
+    "num": 72,
+    "exam": "AIPMT 2007",
+    "question": "Bowman's glands are located in the",
+    "options": [
+      {
+        "id": "A",
+        "text": "Anterior pituitary"
+      },
+      {
+        "id": "B",
+        "text": "Female reproductive system of cockroach"
+      },
+      {
+        "id": "C",
+        "text": "Olfactory epithelium of our nose"
+      },
+      {
+        "id": "D",
+        "text": "Proximal end of uriniferous tubules."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Olfactory epithelium of our nose** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 73,
+    "exam": "AIPMT 2006",
+    "question": "Bowman's glands are found in",
+    "options": [
+      {
+        "id": "A",
+        "text": "juxtamedullary nephrons"
+      },
+      {
+        "id": "B",
+        "text": "Olfactory epithelium"
+      },
+      {
+        "id": "C",
+        "text": "external auditory canal"
+      },
+      {
+        "id": "D",
+        "text": "cortical nephrons only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Olfactory epithelium** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 74,
+    "exam": "AIPMT 2001",
+    "question": "When we migrate from dark to light, we fail to see for some time but after a time visibility becomes normal. It is example of",
+    "options": [
+      {
+        "id": "A",
+        "text": "accommodation"
+      },
+      {
+        "id": "B",
+        "text": "adaptation"
+      },
+      {
+        "id": "C",
+        "text": "mutation"
+      },
+      {
+        "id": "D",
+        "text": "photoperiodism. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**adaptation** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 75,
+    "exam": "AIPMT 2001",
+    "question": "Which of the following statements is the characteristics of human cornea?",
+    "options": [
+      {
+        "id": "A",
+        "text": "It is secreted by conjuctiva and glandular layer."
+      },
+      {
+        "id": "B",
+        "text": "It is a lacrimal gland which secrete tears."
+      },
+      {
+        "id": "C",
+        "text": "Blood circulation is absent in cornea."
+      },
+      {
+        "id": "D",
+        "text": "In old age it becomes the cause of cataract."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Blood circulation is absent in cornea.** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 76,
+    "exam": "AIPMT 1997",
+    "question": "In the chemistry of vision in mammals, the photosensitive substance is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "rhodopsin"
+      },
+      {
+        "id": "B",
+        "text": "melanin"
+      },
+      {
+        "id": "C",
+        "text": "sclerotin"
+      },
+      {
+        "id": "D",
+        "text": "retinol"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**rhodopsin** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 77,
+    "exam": "AIPMT 1993",
+    "question": "Ivan Pavlov performed experiments on",
+    "options": [
+      {
+        "id": "A",
+        "text": "simple reflexes"
+      },
+      {
+        "id": "B",
+        "text": "conditioned reflexes"
+      },
+      {
+        "id": "C",
+        "text": "cardiac reflexes"
+      },
+      {
+        "id": "D",
+        "text": "origin of life"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**conditioned reflexes** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 78,
+    "exam": "AIPMT 1993",
+    "question": "Light rays entering the eye is controlled by",
+    "options": [
+      {
+        "id": "A",
+        "text": "pupil"
+      },
+      {
+        "id": "B",
+        "text": "iris"
+      },
+      {
+        "id": "C",
+        "text": "cornea"
+      },
+      {
+        "id": "D",
+        "text": "lens"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**pupil** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 79,
+    "exam": "AIPMT 1993",
+    "question": "Retina is most sensitive at",
+    "options": [
+      {
+        "id": "A",
+        "text": "optic disc"
+      },
+      {
+        "id": "B",
+        "text": "periphery"
+      },
+      {
+        "id": "C",
+        "text": "macula lutea"
+      },
+      {
+        "id": "D",
+        "text": "fovea centralis"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**fovea centralis** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 80,
+    "exam": "AIPMT 1993",
+    "question": "Function of iris is to",
+    "options": [
+      {
+        "id": "A",
+        "text": "move lens forward and backward"
+      },
+      {
+        "id": "B",
+        "text": "refract light rays"
+      },
+      {
+        "id": "C",
+        "text": "bring about movements of eye lids"
+      },
+      {
+        "id": "D",
+        "text": "alter the size of pupil"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**alter the size of pupil** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 81,
+    "exam": "AIPMT 1993",
+    "question": "Iris is part of",
+    "options": [
+      {
+        "id": "A",
+        "text": "sclerotic"
+      },
+      {
+        "id": "B",
+        "text": "choroid"
+      },
+      {
+        "id": "C",
+        "text": "choroid and retina"
+      },
+      {
+        "id": "D",
+        "text": "sclerotic and choroid Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**choroid** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  },
+  {
+    "num": 82,
+    "exam": "AIPMT 1989",
+    "question": "Sensitive pigmented layer of eye is",
+    "options": [
+      {
+        "id": "A",
+        "text": "cornea"
+      },
+      {
+        "id": "B",
+        "text": "retina"
+      },
+      {
+        "id": "C",
+        "text": "sclerotic"
+      },
+      {
+        "id": "D",
+        "text": "iris"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**retina** is the correct answer according to the official NEET answer key and NCERT Neural Control and Coordination syllabus.",
+    "image": ""
+  }
+]
