@@ -1,0 +1,3876 @@
+[
+  {
+    "num": 1,
+    "exam": "RE-NEET 2026",
+    "question": "The covering of ovum at ovulation is   .",
+    "options": [
+      {
+        "id": "A",
+        "text": "chorion"
+      },
+      {
+        "id": "B",
+        "text": "endometrium"
+      },
+      {
+        "id": "C",
+        "text": "zona radiata"
+      },
+      {
+        "id": "D",
+        "text": "zona pellucida"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe primary oocyte develops a thick, acellular, non-vascular glycoprotein layer called the **zona pellucida** during follicular maturation. It is secreted by the developing oocyte itself.",
+    "image": ""
+  },
+  {
+    "num": 2,
+    "exam": "RE-NEET 2026",
+    "question": "Which of the following structure is not a part of the male reproductive system?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Infundibulum"
+      },
+      {
+        "id": "B",
+        "text": "Rete testis"
+      },
+      {
+        "id": "C",
+        "text": "Epididymis"
+      },
+      {
+        "id": "D",
+        "text": "Vasa efferentia"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe male accessory ducts include the rete testis, vasa efferentia, epididymis, and vas deferens. The **infundibulum** is part of the female Fallopian tube (oviduct).",
+    "image": ""
+  },
+  {
+    "num": 3,
+    "exam": "RE-NEET 2026",
+    "question": "Given below are two statements:\nStatement I : Ovulation is caused by LH surge leading to rupture of Graafian follicles.\nStatement II: Graafian follicle remaining after ovulation transform into corpus luteum and secretes\nlarge amount of estrogen.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is incorrect but Statement II is correct"
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are incorrect"
+      },
+      {
+        "id": "D",
+        "text": "Statement I is correct but Statement II is incorrect"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nStatement I is correct: Both primary and secondary spermatocytes are stages of spermatogenesis possessing genetic material. Statement II is correct: Spermatids possess a haploid set of 23 chromosomes following the second meiotic division.",
+    "image": ""
+  },
+  {
+    "num": 4,
+    "exam": "RE-NEET 2026",
+    "question": "Sperm motility is due to   .",
+    "options": [
+      {
+        "id": "A",
+        "text": "muscular movement"
+      },
+      {
+        "id": "B",
+        "text": "flagellar movement"
+      },
+      {
+        "id": "C",
+        "text": "ciliary movement"
+      },
+      {
+        "id": "D",
+        "text": "amoeboid movement"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nHuman spermatozoa move through the female reproductive tract by **flagellar movement** produced by rhythmic undulating movements of the tail.",
+    "image": ""
+  },
+  {
+    "num": 5,
+    "exam": "RE-NEET 2026",
+    "question": "Which of the following hormone is not secreted by human placenta?",
+    "options": [
+      {
+        "id": "A",
+        "text": "LH"
+      },
+      {
+        "id": "B",
+        "text": "hCG"
+      },
+      {
+        "id": "C",
+        "text": "Estrogen"
+      },
+      {
+        "id": "D",
+        "text": "Progesterone"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**LH (Luteinizing Hormone)** is secreted by the anterior pituitary gland, not the placenta. The human placenta secretes hCG, hPL, estrogens, progesterone, and relaxin.",
+    "image": ""
+  },
+  {
+    "num": 6,
+    "exam": "NEET 2026",
+    "question": "Spermatogonia undergo a series of cell divisions statements to produce sperms. Select the correct\nfrom the following :\nA. Spermatogonia always undergo meiotic cell division.\nB. Primary spermatocytes divide mitotically to produce secondary spermatocytes.\nC. Secondary spermatocytes, through their second meiotic division, produce haploid spermatids.\nD. Spermatids produce spermatozoa through mitosis.\nE. Spermatids transform into spermatozoa by spermiogenesis.\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A and E only"
+      },
+      {
+        "id": "B",
+        "text": "C and E only"
+      },
+      {
+        "id": "C",
+        "text": "A, C and E only"
+      },
+      {
+        "id": "D",
+        "text": "B, C and D only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- Secondary spermatocytes undergo the second meiotic division to form haploid spermatids (C).\n- Spermatids are transformed into mature spermatozoa by spermiogenesis (E).\nHence, statements **C and E only** are correct.",
+    "image": ""
+  },
+  {
+    "num": 7,
+    "exam": "NEET 2026",
+    "question": "Match List I with List II related to embryonic development at various months of pregnancy:\n\n| List I | List II |\n| :--- | :--- |\n| A. The foetus movement starts and hair appears on the head | I. 24 weeks of pregnancy |\n| B. The foetus develops limbs and digits | II. 20 weeks of pregnancy |\n| C. The foetus develops external genital organs | III. 8 weeks of pregnancy |\n| D. The foetus body is covered with fine hair; eyelids separate and eyelashes are formed | IV. 12 weeks of pregnancy |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-IV, C-III, D-I"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nEmbryonic development milestones in human pregnancy:\n- **A. Foetus movements & hair on head**: 5th month / 20 weeks (II)\n- **B. Limbs and digits developed**: End of 2nd month / 8 weeks (III)\n- **C. External genital organs developed**: End of 1st trimester / 12 weeks (IV)\n- **D. Body hair, eyelashes, eyelids separate**: End of 2nd trimester / 24 weeks (I)\nHence, **A-II, B-III, C-IV, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 8,
+    "exam": "NEET 2026",
+    "question": "Arrange the following cell layers/structures around the female gamete, from outer to inner side :\nA. Zona pellucida\nB. Perivitelline space\nC. Corona radiata\nD. Plasma membrane of ovum\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "D, B, A, C"
+      },
+      {
+        "id": "B",
+        "text": "C, A, D, B"
+      },
+      {
+        "id": "C",
+        "text": "C, A, B, D"
+      },
+      {
+        "id": "D",
+        "text": "A, C, B, D"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe layers/structures surrounding the ovum from outside to inside are:\n1. **Corona radiata (C)**: Outermost radially arranged granulosa cells\n2. **Zona pellucida (A)**: Acellular glycoprotein coat\n3. **Perivitelline space (B)**: Fluid-filled space\n4. **Plasma membrane of ovum (D)**: The oolemma\nCorrect sequence: **C, A, B, D**.",
+    "image": ""
+  },
+  {
+    "num": 9,
+    "exam": "NEET 2025",
+    "question": "The first menstruation is called :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Diapause"
+      },
+      {
+        "id": "B",
+        "text": "Ovulation"
+      },
+      {
+        "id": "C",
+        "text": "Menopause"
+      },
+      {
+        "id": "D",
+        "text": "Menarche"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Menarche** is the first occurrence of menstruation at puberty in human females, whereas menopause is the permanent cessation around 50 years of age.",
+    "image": ""
+  },
+  {
+    "num": 10,
+    "exam": "NEET 2025",
+    "question": "Find the correct statement :\n(A) In human pregnancy, the major organ systems are formed at the end of 12 weeks.\n(B) In human pregnancy the major organ systems are formed at the end of 8 weeks.\n(C) In human pregnancy heart is formed after one month of gestation.\n(D) In human pregnancy, limbs and digits develop by the end of second month.\n(E) In human pregnancy the appearance of hair is usually observed in the fifth month.\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "B, C, D and E only"
+      },
+      {
+        "id": "B",
+        "text": "A, C, D and E only"
+      },
+      {
+        "id": "C",
+        "text": "A and E only"
+      },
+      {
+        "id": "D",
+        "text": "B and C only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn human pregnancy:\n- (A) Major organ systems are formed by 12 weeks.\n- (C) The embryo's heart is formed after 1 month of gestation.\n- (D) Limbs and digits develop by the end of the 2nd month.\n- (E) Hair on head appears in the 5th month.\nThus, **A, C, D and E only** are true.",
+    "image": ""
+  },
+  {
+    "num": 11,
+    "exam": "NEET 2025",
+    "question": "Match List-I with List-II.\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Head | I. Enzymes |\n| B. Middle piece | II. Sperm motility |\n| C. Acrosome | III. Energy |\n| D. Tail | IV. Genetic material |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-III, C-I, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-III, C-II, D-I"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nMatching sperm regions with their functions:\n- **A. Head**: Contains haploid nucleus/genetic material (IV)\n- **B. Middle piece**: Contains mitochondria for energy (ATP) production (III)\n- **C. Acrosome**: Contains hydrolytic enzymes for fertilization (I)\n- **D. Tail**: Provides sperm motility (II)\nHence, **A-IV, B-III, C-I, D-II**.",
+    "image": ""
+  },
+  {
+    "num": 12,
+    "exam": "NEET 2025",
+    "question": "Consider the following :\nA. The reductive division for the human female gametogenesis starts earlier than that of the male\ngametogenesis.\nB. The gap between the first meiotic division and the second meiotic division is much shorter for\nmales compared to females.\nC. The first polar body is associated with the formation of the primary oocyte.\nD. Luteinizing Hormone (LH) surge leads to disintegration of the endometrium and onset of\nmenstrual bleeding.\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "B and D are true"
+      },
+      {
+        "id": "B",
+        "text": "B and C are true"
+      },
+      {
+        "id": "C",
+        "text": "A and B are true"
+      },
+      {
+        "id": "D",
+        "text": "A and C are true"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- Statement A is true: Oogenesis begins during embryonic development in females, whereas spermatogenesis starts only at puberty in males.\n- Statement B is true: In males, meiosis I and II proceed continuously, whereas in females, there is a prolonged arrest of years between meiosis I and II.\nThus, **A and B are true**.",
+    "image": ""
+  },
+  {
+    "num": 13,
+    "exam": "NEET 2025",
+    "question": "Twins are born to a family that lives next door to you. The twins are a boy and a girl. Which of the\nfollowing must be true?",
+    "options": [
+      {
+        "id": "A",
+        "text": "They were conceived through in vitro fertilization."
+      },
+      {
+        "id": "B",
+        "text": "They have   identical genetic content."
+      },
+      {
+        "id": "C",
+        "text": "They are monozygotic twins."
+      },
+      {
+        "id": "D",
+        "text": "They are fraternal twins."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nIdentical (monozygotic) twins arise when **one sperm fertilizes one egg**, and the resulting early zygote/blastocyst divides into two separate embryos sharing identical genomes.",
+    "image": ""
+  },
+  {
+    "num": 14,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Given below are two statements: One is labelled as Assertion A and the other is labelled as Reason\nR.\nAssertion A: During menstrual cycle, the ovulation takes place approximately on 14th day.\nReason R: Rapid secretion of LH in the middle of menstrual cycle induces rupture of Graafian follicle\nand thereby the release of ovum.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow.",
+    "options": [
+      {
+        "id": "A",
+        "text": "A is correct but R is not correct."
+      },
+      {
+        "id": "B",
+        "text": "A is not correct but R is correct."
+      },
+      {
+        "id": "C",
+        "text": "Both A and R are correct and R is the correct explanation of A."
+      },
+      {
+        "id": "D",
+        "text": "Both A and R are correct but R is NOT the correct explanation of A."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAssertion (A) is correct: Estrogen, progesterone, and placental lactogen stimulate the growth and branching of mammary duct systems during pregnancy. Reason (R) is false: Prolactin is responsible for milk synthesis and secretion, while oxytocin causes milk ejection.",
+    "image": ""
+  },
+  {
+    "num": 15,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Arrange the following parts in human Mammary gland, traversing the route of milk ejection.\nA. Mammary duct\nB. Lactiferous duct\nC. Mammary alveolus\nD. Ampulla\nE. Mammary tubule\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "D → C → E → A → B"
+      },
+      {
+        "id": "B",
+        "text": "C → E → B → A → D"
+      },
+      {
+        "id": "C",
+        "text": "C → E → A → D → B"
+      },
+      {
+        "id": "D",
+        "text": "A → C → E → D → B"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nTraversing the route of milk ejection from deep within the mammary gland outward:\n**Mammary alveolus (C) → Mammary tubule (E) → Mammary duct (A) → Ampulla (D) → Lactiferous duct (B)**.\nHence, the correct order is **C → E → A → D → B**.",
+    "image": ""
+  },
+  {
+    "num": 16,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II relating to human female external genitalia.\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Mons pubis | (I) A fleshy fold of tissue surrounding the vaginal opening |\n| (B) Clitoris | (II) Fatty cushion of cells covered by skin and hair |\n| (C) Hymen | (III) Tiny finger-like structure above labia minora |\n| (D) Labia majora | (IV) A thin membrane-like structure covering vaginal opening |\n\nChoose the correct answer from the option given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-I, B-IV, C-III, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-III, C-I, D-IV"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nMatching external female genitalia:\n- **A. Mons pubis**: Fatty cushion covered by skin and pubic hair (II)\n- **B. Clitoris**: Tiny finger-like erectile structure above labia minora (III)\n- **C. Hymen**: Thin vascular membrane partially occluding vaginal opening (IV)\n- **D. Labia majora**: Fleshy folds of tissue surrounding the vaginal opening (I)\nHence, **A-II, B-III, C-IV, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 17,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Parturition | (I) Several antibodies for new-born babies |\n| (B) Placenta | (II) Collection of ovum after ovulation |\n| (C) Colostrum | (III) Foetal ejection reflex |\n| (D) Fimbriae | (IV) Secretion of the hormone hCG |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-IV, C-II, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-IV, C-II, D-I"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nMatching reproductive functions:\n- **(A) Parturition**: Delivery induced by foetal ejection reflex (III)\n- **(B) Placenta**: Secretion of human chorionic gonadotrophin (hCG) (IV)\n- **(C) Colostrum**: Provides passive immunity via antibodies (IgA) to newborn (I)\n- **(D) Fimbriae**: Finger-like projections that collect ovum after ovulation (II)\nHence, **A-III, B-IV, C-I, D-II**.",
+    "image": ""
+  },
+  {
+    "num": 18,
+    "exam": "NEET 2024",
+    "question": "Which of the following is not a component of Fallopian tube?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Uterine fundus"
+      },
+      {
+        "id": "B",
+        "text": "Isthmus"
+      },
+      {
+        "id": "C",
+        "text": "Infundibulum"
+      },
+      {
+        "id": "D",
+        "text": "Ampulla"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe Fallopian tube consists of three parts: **infundibulum** (with fimbriae), **ampulla**, and **isthmus**. The **uterine fundus** is the superior dome of the uterus, not part of the Fallopian tube.",
+    "image": ""
+  },
+  {
+    "num": 19,
+    "exam": "NEET 2024",
+    "question": "Given below are two statements: One is labelled as Assertion A and the other is labelled as Reason\nR:\nAssertion A : Breast-feeding during initial period of infant growth is recommended by doctors for\nbringing a healthy baby.\nReason R : Colostrum contains several antibodies absolutely essential to develop resistance for the\nnew born baby.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both A and R are correct and R is the correct explanation of A"
+      },
+      {
+        "id": "B",
+        "text": "Both A and R are correct but R is NOT the correct explanation of A"
+      },
+      {
+        "id": "C",
+        "text": "A is correct but R is not correct"
+      },
+      {
+        "id": "D",
+        "text": "A is not correct but R is correct"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAssertion A is true: Endometrium is essential for implantation. Reason R is true: In the absence of fertilization, the corpus luteum degenerates, causing drop in progesterone and disintegration of the endometrium. Both are true and R is the correct explanation of A.",
+    "image": ""
+  },
+  {
+    "num": 20,
+    "exam": "NEET 2024",
+    "question": "Given below are two statements:\nStatement I: The presence or absence of hymen is not a reliable indicator of virginity.\nStatement II: The hymen is torn during the first coitus only.\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are false"
+      },
+      {
+        "id": "C",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "id": "D",
+        "text": "Statement I is false but Statement II is true"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nStatement I is true: The hymen can be torn by sports, bicycling, insertion of vaginal tampons, or sudden fall; hence its presence/absence is not a reliable sign of virginity. Statement II is false: The hymen is not torn during first coitus only.",
+    "image": ""
+  },
+  {
+    "num": 21,
+    "exam": "NEET 2024",
+    "question": "Identify the correct option (A), (B), (C), (D) with respect to spermatogenesis.\n\n![Spermatogenesis Flowchart](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551329/edvedum/questions/human_reproduction/human_repro_q_21.png)",
+    "options": [
+      {
+        "id": "A",
+        "text": "FSH, Leydig cells, Sertoli cells, spermiogenesis."
+      },
+      {
+        "id": "B",
+        "text": "ICSH, Interstitial cells, Leydig cells, spermiogenesis."
+      },
+      {
+        "id": "C",
+        "text": "FSH, Sertoli cells, Leydig cells, spermatogenesis."
+      },
+      {
+        "id": "D",
+        "text": "ICSH, Leydig cells, Sertoli cells, spermatogenesis."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn the spermatogenesis endocrine cascade:\n- GnRH stimulates anterior pituitary to release **FSH (A)**.\n- LH stimulates **Leydig cells (B)** to secrete androgens.\n- FSH stimulates **Sertoli cells (C)** to secrete factors for **spermiogenesis (D)**.\nHence, **FSH, Leydig cells, Sertoli cells, spermiogenesis**.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551329/edvedum/questions/human_reproduction/human_repro_q_21.png"
+  },
+  {
+    "num": 22,
+    "exam": "NEET 2023 Manipur",
+    "question": "Given below are two statements regarding oogenesis:\nStatement I :- The primary follicles get surrounded by more layers of granulosa cells, a theca and\nshows fluid filled cavity antrum. Now it is called secondary follicle.\nStatement II :- Graafian follicle ruptures to release the secondary oocyte from the ovary by the\nprocess called ovulation.\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but Statement II is false."
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but Statement II is true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are false."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nStatement I is incorrect: The secondary follicle develops an antrum only when transforming into a tertiary follicle. Statement II is true: The mature Graafian follicle ruptures to release the secondary oocyte during ovulation.",
+    "image": ""
+  },
+  {
+    "num": 23,
+    "exam": "NEET 2023",
+    "question": "Which of the following statements are correct regarding female reproductive cycle?\nA. In non-primate mammals cyclical changes during reproduction are called oestrus cycle.\nB. First menstrual cycle begins at puberty and is called menopause.\nC. Lack of menstruation may be indicative of pregnancy.\nD. Cyclic menstruation extends between menarche and menopause.\nChoose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A and B only"
+      },
+      {
+        "id": "B",
+        "text": "A, B and C only"
+      },
+      {
+        "id": "C",
+        "text": "A, C and D only"
+      },
+      {
+        "id": "D",
+        "text": "A and D only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- (A) Presence of hCG in urine forms the basis of pregnancy testing.\n- (C) Progesterone maintains the endometrial lining during pregnancy.\n- (D) Relaxin is secreted in late pregnancy to relax pelvic ligaments.\nHence, **A, C and D only** is correct.",
+    "image": ""
+  },
+  {
+    "num": 24,
+    "exam": "NEET 2023",
+    "question": "Given below are two statements: one is labelled as Assertion A and the other is labelled as Reason\nR.\nAssertion A: Endometrium is necessary for implantation of blastocyst.\nReason R: In the absence of fertilization, the corpus luteum degenerates that causes disintegration\nof endometrium.\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both A and R are true but R is NOT the correct explanation of A."
+      },
+      {
+        "id": "B",
+        "text": "A is true but R is false."
+      },
+      {
+        "id": "C",
+        "text": "A is false but R is true."
+      },
+      {
+        "id": "D",
+        "text": "Both A and R are true and R is the correct explanation of A."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAssertion A is true: The embryo implants at the blastocyst stage into the endometrium. Reason R is true: In the absence of fertilization, degeneration of corpus luteum leads to endometrial breakdown. However, R is not the explanation of why endometrium is necessary for implantation.",
+    "image": ""
+  },
+  {
+    "num": 25,
+    "exam": "NEET 2023",
+    "question": "Given below are two statements:\nStatement I: Vas deferens receives a duct from seminal vesicle and opens into urethra as the\nejaculatory duct.\nStatement Il: The cavity of the cervix is called cervical canal which along with vagina forms birth\ncanal.\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are false."
+      },
+      {
+        "id": "B",
+        "text": "Statement I is correct but Statement II is false."
+      },
+      {
+        "id": "C",
+        "text": "Statement I is incorrect but Statement II is true."
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are true."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nStatement I is false: The secondary oocyte completes meiosis II upon entry of the sperm (fertilization), not at ovulation. Statement II is true: The endometrium undergoes cyclic breakdown and regeneration during menstrual cycles.",
+    "image": ""
+  },
+  {
+    "num": 26,
+    "exam": "NEET 2022 Phase 2",
+    "question": "How many secondary spermatocytes are required to form 400 million spermatozoa?",
+    "options": [
+      {
+        "id": "A",
+        "text": "400 million"
+      },
+      {
+        "id": "B",
+        "text": "50 million"
+      },
+      {
+        "id": "C",
+        "text": "100 million"
+      },
+      {
+        "id": "D",
+        "text": "200 million"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nA normal human male ejaculate contains **200 to 300 million sperms**.",
+    "image": ""
+  },
+  {
+    "num": 27,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Arrange the components of mammary gland. (from proximal to distal).\n(a) Mammary duct\n(b) Lactiferous duct\n(c) Alveoli\n(d) Mammary ampulla\n(e) Mammary tubules\n\nChoose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(e) → (c) → (d) → (b) → (a)"
+      },
+      {
+        "id": "B",
+        "text": "(c) → (a) → (d) → (e) → (b)"
+      },
+      {
+        "id": "C",
+        "text": "(b) → (c) → (e) → (d) → (a)"
+      },
+      {
+        "id": "D",
+        "text": "(c) → (e) → (a) → (d) → (b)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nComponents of mammary gland from proximal to distal:\n**Alveoli (c) → Mammary tubules (e) → Mammary duct (a) → Mammary ampulla (d) → Lactiferous duct (b)**.",
+    "image": ""
+  },
+  {
+    "num": 28,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason\n(R).\nAssertion (A): During pregnancy the level of thyroxine is increased in the maternal blood.\nReason (R): Pregnancy is characterised by metabolic changes in the mother.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A) is not correct but (R) is correct"
+      },
+      {
+        "id": "B",
+        "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)"
+      },
+      {
+        "id": "C",
+        "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A)"
+      },
+      {
+        "id": "D",
+        "text": "(A) is correct but (R) is not correct"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAssertion (A) is correct: Maternal thyroxine levels rise during pregnancy. Reason (R) is correct: Increased thyroxine supports heightened metabolic demands of both mother and developing foetus. R is the correct explanation of A.",
+    "image": ""
+  },
+  {
+    "num": 29,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Which of the following statements are true for spermatogenesis but do not hold true for Oogenesis?\n(a) It results in the formation of haploid gametes\n(b) Differentiation of gamete occurs after the completion of meiosis\n(c) Meiosis occurs continuously in a mitotically dividing stem cell population\n(d) It is controlled by the Luteinising Hormone (LH) and Follicle Stimulating Hormone (FSH)\nsecreted by the anterior pituitary\n(e) It is initiated at puberty\nChoose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(c) and (d) only"
+      },
+      {
+        "id": "B",
+        "text": "(b) and (c) only"
+      },
+      {
+        "id": "C",
+        "text": "(b), (d) and (e) only"
+      },
+      {
+        "id": "D",
+        "text": "(b), (c) and (e) only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nStatements (b) and (c) are correct:\n- (b) Inner cell mass gives rise to the embryo proper.\n- (c) Trophoblast forms chorionic villi for placental exchange.\nStatements (a) and (d) are incorrect.",
+    "image": ""
+  },
+  {
+    "num": 30,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Given below are two statements :\nStatement I : The release of sperms into the seminiferous tubules is called spermiation.\nStatement II : Spermiogenesis is the process of formation of sperms from spermatogonia.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are incorrect"
+      },
+      {
+        "id": "C",
+        "text": "Statement I is correct but Statement II is incorrect"
+      },
+      {
+        "id": "D",
+        "text": "Statement I is incorrect but Statement II is correct"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nStatement I is correct: Spermiation is the release of mature sperms from Sertoli cells into the seminiferous tubule lumen. Statement II is correct: Spermiogenesis is the morphological conversion of spermatids into spermatozoa.",
+    "image": ""
+  },
+  {
+    "num": 31,
+    "exam": "NEET 2022 Phase 1",
+    "question": "At which stage of life the oogenesis process is initiated?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Puberty"
+      },
+      {
+        "id": "B",
+        "text": "Embryonic development stage"
+      },
+      {
+        "id": "C",
+        "text": "Birth"
+      },
+      {
+        "id": "D",
+        "text": "Adult"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOogenesis is initiated during the **embryonic development stage** when millions of oogonia are formed in the foetal ovary; no more are formed after birth.",
+    "image": ""
+  },
+  {
+    "num": 32,
+    "exam": "NEET 2021",
+    "question": "Receptors for sperm binding in mammals are present on :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Zona pellucida"
+      },
+      {
+        "id": "B",
+        "text": "Corona radiata"
+      },
+      {
+        "id": "C",
+        "text": "Vitelline membrane"
+      },
+      {
+        "id": "D",
+        "text": "Perivitelline space"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nDuring fertilization, the sperm contacts the **zona pellucida**, triggering the acrosome reaction and the cortical reaction to block polyspermy.",
+    "image": ""
+  },
+  {
+    "num": 33,
+    "exam": "NEET 2021",
+    "question": "Which of these is not an important component of initiation of parturition in humans?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Release of Prolactin"
+      },
+      {
+        "id": "B",
+        "text": "Increase in estrogen and progesterone ratio"
+      },
+      {
+        "id": "C",
+        "text": "Synthesis of prostaglandins"
+      },
+      {
+        "id": "D",
+        "text": "Release of Oxytocin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nSuckling stimulates sensory impulses to the hypothalamus, triggering release of **oxytocin** from the posterior pituitary, which causes milk ejection.",
+    "image": ""
+  },
+  {
+    "num": 34,
+    "exam": "NEET 2021",
+    "question": "Which of the following secretes the hormone, relaxin, during the later phase of pregnancy?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Uterus"
+      },
+      {
+        "id": "B",
+        "text": "Graafian follicle"
+      },
+      {
+        "id": "C",
+        "text": "Corpus luteum"
+      },
+      {
+        "id": "D",
+        "text": "Foetus"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAfter ovulation, the collapsed Graafian follicle transforms into the **corpus luteum**, which secretes progesterone to maintain the endometrium.",
+    "image": ""
+  },
+  {
+    "num": 35,
+    "exam": "NEET 2020 Phase 2",
+    "question": "Select the correct option of haploid cells from the following groups :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Primary spermatocyte, Secondary spermatocyte, Second polar body"
+      },
+      {
+        "id": "B",
+        "text": "Primary oocyte, Secondary oocyte, Spermatid"
+      },
+      {
+        "id": "C",
+        "text": "Secondary spermatocyte, First polar body, Ovum"
+      },
+      {
+        "id": "D",
+        "text": "Spermatogonia, Primary spermatocyte, Spermatid"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn spermatogenesis: primary spermatocytes divide by meiosis I to produce secondary spermatocytes, which divide by meiosis II into spermatids. In oogenesis, meiosis I produces the secondary oocyte and the first polar body; meiosis II produces the ovum and second polar body.",
+    "image": ""
+  },
+  {
+    "num": 36,
+    "exam": "NEET 2020 Phase 2",
+    "question": "In human beings, at the end of 12 weeks (first trimester) of pregnancy, the following is observed :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Movement of the foetus"
+      },
+      {
+        "id": "B",
+        "text": "Eyelids and eyelashes are formed"
+      },
+      {
+        "id": "C",
+        "text": "Most of the major organ systems are formed"
+      },
+      {
+        "id": "D",
+        "text": "The head is covered with fine hair"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe first clinical sign of growing foetus is hearing the **foetal heart sound** with a stethoscope after the first month of pregnancy.",
+    "image": ""
+  },
+  {
+    "num": 37,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Meiotic division of the secondary oocyte is completed",
+    "options": [
+      {
+        "id": "A",
+        "text": "At the time of fusion of a sperm with an ovum"
+      },
+      {
+        "id": "B",
+        "text": "At the time of copulation"
+      },
+      {
+        "id": "C",
+        "text": "Prior to ovulation"
+      },
+      {
+        "id": "D",
+        "text": "After zygote formation"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nCompletion of meiosis II in the female gamete occurs **at the time of fusion of a sperm with an ovum** (fertilization).",
+    "image": ""
+  },
+  {
+    "num": 38,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Which of the following hormone levels will cause release of ovum (ovulation) from the Graafian\nfollicle?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Low concentration of FSH"
+      },
+      {
+        "id": "B",
+        "text": "High concentration of Progesterone"
+      },
+      {
+        "id": "C",
+        "text": "Low concentration of LH"
+      },
+      {
+        "id": "D",
+        "text": "High concentration of Estrogen"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nDuring the luteal (secretory) phase, high progesterone exerts negative feedback on the pituitary, resulting in **low concentrations of both FSH and LH**.",
+    "image": ""
+  },
+  {
+    "num": 39,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Match the following columns and select the correct option.\n\n| Column-I | Column-II |\n| :--- | :--- |\n| (A) Placenta | (i) Androgens |\n| (B) Zona pellucida | (ii) Human Chorionic Gonadotropin (hCG) |\n| (C) Bulbo-urethral glands | (iii) Layer of the ovum |\n| (D) Leydig cells | (iv) Lubrication of the Penis |",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A)-(ii), (B)-(iii), (C)-(iv), (D)-(i)"
+      },
+      {
+        "id": "B",
+        "text": "(A)-(i), (B)-(iv), (C)-(ii), (D)-(iii)"
+      },
+      {
+        "id": "C",
+        "text": "(A)-(iv), (B)-(iii), (C)-(i), (D)-(ii)"
+      },
+      {
+        "id": "D",
+        "text": "(A)-(iii), (B)-(ii), (C)-(iv), (D)-(i)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nMatching Column-I with Column-II:\n- **Placenta**: Human Chorionic Gonadotropin (hCG) (ii)\n- **Zona pellucida**: Layer of the ovum (iii)\n- **Bulbo-urethral glands**: Lubrication of the penis (iv)\n- **Leydig cells**: Androgens (i)\nHence, **(A)-(ii), (B)-(iii), (C)-(iv), (D)-(i)**.",
+    "image": ""
+  },
+  {
+    "num": 40,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Which of the following hormones is responsible for both the milk ejection reflex and the foetal\nejection reflex?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Relaxin"
+      },
+      {
+        "id": "B",
+        "text": "Estrogen"
+      },
+      {
+        "id": "C",
+        "text": "Prolactin"
+      },
+      {
+        "id": "D",
+        "text": "Oxytocin"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Oxytocin** is the neurohormone responsible for both the milk ejection reflex (let-down) and uterine contractions during parturition (foetal ejection reflex).",
+    "image": ""
+  },
+  {
+    "num": 41,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "No new follicles develop in the luteal phase of the menstrual cycle because:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both FSH and LH levels are low in the luteal phase."
+      },
+      {
+        "id": "B",
+        "text": "Follicles do not remain in the ovary after ovulation."
+      },
+      {
+        "id": "C",
+        "text": "FSH levels are high in the luteal phase."
+      },
+      {
+        "id": "D",
+        "text": "LH levels are high in the luteal phase."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nDuring the luteal phase, elevated progesterone from the corpus luteum exerts negative feedback, so **both FSH and LH levels are low**.",
+    "image": ""
+  },
+  {
+    "num": 42,
+    "exam": "NEET 2019",
+    "question": "Extrusion of second polar body from egg nucleus occurs :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Before entry of sperm into ovum"
+      },
+      {
+        "id": "B",
+        "text": "Simultaneously with first cleavage"
+      },
+      {
+        "id": "C",
+        "text": "After entry of sperm but before fertilization"
+      },
+      {
+        "id": "D",
+        "text": "After fertilization"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe extrusion of the second polar body occurs **after entry of sperm but before completion of fertilization**.",
+    "image": ""
+  },
+  {
+    "num": 43,
+    "exam": "NEET 2019",
+    "question": "Select the correct sequence for transport of sperm cells in male reproductive system :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Seminiferous tubules → Vasa efferentia → Epididymis → Inguinal canal → Urethra"
+      },
+      {
+        "id": "B",
+        "text": "Testis → Epididymis → Vasa efferentia → Vas deferens → Ejaculatory duct → Inguinal canal → Urethra → Urethral meatus"
+      },
+      {
+        "id": "C",
+        "text": "Testis → Epididymis → Vasa efferentia → Rete testis → Inguinal canal → Urethra"
+      },
+      {
+        "id": "D",
+        "text": "Seminiferous tubules → Rete testis → Vasa efferentia → Epididymis → Vas deferens → Ejaculatory duct → Urethra → Urethral meatus"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nCorrect sequence of sperm transport:\n**Seminiferous tubules → Rete testis → Vasa efferentia → Epididymis → Vas deferens → Ejaculatory duct → Urethra → Urethral meatus**.",
+    "image": ""
+  },
+  {
+    "num": 44,
+    "exam": "NEET 2018",
+    "question": "Hormones secreted by the placenta to maintain pregnancy are",
+    "options": [
+      {
+        "id": "A",
+        "text": "hCG, hPL, progestogens, prolactin"
+      },
+      {
+        "id": "B",
+        "text": "hCG, hPL, estrogens, relaxin, oxytocin"
+      },
+      {
+        "id": "C",
+        "text": "hCG, hPL, progestogens, estrogens"
+      },
+      {
+        "id": "D",
+        "text": "hCG, progestogens, estrogens, glucocorticoids"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nHormones secreted by the human placenta include **hCG, hPL, progestogens, and estrogens**.",
+    "image": ""
+  },
+  {
+    "num": 45,
+    "exam": "NEET 2018",
+    "question": "The difference between spermiogenesis and spermiation is",
+    "options": [
+      {
+        "id": "A",
+        "text": "in spermiogenesis spermatids are formed, while in spermiation spermatozoa are formed"
+      },
+      {
+        "id": "B",
+        "text": "in spermiogenesis spermatozoa are formed, while in spermiation spermatids are formed"
+      },
+      {
+        "id": "C",
+        "text": "in spermiogenesis spermatozoa from Sertoli cells are released into the cavity of seminiferous\ntubules, while in spermiation spermatozoa are formed"
+      },
+      {
+        "id": "D",
+        "text": "in spermiogenesis spermatozoa are formed, while in spermiation spermatozoa are released\nfrom Sertoli cells into the cavity of seminiferous tubules"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nIn **spermiogenesis**, spermatids transform into spermatozoa, whereas in **spermiation**, spermatozoa are released from Sertoli cells into the tubule lumen.",
+    "image": ""
+  },
+  {
+    "num": 46,
+    "exam": "NEET 2018",
+    "question": "The amnion of mammalian embryo is derived from",
+    "options": [
+      {
+        "id": "A",
+        "text": "ectoderm and mesoderm"
+      },
+      {
+        "id": "B",
+        "text": "endoderm and mesoderm"
+      },
+      {
+        "id": "C",
+        "text": "mesoderm and trophoblast"
+      },
+      {
+        "id": "D",
+        "text": "ectoderm and endoderm"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe amnion develops from extra-embryonic **somatopleure (ectoderm and somatic mesoderm)**.",
+    "image": ""
+  },
+  {
+    "num": 47,
+    "exam": "NEET 2018",
+    "question": "Match the items given in column I with those in column II and select the correct option given below.\n\n| Column - I | Column - II |\n| :--- | :--- |\n| A. Proliferative phase | (i) Breakdown of endometrial lining |\n| B. Secretory Phase | (ii) Follicular Phase |\n| C. Menstruation | (iii) Luteal Phase |",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-(i), B-(ii), C-(iii)"
+      },
+      {
+        "id": "B",
+        "text": "A-(i), B-(iii), C-(ii)"
+      },
+      {
+        "id": "C",
+        "text": "A-(ii), B-(iii), C-(i)"
+      },
+      {
+        "id": "D",
+        "text": "A-(iii), B-(i), C-(ii)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nMatching menstrual cycle phases:\n- **A. Proliferative phase**: Follicular Phase (ii)\n- **B. Secretory Phase**: Luteal Phase (iii)\n- **C. Menstruation**: Breakdown of endometrial lining (i)\nHence, **A-(ii), B-(iii), C-(i)**.",
+    "image": ""
+  },
+  {
+    "num": 48,
+    "exam": "NEET 2017",
+    "question": "Capacitation occurs in",
+    "options": [
+      {
+        "id": "A",
+        "text": "epididymis"
+      },
+      {
+        "id": "B",
+        "text": "vas deferens"
+      },
+      {
+        "id": "C",
+        "text": "female reproductive tract"
+      },
+      {
+        "id": "D",
+        "text": "rete testis."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe **acrosome** covers the anterior two-thirds of the sperm head and contains hydrolytic enzymes (hyaluronidase, acrosin) needed to penetrate ovum coats.",
+    "image": ""
+  },
+  {
+    "num": 49,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Which of the following depicts the correct pathway of transport of sperms?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Rete testis → Efferent ductules → Epididymis → Vas deferens"
+      },
+      {
+        "id": "B",
+        "text": "Rete testis → Epididymis → Efferent ductules → Vas deferens"
+      },
+      {
+        "id": "C",
+        "text": "Rete testis → Vas deferens → Efferent ductules → Epididymis"
+      },
+      {
+        "id": "D",
+        "text": "Efferent ductules → Rete testis → Vas deferens → Epididymis"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nPathway of sperm transport:\n**Rete testis → Efferent ductules → Epididymis → Vas deferens**.",
+    "image": ""
+  },
+  {
+    "num": 50,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Match column I with column II and select the correct option using the codes given below.\n\n| Column I | Column II |\n| :--- | :--- |\n| (A) Mons pubis | (i) Embryo formation |\n| (B) Antrum | (ii) Sperm |\n| (C) Trophectoderm | (iii) Female external genitalia |\n| (D) Nebenkern | (iv) Graafian follicle |",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A)-(iii), (B)-(iv), (C)-(ii), (D)-(i)"
+      },
+      {
+        "id": "B",
+        "text": "(A)-(iii), (B)-(iv), (C)-(i), (D)-(ii)"
+      },
+      {
+        "id": "C",
+        "text": "(A)-(iii), (B)-(i), (C)-(iv), (D)-(ii)"
+      },
+      {
+        "id": "D",
+        "text": "(A)-(i), (B)-(iv), (C)-(iii), (D)-(ii)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nMatching structures with descriptions:\n- **(A) Mons pubis**: Female external genitalia (iii)\n- **(B) Antrum**: Graafian follicle cavity (iv)\n- **(C) Trophectoderm**: Blastocyst outer layer / embryo formation (i)\n- **(D) Nebenkern**: Spiral mitochondria of sperm (ii)\nHence, **(A)-(iii), (B)-(iv), (C)-(i), (D)-(ii)**.",
+    "image": ""
+  },
+  {
+    "num": 51,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Several hormones like hCG, hPL, estrogen, progesterone are produced by",
+    "options": [
+      {
+        "id": "A",
+        "text": "ovary"
+      },
+      {
+        "id": "B",
+        "text": "placenta"
+      },
+      {
+        "id": "C",
+        "text": "Fallopian tube"
+      },
+      {
+        "id": "D",
+        "text": "pituitary."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nHormones like **hCG, hPL, estrogen, and progesterone** are synthesized and secreted in large amounts by the **placenta** during gestation.",
+    "image": ""
+  },
+  {
+    "num": 52,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Changes in GnRH pulse frequency in females is controlled by circulating levels of",
+    "options": [
+      {
+        "id": "A",
+        "text": "progesterone only"
+      },
+      {
+        "id": "B",
+        "text": "progesterone and inhibin"
+      },
+      {
+        "id": "C",
+        "text": "estrogen and progesterone"
+      },
+      {
+        "id": "D",
+        "text": "estrogen and inhibin."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nDuring the secretory phase, the corpus luteum secretes **progesterone and inhibin** (along with moderate estrogen) to support the endometrium.",
+    "image": ""
+  },
+  {
+    "num": 53,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Fertilisation in humans is practically feasible only if",
+    "options": [
+      {
+        "id": "A",
+        "text": "the ovum and sperms are transported simultaneously to ampullary-isthmic junction of the cervix"
+      },
+      {
+        "id": "B",
+        "text": "the sperms are transported into cervix within 48 hrs of release of ovum in uterus"
+      },
+      {
+        "id": "C",
+        "text": "the sperms are transported into vagina just after the release of ovum in Fallopian tube"
+      },
+      {
+        "id": "D",
+        "text": "the ovum and sperms are transported simultaneously to   ampullary   isthmic   junction of the\nFallopian tube."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nFertilization occurs only when **the ovum and sperms are transported simultaneously to the ampullary-isthmic junction** of the Fallopian tube.",
+    "image": ""
+  },
+  {
+    "num": 54,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Select the incorrect statement.",
+    "options": [
+      {
+        "id": "A",
+        "text": "LH and FSH decreases gradually during the follicular phase."
+      },
+      {
+        "id": "B",
+        "text": "LH triggers secretion of androgen from the Leydig cells."
+      },
+      {
+        "id": "C",
+        "text": "FSH stimulates the Sertoli cells which help in spermiogenesis."
+      },
+      {
+        "id": "D",
+        "text": "LH triggers ovulation in ovary."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nDuring the follicular phase, estrogen and gonadotropins rise, culminating in the mid-cycle surge where **both LH and FSH attain peak levels**.",
+    "image": ""
+  },
+  {
+    "num": 55,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Identify the correct statement on 'inhibin'.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Is produced by granulosa cells in ovary and inhibits the secretion of LH"
+      },
+      {
+        "id": "B",
+        "text": "Is produced by nurse cells in testes and inhibits the secretion of LH"
+      },
+      {
+        "id": "C",
+        "text": "Inhibits the secretion of LH, FSH and prolaction"
+      },
+      {
+        "id": "D",
+        "text": "Is produced by granulosa cells in ovary and inhibits the secretion of FSH"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Inhibin** is secreted by granulosa cells of ovarian follicles and inhibits anterior pituitary **FSH** secretion via negative feedback.",
+    "image": ""
+  },
+  {
+    "num": 56,
+    "exam": "AIPMT 2015",
+    "question": "In human females, meiosis-II is not completed until",
+    "options": [
+      {
+        "id": "A",
+        "text": "uterine implantation"
+      },
+      {
+        "id": "B",
+        "text": "birth"
+      },
+      {
+        "id": "C",
+        "text": "puberty"
+      },
+      {
+        "id": "D",
+        "text": "fertilisation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nIn human females, primary oocytes remain arrested at the **diplotene stage of prophase-I** of meiosis from foetal life until ovulation.",
+    "image": ""
+  },
+  {
+    "num": 57,
+    "exam": "AIPMT 2015",
+    "question": "Which of the following layers in an antral follicle is acellular?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Stroma"
+      },
+      {
+        "id": "B",
+        "text": "Zona pellucida"
+      },
+      {
+        "id": "C",
+        "text": "Granulosa"
+      },
+      {
+        "id": "D",
+        "text": "Theca interna"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe **zona pellucida** is an acellular glycoproteinaceous layer; stroma, granulosa, and theca interna are composed of cells.",
+    "image": ""
+  },
+  {
+    "num": 58,
+    "exam": "AIPMT 2015",
+    "question": "Which of the following events is not associated with ovulation in human life?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Release of secondary oocyte"
+      },
+      {
+        "id": "B",
+        "text": "LH surge"
+      },
+      {
+        "id": "C",
+        "text": "Decrease in estradiol"
+      },
+      {
+        "id": "D",
+        "text": "Full development of Graafian follicle"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOvulation (release of secondary oocyte) is directly induced by the **LH surge** around day 14 of the menstrual cycle.",
+    "image": ""
+  },
+  {
+    "num": 59,
+    "exam": "AIPMT 2015",
+    "question": "Ectopic pregnancies are referred to as",
+    "options": [
+      {
+        "id": "A",
+        "text": "implantation of defective embryo in the uterus"
+      },
+      {
+        "id": "B",
+        "text": "pregnancies terminated due to hormonal imbalance"
+      },
+      {
+        "id": "C",
+        "text": "pregnancies with genetic abnormality"
+      },
+      {
+        "id": "D",
+        "text": "implantation of embryo at site other than uterus."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Ectopic pregnancy** is defined as the implantation of the blastocyst at any site other than the uterine cavity, most commonly the Fallopian tube.",
+    "image": ""
+  },
+  {
+    "num": 60,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "Which of the following cells during gametogenesis is normally diploid?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Spermatogonia"
+      },
+      {
+        "id": "B",
+        "text": "Secondary polar body"
+      },
+      {
+        "id": "C",
+        "text": "Primary polar body"
+      },
+      {
+        "id": "D",
+        "text": "Spermatid"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nPrimary follicles contain **primary oocytes** arrested at prophase-I of meiosis.",
+    "image": ""
+  },
+  {
+    "num": 61,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "Capacitation refers to changes in the",
+    "options": [
+      {
+        "id": "A",
+        "text": "ovum after fertilisation"
+      },
+      {
+        "id": "B",
+        "text": "sperm after fertilisation"
+      },
+      {
+        "id": "C",
+        "text": "sperm before fertilisation"
+      },
+      {
+        "id": "D",
+        "text": "ovum before fertilisation"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Capacitation** occurs in the female reproductive tract, where secretions remove cholesterol and glycoproteins from the sperm membrane, enabling the acrosome reaction.",
+    "image": ""
+  },
+  {
+    "num": 62,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "Hysterectomy is surgical removal of",
+    "options": [
+      {
+        "id": "A",
+        "text": "vas deferens"
+      },
+      {
+        "id": "B",
+        "text": "mammary glands"
+      },
+      {
+        "id": "C",
+        "text": "uterus"
+      },
+      {
+        "id": "D",
+        "text": "prostate gland"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe **uterus** is a female reproductive organ; it is absent in males.",
+    "image": ""
+  },
+  {
+    "num": 63,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "Which of these is not an important component of initiation of parturition in humans?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Release of oxytocin"
+      },
+      {
+        "id": "B",
+        "text": "Release of prolactin"
+      },
+      {
+        "id": "C",
+        "text": "Increase in estrogen and progesterone ratio"
+      },
+      {
+        "id": "D",
+        "text": "Synthesis of prostaglandins"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nParturition signals originate from the fully developed foetus and placenta, producing the **foetal ejection reflex** which triggers maternal oxytocin release.",
+    "image": ""
+  },
+  {
+    "num": 64,
+    "exam": "AIPMT 2014",
+    "question": "The shared terminal duct of the reproductive and urinary system in the human male is",
+    "options": [
+      {
+        "id": "A",
+        "text": "urethra"
+      },
+      {
+        "id": "B",
+        "text": "ureter"
+      },
+      {
+        "id": "C",
+        "text": "vas deferens"
+      },
+      {
+        "id": "D",
+        "text": "vasa efferentia"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe **vas deferens** is an internal accessory duct carrying sperms from the epididymis to the urethra; it is not external genitalia.",
+    "image": ""
+  },
+  {
+    "num": 65,
+    "exam": "AIPMT 2014",
+    "question": "The main function of mammalian corpus luteum is to produce",
+    "options": [
+      {
+        "id": "A",
+        "text": "estrogen only"
+      },
+      {
+        "id": "B",
+        "text": "progesterone"
+      },
+      {
+        "id": "C",
+        "text": "human chorionic gonadotropin"
+      },
+      {
+        "id": "D",
+        "text": "relaxin only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe corpus luteum primarily secretes **progesterone**, which maintains the secretory endometrium necessary for implantation.",
+    "image": ""
+  },
+  {
+    "num": 66,
+    "exam": "AIPMT 2014",
+    "question": "Select the correct option describing gonadotropin activity in a normal pregnant female.",
+    "options": [
+      {
+        "id": "A",
+        "text": "High level of FSH and LH stimulates the thickening of endometrium."
+      },
+      {
+        "id": "B",
+        "text": "High level of FSH and LH facilitates implantation of the embryo."
+      },
+      {
+        "id": "C",
+        "text": "High level of hCG stimulates the synthesis of estrogen and progesterone."
+      },
+      {
+        "id": "D",
+        "text": "High level of hCG stimulates the thickening of endometrium."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nEstrogen secreted by growing follicles stimulates the repair and proliferation of the **endometrium** during the follicular phase.",
+    "image": ""
+  },
+  {
+    "num": 67,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "The foetal ejection reflex in humans triggers the release of",
+    "options": [
+      {
+        "id": "A",
+        "text": "oxytocin from foetal pituitary"
+      },
+      {
+        "id": "B",
+        "text": "human chorionic gonadotropin (hCG) from placenta"
+      },
+      {
+        "id": "C",
+        "text": "oxytocin from maternal pituitary"
+      },
+      {
+        "id": "D",
+        "text": "human placental lactogen (hPL) from placenta"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe part of the Fallopian tube closest to the ovary is the funnel-shaped **infundibulum** with fimbriae.",
+    "image": ""
+  },
+  {
+    "num": 68,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "The figure shows a section of human ovary. Select the option which gives the correct identification of either A or B with function/ characteristic.\n\n![Section of Human Ovary](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551330/edvedum/questions/human_reproduction/human_repro_q_68.png)",
+    "options": [
+      {
+        "id": "A",
+        "text": "A- Tertiary follicle - Forms Graafian follicle"
+      },
+      {
+        "id": "B",
+        "text": "B- Corpus luteum - Secretes progesterone"
+      },
+      {
+        "id": "C",
+        "text": "A- Primary oocyte - It is in the prophase-I of the meiotic division"
+      },
+      {
+        "id": "D",
+        "text": "B- Corpus albicans - Secretes progesterone"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn the diagram of the human ovary, **B is the corpus luteum**, which secretes **progesterone** to maintain pregnancy.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551330/edvedum/questions/human_reproduction/human_repro_q_68.png"
+  },
+  {
+    "num": 69,
+    "exam": "NEET 2013",
+    "question": "What is the correct sequence of sperm formation?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Spermatogonia, spermatozoa, spermatocytes, spermatids"
+      },
+      {
+        "id": "B",
+        "text": "Spermatogonia, spermatocytes, spermatids, spermatozoa"
+      },
+      {
+        "id": "C",
+        "text": "Spermatids, spermatocytes, spermatogonia, spermatozoa"
+      },
+      {
+        "id": "D",
+        "text": "Spermatogonia, spermatocytes, spermatozoa, spermatids"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nSequence of sperm formation: **Spermatogonia → Spermatocytes → Spermatids → Spermatozoa**.",
+    "image": ""
+  },
+  {
+    "num": 70,
+    "exam": "NEET 2013",
+    "question": "Which of the following is not the function of placenta?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Facilitates supply of oxygen and nutrients to embryo"
+      },
+      {
+        "id": "B",
+        "text": "Secretes estrogen"
+      },
+      {
+        "id": "C",
+        "text": "Facilitates removal of carbon dioxide and waste material from embryo"
+      },
+      {
+        "id": "D",
+        "text": "Secretes oxytocin during parturition"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe placenta performs gas/nutrient exchange, excretory waste removal, and hormone synthesis (hCG, hPL, progesterone, estrogen). It **does not secrete oxytocin**.",
+    "image": ""
+  },
+  {
+    "num": 71,
+    "exam": "NEET 2013",
+    "question": "Menstrual flow occurs due to lack of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Progesterone"
+      },
+      {
+        "id": "B",
+        "text": "FSH"
+      },
+      {
+        "id": "C",
+        "text": "Oxytocin"
+      },
+      {
+        "id": "D",
+        "text": "Vasopressin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nFollowing the menstrual phase (days 1-5), the **follicular (proliferative) phase** lasts from days 6 to 13-14.",
+    "image": ""
+  },
+  {
+    "num": 72,
+    "exam": "AIPMT 2012 Mains",
+    "question": "The secretory phase in the human menstrual cycle is also called :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Follicular phase lasting for about 6 days"
+      },
+      {
+        "id": "B",
+        "text": "Luteal phase and lasts for about 13 days"
+      },
+      {
+        "id": "C",
+        "text": "Follicular phase and lasts for about 13 days"
+      },
+      {
+        "id": "D",
+        "text": "Luteal phase and lasts for about 6 days"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nPermanent cessation of menstrual cycles in human females around age 50 is known as **menopause**.",
+    "image": ""
+  },
+  {
+    "num": 73,
+    "exam": "AIPMT 2012 Mains",
+    "question": "Identify the human developmental stage shown below as well as the related right place of its occurrence in a normal pregnant woman, and select the right option for the two, together.\n\n![Developmental Stage](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551330/edvedum/questions/human_reproduction/human_repro_q_73.png)",
+    "options": [
+      {
+        "id": "A",
+        "text": "Late morula, Middle part of Fallopian tube"
+      },
+      {
+        "id": "B",
+        "text": "Blastula, End part of Fallopian tube"
+      },
+      {
+        "id": "C",
+        "text": "Blastocyst, Uterine wall"
+      },
+      {
+        "id": "D",
+        "text": "8-celled morula, Starting point of Fallopian tube"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe diagram depicts a mammalian **blastocyst**, which implants into the **uterine wall (endometrium)** in a pregnant woman.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551330/edvedum/questions/human_reproduction/human_repro_q_73.png"
+  },
+  {
+    "num": 74,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Which one of the following statements is false in respect of viability of mammalian sperm?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Viability of sperm is determined by its motility"
+      },
+      {
+        "id": "B",
+        "text": "Sperms must be concentrated in a thick suspension"
+      },
+      {
+        "id": "C",
+        "text": "Sperm is viable for only up to 24 hours"
+      },
+      {
+        "id": "D",
+        "text": "Survival of sperm depends on the pH of the medium and is more active in alkaline medium"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nHigh circulating levels of progesterone and estrogen exert negative feedback, **inhibiting the release of FSH and LH** from the anterior pituitary.",
+    "image": ""
+  },
+  {
+    "num": 75,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Signals for parturition originate from :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Placenta only"
+      },
+      {
+        "id": "B",
+        "text": "Fully developed foetus only"
+      },
+      {
+        "id": "C",
+        "text": "Both placenta as well as fully developed foetus"
+      },
+      {
+        "id": "D",
+        "text": "Oxytocin released from maternal pituitary"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nPrimary spermatocytes are diploid (46 chromosomes). Following meiosis I, each **secondary spermatocyte** is haploid (23 chromosomes).",
+    "image": ""
+  },
+  {
+    "num": 76,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "In a normal pregnant woman, the amount of total gonadotropin activity was assessed. The results\nexpected was :",
+    "options": [
+      {
+        "id": "A",
+        "text": "High levels of FSH and LH in uterus to stimulate endometrial thickening"
+      },
+      {
+        "id": "B",
+        "text": "High level of circulating HCG to stimulate estrogen and progesterone synthesis"
+      },
+      {
+        "id": "C",
+        "text": "High level of circulating FSH and LH in the uterus to stimulate implantation of the embryo"
+      },
+      {
+        "id": "D",
+        "text": "High level of circulating HCG to stimulate endometrial thickening"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOvulation releases the egg at the **secondary oocyte stage**, which is arrested in metaphase-II until fertilization occurs.",
+    "image": ""
+  },
+  {
+    "num": 77,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "The leydig's cells as found in the human body are the secretory source of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Glucagon"
+      },
+      {
+        "id": "B",
+        "text": "Androgens"
+      },
+      {
+        "id": "C",
+        "text": "Progesterone"
+      },
+      {
+        "id": "D",
+        "text": "Intestinal mucus"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Leydig cells** (interstitial cells) located between seminiferous tubules produce **androgens** (primarily testosterone).",
+    "image": ""
+  },
+  {
+    "num": 78,
+    "exam": "AIPMT 2011 Mains",
+    "question": "What happens during fertilization in humans after many sperms reach close to the ovum?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Only two sperms nearest the ovum penetrate zona pellucida"
+      },
+      {
+        "id": "B",
+        "text": "Secretions of acrosome helps one sperm enter cytoplasm of ovum through zona pellucida"
+      },
+      {
+        "id": "C",
+        "text": "All sperms except the one nearest to the ovum lose their tails"
+      },
+      {
+        "id": "D",
+        "text": "Cells of corona radiata trap all the sperms except one."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nDuring fertilization, enzymes released from the **acrosome** (sperm lysins) digest through the zona pellucida, allowing sperm entry.",
+    "image": ""
+  },
+  {
+    "num": 79,
+    "exam": "AIPMT 2011 Mains",
+    "question": "About which day in a normal human menstrual cycle does rapid secretion of LH (popularly called LH-surge) normally occurs?",
+    "options": [
+      {
+        "id": "A",
+        "text": "11th day"
+      },
+      {
+        "id": "B",
+        "text": "14th day"
+      },
+      {
+        "id": "C",
+        "text": "20th day"
+      },
+      {
+        "id": "D",
+        "text": "5th day"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn a 28-day human menstrual cycle, the **LH surge** typically occurs on the **14th day**, inducing ovulation.",
+    "image": ""
+  },
+  {
+    "num": 80,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "If for some reason, the vasa efferentia in the human reproductive system get blocked, the gametes\nwill not be transported from :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Vagina to uterus"
+      },
+      {
+        "id": "B",
+        "text": "Testes to epididymis"
+      },
+      {
+        "id": "C",
+        "text": "Epididymis to vas deferens"
+      },
+      {
+        "id": "D",
+        "text": "Ovary to uterus"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe vasa efferentia conduct sperms from the rete testis to the epididymis; their blockage stops transport from **testes to epididymis**.",
+    "image": ""
+  },
+  {
+    "num": 81,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "The testes in humans are situated outside the abdominal cavity inside a pouch called scrotum. The\npurpose served is for :",
+    "options": [
+      {
+        "id": "A",
+        "text": "providing a secondary sexual feature for exhibiting the male sex"
+      },
+      {
+        "id": "B",
+        "text": "maintaining the scrotal temperature lower than the internal body temperature"
+      },
+      {
+        "id": "C",
+        "text": "escaping any possible compression by the visceral organs"
+      },
+      {
+        "id": "D",
+        "text": "providing more space for the growth of epididymis"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe scrotum maintains the testes at a temperature **2 to 2.5 °C lower than normal body temperature**, which is necessary for spermatogenesis.",
+    "image": ""
+  },
+  {
+    "num": 82,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "The figure given below depicts a diagrammatic sectional view of the female reproductive system of humans. Which one set of three parts out of I-VI have been correctly identified?\n\n![Female Reproductive System](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551331/edvedum/questions/human_reproduction/human_repro_q_82.png)",
+    "options": [
+      {
+        "id": "A",
+        "text": "(I) Perimetrium, (II) Myometrium, (III) Fallopian tube"
+      },
+      {
+        "id": "B",
+        "text": "(II) Endometrium, (III) Infundibulum, (IV) Fimbriae"
+      },
+      {
+        "id": "C",
+        "text": "(III) Infundibulum, (IV) Fimbriae, (V) Cervix"
+      },
+      {
+        "id": "D",
+        "text": "(IV) Oviducal funnel, (V) Uterus, (VI) Cervix"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn the diagram of the female reproductive system: (I) Endometrium, (II) Myometrium, (III) Infundibulum, (IV) Fimbriae, (V) Cervix, (VI) Vagina.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551331/edvedum/questions/human_reproduction/human_repro_q_82.png"
+  },
+  {
+    "num": 83,
+    "exam": "AIPMT 2010 Mains",
+    "question": "Signals from fully developed foetus and placenta ultimately lead to parturition which requires the\nreleas of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Oxytocin from maternal pituitary"
+      },
+      {
+        "id": "B",
+        "text": "Oxytocin from foetal pituitary"
+      },
+      {
+        "id": "C",
+        "text": "Relaxin from placenta"
+      },
+      {
+        "id": "D",
+        "text": "Estrogen from placenta"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe foetal ejection reflex induces release of **oxytocin from maternal pituitary**, stimulating strong uterine contractions.",
+    "image": ""
+  },
+  {
+    "num": 84,
+    "exam": "AIPMT 2010 Mains",
+    "question": "In human female the blastocyst",
+    "options": [
+      {
+        "id": "A",
+        "text": "gets implanted into uterus 3 days after ovulation"
+      },
+      {
+        "id": "B",
+        "text": "gets nutrition from uterine endometiral secretion only after implanation"
+      },
+      {
+        "id": "C",
+        "text": "gets implanted in endometrium by the trophoblast cells"
+      },
+      {
+        "id": "D",
+        "text": "forms placenta even before implantation"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe human embryo reaches the blastocyst stage and implants into the uterine endometrium **about 7 days (a week) after fertilization**.",
+    "image": ""
+  },
+  {
+    "num": 85,
+    "exam": "AIPMT 2010 Mains",
+    "question": "Secretions from which one of the following are rich in fructose, calcium and some enzymes?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Liver"
+      },
+      {
+        "id": "B",
+        "text": "Pancreas"
+      },
+      {
+        "id": "C",
+        "text": "Salivary glands"
+      },
+      {
+        "id": "D",
+        "text": "Male accessory glands"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nSeminal plasma is composed of secretions from seminal vesicles, prostate, and bulbourethral glands. It receives no secretions from liver or pancreas.",
+    "image": ""
+  },
+  {
+    "num": 86,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Sertoli cells are found in :",
+    "options": [
+      {
+        "id": "A",
+        "text": "ovaries and secrete progesterone"
+      },
+      {
+        "id": "B",
+        "text": "adrenal cortex and secrete adrenaline"
+      },
+      {
+        "id": "C",
+        "text": "seminiferous tubules and provide nutrition to germ cells"
+      },
+      {
+        "id": "D",
+        "text": "pancreas and secrete cholecystokinin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Sertoli cells** in the seminiferous tubules provide nutrition and structural support to developing germ cells.",
+    "image": ""
+  },
+  {
+    "num": 87,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Vasa efferentia are the ductules leading from :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Testicular lobules to rete testis"
+      },
+      {
+        "id": "B",
+        "text": "Rete testis to vas deferens"
+      },
+      {
+        "id": "C",
+        "text": "Vas deferens to epididymis"
+      },
+      {
+        "id": "D",
+        "text": "Epididymis to urethra"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nVasa efferentia carry sperms from the **rete testis** to the caput **epididymis**.",
+    "image": ""
+  },
+  {
+    "num": 88,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Seminal plasma in human males is rich in",
+    "options": [
+      {
+        "id": "A",
+        "text": "fructose and calcium"
+      },
+      {
+        "id": "B",
+        "text": "glucose and calcium"
+      },
+      {
+        "id": "C",
+        "text": "DNA and testosterone"
+      },
+      {
+        "id": "D",
+        "text": "ribose and potassium"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nSeminal plasma is characterized by high concentrations of **fructose, calcium, and certain enzymes**.",
+    "image": ""
+  },
+  {
+    "num": 89,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "The first movements of the foetus and appearance of hair on its head are usually observed during\nwhich month of pregnancy?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fourth month"
+      },
+      {
+        "id": "B",
+        "text": "Fifth month"
+      },
+      {
+        "id": "C",
+        "text": "Sixth month"
+      },
+      {
+        "id": "D",
+        "text": "Third month"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nFoetal movements and appearance of hair on the head occur in the **fifth month** of pregnancy.",
+    "image": ""
+  },
+  {
+    "num": 90,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "The second maturation division of the mammalian ovum occurs",
+    "options": [
+      {
+        "id": "A",
+        "text": "Shortly after ovulation before the ovum makes entry into the Fallopian tube"
+      },
+      {
+        "id": "B",
+        "text": "Until after the ovum has been penetrated by a sperm"
+      },
+      {
+        "id": "C",
+        "text": "Until the nucleus of the sperm has fused with that of the ovum"
+      },
+      {
+        "id": "D",
+        "text": "in the Grafian follicle following the first maturation division"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe secondary oocyte completes its second meiotic division only **upon entry of the sperm during fertilization**.",
+    "image": ""
+  },
+  {
+    "num": 91,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Which one of the following statements about human sperm is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Acrosome has a conical pointed structure used for piercing and penetrating the egg, resulting in\nfertilisation"
+      },
+      {
+        "id": "B",
+        "text": "The sperm lysins in the acrosome dissolve the egg envelope facilitating fertilisation"
+      },
+      {
+        "id": "C",
+        "text": "Acrosome serves as a sensory structure leading the sperm towards the ovum"
+      },
+      {
+        "id": "D",
+        "text": "Acrosome serves no particular function"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe **acrosome** contains hydrolytic enzymes that digest the outer envelopes (corona radiata, zona pellucida) of the ovum.",
+    "image": ""
+  },
+  {
+    "num": 92,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Which one of the following statements about morula in humans is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "It has almost equal quantity of cytoplasm as an uncleaved zygote but much more DNA"
+      },
+      {
+        "id": "B",
+        "text": "It has far less cytoplasm as well as less DNA than in an uncleaved zygote"
+      },
+      {
+        "id": "C",
+        "text": "It has more or less equal quantity of cytoplasm and DNA as in uncleaved zygote"
+      },
+      {
+        "id": "D",
+        "text": "It has more cytoplasm and more DNA than an uncleaved zygote"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nDuring early cleavage, cell division without cell growth means the blastula has roughly the **same cytoplasmic volume as the zygote, but much more DNA**.",
+    "image": ""
+  },
+  {
+    "num": 93,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "The part of Fallopian tube closest to the ovary is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Isthmus"
+      },
+      {
+        "id": "B",
+        "text": "Infundibulum"
+      },
+      {
+        "id": "C",
+        "text": "Cervix"
+      },
+      {
+        "id": "D",
+        "text": "Ampulla"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nFertilization in humans takes place in the **ampulla** of the Fallopian tube.",
+    "image": ""
+  },
+  {
+    "num": 94,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "The signals for parturition originate from",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fully developed foetus only"
+      },
+      {
+        "id": "B",
+        "text": "Placenta only"
+      },
+      {
+        "id": "C",
+        "text": "Placenta as well as fully developed foetus"
+      },
+      {
+        "id": "D",
+        "text": "Oxytocin released from maternal pituitary"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nSignals for parturition originate from **both the fully developed foetus and the placenta**.",
+    "image": ""
+  },
+  {
+    "num": 95,
+    "exam": "AIPMT 2009",
+    "question": "Seminal plasma in humans is rich in :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fructose, calcium and certain enzymes"
+      },
+      {
+        "id": "B",
+        "text": "Fructose and certain enzymes but poor calcium"
+      },
+      {
+        "id": "C",
+        "text": "Glucose and certain enzymes but has no calcium"
+      },
+      {
+        "id": "D",
+        "text": "Fructose and calcium but has no enzyme"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nSeminal plasma is rich in **fructose, calcium and certain enzymes**.",
+    "image": ""
+  },
+  {
+    "num": 96,
+    "exam": "AIPMT 2009",
+    "question": "Which one of the following is the correct matching of the events occurring during menstrual cycle ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ovulation : LH and FSH attain peak level and sharp fall in the secretion of progesterone"
+      },
+      {
+        "id": "B",
+        "text": "Menstruation : Breakdown of myometrium and ovum not fertilized"
+      },
+      {
+        "id": "C",
+        "text": "Secretory phase   : Development of corpus luteum and increased secretion of progesterone"
+      },
+      {
+        "id": "D",
+        "text": "Proliferative phase   : Rapid regeneration of myometrium and maturation of Graafian follicle"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAround day 14 of the cycle, **LH surge** induces the rupture of the Graafian follicle and ovulation.",
+    "image": ""
+  },
+  {
+    "num": 97,
+    "exam": "AIPMT 2009",
+    "question": "Given below is a diagrammatic sketch for a portion of human male reproductive system. Select the correct set of the names of the parts labelled A, B, C, D.\n\n![Male Reproductive System](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551332/edvedum/questions/human_reproduction/human_repro_q_97.png)",
+    "options": [
+      {
+        "id": "A",
+        "text": "A - Ureter, B - Seminal vesicle, C - Prostate, D - Bulbourethral gland"
+      },
+      {
+        "id": "B",
+        "text": "A - Ureter, B - Prostate, C - Seminal vesicle, D - Bulbourethral gland"
+      },
+      {
+        "id": "C",
+        "text": "A - Vas deferens, B - Seminal vesicle, C - Prostate, D - Bulbourethral gland"
+      },
+      {
+        "id": "D",
+        "text": "A - Vas deferens, B - Seminal vesicle, C - Bulbourethral gland, D - Prostate"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn the diagram of the male reproductive tract: **A = Ureter, B = Seminal vesicle, C = Prostate, D = Bulbourethral gland**.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794551332/edvedum/questions/human_reproduction/human_repro_q_97.png"
+  },
+  {
+    "num": 98,
+    "exam": "AIPMT 2009",
+    "question": "Foetal ejection reflex in human female is induced by",
+    "options": [
+      {
+        "id": "A",
+        "text": "Pressure exerted by amniotic fluid"
+      },
+      {
+        "id": "B",
+        "text": "Differentiation of mammary glands"
+      },
+      {
+        "id": "C",
+        "text": "Release of oxytocin from pituitary"
+      },
+      {
+        "id": "D",
+        "text": "Fully developed foetus and placenta"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nDuring parturition, strong contractions of the uterus occur. **Differentiation of mammary glands** occurs throughout pregnancy, not as a birth event.",
+    "image": ""
+  },
+  {
+    "num": 99,
+    "exam": "AIPMT 2009",
+    "question": "The correct sequence of spermatogenetic stages leading to the formation of sperms in a mature\nhuman testis is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "spermatocyte - spermatogonia - spermatid - sperms"
+      },
+      {
+        "id": "B",
+        "text": "spermatogonia - spermatid - spermatocyte - sperms"
+      },
+      {
+        "id": "C",
+        "text": "spermatid - spermatocyte - spermatogonia - sperms"
+      },
+      {
+        "id": "D",
+        "text": "spermatogonia - spermatocyte - spermatid - sperms"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe stages of spermatogenesis are: **spermatogonia → spermatocytes → spermatids → sperms**.",
+    "image": ""
+  },
+  {
+    "num": 100,
+    "exam": "AIPMT 2009",
+    "question": "Which one of the following is the most likely root cause why menstruation is not taking place in\nregularly cycling human female ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Retention of well-developed corpus luteum"
+      },
+      {
+        "id": "B",
+        "text": "Maintenance of high concentration of sex hormones in the blood stream"
+      },
+      {
+        "id": "C",
+        "text": "Maintenance of the hypertrophical endometrial lining"
+      },
+      {
+        "id": "D",
+        "text": "Fertilization of the ovum"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nFertilization and pregnancy sustain high progesterone levels (via hCG and corpus luteum), which prevents endometrial breakdown, causing **absence of menstruation**.",
+    "image": ""
+  },
+  {
+    "num": 101,
+    "exam": "AIPMT 2009",
+    "question": "A change in the amount of yolk and its distribution in the egg will effect :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fertilization"
+      },
+      {
+        "id": "B",
+        "text": "Pattern of cleavage"
+      },
+      {
+        "id": "C",
+        "text": "Formation of zygote"
+      },
+      {
+        "id": "D",
+        "text": "Number of blastomeres produced"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nCleavage involves repeated mitotic divisions that produce blastomeres without overall embryonic growth. The **embryo size does not increase**.",
+    "image": ""
+  },
+  {
+    "num": 102,
+    "exam": "AIPMT 2008",
+    "question": "In humans, at the end of the first meiotic division, the male germ cells differentiate into the:",
+    "options": [
+      {
+        "id": "A",
+        "text": "secondary spermatocytes"
+      },
+      {
+        "id": "B",
+        "text": "spermatogonia"
+      },
+      {
+        "id": "C",
+        "text": "primary spermatocytes"
+      },
+      {
+        "id": "D",
+        "text": "spermatids"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nReduction division (meiosis I) converts diploid primary spermatocytes into haploid **secondary spermatocytes**.",
+    "image": ""
+  },
+  {
+    "num": 103,
+    "exam": "AIPMT 2008",
+    "question": "In human adult females oxytocin:",
+    "options": [
+      {
+        "id": "A",
+        "text": "causes strong uterine contractions during parturition"
+      },
+      {
+        "id": "B",
+        "text": "stimulates pituitary to secrete vasopressin"
+      },
+      {
+        "id": "C",
+        "text": "stimulates growth of mammary glands"
+      },
+      {
+        "id": "D",
+        "text": "is secreted by anterior pituitary"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Relaxin** relaxes the pubic symphysis and softens the cervix to facilitate parturition.",
+    "image": ""
+  },
+  {
+    "num": 104,
+    "exam": "AIPMT 2008",
+    "question": "Which one of the following statements is incorrect about menstruation?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The beginning of the cycle of menstruation is called menarche"
+      },
+      {
+        "id": "B",
+        "text": "At menopause in the female, there is especially abrupt increase in gonadotropic hormones"
+      },
+      {
+        "id": "C",
+        "text": "The menstrual fluid can easily clot"
+      },
+      {
+        "id": "D",
+        "text": "During normal menstruation about 40 ml blood is lost"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nEntry of the sperm triggers completion of meiosis II, forming a haploid mature ovum (ootid) and a **second polar body**.",
+    "image": ""
+  },
+  {
+    "num": 105,
+    "exam": "AIPMT 2008",
+    "question": "Which extraembryonic membrane in humans prevents desiccation of the embryo inside the uterus?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Yolk sac"
+      },
+      {
+        "id": "B",
+        "text": "Amnion"
+      },
+      {
+        "id": "C",
+        "text": "Chorion"
+      },
+      {
+        "id": "D",
+        "text": "Allantois"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe **amnion** secretes amniotic fluid, which cushions the foetus from mechanical shock and prevents desiccation.",
+    "image": ""
+  },
+  {
+    "num": 106,
+    "exam": "AIPMT 2007",
+    "question": "Which part of ovary in mammals acts as an endocrine gland after ovulation ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Stroma"
+      },
+      {
+        "id": "B",
+        "text": "Vitelline membrane"
+      },
+      {
+        "id": "C",
+        "text": "Germinal epithelium"
+      },
+      {
+        "id": "D",
+        "text": "Graafian follicle"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe blastocyst is composed of an outer **trophoblast** layer and an inner group of cells called the **inner cell mass**.",
+    "image": ""
+  },
+  {
+    "num": 107,
+    "exam": "AIPMT 2007",
+    "question": "In the human female, menstruation can be deferred by the administration of:-",
+    "options": [
+      {
+        "id": "A",
+        "text": "LH only"
+      },
+      {
+        "id": "B",
+        "text": "Combination of estrogen and progesterone"
+      },
+      {
+        "id": "C",
+        "text": "FSH only"
+      },
+      {
+        "id": "D",
+        "text": "Combination of FSH and LH"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe surge of **LH (Luteinizing Hormone)** at mid-cycle stimulates ovulation.",
+    "image": ""
+  },
+  {
+    "num": 108,
+    "exam": "AIPMT 2006",
+    "question": "Sertoli cells are regulated by the pituitary hormone known as-",
+    "options": [
+      {
+        "id": "A",
+        "text": "LH"
+      },
+      {
+        "id": "B",
+        "text": "FSH"
+      },
+      {
+        "id": "C",
+        "text": "GH"
+      },
+      {
+        "id": "D",
+        "text": "Prolactin"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**FSH (Follicle Stimulating Hormone)** stimulates the growth and development of ovarian follicles.",
+    "image": ""
+  },
+  {
+    "num": 109,
+    "exam": "AIPMT 2006",
+    "question": "Withdrawal of which of the following hormones is the immediate cause of menstruation ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Progesterone"
+      },
+      {
+        "id": "B",
+        "text": "FSH"
+      },
+      {
+        "id": "C",
+        "text": "FSH-RH"
+      },
+      {
+        "id": "D",
+        "text": "Estrogen"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Progesterone** is the hormone that maintains the secretory state of the endometrium for blastocyst implantation.",
+    "image": ""
+  },
+  {
+    "num": 110,
+    "exam": "AIPMT 2005",
+    "question": "If mammalian ovum fails to get fertilized, which one of the following is unlikely",
+    "options": [
+      {
+        "id": "A",
+        "text": "Corpus luteum will disintegrate"
+      },
+      {
+        "id": "B",
+        "text": "Estrogen secretion further decreases"
+      },
+      {
+        "id": "C",
+        "text": "Primary follicle starts developing"
+      },
+      {
+        "id": "D",
+        "text": "Progesterone secretion rapidly declines"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIf fertilization fails, the corpus luteum degenerates into a white fibrous body called the **corpus albicans**.",
+    "image": ""
+  },
+  {
+    "num": 111,
+    "exam": "AIPMT 2004",
+    "question": "Ovulation in the human female normally takes place during the menstrual cycle -",
+    "options": [
+      {
+        "id": "A",
+        "text": "At the beginning of the proliferative phase"
+      },
+      {
+        "id": "B",
+        "text": "At the mid secretory phase"
+      },
+      {
+        "id": "C",
+        "text": "Just before the end of the secretory cycle"
+      },
+      {
+        "id": "D",
+        "text": "At the end of the proliferative phase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nDuring the post-ovulatory (secretory/luteal) phase, high levels of **progesterone** stimulate glandular development of the endometrium.",
+    "image": ""
+  },
+  {
+    "num": 112,
+    "exam": "AIPMT 2004",
+    "question": "Which of the following hormones is not a secretion product of human placenta -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Estrogen"
+      },
+      {
+        "id": "B",
+        "text": "Progesterone"
+      },
+      {
+        "id": "C",
+        "text": "Prolactin"
+      },
+      {
+        "id": "D",
+        "text": "Human chorionic gonadotropin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Progesterone** is essential for maintaining the uterine lining and preventing spontaneous contractions during pregnancy.",
+    "image": ""
+  },
+  {
+    "num": 113,
+    "exam": "AIPMT 2003",
+    "question": "Bartholin's glands are situated",
+    "options": [
+      {
+        "id": "A",
+        "text": "on the sides of the head of some amphibians"
+      },
+      {
+        "id": "B",
+        "text": "at the reduced tail end of birds"
+      },
+      {
+        "id": "C",
+        "text": "on either side of vagina in humans"
+      },
+      {
+        "id": "D",
+        "text": "on either side of vas deferens in humans."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe vascularized maternal uterine lining modified during pregnancy is called the **decidua**.",
+    "image": ""
+  },
+  {
+    "num": 114,
+    "exam": "AIPMT 2003",
+    "question": "During embryonic development, the establishment of polarity along anterior/posterior,\ndorsal/ventral or medial/lateral axis is called : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Organizer phenomena"
+      },
+      {
+        "id": "B",
+        "text": "Pattern formation"
+      },
+      {
+        "id": "C",
+        "text": "Axis formation"
+      },
+      {
+        "id": "D",
+        "text": "Anamorphosis"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe embryonic organizer phenomenon was discovered by **Spemann and Mangold**.",
+    "image": ""
+  },
+  {
+    "num": 115,
+    "exam": "AIPMT 2002",
+    "question": "What is true for cleavage : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Size of embryo decrease"
+      },
+      {
+        "id": "B",
+        "text": "Size of embryo increase"
+      },
+      {
+        "id": "C",
+        "text": "Size of cells increase"
+      },
+      {
+        "id": "D",
+        "text": "Size of cells decrease"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nDuring cleavage, repeated cell divisions partition the fixed volume of cytoplasm into smaller cells, so **individual cell size decreases while embryo volume remains constant**.",
+    "image": ""
+  },
+  {
+    "num": 116,
+    "exam": "AIPMT 2001",
+    "question": "Which set is similar : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Vita B - Niacin"
+      },
+      {
+        "id": "B",
+        "text": "Sebum-sweat 7"
+      },
+      {
+        "id": "C",
+        "text": "Corpus luteum – Graafian follicles"
+      },
+      {
+        "id": "D",
+        "text": "Bundle of his – Pace maker"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nGastrulation establishes the three primary germ layers: **ectoderm, mesoderm, and endoderm**.",
+    "image": ""
+  },
+  {
+    "num": 117,
+    "exam": "AIPMT 2000",
+    "question": "Blastopore is the pore of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A.C."
+      },
+      {
+        "id": "B",
+        "text": "Archenteron"
+      },
+      {
+        "id": "C",
+        "text": "Blastocoel"
+      },
+      {
+        "id": "D",
+        "text": "Coelom"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nDuring gastrulation, the blastocoel is replaced by the newly formed primitive digestive cavity, the **archenteron**.",
+    "image": ""
+  },
+  {
+    "num": 118,
+    "exam": "AIPMT 1999",
+    "question": "Secretion of progesterone by corpus luteum is initiated by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "thyroxine"
+      },
+      {
+        "id": "B",
+        "text": "LH"
+      },
+      {
+        "id": "C",
+        "text": "MSH"
+      },
+      {
+        "id": "D",
+        "text": "testosterone"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nLeydig cells are stimulated to synthesize and secrete androgens by **LH (ICSH)**.",
+    "image": ""
+  },
+  {
+    "num": 119,
+    "exam": "AIPMT 1999",
+    "question": "The middle piece of the sperm contains :",
+    "options": [
+      {
+        "id": "A",
+        "text": "proteins"
+      },
+      {
+        "id": "B",
+        "text": "centriole"
+      },
+      {
+        "id": "C",
+        "text": "nucleus"
+      },
+      {
+        "id": "D",
+        "text": "mitochondria"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe middle piece of the mammalian sperm contains spirally arranged **mitochondria** providing ATP for flagellar propulsion.",
+    "image": ""
+  },
+  {
+    "num": 120,
+    "exam": "AIPMT 1999",
+    "question": "After ovulation, Graafian follicle regresses into",
+    "options": [
+      {
+        "id": "A",
+        "text": "corpus luteum"
+      },
+      {
+        "id": "B",
+        "text": "corpus callosum"
+      },
+      {
+        "id": "C",
+        "text": "corpus albicans"
+      },
+      {
+        "id": "D",
+        "text": "corpus artesia"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAfter ovulation, the remnants of the follicle transform into the **corpus luteum**.",
+    "image": ""
+  },
+  {
+    "num": 121,
+    "exam": "AIPMT 1998",
+    "question": "Which of the following cells, found in testes of rabbit, secrete male hormone?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Leydig's cell"
+      },
+      {
+        "id": "B",
+        "text": "Sertoli cells"
+      },
+      {
+        "id": "C",
+        "text": "Epithelial cells"
+      },
+      {
+        "id": "D",
+        "text": "Spermatocytes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Sertoli cells** in seminiferous tubules support and nourish developing spermatogenic cells.",
+    "image": ""
+  },
+  {
+    "num": 122,
+    "exam": "AIPMT 1997",
+    "question": "Fertilizin is a chemical substance produced from",
+    "options": [
+      {
+        "id": "A",
+        "text": "polar bodies"
+      },
+      {
+        "id": "B",
+        "text": "middle piece of sperm"
+      },
+      {
+        "id": "C",
+        "text": "mature eggs"
+      },
+      {
+        "id": "D",
+        "text": "acrosome"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nMeiotic divisions distribute **centrioles and mitochondria** into the developing spermatids.",
+    "image": ""
+  },
+  {
+    "num": 123,
+    "exam": "AIPMT 1997",
+    "question": "In human beings, the eggs are",
+    "options": [
+      {
+        "id": "A",
+        "text": "mesolecithal"
+      },
+      {
+        "id": "B",
+        "text": "alecithal"
+      },
+      {
+        "id": "C",
+        "text": "microlecithal"
+      },
+      {
+        "id": "D",
+        "text": "macrolecithal"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nHuman eggs contain negligible yolk and are classified as **alecithal**.",
+    "image": ""
+  },
+  {
+    "num": 124,
+    "exam": "AIPMT 1997",
+    "question": "In the fertile human female, approximately on which day of the menstrual cycle does ovulation take\nplace?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Day 14"
+      },
+      {
+        "id": "B",
+        "text": "Day 18"
+      },
+      {
+        "id": "C",
+        "text": "Day 1"
+      },
+      {
+        "id": "D",
+        "text": "Day 8"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn an average 28-day menstrual cycle, ovulation occurs around **Day 14**.",
+    "image": ""
+  },
+  {
+    "num": 125,
+    "exam": "AIPMT 1995",
+    "question": "The oestrous cycle is a characteristic of",
+    "options": [
+      {
+        "id": "A",
+        "text": "human females only"
+      },
+      {
+        "id": "B",
+        "text": "mammalian females other than primates"
+      },
+      {
+        "id": "C",
+        "text": "human males only"
+      },
+      {
+        "id": "D",
+        "text": "mammalian males other than primates"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe **menstrual cycle** occurs exclusively in females of primate mammals (humans, apes, monkeys).",
+    "image": ""
+  },
+  {
+    "num": 126,
+    "exam": "AIPMT 1995",
+    "question": "The mammalian corpus luteum produces",
+    "options": [
+      {
+        "id": "A",
+        "text": "luteotrophic hormone"
+      },
+      {
+        "id": "B",
+        "text": "luteinizing hormone"
+      },
+      {
+        "id": "C",
+        "text": "estrogen"
+      },
+      {
+        "id": "D",
+        "text": "progesterone"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe mid-cycle surge in **Luteinizing Hormone (LH)** triggers ovulation.",
+    "image": ""
+  },
+  {
+    "num": 127,
+    "exam": "AIPMT 1995",
+    "question": "In an egg, the type of cleavage is determined by",
+    "options": [
+      {
+        "id": "A",
+        "text": "the amount and distribution of yolk"
+      },
+      {
+        "id": "B",
+        "text": "the number of egg membranes"
+      },
+      {
+        "id": "C",
+        "text": "the shape and size of the sperm"
+      },
+      {
+        "id": "D",
+        "text": "the size and location of the nucleus"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe cleavage pattern is determined by the **amount and distribution of yolk** in the egg.",
+    "image": ""
+  },
+  {
+    "num": 128,
+    "exam": "AIPMT 1994",
+    "question": "The immediate cause of induction of ovulation in human female is the large plasma surge of",
+    "options": [
+      {
+        "id": "A",
+        "text": "LH"
+      },
+      {
+        "id": "B",
+        "text": "FSH"
+      },
+      {
+        "id": "C",
+        "text": "progesterone"
+      },
+      {
+        "id": "D",
+        "text": "estradiol"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Progesterone** sustains the thickened secretory endometrium throughout pregnancy.",
+    "image": ""
+  },
+  {
+    "num": 129,
+    "exam": "AIPMT 1994",
+    "question": "What is true about cleavage in the fertilized egg in humans?",
+    "options": [
+      {
+        "id": "A",
+        "text": "It starts while the egg is in Fallopian tube."
+      },
+      {
+        "id": "B",
+        "text": "It starts when the egg reaches uterus."
+      },
+      {
+        "id": "C",
+        "text": "It is meroblastic."
+      },
+      {
+        "id": "D",
+        "text": "It is identical to the normal mitosis."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nCleavage begins **while the zygote is traveling through the Fallopian tube**.",
+    "image": ""
+  },
+  {
+    "num": 130,
+    "exam": "AIPMT 1994",
+    "question": "The extra embryonic membranes of the mammalian embryo are derived from",
+    "options": [
+      {
+        "id": "A",
+        "text": "trophoblast"
+      },
+      {
+        "id": "B",
+        "text": "inner cell mass"
+      },
+      {
+        "id": "C",
+        "text": "formative cells"
+      },
+      {
+        "id": "D",
+        "text": "follicle cells"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe outer cell layer of the blastocyst is the **trophoblast**, which establishes contact with the endometrium.",
+    "image": ""
+  },
+  {
+    "num": 131,
+    "exam": "AIPMT 1994",
+    "question": "In the 28 day human ovarian cycle, the ovulation takes place typically on",
+    "options": [
+      {
+        "id": "A",
+        "text": "day 14 of the cycle"
+      },
+      {
+        "id": "B",
+        "text": "day 28 of the cycle"
+      },
+      {
+        "id": "C",
+        "text": "day 1 of the cycle"
+      },
+      {
+        "id": "D",
+        "text": "day 5 of the cycle"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOvulation typically occurs on **day 14 of the cycle** in response to the LH surge.",
+    "image": ""
+  },
+  {
+    "num": 132,
+    "exam": "AIPMT 1993",
+    "question": "Extrusion of second polar body from egg nucleus occurs",
+    "options": [
+      {
+        "id": "A",
+        "text": "after entry of sperm before completion of fertilization"
+      },
+      {
+        "id": "B",
+        "text": "after completion of fertilization"
+      },
+      {
+        "id": "C",
+        "text": "before entry of sperm"
+      },
+      {
+        "id": "D",
+        "text": "without any relation of sperm entry"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nMeiosis II of the mammalian oocyte is completed **upon entry of the sperm**.",
+    "image": ""
+  },
+  {
+    "num": 133,
+    "exam": "AIPMT 1993",
+    "question": "Termination of gastrulation is indicated by",
+    "options": [
+      {
+        "id": "A",
+        "text": "obliteration of blastocoel"
+      },
+      {
+        "id": "B",
+        "text": "obliteration of archenteron"
+      },
+      {
+        "id": "C",
+        "text": "closure of blastopore"
+      },
+      {
+        "id": "D",
+        "text": "closure of neural tube"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nDuring gastrulation, the blastocoel is obliterated as the **archenteron** expands.",
+    "image": ""
+  },
+  {
+    "num": 134,
+    "exam": "AIPMT 1993",
+    "question": "In telolecithal egg the yolk is found",
+    "options": [
+      {
+        "id": "A",
+        "text": "all over the egg"
+      },
+      {
+        "id": "B",
+        "text": "on one side"
+      },
+      {
+        "id": "C",
+        "text": "both the sides"
+      },
+      {
+        "id": "D",
+        "text": "centre"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nImplantation of the human embryo occurs in the **uterine cavity**.",
+    "image": ""
+  },
+  {
+    "num": 135,
+    "exam": "AIPMT 1993",
+    "question": "Acrosome reaction in sperm is triggered by",
+    "options": [
+      {
+        "id": "A",
+        "text": "capacitation"
+      },
+      {
+        "id": "B",
+        "text": "release of lysin"
+      },
+      {
+        "id": "C",
+        "text": "influx of"
+      },
+      {
+        "id": "D",
+        "text": "release of fertilizin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Capacitation** is the process where sperms undergo physiological changes in the female tract to acquire fertilizing capacity.",
+    "image": ""
+  },
+  {
+    "num": 136,
+    "exam": "AIPMT 1993",
+    "question": "Male hormone is produced in the testis by cells of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sertoli"
+      },
+      {
+        "id": "B",
+        "text": "epithelial"
+      },
+      {
+        "id": "C",
+        "text": "spermatocytes"
+      },
+      {
+        "id": "D",
+        "text": "Leydig"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Sertoli cells** provide nutrients to spermatogenic cells within the seminiferous tubules.",
+    "image": ""
+  },
+  {
+    "num": 137,
+    "exam": "AIPMT 1992",
+    "question": "Meroblastic cleavage is a division which is",
+    "options": [
+      {
+        "id": "A",
+        "text": "horizontal"
+      },
+      {
+        "id": "B",
+        "text": "partial/parietal"
+      },
+      {
+        "id": "C",
+        "text": "total"
+      },
+      {
+        "id": "D",
+        "text": "spiral"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nDue to the absence of yolk, human cleavage is **holoblastic (total)**.",
+    "image": ""
+  },
+  {
+    "num": 138,
+    "exam": "AIPMT 1992",
+    "question": "Eye lens is formed from",
+    "options": [
+      {
+        "id": "A",
+        "text": "ectoderm"
+      },
+      {
+        "id": "B",
+        "text": "mesoderm"
+      },
+      {
+        "id": "C",
+        "text": "endoderm"
+      },
+      {
+        "id": "D",
+        "text": "ectoderm and mesoderm"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe central and peripheral nervous systems originate from embryonic **ectoderm**.",
+    "image": ""
+  },
+  {
+    "num": 139,
+    "exam": "AIPMT 1992",
+    "question": "Blastopore is",
+    "options": [
+      {
+        "id": "A",
+        "text": "opening of neural tube"
+      },
+      {
+        "id": "B",
+        "text": "opening of gastrocoel"
+      },
+      {
+        "id": "C",
+        "text": "future anterior end of embryo"
+      },
+      {
+        "id": "D",
+        "text": "found in blastula"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe blastopore is the opening into the primitive gut or **gastrocoel (archenteron)**.",
+    "image": ""
+  },
+  {
+    "num": 140,
+    "exam": "AIPMT 1991",
+    "question": "Fertilizins are emitted by",
+    "options": [
+      {
+        "id": "A",
+        "text": "immature eggs"
+      },
+      {
+        "id": "B",
+        "text": "mature eggs"
+      },
+      {
+        "id": "C",
+        "text": "sperms"
+      },
+      {
+        "id": "D",
+        "text": "polar bodies"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nA single diploid primary spermatocyte yields **four functional spermatozoa**.",
+    "image": ""
+  },
+  {
+    "num": 141,
+    "exam": "AIPMT 1991",
+    "question": "During cleavage, what is true about cells?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nucleocytoplasmic ratio remains unchanged."
+      },
+      {
+        "id": "B",
+        "text": "Size does not increase."
+      },
+      {
+        "id": "C",
+        "text": "There is less consumption of oxygen."
+      },
+      {
+        "id": "D",
+        "text": "The division is like meiosis."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nDuring cleavage, cellular volumes decrease while nuclei duplicate, so the **nucleocytoplasmic ratio increases**.",
+    "image": ""
+  },
+  {
+    "num": 142,
+    "exam": "AIPMT 1991",
+    "question": "Freshly released human egg has",
+    "options": [
+      {
+        "id": "A",
+        "text": "one Y-chromosome"
+      },
+      {
+        "id": "B",
+        "text": "one X-chromosome"
+      },
+      {
+        "id": "C",
+        "text": "two X-chromosome"
+      },
+      {
+        "id": "D",
+        "text": "one X-chromosome and one Y-chromosome"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nRoughly 50% of male gametes carry an **X-chromosome** and 50% carry a **Y-chromosome**.",
+    "image": ""
+  },
+  {
+    "num": 143,
+    "exam": "AIPMT 1991",
+    "question": "Middle piece of mammalian sperm possesses",
+    "options": [
+      {
+        "id": "A",
+        "text": "mitochondria and centriole"
+      },
+      {
+        "id": "B",
+        "text": "mitochondria only"
+      },
+      {
+        "id": "C",
+        "text": "centriole only"
+      },
+      {
+        "id": "D",
+        "text": "nucleus and mitochondria"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe middle piece of the sperm contains spirally arranged **mitochondria** that provide energy for movement.",
+    "image": ""
+  },
+  {
+    "num": 144,
+    "exam": "AIPMT 1990",
+    "question": "Gonads develop from embryonic",
+    "options": [
+      {
+        "id": "A",
+        "text": "ectoderm"
+      },
+      {
+        "id": "B",
+        "text": "endoderm"
+      },
+      {
+        "id": "C",
+        "text": "mesoderm"
+      },
+      {
+        "id": "D",
+        "text": "both mesoderm and endoderm"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nMuscles, skeleton, and vascular tissues develop from embryonic **mesoderm**.",
+    "image": ""
+  },
+  {
+    "num": 145,
+    "exam": "AIPMT 1990",
+    "question": "How many sperms are formed from a secondary spermatocyte?",
+    "options": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "8"
+      },
+      {
+        "id": "C",
+        "text": "2"
+      },
+      {
+        "id": "D",
+        "text": "1"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOne primary spermatocyte produces **4** functional sperms through meiotic divisions.",
+    "image": ""
+  },
+  {
+    "num": 146,
+    "exam": "AIPMT 1989",
+    "question": "Cells become variable in morphology and function in different regions of the embryo. The process is",
+    "options": [
+      {
+        "id": "A",
+        "text": "differentiation"
+      },
+      {
+        "id": "B",
+        "text": "metamorphosis"
+      },
+      {
+        "id": "C",
+        "text": "organisation"
+      },
+      {
+        "id": "D",
+        "text": "rearrangement"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe process whereby embryonic cells acquire specific structures and functions is called **cellular differentiation**.",
+    "image": ""
+  },
+  {
+    "num": 147,
+    "exam": "AIPMT 1989",
+    "question": "Human eggs are",
+    "options": [
+      {
+        "id": "A",
+        "text": "alecithal"
+      },
+      {
+        "id": "B",
+        "text": "microlecithal"
+      },
+      {
+        "id": "C",
+        "text": "mesolecithal"
+      },
+      {
+        "id": "D",
+        "text": "macrolecithal"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nHuman eggs contain virtually no yolk and are termed **alecithal**.",
+    "image": ""
+  },
+  {
+    "num": 148,
+    "exam": "AIPMT 1989",
+    "question": "Egg is liberated from ovary in",
+    "options": [
+      {
+        "id": "A",
+        "text": "secondary oocyte stage"
+      },
+      {
+        "id": "B",
+        "text": "primary oocyte stage"
+      },
+      {
+        "id": "C",
+        "text": "oogonial stage"
+      },
+      {
+        "id": "D",
+        "text": "mature ovum stage"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe human ovum is released from the ovary during ovulation at the **secondary oocyte stage**.",
+    "image": ""
+  },
+  {
+    "num": 149,
+    "exam": "AIPMT 2005",
+    "question": "Grey crescent is the area -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Just opposite to the site of entry of sperm into ovum"
+      },
+      {
+        "id": "B",
+        "text": "At the point of entry of sperm into ovum"
+      },
+      {
+        "id": "C",
+        "text": "At the vegetal pole"
+      },
+      {
+        "id": "D",
+        "text": "At the animal pole"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe **grey crescent** is a cytoplasmic crescent that forms on the dorsal surface **just opposite to the point of sperm entry** in amphibian eggs.",
+    "image": ""
+  }
+]
