@@ -425,3 +425,4 @@ for (let i = 0; i < qIndices.length; i++) {
 console.log(`Generated all ${allQuestions.length} questions.`);
 fs.writeFileSync('./backend/scripts/excretory_all_questions.json', JSON.stringify(allQuestions, null, 2), 'utf8');
 console.log('Saved to ./backend/scripts/excretory_all_questions.json');
+

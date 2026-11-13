@@ -46,3 +46,4 @@ async function cropSlices() {
 }
 
 cropSlices().catch(console.error);
+

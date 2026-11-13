@@ -11,3 +11,4 @@ for (let q = start; q <= end; q++) {
   console.log(ocr[q]?.trim());
   console.log('----------------------------------------------------');
 }
+

@@ -240,3 +240,4 @@ export const periodPart3 = [
     solution_text: "The distance between the centres of cation and anion is the sum of their ionic radii ($r_+ + r_-$). Among the given ions, $\\text{Cs}^+$ is the largest alkali metal cation and $\\text{I}^-$ is the largest halide anion. Therefore, the crystal of $\\text{CsI}$ has the maximum distance between centres of cations and anions."
   }
 ];
+

@@ -84,3 +84,4 @@ if (mismatches === 0 && errors === 0) {
 } else {
   process.exit(1);
 }
+

@@ -60,3 +60,4 @@ for (const n of targetNums) {
   console.log(`\n=================== Q${n} ===================`);
   console.log(getQ(n));
 }
+

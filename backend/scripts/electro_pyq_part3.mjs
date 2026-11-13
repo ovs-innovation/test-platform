@@ -300,3 +300,4 @@ export const electroPart3 = [
     solution_text: "On a mercury cathode, hydrogen has a very high overvoltage (overpotential), which makes the discharge of $\\text{H}^+$ energetically unfavorable. Consequently, reduction of $\\text{Na}^+$ to sodium occurs in preference to $\\text{H}^+$, and sodium dissolves in mercury to form sodium amalgam."
   }
 ];
+

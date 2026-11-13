@@ -192,3 +192,4 @@ export const electroPart4 = [
     solution_text: "At the anode, oxidation of water takes place in preference to sulphate ions due to lower discharge potential:\n$2\\text{H}_2\\text{O}(l) \\rightarrow \\text{O}_2(g) + 4\\text{H}^+(\\text{aq}) + 4e^-$.\nTherefore, oxygen gas is liberated at the anode."
   }
 ];
+

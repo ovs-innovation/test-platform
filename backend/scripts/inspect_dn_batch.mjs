@@ -28,3 +28,4 @@ for (let q = qStart; q <= qEnd; q++) {
   console.log(`\n=================== QUESTION ${q} [Official Key: ${d.correctOption}] Diagram: ${d.imageUrl ? 'YES' : 'NO'} ===================`);
   console.log(d.ocrText);
 }
+

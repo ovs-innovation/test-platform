@@ -360,3 +360,4 @@ export const kineticsPyqPart1 = [
     solution_text: "For a first order reaction:\n$$t = \\frac{2.303}{k}\\log\\left(\\frac{[A]_0}{[A]_t}\\right)$$\nFor $99\\%$ completion, $[A]_t = 100 - 99 = 1\\%$ of $[A]_0$:\n$$t_{99\\%} = \\frac{2.303}{k}\\log\\left(\\frac{100}{1}\\right) = \\frac{2.303}{k} \\log(10^2) = \\frac{2.303 \\times 2}{k} = \\frac{4.606}{k}$$\nHence, the correct option is (A)."
   }
 ];
+

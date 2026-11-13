@@ -594,3 +594,4 @@ export const semiPart2Questions = [
     explanation: "In a full-wave rectifier, both positive and negative half-cycles of the input AC are converted into unidirectional output pulses. Therefore, the frequency of the output ripple is twice the input AC frequency:\n$$f_{\\text{ripple}} = 2 f_{\\text{in}} = 2 \\times 50\\text{ Hz} = 100\\text{ Hz}$$\n\nHence, the correct option is (D)."
   }
 ];
+

@@ -11,3 +11,4 @@ for (let q = fromQ; q <= toQ; q++) {
   console.log(`\n----------------- Q${q} [Official Key: ${key[q]}] -----------------`);
   console.log(ocr[q] || '(no OCR)');
 }
+

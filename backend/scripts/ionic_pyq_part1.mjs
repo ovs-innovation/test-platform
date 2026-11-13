@@ -302,3 +302,4 @@ export const part1Questions = [
     explanation: "For the dissociation:\n$$\\text{Ag}_2\\text{C}_2\\text{O}_4(s) \\rightleftharpoons 2\\text{Ag}^+ + \\text{C}_2\\text{O}_4^{2-}$$\nGiven $[\\text{Ag}^+] = 2.2 \\times 10^{-4}\\text{ mol L}^{-1}$.\nFrom the stoichiometry:\n$$[\\text{C}_2\\text{O}_4^{2-}] = \\frac{[\\text{Ag}^+]}{2} = \\frac{2.2 \\times 10^{-4}}{2} = 1.1 \\times 10^{-4}\\text{ mol L}^{-1}$$\n\nSolubility product:\n$$K_{sp} = [\\text{Ag}^+]^2[\\text{C}_2\\text{O}_4^{2-}] = (2.2 \\times 10^{-4})^2 \\times (1.1 \\times 10^{-4})$$\n$$= 4.84 \\times 10^{-8} \\times 1.1 \\times 10^{-4} = 5.324 \\times 10^{-12} \\approx 5.3 \\times 10^{-12}$$"
   }
 ];
+

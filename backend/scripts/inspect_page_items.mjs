@@ -1,17 +1,15 @@
 import fs from 'fs';
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 
-const pdfPath = 'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1794310275209_120f888f.pdf';
+const items = JSON.parse(fs.readFileSync('backend/scripts/organic_pdf_items.json', 'utf8'));
 
-async function inspect(pageNum) {
-  const data = new Uint8Array(fs.readFileSync(pdfPath));
-  const doc = await pdfjsLib.getDocument({ data }).promise;
-  const page = await doc.getPage(pageNum);
-  const tc = await page.getTextContent();
-  console.log(`Page ${pageNum} items count:`, tc.items.length);
-  for (const it of tc.items) {
-    console.log(`[x=${Math.round(it.transform[4])}, y=${Math.round(it.transform[5])}] font=${it.fontName} "${it.str}"`);
+const pages = [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 29, 30, 31, 32, 34];
+
+for (const pg of pages) {
+  console.log(`=== PAGE ${pg} ===`);
+  const pgItems = items.filter(it => it.pageNum === pg);
+  for (const it of pgItems) {
+    if (it.str.trim() && (it.str.includes('(A)') || it.str.includes('(B)') || it.str.includes('(C)') || it.str.includes('(D)') || it.str.startsWith('Q') || it.str.includes('I') || it.str.includes('II') || it.str.includes('III') || it.str.includes('Choose') || it.str.includes('Which') || it.str.includes('The'))) {
+      console.log(`  y=${(it.y * 2).toFixed(1)}: "${it.str}"`);
+    }
   }
 }
-
-inspect(2).catch(console.error);

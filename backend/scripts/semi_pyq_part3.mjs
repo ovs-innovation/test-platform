@@ -529,3 +529,4 @@ export const semiPart3Questions = [
     explanation: "In the base circuit, with $V_i = 20\\text{ V}, R_B = 500\\text{ k}\\Omega$, and $V_{BE} = 0$:\n$$I_B = \\frac{V_i - V_{BE}}{R_B} = \\frac{20\\text{ V}}{500 \\times 10^3\\ \\Omega} = 40 \\times 10^{-6}\\text{ A} = 40\\ \\mu\\text{A}$$\nIn the collector circuit, with $V_{CC} = 20\\text{ V}, R_C = 4\\text{ k}\\Omega$, and $V_{CE} = 0$:\n$$I_C = \\frac{V_{CC} - V_{CE}}{R_C} = \\frac{20\\text{ V}}{4 \\times 10^3\\ \\Omega} = 5 \\times 10^{-3}\\text{ A} = 5\\text{ mA}$$\nThe current gain $\\beta$ is:\n$$\\beta = \\frac{I_C}{I_B} = \\frac{5 \\times 10^{-3}\\text{ A}}{40 \\times 10^{-6}\\text{ A}} = \\frac{5000}{40} = 125$$\n\nHence, the correct option is (D)."
   }
 ];
+

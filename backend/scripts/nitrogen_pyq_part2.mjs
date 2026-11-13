@@ -303,3 +303,4 @@ export const nitrogenPart2 = [
     solution: "Aniline diazotizes to benzenediazonium chloride ($X$). When treated with N,N-dimethylaniline, an electrophilic aromatic azo coupling reaction occurs at the para position of the highly activated dimethylaniline ring to produce p-(dimethylamino)azobenzene ($Y$), a brilliant yellow azo dye."
   }
 ];
+

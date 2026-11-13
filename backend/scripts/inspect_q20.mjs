@@ -39,3 +39,4 @@ for (let i = 0; i < allLines.length; i++) {
 const idx20 = qBlocks.findIndex(q => q.num === 20);
 const nextStart = qBlocks[idx20 + 1].startIndex;
 console.log('Q20 lines:\n' + allLines.slice(qBlocks[idx20].startIndex, nextStart).join('\n'));
+

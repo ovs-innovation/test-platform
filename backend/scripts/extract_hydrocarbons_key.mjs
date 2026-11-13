@@ -42,3 +42,4 @@ if (Object.keys(keyMap).length !== 103) {
 
 fs.writeFileSync('backend/scripts/hydrocarbons_official_key.json', JSON.stringify(keyMap, null, 2));
 console.log('Saved hydrocarbons_official_key.json');
+

@@ -586,3 +586,4 @@ export const atomPyqPart1 = [
     solution_text: "According to Aufbau principle for the 6th period ($n = 6$):\n- $6s$ ($n + l = 6 + 0 = 6$)\n- $4f$ [i.e., $(n - 2)f$] ($n + l = 4 + 3 = 7$)\n- $5d$ [i.e., $(n - 1)d$] ($n + l = 5 + 2 = 7$)\n- $6p$ [i.e., $np$] ($n + l = 6 + 1 = 7$)\nThus, the correct filling order is $ns \\rightarrow (n - 2)f \\rightarrow (n - 1)d \\rightarrow np$."
   }
 ];
+

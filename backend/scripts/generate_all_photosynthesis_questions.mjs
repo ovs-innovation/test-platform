@@ -625,3 +625,4 @@ for (const rawQ of rawQuestions) {
 console.log(`Generated ${finalQuestions.length} complete questions.`);
 fs.writeFileSync('./backend/scripts/photosynthesis_all_questions.json', JSON.stringify(finalQuestions, null, 2));
 console.log('Saved to ./backend/scripts/photosynthesis_all_questions.json');
+

@@ -375,3 +375,4 @@ export const coordPart4 = [
     solution_text: "Electrical conductance of a coordination compound in aqueous solution depends directly on the number of ions generated upon dissolution:\n- $[\\text{Co(NH}_3)_6]\\text{Cl}_3 \\rightarrow [\\text{Co(NH}_3)_6]^{3+} + 3\\text{Cl}^-$ produces 4 ions.\n- $[\\text{Co(NH}_3)_5\\text{Cl}]\\text{Cl}_2 \\rightarrow [\\text{Co(NH}_3)_5\\text{Cl}]^{2+} + 2\\text{Cl}^-$ produces 3 ions.\n- $[\\text{Co(NH}_3)_3\\text{Cl}_3]$ is a neutral non-electrolyte coordination compound that does not ionize in aqueous solution (produces 0 ions).\nSince both (C) and (D) represent non-electrolyte species $[\\text{Co(NH}_3)_3\\text{Cl}_3]$, both have zero ionisation and minimum electrical conductance in solution. Therefore, both (C) and (D) are correct."
   }
 ];
+

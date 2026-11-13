@@ -292,3 +292,4 @@ main()
     console.error('Fatal error during seed/sync:', err);
     process.exit(1);
   });
+

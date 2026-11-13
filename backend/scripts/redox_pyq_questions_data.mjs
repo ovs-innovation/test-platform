@@ -504,3 +504,4 @@ export const allRedoxQuestions = [
     solution_text: "In potassium dichromate, $\\text{K}_2\\text{Cr}_2\\text{O}_7$:\nPotassium is an alkali metal with oxidation state $+1$.\nOxygen has an oxidation state of $-2$.\nLet the oxidation state of chromium be $x$:\n$$2(+1) + 2x + 7(-2) = 0$$\n$$2 + 2x - 14 = 0$$\n$$2x = 12 \\implies x = +6$$\nThus, the oxidation state of $\\text{Cr}$ in $\\text{K}_2\\text{Cr}_2\\text{O}_7$ is $+6$."
   }
 ];
+

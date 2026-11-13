@@ -371,3 +371,4 @@ export const aldehydesPart4 = [
     solution: "The iodoform test gives a yellow precipitate of $\\text{CHI}_3$ with compounds having a $\\text{CH}_3\\text{CO}-$ group or $\\text{CH}_3\\text{CH(OH)}-$ group. Both acetophenone ($\\text{C}_6\\text{H}_5\\text{COCH}_3$, option A) and 2-hydroxypropane (isopropyl alcohol, $\\text{CH}_3\\text{CH(OH)CH}_3$, option D) give positive iodoform tests. (Single/Multiple choice: A and D are correct)."
   }
 ];
+

@@ -363,3 +363,4 @@ export const coordPart1 = [
     solution_text: "1. Hydrolysis of urea yields ammonium carbonate (A):\\n$$\\text{NH}_2\\text{CONH}_2 + 2\\text{H}_2\\text{O} \\rightarrow (\\text{NH}_4)_2\\text{CO}_3$$\\n2. Ammonium carbonate decomposes into ammonia (B):\\n$$(\\text{NH}_4)_2\\text{CO}_3 \\rightarrow 2\\text{NH}_3 + \\text{H}_2\\text{O} + \\text{CO}_2$$\\n3. Ammonia reacts with aqueous cupric ion to form a deep blue cuprammonium complex (C):\\n$$\\text{Cu}^{2+} + 4\\text{NH}_3 \\rightarrow [\\text{Cu(NH}_3)_4]^{2+}$$"
   }
 ];
+

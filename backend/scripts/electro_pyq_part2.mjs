@@ -300,3 +300,4 @@ export const electroPart2 = [
     solution_text: "According to Kohlrausch's law:\n$\\Lambda_m^\\circ(\\text{NH}_4\\text{OH}) = \\lambda^\\circ_{\\text{NH}_4^+} + \\lambda^\\circ_{\\text{OH}^-}$ \n$= (\\lambda^\\circ_{\\text{NH}_4^+} + \\lambda^\\circ_{\\text{Cl}^-}) + (\\lambda^\\circ_{\\text{Na}^+} + \\lambda^\\circ_{\\text{OH}^-}) - (\\lambda^\\circ_{\\text{Na}^+} + \\lambda^\\circ_{\\text{Cl}^-})$\n$= \\Lambda_m^\\circ(\\text{NH}_4\\text{Cl}) + \\Lambda_m^\\circ(\\text{NaOH}) - \\Lambda_m^\\circ(\\text{NaCl})$."
   }
 ];
+

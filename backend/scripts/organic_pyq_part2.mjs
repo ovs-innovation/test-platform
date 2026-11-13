@@ -424,3 +424,4 @@ export const part2Questions = [
     solution_text: "The principal chain has 5 carbon atoms (pent-2-ene). Numbering from the left gives substituents at positions 2 (chloro) and 3 (iodo). The configuration has the higher priority or similar groups on opposite sides, giving trans-2-chloro-3-iodo-2-pentene."
   }
 ];
+

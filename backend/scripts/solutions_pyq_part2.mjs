@@ -302,3 +302,4 @@ export const part2Questions = [
     explanation: "Osmotic pressure is given by:\n$$\\pi = C R T = \\frac{n_2}{V} R T = \\frac{m_2}{M_2 V} R T$$\nRearranging for molecular mass $M_2$:\n$$M_2 = \\left(\\frac{m_2}{V}\\right) \\frac{R T}{\\pi}$$\nwhere $m_2$ is the mass of the solute dissolved in volume $V$."
   }
 ];
+

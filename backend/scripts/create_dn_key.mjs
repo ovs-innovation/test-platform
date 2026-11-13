@@ -31,3 +31,4 @@ const officialKey = {
 
 fs.writeFileSync('backend/scripts/dn_official_key.json', JSON.stringify(officialKey, null, 2));
 console.log('Saved 123 official keys to backend/scripts/dn_official_key.json');
+

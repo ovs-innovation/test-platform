@@ -44,3 +44,4 @@ console.log('Total extracted keys count:', Object.keys(keysMap).length);
 
 // Save keys
 fs.writeFileSync('backend/scripts/biotech_app_official_keys.json', JSON.stringify(keysMap, null, 2));
+

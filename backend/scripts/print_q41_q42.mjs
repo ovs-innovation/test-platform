@@ -57,3 +57,4 @@ function getQ(num) {
 console.log(getQ(41));
 console.log('\n--- Q42 ---');
 console.log(getQ(42));
+

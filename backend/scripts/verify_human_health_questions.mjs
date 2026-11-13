@@ -72,3 +72,4 @@ if (errors === 0) {
   console.error(`❌ VERIFICATION FAILED: ${errors} errors found.`);
   process.exit(1);
 }
+

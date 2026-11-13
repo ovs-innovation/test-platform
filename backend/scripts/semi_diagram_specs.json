@@ -1,0 +1,612 @@
+[
+  {
+    "q": 1,
+    "id": "semi_q1_diagram",
+    "page": 2,
+    "type": "prompt_diagram",
+    "yMin": 335,
+    "yMax": 717,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 2,
+    "id": "semi_q2_diagram",
+    "page": 2,
+    "type": "prompt_diagram",
+    "yMin": 902,
+    "yMax": 1284,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 3,
+    "id": "semi_q3_diagram",
+    "page": 3,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 603,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 4,
+    "id": "semi_q4_diagram",
+    "page": 4,
+    "type": "options_included",
+    "yMin": 223,
+    "yMax": 1550,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 6,
+    "id": "semi_q6_diagram",
+    "page": 5,
+    "type": "prompt_diagram",
+    "yMin": 663,
+    "yMax": 1017,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 7,
+    "id": "semi_q7_diagram",
+    "page": 6,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 540,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 8,
+    "id": "semi_q8_diagram",
+    "page": 6,
+    "type": "prompt_diagram",
+    "yMin": 892,
+    "yMax": 912,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 10,
+    "id": "semi_q10_diagram",
+    "page": 7,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 486,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 12,
+    "id": "semi_q12_diagram",
+    "page": 8,
+    "type": "prompt_diagram",
+    "yMin": 691,
+    "yMax": 713,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 13,
+    "id": "semi_q13_diagram",
+    "page": 8,
+    "type": "prompt_diagram",
+    "yMin": 875,
+    "yMax": 1094,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 15,
+    "id": "semi_q15_diagram",
+    "page": 9,
+    "type": "options_included",
+    "yMin": 223,
+    "yMax": 1550,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 19,
+    "id": "semi_q19_diagram",
+    "page": 11,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 455,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 20,
+    "id": "semi_q20_diagram",
+    "page": 12,
+    "type": "prompt_diagram",
+    "yMin": 583,
+    "yMax": 603,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 22,
+    "id": "semi_q22_diagram",
+    "page": 12,
+    "type": "prompt_diagram",
+    "yMin": 1348,
+    "yMax": 1368,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 25,
+    "id": "semi_q25_diagram",
+    "page": 14,
+    "type": "prompt_diagram",
+    "yMin": 472,
+    "yMax": 494,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 28,
+    "id": "semi_q28_diagram",
+    "page": 16,
+    "type": "options_included",
+    "yMin": 253,
+    "yMax": 1550,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 30,
+    "id": "semi_q30_diagram",
+    "page": 17,
+    "type": "options_included",
+    "yMin": 598,
+    "yMax": 1229,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 33,
+    "id": "semi_q33_diagram",
+    "page": 19,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 470,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 35,
+    "id": "semi_q35_diagram",
+    "page": 20,
+    "type": "prompt_diagram",
+    "yMin": 400,
+    "yMax": 782,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 36,
+    "id": "semi_q36_diagram",
+    "page": 20,
+    "type": "prompt_diagram",
+    "yMin": 905,
+    "yMax": 1287,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 38,
+    "id": "semi_q38_diagram",
+    "page": 21,
+    "type": "prompt_diagram",
+    "yMin": 481,
+    "yMax": 752,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 40,
+    "id": "semi_q40_diagram",
+    "page": 21,
+    "type": "prompt_diagram",
+    "yMin": 1136,
+    "yMax": 1311,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 41,
+    "id": "semi_q41_diagram",
+    "page": 22,
+    "type": "options_included",
+    "yMin": 223,
+    "yMax": 1550,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 42,
+    "id": "semi_q42_diagram",
+    "page": 23,
+    "type": "prompt_diagram",
+    "yMin": 259,
+    "yMax": 600,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 43,
+    "id": "semi_q43_diagram",
+    "page": 23,
+    "type": "prompt_diagram",
+    "yMin": 725,
+    "yMax": 924,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 44,
+    "id": "semi_q44_diagram",
+    "page": 23,
+    "type": "prompt_diagram",
+    "yMin": 1049,
+    "yMax": 1265,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 45,
+    "id": "semi_q45_diagram",
+    "page": 24,
+    "type": "prompt_diagram",
+    "yMin": 457,
+    "yMax": 441,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 46,
+    "id": "semi_q46_diagram",
+    "page": 24,
+    "type": "prompt_diagram",
+    "yMin": 601,
+    "yMax": 1013,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 47,
+    "id": "semi_q47_diagram",
+    "page": 25,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 605,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 48,
+    "id": "semi_q48_diagram",
+    "page": 26,
+    "type": "options_included",
+    "yMin": 623,
+    "yMax": 1550,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 49,
+    "id": "semi_q49_diagram",
+    "page": 27,
+    "type": "prompt_diagram",
+    "yMin": 731,
+    "yMax": 753,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 51,
+    "id": "semi_q51_diagram",
+    "page": 28,
+    "type": "prompt_diagram",
+    "yMin": 253,
+    "yMax": 441,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 54,
+    "id": "semi_q54_diagram",
+    "page": 28,
+    "type": "prompt_diagram",
+    "yMin": 1082,
+    "yMax": 1262,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 55,
+    "id": "semi_q55_diagram",
+    "page": 29,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 452,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 56,
+    "id": "semi_q56_diagram",
+    "page": 29,
+    "type": "prompt_diagram",
+    "yMin": 644,
+    "yMax": 1058,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 58,
+    "id": "semi_q58_diagram",
+    "page": 30,
+    "type": "prompt_diagram",
+    "yMin": 253,
+    "yMax": 635,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 59,
+    "id": "semi_q59_diagram",
+    "page": 30,
+    "type": "prompt_diagram",
+    "yMin": 790,
+    "yMax": 1092,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 60,
+    "id": "semi_q60_diagram",
+    "page": 31,
+    "type": "options_included",
+    "yMin": 223,
+    "yMax": 661,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 63,
+    "id": "semi_q63_diagram",
+    "page": 32,
+    "type": "prompt_diagram",
+    "yMin": 521,
+    "yMax": 542,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 65,
+    "id": "semi_q65_diagram",
+    "page": 33,
+    "type": "prompt_diagram",
+    "yMin": 743,
+    "yMax": 765,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 66,
+    "id": "semi_q66_diagram",
+    "page": 33,
+    "type": "prompt_diagram",
+    "yMin": 890,
+    "yMax": 1119,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 71,
+    "id": "semi_q71_diagram",
+    "page": 34,
+    "type": "prompt_diagram",
+    "yMin": 1330,
+    "yMax": 1352,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 74,
+    "id": "semi_q74_diagram",
+    "page": 35,
+    "type": "prompt_diagram",
+    "yMin": 602,
+    "yMax": 824,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 75,
+    "id": "semi_q75_diagram",
+    "page": 36,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 422,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 76,
+    "id": "semi_q76_diagram",
+    "page": 37,
+    "type": "prompt_diagram",
+    "yMin": 253,
+    "yMax": 665,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 77,
+    "id": "semi_q77_diagram",
+    "page": 38,
+    "type": "prompt_diagram",
+    "yMin": 1006,
+    "yMax": 1028,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 78,
+    "id": "semi_q78_diagram",
+    "page": 39,
+    "type": "options_included",
+    "yMin": 223,
+    "yMax": 1099,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 88,
+    "id": "semi_q88_diagram",
+    "page": 42,
+    "type": "options_included",
+    "yMin": 223,
+    "yMax": 1121,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 92,
+    "id": "semi_q92_diagram",
+    "page": 43,
+    "type": "prompt_diagram",
+    "yMin": 389,
+    "yMax": 582,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 95,
+    "id": "semi_q95_diagram",
+    "page": 44,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 635,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 97,
+    "id": "semi_q97_diagram",
+    "page": 45,
+    "type": "prompt_diagram",
+    "yMin": 223,
+    "yMax": 635,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 99,
+    "id": "semi_q99_diagram",
+    "page": 46,
+    "type": "options_included",
+    "yMin": 223,
+    "yMax": 1550,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 107,
+    "id": "semi_q107_diagram",
+    "page": 48,
+    "type": "prompt_diagram",
+    "yMin": 400,
+    "yMax": 743,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 110,
+    "id": "semi_q110_diagram",
+    "page": 49,
+    "type": "options_included",
+    "yMin": 223,
+    "yMax": 1550,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 112,
+    "id": "semi_q112_diagram",
+    "page": 50,
+    "type": "prompt_diagram",
+    "yMin": 686,
+    "yMax": 1068,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 116,
+    "id": "semi_q116_diagram",
+    "page": 51,
+    "type": "prompt_diagram",
+    "yMin": 574,
+    "yMax": 788,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 118,
+    "id": "semi_q118_diagram",
+    "page": 52,
+    "type": "options_included",
+    "yMin": 253,
+    "yMax": 1550,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 126,
+    "id": "semi_q126_diagram",
+    "page": 55,
+    "type": "prompt_diagram",
+    "yMin": 613,
+    "yMax": 632,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 128,
+    "id": "semi_q128_diagram",
+    "page": 56,
+    "type": "prompt_diagram",
+    "yMin": 283,
+    "yMax": 665,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 130,
+    "id": "semi_q130_diagram",
+    "page": 57,
+    "type": "prompt_diagram",
+    "yMin": 263,
+    "yMax": 645,
+    "xMin": 60,
+    "xMax": 1100
+  },
+  {
+    "q": 139,
+    "id": "semi_q139_diagram",
+    "page": 59,
+    "type": "prompt_diagram",
+    "yMin": 257,
+    "yMax": 669,
+    "xMin": 60,
+    "xMax": 1100
+  }
+]

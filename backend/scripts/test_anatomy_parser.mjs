@@ -61,3 +61,4 @@ for (const b of qBlocks) {
 
 console.log(`Issues count: ${issues.length}`);
 console.log(issues);
+

@@ -1,19 +1,30 @@
-const LIVE_API = 'https://edvedum.com/api';
+import fetch from 'node-fetch';
 
-async function checkLive() {
-  const loginRes = await fetch(`${LIVE_API}/auth/login`, {
+async function main() {
+  const loginRes = await fetch('https://edvedum.com/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: 'admin@edvedum.com', password: 'Admin@12345' })
   });
-  const data = await loginRes.json();
-  const token = data.token || data.data?.token || data.accessToken;
+  const { token } = await loginRes.json();
+  const headers = { Authorization: `Bearer ${token}` };
 
-  const chRes = await fetch(`${LIVE_API}/admin/subjects/2/chapters`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  const chData = await chRes.json();
-  console.log('Live chapters for Zoology (Subject 2):', chData);
+  const subsRes = await fetch('https://edvedum.com/api/admin/subjects', { headers });
+  const data = await subsRes.json();
+  const subs = data.subjects || [];
+
+  const zoology = subs.find(s => s.name.toLowerCase().includes('zool'));
+  console.log('Zoology subject:', zoology);
+
+  if (zoology) {
+    const chRes = await fetch(`https://edvedum.com/api/admin/subjects/${zoology.id}/chapters`, { headers });
+    const chaptersData = await chRes.json();
+    const chList = chaptersData.chapters || chaptersData;
+    console.log(`Live chapters for Zoology (count: ${chList.length}):`);
+    for (const c of chList) {
+      console.log(`  id=${c.id}: "${c.name}"`);
+    }
+  }
 }
 
-checkLive().catch(console.error);
+main().catch(console.error);

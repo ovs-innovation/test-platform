@@ -363,3 +363,4 @@ export const coordPart3 = [
     solution_text: "Manganese has atomic number $25$ ($[\\text{Ar}]3d^5 4s^2$). The $\\text{Mn}^{2+}$ ion has configuration $[\\text{Ar}]3d^5$. Since $\\text{H}_2\\text{O}$ is a weak field ligand, $\\Delta_o < P$, so the electrons do not pair up and occupy orbitals according to Hund's rule: $t_{2g}^3 e_g^2$. Thus, there are 5 unpaired electrons."
   }
 ];
+

@@ -43,3 +43,4 @@ async function inspectAndCrop() {
 }
 
 inspectAndCrop().catch(console.error);
+

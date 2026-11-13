@@ -420,3 +420,4 @@ export const bondPyqPart3 = [
     solution_text: "According to Fajan's rules, covalent character increases with smaller cation size and higher ionic charge (greater polarizing power). Cation sizes and charges:\n- $\\text{Na}^+$: largest radius, +1 charge $\\rightarrow$ lowest polarizing power (most ionic)\n- $\\text{Li}^+$: smaller radius, +1 charge $\\rightarrow$ intermediate\n- $\\text{Be}^{2+}$: very small radius, +2 charge $\\rightarrow$ highest polarizing power (most covalent)\nHence, the correct increasing order of covalent character is $\\text{NaCl} < \\text{LiCl} < \\text{BeCl}_2$."
   }
 ];
+

@@ -300,3 +300,4 @@ export const kineticsPyqPart3 = [
     solution_text: "From the Arrhenius equation at two temperatures:\n$$\\ln k_1 = \\ln A - \\frac{E_a}{RT_1}$$\n$$\\ln k_2 = \\ln A - \\frac{E_a}{RT_2}$$\nSubtracting the first equation from the second:\n$$\\ln\\left(\\frac{k_2}{k_1}\\right) = -\\frac{E_a}{RT_2} - \\left(-\\frac{E_a}{RT_1}\\right) = \\frac{E_a}{R}\\left(\\frac{1}{T_1} - \\frac{1}{T_2}\\right)$$\nThis matches Option (D).\nFactoring out the minus sign:\n$$\\ln\\left(\\frac{k_2}{k_1}\\right) = -\\frac{E_a}{R}\\left(\\frac{1}{T_2} - \\frac{1}{T_1}\\right)$$\nThis matches Option (B).\nBoth (B) and (D) are mathematically equivalent and correct expressions."
   }
 ];
+

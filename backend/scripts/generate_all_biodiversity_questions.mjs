@@ -271,3 +271,4 @@ for (let i = 0; i < qStarts.length; i++) {
 console.log(`Successfully generated ${allQuestions.length} questions out of 104.`);
 fs.writeFileSync('./backend/scripts/biodiversity_all_questions.json', JSON.stringify(allQuestions, null, 2), 'utf8');
 console.log('Saved to ./backend/scripts/biodiversity_all_questions.json');
+

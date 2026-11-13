@@ -1,0 +1,67 @@
+import fs from 'fs';
+
+const pages = JSON.parse(fs.readFileSync('./backend/scripts/body_fluids_pages_dump.json', 'utf8'));
+
+const allLines = [];
+for (const p of pages.filter(p => p.page >= 2 && p.page <= 25)) {
+  const items = [...p.items];
+  items.sort((a, b) => (Math.abs(b.y - a.y) > 3) ? (b.y - a.y) : (a.x - b.x));
+  let currentY = null;
+  let currentLine = [];
+  for (const item of items) {
+    if (currentY === null || Math.abs(item.y - currentY) > 3) {
+      if (currentLine.length > 0) {
+        allLines.push({ page: p.page, text: currentLine.map(i => i.str).join(' ').trim() });
+      }
+      currentLine = [item];
+      currentY = item.y;
+    } else {
+      currentLine.push(item);
+    }
+  }
+  if (currentLine.length > 0) {
+    allLines.push({ page: p.page, text: currentLine.map(i => i.str).join(' ').trim() });
+  }
+}
+
+const qStarts = [];
+for (let i = 0; i < allLines.length; i++) {
+  const m = allLines[i].text.match(/^Q(\d+)\./);
+  if (m) {
+    qStarts.push({ qNum: parseInt(m[1]), lineIdx: i, page: allLines[i].page });
+  }
+}
+
+const optionIssues = [];
+for (let i = 0; i < qStarts.length; i++) {
+  const startIdx = qStarts[i].lineIdx;
+  const endIdx = (i + 1 < qStarts.length) ? qStarts[i+1].lineIdx : allLines.length;
+  const qLines = allLines.slice(startIdx, endIdx);
+  const qNum = qStarts[i].qNum;
+
+  const cleanedLines = qLines.map(l => {
+    let t = l.text.replace(/Open solution/g, '').trim();
+    if (t.includes('Exam GOAL') || t.includes('Keep practising') || t.includes('Chapter-wise PYQs') || t.includes('NEET Biology:') || t.includes('Out of syllabus') || t.includes('These questions are on topics')) {
+      return '';
+    }
+    return t;
+  }).filter(t => t.length > 0);
+
+  const fullText = cleanedLines.join('\n');
+
+  const hasA = /\(A\)/.test(fullText);
+  const hasB = /\(B\)/.test(fullText);
+  const hasC = /\(C\)/.test(fullText);
+  const hasD = /\(D\)/.test(fullText);
+
+  if (!hasA || !hasB || !hasC || !hasD) {
+    optionIssues.push({ qNum, hasA, hasB, hasC, hasD, fullText });
+  }
+}
+
+console.log('Questions with missing option markers:', optionIssues.length);
+for (const iss of optionIssues) {
+  console.log(`Q${iss.qNum}: A:${iss.hasA} B:${iss.hasB} C:${iss.hasC} D:${iss.hasD}`);
+  console.log(iss.fullText);
+  console.log('---');
+}

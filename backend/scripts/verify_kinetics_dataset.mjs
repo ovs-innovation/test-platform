@@ -79,3 +79,4 @@ if (mismatches === 0 && formatErrors === 0) {
 } else {
   process.exit(1);
 }
+

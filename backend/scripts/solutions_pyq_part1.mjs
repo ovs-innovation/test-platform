@@ -302,3 +302,4 @@ export const part1Questions = [
     explanation: "At $100^\\circ\\text{C}$, the vapour pressure of pure water is $P^\\circ = 760\\text{ mm Hg}$.\nGiven vapour pressure of solution $P_s = 732\\text{ mm Hg}$.\nUsing relative lowering of vapour pressure:\n$$\\frac{P^\\circ - P_s}{P_s} = \\frac{n_{\\text{solute}}}{n_{\\text{solvent}}} = \\frac{w_2 / M_2}{w_1 / M_1}$$\n$$\\frac{760 - 732}{732} = \\frac{28}{732} = \\frac{6.5 / M_2}{100 / 18}$$\n$$M_2 = \\frac{6.5 \\times 18 \\times 732}{100 \\times 28} = \\frac{85644}{2800} \\approx 30.6\\text{ g mol}^{-1}$$\n\nNow, calculate elevation in boiling point:\n$$\\Delta T_b = K_b \\times m = K_b \\times \\frac{w_2 \\times 1000}{M_2 \\times w_1} = 0.52 \\times \\frac{6.5 \\times 1000}{30.6 \\times 100} \\approx 0.52 \\times 2.124 \\approx 1.10^\\circ\\text{C}$$\n\nBoiling point of solution:\n$$T_b = 100^\\circ\\text{C} + 1.10^\\circ\\text{C} \\approx 101.1^\\circ\\text{C} \\approx 101^\\circ\\text{C}$$"
   }
 ];
+

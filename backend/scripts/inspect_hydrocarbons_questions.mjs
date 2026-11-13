@@ -10,3 +10,4 @@ for (let q = 1; q <= 10; q++) {
   console.log(`PDF Text: ${pdfItems[q]?.slice(0, 150)}...`);
   console.log(`OCR Text: ${ocrItems[q]?.split('\n')[0]}...`);
 }
+

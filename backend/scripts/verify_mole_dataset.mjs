@@ -69,3 +69,4 @@ if (errors === 0) {
   console.error(`Verification FAILED with ${errors} errors.`);
   process.exit(1);
 }
+

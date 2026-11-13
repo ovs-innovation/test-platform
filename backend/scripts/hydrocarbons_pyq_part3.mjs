@@ -304,3 +304,4 @@ export const part3Questions = [
     solution_text: "The Lewis acid catalyst $\\text{FeCl}_3$ polarizes the chlorine molecule and abstracts a chloride ion to form the chloronium electrophile: $\\text{Cl}_2 + \\text{FeCl}_3 \\rightarrow \\text{Cl}^+ + \\text{FeCl}_4^-$. The chloronium ion ($\\text{Cl}^+$) then attacks the electron-rich aromatic ring."
   }
 ];
+

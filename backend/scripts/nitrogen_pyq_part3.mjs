@@ -277,3 +277,4 @@ export const nitrogenPart3 = [
     solution: "The Hofmann bromamide degradation reaction specifically converts primary carboxamides ($\\text{RCONH}_2$) upon treatment with bromine in alkaline medium into primary amines ($\\text{R}-\\text{NH}_2$) having one carbon less."
   }
 ];
+

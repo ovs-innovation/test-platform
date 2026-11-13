@@ -94,3 +94,4 @@ if (mathErrors === 0 && keyMismatches === 0 && prefixErrors === 0 && optionError
 } else {
   throw new Error('Verification failed.');
 }
+

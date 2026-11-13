@@ -630,3 +630,4 @@ export const allChemEqQuestions = [
     solution_text: "From reaction (i):\n$$K_1 = \\frac{[\\text{NO}]^2}{[\\text{N}_2][\\text{O}_2]}$$\nFrom reaction (ii):\n$$K_2 = \\frac{[\\text{N}_2]^{1/2} [\\text{O}_2]^{1/2}}{[\\text{NO}]}$$\nTaking the reciprocal of $K_2$ and squaring it:\n$$\\left(\\frac{1}{K_2}\\right)^2 = \\left(\\frac{[\\text{NO}]}{[\\text{N}_2]^{1/2} [\\text{O}_2]^{1/2}}\\right)^2 = \\frac{[\\text{NO}]^2}{[\\text{N}_2][\\text{O}_2]} = K_1$$\nTherefore, $K_1 = \\left(\\frac{1}{K_2}\\right)^2$."
   }
 ];
+

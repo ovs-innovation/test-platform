@@ -82,3 +82,4 @@ console.log(`Issues count: ${issues.length}`);
 if (issues.length > 0) {
   console.log('Issues:', JSON.stringify(issues, null, 2));
 }
+

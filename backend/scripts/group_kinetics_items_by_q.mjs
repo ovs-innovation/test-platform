@@ -43,3 +43,4 @@ for (let pageNum = 2; pageNum <= 23; pageNum++) {
 
 fs.writeFileSync('./backend/scripts/kinetics_q_text_items.json', JSON.stringify(qTextMap, null, 2));
 console.log(`Mapped text items for ${Object.keys(qTextMap).length} questions.`);
+

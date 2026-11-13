@@ -242,3 +242,4 @@ export const part3Questions = [
     explanation: "Boiling point elevation is given by:\n$$\\Delta T_b = i \\cdot K_b \\cdot M \\propto i \\times M$$\nCalculating the effective particle concentration for each option:\n- (A) $0.01\\text{ M Na}_2\\text{SO}_4$: $\\text{Na}_2\\text{SO}_4 \\rightarrow 2\\text{Na}^+ + \\text{SO}_4^{2-} \\implies i = 3, \\; i \\times M = 3 \\times 0.01 = 0.030\\text{ M}$\n- (B) $0.015\\text{ M glucose}$: $i = 1 \\implies i \\times M = 1 \\times 0.015 = 0.015\\text{ M}$\n- (C) $0.01\\text{ M urea}$: $i = 1 \\implies i \\times M = 1 \\times 0.01 = 0.010\\text{ M}$\n- (D) $0.01\\text{ M KNO}_3$: $\\text{KNO}_3 \\rightarrow \\text{K}^+ + \\text{NO}_3^- \\implies i = 2, \\; i \\times M = 2 \\times 0.01 = 0.020\\text{ M}$\n\nSince $0.01\\text{ M Na}_2\\text{SO}_4$ gives the highest effective particle concentration ($0.030\\text{ M}$), it will exhibit the highest elevation in boiling point and therefore the highest boiling point."
   }
 ];
+

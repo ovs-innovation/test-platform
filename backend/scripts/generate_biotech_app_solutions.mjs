@@ -89,3 +89,4 @@ console.log(finalQuestions[9].solution);
 
 fs.writeFileSync('backend/scripts/biotech_app_final_questions.json', JSON.stringify(finalQuestions, null, 2));
 console.log(`Saved ${finalQuestions.length} complete questions with NCERT solutions!`);
+

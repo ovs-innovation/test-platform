@@ -1,0 +1,3698 @@
+[
+  {
+    "q_num": 1,
+    "exam": "RE-NEET 2026",
+    "text": "Given below are two statements:\nStatement I: In gymnosperms, the male and female gametophytes remain within the sporangia.\nStatement II: In gymnosperms, seeds are not covered.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow:",
+    "options": [
+      "Statement I is incorrect but Statement II is correct",
+      "Both Statement I and Statement II are correct",
+      "Both Statement I and Statement II are incorrect",
+      "Statement I is correct but Statement II is incorrect"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Both Statement I and Statement II are correct. In gymnosperms, male and female gametophytes do not have an independent free-living existence; they remain within the sporangia retained on sporophytes. Gymnosperms have naked seeds (not enclosed within an ovary wall/fruit).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 2,
+    "exam": "RE-NEET 2026",
+    "text": "Sphenopsida class belongs to .",
+    "options": [
+      "pteridophytes",
+      "bryophytes",
+      "angiosperms",
+      "gymnosperms"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - pteridophytes. Sphenopsida is a class of Pteridophytes (e.g., Equisetum - horsetail).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 3,
+    "exam": "NEET 2026",
+    "text": "In which one of the following, the ovules are not enclosed by an ovary wall and remain exposed?",
+    "options": [
+      "Funaria",
+      "Pinus",
+      "Selaginella",
+      "Wolffia"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Pinus. Pinus is a gymnosperm in which the ovules are naked and not enclosed by an ovary wall.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 4,
+    "exam": "NEET 2025",
+    "text": "Which one of the following is the characteristic feature of gymnosperms?",
+    "options": [
+      "Seeds are absent",
+      "Gymnosperms have flowers for reproduction",
+      "Seeds are enclosed in fruits",
+      "Seeds are naked"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Seeds are naked. Gymnosperms are seed-bearing non-flowering plants where seeds are naked and not enclosed in fruits.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 5,
+    "exam": "NEET 2025",
+    "text": "Match List-I with List-II.\n\n| List-I | List-II |\n| :--- | :--- |\n| A. Pteridophyte | I. Salvia |\n| B. Bryophyte | II. Ginkgo |\n| C. Angiosperm | III. Polytrichum |\n| D. Gymnosperm | IV. Salvinia |\n\nChoose the option with all correct matches.",
+    "options": [
+      "A-III, B-IV, C-I, D-II",
+      "A-IV, B-III, C-II, D-I",
+      "A-III, B-IV, C-II, D-I",
+      "A-IV, B-III, C-I, D-II"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - A-IV, B-III, C-I, D-II. Salvinia is a pteridophyte (A-IV), Polytrichum is a moss/bryophyte (B-III), Salvia is an angiosperm (C-I), and Ginkgo is a gymnosperm (D-II).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 6,
+    "exam": "NEET 2025",
+    "text": "In bryophytes, the gemmae help in which one of the following?",
+    "options": [
+      "Nutrient absorption",
+      "Gaseous exchange",
+      "Sexual reproduction",
+      "Asexual reproduction"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Asexual reproduction. Gemmae are green, multicellular, asexual buds which develop in gemma cups located on the thallus in bryophytes (e.g., Marchantia) for asexual reproduction.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 7,
+    "exam": "NEET 2025",
+    "text": "Given below are the stages in the life cycle of pteridophytes. Arrange the following stages in the correct sequence.\n\nA. Prothallus stage\nB. Meiosis in spore mother cells\nC. Fertilisation\nD. Formation of archegonia and antheridia in gametophyte.\nE. Transfer of antherozoids to the archegonia in presence of water.\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "D, E, C, A, B",
+      "E, D, C, B, A",
+      "B, A, D, E, C",
+      "B, A, E, C, D"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - B, A, D, E, C. Life cycle sequence in pteridophytes: Meiosis in spore mother cells (B) -> Haploid spores germinate into free-living prothallus gametophyte (A) -> Development of sex organs archegonia and antheridia (D) -> Transfer of biflagellate/multiflagellate antherozoids to archegonium in presence of water (E) -> Fertilisation forming diploid zygote (C).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 8,
+    "exam": "NEET 2025",
+    "text": "The correct sequence of events in the life cycle of bryophytes is\nA. Fusion of antherozoid with egg.\nB. Attachment of gametophyte to substratum.\nC. Reduction division to produce haploid spores.\nD. Formation of sporophyte.\nE. Release of antherozoids into water.\nChoose the correct answer from the options given below :",
+    "options": [
+      "B, E, A, D, C",
+      "D, E, A, B, C",
+      "D, E, A, C, B",
+      "B, E, A, C, D"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - B, E, A, D, C. In bryophytes: Attachment of gametophyte to substratum (B) -> Release of flagellated antherozoids into water (E) -> Fusion of antherozoid with egg in archegonium (A) -> Formation of sporophyte (D) -> Reduction division in capsule to produce haploid spores (C).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 9,
+    "exam": "NEET 2024 (Re-Examination)",
+    "text": "Which one of the following is not found in Gymnosperms?",
+    "options": [
+      "Sieve cells",
+      "Albuminous cells",
+      "Tracheids",
+      "Vessels"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Vessels. Gymnosperms lack true xylem vessels (except in Gnetales) and companion cells in phloem (they have albuminous cells and sieve cells).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 10,
+    "exam": "NEET 2024 (Re-Examination)",
+    "text": "Identify the incorrect pair :",
+    "options": [
+      "Sphenopsida – Adiantum",
+      "Pteropsida – Dryopteris",
+      "Psilopsida – Psilotum",
+      "Lycopsida – Selaginella"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Sphenopsida – Adiantum. Adiantum belongs to Pteropsida (ferns), not Sphenopsida. Equisetum belongs to Sphenopsida.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 11,
+    "exam": "NEET 2024 (Re-Examination)",
+    "text": "Which of the following is the correct match?",
+    "options": [
+      "Gymnosperms : Cedrus, Pinus, Sequoia",
+      "Angiosperms : Wolffia, Eucalyptus, Sequoia",
+      "Bryophytes : Polytrichum, Polysiphonia, Sphagnum",
+      "Pteridophytes : Equisetum, Ginkgo, Adiantum"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Gymnosperms : Cedrus, Pinus, Sequoia. Cedrus, Pinus, and Sequoia (giant redwood) are all gymnosperms.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 12,
+    "exam": "NEET 2024",
+    "text": "Read the following statements and choose the set of correct statements:\nIn the members of Phaeophyceae,\nA. Asexual reproduction occurs usually by biflagellate zoospores.\nB. Sexual reproduction is by oogamous method only.\nC. Stored food is in the form of carbohydrates which is either mannitol or laminarin.\nD. The major pigments found are chlorophyll a, c and carotenoids and xanthophyll.\nE. Vegetative cells have a cellulosic wall, usually covered on the outside by gelatinous coating of\nalgin.\nChoose the correct answer from the options given below:",
+    "options": [
+      "A, B, C and D only",
+      "B, C, D and E only",
+      "A, C, D and E only",
+      "A, B, C and E only"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - A, C, D and E only. In Phaeophyceae (brown algae): zoospores are biflagellate (pyriform with two unequal lateral flagella), food stored as mannitol/laminarin, major pigments are chlorophyll a, c, carotenoids, fucoxanthin, and cell wall has cellulose and algin. Sexual reproduction can be isogamous, anisogamous, or oogamous (not oogamous only). Hence statements A, C, D, and E are correct.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 13,
+    "exam": "NEET 2023 Manipur",
+    "text": "Match List-I with List-II.\n\n| List-I | List-II |\n| :--- | :--- |\n| (A) Pteropsida | (I) Psilotum |\n| (B) Lycopsida | (II) Equisetum |\n| (C) Psilopsida | (III) Adiantum |\n| (D) Sphenopsida | (IV) Selaginella |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(A)-(II), (B)-(III), (C)-(I), (D)-(IV)",
+      "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)",
+      "(A)-(II), (B)-(III), (C)-(IV), (D)-(I)",
+      "(A)-(III), (B)-(IV), (C)-(I), (D)-(II)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - (A)-(III), (B)-(IV), (C)-(I), (D)-(II).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 14,
+    "exam": "NEET 2023 Manipur",
+    "text": "Which classes of algae possess pigment fucoxanthin and pigment phycoerythrin, respectively ?",
+    "options": [
+      "Phaeophyceae and Chlorophyceae",
+      "Phaeophyceae and Rhodophyceae",
+      "Chlorophyceae and Rhodophyceae",
+      "Rhodophyceae and Phaeophyceae"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Phaeophyceae and Rhodophyceae. Brown algae (Phaeophyceae) possess fucoxanthin, and red algae (Rhodophyceae) possess phycoerythrin.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 15,
+    "exam": "NEET 2023",
+    "text": "Identify the pair of heterosporous pteridophytes among the following :",
+    "options": [
+      "Selaginella and Salvinia",
+      "Psilotum and Salvinia",
+      "Equisetum and Salvinia",
+      "Lycopodium and Selaginella"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Selaginella and Salvinia. Selaginella and Salvinia are heterosporous pteridophytes producing microspores and megaspores.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 16,
+    "exam": "NEET 2023",
+    "text": "Given below are two statements : One labelled as Assertion A and the other labelled as Reason R:\nAssertion A : The first stage of gametophyte in the life cycle of moss is protonema stage.\nReason R : Protonema develops directly from spores produced in capsule.\nIn the light of the above statements, choose the most appropriate answer from options given below:",
+    "options": [
+      "Both A and R are correct but R is NOT the correct explanation of A",
+      "A is correct but R is not correct",
+      "A is not correct but R is correct",
+      "Both A and R are correct and R is the correct explanation of A"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Both A and R are correct and R is the correct explanation of A. The first stage of moss gametophyte is protonema, which develops directly from spores produced in the capsule. Both A and R are true and R correctly explains A.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 17,
+    "exam": "NEET 2023",
+    "text": "Given below are two statements : One labelled as Assertion A and the other labelled as Reason R :\nAssertion A : In gymnosperms the pollen grains are released from the microsporangium and carried\nby air currents. Open solution\nReason R : Air currents carry the pollen grains to the mouth of the archegonia where the male\ngametes are discharged and pollen tube is not formed.\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      "Both A and R are true but R is NOT the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+      "Both A and R are true and R is the correct explanation of A"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - A is true but R is false. In gymnosperms, pollen grains are carried by air currents, germinate and form pollen tube to deliver male gametes to archegonia. Thus Reason R is false.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 18,
+    "exam": "NEET 2022 Phase 2",
+    "text": "Match List-I with List-II :\n\n| List-I | List-II |\n| :--- | :--- |\n| (a) Chlamydomonas | (i) Moss |\n| (b) Cycas | (ii) Pteridophyte |\n| (c) Selaginella | (iii) Alga |\n| (d) Sphagnum | (iv) Gymnosperm |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(a) - (ii), (b) - (iii), (c) - (i), (d) - (iv)",
+      "(a) - (iii), (b) - (i), (c) - (ii), (d) - (iv)",
+      "(a) - (iii), (b) - (iv), (c) - (ii), (d) - (i)",
+      "(a) - (iii), (b) - (ii), (c) - (i), (d) - (iv)"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - (a) - (iii), (b) - (iv), (c) - (ii), (d) - (i). Chlamydomonas is a green alga (iii), Cycas is a gymnosperm (iv), Selaginella is a pteridophyte (ii), and Sphagnum is a moss (i).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 19,
+    "exam": "NEET 2022 Phase 2",
+    "text": "Read the following statements and identify the characters related to the alga shown in the diagram :\n(a) It is a member of Chlorophyceae\n(b) Food is stored in the form of starch\n(c) It is monoecious plant showing oogonium and antheridium\n(d) Food is stored in the form of laminarin or mannitol\n(e) It shows dominance of pigments Chlorophyll a, c and Fucoxanthin\nChoose the correct answer from the options given below :",
+    "options": [
+      "(c), (d) and (e) only",
+      "(a), and (b) only",
+      "(a), (b) and (c) only",
+      "(a), (c) and (d) only"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - (a), (b) and (c) only. The diagram shows Chara (stonewort), a green alga belonging to Chlorophyceae, storing food as starch, and bearing globule (antheridium) and nucule (oogonium).",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794464761/edvedum_plant_kingdom/pk_q19_alga.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 20,
+    "exam": "NEET 2022 Phase 1",
+    "text": "Hydrocolloid carrageen is obtained from :",
+    "options": [
+      "Chlorophyceae and Phaeophyceae",
+      "Phaeophyceae and Rhodophyceae",
+      "Rhodophyceae only",
+      "Phaeophyceae only"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Rhodophyceae only. Carrageen is a hydrocolloid (phycocolloid) extracted from red algae (Rhodophyceae, e.g., Chondrus crispus).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 21,
+    "exam": "NEET 2022 Phase 1",
+    "text": "Which of the following is incorrectly matched?",
+    "options": [
+      "Ectocarpus - Fucoxanthin",
+      "Ulothrix - Mannitol",
+      "Porphyra - Floridian Starch",
+      "Volvox - Starch"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Ulothrix - Mannitol.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 22,
+    "exam": "NEET 2022 Phase 1",
+    "text": "Match the plant with the kind of life cycle it exhibits:\n\n| List - I | List - II |\n| :--- | :--- |\n| (a) Spirogyra | (i) Dominant diploid sporophyte vascular plant, with highly reduced male or female gametophyte |\n| (b) Fern | (ii) Dominant haploid free-living gametophyte |\n| (c) Funaria | (iii) Dominant diploid sporophyte alternating with reduced gametophyte called prothallus |\n| (d) Cycas | (iv) Dominant haploid leafy gametophyte alternating with partially dependent multicellular sporophyte |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)",
+      "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)",
+      "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)",
+      "(a)-(ii), (b)-(iv), (c)-(i), (d)-(iii)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (a)-(ii), (b)-(iii), (c)-(iv), (d)-(i).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 23,
+    "exam": "NEET 2021",
+    "text": "Gemmae are present in",
+    "options": [
+      "Some Liverworts",
+      "Mosses",
+      "Pteridophytes",
+      "Some Gymnosperms"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Some Liverworts.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 24,
+    "exam": "NEET 2021",
+    "text": "Which of the following algae produce Carrageen?",
+    "options": [
+      "Blue-green algae",
+      "Green algae",
+      "Brown algae",
+      "Red algae"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Red algae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 25,
+    "exam": "NEET 2021",
+    "text": "Which of the following algae contains mannitol as reserve food material?",
+    "options": [
+      "Ulothrix",
+      "Ectocarpus",
+      "Gracilaria",
+      "Volvox"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Ectocarpus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 26,
+    "exam": "NEET 2020 Phase 2",
+    "text": "Male and female gametophytes do not have an independent free living existence in :",
+    "options": [
+      "Bryophytes",
+      "Pteridophytes",
+      "Algae",
+      "Angiosperms"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Angiosperms.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 27,
+    "exam": "NEET 2020 Phase 2",
+    "text": "Phycoerythrin is the major pigment in :",
+    "options": [
+      "Brown algae",
+      "Red algae",
+      "Blue green algae",
+      "Green algae"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Red algae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 28,
+    "exam": "NEET 2020 Phase 2",
+    "text": "Which of the following statements is incorrect about gymnosperms ?",
+    "options": [
+      "Their seeds are not covered",
+      "They are heterosporous",
+      "Male and female gametophytes are free living",
+      "Most of them have narrow leaves with thick cuticle"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Male and female gametophytes are free living.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 29,
+    "exam": "NEET 2020 Phase 1",
+    "text": "Which of the following pairs is of unicellular algae?",
+    "options": [
+      "Gelidium and Gracilaria",
+      "Anabaena and Volvox",
+      "Chlorella and Spirulina",
+      "Laminaria and Sargassum"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Chlorella and Spirulina.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 30,
+    "exam": "NEET 2020 Phase 1",
+    "text": "Floridean starch has structure similar to",
+    "options": [
+      "Amylopectin and glycogen",
+      "Mannitol and algin",
+      "Laminarin and cellulose",
+      "Starch and cellulose"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Amylopectin and glycogen.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 31,
+    "exam": "NEET 2020 Phase 1",
+    "text": "Strobili or cones are found in",
+    "options": [
+      "Pteris",
+      "Marchantia",
+      "Equisetum",
+      "Salvinia"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Equisetum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 32,
+    "exam": "NEET 2019",
+    "text": "From evolutionary point of view, retention of the female gametophyte with developing young embryo\non the parent sporophyte for some time, is first observed in :",
+    "options": [
+      "Pteridophytes",
+      "Mosses",
+      "Liverworts",
+      "Gymnosperms"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Pteridophytes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 33,
+    "exam": "NEET 2019",
+    "text": "Pinus seed cannot germinate and establish without fungal association. This is because :",
+    "options": [
+      "it has very hard seed coat",
+      "Its seeds contain inhibitors that prevent germination",
+      "its embryo is immature",
+      "it has obligate association with mycorrhizae"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - it has obligate association with mycorrhizae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 34,
+    "exam": "NEET 2018",
+    "text": "Which of the following statements is correct?",
+    "options": [
+      "Selaginella is heterosporous, while Salvinia is homosporous.",
+      "Stems are usually unbranched in both Cycas and Cedrus",
+      "Ovules are not enclosed by ovary wall in gymnosperms",
+      "Horsetails are gymnosperms"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Ovules are not enclosed by ovary wall in gymnosperms.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 35,
+    "exam": "NEET 2018",
+    "text": "Which one is wrongly matched?",
+    "options": [
+      "Biflagellate zoospores – Brown algae",
+      "Uniflagellate gametes – Polysiphonia",
+      "Unicellular organism – Chlorella",
+      "Gemma cups – Marchantia"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Uniflagellate gametes – Polysiphonia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 36,
+    "exam": "NEET 2018",
+    "text": "Winged pollen grains are present in",
+    "options": [
+      "Mustard",
+      "Cycas",
+      "Mango",
+      "Pinus"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Pinus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 37,
+    "exam": "NEET 2017",
+    "text": "An example of colonial alga is",
+    "options": [
+      "Volvox",
+      "Ulothrix",
+      "Spirogyra",
+      "Chlorella"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Volvox.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 38,
+    "exam": "NEET 2017",
+    "text": "Select the mismatch",
+    "options": [
+      "Cycas Dioecious",
+      "Salvinia Heterosporous",
+      "Equisetum Homosporous",
+      "Pinus Dioecious"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Pinus Dioecious.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 39,
+    "exam": "NEET 2017",
+    "text": "Zygotic meiosis is characteristic of",
+    "options": [
+      "Fucus",
+      "Funaria",
+      "Chlamydomonas",
+      "Marchantia"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Chlamydomonas.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 40,
+    "exam": "NEET 2016 Phase 2",
+    "text": "Conifers are adapted to tolerate extreme environmental conditions because of",
+    "options": [
+      "broad hardy leaves",
+      "superficial stomata",
+      "thick cuticle",
+      "presence of vessels."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - thick cuticle.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 41,
+    "exam": "NEET 2016 Phase 2",
+    "text": "Which one of the following statements is wrong?",
+    "options": [
+      "Algae increase the level of dissolved oxygen in the immediate environment.",
+      "Algin is obtained from red algae, and carrageenan from brown algae.",
+      "Agar-agar is obtained from Gelidium and Gracilaria.",
+      "Laminaria and Sargassum are used as food."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Algin is obtained from red algae, and carrageenan from brown algae..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 42,
+    "exam": "NEET 2016 Phase 1",
+    "text": "Select the correct statement",
+    "options": [
+      "Sequoia is one of the tallest trees.",
+      "The leaves of gymnosperms are not well adapted to extremes of climate.",
+      "Gymnosperms are both homosporous and heterosporous.",
+      "Salvinia, Ginkgo and Pinus all are gymnosperms."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Sequoia is one of the tallest trees..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 43,
+    "exam": "NEET 2016 Phase 1",
+    "text": "In bryophytes and pteridophytes, transport of male gametes requires",
+    "options": [
+      "birds",
+      "water",
+      "wind",
+      "insects."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - water.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 44,
+    "exam": "AIPMT 2015",
+    "text": "Which one is a wrong statement?",
+    "options": [
+      "Haploid endosperm is typical feature of Gymnosperms.",
+      "Brown algae have chlorophyll and and fucoxanthin.",
+      "Archegonia are found in Bryophyta, Pteridophyta and Gymnosperms.",
+      "Mucor has biflagellate zoospores."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Mucor has biflagellate zoospores..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 45,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "Which one of the following statements is wrong?",
+    "options": [
+      "Chlorella and Spirulina are used as space food.",
+      "Mannitol is stored food in Rhodophyceae.",
+      "Algin and carrageenan are products of algae.",
+      "Agar-agar is obtained from Gelidium and Gracilaria."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Mannitol is stored food in Rhodophyceae..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 46,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "In which of the following, gametophyte is not independent free living?",
+    "options": [
+      "Pteris",
+      "Pinus",
+      "Funaria",
+      "Marchantia"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Pinus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 47,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "Read the following five statements (A to E) and select the option with all correct statements.\nA. Mosses and lichens are the first organisms to colonise a bare rock.\nB. Selaginella is a homosporous pteridophyte Open solution\nC. Coralloid roots in Cycas have VAM.\nD. Main plant body in bryophytes is gametophytic, whereas in pteridophytes it is sporophytic.\nE. In gymnosperms, male and female gametophytes are present within sporangia located on\nsporophyte.",
+    "options": [
+      "A, D and E",
+      "B, C and E",
+      "A, C and D",
+      "B, C and D"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - A, D and E.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 48,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "Male gametes are flagellated in",
+    "options": [
+      "Ectocarpus",
+      "Spirogyra",
+      "Polysiphonia",
+      "Anabaena."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Ectocarpus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 49,
+    "exam": "AIPMT 2014",
+    "text": "Which one of the following is wrong about Chara ?",
+    "options": [
+      "Upper oogonium and lower round antheridium",
+      "Globule and nucule present on the same plant",
+      "Upper antheridium and lower oogonium",
+      "Globule is male reproductive structure"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Upper antheridium and lower oogonium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 50,
+    "exam": "AIPMT 2014",
+    "text": "Which of the following is responsible for peat formation?",
+    "options": [
+      "Marchanita",
+      "Riccia",
+      "Funaria",
+      "Sphagnum"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Sphagnum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 51,
+    "exam": "AIPMT 2014",
+    "text": "Male gametophyte with least number of cells is present in",
+    "options": [
+      "Pteris",
+      "Funaria",
+      "Lilium",
+      "Pinus."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Lilium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 52,
+    "exam": "AIPMT 2014",
+    "text": "Which one of the following shows isogamy with non-flagellated gametes?",
+    "options": [
+      "Sargassum",
+      "Ectocarpus",
+      "Ulothrix",
+      "Spirogyra"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Spirogyra.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 53,
+    "exam": "AIPMT 2014",
+    "text": "An alga which can be employed as food for human being is :",
+    "options": [
+      "Polysiphonia",
+      "Chlorella",
+      "Ulothrix",
+      "Spirogyra"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Chlorella.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 54,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "Syngamy can occur outside the body of the organism in",
+    "options": [
+      "mosses",
+      "algae",
+      "ferns",
+      "Fungi"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - algae.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 55,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "What is common in all the three, Funaria, Dryopteris and Ginkgo ?",
+    "options": [
+      "Presence of archegonia",
+      "Well developed vascular tissues",
+      "Independent gametophyte",
+      "Independent sporophyte"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Presence of archegonia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 56,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "Which one of the following is wrongly matched?",
+    "options": [
+      "Spirogyra - Motile gametes",
+      "Sargassum - Chlorophyll",
+      "Basidiomycetes - Puffballs",
+      "Nostoc - Water blooms"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Spirogyra - Motile gametes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 57,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "The plant body is thalloid in",
+    "options": [
+      "Sphagnum",
+      "Salvinia",
+      "Marchantia",
+      "Funaria."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Marchantia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 58,
+    "exam": "NEET 2013",
+    "text": "Select the wrong statement",
+    "options": [
+      "In Oomycetes, female gamete is smaller and motile, while male gamete is larger and non-motile.",
+      "Chlamydomonas exhibits both isogamy and anisogamy and Fucus shows oogamy.",
+      "Isogametes are similar in structure, function and behaviour.",
+      "Anisogametes differ either in structure, function or behaviour."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - In Oomycetes, female gamete is smaller and motile, while male gamete is larger and non-motile..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 59,
+    "exam": "NEET 2013",
+    "text": "Isogamous condition with non-flagellated gametes is found in",
+    "options": [
+      "Volvox",
+      "Fucus",
+      "Chlamydomonas",
+      "Spirogyra."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Spirogyra..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 60,
+    "exam": "NEET 2013",
+    "text": "Monoecious plant of Chara shows occurrence of",
+    "options": [
+      "upper antheridium and lower oogonium on the same plant",
+      "upper oogonium and lower antheridium on the same plant",
+      "antheridiophore and archegoniophore on the same plant",
+      "stamen and carpel on the same plant."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - upper oogonium and lower antheridium on the same plant.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 61,
+    "exam": "NEET 2013",
+    "text": "Read the following statements (A - E) and answer the question which follows them.",
+    "options": [
+      "In liverworts, mosses and ferns gametophytes are free-living. Open solution Three",
+      "Gymnosperms and some ferns are heterosporous. Four",
+      "Sexual reproduction in Fucus, Volvox and Albugo is oogamous. One",
+      "The sporophyte in liverworts is more elaborate than that in mosses.\n(E) Both, Pinus and Marchantia are dioecious.\nHow many of the above statements are correct? Two"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - In liverworts, mosses and ferns gametophytes are free-living. Open solution Three.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 62,
+    "exam": "NEET 2013",
+    "text": "Besides paddy fields, cyanobacteria are also found inside vegetative part of :",
+    "options": [
+      "Cycus",
+      "Psilotum",
+      "Pinus",
+      "Equisetum"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Cycus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 63,
+    "exam": "AIPMT 2012 Mains",
+    "text": "Which one of the following pairs is wrongly matched?",
+    "options": [
+      "Ginkgo Archegonia",
+      "Salvinia Prothallus",
+      "Viroids RNA",
+      "Mustard Synergids"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Salvinia Prothallus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 64,
+    "exam": "AIPMT 2012 Mains",
+    "text": "Read the following five statements (A - E) and answer as asked next to them.",
+    "options": [
+      "In Equisetum, the female gametophyte is retained on the parent sporophyte. Two",
+      "In Ginkgo, male gametophyte is not independent. Open solution Three",
+      "The sporophyte in Riccia is more developed than that in Polytrichum . Four",
+      "Sexual reproduction in Volvox is isogamous.\n(E) The spores of slime moulds lack cell walls.\nHow many of the above statements are correct? One"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Sexual reproduction in Volvox is isogamous.\n(E) The spores of slime moulds lack cell walls.\nHow many of the above statements are correct? One.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 65,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Which one of the following is common to multicellular fungi, filamentous algae and protonema of\nmosses?",
+    "options": [
+      "diplontic life cycle",
+      "Members of Kingdom Plantae",
+      "Mode of Nutrition",
+      "Multiplication by fragmentation"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Multiplication by fragmentation.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 66,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Which one of the following is a correct statement?",
+    "options": [
+      "Pteridophyte gametophyte has a protonemal and leafy stage.",
+      "In gymnosperms, female gametophyte is free-living.",
+      "Antheridiophores and archegoniophores are present in pterido phytes.",
+      "Origin of seed habit can be traced in pteridophytes."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Origin of seed habit can be traced in pteridophytes..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 67,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Cycas and Adiantum resemble each other in having",
+    "options": [
+      "seeds",
+      "motile sperms",
+      "cambium",
+      "vessels"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - motile sperms.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 68,
+    "exam": "AIPMT 2011 Mains",
+    "text": "Selaginella and Salvinia are considered to represent a significant step toward evolution of seed\nhabit because",
+    "options": [
+      "female gametophyte is free and gets dispersed like seeds. Open solution",
+      "female gametophyte lacks archegonia.",
+      "megaspores possess endosperm and embryo surrounded by seed coat.",
+      "embryo develops in female gametophyte which is retained on parent sporophyte."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - embryo develops in female gametophyte which is retained on parent sporophyte..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 69,
+    "exam": "AIPMT 2011 Mains",
+    "text": "Consider the following four statements whether they are correct or wrong.\nA. The sporophyte in liverworts is more eleborate than that in mosses.\nB. Salvinia is heterosporous. Open solution\nC. The life-cycle in all seed-bearing plants is diplontic.\nD. In Pinus male and female cones are borne on different trees.\nThe two wrong statements together are",
+    "options": [
+      "A and C",
+      "A and D",
+      "B and C",
+      "A and B."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - A and D.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 70,
+    "exam": "AIPMT 2011 Mains",
+    "text": "Examine the figure given below and select the correct option giving all the four parts (A, B, C and D)\nrightly identified.",
+    "options": [
+      "Archegoniophore Antheridiophore Archegoniophore Seta",
+      "Female thallus Male thallus Female thallus Sporophyte",
+      "Gemmacup Globule Bud Protonema",
+      "Rhizoids Roots Foot Rhizoids"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Archegoniophore Antheridiophore Archegoniophore Seta. In Marchantia female thallus: A = Archegoniophore, B = Female thallus, C = Gemma cup, D = Rhizoids.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794464763/edvedum_plant_kingdom/pk_q70_marchantia.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 71,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "The gametophyte is not an independent, free-living generation in",
+    "options": [
+      "Polytrichum",
+      "Adiantum",
+      "Marchantia",
+      "Pinus."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Pinus..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 72,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "Compared with the gametophytes of the bryophytes, the gametophytes of vascular plants tend to be",
+    "options": [
+      "smaller but to have larger sex organs",
+      "larger but to have smaller sex organs",
+      "larger and to have larger sex organs",
+      "smaller and to have smaller sex organs."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - smaller and to have smaller sex organs..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 73,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "Archegoniophore is present in",
+    "options": [
+      "Marchantia",
+      "Chara",
+      "Adiantum",
+      "Funaria."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Marchantia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 74,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "A prokaryotic autotrophic nitrogen fixing symbiont is found in",
+    "options": [
+      "Alnus",
+      "Cycas",
+      "Cicer",
+      "Pisum"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Cycas.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 75,
+    "exam": "AIPMT 2010 Mains",
+    "text": "Which one of the following is monoecious?",
+    "options": [
+      "Marchantia",
+      "Cycas",
+      "Pinus",
+      "Date palm"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Pinus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 76,
+    "exam": "AIPMT 2010 Mains",
+    "text": "Examine the figures A, B, C and D. In which one of the four options all the items A, B, C and D are\ncorrect?",
+    "options": [
+      "Funaria, Equisetum, Chara, Selaginella,",
+      "Adiantum, Ginkgo, Marchantia, Equisetum,",
+      "Salvinia, Selaginella, Fucus, Salvinia,",
+      "Riccia Lycopodium Pinus Ginkgo"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Riccia Lycopodium Pinus Ginkgo. In the given figures: A = Selaginella, B = Equisetum, C = Salvinia, D = Ginkgo.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794464766/edvedum_plant_kingdom/pk_q76_figures.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 77,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "Algae have cell wall made up of:",
+    "options": [
+      "cellulose, galactans and mannans",
+      "hemicellulose, pectins and proteins",
+      "pectins, cellulose and proteins",
+      "cellulose, hemicellulose and pectins."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - cellulose, galactans and mannans.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 78,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "Male and female gametophytes are independent and free-living in",
+    "options": [
+      "mustard",
+      "castor",
+      "Pinus",
+      "Sphagnum."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Sphagnum..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 79,
+    "exam": "AIPMT 2009",
+    "text": "Which one of the following is a vascular cryptogam?",
+    "options": [
+      "Ginkgo",
+      "Marchantia",
+      "Cedrus",
+      "Equisetum"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Equisetum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 80,
+    "exam": "AIPMT 2009",
+    "text": "Mannitol is the stored food in",
+    "options": [
+      "Porphyra",
+      "Fucus",
+      "Gracillaria",
+      "Chara."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Fucus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 81,
+    "exam": "AIPMT 2009",
+    "text": "Which one of the following is considered important in the development of seed habit?",
+    "options": [
+      "Heterospory",
+      "Haplontic life cycle",
+      "Free-living gametophyte",
+      "Dependent sporophyte"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Heterospory.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 82,
+    "exam": "AIPMT 2009",
+    "text": "Which one of the following has haplontic life cycle?",
+    "options": [
+      "Polytrichum",
+      "Ustilago",
+      "Wheat",
+      "Funaria"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Ustilago.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 83,
+    "exam": "AIPMT 2009",
+    "text": "Which one of the following plants is monoecious?",
+    "options": [
+      "Pinus",
+      "Cycas",
+      "Papaya",
+      "Marchantia"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Pinus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 84,
+    "exam": "AIPMT 2008",
+    "text": "Select one of the following pairs of important features distinguishing Gnetum from Cycas and Pinus\nand showing affinities with angiosperms.",
+    "options": [
+      "Perianth and two integuments Open solution",
+      "Embryo development and apical meristem",
+      "Absence of resin duct and leaf venation",
+      "Presence of vessel elements and absence of archegonia"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Presence of vessel elements and absence of archegonia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 85,
+    "exam": "AIPMT 2008",
+    "text": "In which one of the following male and female gametophytes do not have free living independent\nexistance?",
+    "options": [
+      "Polytrichum",
+      "Cedrus",
+      "Pteris",
+      "Funaria"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Cedrus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 86,
+    "exam": "AIPMT 2008",
+    "text": "Which one of the following is heterosporous?",
+    "options": [
+      "Adiantum",
+      "Equisetum",
+      "Dryopteris",
+      "Salvinia"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Salvinia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 87,
+    "exam": "AIPMT 2007",
+    "text": "In gymnosperms, the pollen chamber represents",
+    "options": [
+      "a cavity in the ovule in which pollen grains are stored after pollination",
+      "an opening in the megagametophyte through which the pollen tube approaches the egg",
+      "the microsporangium in which pollen grains develop",
+      "a cell in the pollen grain in which the sperms are formed."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - a cavity in the ovule in which pollen grains are stored after pollination.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 88,
+    "exam": "AIPMT 2007",
+    "text": "Spore dissemination in some liverworts is added by",
+    "options": [
+      "indusium",
+      "calyptra",
+      "peristome teeth",
+      "elaters."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - elaters..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 89,
+    "exam": "AIPMT 2007",
+    "text": "Flagellated male gametes are present in all the three of which one of the following sets?",
+    "options": [
+      "Zygnema, Saprolegnia and Hydrilla",
+      "Fucus, Marsilea and Calotropis",
+      "Riccia, Dryopteris and Cycas",
+      "Anthoceros, Funaria and Spirogyra"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Riccia, Dryopteris and Cycas.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 90,
+    "exam": "AIPMT 2007",
+    "text": "If you are asked to classify the various algae into distinct groups, which of the following characters\nyou should choose?",
+    "options": [
+      "Nature of stored food materials in the cell",
+      "Structural organization of thallus",
+      "Chemical composition of the cell wall",
+      "Types of pigments present in the cell"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Types of pigments present in the cell.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 91,
+    "exam": "AIPMT 2007",
+    "text": "In the prothallus of a vascular cryptogam, the antherozoids and eggs mature at different times. As a\nresult",
+    "options": [
+      "there is high degree of sterility",
+      "one can conclude that the plant is apomictic",
+      "self fertilization is prevented",
+      "there is no change in success rate of fertilization."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - self fertilization is prevented.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 92,
+    "exam": "AIPMT 2006",
+    "text": "Peat moss is used as a packing material for sending flowers and live plants to distant places\nbecause",
+    "options": [
+      "it serves as a disinfectant",
+      "it is easily available Open solution",
+      "it is hygroscopic",
+      "it reduces transpiration."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - it is hygroscopic.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 93,
+    "exam": "AIPMT 2006",
+    "text": "Conifers differ from grasses in the",
+    "options": [
+      "formation of endosperm before fertilization",
+      "production of seeds from ovules",
+      "lack of xylem tracheids",
+      "absence of pollen tubes."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - formation of endosperm before fertilization.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 94,
+    "exam": "AIPMT 2006",
+    "text": "In a moss, the sporophyte",
+    "options": [
+      "manufactures food for itself, as well as for the gametophyte",
+      "is partially parasitic on the gametophyte",
+      "produces gametes that give rise to the gametophyte",
+      "arises form a spore produced from the gametophyte."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - is partially parasitic on the gametophyte.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 95,
+    "exam": "AIPMT 2005",
+    "text": "Ectophloic siphonostele is found in",
+    "options": [
+      "Osmunda and Equisetum",
+      "Marsilea and Botrychium",
+      "Adiantum and Cucurbitaceae",
+      "Dicksonia and Maiden hair fern."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Osmunda and Equisetum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 96,
+    "exam": "AIPMT 2005",
+    "text": "Match items in column I with those in column II.\n\n| Column I | Column II |\n| :--- | :--- |\n| (A) Peritrichous flagellation | (J) Ginkgo |\n| (B) Living fossil | (K) Macrocystis |\n| (C) Rhizophore | (L) Escherichia coli |\n| (D) Smallest flowering plant | (M) Selaginella |\n| (E) Largest perennial alga | (N) Wolffia |\n\nSelect the correct answer from the following.",
+    "options": [
+      "(A) - (L); (B) - (J); (C) - (M); (D) - (N); (E) - (K)",
+      "(A) - (K); (B) - (J); (C) - (L); (D) - (M); (E) - (N)",
+      "(A) - (N); (B) - (L); (C) - (K); (D) - (N); (E) - (J)",
+      "(A) - (J); (B) - (K); (C) - (N); (D) - (L); (E) - (K)"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - (A) - (L); (B) - (J); (C) - (M); (D) - (N); (E) - (K).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 97,
+    "exam": "AIPMT 2005",
+    "text": "Top-shaped multiciliate male gametes and the nature seed which bears only one embryo with two\ncotyledons, are characterised features of",
+    "options": [
+      "cycads",
+      "conifers",
+      "polypetalous angiosperms",
+      "gamopetalous angiosperms"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - cycads.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 98,
+    "exam": "AIPMT 2004",
+    "text": "Diversification in plant life appeared",
+    "options": [
+      "due to long periods of evolutionary changes",
+      "due to abrupt mutations",
+      "suddenly on earth",
+      "by seed dispersal."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - due to long periods of evolutionary changes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 99,
+    "exam": "AIPMT 2004",
+    "text": "Angiosperms have dominated the land flora primarily because of their",
+    "options": [
+      "power of adaptability in diverse habitat",
+      "property of producing large number of seeds",
+      "nature of self pollination",
+      "domestication by man."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - power of adaptability in diverse habitat.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 100,
+    "exam": "AIPMT 2003",
+    "text": "Which one of the following pairs of plants are not seed producers?",
+    "options": [
+      "Fern and Funaria",
+      "Funaria and Ficus",
+      "Ficus and Chlamydomonas",
+      "Funaria and Pinus"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Fern and Funaria.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 101,
+    "exam": "AIPMT 2003",
+    "text": "Sexual reproduction in Spirogyra is an advanced feature because it shows",
+    "options": [
+      "different sizes of motile sex organs",
+      "same size of motile sex organs",
+      "morphologically different sex organs",
+      "physiologically differentiated sex organs."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - physiologically differentiated sex organs..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 102,
+    "exam": "AIPMT 2003",
+    "text": "Plants reproducing by spores such as mosses and ferns are grouped under the general term",
+    "options": [
+      "cryptogams",
+      "bryophytes",
+      "sporophytes",
+      "thallophytes."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - cryptogams.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 103,
+    "exam": "AIPMT 2003",
+    "text": "Which one pair of examples will correctly represent the grouping spermatophyta according to one of\nthe schemes of classifying plants?",
+    "options": [
+      "Acacia, sugarcane",
+      "Pinus, Cycas",
+      "Rhizopus, Triticum",
+      "Ginkgo, Pisum"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Ginkgo, Pisum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 104,
+    "exam": "AIPMT 2002",
+    "text": "Which of the following is without exception in angiosperms?",
+    "options": [
+      "Presence of vessels",
+      "Double fertilisation",
+      "Secondary growth",
+      "Autotrophic nutrition"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Double fertilisation.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 105,
+    "exam": "AIPMT 2002",
+    "text": "Which of the following plants produces seeds but not flowers?",
+    "options": [
+      "Maize",
+      "Mint",
+      "Peepal",
+      "Pinus"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Pinus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 106,
+    "exam": "AIPMT 2001",
+    "text": "Cycas has two cotyledons but not included in angiosperms because of",
+    "options": [
+      "naked ovules",
+      "seems like monocot",
+      "circinate ptyxis",
+      "compound leaves."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - naked ovules.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 107,
+    "exam": "AIPMT 2000",
+    "text": "A student observed an algae with chlorophyll a, d and phycoerythrin, it should belong to",
+    "options": [
+      "Phaeophyta",
+      "Rhodophyta",
+      "Chlorophyta",
+      "Bacillariophyta"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Rhodophyta.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 108,
+    "exam": "AIPMT 2000",
+    "text": "In ferns, meiosis takes place at the time of",
+    "options": [
+      "spore formation",
+      "spore germination",
+      "gamete formation",
+      "antheridia and archegonia formation"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - spore formation.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 109,
+    "exam": "AIPMT 2000",
+    "text": "Plant group with largest ovule, largest tree, and largest gametes is",
+    "options": [
+      "gymnosperm",
+      "angiosperm",
+      "bryophyta",
+      "pteridophyta."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - gymnosperm.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 110,
+    "exam": "AIPMT 1999",
+    "text": "The book 'Genera Plantarum' was written by :",
+    "options": [
+      "Hutchinson",
+      "Bessey",
+      "Engler and Prantl",
+      "Bentham and Hooker"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Bentham and Hooker.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 111,
+    "exam": "AIPMT 1999",
+    "text": "A system of classification in which a large number of traits are considered is :",
+    "options": [
+      "phylogenetic system",
+      "artificial system",
+      "natural system",
+      "synthetic system"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - natural system.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 112,
+    "exam": "AIPMT 1999",
+    "text": "The antherozoids of Funaria are :",
+    "options": [
+      "monociliated",
+      "biciliated",
+      "multiciliated",
+      "aciliated"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - biciliated.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 113,
+    "exam": "AIPMT 1999",
+    "text": "Bryophytes comprise",
+    "options": [
+      "small sporophyte phase generally parasitic on gametophyte",
+      "sporophyte of longer duration",
+      "dominant phase of gametophyte which produces spores",
+      "dominant phase of sporophyte which is parasitic"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - small sporophyte phase generally parasitic on gametophyte.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 114,
+    "exam": "AIPMT 1999",
+    "text": "In which of the following would you place the plants having vascular tissue lacking seeds ?",
+    "options": [
+      "Gymnosperms",
+      "Algae",
+      "Pteridophytes",
+      "Bryophytes"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Pteridophytes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 115,
+    "exam": "AIPMT 1999",
+    "text": "Which of the following is true about bryophytes ?",
+    "options": [
+      "They are thalloid",
+      "They possess archegonia",
+      "They contain chloroplasts",
+      "All of the above"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - All of the above.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 116,
+    "exam": "AIPMT 1999",
+    "text": "Dichotomous branching is found in :",
+    "options": [
+      "Marchantia",
+      "fern",
+      "liverworts",
+      "Funaria"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Marchantia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 117,
+    "exam": "AIPMT 1999",
+    "text": "The endosperm of gymnosperm is",
+    "options": [
+      "polyploid",
+      "haploid",
+      "triploid",
+      "diploid"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - haploid.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 118,
+    "exam": "AIPMT 1998",
+    "text": "Which one of the following statements about Cycas is incorrect?",
+    "options": [
+      "Its roots contain some blue-green algae",
+      "It does not have a well organized female flower",
+      "It has circinate vernation",
+      "Its xylem is mainly composed of xylem vessels"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Its xylem is mainly composed of xylem vessels.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 119,
+    "exam": "AIPMT 1998",
+    "text": "Largest sperms in the plants world are found in",
+    "options": [
+      "Thuja",
+      "Pinus",
+      "Banyan",
+      "Cycas"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Cycas.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 120,
+    "exam": "AIPMT 1998",
+    "text": "Ulothrix can be described as a",
+    "options": [
+      "filamentous alga with flagellated reproductive stages",
+      "non-motile colonial alga lacking zoospores",
+      "filamentous alga lacking flagellated reproductive stages",
+      "membranous alga producing zoospores"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - filamentous alga with flagellated reproductive stages.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 121,
+    "exam": "AIPMT 1998",
+    "text": "Bryophytes are dependent on water because",
+    "options": [
+      "archegonium has to remain filled with water for fertilization",
+      "water is essential for fertilization for their homosporous nature",
+      "water is essential for their vegetative propagation",
+      "the sperms can easily reach upto egg in the archegonium"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - the sperms can easily reach upto egg in the archegonium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 122,
+    "exam": "AIPMT 1998",
+    "text": "The walking fern is so named because",
+    "options": [
+      "its spores are able to walk",
+      "it is dispersed through the agency of walking animals",
+      "it propagates vegetatively by its leaf tips",
+      "it knows how to walk by itself"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - it propagates vegetatively by its leaf tips.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 123,
+    "exam": "AIPMT 1998",
+    "text": "Transfusion tissue is present in the leaves of",
+    "options": [
+      "Dryopteris",
+      "Cycas",
+      "Pinus",
+      "Both (b) and (c)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Both (b) and (c).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 124,
+    "exam": "AIPMT 1998",
+    "text": "Floral features are chiefly used in angiosperms identification because",
+    "options": [
+      "flowers are nice to work with",
+      "flowers are of various colours",
+      "flowers can be safely pressed",
+      "reproductive parts are more stable and conservative than vegetative parts"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - reproductive parts are more stable and conservative than vegetative parts.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 125,
+    "exam": "AIPMT 1997",
+    "text": "Heterospory and seed habit are often exhibited by a plant possessing",
+    "options": [
+      "petiole",
+      "ligule",
+      "bract",
+      "spathe"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - ligule.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 126,
+    "exam": "AIPMT 1997",
+    "text": "An alga, very rich in protein, is",
+    "options": [
+      "Chlorella",
+      "Nostoc",
+      "Spirogyra",
+      "Ulothrix"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Chlorella.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 127,
+    "exam": "AIPMT 1997",
+    "text": "Ulothrix filaments produce",
+    "options": [
+      "heterogametes",
+      "basidiospores",
+      "isogametes",
+      "anisogametes"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - isogametes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 128,
+    "exam": "AIPMT 1997",
+    "text": "Bryophytes can be separated from algae, because they",
+    "options": [
+      "possess archegonia",
+      "contain chloroplast",
+      "are thalloid forms",
+      "have no conducting tissue"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - possess archegonia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 129,
+    "exam": "AIPMT 1997",
+    "text": "Multicellular branched rhizoids and leafy gametophytes are the characteristics of",
+    "options": [
+      "some bryophytes",
+      "pteridophytes",
+      "all bryophytes",
+      "gymnosperms"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - some bryophytes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 130,
+    "exam": "AIPMT 1997",
+    "text": "Brown algae is characterised by the presence of",
+    "options": [
+      "fucoxanthin",
+      "haematochrome",
+      "phycocyanin",
+      "phycoerythrin"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - fucoxanthin.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 131,
+    "exam": "AIPMT 1996",
+    "text": "The smallest plant family ‘Gymnosperm’ has how many species?",
+    "options": [
+      "640",
+      "300",
+      "1000",
+      "900"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - 900.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 132,
+    "exam": "AIPMT 1996",
+    "text": "Which of the following plant kingdom is called ‘amphibians’?",
+    "options": [
+      "Pteridophyta",
+      "Thallophyta",
+      "Tracheophyta",
+      "Bryophyta"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Bryophyta.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 133,
+    "exam": "AIPMT 1996",
+    "text": "Elater mechanism for spore dispersal is exhibited by",
+    "options": [
+      "liverworts",
+      "Marchantia",
+      "Riccia",
+      "Funaria"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Marchantia.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 134,
+    "exam": "AIPMT 1996",
+    "text": "A gymnospermic leaf carries 16 chromosomes. The number of chromosomes in its endosperm will\nbe",
+    "options": [
+      "12",
+      "8",
+      "16",
+      "24"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - 8.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 135,
+    "exam": "AIPMT 1995",
+    "text": "The pyrenoids are made up of",
+    "options": [
+      "proteinaceous centre and starchy sheath",
+      "core of nucleic acid surrounded by protein sheath",
+      "core of protein surrounded by fatty sheath",
+      "core of starch surrounded by sheath of protein"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - proteinaceous centre and starchy sheath.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 136,
+    "exam": "AIPMT 1995",
+    "text": "The plant body of moss ( Funaria ) is",
+    "options": [
+      "completely sporophyte",
+      "predominantly gametophyte with sporophyte",
+      "completely gametophyte",
+      "predominantly sporophyte with gametophyte"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - predominantly gametophyte with sporophyte.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 137,
+    "exam": "AIPMT 1995",
+    "text": "A well developed archegonium with neck consisting of 4-6 rows and neck canal cells, characterises",
+    "options": [
+      "gymnosperms and flowering plants",
+      "pteridophytes and gymnosperms",
+      "gymnosperms only",
+      "bryophytes and pteridophytes"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - bryophytes and pteridophytes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 138,
+    "exam": "AIPMT 1994",
+    "text": "Phylogenetic classification is one which is based on",
+    "options": [
+      "overall similarities",
+      "utilitarian system",
+      "habits of plants",
+      "common evolutionary descent"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - common evolutionary descent.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 139,
+    "exam": "AIPMT 1994",
+    "text": "In Chlorophyceae, the mode of sexual reproduction is",
+    "options": [
+      "isogamy",
+      "anisogamy",
+      "oogamy",
+      "all of these"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - all of these.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 140,
+    "exam": "AIPMT 1994",
+    "text": "In Pinus , the wings of the seed develops from",
+    "options": [
+      "ovuliferous scale",
+      "integument",
+      "nucellus",
+      "bract"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - ovuliferous scale.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 141,
+    "exam": "AIPMT 1994",
+    "text": "In bryophytes",
+    "options": [
+      "both generations are independent",
+      "gametophytes are dependent upon sporophytes",
+      "sporophytes complete their life cycle",
+      "sporophytes are dependent upon gametophytes"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - sporophytes are dependent upon gametophytes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 142,
+    "exam": "AIPMT 1993",
+    "text": "Which one is the most advanced from evolutionary view point?",
+    "options": [
+      "Selaginella",
+      "Funaria",
+      "Chlamydomonas",
+      "Pinus"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Pinus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 143,
+    "exam": "AIPMT 1993",
+    "text": "Pinus differs from mango in having",
+    "options": [
+      "tree habit",
+      "green leaves",
+      "ovules not enclosed in ovary",
+      "wood"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - ovules not enclosed in ovary.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 144,
+    "exam": "AIPMT 1993",
+    "text": "Pyrenoids are the centres for formation of",
+    "options": [
+      "Porphyra",
+      "enzymes",
+      "fat",
+      "starch"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - starch.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 145,
+    "exam": "AIPMT 1993",
+    "text": "Pteridophytes differ from bryophytes and thallophytes in having",
+    "options": [
+      "vascular tissues",
+      "motile antherozoids",
+      "archegonia",
+      "alternation of generations"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - vascular tissues.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 146,
+    "exam": "AIPMT 1993",
+    "text": "Chloroplast of Chlamydomonas is",
+    "options": [
+      "stellate",
+      "cup-shaped",
+      "collar-shaped",
+      "spiral"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - cup-shaped.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 147,
+    "exam": "AIPMT 1993",
+    "text": "In Ulothrix / Spirogyra , reduction division (meiosis) occurs at the time of",
+    "options": [
+      "gamete formation",
+      "zoospore formation",
+      "zygospore germination",
+      "vegetative reproduction"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - zygospore germination.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 148,
+    "exam": "AIPMT 1993",
+    "text": "Pteridophytes differ from mosses/bryophytes in possessing",
+    "options": [
+      "independent gametophyte",
+      "well developed vascular system",
+      "archegonia",
+      "flagellate spermatozoids"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - well developed vascular system.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 149,
+    "exam": "AIPMT 1993",
+    "text": "Protonema occurs in the life cycle of",
+    "options": [
+      "Riccia",
+      "Funaria",
+      "Anthoceros",
+      "Spirogya"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Funaria.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 150,
+    "exam": "AIPMT 1992",
+    "text": "Resin and turpentine are obtained from",
+    "options": [
+      "Cycas",
+      "Pinus",
+      "Cedrus",
+      "Abies"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Pinus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 151,
+    "exam": "AIPMT 1992",
+    "text": "Turpentine is got from",
+    "options": [
+      "angiospermous wood",
+      "bryophytes",
+      "gymnospermous wood",
+      "ferns"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - gymnospermous wood.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 152,
+    "exam": "AIPMT 1992",
+    "text": "In Pinus , the pollen grain has 6 chromosomes then in its endosperm will have",
+    "options": [
+      "12",
+      "18",
+      "6",
+      "24"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - 6.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 153,
+    "exam": "AIPMT 1992",
+    "text": "A plant having seeds but lacking flowers and fruits belongs to",
+    "options": [
+      "pteridophytes",
+      "mosses",
+      "ferns",
+      "gymnosperms"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - gymnosperms.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 154,
+    "exam": "AIPMT 1992",
+    "text": "Which one of the following is not common between Funaria and Selaginella ?",
+    "options": [
+      "Archegonium",
+      "Embryo",
+      "Flagellate sperms",
+      "Roots"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Roots.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 155,
+    "exam": "AIPMT 1992",
+    "text": "The plant group that produces spores and embryo but lacks vascular tissues and seeds is",
+    "options": [
+      "Pteridophyta",
+      "Rhodophyta",
+      "Bryophyta",
+      "Phaeophyta"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Bryophyta.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 156,
+    "exam": "AIPMT 1991",
+    "text": "An important criterion for modern day classification is",
+    "options": [
+      "resemblances in morphology",
+      "anatomical and physiological traits",
+      "breeding habits",
+      "presence or absence of notochord"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - anatomical and physiological traits.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 157,
+    "exam": "AIPMT 1991",
+    "text": "Bryophytes are amphibians because",
+    "options": [
+      "they require a layer of water for carrying out sexual reproduction",
+      "they occur in damp places",
+      "they are mostly aquatic",
+      "all the above"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - they require a layer of water for carrying out sexual reproduction.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 158,
+    "exam": "AIPMT 1991",
+    "text": "Which one has the largest gametophyte?",
+    "options": [
+      "Cycas",
+      "Angiosperm",
+      "Selaginella",
+      "Moss"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Moss.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 159,
+    "exam": "AIPMT 1991",
+    "text": "The common mode of sexual reproduction in Chlamydomonas is",
+    "options": [
+      "isogamous",
+      "anisogamous",
+      "oogamous",
+      "hologamous"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - isogamous.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 160,
+    "exam": "AIPMT 1991",
+    "text": "The product of conjugation in Spirogyra or fertilization of Chlamydomonas is",
+    "options": [
+      "zygospore",
+      "zoospore",
+      "oospore",
+      "carpospore"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - zygospore.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 161,
+    "exam": "AIPMT 1990",
+    "text": "Protonema occurs in the life cycle of",
+    "options": [
+      "Riccia",
+      "Funaria",
+      "Anthoceros",
+      "Spirogya"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Funaria.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 162,
+    "exam": "AIPMT 1990",
+    "text": "Moss peristome takes part in",
+    "options": [
+      "spore dispersal",
+      "photosynthesis",
+      "protection",
+      "absorption"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - spore dispersal.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 163,
+    "exam": "AIPMT 1990",
+    "text": "Apophysis in the capsule of Funaria is",
+    "options": [
+      "lower part",
+      "upper part",
+      "middle part",
+      "fertile part"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - lower part.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 164,
+    "exam": "AIPMT 1989",
+    "text": "System of classification used by Linnaeus was",
+    "options": [
+      "natural system",
+      "artificial system",
+      "phylogenetic system",
+      "asexual system"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - artificial system.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 165,
+    "exam": "AIPMT 1989",
+    "text": "Artificial system of classification was first used by",
+    "options": [
+      "Linnaeus",
+      "De Candolle",
+      "Pliny the Elder",
+      "Bentham and Hooker"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Linnaeus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 166,
+    "exam": "AIPMT 1989",
+    "text": "In Pinus /gymnosperms, the haploid structure are",
+    "options": [
+      "megaspore, endosperm and embryo",
+      "megaspore, pollen grain and endosperm",
+      "megaspore, integument and root",
+      "pollen grain, leaf and root"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - megaspore, pollen grain and endosperm.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 167,
+    "exam": "AIPMT 1989",
+    "text": "Sperms of both Funaria and Pteris were released together near the archegonia of Pteris . Only its\nsperms enter the archegonia as",
+    "options": [
+      "Pteris archegonia repel Funaria sperms",
+      "Funaria sperms get killed by Pteris sperms",
+      "Funaria sperms are less mobile",
+      "Pteris archegonia release chemical to attract its sperms"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Pteris archegonia release chemical to attract its sperms.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 168,
+    "exam": "AIPMT 1989",
+    "text": "Evolutionary important character of Selaginella is",
+    "options": [
+      "heterosporous nature",
+      "rhizophore",
+      "strobili",
+      "ligule"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - heterosporous nature.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 169,
+    "exam": "AIPMT 1988",
+    "text": "Classification given by Bentham and Hooker is",
+    "options": [
+      "artificial",
+      "natural",
+      "phylogenetic",
+      "numerical"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - natural.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 170,
+    "exam": "AIPMT 1988",
+    "text": "In Pinus / Cycas /gymnosperms, the endosperm is",
+    "options": [
+      "triploid",
+      "haploid",
+      "diploid",
+      "tetraploid"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - haploid.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 171,
+    "exam": "AIPMT 1988",
+    "text": "Prothallus (gametophyte) gives rise to fern plant (sporophyte) without fertilization. It is",
+    "options": [
+      "apospory",
+      "apogamy",
+      "parthenocarpy",
+      "parthenogenesis"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - apogamy.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 172,
+    "exam": "AIPMT 1988",
+    "text": "Sexual reproduction involving fusion of two cells in Chlamydomonas is",
+    "options": [
+      "isogamy",
+      "homogamy",
+      "somatogamy",
+      "hologamy"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - hologamy.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 173,
+    "exam": "NEET 2023 Manipur · MCQ (Single Correct Answer)",
+    "text": "Which of the following statements is true ?",
+    "options": [
+      "All pteridophytes exhibit haplo-diplontic pattern.",
+      "Seed bearing plants follow haplontic pattern",
+      "Most algal genera are diplontic",
+      "Most bryophytes do not have haplo-diplontic life cycle."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - All pteridophytes exhibit haplo-diplontic pattern..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 174,
+    "exam": "NEET 2021 · MCQ (Single Correct Answer)",
+    "text": "Genera like Selaginella and Salvinia produce two kinds of spores. Such plants are known as :",
+    "options": [
+      "Heterosporous",
+      "Homosorus",
+      "Heterosorus",
+      "Homosporous"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Heterosporous.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 175,
+    "exam": "NEET 2017 · MCQ (Single Correct Answer)",
+    "text": "Life cycles of Ectocarpus and Fucus respectively are",
+    "options": [
+      "diplontic, haplodiplontic",
+      "haplodiplontic, diplontic",
+      "haplodiplontic, haplontic",
+      "haplontic, diplontic."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - haplodiplontic, diplontic.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  },
+  {
+    "q_num": 176,
+    "exam": "AIPMT 1992 · MCQ (Single Correct Answer)",
+    "text": "A plant in which sporophytic generation is represented by zygote is",
+    "options": [
+      "Pinus",
+      "Selaginella",
+      "Chlamydomonas",
+      "Dryopteris"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Chlamydomonas.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Plant Kingdom"
+  }
+]

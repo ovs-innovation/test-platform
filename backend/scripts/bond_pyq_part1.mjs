@@ -420,3 +420,4 @@ export const bondPyqPart1 = [
     solution_text: "$\\text{PCl}_5$ has 5 bond pairs and 0 lone pairs with $\\text{sp}^3\\text{d}$ hybridisation, resulting in a trigonal bipyramidal geometry (not trigonal planar). Thus, pair (B) is wrongly matched."
   }
 ];
+

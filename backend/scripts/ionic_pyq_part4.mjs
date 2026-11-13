@@ -230,3 +230,4 @@ export const part4Questions = [
     explanation: "- $\\text{NH}_4\\text{Cl}$ is acidic ($\\text{pH} < 7$).\n- $\\text{NaCl}$ is neutral ($\\text{pH} = 7$).\n- $\\text{NaHCO}_3$ is an amphiprotic salt with $\\text{pH} = \\frac{1}{2}(\\text{p}K_{a_1} + \\text{p}K_{a_2}) \\approx 8.3$.\n- $\\text{Na}_2\\text{CO}_3$ is the salt of a strong base ($\\text{NaOH}$) and a weak diprotic acid ($\\text{H}_2\\text{CO}_3$). Carbonate ions ($\\text{CO}_3^{2-}$) undergo strong hydrolysis:\n$$\\text{CO}_3^{2-} + \\text{H}_2\\text{O} \\rightleftharpoons \\text{HCO}_3^- + \\text{OH}^-$$\nyielding a strongly alkaline solution ($\\text{pH} \\approx 11.5$, the highest among the options)."
   }
 ];
+

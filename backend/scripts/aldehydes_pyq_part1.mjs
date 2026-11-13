@@ -415,3 +415,4 @@ export const aldehydesPart1 = [
     solution: "In the Etard reaction, chromyl chloride ($\\text{CrO}_2\\text{Cl}_2$) in $\\text{CS}_2$ oxidizes the methyl group of toluene to form a brown chromium complex intermediate: $\\text{C}_6\\text{H}_5\\text{CH}(\\text{OCrOHCl}_2)_2$ (Structure A), which upon aqueous acidic hydrolysis produces benzaldehyde."
   }
 ];
+

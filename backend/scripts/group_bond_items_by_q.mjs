@@ -31,3 +31,4 @@ for (const [qNum, list] of Object.entries(qMap)) {
 
 fs.writeFileSync('backend/scripts/bond_q_text_items.json', JSON.stringify(formatted, null, 2));
 console.log('Saved grouped text items for all questions.');
+

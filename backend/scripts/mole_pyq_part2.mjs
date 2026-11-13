@@ -507,3 +507,4 @@ export const molePyqPart2 = [
     solution_text: "Dimensions of pressure:\n$$[P] = \\frac{[F]}{[A]} = \\frac{[\\text{M}\\text{L}\\text{T}^{-2}]}{[\\text{L}^2]} = [\\text{M}\\text{L}^{-1}\\text{T}^{-2}]$$\nDimensions of energy per unit volume:\n$$\\left[\\frac{E}{V}\\right] = \\frac{[\\text{M}\\text{L}^2\\text{T}^{-2}]}{[\\text{L}^3]} = [\\text{M}\\text{L}^{-1}\\text{T}^{-2}]$$\nTherefore, pressure has the same dimensions as energy per unit volume."
   }
 ];
+

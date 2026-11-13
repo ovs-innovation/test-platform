@@ -1,0 +1,12 @@
+import fs from 'fs';
+
+const ocr = JSON.parse(fs.readFileSync('./backend/scripts/biomolecules_ocr.json', 'utf8'));
+const textItems = JSON.parse(fs.readFileSync('./backend/scripts/biomolecules_q_text_items.json', 'utf8'));
+
+const qs = [22, 26, 27, 51, 52, 62, 81];
+for (const q of qs) {
+  console.log(`================ Q${q} ================`);
+  console.log('TEXT ITEMS:', textItems[q]);
+  console.log('OCR:', ocr[q]);
+}
+

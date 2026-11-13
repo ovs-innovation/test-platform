@@ -406,3 +406,4 @@ export const aldehydesPart3 = [
     solution: "Aldol condensation requires the presence of at least one $\\alpha$-hydrogen atom in the carbonyl compound so that an enolate anion can be formed in the presence of base. Formaldehyde ($\\text{HCHO}$) has no $\\alpha$-carbon and no $\\alpha$-hydrogen; hence, it cannot undergo self-aldol condensation."
   }
 ];
+

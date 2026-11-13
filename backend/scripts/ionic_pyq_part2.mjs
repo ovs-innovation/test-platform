@@ -302,3 +302,4 @@ export const part2Questions = [
     explanation: "- In $(\\text{CH}_3)_3\\text{B}$ (trimethylborane), the central boron atom has only 6 electrons in its valence shell, leaving an empty $2p$ orbital. Hence, it acts as an electron-pair acceptor (Lewis acid).\n- $(\\text{CH}_3)_2\\text{O}$, $(\\text{CH}_3)_3\\text{P}$, and $(\\text{CH}_3)_3\\text{N}$ all contain lone pairs on oxygen, phosphorus, and nitrogen respectively, acting as Lewis bases."
   }
 ];
+

@@ -490,3 +490,4 @@ export const semiPart4Questions = [
     explanation: "An oscillator circuit (such as an LC tank circuit with transistor feedback) generates continuous, undamped, constant-amplitude sinusoidal high-frequency oscillations (radio waves).\n\nHence, the correct option is (D)."
   }
 ];
+

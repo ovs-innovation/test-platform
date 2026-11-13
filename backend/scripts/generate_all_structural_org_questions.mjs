@@ -470,3 +470,4 @@ for (let i = 0; i < qStarts.length; i++) {
 console.log(`Successfully generated ${allQuestions.length} questions out of 130.`);
 fs.writeFileSync('./backend/scripts/structural_org_all_questions.json', JSON.stringify(allQuestions, null, 2), 'utf8');
 console.log('Saved to ./backend/scripts/structural_org_all_questions.json');
+

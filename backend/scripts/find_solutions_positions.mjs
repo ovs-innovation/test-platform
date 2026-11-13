@@ -39,3 +39,4 @@ for (let q = 1; q <= 70; q++) {
 
 fs.writeFileSync('backend/scripts/solutions_q_positions.json', JSON.stringify(qPos, null, 2));
 console.log('Saved solutions_q_positions.json');
+

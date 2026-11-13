@@ -585,3 +585,4 @@ export const atomPyqPart2 = [
     solution_text: "Hydrogen has atomic number $Z = 1$ (1 proton).\nGiven number of neutrons $n = 2$.\nMass number $A = \\text{protons} + \\text{neutrons} = 1 + 2 = 3$.\nThis isotope is tritium ($^3_1\\text{H}$).\nThus, atomic number and mass number are 1 and 3 respectively."
   }
 ];
+

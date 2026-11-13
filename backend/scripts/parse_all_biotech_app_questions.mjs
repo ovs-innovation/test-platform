@@ -98,3 +98,4 @@ console.log('Missing question numbers:', missing);
 
 // Save parsed blocks to JSON for further inspection
 fs.writeFileSync('backend/scripts/biotech_app_raw_blocks.json', JSON.stringify(questionBlocks, null, 2));
+

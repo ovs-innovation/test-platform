@@ -305,3 +305,4 @@ export const nitrogenPart1 = [
     solution: "Secondary amines react with benzenesulfonyl chloride (Hinsberg's reagent) to form N,N-disubstituted benzenesulfonamides that do not contain an acidic hydrogen atom on nitrogen. Consequently, the product is completely insoluble in aqueous alkali. Diisopropylamine (option B) is a secondary amine."
   }
 ];
+

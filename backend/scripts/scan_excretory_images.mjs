@@ -18,3 +18,4 @@ async function scanImages() {
 }
 
 scanImages().catch(console.error);
+

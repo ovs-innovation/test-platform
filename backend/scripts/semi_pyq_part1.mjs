@@ -595,3 +595,4 @@ export const SEMI_QUESTIONS_PART1 = [
     difficulty: 'easy'
   }
 ];
+

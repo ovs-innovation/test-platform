@@ -363,3 +363,4 @@ export const coordPart2 = [
     solution_text: "The coordination formula of dichlorotetraaquachromium(III) chloride is $[\\text{Cr(H}_2\\text{O})_4\\text{Cl}_2]\\text{Cl}$. Only the chloride ion present in the ionization sphere (outside the coordination sphere) ionizes in aqueous solution to react with $\\text{AgNO}_3$:\\n$$\\text{Moles of complex} = M \\times V = 0.01\\text{ mol/L} \\times 0.1\\text{ L} = 0.001\\text{ mol}$$\\nSince each mole of complex produces 1 mole of free chloride ions, $0.001\\text{ mole of AgCl}$ is precipitated."
   }
 ];
+

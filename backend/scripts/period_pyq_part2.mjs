@@ -300,3 +300,4 @@ export const periodPart2 = [
     solution_text: "$\\text{K}^+$, $\\text{Ca}^{2+}$, $\\text{Cl}^-$, and $\\text{S}^{2-}$ are all isoelectronic species containing 18 electrons. $\\text{S}^{2-}$ has the lowest nuclear charge ($Z = 16$), resulting in the weakest electrostatic pull on the electron cloud and therefore the largest ionic radius."
   }
 ];
+

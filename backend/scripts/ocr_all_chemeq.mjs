@@ -27,3 +27,4 @@ async function ocrAll() {
 }
 
 ocrAll().catch(console.error);
+

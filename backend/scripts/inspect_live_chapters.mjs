@@ -1,34 +1,51 @@
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
-
 const LIVE_API = 'https://edvedum.com/api';
 
-async function getToken() {
-  const res = await fetch(`${LIVE_API}/auth/login`, {
+async function main() {
+  const loginRes = await fetch(LIVE_API + '/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: 'admin@edvedum.com', password: 'Admin@12345' })
   });
-  const data = await res.json();
-  return data.token || data.accessToken || data.data?.token;
-}
+  const token = (await loginRes.json()).token;
 
-async function checkLive() {
-  const token = await getToken();
-  console.log('Logged in to Live API.');
-  const chRes = await fetch(`${LIVE_API}/admin/subjects/5/chapters`, {
-    headers: { Authorization: `Bearer ${token}` }
+  const subsRes = await fetch(LIVE_API + '/admin/subjects', {
+    headers: { 'Authorization': 'Bearer ' + token }
   });
-  const data = await chRes.json();
-  const chapters = Array.isArray(data) ? data : (data.chapters || data.data || []);
-  console.log('Live Physics Chapters:');
-  chapters.forEach(c => console.log(`- [${c.id}] ${c.name}`));
+  const subs = (await subsRes.json()).subjects || [];
+  const physicsSub = subs.find(s => s.name.toLowerCase() === 'physics');
+
+  const chapsRes = await fetch(LIVE_API + '/admin/subjects/' + physicsSub.id + '/chapters', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+  const chaps = (await chapsRes.json()).chapters || [];
+  console.log('Live Physics Chapters count:', chaps.length);
+  chaps.forEach(c => console.log('  id:', c.id, 'name:', c.name));
+
+  const pyqRes = await fetch(LIVE_API + '/question-bank?category=PYQ', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+  const pyqData = await pyqRes.json();
+  const pyqQuestions = pyqData.questions || [];
+  console.log('\nTotal questions returned with category=PYQ:', pyqQuestions.length);
+
+  // Group by subject
+  const subCounts = {};
+  pyqQuestions.forEach(q => {
+    subCounts[q.subject] = (subCounts[q.subject] || 0) + 1;
+  });
+  console.log('PYQ by subject:', subCounts);
+
+  const physicsPYQ = pyqQuestions.filter(q => (q.subject || '').toLowerCase() === 'physics');
+  console.log('Total Physics PYQ:', physicsPYQ.length);
+
+  // Group Physics PYQ by chapter & chapter_id
+  const chapCounts = {};
+  physicsPYQ.forEach(q => {
+    const key = `[id:${q.chapter_id}] ${q.chapter}`;
+    chapCounts[key] = (chapCounts[key] || 0) + 1;
+  });
+  console.log('\nPhysics PYQ grouped by [chapter_id] chapter:');
+  console.log(chapCounts);
 }
 
-checkLive().catch(console.error);
-
+main().catch(console.error);

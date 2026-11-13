@@ -384,3 +384,4 @@ export const bondPyqPart5 = [
     solution_text: "When the internuclear axis is the $z$-axis:\n- If identical perpendicular orbitals overlap ($p_x-p_x$ or $p_y-p_y$), they overlap laterally/sidewise to form a $\\pi$ molecular orbital (Option A).\n- If different orbitals overlap ($p_x-p_y$), their orbital symmetries are mutually orthogonal with positive and negative overlap cancelling each other out completely, so zero overlap occurs and no bond will form (Option D).\nHence, both (A) and (D) are valid."
   }
 ];
+

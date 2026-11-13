@@ -67,3 +67,4 @@ if (keyMismatches === 0 && optionErrors === 0 && textErrors === 0 && diagramCoun
   console.error('\n✗ VERIFICATION FAILED: Please fix errors above.');
   process.exit(1);
 }
+

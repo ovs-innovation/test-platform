@@ -15,3 +15,4 @@ for (let i = start; i <= end; i++) {
   console.log('--- OCR TEXT ---');
   console.log(ocr[i]);
 }
+

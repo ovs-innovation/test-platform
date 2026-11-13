@@ -360,3 +360,4 @@ export const bondPyqPart4 = [
     solution_text: "In $\\text{BCl}_3$, Boron has 3 valence electrons and forms 3 bond pairs with zero lone pairs ($\\text{sp}^2$, trigonal planar). In $\\text{NCl}_3$, Nitrogen has 5 valence electrons and forms 3 bond pairs with 1 lone pair ($\\text{sp}^3$, trigonal pyramidal). The presence of the lone pair causes $\\text{NCl}_3$ to be pyramidal."
   }
 ];
+

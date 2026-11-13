@@ -7,3 +7,4 @@ export const allMoleQuestions = [
 ];
 
 console.log(`Total mole questions loaded: ${allMoleQuestions.length}`);
+

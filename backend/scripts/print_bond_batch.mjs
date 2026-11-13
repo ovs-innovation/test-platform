@@ -15,3 +15,4 @@ for (let q = startQ; q <= endQ; q++) {
   console.log(`PDF Text: ${pdfText[q] || 'NONE'}`);
   console.log(`OCR Text:\n${ocr[q] || 'NONE'}`);
 }
+

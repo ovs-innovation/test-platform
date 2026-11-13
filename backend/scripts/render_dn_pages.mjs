@@ -37,3 +37,4 @@ async function renderPages() {
 }
 
 renderPages().catch(console.error);
+

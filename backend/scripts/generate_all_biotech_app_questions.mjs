@@ -187,3 +187,4 @@ Select the correct option:`;
 
 console.log(`Generated ${questions.length} questions.`);
 fs.writeFileSync('backend/scripts/biotech_app_parsed_questions.json', JSON.stringify(questions, null, 2));
+

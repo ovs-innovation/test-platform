@@ -364,3 +364,4 @@ export const part1Questions = [
     solution_text: "In structure (C), the compound has a halogen on a central quaternary/tertiary carbon where elimination yields a substituted isomer or cannot give propene directly without skeleton fragmentation. Cyclopropane reacts with $\\text{HBr}$ by ring opening to form 1-bromopropane which undergoes elimination to propene. Propan-1-ol and 1-bromopropane also undergo dehydration/elimination to yield propene."
   }
 ];
+

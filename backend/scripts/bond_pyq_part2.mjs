@@ -420,3 +420,4 @@ export const bondPyqPart2 = [
     solution_text: "$\\text{O}_2^-$ (superoxide ion) has $8 + 8 + 1 = 17$ electrons (an odd number of electrons). By Molecular Orbital Theory, it possesses 1 unpaired electron in the $\\pi^*_{2p}$ antibonding orbital, making it paramagnetic. $\\text{CN}^-$, $\\text{NO}^+$, and $\\text{CO}$ all have 14 electrons with all electrons paired (diamagnetic)."
   }
 ];
+

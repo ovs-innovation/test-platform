@@ -1,24 +1,37 @@
-import sharp from 'sharp';
 import fs from 'fs';
+import path from 'path';
+import { createCanvas, loadImage } from '@napi-rs/canvas';
 
-const pagesDir = './scripts/pblock_pages/';
-const uploadsDir = './backend/uploads/pblock/';
-const publicUploadsDir = '../frontend/public/uploads/pblock/';
-
-async function fineTune() {
-  // Q1: Structure of perchloric acid is: (1), (2), (3), (4)
-  await sharp(pagesDir + 'pblock_page1_q1_12.png')
-    .extract({ left: 5, top: 48, width: 135, height: 74 })
-    .toFile(uploadsDir + 'pblock_q1_perchloric_acid.png');
-  fs.copyFileSync(uploadsDir + 'pblock_q1_perchloric_acid.png', publicUploadsDir + 'pblock_q1_perchloric_acid.png');
-
-  // Q95: Which of the following is correct structure of S2Cl2? (1), (2), (3), (4)
-  await sharp(pagesDir + 'pblock_page6_q81_100.png')
-    .extract({ left: 130, top: 162, width: 122, height: 32 })
-    .toFile(uploadsDir + 'pblock_q95_s2cl2_structures.png');
-  fs.copyFileSync(uploadsDir + 'pblock_q95_s2cl2_structures.png', publicUploadsDir + 'pblock_q95_s2cl2_structures.png');
-
-  console.log('Fine-tuned crops for Q1 and Q95!');
+const OUT_DIR = './backend/uploads/p_block';
+if (!fs.existsSync(OUT_DIR)) {
+  fs.mkdirSync(OUT_DIR, { recursive: true });
 }
 
-fineTune().catch(console.error);
+async function cropQ118Diagrams() {
+  const pageImg = await loadImage('./backend/scripts/pblock_pages/page_28.png');
+
+  // Page 28 coordinates:
+  // Option A diagram: x=100..450, y=240..460
+  // Option B diagram: x=100..450, y=470..690
+  // Option C diagram: x=100..450, y=690..910
+
+  const specs = [
+    { name: 'q118_opt_a.png', x: 100, y: 240, w: 320, h: 220 },
+    { name: 'q118_opt_b.png', x: 100, y: 470, w: 320, h: 220 },
+    { name: 'q118_opt_c.png', x: 100, y: 690, w: 320, h: 220 }
+  ];
+
+  for (const s of specs) {
+    const canvas = createCanvas(s.w, s.h);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(pageImg, s.x, s.y, s.w, s.h, 0, 0, s.w, s.h);
+    const buf = canvas.toBuffer('image/png');
+    fs.writeFileSync(path.join(OUT_DIR, s.name), buf);
+    console.log(`Saved ${s.name}`);
+  }
+}
+
+cropQ118Diagrams().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

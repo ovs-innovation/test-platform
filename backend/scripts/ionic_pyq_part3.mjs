@@ -242,3 +242,4 @@ export const part3Questions = [
     explanation: "For a dibasic acid $\\text{H}_2\\text{A}$:\n1. $\\text{H}_2\\text{A} \\rightleftharpoons \\text{H}^+ + \\text{HA}^- \\quad (K_{a_1})$\n2. $\\text{HA}^- \\rightleftharpoons \\text{H}^+ + \\text{A}^{2-} \\quad (K_{a_2})$\n\nRemoving a proton from a neutral molecule ($\\text{H}_2\\text{A}$) is much easier than removing a positively charged proton from a negatively charged ion ($\\text{HA}^-$) due to electrostatic attraction. Hence, $K_{a_1} > K_{a_2}$."
   }
 ];
+

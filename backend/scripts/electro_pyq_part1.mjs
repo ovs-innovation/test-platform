@@ -300,3 +300,4 @@ export const electroPart1 = [
     solution_text: "Reaction: $\\text{Ca}^{2+} + 2e^- \\rightarrow \\text{Ca}$.\n$1\\text{ mole}$ ($40\\text{ g}$) of $\\text{Ca}$ requires $2\\text{ F}$ of charge.\nTherefore, $20\\text{ g}$ of $\\text{Ca}$ ($0.5\\text{ mole}$) requires $0.5 \\times 2 = 1\\text{ F}$."
   }
 ];
+

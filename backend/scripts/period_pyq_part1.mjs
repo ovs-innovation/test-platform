@@ -300,3 +300,4 @@ export const periodPart1 = [
     solution_text: "Element with $Z = 114$ (Flerovium, Fl) follows Radon ($Z = 86$):\n$86 + 14 (5f) + 10 (6d) + 2 (7s) + 2 (7p) = 114$.\nIts valence configuration is $7s^2 7p^2$, placing it in Group 14 (Carbon family)."
   }
 ];
+

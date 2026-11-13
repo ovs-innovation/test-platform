@@ -585,3 +585,4 @@ export const molePyqPart1 = [
     solution_text: "Weighted average atomic mass:\n$$\\bar{A} = \\frac{(200 \\times 90) + (199 \\times 8.0) + (202 \\times 2.0)}{100}$$\n$$\\bar{A} = \\frac{18000 + 1592 + 404}{100} = \\frac{19996}{100} = 199.96\\text{ amu}$$\nThis is closest to $200\\text{ amu}$."
   }
 ];
+

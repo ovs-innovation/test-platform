@@ -28,3 +28,4 @@ console.log('Missing keys:', missing);
 
 fs.writeFileSync('./backend/scripts/inheritance_official_keys.json', JSON.stringify(keyMap, null, 2));
 console.log('Saved to backend/scripts/inheritance_official_keys.json');
+

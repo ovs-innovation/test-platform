@@ -6,3 +6,4 @@ for (const pNum of [2, 3, 11, 12]) {
   console.log(`\n================ PAGE ${pNum} ================`);
   console.log(pages[pNum - 1].rawText);
 }
+

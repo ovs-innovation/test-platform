@@ -411,3 +411,4 @@ export const aldehydesPart2 = [
     solution: "1. Alkaline $\\text{KMnO}_4$ oxidation of ethylbenzene cleaves the alkyl side chain to give benzoic acid ($\\mathbf{B} = \\text{C}_6\\text{H}_5\\text{COOH}$). 2. The $-\\text{COOH}$ group is meta-directing and deactivating, so electrophilic bromination with $\\text{Br}_2/\\text{FeCl}_3$ gives m-bromobenzoic acid ($\\mathbf{C}$). 3. Esterification with ethanol and acid catalyst gives ethyl m-bromobenzoate ($\\mathbf{D}$)."
   }
 ];
+

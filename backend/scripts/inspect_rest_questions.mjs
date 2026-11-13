@@ -59,3 +59,4 @@ for (const n of restNums) {
   console.log(`\n=================== Q${n} ===================`);
   console.log(getQ(n));
 }
+

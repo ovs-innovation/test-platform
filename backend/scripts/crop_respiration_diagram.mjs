@@ -32,3 +32,4 @@ async function renderAndCrop() {
 }
 
 renderAndCrop().catch(console.error);
+

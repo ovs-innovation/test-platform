@@ -28,3 +28,4 @@ console.log(`Found ${questions.length} questions:`);
 questions.forEach(q => console.log(`Q${q.num}: Page ${q.pageNum}, y=${q.y}`));
 
 fs.writeFileSync('backend/scripts/redox_q_positions.json', JSON.stringify(questions, null, 2));
+

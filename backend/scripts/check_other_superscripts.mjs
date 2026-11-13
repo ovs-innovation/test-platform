@@ -11,3 +11,4 @@ for (const qNum of [33, 35, 41, 44]) {
     console.log(items.map(i => i.str).filter(s => s.trim().length > 0).join(' '));
   }
 }
+

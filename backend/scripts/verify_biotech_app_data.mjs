@@ -41,3 +41,4 @@ for (let i = 0; i < questions.length; i++) {
 }
 
 console.log(`Verification: ${passed} / 99 questions passed 100%!`);
+

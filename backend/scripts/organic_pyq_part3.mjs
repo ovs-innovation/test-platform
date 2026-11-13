@@ -1,3 +1,4 @@
+
 import fs from 'fs';
 
 const urls = JSON.parse(fs.readFileSync('backend/scripts/organic_diagram_urls.json', 'utf8'));

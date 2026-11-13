@@ -12,3 +12,4 @@ export const coordQuestions = [
   ...coordPart3,
   ...coordPart4
 ];
+

@@ -216,3 +216,4 @@ export const part4Questions = [
     solution_text: "Compound (3) is 1-butyne, which possesses a terminal acidic acetylenic proton ($-\\text{C}\\equiv\\text{C}-\\text{H}$). Ammoniacal silver nitrate (Tollens' reagent) forms a characteristic white precipitate of silver acetylide ($\\text{CH}_3\\text{CH}_2\\text{C}\\equiv\\text{CAg}$) exclusively with terminal alkynes, allowing it to be clearly distinguished from internal alkynes, alkanes, and alkenes."
   }
 ];
+

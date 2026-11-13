@@ -41,3 +41,4 @@ if (errors === 0) {
   console.error(`Found ${errors} issues during verification.`);
   process.exit(1);
 }
+

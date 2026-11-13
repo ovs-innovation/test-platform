@@ -381,3 +381,4 @@ for (const q of allQuestions) {
 
 fs.writeFileSync('./backend/scripts/microbes_all_questions.json', JSON.stringify(allQuestions, null, 2));
 console.log('Successfully saved to backend/scripts/microbes_all_questions.json');
+
