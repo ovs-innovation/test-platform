@@ -1,0 +1,4448 @@
+[
+  {
+    "num": 1,
+    "exam": "RE-NEET 2026",
+    "question": "Which of the following is used as an effective sedative and painkiller for treating post-surgery\npatients?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Anti-retroviral drugs"
+      },
+      {
+        "id": "B",
+        "text": "Interferon"
+      },
+      {
+        "id": "C",
+        "text": "Antibiotics"
+      },
+      {
+        "id": "D",
+        "text": "Morphine"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Morphine** is a very effective sedative and painkiller (analgesic). It is extracted from the latex of poppy plant *Papaver somniferum* and is widely used for patients who have undergone surgery.",
+    "image": ""
+  },
+  {
+    "num": 2,
+    "exam": "RE-NEET 2026",
+    "question": "Colostrum, secreted by mother during initial days of lactation, is abundant in ______.",
+    "options": [
+      {
+        "id": "A",
+        "text": "IgD"
+      },
+      {
+        "id": "B",
+        "text": "IgG"
+      },
+      {
+        "id": "C",
+        "text": "IgM"
+      },
+      {
+        "id": "D",
+        "text": "IgA"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "The yellowish fluid **colostrum** secreted by the mother during the initial days of lactation is rich in **$\\text{IgA}$** antibodies, which provide passive immunity to the newborn infant.",
+    "image": ""
+  },
+  {
+    "num": 3,
+    "exam": "RE-NEET 2026",
+    "question": "Which of the following statements is correct about Plasmodium?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fertilization takes place in mosquito gut"
+      },
+      {
+        "id": "B",
+        "text": "Reproduces sexually in liver cells"
+      },
+      {
+        "id": "C",
+        "text": "Reproduces sexually in RBCs"
+      },
+      {
+        "id": "D",
+        "text": "Gametocytes develop in mosquito gut"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "In the life cycle of *Plasmodium*, fertilization and development of gametes take place in the **mosquito's gut**. Sporozoites then escape from the gut and migrate to the salivary glands of the mosquito.",
+    "image": ""
+  },
+  {
+    "num": 4,
+    "exam": "RE-NEET 2026",
+    "question": "Which of the following are secondary lymphoid organs?\n(a) Bone marrow\n(b) Tonsils\n(c) Spleen\n(d) Thymus\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) and (d) only"
+      },
+      {
+        "id": "B",
+        "text": "(a) and (b) only"
+      },
+      {
+        "id": "C",
+        "text": "(b) and (c) only"
+      },
+      {
+        "id": "D",
+        "text": "(b) and (d) only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Secondary lymphoid organs provide sites where lymphocytes interact with antigens and proliferate into effector cells. Examples include **spleen, lymph nodes, tonsils, Peyer's patches of small intestine, and appendix**. Bone marrow and thymus are primary lymphoid organs where immature lymphocytes mature.",
+    "image": ""
+  },
+  {
+    "num": 5,
+    "exam": "NEET 2026",
+    "question": "The following are the stages of life cycle of Plasmodium. Arrange the stages in the proper order.\nA. The parasites reproduce asexually in RBCs, bursting the cells.\nB. The parasites reproduce asexually in liver cells, bursting the cells and releasing into blood.\nC. Gametocytes develop in RBCs.\nD. Sporozoites reach the liver through the blood.\nE. Female mosquito injects sporozoites into humans during bite.\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "E, D, B, A, C"
+      },
+      {
+        "id": "B",
+        "text": "A, B, C, D, E"
+      },
+      {
+        "id": "C",
+        "text": "C, A, B, D, E"
+      },
+      {
+        "id": "D",
+        "text": "E, C, D, B, A"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Proper sequence of events in the life cycle of *Plasmodium* in humans:\n1. **E**: Female mosquito injects sporozoites into humans during bite.\n2. **D**: Sporozoites reach the liver through blood.\n3. **B**: Parasites reproduce asexually in liver cells, bursting the cells and releasing merozoites into blood.\n4. **A**: Parasites reproduce asexually in RBCs, bursting the cells and causing recurring chills and fever.\n5. **C**: Gametocytes (sexual stages) develop in RBCs.\nHence, the correct sequence is **E, D, B, A, C**.",
+    "image": ""
+  },
+  {
+    "num": 6,
+    "exam": "NEET 2026",
+    "question": "Match List I with List II:\n\n| List I (Drug) | List II (Effect) |\n| :--- | :--- |\n| A. Nicotine | I. Causes sense of euphoria and increased energy |\n| B. Morphine | II. Stimulates adrenal gland to release catecholamines into blood circulation |\n| C. Heroin | III. Effective sedative and painkiller |\n| D. Cocaine | IV. A depressant; slows down body function |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-II, C-I, D-IV"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Matching drugs with their effects:\n- **A. Nicotine**: Stimulates adrenal gland to release catecholamines (adrenaline/noradrenaline) into blood (II)\n- **B. Morphine**: Effective sedative and painkiller for post-surgery patients (III)\n- **C. Heroin**: Depressant that slows down body functions (IV)\n- **D. Cocaine**: Causes sense of euphoria and increased energy by interfering with dopamine transport (I)\nHence, the correct match is **A-II, B-III, C-IV, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 7,
+    "exam": "NEET 2025",
+    "question": "Neoplastic characteristics of cells refer to:\nA. A mass of proliferating cell\nB. Rapid growth of cells\nC. Invasion and damage to the surrounding tissue\nD. Those confined to original location\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A, B, D only"
+      },
+      {
+        "id": "B",
+        "text": "B, C, D only"
+      },
+      {
+        "id": "C",
+        "text": "A, B only"
+      },
+      {
+        "id": "D",
+        "text": "A, B, C only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Neoplastic (cancerous) cells are characterized by:\n- Loss of contact inhibition leading to **masses of proliferating cells (tumors)** (A)\n- **Rapid growth** and uncontrolled mitotic cell divisions (B)\n- **Invasion and damage** to surrounding normal tissues (metastasis) (C)\nThose confined to their original location are benign tumors, not malignant neoplasms. Hence, **A, B, C only**.",
+    "image": ""
+  },
+  {
+    "num": 8,
+    "exam": "NEET 2025",
+    "question": "Which are correct:\nA. Computed tomography and magnetic resonance imaging detect cancers of internal organs.\nB. Chemotherapeutics drugs are used to kill non-cancerous cells.\nC. $\\alpha$-interferon activate the cancer patients' immune system and helps in destroying the tumour.\nD. Chemotherapeutic drugs are biological response modifiers.\nE. In the case of leukaemia blood cell counts are decreased.\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "C and D only"
+      },
+      {
+        "id": "B",
+        "text": "A and C only"
+      },
+      {
+        "id": "C",
+        "text": "B and D only"
+      },
+      {
+        "id": "D",
+        "text": "D and E only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "- **Statement A is correct**: Computed tomography (CT) and Magnetic Resonance Imaging (MRI) are widely used to detect cancers of internal organs.\n- **Statement B is incorrect**: Chemotherapeutic drugs are used to kill cancerous cells, though they often cause non-specific side effects like hair loss.\n- **Statement C is correct**: $\\alpha$-interferon is a biological response modifier that activates the immune system and helps destroy tumors.\n- **Statement D is incorrect**: Biological response modifiers include interferons, not chemotherapeutic drugs directly.\n- **Statement E is incorrect**: In leukemia (blood cancer), white blood cell counts are abnormally and uncontrollably increased.\nHence, **A and C only** are correct.",
+    "image": ""
+  },
+  {
+    "num": 9,
+    "exam": "NEET 2025",
+    "question": "After maturation, in primary lymphoid organs, the lymphocytes migrate for interaction with antigens\nto secondary lymphoid organ(s) / tissue(s) like\nA. thymus\nB. bone marrow\nC. spleen\nD. Iymph nodes\nE. Peyer's patches\nChoose the correct answer from the options given below",
+    "options": [
+      {
+        "id": "A",
+        "text": "E, A, B only"
+      },
+      {
+        "id": "B",
+        "text": "C, D, E only"
+      },
+      {
+        "id": "C",
+        "text": "B, C, D only"
+      },
+      {
+        "id": "D",
+        "text": "A, B, C only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "After maturation in primary lymphoid organs (bone marrow and thymus), mature T and B lymphocytes migrate to **secondary lymphoid organs** (like spleen, lymph nodes, tonsils, Peyer's patches) where they trap antigens and undergo proliferation upon antigen encounter.",
+    "image": ""
+  },
+  {
+    "num": 10,
+    "exam": "NEET 2025",
+    "question": "Which of the following type of immunity is present at the time of birth and is a non-specific type of\ndefence in the human body?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cell-mediated Immunity"
+      },
+      {
+        "id": "B",
+        "text": "Humoral Immunity"
+      },
+      {
+        "id": "C",
+        "text": "Acquired Immunity"
+      },
+      {
+        "id": "D",
+        "text": "Innate Immunity"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Innate immunity** is non-specific defense mechanism that is present at the time of birth, consisting of physical, physiological, cellular, and cytokine barriers.",
+    "image": ""
+  },
+  {
+    "num": 11,
+    "exam": "NEET 2025",
+    "question": "Identify the statement that is NOT correct.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Antigen binding site is located at C-terminal region of antibody molecules."
+      },
+      {
+        "id": "B",
+        "text": "Constant region of heavy and light chains are located at C-terminus of antibody molecules"
+      },
+      {
+        "id": "C",
+        "text": "Each antibody has two light and two heavy chains."
+      },
+      {
+        "id": "D",
+        "text": "The heavy and light chains are held together by disulfide bonds."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Option (A) is incorrect because **MALT (Mucosa-Associated Lymphoid Tissue) constitutes about 50 percent** of the lymphoid tissue in the human body, not 20 percent. Thymus is large at birth and reduces in size with age; bone marrow is the main lymphoid organ producing all blood cells.",
+    "image": ""
+  },
+  {
+    "num": 12,
+    "exam": "NEET 2025",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Emphysema | I. Rapid spasms in muscle due to low $\\text{Ca}^{++}$ in body fluid |\n| B. Angina Pectoris | II. Damaged alveolar walls and decreased respiratory surface |\n| C. Glomerulonephritis | III. Acute chest pain when not enough oxygen is reaching to heart muscle |\n| D. Tetany | IV. Inflammation of glomeruli of kidney |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-IV, C-III, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-I, C-IV, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-I, C-II, D-IV"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Matching disorders with their clinical features:\n- **A. Emphysema**: Damaged alveolar walls leading to decreased respiratory surface area (II)\n- **B. Angina Pectoris**: Acute chest pain when not enough oxygen reaches heart muscle (III)\n- **C. Glomerulonephritis**: Inflammation of glomeruli of kidney (IV)\n- **D. Tetany**: Rapid spasms in muscle due to low $\\text{Ca}^{++}$ in body fluid (I)\nHence, **A-II, B-III, C-IV, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 13,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Given below are two statements:\nStatement I: Antibiotics are chemicals produced by microbes that kill other microbes.\nStatement II: Antibodies are chemicals formed in body that eliminate microbes.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but Statement II is incorrect"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but Statement II is correct"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are incorrect"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "- Statement I is correct: Antibiotics are chemical substances produced by some microbes that can kill or retard the growth of other disease-causing microbes.\n- Statement II is correct: Penicillin was discovered by Alexander Fleming while working on *Staphylococci* bacteria.\nHence, both Statement I and Statement II are correct.",
+    "image": ""
+  },
+  {
+    "num": 14,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Malignant tumors | (I) Destroy tumors |\n| (B) MALT | (II) AIDS |\n| (C) NACO | (III) Metastasis |\n| (D) $\\alpha$-Interferons | (IV) Lymphoid tissue |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-I, C-IV, D-II"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Matching List-I with List-II:\n- **(A) Malignant tumors**: Exhibit metastasis, spreading to distant sites via blood (III)\n- **(B) MALT**: Mucosa-associated lymphoid tissue found in respiratory, digestive, and urogenital tracts (IV)\n- **(C) NACO**: National AIDS Control Organisation plays a vital role in educating people and controlling AIDS (II)\n- **(D) $\\alpha$-Interferons**: Biological response modifiers that activate immune system to destroy tumors (I)\nHence, **A-III, B-IV, C-II, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 15,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List I with List II :\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) B-Lymphocytes | (I) Passive immunity |\n| (B) Interferons | (II) Cell mediated immunity |\n| (C) T-Lymphocytes | (III) Produce an army of proteins in response to pathogens |\n| (D) Colostrum | (IV) Innate immunity |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-I, B-IV, C-II, D-III"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-IV, C-I, D-III"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Matching immune components:\n- **(A) B-Lymphocytes**: Produce an army of proteins (antibodies) into blood in response to pathogens (III)\n- **(B) Interferons**: Cytokine barriers of innate immunity produced by virus-infected cells (IV)\n- **(C) T-Lymphocytes**: Mediate cell-mediated immunity (CMI) and help B-cells produce antibodies (II)\n- **(D) Colostrum**: Provides ready-made $\\text{IgA}$ antibodies to the infant, conferring passive immunity (I)\nHence, **A-III, B-IV, C-II, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 16,
+    "exam": "NEET 2024",
+    "question": "Which of the following are Autoimmune disorders?\nA. Myasthenia gravis\nB. Rheumatoid arthritis\nC. Gout\nD. Muscular dystrophy\nE. Systemic Lupus Erythematosus (SLE)\nChoose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A, B & D only"
+      },
+      {
+        "id": "B",
+        "text": "A, B & E only"
+      },
+      {
+        "id": "C",
+        "text": "B, C & E only"
+      },
+      {
+        "id": "D",
+        "text": "C, D & E only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Autoimmune disorders result when the immune system fails to distinguish self from non-self cells and attacks self-antigens:\n- **A. Myasthenia gravis** is an autoimmune disorder affecting neuromuscular junction.\n- **B. Rheumatoid arthritis** is a classic autoimmune disorder affecting joint synovium.\n- **D. Systemic Lupus Erythematosus (SLE)** is an autoimmune disease.\nGout is caused by uric acid crystal accumulation, and Alzheimer's is a neurodegenerative disease. Hence, **A, B and D only**.",
+    "image": ""
+  },
+  {
+    "num": 17,
+    "exam": "NEET 2024",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Typhoid | I. Fungus |\n| B. Leishmaniasis | II. Nematode |\n| C. Ringworm | III. Protozoa |\n| D. Filariasis | IV. Bacteria |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-I, B-III, C-II, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-III, C-I, D-II"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-I, C-IV, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-IV, C-III, D-I"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Matching infectious diseases with their causative pathogen types:\n- **A. Typhoid**: *Salmonella typhi* (Bacteria) (IV)\n- **B. Leishmaniasis**: *Leishmania donovani* (Protozoa) (III)\n- **C. Ringworm**: *Microsporum / Trichophyton / Epidermophyton* (Fungus) (I)\n- **D. Filariasis**: *Wuchereria bancrofti* (Nematode / Aschelminthes) (II)\nHence, **A-IV, B-III, C-I, D-II**.",
+    "image": ""
+  },
+  {
+    "num": 18,
+    "exam": "NEET 2024",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Cocaine | I. Effective sedative in surgery |\n| B. Heroin | II. Cannabis sativa |\n| C. Morphine | III. Erythroxylum |\n| D. Marijuana | IV. Papaver somniferum |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-III, C-I, D-II"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-III, C-II, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-I, C-III, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-IV, C-I, D-II"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Matching drugs with their plant sources or clinical properties:\n- **A. Cocaine**: Obtained from *Erythroxylum coca* (III)\n- **B. Heroin**: Diacetylmorphine obtained from *Papaver somniferum* (IV)\n- **C. Morphine**: Effective sedative and painkiller in surgery (I)\n- **D. Marijuana**: Cannabinoid obtained from *Cannabis sativa* (II)\nHence, **A-III, B-IV, C-I, D-II**.",
+    "image": ""
+  },
+  {
+    "num": 19,
+    "exam": "NEET 2024",
+    "question": "Match List I with List II :\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Common cold | I. Plasmodium |\n| B. Haemozoin | II. Typhoid |\n| C. Widal test | III. Rhinoviruses |\n| D. Allergy | IV. Dust mites |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-IV, C-III, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-III, C-II, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-I, C-II, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-II, C-III, D-I"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Matching terms with their clinical associations:\n- **A. Common cold**: Caused by Rhinoviruses (III)\n- **B. Haemozoin**: Toxic pigment released on rupture of RBCs by *Plasmodium* (I)\n- **C. Widal test**: Diagnostic test for typhoid fever caused by *Salmonella typhi* (II)\n- **D. Allergy**: Exaggerated immune response triggered by allergens like dust mites (IV)\nHence, **A-III, B-I, C-II, D-IV**.",
+    "image": ""
+  },
+  {
+    "num": 20,
+    "exam": "NEET 2024",
+    "question": "Given below are two statements :\nStatement I : Bone marrow is the main lymphoid organ where all blood cells including lymphocytes\nare produced.\nStatement II : Both bone marrow and thymus provide micro environments for the development and\nmaturation of T-lymphocytes.\nIn the light of above statements, choose the most appropriate answer from the options given below",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are correct."
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are incorrect."
+      },
+      {
+        "id": "C",
+        "text": "Statement I is correct but Statement II is incorrect."
+      },
+      {
+        "id": "D",
+        "text": "Statement I is incorrect but Statement II is correct."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "- Statement I is correct: Bone marrow is the primary lymphoid organ where all blood cells including lymphocytes are produced.\n- Statement II is correct: Spleen is a secondary lymphoid organ consisting of a large reservoir of erythrocytes and lymphocytes.",
+    "image": ""
+  },
+  {
+    "num": 21,
+    "exam": "NEET 2023 Manipur",
+    "question": "Which of the following sexually transmitted infections are completely curable ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "HIV infection and Trichomoniasis"
+      },
+      {
+        "id": "B",
+        "text": "Syphilis and trichomoniasis"
+      },
+      {
+        "id": "C",
+        "text": "Hepatitis – B and Genital herpes"
+      },
+      {
+        "id": "D",
+        "text": "Genital herpes and Genital warts"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Sexually transmitted infections like **Chlamydiasis, Gonorrhoea, and Syphilis** are completely curable if detected early and treated properly. Hepatitis-B, Genital herpes, and HIV infections are not curable.",
+    "image": ""
+  },
+  {
+    "num": 22,
+    "exam": "NEET 2023 Manipur",
+    "question": "Match List - I with List - II.\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Typhoid | (I) Protozoan |\n| (B) Elephantiasis | (II) Salmonella |\n| (C) Ringworm | (III) Aschelminthes |\n| (D) Malaria | (IV) Microsporum |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A)-(I), (B)-(IV), (C)-(III), (D)-(II)"
+      },
+      {
+        "id": "B",
+        "text": "(A)-(I), (B)-(III), (C)-(IV), (D)-(II)"
+      },
+      {
+        "id": "C",
+        "text": "(A)-(II), (B)-(III), (C)-(IV), (D)-(I)"
+      },
+      {
+        "id": "D",
+        "text": "(A)-(II), (B)-(IV), (C)-(III), (D)-(I)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Matching diseases with pathogen groups:\n- **(A) Typhoid**: *Salmonella typhi* (Bacteria) (II)\n- **(B) Elephantiasis**: *Wuchereria bancrofti* (Aschelminthes) (III)\n- **(C) Ringworm**: *Microsporum* (Fungus) (IV)\n- **(D) Malaria**: *Plasmodium* (Protozoan) (I)\nHence, **(A)-(II), (B)-(III), (C)-(IV), (D)-(I)**.",
+    "image": ""
+  },
+  {
+    "num": 23,
+    "exam": "NEET 2023 Manipur",
+    "question": "Match List-I with List-II.\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Cytokine barriers | (I) Mucus coating of respiratory tract |\n| (B) Cellular barriers | (II) Interferons |\n| (C) Physiological barriers | (III) Neutrophils and Macrophages |\n| (D) Physical barriers | (IV) Tears and Saliva |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A)-(II), (B)-(III), (C)-(IV), (D)-(I)"
+      },
+      {
+        "id": "B",
+        "text": "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)"
+      },
+      {
+        "id": "C",
+        "text": "(A)-(III), (B)-(I), (C)-(II), (D)-(IV)"
+      },
+      {
+        "id": "D",
+        "text": "(A)-(II), (B)-(III), (C)-(I), (D)-(IV)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Matching innate immune barriers:\n- **(A) Cytokine barriers**: Interferons (II)\n- **(B) Cellular barriers**: Polymorphonuclear leukocytes (PMNL-neutrophils) and macrophages (III)\n- **(C) Physiological barriers**: Acid in stomach, saliva in mouth, tears from eyes (IV)\n- **(D) Physical barriers**: Skin and mucus coating of respiratory/urogenital tract (I)\nHence, **(A)-(II), (B)-(III), (C)-(IV), (D)-(I)**.",
+    "image": ""
+  },
+  {
+    "num": 24,
+    "exam": "NEET 2023",
+    "question": "In which blood corpuscles, the HIV undergoes replication and produces progeny viruses?",
+    "options": [
+      {
+        "id": "A",
+        "text": "B-lymphocytes"
+      },
+      {
+        "id": "B",
+        "text": "Basophils"
+      },
+      {
+        "id": "C",
+        "text": "Eosinophils"
+      },
+      {
+        "id": "D",
+        "text": "$\\text{T}_\\text{H}$ cells"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "In an infected person, HIV enters helper T-lymphocytes ($\\text{T}_\\text{H}$ cells), replicates using reverse transcriptase, and produces progeny viruses that attack and destroy other $\\text{T}_\\text{H}$ cells, leading to severe immunodeficiency.",
+    "image": ""
+  },
+  {
+    "num": 25,
+    "exam": "NEET 2023",
+    "question": "Match List I with List II.\n\n| List I | List II |\n| :--- | :--- |\n| (A) Heroin | (I) Effect on cardiovascular system |\n| (B) Marijuana | (II) Slow down body function |\n| (C) Cocaine | (III) Painkiller |\n| (D) Morphine | (IV) Interfere with transport of dopamine |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-I, C-IV, D-III"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Matching drugs with their physiological effects:\n- **(A) Heroin**: Depressant that slows down body functions (II)\n- **(B) Marijuana**: Cannabinoid that has cardiovascular effects (I)\n- **(C) Cocaine**: Interferes with transport of dopamine, producing euphoria (IV)\n- **(D) Morphine**: Potent analgesic and painkiller (III)\nHence, **A-II, B-I, C-IV, D-III**.",
+    "image": ""
+  },
+  {
+    "num": 26,
+    "exam": "NEET 2023",
+    "question": "Match List I with List II.\n\n| List I | List II |\n| :--- | :--- |\n| (A) Ringworm | (I) Haemophilus influenzae |\n| (B) Filariasis | (II) Trichophyton |\n| (C) Malaria | (III) Wuchereria bancrofti |\n| (D) Pneumonia | (IV) Plasmodium vivax |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-III, C-IV, D-I"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Matching diseases with their causative organisms:\n- **(A) Ringworm**: *Trichophyton* (II)\n- **(B) Filariasis**: *Wuchereria bancrofti* (III)\n- **(C) Malaria**: *Plasmodium vivax* (IV)\n- **(D) Pneumonia**: *Haemophilus influenzae* (I)\nHence, **A-II, B-III, C-IV, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 27,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Which of the following reasons is mainly responsible for graft rejection in transplantation of organs?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cell-mediated response"
+      },
+      {
+        "id": "B",
+        "text": "Inability of recipient to differentiate between ‘self’ and ‘non-self’ tissues/cells"
+      },
+      {
+        "id": "C",
+        "text": "Humoral immune response only"
+      },
+      {
+        "id": "D",
+        "text": "Auto-immune response"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Graft rejection (rejection of transplanted organs/tissues) is primarily mediated by **cell-mediated immune response (CMI)** governed by T-lymphocytes.",
+    "image": ""
+  },
+  {
+    "num": 28,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Match List - I with List - II :\n\n| List - I | List - II |\n| :--- | :--- |\n| (a) Cellular barrier | (i) Interferons |\n| (b) Cytokine barrier | (ii) Mucus |\n| (c) Physical barrier | (iii) Neutrophils |\n| (d) Physiological barrier | (iv) HCl in gastric juice |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) - (iii), (b) - (i), (c) - (ii), (d) - (iv)"
+      },
+      {
+        "id": "B",
+        "text": "(a) - (ii), (b) - (iii), (c) - (iv), (d) - (i)"
+      },
+      {
+        "id": "C",
+        "text": "(a) - (ii), (b) - (iii), (c) - (i), (d) - (iv)"
+      },
+      {
+        "id": "D",
+        "text": "(a) - (iii), (b) - (iv), (c) - (ii), (d) - (i)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Matching innate immune barriers with examples:\n- **(a) Cellular barrier**: Neutrophils and monocytes (iii)\n- **(b) Cytokine barrier**: Interferons secreted by virus-infected cells (i)\n- **(c) Physical barrier**: Mucus coating of respiratory tract (ii)\n- **(d) Physiological barrier**: $\\text{HCl}$ in gastric juice, saliva, tears (iv)\nHence, **(a)-(iii), (b)-(i), (c)-(ii), (d)-(iv)**.",
+    "image": ""
+  },
+  {
+    "num": 29,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Given below are two statements:\nStatement I : Autoimmune disorder is a condition where body defense mechanism recognizes its\nown cells as foreign bodies.\nStatement II : Rheumatoid arthritis is a condition where body does not attack self cells.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are incorrect"
+      },
+      {
+        "id": "C",
+        "text": "Statement I is correct but Statement II is incorrect"
+      },
+      {
+        "id": "D",
+        "text": "Statement I is incorrect but Statement II is correct"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Statement I is correct: Autoimmune disorders occur when the immune system mistakenly attacks self-cells and tissues. Statement II is correct: Rheumatoid arthritis is an autoimmune condition where the body attacks joint tissues. Both statements are correct.",
+    "image": ""
+  },
+  {
+    "num": 30,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Select the incorrect statement with respect to acquired immunity.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Primary response is produced when our body encounters a pathogen for the first time."
+      },
+      {
+        "id": "B",
+        "text": "Anamnestic response is elicited on subsequent encounters with the same pathogen."
+      },
+      {
+        "id": "C",
+        "text": "Anamnestic response is due to memory of first encounter."
+      },
+      {
+        "id": "D",
+        "text": "Acquired immunity is non-specific type of defense present at the time of birth."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Acquired immunity is pathogen-specific and characterized by memory. When the body encounters a pathogen for the first time, it produces a **primary response** of low intensity. Subsequent encounters with the same pathogen elicit a highly intensified **secondary (anamnestic) response**, not anamnestic on first encounter.",
+    "image": ""
+  },
+  {
+    "num": 31,
+    "exam": "NEET 2021",
+    "question": "Match List-I with List-II:\n\n| List-I | List-II |\n| :--- | :--- |\n| (a) Filariasis | (i) Haemophilus influenzae |\n| (b) Amoebiasis | (ii) Trichophyton |\n| (c) Pneumonia | (iii) Wuchereria bancrofti |\n| (d) Ringworm | (iv) Entamoeba histolytica |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(ii), (b)-(iii), (c)-(i), (d)-(iv)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iv), (b)-(i), (c)-(iii), (d)-(ii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(i), (b)-(ii), (c)-(iv), (d)-(iii)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Matching diseases with causative pathogens:\n- **(a) Filariasis**: *Wuchereria bancrofti* (iii)\n- **(b) Amoebiasis**: *Entamoeba histolytica* (iv)\n- **(c) Pneumonia**: *Haemophilus influenzae* (i)\n- **(d) Ringworm**: *Trichophyton* (ii)\nHence, **(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)**.",
+    "image": ""
+  },
+  {
+    "num": 32,
+    "exam": "NEET 2020 Phase 2",
+    "question": "The yellowish fluid \"colostrum\" secreted by mammary glands of mother during the initial days of\nlactation has abundant antibodies (IgA) to protect the infant. This type of immunity is called as :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Autoimmunity"
+      },
+      {
+        "id": "B",
+        "text": "Passive immunity"
+      },
+      {
+        "id": "C",
+        "text": "Active immunity"
+      },
+      {
+        "id": "D",
+        "text": "Acquired immunity"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Colostrum secreted by the mother during the first few days of lactation is rich in **$\\text{IgA}$ antibodies**, providing passive immunity to protect the newborn infant from various infections.",
+    "image": ""
+  },
+  {
+    "num": 33,
+    "exam": "NEET 2020 Phase 2",
+    "question": "Match the following columns and select the correct option :\n\n| Column - I | Column - II |\n| :--- | :--- |\n| (i) Typhoid | (a) Haemophilus influenzae |\n| (ii) Malaria | (b) Wuchereria bancrofti |\n| (iii) Pneumonia | (c) Plasmodium vivax |\n| (iv) Filariasis | (d) Salmonella typhi |\n\nChoose the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(i)-(a), (ii)-(b), (iii)-(d), (iv)-(c)"
+      },
+      {
+        "id": "B",
+        "text": "(i)-(d), (ii)-(c), (iii)-(a), (iv)-(b)"
+      },
+      {
+        "id": "C",
+        "text": "(i)-(c), (ii)-(d), (iii)-(b), (iv)-(a)"
+      },
+      {
+        "id": "D",
+        "text": "(i)-(a), (ii)-(c), (iii)-(b), (iv)-(d)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Matching diseases with causative organisms:\n- **(i) Typhoid**: *Salmonella typhi* (d)\n- **(ii) Malaria**: *Plasmodium vivax* (c)\n- **(iii) Pneumonia**: *Haemophilus influenzae* (a)\n- **(iv) Filariasis**: *Wuchereria bancrofti* (b)\nHence, **(i)-(d), (ii)-(c), (iii)-(a), (iv)-(b)**.",
+    "image": ""
+  },
+  {
+    "num": 34,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Match the following diseases with the causative organism and select the correct option:\n\n| Column-I | Column-II |\n| :--- | :--- |\n| (a) Typhoid | (i) Wuchereria |\n| (b) Pneumonia | (ii) Plasmodium |\n| (c) Filariasis | (iii) Salmonella |\n| (d) Malaria | (iv) Haemophilus |\n\nChoose the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(i), (b)-(iii), (c)-(ii), (d)-(iv)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(ii), (b)-(i), (c)-(iii), (d)-(iv)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Matching diseases with causative organisms:\n- **(a) Typhoid**: *Salmonella typhi* (iii)\n- **(b) Pneumonia**: *Haemophilus influenzae* / *Streptococcus pneumoniae* (iv)\n- **(c) Filariasis**: *Wuchereria bancrofti* (i)\n- **(d) Malaria**: *Plasmodium* (ii)\nHence, **(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)**.",
+    "image": ""
+  },
+  {
+    "num": 35,
+    "exam": "NEET 2020 Phase 1",
+    "question": "The infectious stage of Plasmodium that enters the human body is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Trophozoites"
+      },
+      {
+        "id": "B",
+        "text": "Sporozoites"
+      },
+      {
+        "id": "C",
+        "text": "Male gametocytes"
+      },
+      {
+        "id": "D",
+        "text": "Female gametocytes"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "The infectious stage of *Plasmodium* that enters the human body through the bite of an infected female *Anopheles* mosquito is the **sporozoite**.",
+    "image": ""
+  },
+  {
+    "num": 36,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Identify the wrong statement with reference to immunity",
+    "options": [
+      {
+        "id": "A",
+        "text": "Active immunity is quick and gives full response."
+      },
+      {
+        "id": "B",
+        "text": "When exposed to antigen (living or dead) antibodies are produced in the host’s body. It is called\n“Active immunity”."
+      },
+      {
+        "id": "C",
+        "text": "Foetus receives some antibodies from mother, it is an example for passive immunity."
+      },
+      {
+        "id": "D",
+        "text": "When ready-made antibodies are directly given, it is called “Passive immunity”"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Option (A) is incorrect because fetus receives antibodies (like $\\text{IgG}$) from mother across placenta, which is an example of **passive immunity**, not active immunity.",
+    "image": ""
+  },
+  {
+    "num": 37,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Coca alkaloid or cocaine is obtained from :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Datura"
+      },
+      {
+        "id": "B",
+        "text": "Papaver somniferum"
+      },
+      {
+        "id": "C",
+        "text": "Atropa belladonna"
+      },
+      {
+        "id": "D",
+        "text": "Erythroxylum coca"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Coca alkaloid or cocaine is obtained from the leaves and young twigs of the South American coca plant, **Erythroxylum coca**.",
+    "image": ""
+  },
+  {
+    "num": 38,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Humans have acquired immune system that produces antibodies to neutralize pathogens. Still\ninnate immune system is present at the time of birth because it",
+    "options": [
+      {
+        "id": "A",
+        "text": "provides passive immunity"
+      },
+      {
+        "id": "B",
+        "text": "is very specific and uses different macrophages."
+      },
+      {
+        "id": "C",
+        "text": "produces memory cells for mounting fast secondary response."
+      },
+      {
+        "id": "D",
+        "text": "has natural killer cells which can phagocytose and destroy microbes"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "The primary characteristics of acquired immunity that enable it to recognize diverse pathogens are **specificity and immunological memory**.",
+    "image": ""
+  },
+  {
+    "num": 39,
+    "exam": "NEET 2019",
+    "question": "Identify the correct pair representing the causative agent of typhoid fever and the confirmatory test\nfor typhoid.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Salmonella typhi/ Anthorone test"
+      },
+      {
+        "id": "B",
+        "text": "Salmonella typhi/ Widal test"
+      },
+      {
+        "id": "C",
+        "text": "Plasmodium vivax/ UTI test"
+      },
+      {
+        "id": "D",
+        "text": "Streptococcus pneumoniae/ Widal test"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Typhoid fever is caused by the bacterium **Salmonella typhi**, which infects the small intestine and is confirmed clinically by the **Widal test**.",
+    "image": ""
+  },
+  {
+    "num": 40,
+    "exam": "NEET 2019",
+    "question": "Colostrum, the yellowish fluid, secreted by mother during the initial days of lactation is very\nessential to impart immunity to the newborn infants because it contains :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Macrophages"
+      },
+      {
+        "id": "B",
+        "text": "Immunoglobulin A"
+      },
+      {
+        "id": "C",
+        "text": "Natural killer cells"
+      },
+      {
+        "id": "D",
+        "text": "Monocytes"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Colostrum contains abundant **$\\text{IgA}$** antibodies, providing natural passive immunity to protect the newborn baby.",
+    "image": ""
+  },
+  {
+    "num": 41,
+    "exam": "NEET 2019",
+    "question": "Which of the following sexually transmitted diseases is   not   completely curable ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Genital herpes"
+      },
+      {
+        "id": "B",
+        "text": "Chlamydiasis"
+      },
+      {
+        "id": "C",
+        "text": "Gonorrhoea"
+      },
+      {
+        "id": "D",
+        "text": "Genital warts"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Among sexually transmitted infections, **Hepatitis-B, Genital herpes, and HIV infections are not completely curable**, whereas syphilis, gonorrhoea, and chlamydiasis are treatable with antibiotics.",
+    "image": ""
+  },
+  {
+    "num": 42,
+    "exam": "NEET 2019",
+    "question": "Drug called ‘Heroin’ is synthesized by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "glycosylation of morphine"
+      },
+      {
+        "id": "B",
+        "text": "nitration of morphine"
+      },
+      {
+        "id": "C",
+        "text": "methylation of morphine"
+      },
+      {
+        "id": "D",
+        "text": "acetylation of morphine"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Heroin (diacetylmorphine), commonly known as smack, is synthesized by the **acetylation of morphine**.",
+    "image": ""
+  },
+  {
+    "num": 43,
+    "exam": "NEET 2019",
+    "question": "Which of the following immune responses is responsible for rejection of kidney graft?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Inflammatory immune response"
+      },
+      {
+        "id": "B",
+        "text": "Cell-mediated immune response"
+      },
+      {
+        "id": "C",
+        "text": "Auto-immune response"
+      },
+      {
+        "id": "D",
+        "text": "Humoral immune response"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Tissue and organ graft rejection is mediated primarily by **cell-mediated immunity (CMI)**, controlled by T-lymphocytes.",
+    "image": ""
+  },
+  {
+    "num": 44,
+    "exam": "NEET 2018",
+    "question": "Which part of poppy plant is used to obtain the drug “smack”?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Flowers"
+      },
+      {
+        "id": "B",
+        "text": "Latex"
+      },
+      {
+        "id": "C",
+        "text": "Roots"
+      },
+      {
+        "id": "D",
+        "text": "Leaves"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Smack or heroin is obtained from the **latex** extracted from unripe seed capsules of the opium poppy *Papaver somniferum*.",
+    "image": ""
+  },
+  {
+    "num": 45,
+    "exam": "NEET 2018",
+    "question": "Which of the following is not an autoimmune disease?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Psoriasis"
+      },
+      {
+        "id": "B",
+        "text": "Rheumatoid arthritis"
+      },
+      {
+        "id": "C",
+        "text": "Alzheimer’s disease"
+      },
+      {
+        "id": "D",
+        "text": "Vitiligo"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Alzheimer's disease** is a progressive neurodegenerative disorder caused by amyloid plaque deposition, not an autoimmune disease. Rheumatoid arthritis, myasthenia gravis, and vitiligo have autoimmune etiologies.",
+    "image": ""
+  },
+  {
+    "num": 46,
+    "exam": "NEET 2018",
+    "question": "In which disease does mosquito transmitted pathogen cause chronic inflammation of lymphatic\nvessels?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Elephantiasis"
+      },
+      {
+        "id": "B",
+        "text": "Ascariasis"
+      },
+      {
+        "id": "C",
+        "text": "Ringworm disease"
+      },
+      {
+        "id": "D",
+        "text": "Amoebiasis"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "In **Elephantiasis (filariasis)**, the pathogen *Wuchereria* causes chronic inflammation in the lymphatic vessels of the lower limbs, transmitted through female *Culex* mosquitoes.",
+    "image": ""
+  },
+  {
+    "num": 47,
+    "exam": "NEET 2017",
+    "question": "Transplantation of tissues/ organs fails often due to non-acceptance by the patient's body. Which\ntype of immuneresponse is responsible for such rejections ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cell-mediated immune response"
+      },
+      {
+        "id": "B",
+        "text": "Physiological immune response"
+      },
+      {
+        "id": "C",
+        "text": "Hormonal immune response"
+      },
+      {
+        "id": "D",
+        "text": "Autoimmune response"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Transplantation of tissues or organs frequently fails due to tissue graft rejection mediated by **cell-mediated immune response** of T-lymphocytes.",
+    "image": ""
+  },
+  {
+    "num": 48,
+    "exam": "NEET 2017",
+    "question": "MALT constitutes about ________ percent of the lymphoid tissue in human body",
+    "options": [
+      {
+        "id": "A",
+        "text": "20%"
+      },
+      {
+        "id": "B",
+        "text": "70%"
+      },
+      {
+        "id": "C",
+        "text": "10%"
+      },
+      {
+        "id": "D",
+        "text": "50%"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "MALT (Mucosa-Associated Lymphoid Tissue) constitutes about **50%** of the lymphoid tissue in the human body, located within the lining of major tracts (respiratory, digestive, and urogenital).",
+    "image": ""
+  },
+  {
+    "num": 49,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Which of the following sets of diseases is caused by bacteria ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Herpes and influenza"
+      },
+      {
+        "id": "B",
+        "text": "Cholera and tetanus"
+      },
+      {
+        "id": "C",
+        "text": "Tetanus and mumps"
+      },
+      {
+        "id": "D",
+        "text": "Typhoid and smallpox"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Cholera** (caused by *Vibrio cholerae*) and **Tetanus** (caused by *Clostridium tetani*) are bacterial diseases.",
+    "image": ""
+  },
+  {
+    "num": 50,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Which of the following is correct regarding AIDS causative agent HIV ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "HIV is unenveloped retrovirus"
+      },
+      {
+        "id": "B",
+        "text": "HIV is enveloped virus containing one molecule of single-stranded RNA and one molecule of\nreverse transcriptase."
+      },
+      {
+        "id": "C",
+        "text": "HIV does not escape but attacks the acquired immune response"
+      },
+      {
+        "id": "D",
+        "text": "HIV is enveloped virus that contains two identical molecules of single-stranded RNA and two\nmolecules of reverse transcriptase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "HIV is an enveloped retrovirus containing **two identical single-stranded RNA (ssRNA)** molecules and two reverse transcriptase enzyme molecules inside its capsid.",
+    "image": ""
+  },
+  {
+    "num": 51,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Antivenom injection contains preformed antibodies while polio drops that are administered into the\nbody contain -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Attenuated pathogens"
+      },
+      {
+        "id": "B",
+        "text": "Activated pathogens"
+      },
+      {
+        "id": "C",
+        "text": "Harvested antibodies"
+      },
+      {
+        "id": "D",
+        "text": "Gamma globulin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Antivenom contains preformed antibodies conferring **passive immunity**, whereas polio drops contain attenuated poliovirus that stimulates the recipient's immune system to produce antibodies, providing **active immunity**.",
+    "image": ""
+  },
+  {
+    "num": 52,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Which of the following statements is not true for cancer cells in relation to mutations ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mutations inhibit production of telomerase"
+      },
+      {
+        "id": "B",
+        "text": "Mutations in proto-oncogenes accelerate the cell cycle"
+      },
+      {
+        "id": "C",
+        "text": "Mutations destroy telomerase inhibitor"
+      },
+      {
+        "id": "D",
+        "text": "Mutations inactivate the cell control"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Normal cells show contact inhibition; cancer cells **lose contact inhibition** and continue to divide uncontrollably, forming tumors. Hence, statement (A) is false.",
+    "image": ""
+  },
+  {
+    "num": 53,
+    "exam": "NEET 2016 Phase 1",
+    "question": "In higher vertebrates, the immune system can distinguish self-cells and non-self. If this property is\nlost due to genetic abnormality and it attacks self-cells, then it leads to",
+    "options": [
+      {
+        "id": "A",
+        "text": "Active immunity"
+      },
+      {
+        "id": "B",
+        "text": "Allergic response"
+      },
+      {
+        "id": "C",
+        "text": "Graft rejection"
+      },
+      {
+        "id": "D",
+        "text": "Auto-immune disease"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "In higher vertebrates, autoimmune disorders occur due to the failure of the immune system to distinguish self from non-self, leading to attack on self-cells.",
+    "image": ""
+  },
+  {
+    "num": 54,
+    "exam": "AIPMT 2015",
+    "question": "If you suspect major deficiency of antibodies in a person, to which of the following would you look\nfor confirmatory evidence ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fibrinogin in plasma"
+      },
+      {
+        "id": "B",
+        "text": "Haemocytes"
+      },
+      {
+        "id": "C",
+        "text": "Serum albumins"
+      },
+      {
+        "id": "D",
+        "text": "Serum globulins"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Antibodies (immunoglobulins) are gamma globulins found in blood plasma; thus, antibody deficiency is detected by analyzing **serum globulins**.",
+    "image": ""
+  },
+  {
+    "num": 55,
+    "exam": "AIPMT 2015",
+    "question": "Which of the following immunoglobulins does constitute the largest percentage in human milk?",
+    "options": [
+      {
+        "id": "A",
+        "text": "IgM"
+      },
+      {
+        "id": "B",
+        "text": "IgA"
+      },
+      {
+        "id": "C",
+        "text": "IgG"
+      },
+      {
+        "id": "D",
+        "text": "IgD"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**$\\text{IgG}$** constitutes about 75-80% of total immunoglobulins in human serum and is the only antibody capable of crossing the placenta.",
+    "image": ""
+  },
+  {
+    "num": 56,
+    "exam": "AIPMT 2015",
+    "question": "Which of the following diseases is caused by a protozoan?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Influenza"
+      },
+      {
+        "id": "B",
+        "text": "Babesiosis"
+      },
+      {
+        "id": "C",
+        "text": "Blastomycosis"
+      },
+      {
+        "id": "D",
+        "text": "Syphilis"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Amoebiasis** is caused by the protozoan parasite *Entamoeba histolytica*.",
+    "image": ""
+  },
+  {
+    "num": 57,
+    "exam": "AIPMT 2015",
+    "question": "Grafted kidney may be rejected in a patient due to -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Humoral immune response"
+      },
+      {
+        "id": "B",
+        "text": "Cell-mediated immune response"
+      },
+      {
+        "id": "C",
+        "text": "Passive immune response"
+      },
+      {
+        "id": "D",
+        "text": "Innate immune response"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Grafted organ/kidney rejection is primarily carried out by **cell-mediated immune response** mediated by cytotoxic T-cells.",
+    "image": ""
+  },
+  {
+    "num": 58,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "Match each disease with its correct type of vaccine:\n\n| Column I | Column II |\n| :--- | :--- |\n| A. Tuberculosis | (i) Harmless virus |\n| B. Whooping cough | (ii) Inactivated toxin |\n| C. Diphtheria | (iii) Killed bacteria |\n| D. Polio | (iv) Harmless bacteria |\n\nChoose the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A - (i), B - (ii), C - (iv), D - (iii)"
+      },
+      {
+        "id": "B",
+        "text": "A - (iv), B - (iii), C - (ii), D - (i)"
+      },
+      {
+        "id": "C",
+        "text": "A - (ii), B - (i), C - (iii), D - (iv)"
+      },
+      {
+        "id": "D",
+        "text": "A - (iii), B - (ii), C - (iv), D - (i)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Matching vaccines with their nature:\n- **A. Tuberculosis**: BCG vaccine containing living harmless bacteria (*Mycobacterium bovis*) (iv)\n- **B. Whooping cough**: Pertussis vaccine containing killed bacteria (iii)\n- **C. Diphtheria**: Diphtheria toxoid (inactivated toxin) (ii)\n- **D. Polio**: OPV / Salk vaccine containing harmless/attenuated or killed virus (i)\nHence, **A-(iv), B-(iii), C-(ii), D-(i)**.",
+    "image": ""
+  },
+  {
+    "num": 59,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "The active form of Entamoeba histolytica feeds upon",
+    "options": [
+      {
+        "id": "A",
+        "text": "food in intensine"
+      },
+      {
+        "id": "B",
+        "text": "mucosa and submucosa of colon only"
+      },
+      {
+        "id": "C",
+        "text": "blood only"
+      },
+      {
+        "id": "D",
+        "text": "erythrocytes, mucosa and submucosa of colon"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "The trophozoite (active feeding form) of *Entamoeba histolytica* invades the mucosa and submucosa of the large intestine, feeding on **erythrocytes (RBCs), mucosa, and submucosa**.",
+    "image": ""
+  },
+  {
+    "num": 60,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "HIV that causes AIDS, first starts destroying",
+    "options": [
+      {
+        "id": "A",
+        "text": "thrombocytes"
+      },
+      {
+        "id": "B",
+        "text": "leucocytes"
+      },
+      {
+        "id": "C",
+        "text": "helper T-lymphocytes"
+      },
+      {
+        "id": "D",
+        "text": "B-lymphocytes"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "HIV binds to CD4 receptors and preferentially infects and destroys **helper T-lymphocytes ($\\text{CD4}^+$ T-cells)**, severely impairing the immune response.",
+    "image": ""
+  },
+  {
+    "num": 61,
+    "exam": "AIPMT 2014",
+    "question": "Which is the particular type of drug that is obtained from the plant whose one flowering branch is shown below?\n\n![Datura flowering branch](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794554544/edvedum/questions/human_health_and_diseases/human_health_q_61.png)",
+    "options": [
+      {
+        "id": "A",
+        "text": "Hallucinogen"
+      },
+      {
+        "id": "B",
+        "text": "Stimulant"
+      },
+      {
+        "id": "C",
+        "text": "Depressant"
+      },
+      {
+        "id": "D",
+        "text": "Pain-killer"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The plant illustrated is **Datura**, which possesses strong **hallucinogenic** properties. Datura belongs to family Solanaceae and contains tropane alkaloids like scopolamine and atropine.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794554544/edvedum/questions/human_health_and_diseases/human_health_q_61.png"
+  },
+  {
+    "num": 62,
+    "exam": "AIPMT 2014",
+    "question": "At which stage of HIV infection does one usually show symptoms of AIDS ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Within 15 days of sexual contact with an infected person."
+      },
+      {
+        "id": "B",
+        "text": "When the infected retro virus enters host cells."
+      },
+      {
+        "id": "C",
+        "text": "When HIV damages large number of helper T−Lymphocytes."
+      },
+      {
+        "id": "D",
+        "text": "When the viral DNA is produced by reverse transcriptase."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "HIV symptoms of AIDS typically manifest when the virus has severely depleted the population of **helper T-lymphocytes ($\\text{T}_\\text{H}$ cells)**, leading to opportunistic infections.",
+    "image": ""
+  },
+  {
+    "num": 63,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Which one of the following statements is correct regarding Sexually Transmitted Diseases (STD) ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Haemophilia is one of the STD"
+      },
+      {
+        "id": "B",
+        "text": "The chances of a 5 year boy contracting an STD are very little"
+      },
+      {
+        "id": "C",
+        "text": "A person may contract syphilis by sharing milk with one already suffering from the disease"
+      },
+      {
+        "id": "D",
+        "text": "Genital herpes and sickle - cell anaemia are both STD"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Chances of a 5-year-old contracting an STD are extremely low because STDs are transmitted through sexual contact, infected blood transfusion, or congenital transmission from an infected mother.",
+    "image": ""
+  },
+  {
+    "num": 64,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Identify the site where Wuchereria bancrofti is normally found on human body :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Blood vessels of the thigh region"
+      },
+      {
+        "id": "B",
+        "text": "Lymphatic vessels of the lower limbs"
+      },
+      {
+        "id": "C",
+        "text": "Muscles of the legs"
+      },
+      {
+        "id": "D",
+        "text": "Skin between the fingers"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "*Wuchereria bancrofti* adults live in the **lymphatic vessels of the lower limbs** and genital organs in humans, causing chronic lymphedema (elephantiasis).",
+    "image": ""
+  },
+  {
+    "num": 65,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Which one of the following is a hallucinogenic drug?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Morphine"
+      },
+      {
+        "id": "B",
+        "text": "Opium"
+      },
+      {
+        "id": "C",
+        "text": "Caffeine"
+      },
+      {
+        "id": "D",
+        "text": "Lysergic acid diethylamide"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**LSD (Lysergic acid diethylamide)**, obtained from the fungus *Claviceps purpurea*, is a potent hallucinogen.",
+    "image": ""
+  },
+  {
+    "num": 66,
+    "exam": "NEET 2013",
+    "question": "Infection of Ascaris usually occurs by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Tse-tse fly"
+      },
+      {
+        "id": "B",
+        "text": "mosquito bite"
+      },
+      {
+        "id": "C",
+        "text": "drinking water containing eggs of Ascaris"
+      },
+      {
+        "id": "D",
+        "text": "eating imperfectly cooked pork"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Infection of *Ascaris lumbricoides* occurs through the ingestion of **water, vegetables, or fruits contaminated with embryonated eggs** passed in the feces of an infected person.",
+    "image": ""
+  },
+  {
+    "num": 67,
+    "exam": "NEET 2013",
+    "question": "The cell-mediated immunity inside the human body is carried out by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "T-lymphocytes"
+      },
+      {
+        "id": "B",
+        "text": "B-lymphocytes"
+      },
+      {
+        "id": "C",
+        "text": "Thrombocytes"
+      },
+      {
+        "id": "D",
+        "text": "Erythrocytes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Cell-mediated immunity (CMI) is carried out by **T-lymphocytes**, which directly recognize and destroy infected or abnormal cells.",
+    "image": ""
+  },
+  {
+    "num": 68,
+    "exam": "AIPMT 2012 Mains",
+    "question": "Identify the molecules (a) and (b) shown below and select the right option giving their source and use.\n\n![Molecules (a) and (b)](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794554545/edvedum/questions/human_health_and_diseases/human_health_q_68.png)",
+    "options": [
+      {
+        "id": "A",
+        "text": "Molecule (b) Heroin; Source: Cannabis sativa; Use: Depressant and slows down body functions"
+      },
+      {
+        "id": "B",
+        "text": "Molecule (a) Morphine; Source: Papaver somniferum; Use: Sedative and pain killer"
+      },
+      {
+        "id": "C",
+        "text": "Molecule (a) Cocaine; Source: Erythroxylum coca; Use: Accelerates the transport of dopamine"
+      },
+      {
+        "id": "D",
+        "text": "Molecule (b) Cannabinoid; Source: Atropa belladona; Use: Produces hallucinations"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "In the diagram:\n- Molecule (a) is **morphine**, extracted from *Papaver somniferum* (opium poppy), used as a potent sedative and painkiller.\n- Molecule (b) is a **cannabinoid**, obtained from *Cannabis sativa*.\nHence, option (B) correctly identifies molecule (a) Morphine, source *Papaver somniferum*, use sedative and painkiller.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794554545/edvedum/questions/human_health_and_diseases/human_health_q_68.png"
+  },
+  {
+    "num": 69,
+    "exam": "AIPMT 2012 Mains",
+    "question": "Which one of the following sets of items in the option A – D are correctly categorized with one exception in it ?\n\n| | ITEMS | CATEGORY | EXCEPTION |\n| :--- | :--- | :--- | :--- |\n| (A) | Kangaroo, Koala, wombat | Australian marsupials | Wombat |\n| (B) | Typhoid, Pneumonia, Diphtheria | Bacterial diseases | Diphtheria |\n| (C) | UAA, UAG, UGA | Stop codons | UAG |\n| (D) | Plasmodium, Cuscuta, Trypanosoma | Protozoan parasites | Cuscuta |",
+    "options": [
+      {
+        "id": "A",
+        "text": "Kangaroo, Koala, wombat — Australian marsupials (Exception: Wombat)"
+      },
+      {
+        "id": "B",
+        "text": "Typhoid, Pneumonia, Diphtheria — Bacterial diseases (Exception: Diphtheria)"
+      },
+      {
+        "id": "C",
+        "text": "UAA, UAG, UGA — Stop codons (Exception: UAG)"
+      },
+      {
+        "id": "D",
+        "text": "Plasmodium, Cuscuta, Trypanosoma — Protozoan parasites (Exception: Cuscuta)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "In option (D), *Plasmodium* and *Trypanosoma* are protozoan parasites, whereas *Cuscuta* (dodder) is an angiospermic total stem parasite (plant), making it the exception.",
+    "image": ""
+  },
+  {
+    "num": 70,
+    "exam": "AIPMT 2012 Mains",
+    "question": "Read the following four statements (A-D) :\n(A) Colostrum is recommended for the new born because it is rich in antigen\n(B) Chikengunya is caused by a Gram negative bacterium\n(C) Tissue culture has proved useful in obtaining virus-free plants\n(D) Beer is manufactured by distillation of fermented grape juice\nHow many of the above statements are wrong ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Two"
+      },
+      {
+        "id": "B",
+        "text": "One"
+      },
+      {
+        "id": "C",
+        "text": "Four"
+      },
+      {
+        "id": "D",
+        "text": "Three"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Both statements A and C are correct:\n- Colostrum provides passive immunity via $\\text{IgA}$.\n- Spleen is a secondary lymphoid organ filtering blood.\nStatements B and D contain factual inaccuracies.",
+    "image": ""
+  },
+  {
+    "num": 71,
+    "exam": "AIPMT 2012 Mains",
+    "question": "Which one of the following statements is correct with respect to immunity?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Rejection of a kidney graft is the function of B-lymphocytes."
+      },
+      {
+        "id": "B",
+        "text": "Preformed antibodies need to be injected to treat the bite by a viper snake."
+      },
+      {
+        "id": "C",
+        "text": "The antibodies against small pox pathogen are produced by T – lymphocytes"
+      },
+      {
+        "id": "D",
+        "text": "Antibodies are protein molecules, each of which has four light chains."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Active immunity is slow and takes time to deliver its full effective response, whereas passive immunity provides immediate protection via preformed antibodies.",
+    "image": ""
+  },
+  {
+    "num": 72,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Motile zygote of Plasmodium occurs in",
+    "options": [
+      {
+        "id": "A",
+        "text": "Human liver"
+      },
+      {
+        "id": "B",
+        "text": "Salivary glands of Anopheles"
+      },
+      {
+        "id": "C",
+        "text": "Human RBCs"
+      },
+      {
+        "id": "D",
+        "text": "Gut of female Anopheles"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "The motile zygote (ookinete) of *Plasmodium* is formed in the **gut of the female Anopheles mosquito**.",
+    "image": ""
+  },
+  {
+    "num": 73,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Common cold differs from pneumonia in, that",
+    "options": [
+      {
+        "id": "A",
+        "text": "Pneumonia is a communicable disease whereas the common cold is a nutritional deficiency\ndisease"
+      },
+      {
+        "id": "B",
+        "text": "Pneumonia can be prevented by a live attenuated bacterial vaccine whereas the common cold\nhas no effective vaccine"
+      },
+      {
+        "id": "C",
+        "text": "Pneumonia is caused by a virus while the common cold is caused by the bacterium\nhaemophilus influenzae"
+      },
+      {
+        "id": "D",
+        "text": "Pneumonia pathogen infects alveoli wheras the common cold affects nose and respiratory\npassage but not the lungs"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Common cold infects the nose and upper respiratory passage but **does not affect the lungs**, whereas pneumonia infects the alveoli of the lungs, filling them with fluid.",
+    "image": ""
+  },
+  {
+    "num": 74,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Which one of the following in not a property of cancerous cells whereas the remaining three are ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "They do not remain confined in the area of formation"
+      },
+      {
+        "id": "B",
+        "text": "They divide in an uncontrolled manner"
+      },
+      {
+        "id": "C",
+        "text": "They compete with normal cells for vital nutrients"
+      },
+      {
+        "id": "D",
+        "text": "They show contact inhibition"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Cancerous cells lose **contact inhibition**, which is a normal cellular property where contact with neighboring cells inhibits further mitotic division.",
+    "image": ""
+  },
+  {
+    "num": 75,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Cirrhosis of liver is caused by the chronic intake of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cocaine"
+      },
+      {
+        "id": "B",
+        "text": "Alcohol"
+      },
+      {
+        "id": "C",
+        "text": "Tobacco (Chewing)"
+      },
+      {
+        "id": "D",
+        "text": "Opium"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Cirrhosis of the liver (replacement of healthy liver tissue with scar tissue) is caused by chronic, excessive consumption of **alcohol**.",
+    "image": ""
+  },
+  {
+    "num": 76,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Widal Test is carried out to test :",
+    "options": [
+      {
+        "id": "A",
+        "text": "HIV/AIDS"
+      },
+      {
+        "id": "B",
+        "text": "Typhoid fever"
+      },
+      {
+        "id": "C",
+        "text": "Malaria"
+      },
+      {
+        "id": "D",
+        "text": "Diabetes mellitus"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Widal test** is the serological test used for the diagnosis of **typhoid fever**.",
+    "image": ""
+  },
+  {
+    "num": 77,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "In which one of the following options the two examples are correctly matched with their particular type of immunity?\n\n| Option | Examples | Types of immunity |\n| :--- | :--- | :--- |\n| (A) | Polymorphonuclear leukocytes and monocytes | Cellular barriers |\n| (B) | Anti-tetanus and antisnake bite injection | Active immunity |\n| (C) | Saliva in mouth and Tear in eyes | Physical barriers |\n| (D) | Mucus coating of epithelium lining the urinogenital tract and the HCl in stomach | Physiological barriers |",
+    "options": [
+      {
+        "id": "A",
+        "text": "Polymorphonuclear leukocytes and monocytes — Cellular barriers"
+      },
+      {
+        "id": "B",
+        "text": "Anti-tetanus and antisnake bite injection — Active immunity"
+      },
+      {
+        "id": "C",
+        "text": "Saliva in mouth and Tear in eyes — Physical barriers"
+      },
+      {
+        "id": "D",
+        "text": "Mucus coating of epithelium lining the urinogenital tract and HCl in stomach — Physiological barriers"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Polymorphonuclear leukocytes (PMNL-neutrophils) and monocytes are cellular components that phagocytose microbes, representing **cellular barriers** of innate immunity.",
+    "image": ""
+  },
+  {
+    "num": 78,
+    "exam": "AIPMT 2011 Mains",
+    "question": "Which one of the following options gives the correct matching of a disease with its causative organism and mode of infection ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Disease: Pneumonia | Causative Organism: Streptococcus pneumoniae | Mode of Infection: Droplet infection"
+      },
+      {
+        "id": "B",
+        "text": "Disease: Malaria | Causative Organism: Plasmodium vivax | Mode of Infection: Bite of male Anopheles mosquito"
+      },
+      {
+        "id": "C",
+        "text": "Disease: Elephantiasis | Causative Organism: Wuchereria bancrofti | Mode of Infection: With infected water and food"
+      },
+      {
+        "id": "D",
+        "text": "Disease: Typhoid | Causative Organism: Salmonella typhi | Mode of Infection: With inspired air"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Pneumonia is caused by *Streptococcus pneumoniae* and *Haemophilus influenzae*, transmitted through **droplets/aerosols** released by an infected person.",
+    "image": ""
+  },
+  {
+    "num": 79,
+    "exam": "AIPMT 2011 Mains",
+    "question": "Common cold is not cured by antibiotics because it is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "caused by a Gram-positive bacterium"
+      },
+      {
+        "id": "B",
+        "text": "caused by a Gram-negative bacterium"
+      },
+      {
+        "id": "C",
+        "text": "not an infectious disease"
+      },
+      {
+        "id": "D",
+        "text": "caused by a virus"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "The common cold is caused by **Rhinoviruses**; antibiotics inhibit bacterial biochemical pathways and are ineffective against viral infections.",
+    "image": ""
+  },
+  {
+    "num": 80,
+    "exam": "AIPMT 2011 Mains",
+    "question": "Select the   correct   statement with respect to diseases and immunisation",
+    "options": [
+      {
+        "id": "A",
+        "text": "Certain protozoans have been used to mass produce hepatitis B vaccine"
+      },
+      {
+        "id": "B",
+        "text": "Injection of snake antivenom against snake bite is an example of active immunisation"
+      },
+      {
+        "id": "C",
+        "text": "If due to some reason B- and T-lymphocytes are damaged, the body will not produce antibodies\nagainst a pathogen"
+      },
+      {
+        "id": "D",
+        "text": "Injection of dead / inactivated pathogens causes passive immunity"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Infection by pathogens triggers the body to produce antibodies, creating **active immunity**.",
+    "image": ""
+  },
+  {
+    "num": 81,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "Where will you look for the sporozoites of the malarial parasite ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "red blood corpuscles of humans suffering from malaria"
+      },
+      {
+        "id": "B",
+        "text": "spleen of infected humans"
+      },
+      {
+        "id": "C",
+        "text": "Salivary glands of freshly moulted female Anopheles mosquito"
+      },
+      {
+        "id": "D",
+        "text": "Saliva of infected female Anopheles mosquito"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Sporozoites, the infective stages of *Plasmodium*, are stored in the **salivary glands of infected female Anopheles mosquitoes**.",
+    "image": ""
+  },
+  {
+    "num": 82,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "Which one of the following acts as a physiological barrier to the entry of microorganisms in human\nbody?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Epithelium of urogenital tract"
+      },
+      {
+        "id": "B",
+        "text": "Tears"
+      },
+      {
+        "id": "C",
+        "text": "Monocytes"
+      },
+      {
+        "id": "D",
+        "text": "Skin"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Acid in stomach, saliva in mouth, and tears in eyes** contain antimicrobial agents like lysozyme and serve as **physiological barriers**.",
+    "image": ""
+  },
+  {
+    "num": 83,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "A certain patient is suspected to be suffering from Acquired Immuno Deficiency Syndrome. Which\ndiagnostic technique will you recommend for its detection?",
+    "options": [
+      {
+        "id": "A",
+        "text": "ELISA"
+      },
+      {
+        "id": "B",
+        "text": "MRI"
+      },
+      {
+        "id": "C",
+        "text": "Ultra sound"
+      },
+      {
+        "id": "D",
+        "text": "WIDAL"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The initial diagnostic test for suspected HIV/AIDS is the **ELISA (Enzyme-Linked Immunosorbent Assay)**, confirmed by Western Blot.",
+    "image": ""
+  },
+  {
+    "num": 84,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "At which stage of HIV infection does one usually show symptoms of AIDS?",
+    "options": [
+      {
+        "id": "A",
+        "text": "When the infecting retrovirus enters host cells"
+      },
+      {
+        "id": "B",
+        "text": "When viral DNA is produced by reverse transcriptase"
+      },
+      {
+        "id": "C",
+        "text": "When HIV replicates rapidly in helper T-lymphocytes and damages large number of these"
+      },
+      {
+        "id": "D",
+        "text": "Within 15 days of sexual contact with an infected person"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Symptoms of AIDS appear when HIV causes large-scale depletion of **helper T-lymphocytes ($\\text{CD4}^+$ T-cells)**.",
+    "image": ""
+  },
+  {
+    "num": 85,
+    "exam": "AIPMT 2010 Mains",
+    "question": "Which one of the following techniques is safest for the detection of cancers ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Computed tomography (CT)"
+      },
+      {
+        "id": "B",
+        "text": "Magnetic resonance imaging (MRI)"
+      },
+      {
+        "id": "C",
+        "text": "Histopathological studies"
+      },
+      {
+        "id": "D",
+        "text": "Radiography (X-ray)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**MRI (Magnetic Resonance Imaging)** is the safest technique because it uses non-ionizing radiation and strong magnetic fields, avoiding harmful ionizing radiation.",
+    "image": ""
+  },
+  {
+    "num": 86,
+    "exam": "AIPMT 2010 Mains",
+    "question": "A person suffering from a disease caused by Plasmodium, experiences recurring chill and fever at\nthe time when",
+    "options": [
+      {
+        "id": "A",
+        "text": "the parasite after its rapid multiplication inside RBCs ruptures them, releasing the stage to enter\nfresh RBCs."
+      },
+      {
+        "id": "B",
+        "text": "the trophozoites reach maximum growth and give out certain toxins"
+      },
+      {
+        "id": "C",
+        "text": "the sporozoites released from RBCs are being rapidly killed and broken down inside spleen"
+      },
+      {
+        "id": "D",
+        "text": "the microgametocytes and megagametocytes are being destroyed by the WBCs."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Periodic chills and high fever in malaria are caused by the release of **haemozoin** toxin when infected erythrocytes rupture.",
+    "image": ""
+  },
+  {
+    "num": 87,
+    "exam": "AIPMT 2010 Mains",
+    "question": "Which one of the following can   not   be used for preparation of vaccines against plague?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Formalin-inactivated suspensions of virulent bacteria"
+      },
+      {
+        "id": "B",
+        "text": "Avirulent live bacteria"
+      },
+      {
+        "id": "C",
+        "text": "Synthetic capsular polysaccharide material"
+      },
+      {
+        "id": "D",
+        "text": "Heat-killed suspensions of virulent bacteria"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Killed pathogens, attenuated pathogens, and toxoids are used in vaccines; whole virulent living pathogens cannot be safely used directly without attenuation.",
+    "image": ""
+  },
+  {
+    "num": 88,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Ringworm in humans is caused by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fungi"
+      },
+      {
+        "id": "B",
+        "text": "Viruses"
+      },
+      {
+        "id": "C",
+        "text": "Bacteria"
+      },
+      {
+        "id": "D",
+        "text": "Nematodes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Ringworm is a contagious fungal disease in humans caused by fungi belonging to genera **Microsporum, Trichophyton, and Epidermophyton**.",
+    "image": ""
+  },
+  {
+    "num": 89,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Widal test is used for the diagnosis of –",
+    "options": [
+      {
+        "id": "A",
+        "text": "Tuberculosis"
+      },
+      {
+        "id": "B",
+        "text": "Malaria"
+      },
+      {
+        "id": "C",
+        "text": "Typhoid"
+      },
+      {
+        "id": "D",
+        "text": "Pneumonia"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Widal test** is used for the diagnostic confirmation of **typhoid fever**.",
+    "image": ""
+  },
+  {
+    "num": 90,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Which one of the following statements is correct with respect to AIDS ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The causative HIV retrovirus enters helper T-lymphocytes thus reducing their numbers"
+      },
+      {
+        "id": "B",
+        "text": "AIDS patients are being fully cured cent per cent with proper care and nutrition"
+      },
+      {
+        "id": "C",
+        "text": "The HIV can be transmitted through eating food together with an infected person"
+      },
+      {
+        "id": "D",
+        "text": "Drug addicts are least susceptible to HIV infection"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "HIV/AIDS is not transmitted by ordinary touch or physical contact; it spreads only through exchange of body fluids (sexual contact, blood transfusion, needle sharing, mother to child).",
+    "image": ""
+  },
+  {
+    "num": 91,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Select the correct statement from the ones given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cocaine is given to patients after surgery as it stimulates recovery"
+      },
+      {
+        "id": "B",
+        "text": "Chewing tobacco lowers blood pressure and heart rate"
+      },
+      {
+        "id": "C",
+        "text": "Barbiturates when given to criminals make them tell the truth"
+      },
+      {
+        "id": "D",
+        "text": "Morphine is often given to persons who have undergone surgery as a pain killer"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Morphine is an effective analgesic and sedative extracted from the poppy plant *Papaver somniferum*.",
+    "image": ""
+  },
+  {
+    "num": 92,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Consider the following four statements (a–d) regarding kidney transplant and select the two correct\nones out of these.\na. Even if a kidney transplant is proper the recipient may need to take immunosuppressants for a\nlong time\nb. The cell-mediated immune response is responsible for the graft rejection\nc. The B-lymphocytes are responsible for rejection of the graft\nd. The acceptance or rejection of a kidney transplant depends on specific interferons\nThe two correct statements are",
+    "options": [
+      {
+        "id": "A",
+        "text": "a & b"
+      },
+      {
+        "id": "B",
+        "text": "b & c"
+      },
+      {
+        "id": "C",
+        "text": "c & d"
+      },
+      {
+        "id": "D",
+        "text": "a & c"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Regarding kidney transplantation, tissue matching and blood group matching are essential, and cell-mediated immunity is responsible for graft rejection. Immunosuppressants (like cyclosporin A) are administered lifelong.",
+    "image": ""
+  },
+  {
+    "num": 93,
+    "exam": "AIPMT 2009",
+    "question": "Which one of the following statement is correct ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Patients who have undergone surgery are given cannabinoids to relieve pain."
+      },
+      {
+        "id": "B",
+        "text": "Heroin accelerates body functions."
+      },
+      {
+        "id": "C",
+        "text": "Malignant tumours may exhibit metastasis"
+      },
+      {
+        "id": "D",
+        "text": "Benign tumours show the property of metastasis"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Drug-induced hallucinations can be caused by plant extracts like *Atropa belladonna* and *Datura* species.",
+    "image": ""
+  },
+  {
+    "num": 94,
+    "exam": "AIPMT 2009",
+    "question": "Which of following is a pair of viral diseases ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ringworm, AIDS"
+      },
+      {
+        "id": "B",
+        "text": "Common Cold, AIDS"
+      },
+      {
+        "id": "C",
+        "text": "Typhoid, Tuberculosis"
+      },
+      {
+        "id": "D",
+        "text": "Dysentery, Common Cold"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Common cold and AIDS** are both viral diseases (caused by Rhinovirus and HIV, respectively).",
+    "image": ""
+  },
+  {
+    "num": 95,
+    "exam": "AIPMT 2009",
+    "question": "A person likely to develop tetanus is immunised by administering:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Preformed antibodies"
+      },
+      {
+        "id": "B",
+        "text": "Wide spectrum antibiotics"
+      },
+      {
+        "id": "C",
+        "text": "Weakened germs"
+      },
+      {
+        "id": "D",
+        "text": "Dead germs"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "For immediate protection against tetanus, **anti-tetanus serum (preformed antibodies)** is administered to confer rapid passive immunity.",
+    "image": ""
+  },
+  {
+    "num": 96,
+    "exam": "AIPMT 2009",
+    "question": "The letter T in T-lymphocyte refers to:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Thalamus"
+      },
+      {
+        "id": "B",
+        "text": "Tonsil"
+      },
+      {
+        "id": "C",
+        "text": "Thymus"
+      },
+      {
+        "id": "D",
+        "text": "Thyroid"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "In T-lymphocyte, the letter 'T' stands for **Thymus**, the organ where these lymphocytes undergo maturation and differentiation.",
+    "image": ""
+  },
+  {
+    "num": 97,
+    "exam": "AIPMT 2009",
+    "question": "Use of anti-histamines and steroids give a quick relief from:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nausea"
+      },
+      {
+        "id": "B",
+        "text": "Cough"
+      },
+      {
+        "id": "C",
+        "text": "Headache"
+      },
+      {
+        "id": "D",
+        "text": "Allergy"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Allergic symptoms are mediated by histamine and serotonin; anti-histamines, adrenaline, and steroids provide rapid symptomatic relief.",
+    "image": ""
+  },
+  {
+    "num": 98,
+    "exam": "AIPMT 2008",
+    "question": "Match the disease in Column I with the appropriate items (pathogen/ prevention/ treatment) in Column II:\n\n| Column I | Column II |\n| :--- | :--- |\n| (A) Amoebiasis | (i) Treponema pallidum |\n| (B) Diphtheria | (ii) Use only sterilized food |\n| (C) Cholera | (iii) DPT Vaccine |\n| (D) Syphilis | (iv) Use oral rehydration |\n\nChoose the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A = (ii), B = (iv), C = (i), D = (iii)"
+      },
+      {
+        "id": "B",
+        "text": "A = (i), B = (ii), C = (iii), D = (iv)"
+      },
+      {
+        "id": "C",
+        "text": "A = (ii), B = (i), C = (iii), D = (iv)"
+      },
+      {
+        "id": "D",
+        "text": "A = (ii), B = (iii), C = (iv), D = (i)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Matching diseases with pathogen/prevention/treatment:\n- **(A) Amoebiasis**: Use only sterilized food and boiled water (ii)\n- **(B) Diphtheria**: Prevented by DPT vaccine (iii)\n- **(C) Cholera**: Oral rehydration therapy prevents dehydration (iv)\n- **(D) Syphilis**: Caused by *Treponema pallidum* (i)\nHence, **A=(ii), B=(iii), C=(iv), D=(i)**.",
+    "image": ""
+  },
+  {
+    "num": 99,
+    "exam": "AIPMT 2008",
+    "question": "Which one of the following is the correct statement regarding the particular psychotropic drug\nspecified ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Hashish causes after thought perceptions and hallucinations"
+      },
+      {
+        "id": "B",
+        "text": "Morphine leads to delusions and disturbed emotions"
+      },
+      {
+        "id": "C",
+        "text": "Opium stimulates nervous system and causes hallucinations"
+      },
+      {
+        "id": "D",
+        "text": "Barbiturates cause relaxation and temporary euphoria"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Saliva in the mouth and tears from eyes contain lysozyme and constitute **physiological barriers** of innate immunity.",
+    "image": ""
+  },
+  {
+    "num": 100,
+    "exam": "AIPMT 2008",
+    "question": "To which type of barriers under innate immunity, do the saliva in the mouth and the tears from the\neyes, belong?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Physiological barriers"
+      },
+      {
+        "id": "B",
+        "text": "Physical barriers"
+      },
+      {
+        "id": "C",
+        "text": "Cytokine barriers"
+      },
+      {
+        "id": "D",
+        "text": "Cellular barriers"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Saliva in mouth, tears from eyes, and stomach acid are classified as **physiological barriers** of innate immunity.",
+    "image": ""
+  },
+  {
+    "num": 101,
+    "exam": "AIPMT 2008",
+    "question": "Consider the following statements about biomedical technologies,\n(i) During open heart surgery blood is circulated in the heart-lung machine\n(ii) Blockage in coronary arteries is removed by angiography\n(iii) Computerised Axial Tomography (CAT) shows detailed internal structure as seen in a section of\nbody.\n(iv) X-ray provides clear and detailed images of organs like prostate glands and lungs\nWhich two of the above statements are correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "(i) and (iii)"
+      },
+      {
+        "id": "B",
+        "text": "(i) and (ii)"
+      },
+      {
+        "id": "C",
+        "text": "(ii) and (iv)"
+      },
+      {
+        "id": "D",
+        "text": "(iii) and (iv)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Biomedical imaging: MRI uses strong magnetic fields and radio waves, making it safe and non-invasive; CT scan utilizes X-rays to create three-dimensional images of internal organs.",
+    "image": ""
+  },
+  {
+    "num": 102,
+    "exam": "AIPMT 2007",
+    "question": "Increased asthmatic attacks in certain seasons are related to:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Eating fruits preserved in tin containers"
+      },
+      {
+        "id": "B",
+        "text": "Inhalation of seasonal pollen"
+      },
+      {
+        "id": "C",
+        "text": "Low temperature"
+      },
+      {
+        "id": "D",
+        "text": "Hot and humid environment"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Seasonal asthmatic attacks are allergic responses provoked by environmental allergens such as airborne **pollens** during flowering seasons.",
+    "image": ""
+  },
+  {
+    "num": 103,
+    "exam": "AIPMT 2007",
+    "question": "If you suspect major deficiency of antibodies in a person, to which of the following would you look\nfor confirmatory evidence?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Serum albumins"
+      },
+      {
+        "id": "B",
+        "text": "Fibrinogen in the plasma"
+      },
+      {
+        "id": "C",
+        "text": "Serum globulins"
+      },
+      {
+        "id": "D",
+        "text": "Haemocytes"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Major deficiency of antibodies is identified by analyzing **serum globulins**, as immunoglobulins constitute the gamma-globulin fraction of serum.",
+    "image": ""
+  },
+  {
+    "num": 104,
+    "exam": "AIPMT 2007",
+    "question": "Lysozyme that is present in perspiration, saliva and tears, destroys:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Certain types of bacteria"
+      },
+      {
+        "id": "B",
+        "text": "Most virus – infected cells"
+      },
+      {
+        "id": "C",
+        "text": "All viruses"
+      },
+      {
+        "id": "D",
+        "text": "Certain fungi"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Lysozyme** is an antimicrobial enzyme present in tears, saliva, and sweat that hydrolyzes peptidoglycan in **bacterial cell walls**.",
+    "image": ""
+  },
+  {
+    "num": 105,
+    "exam": "AIPMT 2006",
+    "question": "HIV that causes AIDS, first starts destroying",
+    "options": [
+      {
+        "id": "A",
+        "text": "Helper T-lymphocytes"
+      },
+      {
+        "id": "B",
+        "text": "B-lymphocytes"
+      },
+      {
+        "id": "C",
+        "text": "Leucocytes"
+      },
+      {
+        "id": "D",
+        "text": "Thrombocytes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "HIV attacks and replicates within **helper T-lymphocytes ($\\text{CD4}^+$ T-cells)** and macrophages, destroying them.",
+    "image": ""
+  },
+  {
+    "num": 106,
+    "exam": "AIPMT 2006",
+    "question": "A person showing unpredictable moods, outbursts of emotion, quarrelsome behaviour and conflicts\nwith others is suffering from-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mood disorders"
+      },
+      {
+        "id": "B",
+        "text": "Addictive disorders"
+      },
+      {
+        "id": "C",
+        "text": "Schizophrenia"
+      },
+      {
+        "id": "D",
+        "text": "Borderline Personality Disorder (BPD)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "A person displaying erratic emotions, unstable self-image, and stormy relationships exhibits symptoms of borderline personality or emotional instability disorder.",
+    "image": ""
+  },
+  {
+    "num": 107,
+    "exam": "AIPMT 2006",
+    "question": "Antibodies in our body are complex-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Prostaglandins"
+      },
+      {
+        "id": "B",
+        "text": "Steroids"
+      },
+      {
+        "id": "C",
+        "text": "Glycoproteins"
+      },
+      {
+        "id": "D",
+        "text": "Lipoproteins"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Antibodies are globular **glycoproteins** (immunoglobulins) consisting of four polypeptide chains held together by disulfide bonds.",
+    "image": ""
+  },
+  {
+    "num": 108,
+    "exam": "AIPMT 2005",
+    "question": "Which one of the following depresses brain activity and produces feelings of calmness, relaxation\nand drowsiness ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Hashish"
+      },
+      {
+        "id": "B",
+        "text": "Amphetamines"
+      },
+      {
+        "id": "C",
+        "text": "Morphine"
+      },
+      {
+        "id": "D",
+        "text": "Valium"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Barbiturates and tranquilizers** act as central nervous system depressants, reducing anxiety and inducing calmness or sleep.",
+    "image": ""
+  },
+  {
+    "num": 109,
+    "exam": "AIPMT 2005",
+    "question": "Damage to thymus in a child may lead to",
+    "options": [
+      {
+        "id": "A",
+        "text": "A reduction in stem cell production"
+      },
+      {
+        "id": "B",
+        "text": "Loss of cell mediated immunity"
+      },
+      {
+        "id": "C",
+        "text": "A reduction in haemoglobin content of blood"
+      },
+      {
+        "id": "D",
+        "text": "Loss of antibody mediated immunity"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Thymus is essential for the maturation of T-lymphocytes; removal or damage to thymus impairs **cell-mediated immunity**.",
+    "image": ""
+  },
+  {
+    "num": 110,
+    "exam": "AIPMT 2005",
+    "question": "AIDS is caused by HIV that principally infects",
+    "options": [
+      {
+        "id": "A",
+        "text": "all lymphocytes"
+      },
+      {
+        "id": "B",
+        "text": "activator B cells"
+      },
+      {
+        "id": "C",
+        "text": "lymphocytes"
+      },
+      {
+        "id": "D",
+        "text": "cytotoxic T cells"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "HIV principally infects and destroys **helper T-lymphocytes ($\\text{CD4}^+$ T-cells)**.",
+    "image": ""
+  },
+  {
+    "num": 111,
+    "exam": "AIPMT 2004",
+    "question": "Which one of the following is not correctly matched ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Anopheles culicifacies   – Leishmaniasis"
+      },
+      {
+        "id": "B",
+        "text": "Glossina palpalis   – Sleeping sickness"
+      },
+      {
+        "id": "C",
+        "text": "Culex pipiens   – Filariasis"
+      },
+      {
+        "id": "D",
+        "text": "Aedes aegypti   – Yellow fever"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Carcinogens: radiation, oncogenic viruses, chemical carcinogens. An erroneous association between an agent and its pathological effect is identified.",
+    "image": ""
+  },
+  {
+    "num": 112,
+    "exam": "AIPMT 2004",
+    "question": "Cancer cells are more easily damaged by radiation than normal cells because they are",
+    "options": [
+      {
+        "id": "A",
+        "text": "starved of mutation"
+      },
+      {
+        "id": "B",
+        "text": "undergoing rapid division"
+      },
+      {
+        "id": "C",
+        "text": "different in structure"
+      },
+      {
+        "id": "D",
+        "text": "non-dividing"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Cancer cells are more susceptible to radiation damage than normal cells because they undergo **rapid and uncontrolled mitotic divisions**.",
+    "image": ""
+  },
+  {
+    "num": 113,
+    "exam": "AIPMT 2003",
+    "question": "Carcinoma refers to : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Malignant tumours of the colon"
+      },
+      {
+        "id": "B",
+        "text": "Benign tumours of the connective tissue"
+      },
+      {
+        "id": "C",
+        "text": "Malignant tumours of the connective tissue"
+      },
+      {
+        "id": "D",
+        "text": "Malignant tumours of the skin or mucous membrane"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Carcinoma** is a malignant neoplasm originating from **epithelial tissues** (e.g., skin, breast, lung, stomach).",
+    "image": ""
+  },
+  {
+    "num": 114,
+    "exam": "AIPMT 2003",
+    "question": "Short-lived immunity acquired from mother to foetus across placenta or through mother's milk to\nthe infant is categorised as :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Passive immunity"
+      },
+      {
+        "id": "B",
+        "text": "Cellular immunity"
+      },
+      {
+        "id": "C",
+        "text": "Innate non-specific immunity"
+      },
+      {
+        "id": "D",
+        "text": "Active immunity"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The transfer of antibodies across the placenta ($\\text{IgG}$) or via colostrum ($\\text{IgA}$) provides **natural passive immunity**.",
+    "image": ""
+  },
+  {
+    "num": 115,
+    "exam": "AIPMT 2003",
+    "question": "What is true about T-lymphocytes in mammals?",
+    "options": [
+      {
+        "id": "A",
+        "text": "They scavenge damaged cells and cellular debris"
+      },
+      {
+        "id": "B",
+        "text": "These are produced in thyroid"
+      },
+      {
+        "id": "C",
+        "text": "There are three main types — cytotoxic T-cells, helper T-cells and suppressor T-cells"
+      },
+      {
+        "id": "D",
+        "text": "These originate in lymphoid tissues"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "T-lymphocytes originate in the **bone marrow** and migrate to the **thymus** for maturation and education.",
+    "image": ""
+  },
+  {
+    "num": 116,
+    "exam": "AIPMT 2002",
+    "question": "Cancerous cells can easily be destroyed by radiations due to : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fast mutation"
+      },
+      {
+        "id": "B",
+        "text": "Lack of oxygen"
+      },
+      {
+        "id": "C",
+        "text": "Rapid cell division"
+      },
+      {
+        "id": "D",
+        "text": "Lack of nutrition"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Cancerous cells are destroyed by ionizing radiation because radiation damages DNA during rapid cell division.",
+    "image": ""
+  },
+  {
+    "num": 117,
+    "exam": "AIPMT 2002",
+    "question": "Which of the following is used in the treatment of thyroid cancer?",
+    "options": [
+      {
+        "id": "A",
+        "text": "I-131"
+      },
+      {
+        "id": "B",
+        "text": "U-238"
+      },
+      {
+        "id": "C",
+        "text": "Ra-224"
+      },
+      {
+        "id": "D",
+        "text": "C-14"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Iodine-131 ($I^{131}$)** is a radioactive isotope of iodine widely used in the diagnosis and radiation treatment of **thyroid cancer** due to its selective uptake by thyroid tissue.",
+    "image": ""
+  },
+  {
+    "num": 118,
+    "exam": "AIPMT 2001",
+    "question": "Which one of the following is correct match ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Bhang – Analgesic"
+      },
+      {
+        "id": "B",
+        "text": "Cocaine – opiatic narcotic"
+      },
+      {
+        "id": "C",
+        "text": "Morphine – Hallucinogenic"
+      },
+      {
+        "id": "D",
+        "text": "Reserpine – Tranquilliser"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Matching diseases: Typhoid - *Salmonella typhi*, Malaria - *Plasmodium*, Amoebiasis - *Entamoeba histolytica*.",
+    "image": ""
+  },
+  {
+    "num": 119,
+    "exam": "AIPMT 2001",
+    "question": "L.S.D. is : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Stimulant"
+      },
+      {
+        "id": "B",
+        "text": "Tranquiliser"
+      },
+      {
+        "id": "C",
+        "text": "Hallucinogenic"
+      },
+      {
+        "id": "D",
+        "text": "Sedative"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**LSD (Lysergic acid diethylamide)** is a semisynthetic hallucinogenic psychedelic drug derived from ergot alkaloid.",
+    "image": ""
+  },
+  {
+    "num": 120,
+    "exam": "AIPMT 2001",
+    "question": "Salmonella is related with : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "T.B."
+      },
+      {
+        "id": "B",
+        "text": "Tetanus"
+      },
+      {
+        "id": "C",
+        "text": "Typhoid"
+      },
+      {
+        "id": "D",
+        "text": "Polio"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "*Salmonella* is a genus of rod-shaped bacteria responsible for **typhoid fever** (*Salmonella typhi*).",
+    "image": ""
+  },
+  {
+    "num": 121,
+    "exam": "AIPMT 2001",
+    "question": "Which is the most infectious disease?",
+    "options": [
+      {
+        "id": "A",
+        "text": "AIDS"
+      },
+      {
+        "id": "B",
+        "text": "Malaria"
+      },
+      {
+        "id": "C",
+        "text": "Hepatitis -B"
+      },
+      {
+        "id": "D",
+        "text": "Cough and cold"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Hepatitis B** is highly infectious and transmissible via blood and body fluids, significantly more infectious than HIV.",
+    "image": ""
+  },
+  {
+    "num": 122,
+    "exam": "AIPMT 2001",
+    "question": "Interferons are synthesized in response to",
+    "options": [
+      {
+        "id": "A",
+        "text": "Bacteria"
+      },
+      {
+        "id": "B",
+        "text": "Mycoplasma"
+      },
+      {
+        "id": "C",
+        "text": "Viruses"
+      },
+      {
+        "id": "D",
+        "text": "Fungi"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Interferons** are antiviral glycoproteins secreted by host cells specifically in response to **viral infection**.",
+    "image": ""
+  },
+  {
+    "num": 123,
+    "exam": "AIPMT 2001",
+    "question": "Reason of lung cancer is : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Calcium fluoride"
+      },
+      {
+        "id": "B",
+        "text": "Cement factory"
+      },
+      {
+        "id": "C",
+        "text": "Coal mining"
+      },
+      {
+        "id": "D",
+        "text": "Bauxite mining"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "The leading cause of lung cancer is **tobacco smoking**, which contains chemical carcinogens like polycyclic aromatic hydrocarbons.",
+    "image": ""
+  },
+  {
+    "num": 124,
+    "exam": "AIPMT 2001",
+    "question": "Monoclonal antibodies",
+    "options": [
+      {
+        "id": "A",
+        "text": "are obtained from a cell and act on one antigen"
+      },
+      {
+        "id": "B",
+        "text": "are obtained from a group of cells and act on more than one antigens"
+      },
+      {
+        "id": "C",
+        "text": "are obtained from a group of same type of cells and act on single antigen"
+      },
+      {
+        "id": "D",
+        "text": "are obtained from a group of same type of cells and act on more than one antigens"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Monoclonal antibodies are identical antibodies produced by hybridoma cells, all targeted against a single specific epitope of an antigen.",
+    "image": ""
+  },
+  {
+    "num": 125,
+    "exam": "AIPMT 2000",
+    "question": "Which is showing accurate pairing ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Gonorrhoea - Leishmania donovani"
+      },
+      {
+        "id": "B",
+        "text": "Syphilis - Treponema pallidum"
+      },
+      {
+        "id": "C",
+        "text": "Typhoid – Mycobacterium leprae"
+      },
+      {
+        "id": "D",
+        "text": "AIDS - Bacillus conjugalis"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Accurate pairing between pathogen and disease: *Streptococcus pneumoniae* causing pneumonia.",
+    "image": ""
+  },
+  {
+    "num": 126,
+    "exam": "AIPMT 2000",
+    "question": "Which disease of man is similar with cattle's, bovine spongyform encephalopathy ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Spongiocitis of cerebrum"
+      },
+      {
+        "id": "B",
+        "text": "Encephalitis"
+      },
+      {
+        "id": "C",
+        "text": "Spondylitis"
+      },
+      {
+        "id": "D",
+        "text": "Jecob-crutzfelt disease"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Bovine Spongiform Encephalopathy (BSE, or mad cow disease) in cattle is analogous to **Creutzfeldt-Jakob Disease (CJD)** in humans, both caused by prions.",
+    "image": ""
+  },
+  {
+    "num": 127,
+    "exam": "AIPMT 2000",
+    "question": "Saline solution is given to patients of Cholera because",
+    "options": [
+      {
+        "id": "A",
+        "text": "NaCl produces energy"
+      },
+      {
+        "id": "B",
+        "text": "Na   +   prevents water loss from body"
+      },
+      {
+        "id": "C",
+        "text": "NaCl is antibacterial"
+      },
+      {
+        "id": "D",
+        "text": "NaCl function as regulatory material"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "In cholera, severe diarrhea leads to massive fluid and electrolyte depletion; saline solution restores **osmotic balance and hydration**.",
+    "image": ""
+  },
+  {
+    "num": 128,
+    "exam": "AIPMT 2000",
+    "question": "Small proteins produced by vertebrate cells naturally in response to viral infections and which inhibit\nmultiplication of viruses are called",
+    "options": [
+      {
+        "id": "A",
+        "text": "immunoglobulins"
+      },
+      {
+        "id": "B",
+        "text": "interferons"
+      },
+      {
+        "id": "C",
+        "text": "antitoxins"
+      },
+      {
+        "id": "D",
+        "text": "lipoproteins"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Vertebrate cells infected with viruses produce glycoproteins called **interferons** that inhibit viral replication in neighboring healthy cells.",
+    "image": ""
+  },
+  {
+    "num": 129,
+    "exam": "AIPMT 1999",
+    "question": "Fish which eradicate the mosquito larva are :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cuttle fish"
+      },
+      {
+        "id": "B",
+        "text": "Anabas"
+      },
+      {
+        "id": "C",
+        "text": "Gambusia"
+      },
+      {
+        "id": "D",
+        "text": "Rohu"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Gambusia fish** (*Gambusia affinis*) feed voraciously on mosquito larvae and are used in the biological control of mosquitoes.",
+    "image": ""
+  },
+  {
+    "num": 130,
+    "exam": "AIPMT 1999",
+    "question": "Active immunity means :",
+    "options": [
+      {
+        "id": "A",
+        "text": "resistance developed after disease"
+      },
+      {
+        "id": "B",
+        "text": "increasing quantity of blood"
+      },
+      {
+        "id": "C",
+        "text": "resistance developed before disease"
+      },
+      {
+        "id": "D",
+        "text": "increasing rate of heart-beat"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Active immunity** involves the body's own immune system producing antibodies and memory cells in response to exposure to antigens.",
+    "image": ""
+  },
+  {
+    "num": 131,
+    "exam": "AIPMT 1999",
+    "question": "Koch's postulates are not applicable to :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cholera"
+      },
+      {
+        "id": "B",
+        "text": "Leprosy"
+      },
+      {
+        "id": "C",
+        "text": "TB"
+      },
+      {
+        "id": "D",
+        "text": "Diphtheria"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Koch's postulates are not applicable to obligate intracellular parasites such as **viruses** (and *Mycobacterium leprae*), which cannot be grown on standard artificial culture media.",
+    "image": ""
+  },
+  {
+    "num": 132,
+    "exam": "AIPMT 1999",
+    "question": "The antibodies are",
+    "options": [
+      {
+        "id": "A",
+        "text": "germs"
+      },
+      {
+        "id": "B",
+        "text": "carbohydrates"
+      },
+      {
+        "id": "C",
+        "text": "proteins"
+      },
+      {
+        "id": "D",
+        "text": "lipids"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Antibodies are complex **glycoproteins** (immunoglobulins) synthesized by plasma B-cells.",
+    "image": ""
+  },
+  {
+    "num": 133,
+    "exam": "AIPMT 1998",
+    "question": "Which of the following is not the main function of lymph glands?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Forming WBC"
+      },
+      {
+        "id": "B",
+        "text": "Forming antibodies"
+      },
+      {
+        "id": "C",
+        "text": "Forming RBC"
+      },
+      {
+        "id": "D",
+        "text": "Destroying bacteria"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Lymph nodes act as biological filters to trap foreign antigens; they do not destroy healthy red blood cells (erythrocyte destruction occurs primarily in the spleen).",
+    "image": ""
+  },
+  {
+    "num": 134,
+    "exam": "AIPMT 1998",
+    "question": "In mammals, histamine is secreted by",
+    "options": [
+      {
+        "id": "A",
+        "text": "fibroblasts"
+      },
+      {
+        "id": "B",
+        "text": "histocytes"
+      },
+      {
+        "id": "C",
+        "text": "lymphocytes"
+      },
+      {
+        "id": "D",
+        "text": "mast cells"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Histamine is synthesized and released by **mast cells** in connective tissue and basophils during inflammatory and allergic reactions.",
+    "image": ""
+  },
+  {
+    "num": 135,
+    "exam": "AIPMT 1998",
+    "question": "Botulism caused by   Clostridium botulinum   affects the",
+    "options": [
+      {
+        "id": "A",
+        "text": "spleen"
+      },
+      {
+        "id": "B",
+        "text": "intestine"
+      },
+      {
+        "id": "C",
+        "text": "lymph glands"
+      },
+      {
+        "id": "D",
+        "text": "neuromuscular junction"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Botulism, caused by the neurotoxin of *Clostridium botulinum*, inhibits acetylcholine release at the neuromuscular junction, affecting the **nervous and muscular systems**.",
+    "image": ""
+  },
+  {
+    "num": 136,
+    "exam": "AIPMT 1998",
+    "question": "Human immuno deficiency virus (HIV) has a protein coat and a genetic material which is",
+    "options": [
+      {
+        "id": "A",
+        "text": "single stranded DNA"
+      },
+      {
+        "id": "B",
+        "text": "single stranded RNA"
+      },
+      {
+        "id": "C",
+        "text": "double stranded RNA"
+      },
+      {
+        "id": "D",
+        "text": "double stranded DNA"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "HIV is an enveloped retrovirus containing a protein capsid enclosing **single-stranded RNA** and reverse transcriptase.",
+    "image": ""
+  },
+  {
+    "num": 137,
+    "exam": "AIPMT 1998",
+    "question": "Typhoid fever is caused by",
+    "options": [
+      {
+        "id": "A",
+        "text": "Giardia"
+      },
+      {
+        "id": "B",
+        "text": "Salmonella"
+      },
+      {
+        "id": "C",
+        "text": "Shigella"
+      },
+      {
+        "id": "D",
+        "text": "Escherichia"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Typhoid fever is a bacterial infection caused by **Salmonella typhi**.",
+    "image": ""
+  },
+  {
+    "num": 138,
+    "exam": "AIPMT 1997",
+    "question": "Which of the following is an opiate narcotic?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Amphetamines"
+      },
+      {
+        "id": "B",
+        "text": "LSD"
+      },
+      {
+        "id": "C",
+        "text": "Barbiturates"
+      },
+      {
+        "id": "D",
+        "text": "Morphine"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Morphine, codeine, and heroin** are opiate narcotics derived from the opium poppy *Papaver somniferum*.",
+    "image": ""
+  },
+  {
+    "num": 139,
+    "exam": "AIPMT 1997",
+    "question": "Which of the following will be curable in next two decades?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Tuberculosis"
+      },
+      {
+        "id": "B",
+        "text": "Cancer"
+      },
+      {
+        "id": "C",
+        "text": "Poliomyelitis"
+      },
+      {
+        "id": "D",
+        "text": "None of these"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Advances in molecular medicine, gene therapy, and monoclonal antibodies aim to eradicate infectious diseases and genetic disorders.",
+    "image": ""
+  },
+  {
+    "num": 140,
+    "exam": "AIPMT 1997",
+    "question": "Diphtheria is caused by",
+    "options": [
+      {
+        "id": "A",
+        "text": "nematodes"
+      },
+      {
+        "id": "B",
+        "text": "bacteria"
+      },
+      {
+        "id": "C",
+        "text": "virus"
+      },
+      {
+        "id": "D",
+        "text": "none of these."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Diphtheria is caused by the bacterium **Corynebacterium diphtheriae**, which produces an exotoxin affecting the throat and airways.",
+    "image": ""
+  },
+  {
+    "num": 141,
+    "exam": "AIPMT 1997",
+    "question": "Which of the following diseases is now considered completely eradicated from India?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Small pox"
+      },
+      {
+        "id": "B",
+        "text": "Poliomyelitis"
+      },
+      {
+        "id": "C",
+        "text": "Plague"
+      },
+      {
+        "id": "D",
+        "text": "Kala-azar"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Smallpox** is the first infectious disease to be completely eradicated globally through widespread vaccination.",
+    "image": ""
+  },
+  {
+    "num": 142,
+    "exam": "AIPMT 1997",
+    "question": "Which of the following symptoms indicate red sickness?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nausea and loss of hair"
+      },
+      {
+        "id": "B",
+        "text": "Ulcerated skin, nausea and loss of hair"
+      },
+      {
+        "id": "C",
+        "text": "Red and ulcerated skin"
+      },
+      {
+        "id": "D",
+        "text": "Nausea and anaemia"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Red sickness symptoms correspond to specific clinical manifestations in systemic infectious pathology.",
+    "image": ""
+  },
+  {
+    "num": 143,
+    "exam": "AIPMT 1997",
+    "question": "If a person shows production of interferons in his body, the chances are that he has got an infection\nof",
+    "options": [
+      {
+        "id": "A",
+        "text": "tetanus"
+      },
+      {
+        "id": "B",
+        "text": "malaria"
+      },
+      {
+        "id": "C",
+        "text": "typhoid"
+      },
+      {
+        "id": "D",
+        "text": "measles."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Interferons are produced in response to viral invasion; high interferon levels indicate an active **viral infection**.",
+    "image": ""
+  },
+  {
+    "num": 144,
+    "exam": "AIPMT 1996",
+    "question": "Which of the following pair of diseases is caused by virus?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Rabies, mumps"
+      },
+      {
+        "id": "B",
+        "text": "Cholera, tuberculosis"
+      },
+      {
+        "id": "C",
+        "text": "Typhoid, tetanus"
+      },
+      {
+        "id": "D",
+        "text": "AIDS, syphilis"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Poliomyelitis and Measles** (or Dengue/Rabies) are classic viral diseases.",
+    "image": ""
+  },
+  {
+    "num": 145,
+    "exam": "AIPMT 1996",
+    "question": "Antibodies are produced by",
+    "options": [
+      {
+        "id": "A",
+        "text": "leucocytes"
+      },
+      {
+        "id": "B",
+        "text": "monocytes"
+      },
+      {
+        "id": "C",
+        "text": "lymphocytes"
+      },
+      {
+        "id": "D",
+        "text": "spleen."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Antibodies are produced and secreted by **plasma cells**, which are terminally differentiated B-lymphocytes.",
+    "image": ""
+  },
+  {
+    "num": 146,
+    "exam": "AIPMT 1996",
+    "question": "The interferons are",
+    "options": [
+      {
+        "id": "A",
+        "text": "antigen proteins"
+      },
+      {
+        "id": "B",
+        "text": "antiviral proteins"
+      },
+      {
+        "id": "C",
+        "text": "antibiotic proteins"
+      },
+      {
+        "id": "D",
+        "text": "all of these."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Interferons are antiviral **glycoproteins** belonging to the cytokine family.",
+    "image": ""
+  },
+  {
+    "num": 147,
+    "exam": "AIPMT 1995",
+    "question": "Nicotine acts as a stimulant, because it mimics the effect of",
+    "options": [
+      {
+        "id": "A",
+        "text": "testosterone"
+      },
+      {
+        "id": "B",
+        "text": "dopamine"
+      },
+      {
+        "id": "C",
+        "text": "thyroxine"
+      },
+      {
+        "id": "D",
+        "text": "acetylcholine."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Nicotine mimics the neurotransmitter **acetylcholine (ACh)** by binding to nicotinic acetylcholine receptors in the nervous system.",
+    "image": ""
+  },
+  {
+    "num": 148,
+    "exam": "AIPMT 1995",
+    "question": "The blood cancer is known as",
+    "options": [
+      {
+        "id": "A",
+        "text": "haemolysis"
+      },
+      {
+        "id": "B",
+        "text": "haemophilia"
+      },
+      {
+        "id": "C",
+        "text": "leukaemia"
+      },
+      {
+        "id": "D",
+        "text": "thrombosis."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Malignancy of white blood cells or blood-forming tissues is called **leukemia**.",
+    "image": ""
+  },
+  {
+    "num": 149,
+    "exam": "AIPMT 1995",
+    "question": "Which one of the following pairs is not correctly matched?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Syphilis -   Trichuris trichiura"
+      },
+      {
+        "id": "B",
+        "text": "Sleeping sickness -   Trypanosoma gambiense"
+      },
+      {
+        "id": "C",
+        "text": "Dengue fever - arbovirus"
+      },
+      {
+        "id": "D",
+        "text": "Plague -   Yersinia pestis"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Matching diseases and vectors: Sleeping sickness is transmitted by Tsetse fly (*Glossina*), Malaria by *Anopheles*, Dengue by *Aedes*.",
+    "image": ""
+  },
+  {
+    "num": 150,
+    "exam": "AIPMT 1995",
+    "question": "Which one of the following diseases is due to an allergic reaction?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Enteric fever"
+      },
+      {
+        "id": "B",
+        "text": "Skin cancer"
+      },
+      {
+        "id": "C",
+        "text": "Goitre"
+      },
+      {
+        "id": "D",
+        "text": "Hay fever"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Hay fever and Asthma** are allergic reactions triggered by airborne allergens like pollen and dust.",
+    "image": ""
+  },
+  {
+    "num": 151,
+    "exam": "AIPMT 1995",
+    "question": "Which of the following causes plague?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Trichinella spiralis"
+      },
+      {
+        "id": "B",
+        "text": "Salmonella typhimuium"
+      },
+      {
+        "id": "C",
+        "text": "Yersinia pestis"
+      },
+      {
+        "id": "D",
+        "text": "Leishmania donovani"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Plague (bubonic plague) is caused by the rod-shaped bacterium **Yersinia pestis** (formerly *Pasteurella pestis*), transmitted by rat fleas (*Xenopsylla cheopis*).",
+    "image": ""
+  },
+  {
+    "num": 152,
+    "exam": "AIPMT 1995",
+    "question": "Antigens are present",
+    "options": [
+      {
+        "id": "A",
+        "text": "inside the cytoplasm"
+      },
+      {
+        "id": "B",
+        "text": "on nuclear membrane"
+      },
+      {
+        "id": "C",
+        "text": "inside the nucleus"
+      },
+      {
+        "id": "D",
+        "text": "on cell surface."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Antigens are foreign molecules located on **cell surfaces** or outer coats of microorganisms.",
+    "image": ""
+  },
+  {
+    "num": 153,
+    "exam": "AIPMT 1994",
+    "question": "A cell-coded protein that is formed in response to infection, with most animal viruses, is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "histone"
+      },
+      {
+        "id": "B",
+        "text": "antibody"
+      },
+      {
+        "id": "C",
+        "text": "interferon"
+      },
+      {
+        "id": "D",
+        "text": "antigen."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Cell-coded proteins produced in response to viral infections that protect unaffected neighboring cells are **interferons**.",
+    "image": ""
+  },
+  {
+    "num": 154,
+    "exam": "AIPMT 1994",
+    "question": "Which one of the following does correctly match a sexually transmitted disease with its pathogen?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Syphilis-   Treponema pallidum"
+      },
+      {
+        "id": "B",
+        "text": "Gonorrhoea-   Entamoeba histolytica"
+      },
+      {
+        "id": "C",
+        "text": "Urethritis-   Bacillus anthracis"
+      },
+      {
+        "id": "D",
+        "text": "Softsore-   Bacillus brevis   ."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Matching STDs: Syphilis is caused by *Treponema pallidum*, Gonorrhoea by *Neisseria gonorrhoeae*.",
+    "image": ""
+  },
+  {
+    "num": 155,
+    "exam": "AIPMT 1994",
+    "question": "A metastatic cancerous tumour is termed 'sarcoma' if the disorder is in",
+    "options": [
+      {
+        "id": "A",
+        "text": "fibroblasts"
+      },
+      {
+        "id": "B",
+        "text": "circulatory system"
+      },
+      {
+        "id": "C",
+        "text": "immune system"
+      },
+      {
+        "id": "D",
+        "text": "epithelial cells."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "A malignant tumor arising from mesodermal connective tissues (bone, cartilage, muscle) is termed a **sarcoma**.",
+    "image": ""
+  },
+  {
+    "num": 156,
+    "exam": "AIPMT 1994",
+    "question": "The main reason why antibodies could not solve all the problems of bacteria mediated disease is",
+    "options": [
+      {
+        "id": "A",
+        "text": "decreased efficiency of the immune system"
+      },
+      {
+        "id": "B",
+        "text": "insensitivity of the individual following prolonged exposure to antibiotics"
+      },
+      {
+        "id": "C",
+        "text": "development of mutant strains resistant to antibodies"
+      },
+      {
+        "id": "D",
+        "text": "inactivation of antibiotics by bacterial enzymes."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Bacteria rapidly develop **antibiotic resistance** through mutations and plasmid-mediated horizontal gene transfer, limiting the efficacy of antibiotics.",
+    "image": ""
+  },
+  {
+    "num": 157,
+    "exam": "AIPMT 1993",
+    "question": "Schizont stage of   Plasmodium   occurs in human cells",
+    "options": [
+      {
+        "id": "A",
+        "text": "erythrocytes"
+      },
+      {
+        "id": "B",
+        "text": "liver cells"
+      },
+      {
+        "id": "C",
+        "text": "erythrocytes and liver cells"
+      },
+      {
+        "id": "D",
+        "text": "erythrocytes, liver cells and spleen cells"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "The schizont stage of *Plasmodium* occurs during asexual schizogony in **human liver cells and erythrocytes (RBCs)**.",
+    "image": ""
+  },
+  {
+    "num": 158,
+    "exam": "AIPMT 1993",
+    "question": "If all ponds and puddles are destroyed, the organism likely to be destroyed is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Leishmania"
+      },
+      {
+        "id": "B",
+        "text": "Trypanosoma"
+      },
+      {
+        "id": "C",
+        "text": "Ascaris"
+      },
+      {
+        "id": "D",
+        "text": "Plasmodium"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "If all standing water bodies (ponds, puddles) are eliminated, the aquatic breeding sites of mosquitoes will be eliminated, preventing the life cycle of **Plasmodium**.",
+    "image": ""
+  },
+  {
+    "num": 159,
+    "exam": "AIPMT 1993",
+    "question": "Opiate narcotic is",
+    "options": [
+      {
+        "id": "A",
+        "text": "bhang"
+      },
+      {
+        "id": "B",
+        "text": "charas"
+      },
+      {
+        "id": "C",
+        "text": "heroin"
+      },
+      {
+        "id": "D",
+        "text": "nicotine."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Opiates like **morphine, heroin, and codeine** are derived from opium and act as narcotics.",
+    "image": ""
+  },
+  {
+    "num": 160,
+    "exam": "AIPMT 1993",
+    "question": "Give the correct matching of causative agent/germ and disease.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Anopheles   – Malaria"
+      },
+      {
+        "id": "B",
+        "text": "Leishmania   – Sleeping sickness"
+      },
+      {
+        "id": "C",
+        "text": "Glossina   – Kala-azar"
+      },
+      {
+        "id": "D",
+        "text": "Wuchereria   – Filariasis"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Matching pathogen and disease: *Salmonella typhi* - Typhoid, *Mycobacterium tuberculosis* - Tuberculosis, *Wuchereria bancrofti* - Filariasis.",
+    "image": ""
+  },
+  {
+    "num": 161,
+    "exam": "AIPMT 1992",
+    "question": "The part of life cycle of malarial parasite   Plasmodium vivax   , that is passed in female   Anopheles   is",
+    "options": [
+      {
+        "id": "A",
+        "text": "sexual cycle"
+      },
+      {
+        "id": "B",
+        "text": "pre-erythrocytic schizogony"
+      },
+      {
+        "id": "C",
+        "text": "exoerythrocytic schizogony"
+      },
+      {
+        "id": "D",
+        "text": "post-erythrocytic schizogony"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The sexual cycle (gametogony and syngamy) of *Plasmodium vivax* takes place in the **gut of female Anopheles mosquito**.",
+    "image": ""
+  },
+  {
+    "num": 162,
+    "exam": "AIPMT 1991",
+    "question": "Malignant tertian malarial parasite, belongs to class",
+    "options": [
+      {
+        "id": "A",
+        "text": "Plasmodium falciparum"
+      },
+      {
+        "id": "B",
+        "text": "P. vivax"
+      },
+      {
+        "id": "C",
+        "text": "P. ovale"
+      },
+      {
+        "id": "D",
+        "text": "P. malariae"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Malignant tertian malaria is caused by *Plasmodium falciparum*, belonging to the class **Sporozoa** (Apicomplexa).",
+    "image": ""
+  },
+  {
+    "num": 163,
+    "exam": "AIPMT 1991",
+    "question": "Who discovered   Plasmodium   in RBC of human beings?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ronald Ross"
+      },
+      {
+        "id": "B",
+        "text": "Mendel"
+      },
+      {
+        "id": "C",
+        "text": "Laveran"
+      },
+      {
+        "id": "D",
+        "text": "Stephens"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "*Plasmodium* was first discovered in the red blood cells of a malaria patient by **Charles Louis Alphonse Laveran** in 1880.",
+    "image": ""
+  },
+  {
+    "num": 164,
+    "exam": "AIPMT 1990",
+    "question": "Amoebiasis is prevented by",
+    "options": [
+      {
+        "id": "A",
+        "text": "eating balanced food"
+      },
+      {
+        "id": "B",
+        "text": "eating plenty of fruits"
+      },
+      {
+        "id": "C",
+        "text": "drinking boiled water"
+      },
+      {
+        "id": "D",
+        "text": "using mosquito nets"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Amoebiasis is prevented by drinking **clean, boiled water** and consuming properly washed, hygienic food, preventing ingestion of *Entamoeba* cysts.",
+    "image": ""
+  },
+  {
+    "num": 165,
+    "exam": "AIPMT 1990",
+    "question": "The infective stage of malarial parasite,   Plasmodium   that enters human body is",
+    "options": [
+      {
+        "id": "A",
+        "text": "merozoite"
+      },
+      {
+        "id": "B",
+        "text": "sporozoite"
+      },
+      {
+        "id": "C",
+        "text": "trophozoite"
+      },
+      {
+        "id": "D",
+        "text": "minuta form"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "The infective stage of *Plasmodium* that is inoculated into the human host by female *Anopheles* mosquito is the **sporozoite**.",
+    "image": ""
+  },
+  {
+    "num": 166,
+    "exam": "AIPMT 1990",
+    "question": "Kala-azar and Oriental Sore are spread by",
+    "options": [
+      {
+        "id": "A",
+        "text": "housefly"
+      },
+      {
+        "id": "B",
+        "text": "bed bug"
+      },
+      {
+        "id": "C",
+        "text": "sand fly"
+      },
+      {
+        "id": "D",
+        "text": "fruit fly"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Kala-azar (visceral leishmaniasis) is transmitted by the bite of infected **sandflies (*Phlebotomus*)**.",
+    "image": ""
+  },
+  {
+    "num": 167,
+    "exam": "AIPMT 1990",
+    "question": "Analgesic drugs",
+    "options": [
+      {
+        "id": "A",
+        "text": "form tissues"
+      },
+      {
+        "id": "B",
+        "text": "relieve pain"
+      },
+      {
+        "id": "C",
+        "text": "relieve fatigue"
+      },
+      {
+        "id": "D",
+        "text": "cause pain."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Analgesic drugs** are pharmacological agents that relieve pain without causing loss of consciousness.",
+    "image": ""
+  },
+  {
+    "num": 168,
+    "exam": "AIPMT 1989",
+    "question": "Malaria fever coincides with liberation of",
+    "options": [
+      {
+        "id": "A",
+        "text": "cryptomerozoites"
+      },
+      {
+        "id": "B",
+        "text": "metacryptomerozoites"
+      },
+      {
+        "id": "C",
+        "text": "merozoites"
+      },
+      {
+        "id": "D",
+        "text": "trophozoites"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Malarial fever and chills coincide with the bursting of RBCs and release of **haemozoin** along with merozoites into the bloodstream.",
+    "image": ""
+  },
+  {
+    "num": 169,
+    "exam": "AIPMT 1989",
+    "question": "Fish which can be used in biological control of mosquitoes/larvicidal fish is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Eel"
+      },
+      {
+        "id": "B",
+        "text": "carp"
+      },
+      {
+        "id": "C",
+        "text": "cat fish"
+      },
+      {
+        "id": "D",
+        "text": "Gambusia"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Gambusia** fish are larvicidal fish introduced into ponds to consume mosquito larvae, providing biological vector control.",
+    "image": ""
+  },
+  {
+    "num": 170,
+    "exam": "AIPMT 1989",
+    "question": "Which one engulfs pathogens rapidly?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Acidophils"
+      },
+      {
+        "id": "B",
+        "text": "Monocytes"
+      },
+      {
+        "id": "C",
+        "text": "Basophils"
+      },
+      {
+        "id": "D",
+        "text": "Neutrophils\nThese questions are on topics no longer in the current syllabus. They are kept for practice, after everything else."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Neutrophils and monocytes (macrophages)** are professional phagocytes that rapidly engulf and digest invading pathogens.",
+    "image": ""
+  },
+  {
+    "num": 171,
+    "exam": "NEET 2023 Manipur",
+    "question": "Diacetyl morphine is also called as :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Amphetamine"
+      },
+      {
+        "id": "B",
+        "text": "Barbiturate"
+      },
+      {
+        "id": "C",
+        "text": "Crack"
+      },
+      {
+        "id": "D",
+        "text": "Smack"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Diacetylmorphine** is chemically synthesized by the acetylation of morphine and is commonly known as **smack** or heroin.",
+    "image": ""
+  }
+]
