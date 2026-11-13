@@ -1,0 +1,3005 @@
+[
+  {
+    "num": 1,
+    "exam": "RE-NEET 2026",
+    "question": "**RE-NEET 2026**\n\nGiven below are two statements : one is labelled as Assertion A and the other is labelled as Reason R.\n\nAssertion A : In recombinant DNA technology, lysozyme is used for disrupting bacterial cells while cellulase is for plant cells.\nReason R : Isolation of genetic material needs disruption of cells.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "text": "Assertion A is not correct but Reason R is correct"
+      },
+      {
+        "text": "Both Assertion A and Reason R are correct and Reason R is the correct explanation of Assertion A"
+      },
+      {
+        "text": "Both Assertion A and Reason R are correct but Reason R is not the correct explanation of Assertion A"
+      },
+      {
+        "text": "Assertion A is correct but Reason R is not correct"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Disruption of cell envelope is the primary prerequisite for isolating DNA. Lysozyme digests bacterial peptidoglycan cell walls, while cellulase degrades plant cellulosic walls. Therefore, both Assertion A and Reason R are correct, and Reason R correctly explains Assertion A."
+  },
+  {
+    "num": 2,
+    "exam": "RE-NEET 2026",
+    "question": "**RE-NEET 2026**\n\nMatch List-I with List-II:\n\n| List-I | List-II |\n| :--- | :--- |\n| A. Transformation | I. Restriction enzyme |\n| B. Cloning site | II. Transfer DNA to host bacteria |\n| C. Selection | III. Replication |\n| D. Ori | IV. Antibiotic |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "text": "A-IV, B-I, C-III, D-II"
+      },
+      {
+        "text": "A-II, B-I, C-IV, D-III"
+      },
+      {
+        "text": "A-I, B-II, C-IV, D-III"
+      },
+      {
+        "text": "A-III, B-IV, C-II, D-I"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Matching concepts of Recombinant DNA Technology:\n- A. Transformation: Transfer of foreign DNA into host bacteria (II)\n- B. Cloning site: Specific recognition sequence for a restriction enzyme (I)\n- C. Selection: Distinguishes transformants/recombinants using antibiotic resistance genes (IV)\n- D. Ori (Origin of replication): Site responsible for initiating replication and controlling copy number (III)\nHence, the correct match is A-II, B-I, C-IV, D-III."
+  },
+  {
+    "num": 3,
+    "exam": "RE-NEET 2026",
+    "question": "**RE-NEET 2026**\n\nGiven below are two statements : Statement I : Plasmids are autonomously replicating DNA. Statement II: Plasmids are extrachromosomal DNA. In the light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "text": "Statement I is incorrect but Statement II is correct"
+      },
+      {
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "text": "Both Statement I and Statement II are incorrect"
+      },
+      {
+        "text": "Statement I is correct but Statement II is incorrect"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Plasmids are extrachromosomal, double-stranded, circular, self-replicating (autonomously replicating) DNA molecules present naturally in bacteria. Therefore, both Statement I and Statement II are correct."
+  },
+  {
+    "num": 4,
+    "exam": "RE-NEET 2026",
+    "question": "**RE-NEET 2026**\n\nDuring PCR, primers bind to the DNA strands in the   step.",
+    "options": [
+      {
+        "text": "ligation"
+      },
+      {
+        "text": "denaturation"
+      },
+      {
+        "text": "extension"
+      },
+      {
+        "text": "annealing"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "In Polymerase Chain Reaction (PCR), primers anneal (bind) to the single-stranded template DNA at the 3' ends during the annealing step (at around 50–60°C)."
+  },
+  {
+    "num": 5,
+    "exam": "NEET 2026",
+    "question": "**NEET 2026**\n\nMatch List I with List II:\n\n| List-I | List-II |\n| :--- | :--- |\n| A. Genetically modified organism | I. Agrobacterium tumefaciens |\n| B. Thermostable DNA polymerase | II. Bt cotton |\n| C. Ti plasmid | III. Thermus aquaticus |\n| D. pBR322 | IV. Escherichia coli |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "text": "A-II, B-I, C-IV, D-III"
+      },
+      {
+        "text": "A-I, B-IV, C-III, D-II"
+      },
+      {
+        "text": "A-I, B-II, C-IV, D-III"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Matching biotechnology concepts with examples:\n- A. Genetically modified organism: Bt cotton (II)\n- B. Thermostable DNA polymerase: Isolated from the bacterium Thermus aquaticus (III)\n- C. Ti plasmid: Derived from the soil bacterium Agrobacterium tumefaciens (I)\n- D. pBR322: A standard cloning vector constructed for Escherichia coli (IV)\nHence, the correct match is A-II, B-III, C-I, D-IV."
+  },
+  {
+    "num": 6,
+    "exam": "NEET 2026",
+    "question": "**NEET 2026**\n\nIdentify the correct sequence of steps in each cycle of Polymerase Chain Reaction :",
+    "options": [
+      {
+        "text": "Extension   →   Annealing   →   Denaturation"
+      },
+      {
+        "text": "Annealing   →   Denaturation   →   Extension"
+      },
+      {
+        "text": "Denaturation   →   Extension   →   Annealing"
+      },
+      {
+        "text": "Denaturation   →   Annealing   →   Extension"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "The correct sequence of steps in each cycle of Polymerase Chain Reaction (PCR) is:\n1. Denaturation (at ~94-96°C to separate DNA strands)\n2. Annealing (at ~50-60°C where primers bind)\n3. Extension (at ~72°C where Taq polymerase synthesizes new strands)."
+  },
+  {
+    "num": 7,
+    "exam": "NEET 2026",
+    "question": "**NEET 2026**\n\nWhich of the following statements are not true regarding restriction endonucleases? A. They are called molecular scissors. B. These are the enzymes responsible for restricting the growth of bacteriophages in E. coli. C. They cut the DNA only at the centre of the palindromic sites. D. They remove nucleotides only from the ends of DNA fragments. E. They recognise specific palindromic base-pair sequences. Choose the answer from the options given below :",
+    "options": [
+      {
+        "text": "A and B only"
+      },
+      {
+        "text": "A and E only"
+      },
+      {
+        "text": "D and E only"
+      },
+      {
+        "text": "C and D only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "DNA fragments are negatively charged molecules due to phosphate groups in the backbone. During gel electrophoresis, they migrate towards the positive electrode (anode) through the agarose matrix."
+  },
+  {
+    "num": 8,
+    "exam": "NEET 2026",
+    "question": "**NEET 2026**\n\nWhich of the following statements are correct with respect to DNA separation, isolation and visualization? A. The cutting of DNA is done by molecular scissors. B. The DNA fragments separate according to their size in an agarose gel, upon electrophoresis. C. The separated DNA fragments can be seen without staining when exposed to UV light. D. The separated DNA fragments, when stained with ethidium bromide, can be seen in visible light. Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "text": "B and D only"
+      },
+      {
+        "text": "A and B only"
+      },
+      {
+        "text": "B and C only"
+      },
+      {
+        "text": "A and D only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Agarose gel electrophoresis separates DNA fragments on the basis of their size (molecular weight) through the sieving effect of the agarose gel; smaller fragments travel faster and further than larger ones."
+  },
+  {
+    "num": 9,
+    "exam": "NEET 2026",
+    "question": "**NEET 2026**\n\nInsertion of a foreign DNA at BamHI site in an E.coli cloning vector pBR322 results in the loss of antibiotic resistance towards:",
+    "options": [
+      {
+        "text": "Ampicillin and tetracycline"
+      },
+      {
+        "text": "Ampicillin"
+      },
+      {
+        "text": "Tetracycline"
+      },
+      {
+        "text": "Gentamycin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Downstream processing refers to the stages after biosynthesis, including separation and purification of the product, followed by formulation with suitable preservatives and quality control testing."
+  },
+  {
+    "num": 10,
+    "exam": "NEET 2025",
+    "question": "**NEET 2025**\n\nIn the above represented plasmid, an alien piece of DNA is inserted at EcoRI site. Which of the following strategies will be chosen to select the recombinant colonies?",
+    "options": [
+      {
+        "text": "White color colonies will be selected."
+      },
+      {
+        "text": "Blue color colonies grown on ampicillin plates can be selected."
+      },
+      {
+        "text": "Using ampicillin & tetracycline containing medium plate."
+      },
+      {
+        "text": "Blue color colonies will be selected."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "In the diagram, the alien DNA is inserted at the EcoRI site within the beta-galactosidase gene (lacZ), resulting in insertional inactivation. When grown on a chromogenic substrate (X-gal), non-recombinants form blue colonies, whereas recombinants form white colonies due to inactivation of the enzyme."
+  },
+  {
+    "num": 11,
+    "exam": "NEET 2025",
+    "question": "**NEET 2025**\n\nPolymerase chain reaction (PCR) amplifies DNA following the equation:",
+    "options": [
+      {
+        "text": "2n + 1"
+      },
+      {
+        "text": "2N^2"
+      },
+      {
+        "text": "N^2"
+      },
+      {
+        "text": "2^n"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "In Polymerase Chain Reaction (PCR), the number of amplified DNA molecules doubles in each cycle. After 'n' cycles, the number of DNA copies produced from a single starting template is given by the exponential equation 2^n."
+  },
+  {
+    "num": 12,
+    "exam": "NEET 2025",
+    "question": "**NEET 2025**\n\nIdentify the part of a bio-reactor which is used as a foam breaker from the given figure.",
+    "options": [
+      {
+        "text": "D"
+      },
+      {
+        "text": "C"
+      },
+      {
+        "text": "A"
+      },
+      {
+        "text": "B"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "In a stirred-tank bioreactor, the foam breaker (impeller located above the culture surface) breaks foam to prevent overflow and aeration loss. As indicated by the labels, part C represents the foam breaker."
+  },
+  {
+    "num": 13,
+    "exam": "NEET 2025",
+    "question": "**NEET 2025**\n\nThe blue and white selectable markers have been developed which differentiate recombinant colonies from nonrecombinant colonies on the basis of their ability to produce colour in the presence of a chromogenic substrate. Given below are two statements about this method: Statement I : The blue coloured colonies have DNA insert in the plasmid and they are identified as recombinant colonies. Statement II : The colonies without blue colour have DNA insert in the plasmid and are identified as recombinant colonies. In the light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "text": "Statement I is correct but Statement II is incorrect"
+      },
+      {
+        "text": "Statement I is incorrect but Statement II is correct"
+      },
+      {
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "text": "Both Statement I and Statement II are incorrect"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Restriction endonucleases cut both strands of double-stranded DNA at specific palindromic recognition sequences, breaking phosphodiester bonds."
+  },
+  {
+    "num": 14,
+    "exam": "NEET 2025",
+    "question": "**NEET 2025**\n\nWhich of the following enzyme(s) are NOT essential for gene cloning? A. Restriction enzymes B. DNA ligase C. DNA mutase D. DNA recombinase E. DNA polymerase Choose the correct answer from the options given below:",
+    "options": [
+      {
+        "text": "D and E only"
+      },
+      {
+        "text": "B and C only"
+      },
+      {
+        "text": "C and D only"
+      },
+      {
+        "text": "A and B only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "The enzyme Taq polymerase used in PCR is isolated from the thermophilic bacterium Thermus aquaticus, allowing it to remain stable and functional during the high-temperature denaturation step (~94°C)."
+  },
+  {
+    "num": 15,
+    "exam": "NEET 2025",
+    "question": "**NEET 2025**\n\nGiven below are two statements: Statement 1 : The DNA fragments extracted from gel electrophoresis can be used in construction of recombinant DNA. Statement II : Smaller size DNA fragments are observed near anode while larger fragments are found near the wells in an agarose gel. In the light of the above statements, choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "text": "Statement I is correct but statement II is incorrect"
+      },
+      {
+        "text": "Statement I is incorrect but statement II is correct"
+      },
+      {
+        "text": "Both statement I and statement II are correct"
+      },
+      {
+        "text": "Both statement I and statement II are incorrect"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "During gel electrophoresis, DNA fragments separated on an agarose gel can only be visualized after staining with ethidium bromide (EtBr) and exposure to ultraviolet (UV) light, appearing as bright orange bands."
+  },
+  {
+    "num": 16,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "**NEET 2024 (Re-Examination)**\n\nIdentify the incorrect statement related to gel electrophoresis.",
+    "options": [
+      {
+        "text": "Separated DNA fragments can be directly seen under UV radiation"
+      },
+      {
+        "text": "Separated DNA can be extracted from gel piece"
+      },
+      {
+        "text": "Fragment of DNA moves toward anode"
+      },
+      {
+        "text": "Sieving effect of agarose gel helps in separation of DNA fragments"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Chilled ethanol is added during DNA isolation to precipitate the dissolved DNA out of the aqueous solution, allowing it to be spooled out as fine threads."
+  },
+  {
+    "num": 17,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "**NEET 2024 (Re-Examination)**\n\nRecombinant DNA molecule can be created normally by cutting the vector DNA and source DNA respectively with:",
+    "options": [
+      {
+        "text": "Hind II, Hind II"
+      },
+      {
+        "text": "Hind II, Alu I"
+      },
+      {
+        "text": "Hind II, EcoR I"
+      },
+      {
+        "text": "Hind II, BamHI"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The biolistic or gene gun method shoots microscopic pellets of gold or tungsten coated with foreign DNA directly into plant cells at high velocity."
+  },
+  {
+    "num": 18,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "**NEET 2024 (Re-Examination)**\n\nSelect the restriction endonuclease enzymes whose restriction sites are present for the tetracycline resistance   (tet   )   gene in the pBR322 cloning vector.",
+    "options": [
+      {
+        "text": "Bam HI and Sal I"
+      },
+      {
+        "text": "Sal I and Pst I"
+      },
+      {
+        "text": "Pst I and Pvu I"
+      },
+      {
+        "text": "Pvu I and Bam HI"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Microinjection is a method of direct gene transfer where foreign recombinant DNA is directly injected into the nucleus of an animal cell using a micro-needle."
+  },
+  {
+    "num": 19,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "**NEET 2024 (Re-Examination)**\n\nWhich of the following are correct about EcoRI?\n\nA. Cut the DNA with blunt end\nB. Cut the DNA with sticky end\nC. Recognise a specific palindromic sequence\nD. Cut the DNA between the base G and A when encounters the DNA sequence 'GAATTC'\nE. Exonuclease\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "text": "B, C, E only"
+      },
+      {
+        "text": "A, D, E only"
+      },
+      {
+        "text": "A, C, D only"
+      },
+      {
+        "text": "B, C, D only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "EcoRI is an endonuclease (not exonuclease). It cuts DNA by recognizing the specific palindromic sequence 5'-GAATTC-3' between the bases G and A, producing sticky ends with overhanging single-stranded stretches. Thus, statements B, C, and D are correct."
+  },
+  {
+    "num": 20,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "**NEET 2024 (Re-Examination)**\n\nFollowing are the steps involved in the process of PCR:\n\nA. Annealing\nB. Amplification (~1 billion times)\nC. Denaturation\nD. Treatment with Taq polymerase and deoxynucleotides\nE. Extension\n\nChoose the correct sequence of steps of PCR from the options given below :",
+    "options": [
+      {
+        "text": "C -> A -> D -> E -> B"
+      },
+      {
+        "text": "A -> B -> E -> D -> C"
+      },
+      {
+        "text": "A -> C -> E -> D -> B"
+      },
+      {
+        "text": "D -> B -> E -> C -> A"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The correct sequence of events in PCR is: C. Denaturation (strands separate at 94°C) -> A. Annealing (primers bind at 54°C) -> D. Treatment with Taq polymerase and dNTPs -> E. Extension (new strand synthesis at 72°C) -> B. Amplification (~1 billion times after multiple cycles). Thus, C -> A -> D -> E -> B is the correct order."
+  },
+  {
+    "num": 21,
+    "exam": "NEET 2024",
+    "question": "**NEET 2024**\n\nHind II always cuts DNA molecules at a particular point called recognition sequence and it consists of:",
+    "options": [
+      {
+        "text": "8 bp"
+      },
+      {
+        "text": "6 bp"
+      },
+      {
+        "text": "4 bp"
+      },
+      {
+        "text": "10 bp"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Exonucleases remove nucleotides from the ends of the DNA (either 5' or 3' end), whereas endonucleases make cuts at specific internal positions within the DNA molecule."
+  },
+  {
+    "num": 22,
+    "exam": "NEET 2024",
+    "question": "**NEET 2024**\n\nWhat is the fate of a piece of DNA carrying only gene of interest which is transferred into an alien organism? A. The piece of DNA would be able to multiply itself independently in the progeny cells of the organism. B. It may get integrated into the genome of the recipient. C. It may multiply and be inherited along with the host DNA. D. The alien piece of DNA is not an integral part of chromosome. E. It shows ability to replicate. Choose the correct answer from the options given below:",
+    "options": [
+      {
+        "text": "A and B only"
+      },
+      {
+        "text": "D and E only"
+      },
+      {
+        "text": "B and C only"
+      },
+      {
+        "text": "A and E only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "A stirred-tank bioreactor provides continuous stirring and aeration to ensure optimal mixing and uniform oxygen availability throughout the culture volume."
+  },
+  {
+    "num": 23,
+    "exam": "NEET 2024",
+    "question": "**NEET 2024**\n\nThe \"Ti plasmid\" of Agrobacterium tumefaciens stands for",
+    "options": [
+      {
+        "text": "Tumour inhibiting plasmid"
+      },
+      {
+        "text": "Tumor independent plasmid"
+      },
+      {
+        "text": "Tumor inducing plasmid"
+      },
+      {
+        "text": "Temperature independent plasmid"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "In agarose gel electrophoresis, the DNA fragments are separated according to their size (length) because the agarose gel matrix acts as a molecular sieve; smaller fragments move farther and faster toward the anode."
+  },
+  {
+    "num": 24,
+    "exam": "NEET 2024",
+    "question": "**NEET 2024**\n\nWhich of the following statements is incorrect?",
+    "options": [
+      {
+        "text": "A bio-reactor provides optimal growth conditions for achieving the desired product"
+      },
+      {
+        "text": "Most commonly used bio-reactors are of stirring type"
+      },
+      {
+        "text": "Bio-reactors are used to produce small scale bacterial cultures"
+      },
+      {
+        "text": "Bio-reactors have an agitator system, an oxygen delivery system and foam control system"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Palindromic sequences in DNA are base pair sequences that read identically on both strands when read in the same 5' to 3' direction (e.g., 5'-GAATTC-3' / 3'-CTTAAG-5')."
+  },
+  {
+    "num": 25,
+    "exam": "NEET 2024",
+    "question": "**NEET 2024**\n\nThe following diagram shows restriction sites in E. coli cloning vector pBR322. Find the role of ‘X’ and ‘Y’ genes :",
+    "options": [
+      {
+        "text": "The gene ‘X’ is responsible for resistance to antibiotics and ‘Y’ for protein involved in the replication of Plasmid."
+      },
+      {
+        "text": "The gene ‘X’ is responsible for controlling the copy number of the linked DNA and ‘Y’ for protein involved in the replication of Plasmid."
+      },
+      {
+        "text": "The gene ‘X’ is for protein involved in replication of Plasmid and ‘Y’ for resistance to antibiotics."
+      },
+      {
+        "text": "Gene ’X’ is responsible for recognition sites and ‘Y’ is responsible for antibiotic resistance."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "In the pBR322 cloning vector:\n- 'X' represents the origin of replication (ori), which controls replication and determines copy number of the linked DNA.\n- 'Y' represents the rop gene, which codes for proteins involved in the replication of the plasmid.\nTherefore, option B is correct."
+  },
+  {
+    "num": 26,
+    "exam": "NEET 2023 Manipur",
+    "question": "**NEET 2023 Manipur**\n\nThermostable DNA polymerase used in PCR was isolated from :",
+    "options": [
+      {
+        "text": "Thermus aquaticus"
+      },
+      {
+        "text": "Escherichia coli"
+      },
+      {
+        "text": "Agrobacterium tumifaciens"
+      },
+      {
+        "text": "Bacillus thuringiensis"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Thermostable DNA polymerase (Taq polymerase) was isolated from the thermophilic bacterium Thermus aquaticus."
+  },
+  {
+    "num": 27,
+    "exam": "NEET 2023 Manipur",
+    "question": "**NEET 2023 Manipur**\n\nLigation of foreign DNA at which of the following site will result in loss of tetracyclin resistance of pBR322 :",
+    "options": [
+      {
+        "text": "Pst I"
+      },
+      {
+        "text": "Pvu I"
+      },
+      {
+        "text": "EcoR I"
+      },
+      {
+        "text": "BamH I"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "In the pBR322 vector, the BamHI and SalI restriction recognition sites are located within the tetracycline resistance gene (tetR). Ligation of foreign DNA at the BamHI site results in insertional inactivation of the tetR gene, causing loss of tetracycline resistance."
+  },
+  {
+    "num": 28,
+    "exam": "NEET 2023 Manipur",
+    "question": "**NEET 2023 Manipur**\n\nWhich of the following statement is incorrect about Agrobacterium tumifaciens?",
+    "options": [
+      {
+        "text": "It is used to deliver gene of interest in both prokaryotic as well as eukaryotic host cells."
+      },
+      {
+        "text": "'Ti' plasmid from Agrobacterium tumifaciens used for gene transfer is not pathogenic to plant cell."
+      },
+      {
+        "text": "It transforms normal plant cells into tumor cells."
+      },
+      {
+        "text": "It delivers 'T-DNA' into plant cell."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Agrobacterium tumifaciens is a natural plant pathogen that infects dicotyledonous plants and is used as a cloning vector for plant cells. It is not used to deliver genes into prokaryotic host cells. Hence statement A is incorrect."
+  },
+  {
+    "num": 29,
+    "exam": "NEET 2023 Manipur",
+    "question": "**NEET 2023 Manipur**\n\nMatch List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Kanamycin | (I) Delivers genes into animal cells |\n| (B) ClaI | (II) Selectable marker |\n| (C) Disarmed retroviruses | (III) Restriction site |\n| (D) Kanamycin gene | (IV) Antibiotic resistance |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "text": "(A)-(II), (B)-(III), (C)-(I), (D)-(IV)"
+      },
+      {
+        "text": "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)"
+      },
+      {
+        "text": "(A)-(IV), (B)-(III), (C)-(I), (D)-(II)"
+      },
+      {
+        "text": "(A)-(II), (B)-(IV), (C)-(I), (D)-(III)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Matching List I with List II:\n- (A) Kanamycin: Antibiotic to which resistance can be conferred -> selectable marker (II)\n- (B) ClaI: Restriction endonuclease recognition site (III)\n- (C) Disarmed retroviruses: Used as vectors to deliver genes into animal cells (I)\n- (D) Kanamycin gene: Imparts antibiotic resistance to the host cell (IV)\nHence, the correct matching is (A)-(II), (B)-(III), (C)-(I), (D)-(IV)."
+  },
+  {
+    "num": 30,
+    "exam": "NEET 2023 Manipur",
+    "question": "**NEET 2023 Manipur**\n\nWhich of the following can act as molecular scissors?",
+    "options": [
+      {
+        "text": "Restriction enzymes"
+      },
+      {
+        "text": "DNA ligase"
+      },
+      {
+        "text": "RNA polymerase"
+      },
+      {
+        "text": "DNA polymerase"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Restriction enzymes cut double-stranded DNA at specific recognition sequences and are therefore universally referred to as 'molecular scissors'."
+  },
+  {
+    "num": 31,
+    "exam": "NEET 2023",
+    "question": "**NEET 2023**\n\nDuring the purification process for recombinant DNA technology, addition of chilled ethanol precipitates out",
+    "options": [
+      {
+        "text": "DNA"
+      },
+      {
+        "text": "Histones"
+      },
+      {
+        "text": "Polysaccharides"
+      },
+      {
+        "text": "RNA"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "During isolation and purification of DNA, the addition of chilled ethanol causes the purified DNA to precipitate out of the solution."
+  },
+  {
+    "num": 32,
+    "exam": "NEET 2023",
+    "question": "**NEET 2023**\n\nIn gene gun method used to introduce alien DNA into host cells, microparticles of ________ metal are used.",
+    "options": [
+      {
+        "text": "Zinc"
+      },
+      {
+        "text": "Tungsten or gold"
+      },
+      {
+        "text": "Silver"
+      },
+      {
+        "text": "Copper"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "In the gene gun (biolistics) method of transformation, microparticles of tungsten or gold coated with DNA are bombarded into target host cells."
+  },
+  {
+    "num": 33,
+    "exam": "NEET 2023",
+    "question": "**NEET 2023**\n\nUpon exposure to UV radiation, DNA stained with ethidium bromide will show",
+    "options": [
+      {
+        "text": "Bright blue colour"
+      },
+      {
+        "text": "Bright yellow colour"
+      },
+      {
+        "text": "Bright orange colour"
+      },
+      {
+        "text": "Bright red colour"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "DNA bands stained with ethidium bromide (EtBr) fluoresce as bright orange colored bands when viewed under ultraviolet (UV) light."
+  },
+  {
+    "num": 34,
+    "exam": "NEET 2023",
+    "question": "**NEET 2023**\n\nWhich of the following is not a cloning vector?",
+    "options": [
+      {
+        "text": "YAC"
+      },
+      {
+        "text": "pBR322"
+      },
+      {
+        "text": "Probe"
+      },
+      {
+        "text": "BAC"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "YAC (Yeast Artificial Chromosome), BAC (Bacterial Artificial Chromosome), and pBR322 are cloning vectors used to carry foreign DNA. A probe is a single-stranded radioactively/chemically labeled nucleic acid fragment used for hybridization and detection, not a cloning vector."
+  },
+  {
+    "num": 35,
+    "exam": "NEET 2022 Phase 2",
+    "question": "**NEET 2022 Phase 2**\n\nGiven below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A) : When a particular restriction enzyme cuts strand of DNA, overhanging stretches or sticky ends are formed.\nReason (R) : Some restriction enzymes cut the strand of DNA a little away from the centre of palindromic site.\n\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "text": "(A) is not correct but (R) is correct"
+      },
+      {
+        "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)"
+      },
+      {
+        "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A)"
+      },
+      {
+        "text": "(A) is correct but (R) is not correct"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Assertion (A) is correct: Restriction enzymes often generate staggered cuts producing overhanging single-stranded stretches called sticky ends. Reason (R) is correct: These sticky ends are formed because restriction enzymes cut the two strands of DNA a few base pairs away from the center of the palindromic recognition site. Thus, Reason (R) correctly explains Assertion (A)."
+  },
+  {
+    "num": 36,
+    "exam": "NEET 2022 Phase 2",
+    "question": "**NEET 2022 Phase 2**\n\nSeparation of DNA fragments is done by a technique known as",
+    "options": [
+      {
+        "text": "Gel electrophoresis"
+      },
+      {
+        "text": "Polymerase Chain Reaction"
+      },
+      {
+        "text": "Recombinant technology"
+      },
+      {
+        "text": "Southern blotting"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Separation and isolation of DNA fragments based on their size is achieved by agarose gel electrophoresis."
+  },
+  {
+    "num": 37,
+    "exam": "NEET 2022 Phase 2",
+    "question": "**NEET 2022 Phase 2**\n\nThe enzyme (a) is needed for isolating genetic material from plant cells and enzyme (b) for isolating genetic material from fungus. Choose the correct pair of options from the following :",
+    "options": [
+      {
+        "text": "(a) Cellulase (b) Lipase"
+      },
+      {
+        "text": "(a) Cellulase (b) Protease"
+      },
+      {
+        "text": "(a) Cellulase (b) Chitinase"
+      },
+      {
+        "text": "(a) Chitinase (b) Lipase"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Plant cell walls are composed mainly of cellulose and are degraded by cellulase, whereas fungal cell walls are made of chitin and are digested by chitinase."
+  },
+  {
+    "num": 38,
+    "exam": "NEET 2022 Phase 2",
+    "question": "**NEET 2022 Phase 2**\n\nMatch List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (a) Gene gun | (i) Replacement of a faulty gene by a normal healthy gene |\n| (b) Gene therapy | (ii) Used for transfer of gene |\n| (c) Gene cloning | (iii) Total DNA in the cells of an organism |\n| (d) Genome | (iv) To obtain identical copies of a particular DNA molecule |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "text": "(a) - (ii), (b) - (i), (c) - (iv), (d) - (iii)"
+      },
+      {
+        "text": "(a) - (ii), (b) - (i), (c) - (iv), (d) - (iii)"
+      },
+      {
+        "text": "(a) - (i), (b) - (iii), (c) - (ii), (d) - (iv)"
+      },
+      {
+        "text": "(a) - (iv), (b) - (i), (c) - (iii), (d) - (ii)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Matching List-I with List-II:\n- (a) Gene gun: Used for vectorless transfer of gene into plant cells (ii)\n- (b) Gene therapy: Replacement of a faulty disease-causing gene by a functional healthy gene (i)\n- (c) Gene cloning: Producing identical copies of a particular gene or DNA sequence (iv)\n- (d) Genome: The total genetic material (DNA) present in the haploid set of chromosomes of an organism (iii)\nHence, the correct match is (a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)."
+  },
+  {
+    "num": 39,
+    "exam": "NEET 2022 Phase 2",
+    "question": "**NEET 2022 Phase 2**\n\nPathogenic bacteria gain resistance to antibiotics due to changes in their :",
+    "options": [
+      {
+        "text": "Nucleoid"
+      },
+      {
+        "text": "Cosmids"
+      },
+      {
+        "text": "Plasmids"
+      },
+      {
+        "text": "Nucleus"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "DNA ligase catalyzes the formation of phosphodiester bonds to join two DNA fragments, functioning as molecular glue."
+  },
+  {
+    "num": 40,
+    "exam": "NEET 2022 Phase 2",
+    "question": "**NEET 2022 Phase 2**\n\nWhich of the following methods is not commonly used for introducing foreign DNA into the plant cell?",
+    "options": [
+      {
+        "text": "Bacteriophages"
+      },
+      {
+        "text": "Agrobacterium mediated transformation"
+      },
+      {
+        "text": "Gene gun"
+      },
+      {
+        "text": "‘Disarmed pathogen’ vectors"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The primary purpose of adding divalent cations such as Ca2+ during chemical transformation is to increase the permeability of bacterial cell walls and membranes, making the host competent to take up plasmid DNA."
+  },
+  {
+    "num": 41,
+    "exam": "NEET 2022 Phase 2",
+    "question": "**NEET 2022 Phase 2**\n\nRefer to the following statements for agarose-gel electrophoresis: (a) Agarose is a natural polymer obtained from sea-weed. (b) The separation of DNA molecules in agarose-gel electrophoresis depends on the size of DNA. (c) The DNA migrates from negatively-charged electrode to the positively-charged electrode (d) The DNA migrates from positively-charged electrode to the negatively-charged electrode. Choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "text": "(b), (c) and (d) only"
+      },
+      {
+        "text": "(a) and (b) only"
+      },
+      {
+        "text": "(a), (b) and (c) only"
+      },
+      {
+        "text": "(a), (b) and (d) only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Elution is the process of cutting out the desired DNA band from an agarose gel and extracting the DNA from the gel piece."
+  },
+  {
+    "num": 42,
+    "exam": "NEET 2022 Phase 1",
+    "question": "**NEET 2022 Phase 1**\n\nGiven below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A) : Polymerase chain reaction is used in DNA amplification.\nReason (R) : The ampicillin resistant gene is used as a selectable marker to check transformation.\n\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "text": "Both (A) and (R) are correct and (R) is the correct explanation of (A)"
+      },
+      {
+        "text": "Both (A) and (R) are correct but (R) is not the correct explanation of (A)"
+      },
+      {
+        "text": "(A) is correct but (R) is not correct"
+      },
+      {
+        "text": "(A) is not correct but (R) is correct"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Assertion (A): Polymerase chain reaction (PCR) is used for in vitro amplification of DNA. (Correct)\nReason (R): Ampicillin resistance gene acts as a selectable marker to identify transformed cells. (Correct)\nHowever, Reason (R) is an independent statement about selectable markers and does not explain why or how PCR amplifies DNA. Hence, both are correct, but (R) is not the correct explanation of (A)."
+  },
+  {
+    "num": 43,
+    "exam": "NEET 2022 Phase 1",
+    "question": "**NEET 2022 Phase 1**\n\nWhich one of the following statement is not true regarding gel electrophoresis technique?",
+    "options": [
+      {
+        "text": "The process of extraction of separated DNA strands from gel is called elution."
+      },
+      {
+        "text": "The separated DNA fragments are stained by using ethidium bromide."
+      },
+      {
+        "text": "The presence of chromogenic substrate gives blue coloured DNA bands on the gel."
+      },
+      {
+        "text": "Bright orange coloured bands of DNA can be observed in the gel when exposed to UV light."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Downstream processing involves separation and purification of the biosynthesized product, followed by preservation, formulating, and clinical testing."
+  },
+  {
+    "num": 44,
+    "exam": "NEET 2022 Phase 1",
+    "question": "**NEET 2022 Phase 1**\n\nIn the following palindromic base sequences of DNA, which one can be cut easily by particular restriction enzyme?",
+    "options": [
+      {
+        "text": "5'GATACT3' ; 3'CTATGA5'"
+      },
+      {
+        "text": "5'GAATTC3' ; 3'CTTAAG5'"
+      },
+      {
+        "text": "5'CTCAGT3' ; 3'GAGTCA5'"
+      },
+      {
+        "text": "5'GTATTC3' ; 3'CATAAG5'"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Plasmids and bacteriophages are preferred cloning vectors because they have high copy numbers and replicate autonomously within bacterial cells independent of the host chromosome."
+  },
+  {
+    "num": 45,
+    "exam": "NEET 2022 Phase 1",
+    "question": "**NEET 2022 Phase 1**\n\nGiven below are two statements: Statement I : Restriction endonucleases recognise specific sequence to cut DNA known as palindromic nucleotide sequence. Statement II : Restriction endonucleases cut the DNA strand a little away from the centre of the palindromic site. In the light of the above statements, choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "text": "Both Statement I and Statement II are incorrect"
+      },
+      {
+        "text": "Statement I is correct but Statement II is incorrect"
+      },
+      {
+        "text": "Statement I is incorrect but Statement II is correct"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Electroporation involves applying brief high-voltage electrical pulses to create transient hydrophilic pores in the host cell plasma membrane, allowing foreign DNA entry."
+  },
+  {
+    "num": 46,
+    "exam": "NEET 2022 Phase 1",
+    "question": "**NEET 2022 Phase 1**\n\nWhich of the following is not a desirable feature of a cloning vector?",
+    "options": [
+      {
+        "text": "Presence of origin of replication"
+      },
+      {
+        "text": "Presence of a marker gene"
+      },
+      {
+        "text": "Presence of single restriction enzyme site"
+      },
+      {
+        "text": "Presence of two or more recognition sites"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "EcoRI cuts between G and A in the palindromic recognition sequence 5'-GAATTC-3'."
+  },
+  {
+    "num": 47,
+    "exam": "NEET 2021",
+    "question": "**NEET 2021**\n\nDuring the purification process for recombinant DNA technology, addition of chilled ethanol precipitates out :",
+    "options": [
+      {
+        "text": "Polysaccharides"
+      },
+      {
+        "text": "RNA"
+      },
+      {
+        "text": "DNA"
+      },
+      {
+        "text": "Histones"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "In recombinant DNA technology, vector DNA and source (foreign) DNA must be digested with the same restriction enzyme so that both fragments possess complementary sticky ends that can be ligated seamlessly."
+  },
+  {
+    "num": 48,
+    "exam": "NEET 2021",
+    "question": "**NEET 2021**\n\nDNA strands on a gel stained with ethidium bromide when viewed under UV radiation, appear as",
+    "options": [
+      {
+        "text": "Bright blue bands"
+      },
+      {
+        "text": "Yellow bands"
+      },
+      {
+        "text": "Bright orange bands"
+      },
+      {
+        "text": "Dark red bands"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "The first recombinant DNA molecule was constructed in 1972 by Stanley Cohen and Herbert Boyer by combining an antibiotic resistance gene from Salmonella typhimurium with a plasmid vector."
+  },
+  {
+    "num": 49,
+    "exam": "NEET 2021",
+    "question": "**NEET 2021**\n\nWhich of the following is not an application of PCR (Polymerase Chain Reaction)?",
+    "options": [
+      {
+        "text": "Detection of gene mutation"
+      },
+      {
+        "text": "Molecular diagnosis"
+      },
+      {
+        "text": "Gene amplification"
+      },
+      {
+        "text": "Purification of isolated protein"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "In PCR, denaturation involves heating the reaction mixture to high temperature (~94°C) to break hydrogen bonds between complementary base pairs, thereby separating the double-stranded DNA into two single strands."
+  },
+  {
+    "num": 50,
+    "exam": "NEET 2021",
+    "question": "**NEET 2021**\n\nWhich of the following is a correct sequence of steps in a PCR (Polymerase Chain Reaction)?",
+    "options": [
+      {
+        "text": "Annealing, Denaturation, Extension"
+      },
+      {
+        "text": "Denaturation, Annealing, Extension"
+      },
+      {
+        "text": "Denaturation, Extension, Annealing"
+      },
+      {
+        "text": "Extension, Denaturation, Annealing"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "A selectable marker functions to distinguish and select transformants from non-transformants and recombinants from non-recombinants, facilitating the elimination of non-transformed cells."
+  },
+  {
+    "num": 51,
+    "exam": "NEET 2021",
+    "question": "**NEET 2021**\n\nR Plasmid pBR322 has Pst I restriction enzyme site within gene amp that confers ampicillin resistance. If this enzyme is used for inserting a gene for   -galactoside   production and the recombinant plasmid is inserted in an E.coli strain",
+    "options": [
+      {
+        "text": "It will be able to produce a novel protein with dual ability"
+      },
+      {
+        "text": "It will not be able to confer ampicillin resistance to the host cell"
+      },
+      {
+        "text": "The transformed cells will have the ability to resist ampicillin as well as produce   -galactoside"
+      },
+      {
+        "text": "It will lead to lysis of host cell"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Thermostable enzymes such as Taq polymerase remain active at high temperatures because their tertiary protein conformation is fortified with extra disulfide bonds and hydrophobic interactions."
+  },
+  {
+    "num": 52,
+    "exam": "NEET 2021",
+    "question": "**NEET 2021**\n\nDuring the process of gene amplification using PCR, if very high temperature is not maintained in the beginning, then which of the following steps of PCR will be affected first?",
+    "options": [
+      {
+        "text": "Ligation"
+      },
+      {
+        "text": "Annealing"
+      },
+      {
+        "text": "Extension"
+      },
+      {
+        "text": "Denaturation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "EcoRI is named according to standard nomenclature:\n- 'E' comes from the genus Escherichia\n- 'co' comes from the species coli\n- 'R' comes from the strain RY 13\n- 'I' is the Roman numeral denoting the order of discovery in that organism."
+  },
+  {
+    "num": 53,
+    "exam": "NEET 2021",
+    "question": "**NEET 2021**\n\nA specific recognition sequence identified by endonucleases to make cuts at specific positions within the DNA is :",
+    "options": [
+      {
+        "text": "Poly (A) tail sequences"
+      },
+      {
+        "text": "Degenerate primer sequence"
+      },
+      {
+        "text": "Okazaki sequences"
+      },
+      {
+        "text": "Palindromic Nucleotide sequences"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Palindromic nucleotide sequences are specific sequences of base pairs that read the same on complementary strands in both directions (5' -> 3' and 3' -> 5'), serving as recognition sites for restriction endonucleases."
+  },
+  {
+    "num": 54,
+    "exam": "NEET 2020 Phase 2",
+    "question": "**NEET 2020 Phase 2**\n\nMatch the following techniques or instruments with their usage :\n\n| Technique / Instrument | Usage |\n| :--- | :--- |\n| (a) Bioreactor | (i) Separation of DNA fragments |\n| (b) Electrophoresis | (ii) Production of large quantities of products |\n| (c) PCR | (iii) Detection of pathogen, based on antigen - antibody reaction |\n| (d) ELISA | (iv) Amplification of nucleic acids |\n\nSelect the correct option from following :",
+    "options": [
+      {
+        "text": "(a)-(ii), (b)-(i), (c)-(iii), (d)-(iv)"
+      },
+      {
+        "text": "(a)-(iii), (b)-(ii), (c)-(iv), (d)-(i)"
+      },
+      {
+        "text": "(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)"
+      },
+      {
+        "text": "(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Matching techniques with usage:\n- (a) Bioreactor: Production of large quantities of biological products under controlled conditions (ii)\n- (b) Electrophoresis: Separation of DNA fragments based on molecular size (i)\n- (c) PCR: Amplification of specific nucleic acid sequences in vitro (iv)\n- (d) ELISA: Detection of pathogens based on specific antigen-antibody interactions (iii)\nHence, the correct match is (a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)."
+  },
+  {
+    "num": 55,
+    "exam": "NEET 2020 Phase 2",
+    "question": "**NEET 2020 Phase 2**\n\nIn a mixture, DNA fragments are separated by",
+    "options": [
+      {
+        "text": "Polymerase chain reaction"
+      },
+      {
+        "text": "Bioprocess engineering"
+      },
+      {
+        "text": "Restriction digestion"
+      },
+      {
+        "text": "Electrophoresis"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Recombinant DNA technology comprises several key stages: isolation of DNA, fragmentation by restriction endonucleases, isolation of desired DNA fragment, ligation into vector, transfer into host cell, culturing host cells on a large scale, and downstream processing."
+  },
+  {
+    "num": 56,
+    "exam": "NEET 2020 Phase 2",
+    "question": "**NEET 2020 Phase 2**\n\nIn Recombinant DNA technology antibiotics are used :",
+    "options": [
+      {
+        "text": "as selectable markers"
+      },
+      {
+        "text": "to keep medium bacteria-free"
+      },
+      {
+        "text": "to detect alien DNA"
+      },
+      {
+        "text": "to impart disease-resistance to the host plant"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Competent cells are bacterial cells treated chemically (e.g., with CaCl2) and physically (heat-shock) to enable them to take up foreign plasmid DNA through their cell wall and membrane."
+  },
+  {
+    "num": 57,
+    "exam": "NEET 2020 Phase 2",
+    "question": "**NEET 2020 Phase 2**\n\nFirst discovered restriction endonuclease that always cuts DNA molecule at a particular point by recognising a specific sequence of six base pairs is :",
+    "options": [
+      {
+        "text": "Hind II"
+      },
+      {
+        "text": "EcoRI"
+      },
+      {
+        "text": "Adenosine deaminase"
+      },
+      {
+        "text": "Thermostable DNA polymerase"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "In insertional inactivation, the recombinant DNA is introduced into the coding sequence of a selectable marker gene (e.g., beta-galactosidase), causing disruption and loss of function of that gene."
+  },
+  {
+    "num": 58,
+    "exam": "NEET 2020 Phase 2",
+    "question": "**NEET 2020 Phase 2**\n\nSelect the correct statement from the following :",
+    "options": [
+      {
+        "text": "PCR is used for isolation and separation of gene of interest."
+      },
+      {
+        "text": "Gel electrophoresis is used for amplification of a DNA segment."
+      },
+      {
+        "text": "The polymerase enzyme joins the gene of interest and the vector DNA."
+      },
+      {
+        "text": "Restriction enzyme digestions are performed by incubating purified DNA molecules with the restriction enzymes of optimum conditions."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "During downstream processing, the product undergoes rigorous separation, purification, and quality control testing before being formulated and marketed."
+  },
+  {
+    "num": 59,
+    "exam": "NEET 2020 Phase 2",
+    "question": "**NEET 2020 Phase 2**\n\nSpooling is -",
+    "options": [
+      {
+        "text": "Collection of isolated DNA"
+      },
+      {
+        "text": "Amplification of DNA"
+      },
+      {
+        "text": "Cutting of separated DNA bands from the agarose gel"
+      },
+      {
+        "text": "Transfer of separated DNA fragments to synthetic membranes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The Ti (tumor-inducing) plasmid found in the natural soil bacterium Agrobacterium tumefaciens transfers a segment called T-DNA into the plant host genome."
+  },
+  {
+    "num": 60,
+    "exam": "NEET 2020 Phase 1",
+    "question": "**NEET 2020 Phase 1**\n\nIn gel electrophoresis, separated DNA fragments can be visualized with the help of",
+    "options": [
+      {
+        "text": "Ethidium bromide in infrared radiation"
+      },
+      {
+        "text": "Ethidium bromide in UV radiation"
+      },
+      {
+        "text": "Acetocarmine in bright blue light"
+      },
+      {
+        "text": "Acetocarmine in UV radiation"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "In agarose gel electrophoresis, larger DNA fragments experience more frictional drag through the gel pores and therefore migrate more slowly compared to smaller fragments."
+  },
+  {
+    "num": 61,
+    "exam": "NEET 2020 Phase 1",
+    "question": "**NEET 2020 Phase 1**\n\nIdentify the wrong statement with regard to Restriction Enzymes",
+    "options": [
+      {
+        "text": "Sticky ends can be joined by using DNA ligases."
+      },
+      {
+        "text": "They cut the strand of DNAat palindromic sites."
+      },
+      {
+        "text": "Each restriction enzyme functions by inspecting the length of a DNA sequence."
+      },
+      {
+        "text": "They are useful in genetic engineering"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Annealing in PCR occurs at temperatures between 50°C and 60°C, permitting short synthetic oligonucleotide primers to bind to complementary sequences on the single-stranded template DNA."
+  },
+  {
+    "num": 62,
+    "exam": "NEET 2020 Phase 1",
+    "question": "**NEET 2020 Phase 1**\n\nThe specific palindromic sequence which is recognized by EcoRI is",
+    "options": [
+      {
+        "text": "5’ - GGATCC - 3’"
+      },
+      {
+        "text": "5’ - GAATTC - 3’ 3’ - CCTAGG - 5’  3’ - CTTAAG - 5’"
+      },
+      {
+        "text": "5’ - GGAACC - 3’"
+      },
+      {
+        "text": "5’ - CTTAAG - 3’ 3’ - CCTTGG - 5’  3’ - GAATTC - 5’"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Origin of replication (ori) is the specific DNA sequence that acts as the starting point for DNA replication and controls the copy number of the plasmid."
+  },
+  {
+    "num": 63,
+    "exam": "NEET 2020 Phase 1",
+    "question": "**NEET 2020 Phase 1**\n\nThe sequence that controls the copy number of the linked DNA in the vector, is termed",
+    "options": [
+      {
+        "text": "Recognition site"
+      },
+      {
+        "text": "Ori site"
+      },
+      {
+        "text": "Selectable marker"
+      },
+      {
+        "text": "Palindromic sequence"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Spooling refers to the collection of precipitated threads of purified DNA by winding them onto a glass rod."
+  },
+  {
+    "num": 64,
+    "exam": "NEET 2020 Phase 1",
+    "question": "**NEET 2020 Phase 1**\n\nMatch the organism with its use in biotechnology:\n\n| Column I (Organism) | Column II (Use in Biotechnology) |\n| :--- | :--- |\n| (a) Bacillus thuringiensis | (i) Cloning vector |\n| (b) Thermus aquaticus | (ii) Construction of first rDNA molecule |\n| (c) Agrobacterium tumefaciens | (iii) DNA polymerase |\n| (d) Salmonella typhimurium | (iv) Cry proteins |\n\nSelect the correct option from the following:",
+    "options": [
+      {
+        "text": "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)"
+      },
+      {
+        "text": "(a)-(ii), (b)-(iv), (c)-(iii), (d)-(i)"
+      },
+      {
+        "text": "(a)-(iv), (b)-(iii), (c)-(i), (d)-(ii)"
+      },
+      {
+        "text": "(a)-(iii), (b)-(ii), (c)-(iv), (d)-(i)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Matching organism with application:\n- (a) Bacillus thuringiensis: Produces Cry toxin proteins that kill insect pests (iv)\n- (b) Thermus aquaticus: Source of heat-stable Taq DNA polymerase (iii)\n- (c) Agrobacterium tumefaciens: Used as a cloning vector for gene transfer in plants (i)\n- (d) Salmonella typhimurium: Source of antibiotic resistance gene in the first recombinant DNA construct by Cohen and Boyer (ii)\nHence, the match is (a)-(iv), (b)-(iii), (c)-(i), (d)-(ii)."
+  },
+  {
+    "num": 65,
+    "exam": "NEET 2020 Phase 1",
+    "question": "**NEET 2020 Phase 1**\n\nChoose the correct pair from the following",
+    "options": [
+      {
+        "text": "Exonucleases – Make cuts at specific positions within DNA"
+      },
+      {
+        "text": "Ligases – Join the two DNA molecules"
+      },
+      {
+        "text": "Polymerases – Break the DNA into fragments"
+      },
+      {
+        "text": "Nucleases – Separate the two strands of DNA"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "During recombinant DNA preparation, vector DNA and foreign DNA are cleaved with the same restriction endonuclease so that complementary sticky ends are produced."
+  },
+  {
+    "num": 66,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "**NEET 2019 (Odisha)**\n\nA selectable marker is used to :",
+    "options": [
+      {
+        "text": "Mark a gene on a chromosome for isolation using restriction enzyme"
+      },
+      {
+        "text": "Help in eliminating the non-transformants, so that the transformants can be regenerated"
+      },
+      {
+        "text": "Identify the gene for a desired trait in an alien organism"
+      },
+      {
+        "text": "Select a suitable vector for transformation in a specific crop"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "A bioreactor provides optimum growth conditions (temperature, pH, substrate, oxygen, salts, and vitamins) to enable microorganisms to multiply and produce the desired recombinant protein at high yields."
+  },
+  {
+    "num": 67,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "**NEET 2019 (Odisha)**\n\nGiven below are four statements pertaining to separation of DNA fragments using Gel electrophoresis. Identify the incorrect statements. (a) DNA is negatively charged molecule and so it is loaded on gel towards the Anode terminal. (b) DNA fragments travel along the surface of the gel whose concentration does not affect movement of DNA. (c) Smaller the size of DNA fragment, larger is the distance it travels through it. (d) Pure DNA can be visualized directly by exposing to UV radiation. Choose correct answer from the options given below :",
+    "options": [
+      {
+        "text": "(a), (b) and (d)"
+      },
+      {
+        "text": "(a), (c) and (d)"
+      },
+      {
+        "text": "(a), (b) and (c)"
+      },
+      {
+        "text": "(b), (c) and (d)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Plasmids are extra-chromosomal, double-stranded, circular DNA molecules that replicate autonomously in bacterial host cells."
+  },
+  {
+    "num": 68,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "**NEET 2019 (Odisha)**\n\nAn enzyme catalysing the removal of nucleotides from ends of DNA is :",
+    "options": [
+      {
+        "text": "Protease"
+      },
+      {
+        "text": "DNA ligase"
+      },
+      {
+        "text": "Endonuclease"
+      },
+      {
+        "text": "Exonuclease"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "The presence of a chromogenic substrate allows selection of recombinant colonies via insertional inactivation: recombinant colonies do not produce beta-galactosidase and remain white, while non-recombinants produce active enzyme and turn blue."
+  },
+  {
+    "num": 69,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "**NEET 2019 (Odisha)**\n\nMatch the following enzymes with their functions:\n\n| Enzyme | Function |\n| :--- | :--- |\n| (a) Restriction endonuclease | (i) Joins the DNA fragments |\n| (b) Restriction exonuclease | (ii) Extends primers on genomic DNA template |\n| (c) DNA ligase | (iii) Cuts DNA at specific position |\n| (d) Taq polymerase | (iv) Removes nucleotides from the ends of DNA |\n\nSelect the correct option from the following:",
+    "options": [
+      {
+        "text": "a(ii), b(iv), c(i), d(iii)"
+      },
+      {
+        "text": "a(iii), b(i), c(iv), d(ii)"
+      },
+      {
+        "text": "a(iii), b(iv), c(i), d(ii)"
+      },
+      {
+        "text": "a(iv), b(iii), c(i), d(ii)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Matching enzymes with their functions:\n- a. Restriction endonuclease: Cuts DNA at specific palindromic positions within the molecule (iii)\n- b. Restriction exonuclease: Removes nucleotides from the ends of the DNA strand (iv)\n- c. DNA ligase: Joins complementary DNA fragments by creating phosphodiester bonds (i)\n- d. Taq polymerase: Synthesizes new DNA strands by extending primers on the template at high temperature (ii)\nHence, the correct match is a(iii), b(iv), c(i), d(ii)."
+  },
+  {
+    "num": 70,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "**NEET 2019 (Odisha)**\n\nThe two antibiotic resistance genes on vector pBR322 are for",
+    "options": [
+      {
+        "text": "Tetracycline and Kanamycin"
+      },
+      {
+        "text": "Ampicillin and Tetracycline"
+      },
+      {
+        "text": "Ampicillin and Chloramphenicol"
+      },
+      {
+        "text": "Chloramphenicol and Tetracycline"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Agarose is a natural linear polysaccharide extracted from seaweeds (red algae like Gelidium and Gracilaria) used extensively as the matrix in gel electrophoresis."
+  },
+  {
+    "num": 71,
+    "exam": "NEET 2019",
+    "question": "**NEET 2019**\n\nDNA precipitation out of a mixture of biomolecules can be achieved by treatment with :",
+    "options": [
+      {
+        "text": "Methanol at room temperature"
+      },
+      {
+        "text": "Chilled chloroform"
+      },
+      {
+        "text": "Isopropanol"
+      },
+      {
+        "text": "Chilled ethanol"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "A selectable marker helps identify and eliminate non-transformants, selectively permitting the growth of transformants carrying the recombinant vector."
+  },
+  {
+    "num": 72,
+    "exam": "NEET 2019",
+    "question": "**NEET 2019**\n\nFollowing statements describe the characteristics of the enzyme Restriction Endonuclease. Identify the   incorrect   statement.",
+    "options": [
+      {
+        "text": "The enzyme cuts the sugar-phosphate backbone at specific sites on each strand"
+      },
+      {
+        "text": "The enzyme recognizes a specific palindromic nucleotide sequence in the DNA"
+      },
+      {
+        "text": "The enzyme cuts DNA molecule at identified position within the DNA"
+      },
+      {
+        "text": "The enzyme binds DNA at specific sites and cuts only one of the two strands"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Heat shock transformation involves placing competent cells on ice, followed by a brief exposure to 42°C, and immediate return to ice, allowing DNA to enter through transient membrane pores."
+  },
+  {
+    "num": 73,
+    "exam": "NEET 2018",
+    "question": "**NEET 2018**\n\nThe correct order of steps in Polymerase Chain Reaction (PCR) is",
+    "options": [
+      {
+        "text": "extension, denaturation, annealing"
+      },
+      {
+        "text": "annealing, extension, denaturation"
+      },
+      {
+        "text": "denaturation, extension, annealing"
+      },
+      {
+        "text": "denaturation, annealing, extension"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Palindromic sequences possess rotational symmetry about the axis of the sequence, ensuring identical base reading in 5' to 3' orientation on both complementary strands."
+  },
+  {
+    "num": 74,
+    "exam": "NEET 2017",
+    "question": "**NEET 2017**\n\nThe DNA fragments separated on an agarose gel can be visualised after staining with",
+    "options": [
+      {
+        "text": "Bromophenol blue"
+      },
+      {
+        "text": "Aniline blue"
+      },
+      {
+        "text": "Ethidium bromide"
+      },
+      {
+        "text": "Acetocarmine"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Polymerase Chain Reaction (PCR) enables in vitro billion-fold amplification of a target DNA sequence using oligonucleotide primers, deoxynucleotides, and thermostable DNA polymerase."
+  },
+  {
+    "num": 75,
+    "exam": "NEET 2017",
+    "question": "**NEET 2017**\n\nDNA fragments are",
+    "options": [
+      {
+        "text": "Positively charged"
+      },
+      {
+        "text": "Either positively or negatively charged depending on their size"
+      },
+      {
+        "text": "Neutral"
+      },
+      {
+        "text": "Negatively charged"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Bacteriophages can carry larger DNA fragments than basic plasmids and replicate at high copy numbers inside host cells."
+  },
+  {
+    "num": 76,
+    "exam": "NEET 2017",
+    "question": "**NEET 2017**\n\nA gene whose expression helps to identify transformed cell is known as",
+    "options": [
+      {
+        "text": "Selectable marker"
+      },
+      {
+        "text": "Plasmid"
+      },
+      {
+        "text": "Vector"
+      },
+      {
+        "text": "Structural gene"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "DNA molecules carry negative electric charges on the phosphate groups of their sugar-phosphate backbones; hence they migrate toward the positive anode during electrophoresis."
+  },
+  {
+    "num": 77,
+    "exam": "NEET 2017",
+    "question": "**NEET 2017**\n\nWhat is the criterion for DNA fragments movement on agarose gel during gel electrophoresis ?",
+    "options": [
+      {
+        "text": "Positively charged fragment move to farther end"
+      },
+      {
+        "text": "Negatively charged fragments do not move"
+      },
+      {
+        "text": "The smaller the fragment size, the farther it moves"
+      },
+      {
+        "text": "The larger the fragment size, the farther it moves"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "The enzyme reverse transcriptase synthesizes complementary DNA (cDNA) from an RNA template."
+  },
+  {
+    "num": 78,
+    "exam": "NEET 2017",
+    "question": "**NEET 2017**\n\nThe process of separation and purification of expressed protein before marketing is called :",
+    "options": [
+      {
+        "text": "Upstream processing"
+      },
+      {
+        "text": "Bioprocessing"
+      },
+      {
+        "text": "Downstream processing"
+      },
+      {
+        "text": "Postproduction processing"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Bioreactor cultures must be continuously aerated and agitated to maintain uniform dissolved oxygen levels and nutrient availability for optimal aerobic microbial growth."
+  },
+  {
+    "num": 79,
+    "exam": "NEET 2016 Phase 2",
+    "question": "**NEET 2016 Phase 2**\n\nStirred-tank bioreactors have been designed for -",
+    "options": [
+      {
+        "text": "ensuring anaerobic conditions in the culture vessel"
+      },
+      {
+        "text": "addition of preservatives to the product"
+      },
+      {
+        "text": "purification of product"
+      },
+      {
+        "text": "availability of oxygen throughout the process"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Continuous culture systems maintain the microorganisms in their physiologically most active exponential (log) phase by continuously adding fresh medium and draining exhausted medium."
+  },
+  {
+    "num": 80,
+    "exam": "NEET 2016 Phase 2",
+    "question": "**NEET 2016 Phase 2**\n\nA foreign DNA and plasmid cut by the same restriction endonuclease can be joined to form a recombinant plasmid using",
+    "options": [
+      {
+        "text": "Eco RI"
+      },
+      {
+        "text": "Polymerase III"
+      },
+      {
+        "text": "Ligase"
+      },
+      {
+        "text": "Taq polymerase"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "The modern definition of biotechnology encompassing both traditional techniques and modern molecular technologies was provided by the European Federation of Biotechnology (EFB)."
+  },
+  {
+    "num": 81,
+    "exam": "NEET 2016 Phase 2",
+    "question": "**NEET 2016 Phase 2**\n\nWhich of the following is not a component of downstream processing ?",
+    "options": [
+      {
+        "text": "Purification"
+      },
+      {
+        "text": "Expression"
+      },
+      {
+        "text": "Preservation"
+      },
+      {
+        "text": "Separation"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "HindII was the first restriction endonuclease discovered and isolated (by Smith, Wilcox, and Kelley in 1970)."
+  },
+  {
+    "num": 82,
+    "exam": "NEET 2016 Phase 2",
+    "question": "**NEET 2016 Phase 2**\n\nWhich of the following restriction enzymes produces blunt ends ?",
+    "options": [
+      {
+        "text": "Eco RV"
+      },
+      {
+        "text": "Hind III"
+      },
+      {
+        "text": "Xho I"
+      },
+      {
+        "text": "Sal I"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Sticky ends produced by restriction enzyme digestion have protruding single-stranded overhangs that readily form complementary hydrogen bonds with matching sticky ends."
+  },
+  {
+    "num": 83,
+    "exam": "NEET 2016 Phase 1",
+    "question": "**NEET 2016 Phase 1**\n\nWhich of the following is not a feature of the plasmids ?",
+    "options": [
+      {
+        "text": "Single-stranded"
+      },
+      {
+        "text": "Transferable"
+      },
+      {
+        "text": "Independent replication"
+      },
+      {
+        "text": "Circular structure"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The concentration of agarose in the gel determines pore size: higher agarose concentrations create smaller pores suitable for separating smaller DNA fragments."
+  },
+  {
+    "num": 84,
+    "exam": "NEET 2016 Phase 1",
+    "question": "**NEET 2016 Phase 1**\n\nThe taq polymerase enzyme is obtained from",
+    "options": [
+      {
+        "text": "Thermus aquaticus"
+      },
+      {
+        "text": "Bacillus subtilis"
+      },
+      {
+        "text": "Pseudomonas putida"
+      },
+      {
+        "text": "Thiobacillus ferrooxidans"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Ethidium bromide intercalates between adjacent base pairs in double-stranded DNA, emitting bright orange fluorescence under ultraviolet excitation."
+  },
+  {
+    "num": 85,
+    "exam": "NEET 2016 Phase 1",
+    "question": "**NEET 2016 Phase 1**\n\nWhich of the following is a restriction endonuclease ?",
+    "options": [
+      {
+        "text": "DNase I"
+      },
+      {
+        "text": "Hind II"
+      },
+      {
+        "text": "RNase I"
+      },
+      {
+        "text": "Protease"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "HindII is a restriction endonuclease that recognizes a specific 6-base-pair sequence and cuts the DNA double helix."
+  },
+  {
+    "num": 86,
+    "exam": "AIPMT 2015",
+    "question": "**AIPMT 2015**\n\nThe DNA molecule to which the gene of interest is integrated for cloning is called -",
+    "options": [
+      {
+        "text": "Transformer"
+      },
+      {
+        "text": "Template"
+      },
+      {
+        "text": "Vector"
+      },
+      {
+        "text": "Carrier"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "The DNA molecule to which the foreign gene of interest is joined for delivery into the host cell is known as a cloning vector."
+  },
+  {
+    "num": 87,
+    "exam": "AIPMT 2015",
+    "question": "**AIPMT 2015**\n\nThe cutting of DNA at specific locations became possible with the discovery of -",
+    "options": [
+      {
+        "text": "Restriction enzymes"
+      },
+      {
+        "text": "Selectable markers"
+      },
+      {
+        "text": "Probes"
+      },
+      {
+        "text": "Ligases"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Cutting of DNA at precise recognition sites became possible with the discovery and isolation of restriction endonucleases."
+  },
+  {
+    "num": 88,
+    "exam": "AIPMT 2014",
+    "question": "**AIPMT 2014**\n\nAn analysis of chromosomal DNA using the Southern hybridization technique does not use:",
+    "options": [
+      {
+        "text": "Blotting"
+      },
+      {
+        "text": "PCR"
+      },
+      {
+        "text": "Electrophoresis"
+      },
+      {
+        "text": "Autoradiography"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Southern hybridization involves agarose gel electrophoresis, transfer (blotting) of DNA to a nitrocellulose or nylon membrane, and autoradiographic detection with labeled probes. PCR is not an essential component of classical Southern blotting."
+  },
+  {
+    "num": 89,
+    "exam": "AIPMT 2014",
+    "question": "**AIPMT 2014**\n\nWhich vector can clone only a small fragment of DNA ?",
+    "options": [
+      {
+        "text": "Cosmid"
+      },
+      {
+        "text": "Bacterial artificial chromosome"
+      },
+      {
+        "text": "Yeast artificial chromosome"
+      },
+      {
+        "text": "Plasmid"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Standard plasmids have a relatively small cloning capacity (typically <10 kb) compared to cosmids (30-45 kb), BACs (100-300 kb), and YACs (up to 1000 kb)."
+  },
+  {
+    "num": 90,
+    "exam": "AIPMT 2014",
+    "question": "**AIPMT 2014**\n\nCommonly used vectors for human genome sequencing are :",
+    "options": [
+      {
+        "text": "BAC and YAC"
+      },
+      {
+        "text": "T/A Cloning Vectors"
+      },
+      {
+        "text": "T− DNA"
+      },
+      {
+        "text": "Expression Vectors"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Bacterial Artificial Chromosomes (BAC) and Yeast Artificial Chromosomes (YAC) were the vector systems commonly used in the Human Genome Project to clone and sequence very large genomic fragments."
+  },
+  {
+    "num": 91,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "**NEET 2013 (Karnataka)**\n\nDuring the process of isolation of DNA, chilled ethanol is added to :",
+    "options": [
+      {
+        "text": "Break open the cell to release DNA"
+      },
+      {
+        "text": "Remove proteins such as histones"
+      },
+      {
+        "text": "Facilitate action of restriction enzymes"
+      },
+      {
+        "text": "Precipitate DNA"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Chilled ethanol is added to aqueous cell lysates during DNA isolation to insolubilize and precipitate the pure DNA molecules."
+  },
+  {
+    "num": 92,
+    "exam": "NEET 2013",
+    "question": "**NEET 2013**\n\nThe colonies of recombinant bacteria appear white in contrast to blue colonies of non-recombinant bacteria because of :",
+    "options": [
+      {
+        "text": "Insertional inactivation of alphagalactosidase in recombinant bacteria"
+      },
+      {
+        "text": "Inactivation of glycosidase enzyme in recombinant bacteria"
+      },
+      {
+        "text": "Insertional inactivation of alphagalactosidase in non-recombinant bacteria"
+      },
+      {
+        "text": "Non-recombinant bacteria containing betagalactosidase"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "DNA fragments separated on an agarose gel are visualized by staining with ethidium bromide and observing under ultraviolet illumination."
+  },
+  {
+    "num": 93,
+    "exam": "NEET 2013",
+    "question": "**NEET 2013**\n\nDNA fragments generated by the restriction endonucleases in a chemical reaction can be separated by :",
+    "options": [
+      {
+        "text": "Polymerase chain reaction"
+      },
+      {
+        "text": "Restriction mapping"
+      },
+      {
+        "text": "Electrophoresis"
+      },
+      {
+        "text": "Centrifugation"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "DNA ligase joins DNA fragments by catalyzing the formation of covalent phosphodiester bonds between adjacent 3'-hydroxyl and 5'-phosphate ends."
+  },
+  {
+    "num": 94,
+    "exam": "NEET 2013",
+    "question": "**NEET 2013**\n\nWhich of the following is not corretly matched for the organism and its cell wall degrading enzyme ?",
+    "options": [
+      {
+        "text": "Plant cells- Cellulase"
+      },
+      {
+        "text": "Algae-Methylase"
+      },
+      {
+        "text": "Fungi - Chitinase"
+      },
+      {
+        "text": "Bacteria-Lysozyme"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Cellulose cell walls of plant cells are degraded by cellulase, fungal walls by chitinase, and bacterial walls by lysozyme. Algal cell walls contain cellulose, galactans, and mannans, which are degraded by cellulase/galactanase, not methylase. Hence option B is incorrect."
+  },
+  {
+    "num": 95,
+    "exam": "AIPMT 2012 Mains",
+    "question": "**AIPMT 2012 Mains**\n\nBiolistics (gene-gun) is suitable for -",
+    "options": [
+      {
+        "text": "DNA finger printing"
+      },
+      {
+        "text": "Constructing recombinant DNA by joining with vectors"
+      },
+      {
+        "text": "Disarming pathogen vectors"
+      },
+      {
+        "text": "Transformation of plant cells"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "The biolistics (gene gun) method is especially suitable for the direct transformation of plant cells by bombarding them with microprojectiles coated with DNA."
+  },
+  {
+    "num": 96,
+    "exam": "AIPMT 2012 Mains",
+    "question": "**AIPMT 2012 Mains**\n\nIn genetic engineering, the antibiotics are used",
+    "options": [
+      {
+        "text": "As sequences from where replication starts"
+      },
+      {
+        "text": "As selectable markers"
+      },
+      {
+        "text": "To keep the cultures free of infection"
+      },
+      {
+        "text": "To select healthy vectors"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Stirred-tank bioreactors have been designed to ensure uniform availability of oxygen, efficient temperature control, and nutrient distribution throughout the process."
+  },
+  {
+    "num": 97,
+    "exam": "AIPMT 2012 Mains",
+    "question": "**AIPMT 2012 Mains**\n\nWhich one of the following represents a palindromic sequence in DNA ?",
+    "options": [
+      {
+        "text": "5'-GAATTC-3'"
+      },
+      {
+        "text": "5'-GATACC-3' 3'-CTTAAG-5'  3'-CCTAAG-5'"
+      },
+      {
+        "text": "5'-CCAATG-3'"
+      },
+      {
+        "text": "5'-CATTAG-3' 3'-GAATCC-5'  3'-GATAAC-5'"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "A palindromic sequence reads identical on both strands in the 5' -> 3' direction. The sequence 5'-GAATTC-3' paired with 3'-CTTAAG-5' is the classic palindromic recognition site of EcoRI."
+  },
+  {
+    "num": 98,
+    "exam": "AIPMT 2012 Mains",
+    "question": "**AIPMT 2012 Mains**\n\nThe figure below shows three steps (A, B, C) of Polymerase Chain Reaction (PCR). Select the option giving correct identification together with what it represents ?",
+    "options": [
+      {
+        "text": "C - Extension in the presence of heat stable DNA polymerase"
+      },
+      {
+        "text": "B - Denaturation at a temperature of about 98ºC separating the two DNA strands"
+      },
+      {
+        "text": "A - Denaturation at a temperature of about 50ºC"
+      },
+      {
+        "text": "A - Annealing with two sets of primers"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "In the PCR diagram:\n- Step A represents Denaturation (strands separate at ~94°C)\n- Step B represents Annealing (primers bind at ~54°C)\n- Step C represents Extension (Taq polymerase synthesizes complementary strands at ~72°C in the presence of deoxynucleotides).\nThus, option A correctly identifies C as extension."
+  },
+  {
+    "num": 99,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "**AIPMT 2012 Prelims**\n\nThe figure below is the diagrammatic representation of the E. coli vector pBR 322. Which one of the given options correctly identifies its certain component(s) ?",
+    "options": [
+      {
+        "text": "ori - original restriction enzyme"
+      },
+      {
+        "text": "ampR, tetR - antibiotic resistance genes"
+      },
+      {
+        "text": "rop - reduced osmotic pressure"
+      },
+      {
+        "text": "Hind III, EcoRI - selectable markers"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "In the pBR322 vector, ampR and tetR are antibiotic resistance genes that serve as selectable markers to identify and select recombinant transformants."
+  },
+  {
+    "num": 100,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "**AIPMT 2012 Prelims**\n\nPCR and Restriction Fragment Length Polymorphism are the methods for",
+    "options": [
+      {
+        "text": "Genetic transformation"
+      },
+      {
+        "text": "Genetic Fingerprinting"
+      },
+      {
+        "text": "Study of enzymes"
+      },
+      {
+        "text": "DNA sequencing"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Polymerase Chain Reaction (PCR) and Restriction Fragment Length Polymorphism (RFLP) are key molecular biology techniques employed in DNA fingerprinting (genetic profiling)."
+  },
+  {
+    "num": 101,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "**AIPMT 2012 Prelims**\n\nWhich one is a true statement regarding DNA polymerase used in PCR ?",
+    "options": [
+      {
+        "text": "It is used to ligate introduced DNA in recipient cell"
+      },
+      {
+        "text": "It remains active at high temperature"
+      },
+      {
+        "text": "It serves as a selectable marker"
+      },
+      {
+        "text": "It is isolated from a virus"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "The DNA polymerase used in PCR (Taq polymerase) remains active at high temperatures (~94°C) without being denatured."
+  },
+  {
+    "num": 102,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "**AIPMT 2012 Prelims**\n\nFor transformation, micro - particles coated with DNA to be bombarded with gene are made up of",
+    "options": [
+      {
+        "text": "Gold or Tungsten"
+      },
+      {
+        "text": "Platinum or zinc"
+      },
+      {
+        "text": "Silver or platinum"
+      },
+      {
+        "text": "Silicon or platinum"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "In biolistic gene transformation, microscopic particles coated with DNA are made of inert, dense metals like gold or tungsten."
+  },
+  {
+    "num": 103,
+    "exam": "AIPMT 2011 Mains",
+    "question": "**AIPMT 2011 Mains**\n\nWhich one of the following techniques made it possible to genetically engineer living organisms ?",
+    "options": [
+      {
+        "text": "Recombinant DNA techniques"
+      },
+      {
+        "text": "X-ray diffraction"
+      },
+      {
+        "text": "Heavier isotope labeling"
+      },
+      {
+        "text": "Hybridization"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Recombinant DNA technology (genetic engineering) made it possible to isolate, cut, join, and introduce genes into living organisms."
+  },
+  {
+    "num": 104,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "**AIPMT 2011 Prelims**\n\nContinuous addition of sugars in 'fed batch' fermentation is done to :",
+    "options": [
+      {
+        "text": "obtain antibiotics"
+      },
+      {
+        "text": "produce methane"
+      },
+      {
+        "text": "purify enzymes"
+      },
+      {
+        "text": "degrade sewage"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Continuous addition of fresh nutrients and sugars in a fed-batch or continuous culture fermentation maintains the microorganisms in their active log/exponential growth phase for maximum product yield."
+  },
+  {
+    "num": 105,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "**AIPMT 2011 Prelims**\n\nGiven below is a sample of a portion of DNA strand giving the base sequence on the opposite strands. What is so special shown in it ? 5' .............. GAATTC ................ 3' 3' .............. CTTAAG ................. 5'",
+    "options": [
+      {
+        "text": "Start codon at the 5' end"
+      },
+      {
+        "text": "Replication completed"
+      },
+      {
+        "text": "Deletion mutation"
+      },
+      {
+        "text": "Palindromic sequence of base pairs"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "The sequence 5'-GAATTC-3' and 3'-CTTAAG-5' is a palindromic base pair sequence where both strands have the exact same base sequence when read in the 5' -> 3' direction."
+  },
+  {
+    "num": 106,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "**AIPMT 2011 Prelims**\n\nThere is a restriction endonuclease called EcoRl. What does \"co\" part in it stand for ?",
+    "options": [
+      {
+        "text": "colon"
+      },
+      {
+        "text": "coelom"
+      },
+      {
+        "text": "coenzyme"
+      },
+      {
+        "text": "coli"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "In the restriction enzyme EcoRI, 'co' stands for the species 'coli' (from Escherichia coli)."
+  },
+  {
+    "num": 107,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "**AIPMT 2011 Prelims**\n\nAgarose extracted from sea weeds finds use in :",
+    "options": [
+      {
+        "text": "Spectrophotometry"
+      },
+      {
+        "text": "PCR"
+      },
+      {
+        "text": "Tissue Culture"
+      },
+      {
+        "text": "Gel electrophoresis"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Agarose, extracted from seaweeds (marine red algae), is widely used as the supporting matrix for gel electrophoresis."
+  },
+  {
+    "num": 108,
+    "exam": "AIPMT 2010 Mains",
+    "question": "**AIPMT 2010 Mains**\n\nWhich of the following are used in gene cloning ?",
+    "options": [
+      {
+        "text": "Mesosomes"
+      },
+      {
+        "text": "Nucleoids"
+      },
+      {
+        "text": "Lomasomes"
+      },
+      {
+        "text": "Plasmids"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Plasmids and bacteriophages are extensively used as cloning vectors to carry foreign genetic material into host cells for gene cloning."
+  },
+  {
+    "num": 109,
+    "exam": "AIPMT 2010 Mains",
+    "question": "**AIPMT 2010 Mains**\n\nIn genetic engineering, a DNA segment (gene) of interest, is transferred to the host cell through a vector. Consider the following four agents (A-D) in this regard and select the correct option about which one or more of these can be used as a vector / vectors –\n(A) a bacterium\n(B) plasmid\n(C) plasmodium\n(D) bacteriophage",
+    "options": [
+      {
+        "text": "(B) and (D) only"
+      },
+      {
+        "text": "(A) and (C) only"
+      },
+      {
+        "text": "(A), (B) and (D) only"
+      },
+      {
+        "text": "(A) only"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Plasmids (B) and bacteriophages (D) have the ability to replicate independently within bacterial cells and are therefore standard cloning vectors in genetic engineering. Hence, (B) and (D) only are used."
+  },
+  {
+    "num": 110,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "**AIPMT 2010 Prelims**\n\nWhich one of the following palindromic base sequences in DNA can be easily cut at about the middle by some particular restriction enzyme?",
+    "options": [
+      {
+        "text": "5' _____ CG TTCG ______ 3' 3' ______ATGGTA ______5'"
+      },
+      {
+        "text": "5'______GAATTC ______3' 3'______CTTAAG______5'"
+      },
+      {
+        "text": "5'______CACGTA______3' 3'______CTCAGT______5'"
+      },
+      {
+        "text": "5'______GATATG ______3' 3'______CTACTA ______5'"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "In agarose gel electrophoresis, DNA fragments separate according to their size due to the molecular sieving effect of the agarose gel pores."
+  },
+  {
+    "num": 111,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "**AIPMT 2010 Prelims**\n\nWhich one of the following is used as vector for cloning genes into higher organisms ?",
+    "options": [
+      {
+        "text": "Retrovirus"
+      },
+      {
+        "text": "Salmonella typhimurium"
+      },
+      {
+        "text": "Rhizopus nigricans"
+      },
+      {
+        "text": "Baculovirus"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "DNA fragments are negatively charged molecules and therefore move toward the positive electrode (anode) during gel electrophoresis."
+  },
+  {
+    "num": 112,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "**AIPMT 2010 Prelims**\n\nRestriction endonucleases are enzymes which –",
+    "options": [
+      {
+        "text": "recognize a specific nucleotide sequence for binding of DNA ligase"
+      },
+      {
+        "text": "remove nucleotides from the ends of the DNA molecule"
+      },
+      {
+        "text": "restrict the action of the enzyme DNA polymerase"
+      },
+      {
+        "text": "make cuts at specific positions within the DNA molecule"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Gel electrophoresis is used for the separation of DNA fragments according to their size."
+  },
+  {
+    "num": 113,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "**AIPMT 2010 Prelims**\n\nStirred-tank bioreactors have been designed for –",
+    "options": [
+      {
+        "text": "Purification of the product"
+      },
+      {
+        "text": "Availability of oxygen throughout the process"
+      },
+      {
+        "text": "Ensuring anaerobic conditions in the culture vessel"
+      },
+      {
+        "text": "Addition of preservatives to the product"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Restriction endonucleases cleave DNA at specific palindromic recognition sequences, creating either sticky or blunt ends."
+  },
+  {
+    "num": 114,
+    "exam": "AIPMT 2009",
+    "question": "**AIPMT 2009**\n\nWhich one of the following is commonly used in transfer of foreign DNA into crop plants ?",
+    "options": [
+      {
+        "text": "Trichoderma harzianum"
+      },
+      {
+        "text": "Meloidogyne incognita"
+      },
+      {
+        "text": "Agrobacterium tumefaciens"
+      },
+      {
+        "text": "Penicillium expansum"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "The two enzymes responsible for restricting the growth of bacteriophages in E. coli (discovered in 1963) were a methylase (which adds methyl groups to host DNA) and a restriction endonuclease (which cuts foreign viral DNA)."
+  },
+  {
+    "num": 115,
+    "exam": "AIPMT 2008",
+    "question": "**AIPMT 2008**\n\nGel electrophoresis is used for:",
+    "options": [
+      {
+        "text": "cutting of DNA into fragments"
+      },
+      {
+        "text": "separation of DNA fragments according to their size"
+      },
+      {
+        "text": "construction of recombinant DNA by joining with cloning vectors"
+      },
+      {
+        "text": "isolation of DNA molecule"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "DNA ligase facilitates the joining of DNA strands together by catalyzing the formation of phosphodiester bonds."
+  },
+  {
+    "num": 116,
+    "exam": "AIPMT 2008",
+    "question": "**AIPMT 2008**\n\nThe linking of antibiotic resistance gene with the plasmid vector became possible with:",
+    "options": [
+      {
+        "text": "Exonucleases"
+      },
+      {
+        "text": "Endonucleases"
+      },
+      {
+        "text": "DNA ligase"
+      },
+      {
+        "text": "DNA polymerase"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "In recombinant DNA technology, the term vector refers to a DNA molecule used as a vehicle to artificially carry foreign genetic material into another cell."
+  },
+  {
+    "num": 117,
+    "exam": "AIPMT 2006",
+    "question": "**AIPMT 2006**\n\nRestriction endonuclease -",
+    "options": [
+      {
+        "text": "Cuts the DNA molecule at specific sites"
+      },
+      {
+        "text": "Synthesizes DNA"
+      },
+      {
+        "text": "Restricts the synthesis of DNA inside the nucleus"
+      },
+      {
+        "text": "Cuts the DNA molecule randomly"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The enzyme used to join the sticky ends of DNA fragments is DNA ligase."
+  },
+  {
+    "num": 118,
+    "exam": "AIPMT 2006",
+    "question": "**AIPMT 2006**\n\nTwo microbes found to be very useful in genetic engineering are-",
+    "options": [
+      {
+        "text": "Diplococcus sp.and Pseudomonas sp."
+      },
+      {
+        "text": "Vibrio cholerae and a tailed bacteriophage"
+      },
+      {
+        "text": "Crown gall bacterium and Caenorhabditis elegans"
+      },
+      {
+        "text": "Escherichia coli and Agrobacterium tumefaciens"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Plasmids are suitable for gene cloning because they are small, extrachromosomal, double-stranded circular DNA molecules that can replicate independently within host cells."
+  },
+  {
+    "num": 119,
+    "exam": "AIPMT 2005",
+    "question": "**AIPMT 2005**\n\nWhich one of the following hydrolyses internal phosphodiester bonds in a polynucleotide chain ?",
+    "options": [
+      {
+        "text": "protease"
+      },
+      {
+        "text": "Endonuclease"
+      },
+      {
+        "text": "Lipase"
+      },
+      {
+        "text": "Exonuclease"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "In genetic engineering, antibiotic resistance genes in a plasmid vector function as selectable markers."
+  },
+  {
+    "num": 120,
+    "exam": "AIPMT 2004",
+    "question": "**AIPMT 2004**\n\nRestriction endonucleases :-",
+    "options": [
+      {
+        "text": "Are used for in vitro DNA synthesis"
+      },
+      {
+        "text": "Are present in mammalian cells for degradation of DNA when the cell dies"
+      },
+      {
+        "text": "Are synthesized by bacteria as part of their defense mechanism"
+      },
+      {
+        "text": "Are used in genetic engineering for ligating two DNA molecules"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Thermocycler (PCR machine) is used to automate the temperature cycles required for DNA amplification via PCR."
+  },
+  {
+    "num": 121,
+    "exam": "AIPMT 2004",
+    "question": "**AIPMT 2004**\n\nIn transgenics expression of transgene in target tissue is determined by :-",
+    "options": [
+      {
+        "text": "Enhancer"
+      },
+      {
+        "text": "Promoter"
+      },
+      {
+        "text": "Reporter"
+      },
+      {
+        "text": "Transgene"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Taq DNA polymerase has optimum enzymatic activity at approximately 72°C."
+  },
+  {
+    "num": 122,
+    "exam": "AIPMT 2004",
+    "question": "**AIPMT 2004**\n\nThe Ti plasmid is often used for making transgenic plants. This plasmid is found in",
+    "options": [
+      {
+        "text": "Agrobacterium"
+      },
+      {
+        "text": "Rhizobium of the roots of leguminous plants"
+      },
+      {
+        "text": "Azotobacter"
+      },
+      {
+        "text": "Yeast as a 2 μm plasmid"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "A recombinant plasmid containing a foreign DNA insert cannot be replicated unless it contains a functional origin of replication (ori)."
+  },
+  {
+    "num": 123,
+    "exam": "AIPMT 2003",
+    "question": "**AIPMT 2003**\n\nIn recent years, DNA sequences (nucleotide sequence) of mt-DNA and Y chromosomes were considered for the study of human evolution, because : -",
+    "options": [
+      {
+        "text": "They are uniparental in origin and do not take part in recombination"
+      },
+      {
+        "text": "They can be studied from the samples of fossil remains"
+      },
+      {
+        "text": "Their structure is known in greater detail"
+      },
+      {
+        "text": "They are small, and therefore, easy to study"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Transgenic plants are developed by introducing foreign desired genes into plant genomes, often utilizing Agrobacterium tumefaciens Ti plasmid as the vector."
+  },
+  {
+    "num": 124,
+    "exam": "AIPMT 2003",
+    "question": "**AIPMT 2003**\n\nWhich one of the following bacteria has found extensive use in genetic engineering work in plants ?",
+    "options": [
+      {
+        "text": "Xanthomonas citri"
+      },
+      {
+        "text": "Agrobacterium tumefaciens"
+      },
+      {
+        "text": "Bacillus coagulens"
+      },
+      {
+        "text": "Clostridium septicum"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Bioreactors equipped with spargers allow sterile air bubbles to be introduced, significantly increasing the surface area for oxygen transfer."
+  },
+  {
+    "num": 125,
+    "exam": "AIPMT 2002",
+    "question": "**AIPMT 2002**\n\nManipulation of DNA in genetic engineering became possible due to the discovery of : -",
+    "options": [
+      {
+        "text": "Transcriptase"
+      },
+      {
+        "text": "DNA ligase"
+      },
+      {
+        "text": "Primase"
+      },
+      {
+        "text": "Restriction endonuclease"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Competence refers to the physiological state that permits a bacterial cell to take up extracellular exogenous DNA from its surroundings."
+  },
+  {
+    "num": 126,
+    "exam": "AIPMT 2002",
+    "question": "**AIPMT 2002**\n\nWhich steroid is used for transformation?",
+    "options": [
+      {
+        "text": "Cortisol"
+      },
+      {
+        "text": "Cholesterol"
+      },
+      {
+        "text": "Testosterone"
+      },
+      {
+        "text": "Progesterone"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "The first step in the isolation of genetic material is the enzymatic lysis of the cell wall and membrane to release intact cellular DNA."
+  },
+  {
+    "num": 127,
+    "exam": "AIPMT 2001",
+    "question": "**AIPMT 2001**\n\nA mutant strain of T4 – Bacteriophage, R-II, fails to lyse the E-Coli but when two strains RIIX and R- IIY are mixed then they lyse the E.Coli. What may be the possible reason : -",
+    "options": [
+      {
+        "text": "Both strains have different cistrons"
+      },
+      {
+        "text": "Both strains have simillar cistrons"
+      },
+      {
+        "text": "It is not mutated"
+      },
+      {
+        "text": "Bacteriophage transforms in wild"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Ribonuclease (RNase) digests RNA molecules, ensuring pure DNA isolation without ribonucleic acid contamination."
+  },
+  {
+    "num": 128,
+    "exam": "AIPMT 2001",
+    "question": "**AIPMT 2001**\n\nIn lederberg's replica plating experiment what shall be used to obtain streptomycin resistant strain : -",
+    "options": [
+      {
+        "text": "Only minimal medium"
+      },
+      {
+        "text": "Complete medium and streptomycine"
+      },
+      {
+        "text": "Only complete medium"
+      },
+      {
+        "text": "Minimal medium and streptomycine"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Proteases are added during DNA extraction to degrade and remove contaminating proteins, including histone complexes."
+  },
+  {
+    "num": 129,
+    "exam": "AIPMT 2001",
+    "question": "**AIPMT 2001**\n\nWhich of the following cut the DNA from specific places ?",
+    "options": [
+      {
+        "text": "Exonuclease"
+      },
+      {
+        "text": "Alkaline phosphate"
+      },
+      {
+        "text": "E.coli restriction endonuclease I"
+      },
+      {
+        "text": "Ligase"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Elution describes the procedure of cutting the visible band of DNA out of the agarose gel slice and purifying the DNA fragment from the matrix."
+  },
+  {
+    "num": 130,
+    "exam": "AIPMT 2001",
+    "question": "**AIPMT 2001**\n\nMaximum number of bases in plasmids discovered so far : -",
+    "options": [
+      {
+        "text": "500 kilo base"
+      },
+      {
+        "text": "5 kilo base"
+      },
+      {
+        "text": "50 kilo base"
+      },
+      {
+        "text": "5000 kilo base"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "The human insulin gene was cloned into the plasmid vector pBR322 by Genentech in 1983 to produce humulin in E. coli."
+  },
+  {
+    "num": 131,
+    "exam": "AIPMT 2001",
+    "question": "**AIPMT 2001**\n\nPlasmid is",
+    "options": [
+      {
+        "text": "fragment of DNA which acts as vector"
+      },
+      {
+        "text": "a fragment which joins two genes"
+      },
+      {
+        "text": "-RNA   which acts as carrier"
+      },
+      {
+        "text": "autotrophic fragment"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Restriction endonucleases are called 'restriction' enzymes because in bacteria they restrict the replication and survival of attacking bacteriophages."
+  },
+  {
+    "num": 132,
+    "exam": "AIPMT 2000",
+    "question": "**AIPMT 2000**\n\nThe bacteria generally used for genetic engineering is :",
+    "options": [
+      {
+        "text": "Clostridium"
+      },
+      {
+        "text": "Pseudomonas"
+      },
+      {
+        "text": "Agrobacterium"
+      },
+      {
+        "text": "Bacillus"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "An ideal cloning vector must contain an origin of replication (ori), selectable marker genes, and unique cloning (recognition) sites."
+  },
+  {
+    "num": 133,
+    "exam": "AIPMT 2000",
+    "question": "**AIPMT 2000**\n\nPlasmid has been used as vector because :",
+    "options": [
+      {
+        "text": "Both ends show replication"
+      },
+      {
+        "text": "It has antibiotic resistance gene"
+      },
+      {
+        "text": "It is circular DNA which have capacity to join to eukaryotic DNA"
+      },
+      {
+        "text": "It can move between prokaryotic and eukaryotic cells"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "Insertional inactivation of the lacZ gene eliminates beta-galactosidase production, allowing recombinant colonies to be identified by their white color in the presence of chromogenic substrate (X-gal)."
+  },
+  {
+    "num": 134,
+    "exam": "AIPMT 1999",
+    "question": "**AIPMT 1999**\n\nThe process of replication in plasmid DNA, other than initiation, is controlled by",
+    "options": [
+      {
+        "text": "mitochondrial gene"
+      },
+      {
+        "text": "bacterial gene"
+      },
+      {
+        "text": "plasmid gene"
+      },
+      {
+        "text": "none of the above"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "T-DNA (transfer DNA) is the portion of the Agrobacterium Ti plasmid that is transferred and stably integrated into the host plant nuclear genome."
+  },
+  {
+    "num": 135,
+    "exam": "AIPMT 1999",
+    "question": "**AIPMT 1999**\n\nWhich of the following is related to genetic engineering?",
+    "options": [
+      {
+        "text": "Mutation"
+      },
+      {
+        "text": "Plasmid"
+      },
+      {
+        "text": "Plastid"
+      },
+      {
+        "text": "Heterosis"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Downstream processing does not include biosynthesis/fermentation; it specifically covers the post-fermentation stages of separation, purification, and product formulation."
+  },
+  {
+    "num": 136,
+    "exam": "AIPMT 1998",
+    "question": "**AIPMT 1998**\n\nRecombinant DNA is obtained by cleaving the pro-DNAs by",
+    "options": [
+      {
+        "text": "primase"
+      },
+      {
+        "text": "exonucleases"
+      },
+      {
+        "text": "ligase"
+      },
+      {
+        "text": "restriction endonuclease"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "In continuous fermentation systems, nutrients are continuously fed while effluent containing biomass and products is continuously removed, maintaining a steady state."
+  },
+  {
+    "num": 137,
+    "exam": "AIPMT 1998",
+    "question": "**AIPMT 1998**\n\nThe chemical knives of DNA are",
+    "options": [
+      {
+        "text": "ligases"
+      },
+      {
+        "text": "polymerases"
+      },
+      {
+        "text": "endonucleases"
+      },
+      {
+        "text": "transcriptases"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "The optimum temperature for the extension step of PCR using Taq polymerase is 72°C."
+  },
+  {
+    "num": 138,
+    "exam": "AIPMT 1998",
+    "question": "**AIPMT 1998**\n\nRestriction endonucleases are",
+    "options": [
+      {
+        "text": "synthesized by dog"
+      },
+      {
+        "text": "present in mammalian cells for degradation of DNA"
+      },
+      {
+        "text": "used for  in vitro   DNA synthesis"
+      },
+      {
+        "text": "used in genetic engineering"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "Oligonucleotide primers used in PCR are short single-stranded synthetic DNA sequences complementary to the regions flanking the target sequence."
+  },
+  {
+    "num": 139,
+    "exam": "AIPMT 1998",
+    "question": "**AIPMT 1998**\n\nGenetic engineering is possible, because",
+    "options": [
+      {
+        "text": "the phenomenon of transduction in bacteria is well understood"
+      },
+      {
+        "text": "we can see DNA by electron microscope"
+      },
+      {
+        "text": "we can cut DNA at specific sites by endonucleases like DNAse I"
+      },
+      {
+        "text": "restriction endonucleases purified from bacteria can be used  in vitro"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "DNA moves toward the anode during electrophoresis because of its polyanionic phosphate backbone."
+  },
+  {
+    "num": 140,
+    "exam": "AIPMT 1998",
+    "question": "**AIPMT 1998**\n\nTwo bacteria found to be very useful in genetic engineering experiments are",
+    "options": [
+      {
+        "text": "Nitrosomonas   and  Klebsiella"
+      },
+      {
+        "text": "Escherichia   and  Agrobacterium"
+      },
+      {
+        "text": "Nitrobacter   and  Azotobacter"
+      },
+      {
+        "text": "Rhizobium   and  Diplococcus"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "The first engineered recombinant DNA molecule was created in 1972 by Stanley Cohen and Herbert Boyer."
+  },
+  {
+    "num": 141,
+    "exam": "AIPMT 1995",
+    "question": "**AIPMT 1995**\n\nThe restriction enzymes are used in genetic engineering, because",
+    "options": [
+      {
+        "text": "they can cut DNA at specific base sequence"
+      },
+      {
+        "text": "they are nucleases that cut DNA at variable sites"
+      },
+      {
+        "text": "they can degrade harmful proteins"
+      },
+      {
+        "text": "they can join different DNA fragments."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "Ethidium bromide molecules intercalate between stacked base pairs of DNA, fluorescing brightly under ultraviolet radiation."
+  },
+  {
+    "num": 142,
+    "exam": "AIPMT 1994",
+    "question": "**AIPMT 1994**\n\nWhich of the following organelles is related with genetic engineering?",
+    "options": [
+      {
+        "text": "Mitochondria"
+      },
+      {
+        "text": "Plasmids"
+      },
+      {
+        "text": "Golgi bodies"
+      },
+      {
+        "text": "Lysosomes"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "Biolistics or gene gun technology enables vectorless direct transformation by accelerating DNA-coated microprojectiles into intact plant cells."
+  },
+  {
+    "num": 143,
+    "exam": "NEET 2023",
+    "question": "**NEET 2023**\n\nMain steps in the formation of Recombinant DNA are given below. Arrange these steps in a correct sequence.\n\nA. Insertion of recombinant DNA into the host cell\nB. Cutting of DNA at specific location by restriction enzyme\nC. Isolation of desired DNA fragment\nD. Amplification of gene of interest using PCR\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "text": "C, A, B, D"
+      },
+      {
+        "text": "C, B, D, A"
+      },
+      {
+        "text": "B, D, A, C"
+      },
+      {
+        "text": "B, C, D, A"
+      }
+    ],
+    "correctOption": "B, D",
+    "explanation": "The correct sequence of steps in the construction of recombinant DNA is:\n1. Isolation of the desired DNA fragment (C)\n2. Cutting of DNA at specific locations by restriction enzyme (B)\n3. Amplification of the gene of interest using PCR (D)\n4. Insertion of the recombinant DNA into the host cell (A)\nAlternatively, cutting of DNA (B) and isolating the desired fragment (C) followed by amplification (D) and insertion (A) is also accepted in standard curriculum workflows. Hence, NTA awarded both (B) [C, B, D, A] and (D) [B, C, D, A] as correct answers."
+  }
+]

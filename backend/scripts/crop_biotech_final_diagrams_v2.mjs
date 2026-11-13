@@ -1,0 +1,28 @@
+import sharp from 'sharp';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+async function main() {
+  // Page 5: Q12
+  await sharp(path.resolve(__dirname, 'biotech_rendered_pages/page_5.png'))
+    .extract({ left: 60, top: 1040, width: 450, height: 350 })
+    .toFile(path.resolve(__dirname, 'biotech_diagrams/q_12.png'));
+  console.log('Cropped q_12.png');
+
+  // Page 24: Q98
+  await sharp(path.resolve(__dirname, 'biotech_rendered_pages/page_24.png'))
+    .extract({ left: 50, top: 500, width: 550, height: 335 })
+    .toFile(path.resolve(__dirname, 'biotech_diagrams/q_98.png'));
+  console.log('Cropped q_98.png');
+
+  // Page 25: Q99
+  await sharp(path.resolve(__dirname, 'biotech_rendered_pages/page_25.png'))
+    .extract({ left: 50, top: 280, width: 500, height: 365 })
+    .toFile(path.resolve(__dirname, 'biotech_diagrams/q_99.png'));
+  console.log('Cropped q_99.png');
+}
+
+main().catch(console.error);
