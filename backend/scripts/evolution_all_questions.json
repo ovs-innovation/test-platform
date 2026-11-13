@@ -1,0 +1,4916 @@
+[
+  {
+    "num": 1,
+    "exam": "RE-NEET 2026",
+    "question": "Adaptive radiation in placental mammals and Australian Marsupials leading to similarity between\ndistant species is an example of   .",
+    "options": [
+      {
+        "id": "A",
+        "text": "genetic drift"
+      },
+      {
+        "id": "B",
+        "text": "divergent evolution"
+      },
+      {
+        "id": "C",
+        "text": "convergent evolution"
+      },
+      {
+        "id": "D",
+        "text": "founder effect"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nWhen more than one adaptive radiation appeared to have occurred in an isolated geographical area (representing different habitats), one can call this **convergent evolution**. Placental mammals in North America and Australian marsupials exhibit convergent evolution where distant lineages developed similar adaptations (e.g., Anteater and Numbat, Bobcat and Tasmanian tiger cat).",
+    "image": ""
+  },
+  {
+    "num": 2,
+    "exam": "RE-NEET 2026",
+    "question": "Given below are two statements :\nStatement I : Modern Homo sapiens arose in Australia and moved across continents.\nStatement II: Homo sapiens arose around 75000 to 10000 years ago.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is incorrect but Statement II is correct"
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are correct"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are incorrect"
+      },
+      {
+        "id": "D",
+        "text": "Statement I is correct but Statement II is incorrect"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- Statement I is incorrect: Modern *Homo sapiens* arose in **Africa** (not Australia) and migrated across continents, developing into distinct races.\n- Statement II is correct: *Homo sapiens* arose between **75,000 to 10,000 years ago** during the ice age.\nHence, Statement I is incorrect but Statement II is correct.",
+    "image": ""
+  },
+  {
+    "num": 3,
+    "exam": "RE-NEET 2026",
+    "question": "Which of the following is not evidence for evolution?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Divergent evolution of anatomical structures such as forelimbs"
+      },
+      {
+        "id": "B",
+        "text": "Convergent evolution of traits like wings of birds and butterflies"
+      },
+      {
+        "id": "C",
+        "text": "Paleontological evidence from fossil records"
+      },
+      {
+        "id": "D",
+        "text": "Embryological support for evolution as proposed by Ernst Heckel"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nErnst Haeckel proposed the embryological support for evolution ('ontogeny recapitulates phylogeny'). However, this was carefully disapproved by **Karl Ernst von Baer**, who noted that embryos never pass through the adult stages of other animals. Hence, it is not accepted evidence for evolution.",
+    "image": ""
+  },
+  {
+    "num": 4,
+    "exam": "RE-NEET 2026",
+    "question": "A population of diploid organisms is at Hardy-Weinberg equilibrium. If the frequency of allele   is\n0.1 , the frequency of AA is   .",
+    "options": [
+      {
+        "id": "A",
+        "text": "0.99"
+      },
+      {
+        "id": "B",
+        "text": "0.01"
+      },
+      {
+        "id": "C",
+        "text": "0.02"
+      },
+      {
+        "id": "D",
+        "text": "0.10\nExam   GOAL"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nGiven frequency of allele $A$ ($p$) is $0.1$:\nAccording to the Hardy-Weinberg principle, the frequency of homozygous dominant genotype $AA$ ($p^2$) is:\n$$p^2 = (0.1)^2 = 0.01$$.",
+    "image": ""
+  },
+  {
+    "num": 5,
+    "exam": "RE-NEET 2026",
+    "question": "Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason\n.\nAssertion A : Forelimbs of human and bats are homologous.\nReason R : Forelimbs of humans and bats have similar anatomical structure.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow.",
+    "options": [
+      {
+        "id": "A",
+        "text": "is false but   is true"
+      },
+      {
+        "id": "B",
+        "text": "Both   and   are correct and   is the correct explanation of"
+      },
+      {
+        "id": "C",
+        "text": "Both   and   are true, but   is not the correct explanation of"
+      },
+      {
+        "id": "D",
+        "text": "is true but   is false"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- Assertion A is true: Forelimbs of humans and bats are **homologous organs** sharing common anatomical origin and skeletal plan.\n- Reason R is true: Forelimbs of humans and bats share a similar anatomical structure (humerus, radius, ulna, carpals, metacarpals, phalanges), which correctly explains why they are homologous.\nBoth A and R are correct and R is the correct explanation of A.",
+    "image": ""
+  },
+  {
+    "num": 6,
+    "exam": "RE-NEET 2026",
+    "question": "Natural selection can lead to   .\n(a) stabilisation\n(b) genetic drift\n(c) directional change\n(d) disruption\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) and (c) only"
+      },
+      {
+        "id": "B",
+        "text": "(a) only"
+      },
+      {
+        "id": "C",
+        "text": "(a), (c) and (d) only"
+      },
+      {
+        "id": "D",
+        "text": "(a), (b), (c) and (d)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nNatural selection can lead to:\n1. **Stabilisation**: In which more individuals acquire mean character value.\n2. **Directional change**: In which more individuals acquire value other than the mean character value.\n3. **Disruption**: In which more individuals acquire peripheral character values at both ends of the distribution curve.\nGenetic drift is a random process, not a mode of natural selection. Hence, **(a), (c) and (d) only**.",
+    "image": ""
+  },
+  {
+    "num": 7,
+    "exam": "NEET 2026",
+    "question": "Which of the following is not an example of convergent evolution?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Flippers of penguins and dolphins"
+      },
+      {
+        "id": "B",
+        "text": "Eyes of octopuses and mammals"
+      },
+      {
+        "id": "C",
+        "text": "Fore limbs of whales and bats"
+      },
+      {
+        "id": "D",
+        "text": "Wings of butterflies and birds\nExam   GOAL"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nForelimbs of whales and bats are **homologous structures** resulting from **divergent evolution** (they have identical underlying bone patterns adapted to different functions). Flippers of penguins/dolphins, wings of butterflies/birds, and eyes of octopuses/mammals are classic examples of convergent evolution.",
+    "image": ""
+  },
+  {
+    "num": 8,
+    "exam": "NEET 2026",
+    "question": "Match List I with List II with respect to chronology of evolution of life forms:\n\n| List-I | List-II |\n| :--- | :--- |\n| A. About 65 mya | I. Jawless fish probably evolved |\n| B. About 500 mya | II. The dinosaurs suddenly disappeared from the earth |\n| C. About 350 mya | III. Seaweeds and few plants probably existed |\n| D. About 320 mya | IV. Invertebrates were formed and became active |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A(III), B(IV), C(I), D(II)"
+      },
+      {
+        "id": "B",
+        "text": "A(I), B(II), C(III), D(IV)"
+      },
+      {
+        "id": "C",
+        "text": "A(II), B(IV), C(III), D(I)"
+      },
+      {
+        "id": "D",
+        "text": "A(II), B(IV), C(I), D(III)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nChronology of evolutionary events in the history of life forms:\n- **A. About 65 mya**: Dinosaurs suddenly disappeared from the earth (II)\n- **B. About 500 mya**: Invertebrates were formed and became active (IV)\n- **C. About 350 mya**: Jawless fish probably evolved (I)\n- **D. About 320 mya**: Seaweeds and few plants probably existed (III)\nHence, the correct match is **A(II), B(IV), C(I), D(III)**.",
+    "image": ""
+  },
+  {
+    "num": 9,
+    "exam": "NEET 2026",
+    "question": "Evolution of human appears parallel to the progressive development of brain and language skills. As\nsuch, the evolution of individual species in the sequence of their appearance is:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ramapithecus   →   Homo habilis   →   Homo erectus   →   Neanderthal   →   Homo sapiens"
+      },
+      {
+        "id": "B",
+        "text": "Homo sapiens   →   Ramapithecus   →   Homo habilis   →   Neanderthal   →   Homo erectus"
+      },
+      {
+        "id": "C",
+        "text": "Homo habilis   →   Homo erectus   →   Ramapithecus   →   Neanderthal   →   Homo sapiens"
+      },
+      {
+        "id": "D",
+        "text": "Neanderthal   →   Ramapithecus   →   Homo habilis   →   Homo erectus   →   Homo sapiens"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe chronological sequence of human evolution based on fossil records is:\n**Ramapithecus → Homo habilis → Homo erectus → Neanderthal man → Homo sapiens**.",
+    "image": ""
+  },
+  {
+    "num": 10,
+    "exam": "NEET 2025",
+    "question": "Sweet potato and potato represent a certain type of evolution. Select the correct combination of\nterms to explain the evolution.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Homology, convergent"
+      },
+      {
+        "id": "B",
+        "text": "Analogy, divergent"
+      },
+      {
+        "id": "C",
+        "text": "Analogy, convergent"
+      },
+      {
+        "id": "D",
+        "text": "Homology, divergent\nExam   GOAL"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nSweet potato (root modification) and potato (stem modification) perform the same function of storage of food, but have different anatomical origins. Thus, they represent **analogy** resulting from **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 11,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II :\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Gene pool | (I) Stable within a generation |\n| (B) Genetic drift | (II) Change in gene frequency by chance |\n| (C) Gene flow | (III) Transfer of genes into or out of population |\n| (D) Gene frequency | (IV) Total number of genes and their alleles |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-III, C-IV, D-I"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nMatching terms with definitions:\n- **(A) Gene pool**: Total number of genes and their alleles in a population (IV)\n- **(B) Genetic drift**: Random change in gene frequency occurring by chance in small populations (II)\n- **(C) Gene flow**: Transfer of genes/alleles into or out of a population due to migration (III)\n- **(D) Gene frequency**: Proportion of an allele relative to total alleles at a locus, remaining stable within a generation in equilibrium (I)\nHence, **A-IV, B-II, C-III, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 12,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Which evolutionary phenomenon is depicted by the sketch given in figure?\n\n![Adaptive Radiation of Darwin Finches](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794553057/edvedum/questions/evolution/evolution_q_12.png)",
+    "options": [
+      {
+        "id": "A",
+        "text": "Artificial selection"
+      },
+      {
+        "id": "B",
+        "text": "Genetic drift"
+      },
+      {
+        "id": "C",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "D",
+        "text": "Adaptive radiation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe diagram depicts the beaks of Darwin's finches from the Galapagos Islands, illustrating **adaptive radiation**—the process of evolution of different species in a given geographical area starting from a point and literally radiating to other habitats.",
+    "image": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794553057/edvedum/questions/evolution/evolution_q_12.png"
+  },
+  {
+    "num": 13,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II with respect to convergent evolution:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Lemur | (I) Flying phalanger |\n| (B) Bobcat | (II) Numbat |\n| (C) Anteater | (III) Spotted cuscus |\n| (D) Flying squirrels | (IV) Tasmanian tiger cat |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-II, C-IV, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-II, C-III, D-I"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nMatching placental mammals with their convergent Australian marsupials:\n- **(A) Lemur**: Spotted cuscus (III)\n- **(B) Bobcat**: Tasmanian tiger cat (IV)\n- **(C) Anteater**: Numbat (II)\n- **(D) Flying squirrel**: Flying phalanger (I)\nHence, **A-III, B-IV, C-II, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 14,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Living Fossil | (I) Elongated canine teeth |\n| (B) Connecting Link | (II) Vermiform appendix |\n| (C) Vestigial Organ | (III) Echidna |\n| (D) Atavism | (IV) Latimeria |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-III, C-I, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-IV, C-I, D-II"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nMatching evolutionary terms:\n- **(A) Living Fossil**: *Latimeria* (Coelacanth) (IV)\n- **(B) Connecting Link**: *Echidna* (platypus/spiny anteater connecting reptiles and mammals) (III)\n- **(C) Vestigial Organ**: Vermiform appendix (II)\n- **(D) Atavism**: Elongated canine teeth / sudden appearance of ancestral traits (I)\nHence, **A-IV, B-III, C-II, D-I**.",
+    "image": ""
+  },
+  {
+    "num": 15,
+    "exam": "NEET 2024 (Re-Examination)",
+    "question": "What is the correct order (old to recent) of periods in Paleozoic era?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Silurian, Devonian, Permian, Carboniferous"
+      },
+      {
+        "id": "B",
+        "text": "Silurian, Devonian, Carboniferous, Permian"
+      },
+      {
+        "id": "C",
+        "text": "Permian, Devonian, Silurian, Carboniferous"
+      },
+      {
+        "id": "D",
+        "text": "Silurian, Carboniferous, Permian, Devonian"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe chronological order of periods of the Paleozoic Era from oldest to most recent is:\nCambrian → Ordovician → **Silurian → Devonian → Carboniferous → Permian**.",
+    "image": ""
+  },
+  {
+    "num": 16,
+    "exam": "NEET 2024",
+    "question": "The flippers of the Penguins and Dolphins are the example of the",
+    "options": [
+      {
+        "id": "A",
+        "text": "Adaptive radiation"
+      },
+      {
+        "id": "B",
+        "text": "Natural selection"
+      },
+      {
+        "id": "C",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "D",
+        "text": "Divergent evolution"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nFlippers of penguins (birds) and dolphins (mammals) are analogous structures that perform similar functions (swimming) despite having different phylogenetic lineages, representing **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 17,
+    "exam": "NEET 2024",
+    "question": "Given below are some stages of human evolution.\nArrange them in correct sequence. (Past to Recent)\nA. Homo habilis\nB. Homo sapiens\nC. Homo neanderthalensis\nD. Homo erectus\nChoose the correct sequence of human evolution from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "D-A-C-B"
+      },
+      {
+        "id": "B",
+        "text": "B-A-D-C"
+      },
+      {
+        "id": "C",
+        "text": "C-B-D-A"
+      },
+      {
+        "id": "D",
+        "text": "A-D-C-B\nExam   GOAL"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe chronological order of human evolution (past to recent) is:\n**Homo habilis (A) → Homo erectus (D) → Homo neanderthalensis (C) → Homo sapiens (B)**. Sequence: **A-D-C-B**.",
+    "image": ""
+  },
+  {
+    "num": 18,
+    "exam": "NEET 2024",
+    "question": "Which one of the following factors will not affect the Hardy-Weinberg equilibrium?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Genetic recombination"
+      },
+      {
+        "id": "B",
+        "text": "Genetic drift"
+      },
+      {
+        "id": "C",
+        "text": "Gene migration"
+      },
+      {
+        "id": "D",
+        "text": "Constant gene pool"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nHardy-Weinberg equilibrium states that allele frequencies in a population remain stable and constant from generation to generation in the absence of evolutionary influences. Factors affecting equilibrium are gene migration, genetic drift, mutation, genetic recombination, and natural selection. A **constant gene pool** maintains equilibrium and will not affect or disrupt it.",
+    "image": ""
+  },
+  {
+    "num": 19,
+    "exam": "NEET 2024",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Mesozoic Era | I. Lower invertebrates |\n| B. Proterozoic Era | II. Fish & Amphibia |\n| C. Cenozoic Era | III. Birds & Reptiles |\n| D. Paleozoic Era | IV. Mammals |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-I, C-III, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-I, C-II, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-I, B-II, C-IV, D-III"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-I, C-IV, D-II"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nMatching Geological Eras with characteristic fauna:\n- **A. Mesozoic Era**: Age of reptiles and birds (III)\n- **B. Proterozoic Era**: Origin of primitive lower invertebrates (I)\n- **C. Cenozoic Era**: Age of modern mammals and angiosperms (IV)\n- **D. Paleozoic Era**: Age of fishes and amphibians (II)\nHence, **A-III, B-I, C-IV, D-II**.",
+    "image": ""
+  },
+  {
+    "num": 20,
+    "exam": "NEET 2023 Manipur",
+    "question": "Identify the fossil of man who showed the following characteristics.\n(A) Brain capacity of 1400 cc\n(B) Used hides to protect their body\n(C) Buried their dead bodies\nIn the light of above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Homo erectus"
+      },
+      {
+        "id": "B",
+        "text": "Neanderthal man"
+      },
+      {
+        "id": "C",
+        "text": "Homo habilits"
+      },
+      {
+        "id": "D",
+        "text": "Australopithecus"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Neanderthal man** had a cranial capacity of approximately 1400 cc, used animal hides to protect their bodies, and buried their dead with rituals.",
+    "image": ""
+  },
+  {
+    "num": 21,
+    "exam": "NEET 2023",
+    "question": "Select the correct group/set of Australian Marsupials exhibiting adaptive radiation.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Numbat, Spotted cuscus, Flying phalanger"
+      },
+      {
+        "id": "B",
+        "text": "Mole, Flying squirrel, Tasmanian tiger cat"
+      },
+      {
+        "id": "C",
+        "text": "Lemur, Anteater, Wolf"
+      },
+      {
+        "id": "D",
+        "text": "Tasmanian wolf, Bobcat, Marsupial mole\nExam   GOAL"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAustralian marsupials exhibiting adaptive radiation include **Numbat, Spotted cuscus, and Flying phalanger**. Mole, flying squirrel, bobcat, lemur, and wolf are placental mammals.",
+    "image": ""
+  },
+  {
+    "num": 22,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Panspermia, an idea that is still a favourite for some astronomers, means:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transfer of spores as unit of life from other planets to Earth"
+      },
+      {
+        "id": "B",
+        "text": "Creation of life from dead and decaying matter"
+      },
+      {
+        "id": "C",
+        "text": "Creation of life from chemicals"
+      },
+      {
+        "id": "D",
+        "text": "Origin of sperm in human testes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the hypothesis of **panspermia** (favoured by early Greek thinkers and astronomers), units of life called spores were transferred from outer space to different planets, including Earth.",
+    "image": ""
+  },
+  {
+    "num": 23,
+    "exam": "NEET 2022 Phase 2",
+    "question": "Select the correct statement regarding mutation theory of evolution.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Large differences due to mutations arise gradually in a population"
+      },
+      {
+        "id": "B",
+        "text": "This theory was proposed by Alfred Wallace"
+      },
+      {
+        "id": "C",
+        "text": "Variations are small directional changes"
+      },
+      {
+        "id": "D",
+        "text": "Single step large mutation is a cause of speciation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nHugo de Vries proposed the mutation theory of evolution based on evening primrose (*Oenothera lamarckiana*). He believed that mutation causes speciation in a single step, termed **saltation** (single step large mutation).",
+    "image": ""
+  },
+  {
+    "num": 24,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Natural selection where more individuals acquire specific character value other than the mean\ncharacter value, leads to",
+    "options": [
+      {
+        "id": "A",
+        "text": "Stabilising change"
+      },
+      {
+        "id": "B",
+        "text": "Directional change"
+      },
+      {
+        "id": "C",
+        "text": "Disruptive change"
+      },
+      {
+        "id": "D",
+        "text": "Random change"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn **directional selection**, natural selection favours individuals that acquire a specific character value other than the mean value, causing the peak of the character curve to shift in one direction.",
+    "image": ""
+  },
+  {
+    "num": 25,
+    "exam": "NEET 2022 Phase 1",
+    "question": "Which of the following statements is not true?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Analogous structures are a result of convergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "Sweet potato and potato is an example of analogy"
+      },
+      {
+        "id": "C",
+        "text": "Homology indicates common ancestry"
+      },
+      {
+        "id": "D",
+        "text": "Flippers of penguins and dolphins are a pair of homologous organs"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nFlippers of penguins (birds) and dolphins (mammals) are **analogous organs** resulting from convergent evolution, not homologous organs. Thus, option (D) is not true.",
+    "image": ""
+  },
+  {
+    "num": 26,
+    "exam": "NEET 2021",
+    "question": "The factor that leads to Founder effect in a population is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Genetic drift"
+      },
+      {
+        "id": "B",
+        "text": "Natural selection"
+      },
+      {
+        "id": "C",
+        "text": "Genetic recombination"
+      },
+      {
+        "id": "D",
+        "text": "Mutation\nExam   GOAL"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Genetic drift** in a newly colonised small population can alter allele frequencies so drastically that the new population becomes a different species. The original drifted population is called founders, and this effect is termed the **Founder effect**.",
+    "image": ""
+  },
+  {
+    "num": 27,
+    "exam": "NEET 2021",
+    "question": "Match List-I with List-II.\n\n| List-I | List-II |\n| :--- | :--- |\n| (a) Adaptive radiation | (i) Selection of resistant varieties due to excessive use of herbicides and pesticides |\n| (b) Convergent evolution | (ii) Bones of forelimbs in Man and Whale |\n| (c) Divergent evolution | (iii) Wings of Butterfly and Bird |\n| (d) Evolution by anthropogenic action | (iv) Darwin Finches |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(i), (b)-(iv), (c)-(iii), (d)-(ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iii), (b)-(ii), (c)-(i), (d)-(iv)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nMatching List-I with List-II:\n- **(a) Adaptive radiation**: Darwin Finches (iv)\n- **(b) Convergent evolution**: Wings of Butterfly and Bird (iii)\n- **(c) Divergent evolution**: Bones of forelimbs in Man and Whale (ii)\n- **(d) Evolution by anthropogenic action**: Selection of herbicide/pesticide resistant varieties (i)\nHence, **(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)**.",
+    "image": ""
+  },
+  {
+    "num": 28,
+    "exam": "NEET 2020 Phase 2",
+    "question": "Embryological support for evolution was proposed by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Alfred Wallace"
+      },
+      {
+        "id": "B",
+        "text": "Ernst Heckel"
+      },
+      {
+        "id": "C",
+        "text": "Karl Ernst von Baer"
+      },
+      {
+        "id": "D",
+        "text": "Charles Darwin"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nEmbryological support for evolution based on the observation of certain common features during embryonic stages was proposed by **Ernst Haeckel**.",
+    "image": ""
+  },
+  {
+    "num": 29,
+    "exam": "NEET 2020 Phase 2",
+    "question": "After about how many years of formation of earth, life appeared on this planet ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "50 billion years"
+      },
+      {
+        "id": "B",
+        "text": "500 billion years"
+      },
+      {
+        "id": "C",
+        "text": "50 million years"
+      },
+      {
+        "id": "D",
+        "text": "500 million years\nExam   GOAL"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe Earth was formed about 4.5 billion years ago, and life appeared on Earth roughly 4.0 billion years ago (i.e., **500 million years** after the formation of Earth).",
+    "image": ""
+  },
+  {
+    "num": 30,
+    "exam": "NEET 2020 Phase 2",
+    "question": "The phenomenon of evolution of different species in a given geographical area starting from a point\nand spreading to other habitats is called -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Adaptive radiation"
+      },
+      {
+        "id": "B",
+        "text": "Saltation"
+      },
+      {
+        "id": "C",
+        "text": "Co-evolution"
+      },
+      {
+        "id": "D",
+        "text": "Natural selection"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe evolutionary process starting from a common ancestral point and radiating to different geographical habitats/niches is called **adaptive radiation**.",
+    "image": ""
+  },
+  {
+    "num": 31,
+    "exam": "NEET 2020 Phase 2",
+    "question": "A Hominid fossil discovered in Java in 1891, now extinct, having cranial capacity of about 900 cc\nwas :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Australopithecus"
+      },
+      {
+        "id": "B",
+        "text": "Homo erectus"
+      },
+      {
+        "id": "C",
+        "text": "Neanderthal man"
+      },
+      {
+        "id": "D",
+        "text": "Homo sapiens"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n*Homo erectus* fossils discovered in Java in 1891 (Java Man) revealed a cranial capacity of about **900 cc**.",
+    "image": ""
+  },
+  {
+    "num": 32,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Embryological support for evolution was disapproved by",
+    "options": [
+      {
+        "id": "A",
+        "text": "Oparin"
+      },
+      {
+        "id": "B",
+        "text": "Alfred Wallace"
+      },
+      {
+        "id": "C",
+        "text": "Karl Ernst von Baer"
+      },
+      {
+        "id": "D",
+        "text": "Charles Darwin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nEmbryological support for evolution proposed by Ernst Haeckel was disapproved and rejected by **Karl Ernst von Baer**, who observed that embryos never pass through the adult stages of other animals.",
+    "image": ""
+  },
+  {
+    "num": 33,
+    "exam": "NEET 2020 Phase 1",
+    "question": "From his experiments, S.L. Miller produced amino acids by mixing the following in a closed flask",
+    "options": [
+      {
+        "id": "A",
+        "text": "CH   3   , H   2   , NH   3   and water vapor at 600°C"
+      },
+      {
+        "id": "B",
+        "text": "CH   4   , H   2   , NH   3   and water vapor at 800°C"
+      },
+      {
+        "id": "C",
+        "text": "CH   3   , H   2   , NH   4   and water vapor at 800°C"
+      },
+      {
+        "id": "D",
+        "text": "CH   4   , H   2   , NH   3   and water vapor at 600°C"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn 1953, S.L. Miller created electric discharge in a closed flask containing **CH4, H2, NH3 and water vapor at 800°C** to simulate primitive earth conditions.",
+    "image": ""
+  },
+  {
+    "num": 34,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Flippers of Penguins and Dolphins are examples of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Adaptive radiation"
+      },
+      {
+        "id": "B",
+        "text": "Natural selection"
+      },
+      {
+        "id": "C",
+        "text": "Industrial melanism"
+      },
+      {
+        "id": "D",
+        "text": "Convergent evolution"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nFlippers of penguins and dolphins perform the same hydrodynamic function but have different ancestral origins, serving as a classic example of **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 35,
+    "exam": "NEET 2020 Phase 1",
+    "question": "Which of the following refer to correct example(s) of organisms which have evolved due to changes\nin environment brought about by anthropogenic action?\n(a) Darwin’s Finches of Galapagos islands.\n(b) Herbicide resistant weeds.\n(c) Drug resistant eukaryotes.\n(d) Man-created breeds of domesticated animals like dogs.",
+    "options": [
+      {
+        "id": "A",
+        "text": "(b), (c) and (d)"
+      },
+      {
+        "id": "B",
+        "text": "only (a)"
+      },
+      {
+        "id": "C",
+        "text": "(a) and (c)"
+      },
+      {
+        "id": "D",
+        "text": "only (d)\nExam   GOAL"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAnthropogenic evolution refers to evolution driven by human activities:\n- (b) Herbicide resistant weeds\n- (c) Drug resistant eukaryotes/microbes\n- (d) Man-created breeds of dogs via artificial selection\nDarwin's finches evolved via natural selection, not anthropogenic action. Hence, **(b), (c) and (d)**.",
+    "image": ""
+  },
+  {
+    "num": 36,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "Which of the following statements is correct about the origin and evolution of men?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Neanderthal men lived in Asia between 1,00,000 and 40,000 years back."
+      },
+      {
+        "id": "B",
+        "text": "Agriculture came around 50,000 years back."
+      },
+      {
+        "id": "C",
+        "text": "The   Dryopithecus   and   Ramapithecus   primates existing 15 million years ago, walked like men."
+      },
+      {
+        "id": "D",
+        "text": "Homo habilis   probably ate meat."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Neanderthal men** with a brain size of 1400 cc lived in near East and Central Asia between 100,000 and 40,000 years ago.",
+    "image": ""
+  },
+  {
+    "num": 37,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "A population of a species invades a new area. Which of the following condition will lead to Adaptive\nRadiation?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Area with many habitats occupied by a large number of species."
+      },
+      {
+        "id": "B",
+        "text": "Area with large number of habitats having very low food supply."
+      },
+      {
+        "id": "C",
+        "text": "Area with a single type of vacant habitat"
+      },
+      {
+        "id": "D",
+        "text": "Area with many types of vacant habitats."
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAdaptive radiation occurs most readily when a colonizing species enters an **area with many types of vacant habitats** (unoccupied ecological niches) with minimal competition.",
+    "image": ""
+  },
+  {
+    "num": 38,
+    "exam": "NEET 2019 (Odisha)",
+    "question": "In Australia, marsupials and placental mammals have evolved to share many similar characteristics.\nThis type of evolution may be referred to as",
+    "options": [
+      {
+        "id": "A",
+        "text": "Convergent Evolution"
+      },
+      {
+        "id": "B",
+        "text": "Adaptive Radiation"
+      },
+      {
+        "id": "C",
+        "text": "Divergent Evolution"
+      },
+      {
+        "id": "D",
+        "text": "Cyclical Evolution"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIndependent evolution of similar phenotypic features in distinct lineages (such as Australian marsupials and North American placental mammals) occupying similar ecological niches is called **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 39,
+    "exam": "NEET 2019",
+    "question": "A gene locus has two alleles A, a. If the frequency of dominant allele A is 0.4, then what will be the\nfrequency of homozygous dominant, heterozygous and homozygous recessive individuals in the\npopulation?",
+    "options": [
+      {
+        "id": "A",
+        "text": "0.16(AA); 0.48 (Aa); 0.36(aa)"
+      },
+      {
+        "id": "B",
+        "text": "0.16 (AA); 0.36(Aa); 0.48(aa)"
+      },
+      {
+        "id": "C",
+        "text": "0.36 (AA); 0.48 (Aa); 0.16 (aa)"
+      },
+      {
+        "id": "D",
+        "text": "0.16 (AA); 0.24 (Aa); 0.36 (aa)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nGiven frequency of dominant allele $A$ ($p$) = 0.4. Frequency of recessive allele $a$ ($q$) = $1 - 0.4 = 0.6$.\n- Frequency of $AA$ ($p^2$) = $(0.4)^2 = 0.16$\n- Frequency of $Aa$ ($2pq$) = $2(0.4)(0.6) = 0.48$\n- Frequency of $aa$ ($q^2$) = $(0.6)^2 = 0.36$\nHence, **0.16 (AA); 0.48 (Aa); 0.36 (aa)**.",
+    "image": ""
+  },
+  {
+    "num": 40,
+    "exam": "NEET 2019",
+    "question": "Variations caused by mutation, as proposed by Hugo de Vries, are :",
+    "options": [
+      {
+        "id": "A",
+        "text": "small and directional"
+      },
+      {
+        "id": "B",
+        "text": "small and directionless"
+      },
+      {
+        "id": "C",
+        "text": "random and directional"
+      },
+      {
+        "id": "D",
+        "text": "random and directionless\nExam   GOAL"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to Hugo de Vries, mutations are **random and directionless**, whereas Darwinian variations are small and directional.",
+    "image": ""
+  },
+  {
+    "num": 41,
+    "exam": "NEET 2019",
+    "question": "Match the hominids with their correct brain size:\n\n| Hominid | Brain size |\n| :--- | :--- |\n| (a) Homo habilis | (i) 900 cc |\n| (b) Homo neanderthalensis | (ii) 1350 cc |\n| (c) Homo erectus | (iii) 650-800 cc |\n| (d) Homo sapiens | (iv) 1400 cc |\n\nSelect the correct option:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iv), (b)-(iii), (c)-(i), (d)-(ii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iii), (b)-(ii), (c)-(i), (d)-(iv)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nMatching hominids with brain capacity:\n- **Homo habilis**: 650–800 cc (iii)\n- **Homo neanderthalensis**: 1400 cc (iv)\n- **Homo erectus**: 900 cc (i)\n- **Homo sapiens**: 1350–1400 cc (ii)\nHence, **(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)**.",
+    "image": ""
+  },
+  {
+    "num": 42,
+    "exam": "NEET 2019",
+    "question": "In a species, the weight of newborn ranges from 2 to 5 kg. 97% of the newborn with an average\nweight between 3 to 3.3 kg survive whereas 99% of the infants born with weights from 2 to 2.5 kg or\n4.5 to 5kg die. Which type of selection process is taking place?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Disruptive Selection"
+      },
+      {
+        "id": "B",
+        "text": "Cyclical Selection"
+      },
+      {
+        "id": "C",
+        "text": "Directional Selection"
+      },
+      {
+        "id": "D",
+        "text": "Stabilizing Selection"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nSince infants born with intermediate weights (3 to 3.3 kg) survive at high rates (97%) while those with extreme weights (2 to 2.5 kg or 4.5 to 5 kg) die, natural selection is operating against phenotypic extremes, representing **stabilizing selection**.",
+    "image": ""
+  },
+  {
+    "num": 43,
+    "exam": "NEET 2018",
+    "question": "The similarity of bone structure in the forelimbs of many vertebrates is an example of",
+    "options": [
+      {
+        "id": "A",
+        "text": "homology"
+      },
+      {
+        "id": "B",
+        "text": "analogy"
+      },
+      {
+        "id": "C",
+        "text": "convergent evolution"
+      },
+      {
+        "id": "D",
+        "text": "adaptive radiation"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nHomology refers to structural similarity based on common embryonic origin, seen in the forelimbs of vertebrates (cheetah, human, bat, whale).",
+    "image": ""
+  },
+  {
+    "num": 44,
+    "exam": "NEET 2018",
+    "question": "Among the following sets of examples for divergent evolution, select the incorrect option.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Forelimbs of man, bat and cheetah"
+      },
+      {
+        "id": "B",
+        "text": "Heart of bat, man and cheetah"
+      },
+      {
+        "id": "C",
+        "text": "Brain of bat, man and cheetah"
+      },
+      {
+        "id": "D",
+        "text": "Eye of octopus, bat and man\nExam   GOAL"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nEyes of octopus, bat, and man are **analogous organs** showing convergent evolution, not divergent evolution.",
+    "image": ""
+  },
+  {
+    "num": 45,
+    "exam": "NEET 2018",
+    "question": "According to Hugo de Vries, the mechanism of evolution is",
+    "options": [
+      {
+        "id": "A",
+        "text": "multiple step mutations"
+      },
+      {
+        "id": "B",
+        "text": "saltation"
+      },
+      {
+        "id": "C",
+        "text": "phenotypic variations"
+      },
+      {
+        "id": "D",
+        "text": "minor mutations"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nHugo de Vries termed single-step large mutations leading to speciation as **saltation**.",
+    "image": ""
+  },
+  {
+    "num": 46,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Genetic drift operates in",
+    "options": [
+      {
+        "id": "A",
+        "text": "slow reproductive population"
+      },
+      {
+        "id": "B",
+        "text": "large isolated population"
+      },
+      {
+        "id": "C",
+        "text": "non-reproductive population"
+      },
+      {
+        "id": "D",
+        "text": "small isolated population"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Genetic drift** operates most prominently in **small isolated populations**, where chance events cause significant fluctuations in allele frequencies.",
+    "image": ""
+  },
+  {
+    "num": 47,
+    "exam": "NEET 2016 Phase 2",
+    "question": "In Hardy-Weinberg equation, the frequency of heterozygous individual is represented by",
+    "options": [
+      {
+        "id": "A",
+        "text": "pq"
+      },
+      {
+        "id": "B",
+        "text": "p^2"
+      },
+      {
+        "id": "C",
+        "text": "2pq"
+      },
+      {
+        "id": "D",
+        "text": "q^2"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn the Hardy-Weinberg binomial expansion $(p+q)^2 = p^2 + 2pq + q^2 = 1$, the frequency of heterozygous individuals ($Aa$) is represented by **2pq**.",
+    "image": ""
+  },
+  {
+    "num": 48,
+    "exam": "NEET 2016 Phase 2",
+    "question": "The chronological order of human evolution from early to the recent is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ramapithecus → Homo habilis → Australopithecus → Homo erectus"
+      },
+      {
+        "id": "B",
+        "text": "Australopithecus → Ramapithecus → Homo habilis → Homo erectus"
+      },
+      {
+        "id": "C",
+        "text": "Ramapithecus → Australopithecus → Homo habilis → Homo erectus"
+      },
+      {
+        "id": "D",
+        "text": "Australopithecus → Homo habilis → Ramapithecus → Homo erectus"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe chronological order of human evolutionary stages from earliest to most recent is:\n**Ramapithecus → Australopithecus → Homo habilis → Homo erectus**.",
+    "image": ""
+  },
+  {
+    "num": 49,
+    "exam": "NEET 2016 Phase 2",
+    "question": "Which of the following is the correct sequence of events in the origin of life ?\nI. Formation of protobionts\nII. Synthesis of organic monomers\nIII. Synthesis of organic polymers\nIV. Formation of DNA-based genetic systems",
+    "options": [
+      {
+        "id": "A",
+        "text": "II, III, I, IV"
+      },
+      {
+        "id": "B",
+        "text": "II, III, IV, I"
+      },
+      {
+        "id": "C",
+        "text": "I, II, III, IV"
+      },
+      {
+        "id": "D",
+        "text": "I, III, II, IV"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe sequential stages in the chemical origin of life are:\nSynthesis of organic monomers (II) → Synthesis of organic polymers (III) → Formation of protobionts (I) → Formation of DNA-based genetic systems (IV).\nSequence: **II, III, I, IV**.",
+    "image": ""
+  },
+  {
+    "num": 50,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Which of the following structures is homologus to the wing of a bird ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Wing of a Moth"
+      },
+      {
+        "id": "B",
+        "text": "Dorsal fin of a Shark"
+      },
+      {
+        "id": "C",
+        "text": "Flipper of Whale"
+      },
+      {
+        "id": "D",
+        "text": "Hindlimb of Rabbit\nExam   GOAL"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe wing of a bird and the **flipper of a whale** are homologous structures because both are modified pentadactyl forelimbs sharing a common ancestral skeletal plan.",
+    "image": ""
+  },
+  {
+    "num": 51,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Analogous structures are a result of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Divergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "C",
+        "text": "Stabilizing selection"
+      },
+      {
+        "id": "D",
+        "text": "Shared ancestry"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Analogous structures** arise when unrelated organisms adapt to similar environments or functional demands, which is the result of **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 52,
+    "exam": "NEET 2016 Phase 1",
+    "question": "Following are the two statements regarding the origin of life -\n(a) The earliest organisms that appeared on the earth were non-green and presumably anaerobes\n(b) The first autotrophic organisms were the chemoautotrophs that never released oxygen\nOf the above statements which one of the following options is correct ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both (a) and (b) are false"
+      },
+      {
+        "id": "B",
+        "text": "Both (a) and (b) are correct"
+      },
+      {
+        "id": "C",
+        "text": "(b) is correct but (a) is false"
+      },
+      {
+        "id": "D",
+        "text": "(a) is correct but (b) is false"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- Statement (a) is correct: The earliest primitive life forms were non-photosynthetic anaerobic chemoheterotrophs.\n- Statement (b) is correct: The first autotrophs were anoxygenic chemoautotrophs that did not split water or release oxygen.\nThus, **both (a) and (b) are correct**.",
+    "image": ""
+  },
+  {
+    "num": 53,
+    "exam": "AIPMT 2015",
+    "question": "The wings of a bird and the wings of an insect are :",
+    "options": [
+      {
+        "id": "A",
+        "text": "homologous structures and represent divergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "phylogenetic structures and represent divergent evolution"
+      },
+      {
+        "id": "C",
+        "text": "homologous structures and represent convergent evolution"
+      },
+      {
+        "id": "D",
+        "text": "analogous structures and represent convergent evolution"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nWings of birds and insects perform the same flight function but possess fundamentally different anatomical structures, making them **analogous structures representing convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 54,
+    "exam": "AIPMT 2015",
+    "question": "Industrial melanism is an example of -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mutation"
+      },
+      {
+        "id": "B",
+        "text": "Natural selection"
+      },
+      {
+        "id": "C",
+        "text": "Neo Darwinism"
+      },
+      {
+        "id": "D",
+        "text": "Neo Lamarckism"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n**Industrial melanism** in the peppered moth (*Biston betularia*) in England is a classic demonstration of **natural selection** in action.",
+    "image": ""
+  },
+  {
+    "num": 55,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "A population will not exist in Hardy-Weinberg equilibrium if",
+    "options": [
+      {
+        "id": "A",
+        "text": "there are no mutations"
+      },
+      {
+        "id": "B",
+        "text": "individuals mate selectively"
+      },
+      {
+        "id": "C",
+        "text": "the population is large"
+      },
+      {
+        "id": "D",
+        "text": "there is no migration"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nHardy-Weinberg equilibrium assumes random mating. If **individuals mate selectively** (non-random mating), genotype and allele frequencies change, disrupting equilibrium.",
+    "image": ""
+  },
+  {
+    "num": 56,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "Which is the most common mechanism of genetic variation in the population of a sexually\nreproducing organism ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Transduction"
+      },
+      {
+        "id": "B",
+        "text": "Chromosomal aberrations"
+      },
+      {
+        "id": "C",
+        "text": "Recombination"
+      },
+      {
+        "id": "D",
+        "text": "Genetic Drift\nExam   GOAL"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn sexually reproducing organisms, crossing over and independent assortment during meiosis produce **recombination**, which is the most common source of genetic variation.",
+    "image": ""
+  },
+  {
+    "num": 57,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "question": "Which of the following had the smallest brain capacity ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Homo neanderthalensis"
+      },
+      {
+        "id": "B",
+        "text": "Homo erectus"
+      },
+      {
+        "id": "C",
+        "text": "Homo sapiens"
+      },
+      {
+        "id": "D",
+        "text": "Homo habilis"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nBrain capacities: *Homo habilis* had **650–800 cc**, *Homo erectus* had ~900 cc, *Neanderthal man* had ~1400 cc, and *Homo sapiens* ~1350–1400 cc. Hence, *Homo habilis* had the smallest capacity.",
+    "image": ""
+  },
+  {
+    "num": 58,
+    "exam": "AIPMT 2014",
+    "question": "In a population of 1000 individuals 360 belong to genotype AA, 480 to Aa and the remaining 160 to\naa. Based on this data, the frequency of allele A in the population is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "0.4"
+      },
+      {
+        "id": "B",
+        "text": "0.5"
+      },
+      {
+        "id": "C",
+        "text": "0.6"
+      },
+      {
+        "id": "D",
+        "text": "0.7"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nTotal individuals = 1000. Genotypes: AA = 360, Aa = 480, aa = 160.\nNumber of A alleles = $2(360) + 480 = 720 + 480 = 1200$.\nTotal alleles = $2 \\times 1000 = 2000$.\nFrequency of allele $A$ = $1200 / 2000 = 0.6$.",
+    "image": ""
+  },
+  {
+    "num": 59,
+    "exam": "AIPMT 2014",
+    "question": "Forelimbs of cat, lizard used in walking, forelimbs of whale used in swimming and forelimbs of bats\nused in flying are an example of:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Analogous organs"
+      },
+      {
+        "id": "B",
+        "text": "Homologous organs"
+      },
+      {
+        "id": "C",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "D",
+        "text": "Adaptive radiation"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nForelimbs of cats, lizards, whales, and bats have identical anatomical skeletal frameworks adapted to different modes of locomotion, illustrating **homologous organs**.",
+    "image": ""
+  },
+  {
+    "num": 60,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Random undirectional change in allele frequencies that occur by chance in all populations and\nespecially in small populations is known as :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Genetic drift"
+      },
+      {
+        "id": "B",
+        "text": "Migration"
+      },
+      {
+        "id": "C",
+        "text": "Mutation"
+      },
+      {
+        "id": "D",
+        "text": "Natural selection"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nRandom changes in allele frequency that occur by pure chance, especially in small populations, are known as **genetic drift**.",
+    "image": ""
+  },
+  {
+    "num": 61,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Genetic variation in a population arises due to :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Reproductive isolation and selection"
+      },
+      {
+        "id": "B",
+        "text": "Mutations only"
+      },
+      {
+        "id": "C",
+        "text": "Mutations as well as recombination"
+      },
+      {
+        "id": "D",
+        "text": "Recombination only"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nGenetic variation within a population arises primarily from **mutations** (introducing novel alleles) and **genetic recombination** (during meiotic sexual reproduction).",
+    "image": ""
+  },
+  {
+    "num": 62,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "Dinosaurs dominated the World in which of the following geological era ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Jurassic"
+      },
+      {
+        "id": "B",
+        "text": "Devonian"
+      },
+      {
+        "id": "C",
+        "text": "Coenozoic"
+      },
+      {
+        "id": "D",
+        "text": "Mesozoic"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nDinosaurs flourished, diversified, and dominated the terrestrial world during the **Mesozoic Era** (the Age of Reptiles).",
+    "image": ""
+  },
+  {
+    "num": 63,
+    "exam": "NEET 2013 (Karnataka)",
+    "question": "The finch species of Galapagos Islands are grouped according to their food sources. Which of the\nfollowing is not a finch food ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Insects"
+      },
+      {
+        "id": "B",
+        "text": "Carrion"
+      },
+      {
+        "id": "C",
+        "text": "Tree buds"
+      },
+      {
+        "id": "D",
+        "text": "Seeds\nExam   GOAL"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nGalapagos finches diversified into seed-eating, insect-eating, and cactus/tree-bud feeding niches. They are not known to feed on **carrion** (decaying animal flesh).",
+    "image": ""
+  },
+  {
+    "num": 64,
+    "exam": "NEET 2013",
+    "question": "According to Darwin, the organic evolution is due to -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Reduced feeding efficiency in one species due to the presence of interfering species"
+      },
+      {
+        "id": "B",
+        "text": "Competition within closely related species"
+      },
+      {
+        "id": "C",
+        "text": "Intraspecific competition"
+      },
+      {
+        "id": "D",
+        "text": "Interspecific competition"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nDarwin emphasized that the struggle for existence is most intense between organisms that share similar niches and resources, and considered competition between species (**interspecific competition**) an important driving force in organic evolution.",
+    "image": ""
+  },
+  {
+    "num": 65,
+    "exam": "NEET 2013",
+    "question": "The tendency of population to remain in genetic equilibrium may be disturbed by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "lack of random mating"
+      },
+      {
+        "id": "B",
+        "text": "random mating"
+      },
+      {
+        "id": "C",
+        "text": "lack of migration"
+      },
+      {
+        "id": "D",
+        "text": "lack of mutations"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nGenetic equilibrium is disrupted by factors like non-random mating (**lack of random mating**), mutations, gene flow, genetic drift, and natural selection.",
+    "image": ""
+  },
+  {
+    "num": 66,
+    "exam": "NEET 2013",
+    "question": "Variation in gene frequencies within populations can occur by chance rather than by natural\nselection. This is referred to as :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Genetic drift"
+      },
+      {
+        "id": "B",
+        "text": "Genetic load"
+      },
+      {
+        "id": "C",
+        "text": "Genetic flow"
+      },
+      {
+        "id": "D",
+        "text": "Random mating"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nRandom fluctuations in allele frequency occurring by chance rather than natural selection are termed **genetic drift** (Sewall Wright effect).",
+    "image": ""
+  },
+  {
+    "num": 67,
+    "exam": "NEET 2013",
+    "question": "The process by which organisms with different evolutionary history evolve similar phenotypic\nadaptations in response to a common environmental challenge is called :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "Adaptive radiation"
+      },
+      {
+        "id": "C",
+        "text": "Natural selection"
+      },
+      {
+        "id": "D",
+        "text": "Non-random evolution"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe evolution of similar phenotypic adaptations in organisms with different evolutionary backgrounds in response to similar environmental challenges is **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 68,
+    "exam": "NEET 2013",
+    "question": "The eye of octopus and eye of cat show different patterns of structure, yet they perform similar\nfunction, This is an example of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Homologous organs that have evolved due to divergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "Analogous organs that have evolved due to convergent evolution"
+      },
+      {
+        "id": "C",
+        "text": "Homologous organs that have evolved due to convergent evolution"
+      },
+      {
+        "id": "D",
+        "text": "Analogous organs that have evolved due to divergent evolution"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe eye of an octopus (invertebrate cephalopod) and the eye of a cat (vertebrate mammal) differ in retinal structure and embryonic origin but perform identical visual functions, representing **analogous organs that have evolved due to convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 69,
+    "exam": "AIPMT 2012 Mains",
+    "question": "The idea of mutations was brought forth by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Charles Darwin, who observed a wide variety of organisms during sea voyage"
+      },
+      {
+        "id": "B",
+        "text": "Hugo do Vries, who worked on evening primrose"
+      },
+      {
+        "id": "C",
+        "text": "Gregor Mendol, who worked on Pisum sativum"
+      },
+      {
+        "id": "D",
+        "text": "Hardy Weinberg, who worked on allele frequencies in a population\nExam   GOAL"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe mutation theory of evolution was proposed by **Hugo de Vries**, who conducted breeding experiments on the evening primrose (*Oenothera lamarckiana*).",
+    "image": ""
+  },
+  {
+    "num": 70,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Evolution of different species in a given area starting from a point and spreading to other\ngeographical areas is known as",
+    "options": [
+      {
+        "id": "A",
+        "text": "divergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "Natural selection"
+      },
+      {
+        "id": "C",
+        "text": "Migration"
+      },
+      {
+        "id": "D",
+        "text": "Adaptive radiation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe radiation of diverse species from a single ancestral point into varied habitats and ecological niches within a geographical region is **adaptive radiation**.",
+    "image": ""
+  },
+  {
+    "num": 71,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "Which one of the following options gives one correct example each of convergent evolution and\ndivergent evolution ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Convergent evolution   Thorns of Bougainvillea and tendrils of cucurbita   &   Divergent evolution\nEyes of Octopus and mammals"
+      },
+      {
+        "id": "B",
+        "text": "Convergent evolution   Eyes of octopus and mammals   &   Divergent evolution   Bones of\nforelimbs of mammals and vertebrates"
+      },
+      {
+        "id": "C",
+        "text": "Convergent evolution   Thorns of Bougainvillea and tendrils of cucurbita   &   Divergent evolution\nWings of butterflies and birds"
+      },
+      {
+        "id": "D",
+        "text": "Convergent evolution   Bones of forelimbs of vertebrates   &   Divergent evolution   Wings of\nbutterfly and birds"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- Convergent evolution: Eyes of octopus and mammals (analogous).\n- Divergent evolution: Bones of forelimbs of vertebrates (homologous).\nHence, option (B) is the correct pair.",
+    "image": ""
+  },
+  {
+    "num": 72,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "What was the most significant trend in the evolution of modern man (Homo sapiens) from his\nancestors ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Upright posture"
+      },
+      {
+        "id": "B",
+        "text": "Increasing cranial capacity"
+      },
+      {
+        "id": "C",
+        "text": "Shortening of jaws"
+      },
+      {
+        "id": "D",
+        "text": "Binocular vision"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe single most pronounced evolutionary trend in the lineage leading to modern *Homo sapiens* is the **progressive increase in cranial capacity (brain size)** from ~650 cc in *H. habilis* to ~1400 cc in modern humans.",
+    "image": ""
+  },
+  {
+    "num": 73,
+    "exam": "AIPMT 2012 Prelims",
+    "question": "The extinct human who lived 1,00,000 to 40,000 years ago, in Europe, Asia and parts of Africa, with\nshort stature, heavy eyebrows, retreating foreheads, large jaws with heavy teeth, stocky bodies, a\nlumbering gait and stooped posture was :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Neanderthal human"
+      },
+      {
+        "id": "B",
+        "text": "Homo habilis"
+      },
+      {
+        "id": "C",
+        "text": "Cro-Magnon humans"
+      },
+      {
+        "id": "D",
+        "text": "Ramapithecus"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Neanderthal man** lived roughly 100,000 to 40,000 years ago across Europe, Asia, and North Africa, featuring heavy brow ridges, stooped posture, large jaws, and cranial capacity of ~1400 cc.",
+    "image": ""
+  },
+  {
+    "num": 74,
+    "exam": "AIPMT 2011 Prelims",
+    "question": "What was the most significant trend in the evolution of modern man (Homo sapiens) from his\nancestors ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Uprigth posture"
+      },
+      {
+        "id": "B",
+        "text": "Shortening of jaws"
+      },
+      {
+        "id": "C",
+        "text": "Binocular vision"
+      },
+      {
+        "id": "D",
+        "text": "Increasing cranial capacity\nExam   GOAL"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe most significant evolutionary trend in hominid evolution toward *Homo sapiens* is the **increase in cranial capacity**.",
+    "image": ""
+  },
+  {
+    "num": 75,
+    "exam": "AIPMT 2010 Mains",
+    "question": "Given below are four statements (A-D) each with one or two blanks. Select the option which\ncorrectly fills up the blanks in two statements\n–   Statements :\n(A) Wings of butterfly and birds look alike and are the results of (i) , evolution\n(B) Miller showed that CH   4   , H   2   , NH   3   and (i), when exposed to electric discharge in a flask resulted in\nformation of (ii) .\n(C) Vermiform appendix is a (i) organ and an (ii) evidence of evolution.\n(D) According to Darwin evolution took place due to (i) and (ii) of the fittest.",
+    "options": [
+      {
+        "id": "A",
+        "text": "(C) - (i) vestigial, (ii) anatomical, (D) - (i) mutations, (ii) multiplication"
+      },
+      {
+        "id": "B",
+        "text": "(D) - (i) small variations, (ii) survival, (A) - (i) convergent"
+      },
+      {
+        "id": "C",
+        "text": "(A) - (i) convergent, (B) - (i) oxygen, (ii) nucleosides"
+      },
+      {
+        "id": "D",
+        "text": "(B) - (i) water vapour, (ii) amino acids, (C) - (i) rudimentary (ii) anatomical"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- Statement (D): According to Darwin, evolution took place due to (i) small variations and (ii) survival of the fittest.\n- Statement (A): Wings of butterfly and birds look alike and are the results of (i) convergent evolution.\nHence, option (B) correctly fills blanks.",
+    "image": ""
+  },
+  {
+    "num": 76,
+    "exam": "AIPMT 2010 Mains",
+    "question": "The most apparent changes during the evolutionary history of Homo sapiens is traced in",
+    "options": [
+      {
+        "id": "A",
+        "text": "Remarkable increase in the brain size"
+      },
+      {
+        "id": "B",
+        "text": "Walking upright"
+      },
+      {
+        "id": "C",
+        "text": "Loss of body hair"
+      },
+      {
+        "id": "D",
+        "text": "Shortening of the jaws"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe most remarkable trend in human evolution is the **dramatic enlargement of brain size (cranial capacity)**.",
+    "image": ""
+  },
+  {
+    "num": 77,
+    "exam": "AIPMT 2010 Prelims",
+    "question": "Darwin's finches are a good example of –",
+    "options": [
+      {
+        "id": "A",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "Connecting link"
+      },
+      {
+        "id": "C",
+        "text": "Industrial melanism"
+      },
+      {
+        "id": "D",
+        "text": "Adaptive radiation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nDarwin's finches on the Galapagos Islands provide the prime textbook example of **adaptive radiation**.",
+    "image": ""
+  },
+  {
+    "num": 78,
+    "exam": "AIPMT 2009",
+    "question": "Peripatus is a connecting link between :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ctenophora and Platyhelminthes"
+      },
+      {
+        "id": "B",
+        "text": "Mollusca and Echinodermata"
+      },
+      {
+        "id": "C",
+        "text": "Coelenterata and Porifera"
+      },
+      {
+        "id": "D",
+        "text": "Annelida and Arthropoda"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n*Peripatus* (velvet worm) exhibits nephridia and unsegmented body features characteristic of Annelida, along with clawed legs, antennae, and tracheae characteristic of Arthropoda, serving as a **connecting link between Annelida and Arthropoda**.",
+    "image": ""
+  },
+  {
+    "num": 79,
+    "exam": "AIPMT 2009",
+    "question": "In the case of peppered moth (Biston betularia) the black-coloured from became dominant over the\nlight-coloured form in England during industrial revolution. This is an example of -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Natural selection whereby the darker forms were selected."
+      },
+      {
+        "id": "B",
+        "text": "Protective mimicry"
+      },
+      {
+        "id": "C",
+        "text": "Inheritance of darker colour character acquired due to the darker environment"
+      },
+      {
+        "id": "D",
+        "text": "Appearance of the darker coloured individuals due to very poor sunlight\nExam   GOAL"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nDuring the Industrial Revolution in England, soot-covered tree trunks favoured the survival of dark/melanic moths (*Biston betularia carbonaria*) over speckled white moths due to predatory concealment, demonstrating **natural selection**.",
+    "image": ""
+  },
+  {
+    "num": 80,
+    "exam": "AIPMT 2008",
+    "question": "Darwin's finches are a good example of –",
+    "options": [
+      {
+        "id": "A",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "Adaptive radiation"
+      },
+      {
+        "id": "C",
+        "text": "Connecting link"
+      },
+      {
+        "id": "D",
+        "text": "Industrial melanism"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nDarwin's finches represent **adaptive radiation**.",
+    "image": ""
+  },
+  {
+    "num": 81,
+    "exam": "AIPMT 2008",
+    "question": "Which one of the following scientist's name is correctly matched with the theory put fourth by him?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mendel — Theory of pangenesis"
+      },
+      {
+        "id": "B",
+        "text": "deVries — Natural selection"
+      },
+      {
+        "id": "C",
+        "text": "Pasteur — Inheritance of acquired characters"
+      },
+      {
+        "id": "D",
+        "text": "Weismann — Theory of continuity of germplasm"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**August Weismann** disproved Lamarck's theory and proposed the **Theory of Continuity of Germplasm**, stating that only changes affecting germ cells are inherited.",
+    "image": ""
+  },
+  {
+    "num": 82,
+    "exam": "AIPMT 2008",
+    "question": "Which one of the following is incorrect about the characteristics of protobionts (coacervates and\nmicrospheres) as envisaged in the abiogenic origin of life?",
+    "options": [
+      {
+        "id": "A",
+        "text": "They could separate combinations of molecules from the surroundings"
+      },
+      {
+        "id": "B",
+        "text": "They were able to reproduce"
+      },
+      {
+        "id": "C",
+        "text": "They were partially isolated from the surroundings"
+      },
+      {
+        "id": "D",
+        "text": "They could maintain an internal environment"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nProtobionts (coacervates and microspheres) could maintain an internal chemical environment and separate molecules from their surroundings, but **they lacked a self-replicating genetic system and could not reproduce**.",
+    "image": ""
+  },
+  {
+    "num": 83,
+    "exam": "AIPMT 2008",
+    "question": "Thorn of Bougainvillea and tendril of Cucurbita are examples of:",
+    "options": [
+      {
+        "id": "A",
+        "text": "analogous organs"
+      },
+      {
+        "id": "B",
+        "text": "homologous organs"
+      },
+      {
+        "id": "C",
+        "text": "vestigial organs"
+      },
+      {
+        "id": "D",
+        "text": "retrogressive evolution"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThorns of *Bougainvillea* and tendrils of *Cucurbita* both originate as axillary buds, representing **homologous organs** resulting from divergent evolution.",
+    "image": ""
+  },
+  {
+    "num": 84,
+    "exam": "AIPMT 2008",
+    "question": "What is true about the isolated small tribal populations?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Wrestlers who develop strong body muscles in their life time pass their character on to their\nprogeny"
+      },
+      {
+        "id": "B",
+        "text": "There is no change in population size as they have a large gene pool"
+      },
+      {
+        "id": "C",
+        "text": "There is a decline in population as boys marry girls only from their own tribe"
+      },
+      {
+        "id": "D",
+        "text": "Hereditary disease like colour-blindness do not spread in the isolated population\nExam   GOAL"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn small, isolated populations, genetic drift can lead to random fixation or elimination of alleles, meaning recessive alleles (e.g., colour-blindness) might become fixed or fail to spread.",
+    "image": ""
+  },
+  {
+    "num": 85,
+    "exam": "AIPMT 2007",
+    "question": "The concept of chemical evolution is based on-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Crystallization of chemicals"
+      },
+      {
+        "id": "B",
+        "text": "Effect of solar radiation on chemicals"
+      },
+      {
+        "id": "C",
+        "text": "Possible origin of life by combination of chemicals under suitable environmental conditions"
+      },
+      {
+        "id": "D",
+        "text": "Interaction of water, air and clay under intense heat"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe Oparin-Haldane concept of chemical evolution states that living organisms originated abiogenetically through the **progressive chemical combination and polymerization of organic molecules under primitive Earth conditions**.",
+    "image": ""
+  },
+  {
+    "num": 86,
+    "exam": "AIPMT 2007",
+    "question": "The finches of Galapogas islands provide an evidence in favour of-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Special Creation"
+      },
+      {
+        "id": "B",
+        "text": "Biogeographical Evolution"
+      },
+      {
+        "id": "C",
+        "text": "Evolution due to Mutation"
+      },
+      {
+        "id": "D",
+        "text": "Retrogressive Evolution"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe localized adaptive radiation of Galapagos finches provides strong evidence for **biogeographical evolution**.",
+    "image": ""
+  },
+  {
+    "num": 87,
+    "exam": "AIPMT 2007",
+    "question": "When two species of different genealogy come to resemble each other as a result of adaptation, the\nphenomenon is termed:-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Microevolution"
+      },
+      {
+        "id": "B",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "C",
+        "text": "Co-evolution"
+      },
+      {
+        "id": "D",
+        "text": "Divergent evolution"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nWhen distantly related species develop similar adaptations due to shared environmental pressures, it is termed **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 88,
+    "exam": "AIPMT 2007",
+    "question": "Adaptive radiation refers to:-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Adaptations due to Geographical isolation"
+      },
+      {
+        "id": "B",
+        "text": "Migration of members of a species to different geographical areas"
+      },
+      {
+        "id": "C",
+        "text": "Evolution of different species from a common ancestor"
+      },
+      {
+        "id": "D",
+        "text": "Power of adaptation in an individual to a variety of environments"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAdaptive radiation is the **evolution of diverse species from a common ancestral stock**, each adapted to a unique ecological niche.",
+    "image": ""
+  },
+  {
+    "num": 89,
+    "exam": "AIPMT 2007",
+    "question": "Which one of the following statements is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ontogeny repeats phylogeny."
+      },
+      {
+        "id": "B",
+        "text": "There is no evidence of the existence of gills during embryogenesis of mammals."
+      },
+      {
+        "id": "C",
+        "text": "Stem cells are specialized cells."
+      },
+      {
+        "id": "D",
+        "text": "All plant and animal cells are totipotent."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n**Biogenetic Law** ('Ontogeny recapitulates phylogeny') was proposed by Ernst Haeckel.",
+    "image": ""
+  },
+  {
+    "num": 90,
+    "exam": "AIPMT 2007",
+    "question": "Among the human ancestors the brain size was more than 1000 cc in",
+    "options": [
+      {
+        "id": "A",
+        "text": "Homo erectus"
+      },
+      {
+        "id": "B",
+        "text": "Ramapithecus"
+      },
+      {
+        "id": "C",
+        "text": "Homo habilis"
+      },
+      {
+        "id": "D",
+        "text": "Homo neanderthalensis\nExam   GOAL"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAmong hominids, *Homo neanderthalensis* possessed a cranial capacity of approximately **1400 cc**, which is greater than 1000 cc (*H. habilis* was 650–800 cc and *H. erectus* was ~900 cc).",
+    "image": ""
+  },
+  {
+    "num": 91,
+    "exam": "AIPMT 2007",
+    "question": "Industrial melanism as observed in peppered moth proves that",
+    "options": [
+      {
+        "id": "A",
+        "text": "the melanic form of the moth has no selective advantage over lighter form in industrial area"
+      },
+      {
+        "id": "B",
+        "text": "the lighter-form moth has no selective advantage either in polluted industrial area or non-\npolluted area"
+      },
+      {
+        "id": "C",
+        "text": "melanism is a pollution-generated feature"
+      },
+      {
+        "id": "D",
+        "text": "the true black melanic forms arise by a recurring random mutation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nIndustrial melanism demonstrated that the melanic variety had a selective survival advantage over the typical lighter form in soot-polluted industrial habitats.",
+    "image": ""
+  },
+  {
+    "num": 92,
+    "exam": "AIPMT 2007",
+    "question": "Select the correct statement from the following:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fitness is the end result of the ability to adapt and gets selected by nature"
+      },
+      {
+        "id": "B",
+        "text": "All mammals except whales and camels have seven cervical vertebrae"
+      },
+      {
+        "id": "C",
+        "text": "Mutations are random and directional"
+      },
+      {
+        "id": "D",
+        "text": "Darwinian variations are small and directionless"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to Darwinian evolution, **fitness is the end result of the ability to adapt and get selected by nature**.",
+    "image": ""
+  },
+  {
+    "num": 93,
+    "exam": "AIPMT 2007",
+    "question": "What is common between whale, seal and shark?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Thick subcutaneous fat"
+      },
+      {
+        "id": "B",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "C",
+        "text": "Homoiothermy"
+      },
+      {
+        "id": "D",
+        "text": "Seasonal migration"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nWhales (mammals), seals (mammals), and sharks (cartilaginous fishes) all possess streamlined aquatic bodies and flippers/fins, illustrating **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 94,
+    "exam": "AIPMT 2007",
+    "question": "One of the important consequences of geographical isolation is",
+    "options": [
+      {
+        "id": "A",
+        "text": "preventing speciation"
+      },
+      {
+        "id": "B",
+        "text": "speciation through reproductive isolation"
+      },
+      {
+        "id": "C",
+        "text": "random creation of new species"
+      },
+      {
+        "id": "D",
+        "text": "no change in the isolated fauna"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nGeographical isolation physically separates gene pools, eventually leading to genetic divergence and **speciation through reproductive isolation**.",
+    "image": ""
+  },
+  {
+    "num": 95,
+    "exam": "AIPMT 2006",
+    "question": "An important evidence in favour of organic evolution is the occurrence of-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Homologous organs only"
+      },
+      {
+        "id": "B",
+        "text": "Homologous and vestigial organs"
+      },
+      {
+        "id": "C",
+        "text": "Homologous and analogous organs"
+      },
+      {
+        "id": "D",
+        "text": "Analogous and vestigial organs"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOrganic evolution is strongly supported by the presence of **homologous organs** (demonstrating common ancestry) and **vestigial organs** (remnants of ancestral structures).",
+    "image": ""
+  },
+  {
+    "num": 96,
+    "exam": "AIPMT 2006",
+    "question": "Which one of the following amino-acids was not found to be synthesized in Miller's experiment ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Aspartic acid"
+      },
+      {
+        "id": "B",
+        "text": "Alanine"
+      },
+      {
+        "id": "C",
+        "text": "Glycine"
+      },
+      {
+        "id": "D",
+        "text": "Glutamic acid\nExam   GOAL"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nIn S.L. Miller's spark-discharge experiment, glycine, alanine, and aspartic acid were synthesized. **Glutamic acid** was not among the products detected.",
+    "image": ""
+  },
+  {
+    "num": 97,
+    "exam": "AIPMT 2006",
+    "question": "Jurassic period of the Mesozoic era characterized by-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Radiation of reptiles and origin of mammal like reptiles"
+      },
+      {
+        "id": "B",
+        "text": "Flowering plants and first dinosaurs appear"
+      },
+      {
+        "id": "C",
+        "text": "Gymnosperms are dominant plants and first birds appear"
+      },
+      {
+        "id": "D",
+        "text": "Dinosaurs become extinct and angiosperms appear"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe **Jurassic period** of the Mesozoic era is famous for the **dominance of gymnosperms, radiation of dinosaurs, and the appearance of the first feathered birds (*Archaeopteryx*)**.",
+    "image": ""
+  },
+  {
+    "num": 98,
+    "exam": "AIPMT 2006",
+    "question": "Praying mantis is a good example of-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Warning colouration"
+      },
+      {
+        "id": "B",
+        "text": "Camouflage"
+      },
+      {
+        "id": "C",
+        "text": "Mullerian mimicry"
+      },
+      {
+        "id": "D",
+        "text": "Social insects"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe praying mantis resembles foliage and twigs to blend into its background, which is a prime example of **camouflage (protective resemblance)**.",
+    "image": ""
+  },
+  {
+    "num": 99,
+    "exam": "AIPMT 2006",
+    "question": "Evolutionary history of an organism is known as",
+    "options": [
+      {
+        "id": "A",
+        "text": "Phylogeny"
+      },
+      {
+        "id": "B",
+        "text": "Ancestry"
+      },
+      {
+        "id": "C",
+        "text": "Paleontology"
+      },
+      {
+        "id": "D",
+        "text": "Ontogeny"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe evolutionary history of an organism or a taxonomic group is termed its **phylogeny**.",
+    "image": ""
+  },
+  {
+    "num": 100,
+    "exam": "AIPMT 2005",
+    "question": "Which one of the following experiments suggests that simplest living organisms could not have\noriginated spontaneously from non-living matter ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Meat was not spoiled, when heated and kept sealed in a vessel"
+      },
+      {
+        "id": "B",
+        "text": "Larva cound appear in decaying organic matter"
+      },
+      {
+        "id": "C",
+        "text": "Microbes appeared form unsterilized organic matter"
+      },
+      {
+        "id": "D",
+        "text": "microbes did not appear in stored meat"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nFrancesco Redi and Louis Pasteur demonstrated that meat kept heated and sealed in sterile flasks did not spoil or produce maggots, disproving spontaneous generation.",
+    "image": ""
+  },
+  {
+    "num": 101,
+    "exam": "AIPMT 2005",
+    "question": "De Vries gave his mutation theory on organic evolution while working on -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Althea rosea"
+      },
+      {
+        "id": "B",
+        "text": "Oenothera lamarckiana"
+      },
+      {
+        "id": "C",
+        "text": "Pisum sativum"
+      },
+      {
+        "id": "D",
+        "text": "Drosophila melanogaster\nExam   GOAL"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nHugo de Vries developed his Mutation Theory of Evolution through extensive breeding experiments on the evening primrose, ***Oenothera lamarckiana***.",
+    "image": ""
+  },
+  {
+    "num": 102,
+    "exam": "AIPMT 2005",
+    "question": "There are two opposing views about origin of modern man. According to one view Homo erectus in\nAsia were the ancestors of modern man. A study of variation of DNA however suggested African\norigin of modern man. What kind of observation of DNA variation could suggest this ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Variation only in Asia and no variation in Africa"
+      },
+      {
+        "id": "B",
+        "text": "Similar variation in Africa and Asia"
+      },
+      {
+        "id": "C",
+        "text": "Greater variation in Africa than in Asia"
+      },
+      {
+        "id": "D",
+        "text": "Greater variation in Asia than in Africa"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nStudies of mitochondrial DNA (mtDNA) and nuclear DNA variations in human populations show the **greatest genetic diversity within African populations**, indicating that modern humans originated in Africa and subsequently dispersed elsewhere.",
+    "image": ""
+  },
+  {
+    "num": 103,
+    "exam": "AIPMT 2005",
+    "question": "Which one of the following phenomena supports Darwin's concept of natural selection in organic\nevolution ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Prevalence of pesticide resistant insects"
+      },
+      {
+        "id": "B",
+        "text": "Development of organs from 'stem' cells for organ transplantation"
+      },
+      {
+        "id": "C",
+        "text": "production of 'Dolly', the sheep by cloning"
+      },
+      {
+        "id": "D",
+        "text": "Development of transgenic animals"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe rapid development of **pesticide-resistant insect populations** upon pesticide application is a textbook example of natural selection acting on pre-existing variations.",
+    "image": ""
+  },
+  {
+    "num": 104,
+    "exam": "AIPMT 2005",
+    "question": "Which of the following is the relatively most accurate method for dating of fossils ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Radio-carbon method"
+      },
+      {
+        "id": "B",
+        "text": "Uranium-lead method"
+      },
+      {
+        "id": "C",
+        "text": "Potassium–argon method"
+      },
+      {
+        "id": "D",
+        "text": "Electron-spin resonance method"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Electron-spin resonance (ESR)** and radiometric uranium-series dating provide high accuracy for dating fossils beyond the limited range of carbon-14.",
+    "image": ""
+  },
+  {
+    "num": 105,
+    "exam": "AIPMT 2005",
+    "question": "At a particular locus, frequency of 'A' allele is 0.6 and that of 'a' is 0.4. What would be the frequency\nof heterozygotes in a random mating population at equilibrium ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "0.48"
+      },
+      {
+        "id": "B",
+        "text": "0.24"
+      },
+      {
+        "id": "C",
+        "text": "0.36"
+      },
+      {
+        "id": "D",
+        "text": "0.16"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nGiven $p = 0.6$ (frequency of $A$) and $q = 0.4$ (frequency of $a$).\nFrequency of heterozygotes ($Aa$) = $2pq = 2(0.6)(0.4) = 0.48$.",
+    "image": ""
+  },
+  {
+    "num": 106,
+    "exam": "AIPMT 2005",
+    "question": "Which of the following is not true for a species ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Variations occur among members of a species"
+      },
+      {
+        "id": "B",
+        "text": "Gene flow does not occur between the populations of a species"
+      },
+      {
+        "id": "C",
+        "text": "Each species is reproductively isolated from every other species"
+      },
+      {
+        "id": "D",
+        "text": "Members of a species can interbreed\nExam   GOAL"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nA biological species is defined as a group of interbreeding natural populations that are reproductively isolated from other such groups. Claiming that gene flow does not occur between populations of the same species is incorrect.",
+    "image": ""
+  },
+  {
+    "num": 107,
+    "exam": "AIPMT 2004",
+    "question": "Age of fossils in the past was generally determined by radio-carbon method and other methods\ninvolving radioactive elements found in the rocks. More precise methods, which were used recently\nand led to the revision of the evolutionary periods for different groups of organisms includes -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Electron spin resonance (ESR) & fossil DNA"
+      },
+      {
+        "id": "B",
+        "text": "Study of carbohydrates/proteins in fossils"
+      },
+      {
+        "id": "C",
+        "text": "Study of the conditions of fossilization"
+      },
+      {
+        "id": "D",
+        "text": "Study of carbohydrates/proteins in rocks"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nModern fossil dating techniques include **Electron Spin Resonance (ESR)** and the analysis of **ancient/fossil DNA**.",
+    "image": ""
+  },
+  {
+    "num": 108,
+    "exam": "AIPMT 2004",
+    "question": "What kind of evidence suggested that man is more closely related with chimpanzee than with other\nhominoid apes ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Evidence from fossil remains and the fossil mitochondrial DNA alone"
+      },
+      {
+        "id": "B",
+        "text": "Evidence from DNA extracted from sex chromosomes, autosomes"
+      },
+      {
+        "id": "C",
+        "text": "Comparison of chromosomes morphology only"
+      },
+      {
+        "id": "D",
+        "text": "Evidence from DNA from sex chromosomes only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nHigh-resolution molecular comparisons of **nuclear DNA from sex chromosomes and autosomes** demonstrate that humans share the closest genetic kinship with chimpanzees.",
+    "image": ""
+  },
+  {
+    "num": 109,
+    "exam": "AIPMT 2004",
+    "question": "Which one of the following is living fossil ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cycas"
+      },
+      {
+        "id": "B",
+        "text": "Moss"
+      },
+      {
+        "id": "C",
+        "text": "spirogyra"
+      },
+      {
+        "id": "D",
+        "text": "Saccharomyces"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n***Cycas*** is widely regarded as a 'living fossil' gymnosperm because it preserves ancestral cycadophyte morphological traits almost unchanged from the Mesozoic Era.",
+    "image": ""
+  },
+  {
+    "num": 110,
+    "exam": "AIPMT 2004",
+    "question": "According to oparin, which one of the following was not present in the primitive atmosphere of the\nearth ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Water vapour"
+      },
+      {
+        "id": "B",
+        "text": "Oxygen"
+      },
+      {
+        "id": "C",
+        "text": "Methane"
+      },
+      {
+        "id": "D",
+        "text": "Hydrogen"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to Oparin and Haldane, the primitive atmosphere of the early Earth was reducing, composed of methane, ammonia, hydrogen, and water vapour, but completely devoid of **free molecular oxygen (O2)**.",
+    "image": ""
+  },
+  {
+    "num": 111,
+    "exam": "AIPMT 2004",
+    "question": "The most likely reason for the development of resistance against pesticides in insects damaging a\ncrop is",
+    "options": [
+      {
+        "id": "A",
+        "text": "random mutations"
+      },
+      {
+        "id": "B",
+        "text": "genetic recombination"
+      },
+      {
+        "id": "C",
+        "text": "directed mutations"
+      },
+      {
+        "id": "D",
+        "text": "acquired heritable changes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nPre-existing **random genetic mutations** confer pesticide resistance, which is subsequently selected for when the pesticide is applied.",
+    "image": ""
+  },
+  {
+    "num": 112,
+    "exam": "AIPMT 2003",
+    "question": "Convergent evolution is illustrated by : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Bacterium and protozoan"
+      },
+      {
+        "id": "B",
+        "text": "Rat and dog"
+      },
+      {
+        "id": "C",
+        "text": "Dogfish and whale"
+      },
+      {
+        "id": "D",
+        "text": "Starfish and cuttle fish\nExam   GOAL"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nDogfish (a cartilaginous fish) and whale (a marine mammal) have independently evolved streamlined bodies and fin-like flippers for swimming, illustrating **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 113,
+    "exam": "AIPMT 2003",
+    "question": "Which one of the following sequences was proposed by Darwin and Wallace for organic evolution ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Variations, natural selection, overproduction, constancy of population size"
+      },
+      {
+        "id": "B",
+        "text": "Overproduction, constancy of population size, variations, natural selection"
+      },
+      {
+        "id": "C",
+        "text": "Variations, constancy of population size, overproduction, natural selection"
+      },
+      {
+        "id": "D",
+        "text": "Overproduction, variations, constancy of population size, natural selection"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe Darwin-Wallace evolutionary logic progresses as: **Overproduction → Constancy of population size → Struggle for existence & Variations → Natural selection**.",
+    "image": ""
+  },
+  {
+    "num": 114,
+    "exam": "AIPMT 2003",
+    "question": "Random genetic drift in a population probably results from",
+    "options": [
+      {
+        "id": "A",
+        "text": "Constant low mutation rate"
+      },
+      {
+        "id": "B",
+        "text": "Interbreeding within this population"
+      },
+      {
+        "id": "C",
+        "text": "Large population size"
+      },
+      {
+        "id": "D",
+        "text": "Highly genetically variable individuals"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nRandom genetic drift results from **chance sampling variations in small populations** where allele frequencies fluctuate randomly.",
+    "image": ""
+  },
+  {
+    "num": 115,
+    "exam": "AIPMT 2003",
+    "question": "Industrial melanism is an example of : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Darkening of skin due to smoke from industries"
+      },
+      {
+        "id": "B",
+        "text": "Defensive adaptation of skin against ultraviolet radiations"
+      },
+      {
+        "id": "C",
+        "text": "Drug resistance"
+      },
+      {
+        "id": "D",
+        "text": "Protective resemblance with the surroundings"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nIndustrial melanism in peppered moths illustrates natural selection through **protective resemblance (camouflage) with the surroundings**.",
+    "image": ""
+  },
+  {
+    "num": 116,
+    "exam": "AIPMT 2003",
+    "question": "In a random mating population in equilibrium, which of the following brings about a change in gene\nfrequency in a non-directional manner : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Selection"
+      },
+      {
+        "id": "B",
+        "text": "Random drift"
+      },
+      {
+        "id": "C",
+        "text": "Mutations"
+      },
+      {
+        "id": "D",
+        "text": "Migration"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn a random mating population, **random genetic drift** changes gene frequency purely by chance without any directional selective pressure.",
+    "image": ""
+  },
+  {
+    "num": 117,
+    "exam": "AIPMT 2003",
+    "question": "Darwin in his 'Natural Selection Theory' did not believe in any role of which one of the following in\norganic evolution ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Survival of the fittest"
+      },
+      {
+        "id": "B",
+        "text": "Parasites and predators as natural enemies"
+      },
+      {
+        "id": "C",
+        "text": "Discontinuous variations"
+      },
+      {
+        "id": "D",
+        "text": "Struggle for existence\nExam   GOAL"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nDarwin believed that evolution proceeds continuously through small, gradual, continuous variations; he **did not believe that discontinuous variations (large saltatory mutations) played a significant role**.",
+    "image": ""
+  },
+  {
+    "num": 118,
+    "exam": "AIPMT 2003",
+    "question": "Which one of the following describes correctly the homologous structures ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Organs with anatomical dissimilarities but performing same function"
+      },
+      {
+        "id": "B",
+        "text": "Organs that have no function now, but had an important function in ancestors"
+      },
+      {
+        "id": "C",
+        "text": "Organs with anatomical similarities, but performing different functions"
+      },
+      {
+        "id": "D",
+        "text": "Organs appearing only in embryonic stage and disappearing later in the adult"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n**Homologous structures** are organs that share underlying **anatomical and developmental similarities** (common ancestry) but are adapted to perform different functions.",
+    "image": ""
+  },
+  {
+    "num": 119,
+    "exam": "AIPMT 2003",
+    "question": "Which one of the following is categorised under living fossils ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cycas"
+      },
+      {
+        "id": "B",
+        "text": "Metasequoia"
+      },
+      {
+        "id": "C",
+        "text": "Pinus"
+      },
+      {
+        "id": "D",
+        "text": "Selaginella"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n***Cycas*** is categorized under living fossils.",
+    "image": ""
+  },
+  {
+    "num": 120,
+    "exam": "AIPMT 2002",
+    "question": "Some bacteria are able to grow in streptomycin containing medium due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "natural selection"
+      },
+      {
+        "id": "B",
+        "text": "induced mutation"
+      },
+      {
+        "id": "C",
+        "text": "reproductive isolation"
+      },
+      {
+        "id": "D",
+        "text": "genetic drift."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nStreptomycin resistance in bacteria is an example of **natural selection** favoring pre-existing resistant mutants in the presence of the antibiotic.",
+    "image": ""
+  },
+  {
+    "num": 121,
+    "exam": "AIPMT 2002",
+    "question": "Cause of mimicry is -",
+    "options": [
+      {
+        "id": "A",
+        "text": "offence"
+      },
+      {
+        "id": "B",
+        "text": "concealment"
+      },
+      {
+        "id": "C",
+        "text": "defence"
+      },
+      {
+        "id": "D",
+        "text": "both (b) and (c)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nMimicry serves adaptive functions including **concealment (camouflage) from predators and defence** against enemies.",
+    "image": ""
+  },
+  {
+    "num": 122,
+    "exam": "AIPMT 2002",
+    "question": "Which of the following is important for speciation ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Behavioural isolation"
+      },
+      {
+        "id": "B",
+        "text": "Seasonal isolation"
+      },
+      {
+        "id": "C",
+        "text": "Tropical isolation"
+      },
+      {
+        "id": "D",
+        "text": "Reproductive isolation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n**Reproductive isolation** is the essential prerequisite for speciation, as it prevents gene flow between divergent populations.",
+    "image": ""
+  },
+  {
+    "num": 123,
+    "exam": "AIPMT 2002",
+    "question": "Which of the following are homologous organs ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Wings of birds & Pectoral fins of fish"
+      },
+      {
+        "id": "B",
+        "text": "Wings of bat & Butterfly"
+      },
+      {
+        "id": "C",
+        "text": "Legs of frog & Cockroach"
+      },
+      {
+        "id": "D",
+        "text": "Wings of birds & Locust"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nWings of birds and pectoral fins of fish are **homologous organs** derived from the ancestral anterior appendage of gnathostome vertebrates.",
+    "image": ""
+  },
+  {
+    "num": 124,
+    "exam": "AIPMT 2002",
+    "question": "Genetic drift operates in : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Slow reproductive population"
+      },
+      {
+        "id": "B",
+        "text": "Small isolated population"
+      },
+      {
+        "id": "C",
+        "text": "Large isolated population"
+      },
+      {
+        "id": "D",
+        "text": "Fast reproductive population\nExam   GOAL"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nGenetic drift operates most effectively and noticeably in **small isolated populations**.",
+    "image": ""
+  },
+  {
+    "num": 125,
+    "exam": "AIPMT 2002",
+    "question": "There is no life on moon due to the absence of -",
+    "options": [
+      {
+        "id": "A",
+        "text": "O   2"
+      },
+      {
+        "id": "B",
+        "text": "Light"
+      },
+      {
+        "id": "C",
+        "text": "Water"
+      },
+      {
+        "id": "D",
+        "text": "Temperature"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nLife cannot exist on the Moon primarily due to the total absence of liquid **water** and atmosphere.",
+    "image": ""
+  },
+  {
+    "num": 126,
+    "exam": "AIPMT 2002",
+    "question": "According to fossils which discovered up to present time, origin and evolution of man was started\nfrom",
+    "options": [
+      {
+        "id": "A",
+        "text": "Java"
+      },
+      {
+        "id": "B",
+        "text": "Africa"
+      },
+      {
+        "id": "C",
+        "text": "China"
+      },
+      {
+        "id": "D",
+        "text": "France"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nExtensive fossil discoveries (such as *Australopithecus* and *Homo habilis*) confirm that the origin and early evolution of mankind began in **Africa**.",
+    "image": ""
+  },
+  {
+    "num": 127,
+    "exam": "AIPMT 2002",
+    "question": "In which condition, the gene ratio remains constant for any species population ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Gene flow"
+      },
+      {
+        "id": "B",
+        "text": "Mutation"
+      },
+      {
+        "id": "C",
+        "text": "Sexual selection"
+      },
+      {
+        "id": "D",
+        "text": "Random mating"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the Hardy-Weinberg law, allele frequencies remain constant in a large population undergoing **random mating** with no migration, mutation, or selection.",
+    "image": ""
+  },
+  {
+    "num": 128,
+    "exam": "AIPMT 2002",
+    "question": "Sequence of which of the following is used to know the phylogeny ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "DNA"
+      },
+      {
+        "id": "B",
+        "text": "r-RNA"
+      },
+      {
+        "id": "C",
+        "text": "m-RNA"
+      },
+      {
+        "id": "D",
+        "text": "t-RNA"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nNucleotide sequence analysis of **ribosomal RNA (rRNA)**, particularly 16S and 18S rRNA, is widely used to reconstruct deep phylogenetic relationships across life.",
+    "image": ""
+  },
+  {
+    "num": 129,
+    "exam": "AIPMT 2002",
+    "question": "In which era reptiles were dominant ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Archaeozoic era"
+      },
+      {
+        "id": "B",
+        "text": "Mesozoic era"
+      },
+      {
+        "id": "C",
+        "text": "Coenozoic era"
+      },
+      {
+        "id": "D",
+        "text": "Paleozoic era"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nReptiles dominated the terrestrial, aquatic, and aerial environments during the **Mesozoic Era**.",
+    "image": ""
+  },
+  {
+    "num": 130,
+    "exam": "AIPMT 2002",
+    "question": "Reason of fast speciation in present day crop plants is",
+    "options": [
+      {
+        "id": "A",
+        "text": "mutation"
+      },
+      {
+        "id": "B",
+        "text": "isolation"
+      },
+      {
+        "id": "C",
+        "text": "polyploidy"
+      },
+      {
+        "id": "D",
+        "text": "sexual reproduction"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nRapid speciation in cultivated crop plants has frequently resulted from **polyploidy** (such as autopolyploidy and allopolyploidy in wheat, cotton, and sugarcane).",
+    "image": ""
+  },
+  {
+    "num": 131,
+    "exam": "AIPMT 2001",
+    "question": "Which statement is correct about centre of origin of plant ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Climatic condition more favourable"
+      },
+      {
+        "id": "B",
+        "text": "More diversity in improved variety"
+      },
+      {
+        "id": "C",
+        "text": "None"
+      },
+      {
+        "id": "D",
+        "text": "Frequency of dominant gene is more"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to N.I. Vavilov, the centre of origin of a cultivated crop plant is characterized by the **greatest genetic diversity** in wild ancestors and traditional landraces.",
+    "image": ""
+  },
+  {
+    "num": 132,
+    "exam": "AIPMT 2001",
+    "question": "Half life period of C^14 is : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "5000 years"
+      },
+      {
+        "id": "B",
+        "text": "50 years"
+      },
+      {
+        "id": "C",
+        "text": "500 years"
+      },
+      {
+        "id": "D",
+        "text": "5 × 10^4 years"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe half-life period of radioactive Carbon-14 ($^{14}\\text{C}$) is approximately **5,730 years** (close to 5,000–5,700 years).",
+    "image": ""
+  },
+  {
+    "num": 133,
+    "exam": "AIPMT 2001",
+    "question": "Similarities in organism with different genotype indicates : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Divergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "Macroevolution"
+      },
+      {
+        "id": "C",
+        "text": "Convergent evolution"
+      },
+      {
+        "id": "D",
+        "text": "Microevolution"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nWhen organisms with different genotypes evolve similar adaptations in response to similar ecological niches, it indicates **convergent evolution**.",
+    "image": ""
+  },
+  {
+    "num": 134,
+    "exam": "AIPMT 2001",
+    "question": "Reason of diversity in living being : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mutation"
+      },
+      {
+        "id": "B",
+        "text": "Short term evolutionary change"
+      },
+      {
+        "id": "C",
+        "text": "Long term evolutionary change"
+      },
+      {
+        "id": "D",
+        "text": "Gradual change"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nBiological diversity is the cumulative result of **long-term evolutionary change** through gradual mutation, recombination, and natural selection.",
+    "image": ""
+  },
+  {
+    "num": 135,
+    "exam": "AIPMT 2001",
+    "question": "Which of the following is closest relative of man ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Gorilla"
+      },
+      {
+        "id": "B",
+        "text": "Chimpanzee"
+      },
+      {
+        "id": "C",
+        "text": "Gibbon"
+      },
+      {
+        "id": "D",
+        "text": "Orangutan"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nMolecular genetics and chromosome banding studies show that the **chimpanzee** is the closest living biological relative of modern man.",
+    "image": ""
+  },
+  {
+    "num": 136,
+    "exam": "AIPMT 2001",
+    "question": "Which of the following is correct order of the evolutionary history of man ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Peking man, Hedalberg man, Neanderthal man, Cromagnon man"
+      },
+      {
+        "id": "B",
+        "text": "Peking man, Neanderthal man, Homosapiens Cromagnon man"
+      },
+      {
+        "id": "C",
+        "text": "Peking man, Neanderthal man, Homosapiens Hedalberg man"
+      },
+      {
+        "id": "D",
+        "text": "Peking man, Homo sapiens, Neanderthel man, Cromagnon man"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nEvolutionary sequence: Peking man (*Homo erectus pekinensis*) → Heidelberg man → Neanderthal man → Cro-Magnon man.",
+    "image": ""
+  },
+  {
+    "num": 137,
+    "exam": "AIPMT 2001",
+    "question": "First life on earth was : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Autotrophs"
+      },
+      {
+        "id": "B",
+        "text": "Photoautotrophs"
+      },
+      {
+        "id": "C",
+        "text": "Cyanobacteria"
+      },
+      {
+        "id": "D",
+        "text": "Chemohetrotrophs"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe earliest life forms that arose on Earth were anaerobic **chemoheterotrophs** that obtained nutrients by absorbing pre-existing abiotic organic compounds.",
+    "image": ""
+  },
+  {
+    "num": 138,
+    "exam": "AIPMT 2001",
+    "question": "Forthcoming generations are less adaptive than their parental generation due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "Genetic drift"
+      },
+      {
+        "id": "B",
+        "text": "Natural selection"
+      },
+      {
+        "id": "C",
+        "text": "Mutation"
+      },
+      {
+        "id": "D",
+        "text": "Adaptation\nExam   GOAL"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nDue to random **mutations** that disrupt finely tuned ancestral adaptations, subsequent unselected generations can sometimes show lower overall fitness.",
+    "image": ""
+  },
+  {
+    "num": 139,
+    "exam": "AIPMT 2001",
+    "question": "Occurrence of endemic species in South America and Australia is due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "These is no terrestrial route to these places"
+      },
+      {
+        "id": "B",
+        "text": "Retrogressive evolution"
+      },
+      {
+        "id": "C",
+        "text": "These species has been extinct from other regions"
+      },
+      {
+        "id": "D",
+        "text": "Continental separation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe occurrence of unique endemic species in South America and Australia is primarily due to **continental drift and geographical separation** from Pangaea.",
+    "image": ""
+  },
+  {
+    "num": 140,
+    "exam": "AIPMT 2001",
+    "question": "Darwins theory of pangenesis shows similarity with theory of inheritance of acquired characters\nthen what shall be correct according to it",
+    "options": [
+      {
+        "id": "A",
+        "text": "There should be some physical basis of inheritance"
+      },
+      {
+        "id": "B",
+        "text": "Size of organs increase with aging"
+      },
+      {
+        "id": "C",
+        "text": "Useful organs become strong and developed while useless organs become extinct. These\norgans help in struggle for survival"
+      },
+      {
+        "id": "D",
+        "text": "Development of organs is due to will power"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nDarwin's pangenesis theory proposed gemmules carrying physical factors of heredity, reflecting a physical basis of inheritance.",
+    "image": ""
+  },
+  {
+    "num": 141,
+    "exam": "AIPMT 2001",
+    "question": "Frequency of an allele in an isolated population may change due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "genetic drift"
+      },
+      {
+        "id": "B",
+        "text": "gene flow"
+      },
+      {
+        "id": "C",
+        "text": "mutation"
+      },
+      {
+        "id": "D",
+        "text": "natural selection"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn a completely isolated population, random fluctuations in allele frequency occur through **genetic drift**.",
+    "image": ""
+  },
+  {
+    "num": 142,
+    "exam": "AIPMT 2000",
+    "question": "Which is not a vestigial organ in man ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Segmental muscles of abdomen"
+      },
+      {
+        "id": "B",
+        "text": "Third molar"
+      },
+      {
+        "id": "C",
+        "text": "Coccyx"
+      },
+      {
+        "id": "D",
+        "text": "Nails"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe **nails** on fingers and toes are functional protective keratinized epidermal structures, not vestigial organs.",
+    "image": ""
+  },
+  {
+    "num": 143,
+    "exam": "AIPMT 2000",
+    "question": "Homo sapiens have evolved in",
+    "options": [
+      {
+        "id": "A",
+        "text": "Pleistocene"
+      },
+      {
+        "id": "B",
+        "text": "Paleocene"
+      },
+      {
+        "id": "C",
+        "text": "Oligocene"
+      },
+      {
+        "id": "D",
+        "text": "Holocene"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nModern *Homo sapiens* evolved during the **Pleistocene** epoch (ice ages, ~75,000–10,000 years ago).",
+    "image": ""
+  },
+  {
+    "num": 144,
+    "exam": "AIPMT 2000",
+    "question": "Character which is closely related to human evolution",
+    "options": [
+      {
+        "id": "A",
+        "text": "Reduction in size of jaws"
+      },
+      {
+        "id": "B",
+        "text": "Disappearance of tail"
+      },
+      {
+        "id": "C",
+        "text": "Flat nails"
+      },
+      {
+        "id": "D",
+        "text": "Binocular vision\nExam   GOAL"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nHuman evolution is uniquely characterized by progressive **reduction in the size and prominence of the jaws** along with enlargement of the cranium and facial flattening.",
+    "image": ""
+  },
+  {
+    "num": 145,
+    "exam": "AIPMT 2000",
+    "question": "Which evidence of evolution related to Darwin's finches ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Evidences from comparative anatomy"
+      },
+      {
+        "id": "B",
+        "text": "Evidences from embryology"
+      },
+      {
+        "id": "C",
+        "text": "Evidences from biogeographical distribution"
+      },
+      {
+        "id": "D",
+        "text": "Evidences from palaeontological"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nDarwin's finches provide paramount evidence from **biogeographical distribution (adaptive radiation)**.",
+    "image": ""
+  },
+  {
+    "num": 146,
+    "exam": "AIPMT 2000",
+    "question": "Who is directly related to man ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Gorilla"
+      },
+      {
+        "id": "B",
+        "text": "Orangutan"
+      },
+      {
+        "id": "C",
+        "text": "Gibbon"
+      },
+      {
+        "id": "D",
+        "text": "Rhesus"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAmong hominoid apes, anatomical and biochemical affinities show that African great apes (**Gorilla and Chimpanzee**) are the closest living relatives to man.",
+    "image": ""
+  },
+  {
+    "num": 147,
+    "exam": "AIPMT 2000",
+    "question": "Which is the most important factor for continuity of a species from evolutionary point of view ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Formation of gametes"
+      },
+      {
+        "id": "B",
+        "text": "Synthesis of proteins"
+      },
+      {
+        "id": "C",
+        "text": "Replication of genetic material"
+      },
+      {
+        "id": "D",
+        "text": "None of these"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nFrom an evolutionary perspective, the **replication of genetic material (DNA)** with occasional fidelity errors (mutations) is essential for continuity and diversification of species.",
+    "image": ""
+  },
+  {
+    "num": 148,
+    "exam": "AIPMT 1999",
+    "question": "Phenomenon of 'Industrial melanism' demonstrates :",
+    "options": [
+      {
+        "id": "A",
+        "text": "reproductive isolation"
+      },
+      {
+        "id": "B",
+        "text": "induced mutation"
+      },
+      {
+        "id": "C",
+        "text": "natural selection"
+      },
+      {
+        "id": "D",
+        "text": "geographical isolation"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIndustrial melanism demonstrates Darwinian **natural selection**.",
+    "image": ""
+  },
+  {
+    "num": 149,
+    "exam": "AIPMT 1999",
+    "question": "Which of the following are homologous organs?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nails of human being and claws in animals"
+      },
+      {
+        "id": "B",
+        "text": "Wings of bird and wings of insect"
+      },
+      {
+        "id": "C",
+        "text": "Wings of bird and hand of human"
+      },
+      {
+        "id": "D",
+        "text": "Wings of bat and wings of cockroach"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nWings of a bird and hands of a human are modified tetrapod forelimbs with similar skeletal arrangements, making them **homologous organs**.",
+    "image": ""
+  },
+  {
+    "num": 150,
+    "exam": "AIPMT 1998",
+    "question": "In the developmental history of mammalian heart, it is observed that it passes through a two-\nchambered fish-like heart, three chambered frog-like heart and finally four-chambered stage. To\nwhich hypothesis can this above cited statement be approximated?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Biogenetic law"
+      },
+      {
+        "id": "B",
+        "text": "Hardy-Weinberg law"
+      },
+      {
+        "id": "C",
+        "text": "Lamarck's principle"
+      },
+      {
+        "id": "D",
+        "text": "Mendelian principles\nExam   GOAL"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe observation that embryonic mammalian hearts transit through stages resembling fish, amphibian, and reptilian hearts is aligned with Haeckel's **Biogenetic Law** ('ontogeny recapitulates phylogeny').",
+    "image": ""
+  },
+  {
+    "num": 151,
+    "exam": "AIPMT 1998",
+    "question": "The age of the fossil of Dryopithecus on the geological time scale is",
+    "options": [
+      {
+        "id": "A",
+        "text": "75 × 10^6 years back"
+      },
+      {
+        "id": "B",
+        "text": "25 × 10^6 years back"
+      },
+      {
+        "id": "C",
+        "text": "2.5 × 10^6 years back"
+      },
+      {
+        "id": "D",
+        "text": "50 × 10^6 years back"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n*Dryopithecus* existed approximately **20 to 25 million years ago** during the Miocene epoch.",
+    "image": ""
+  },
+  {
+    "num": 152,
+    "exam": "AIPMT 1998",
+    "question": "The diversity in the type of beaks of finches adapted to different feeding habits on the Galapagos\nislands, as observed by Darwin, provides evidence for",
+    "options": [
+      {
+        "id": "A",
+        "text": "origin of species by natural selection"
+      },
+      {
+        "id": "B",
+        "text": "intraspecific variations"
+      },
+      {
+        "id": "C",
+        "text": "intraspecific competition"
+      },
+      {
+        "id": "D",
+        "text": "interspecific competition"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAdaptive variation in beak shapes of Galapagos finches provides clear evidence for the **origin of species by natural selection**.",
+    "image": ""
+  },
+  {
+    "num": 153,
+    "exam": "AIPMT 1998",
+    "question": "Genetic drift operates only in",
+    "options": [
+      {
+        "id": "A",
+        "text": "island populations"
+      },
+      {
+        "id": "B",
+        "text": "smaller populations"
+      },
+      {
+        "id": "C",
+        "text": "larger populations"
+      },
+      {
+        "id": "D",
+        "text": "Mendelian populations"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nGenetic drift operates most significantly in **smaller populations**.",
+    "image": ""
+  },
+  {
+    "num": 154,
+    "exam": "AIPMT 1998",
+    "question": "Which one of the following statements is correct?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Homo erectus   is the ancestor of man"
+      },
+      {
+        "id": "B",
+        "text": "Cro-magnon man's fossil has been found in Ethiopia"
+      },
+      {
+        "id": "C",
+        "text": "Australopithecus   is the real ancestor of modern man"
+      },
+      {
+        "id": "D",
+        "text": "Neanderthal man is the direct ancestor of   Homo sapiens"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n*Homo erectus* is an immediate ancestor of modern humans, living around 1.5 million years ago.",
+    "image": ""
+  },
+  {
+    "num": 155,
+    "exam": "AIPMT 1997",
+    "question": "Which of the following statements is correct regarding evolution of mankind?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Homo erectus   is preceded by   Homo habilis   ."
+      },
+      {
+        "id": "B",
+        "text": "Neanderthal man and cro-magnon man were living at the same time."
+      },
+      {
+        "id": "C",
+        "text": "Australopithecus   was living in Australia."
+      },
+      {
+        "id": "D",
+        "text": "None of these"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n*Homo erectus* (appearing ~1.5 mya) was preceded in the fossil record by the handy man, ***Homo habilis*** (~2 mya).",
+    "image": ""
+  },
+  {
+    "num": 156,
+    "exam": "AIPMT 1997",
+    "question": "Common origin of man and chimpanzee is best shown by",
+    "options": [
+      {
+        "id": "A",
+        "text": "binocular vision"
+      },
+      {
+        "id": "B",
+        "text": "chromosome number"
+      },
+      {
+        "id": "C",
+        "text": "dental formula"
+      },
+      {
+        "id": "D",
+        "text": "cranial capacity\nExam   GOAL"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe close phylogenetic affinity between man and chimpanzee is conclusively demonstrated by **banding patterns of chromosomes and identical chromosome number (human $2n=46$, chimp $2n=48$)**.",
+    "image": ""
+  },
+  {
+    "num": 157,
+    "exam": "AIPMT 1997",
+    "question": "Which of the following is a living fossil?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mirabilis jalapa"
+      },
+      {
+        "id": "B",
+        "text": "Ginkgo biloba"
+      },
+      {
+        "id": "C",
+        "text": "Pinus longifolia"
+      },
+      {
+        "id": "D",
+        "text": "Dalbergia sissoo"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n***Ginkgo biloba*** (maidenhair tree) is a celebrated living fossil gymnosperm with unchanged morphology since the Mesozoic.",
+    "image": ""
+  },
+  {
+    "num": 158,
+    "exam": "AIPMT 1997",
+    "question": "Evolutionary convergence is characterized by",
+    "options": [
+      {
+        "id": "A",
+        "text": "development of dissimilar characteristics in closely related groups"
+      },
+      {
+        "id": "B",
+        "text": "development of a common set of characteristics in groups of different ancestry"
+      },
+      {
+        "id": "C",
+        "text": "development of characteristics by random mating"
+      },
+      {
+        "id": "D",
+        "text": "replacement of common characteristics in different groups"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nEvolutionary convergence is characterized by the **development of a common set of functional/morphological characteristics in groups of different phylogenetic ancestry**.",
+    "image": ""
+  },
+  {
+    "num": 159,
+    "exam": "AIPMT 1996",
+    "question": "Which of the following changes for man in the course of evolution is probably useless?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Development of being erect"
+      },
+      {
+        "id": "B",
+        "text": "Development of cranial capacity"
+      },
+      {
+        "id": "C",
+        "text": "Loss of tail"
+      },
+      {
+        "id": "D",
+        "text": "Development of opposable thumb"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nDuring human evolution, **loss of the tail** was a neutral or non-essential anatomical modification without direct utilitarian survival benefit compared to bipedalism, brain expansion, and opposable thumbs.",
+    "image": ""
+  },
+  {
+    "num": 160,
+    "exam": "AIPMT 1996",
+    "question": "Which of the following is the direct ancestor of   Homo sapiens   ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Australopithecus"
+      },
+      {
+        "id": "B",
+        "text": "H. sapiens neanderthals"
+      },
+      {
+        "id": "C",
+        "text": "Homo erectus"
+      },
+      {
+        "id": "D",
+        "text": "Homo sapiens fossilis"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nCro-Magnon man (*Homo sapiens fossilis*) is regarded as the direct immediate ancestor of modern *Homo sapiens*.",
+    "image": ""
+  },
+  {
+    "num": 161,
+    "exam": "AIPMT 1996",
+    "question": "Which of the following is the correct group of vestigial organs in man?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nictitating membrane, ear muscles, eyelids and coccyx"
+      },
+      {
+        "id": "B",
+        "text": "Appendix, coccyx, ear muscles and elbow joint"
+      },
+      {
+        "id": "C",
+        "text": "Wisdom tooth, coccyx, body hair and ear muscles"
+      },
+      {
+        "id": "D",
+        "text": "Wisdom tooth, body hairs, nictitating membrane and vermiform appendix"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nVestigial organs in humans include the **wisdom tooth, coccyx, body hair, nictitating membrane, and vermiform appendix**.",
+    "image": ""
+  },
+  {
+    "num": 162,
+    "exam": "AIPMT 1996",
+    "question": "Which of the following is an example of ‘living fossils’?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Pinus"
+      },
+      {
+        "id": "B",
+        "text": "Riccia"
+      },
+      {
+        "id": "C",
+        "text": "Gnetum"
+      },
+      {
+        "id": "D",
+        "text": "Ginkgo\nExam   GOAL"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n***Ginkgo*** is a prime example of living fossils.",
+    "image": ""
+  },
+  {
+    "num": 163,
+    "exam": "AIPMT 1996",
+    "question": "The correct sequence for the manufacture of molecules/organic compounds on the primitive earth is",
+    "options": [
+      {
+        "id": "A",
+        "text": "NH3, nucleic acid, protein and carbohydrate"
+      },
+      {
+        "id": "B",
+        "text": "protein, carbohydrate, water and nucleic acid"
+      },
+      {
+        "id": "C",
+        "text": "NH3, protein, carbohydrate and nucleic acid"
+      },
+      {
+        "id": "D",
+        "text": "NH3, water, nucleic acid and protein"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOn the prebiotic Earth, simple molecules formed first, followed by water, organic monomers, and complex polymers:\n**NH3, water, nucleic acid and protein**.",
+    "image": ""
+  },
+  {
+    "num": 164,
+    "exam": "AIPMT 1996",
+    "question": "The first domesticated animal by primitive man was",
+    "options": [
+      {
+        "id": "A",
+        "text": "cat"
+      },
+      {
+        "id": "B",
+        "text": "cow"
+      },
+      {
+        "id": "C",
+        "text": "dog"
+      },
+      {
+        "id": "D",
+        "text": "horse"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe **dog** (*Canis familiaris*) was the first animal to be domesticated by prehistoric humans.",
+    "image": ""
+  },
+  {
+    "num": 165,
+    "exam": "AIPMT 1995",
+    "question": "The change of the lighter-coloured variety of peppered moth (   Biston betularia   ) to its darker variety\n(   Biston carbonaria   ) is due to",
+    "options": [
+      {
+        "id": "A",
+        "text": "mutation"
+      },
+      {
+        "id": "B",
+        "text": "regeneration"
+      },
+      {
+        "id": "C",
+        "text": "genetic isolation"
+      },
+      {
+        "id": "D",
+        "text": "temporal isolation"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe origin of the dark melanic mutant form of the peppered moth arose due to a recurring **mutation** that was subsequently selected by industrial soot pollution.",
+    "image": ""
+  },
+  {
+    "num": 166,
+    "exam": "AIPMT 1995",
+    "question": "The homologous organs are those that show similarity in",
+    "options": [
+      {
+        "id": "A",
+        "text": "appearance"
+      },
+      {
+        "id": "B",
+        "text": "function"
+      },
+      {
+        "id": "C",
+        "text": "origin"
+      },
+      {
+        "id": "D",
+        "text": "size"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nHomologous organs share fundamental similarity in **embryonic origin and anatomical architecture**.",
+    "image": ""
+  },
+  {
+    "num": 167,
+    "exam": "AIPMT 1995",
+    "question": "Which period is dubbed as the age of prokaryotic microbes?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Precambrian"
+      },
+      {
+        "id": "B",
+        "text": "Phanerozoic"
+      },
+      {
+        "id": "C",
+        "text": "Archean"
+      },
+      {
+        "id": "D",
+        "text": "Proterozoic"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe **Archean / Precambrian** era represents the ancient geological era dominated by prokaryotic anaerobic microbes.",
+    "image": ""
+  },
+  {
+    "num": 168,
+    "exam": "AIPMT 1995",
+    "question": "The presence of gill slits, in the embryos of all vertebrates, supports the theory of",
+    "options": [
+      {
+        "id": "A",
+        "text": "metamorphosis"
+      },
+      {
+        "id": "B",
+        "text": "biogenesis"
+      },
+      {
+        "id": "C",
+        "text": "organic evolution"
+      },
+      {
+        "id": "D",
+        "text": "recapitulation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe presence of pharyngeal gill slits in vertebrate embryos was used by Haeckel to support the **Theory of Recapitulation (Biogenetic Law)**.",
+    "image": ""
+  },
+  {
+    "num": 169,
+    "exam": "AIPMT 1995",
+    "question": "Two zoogeographical regions, separated by high mountain ranges, are",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nearctic and Palaearctic"
+      },
+      {
+        "id": "B",
+        "text": "Neotropical and Ethiopian"
+      },
+      {
+        "id": "C",
+        "text": "Oriental and Australian"
+      },
+      {
+        "id": "D",
+        "text": "Palaearctic and Oriental\nExam   GOAL"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe **Palaearctic and Oriental** zoogeographical realms are geographically separated by the formidable Himalayan mountain ranges.",
+    "image": ""
+  },
+  {
+    "num": 170,
+    "exam": "AIPMT 1994",
+    "question": "Which one of the following changes involved is irrelevant, in the evolution of man?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Perfection of hand for tool making"
+      },
+      {
+        "id": "B",
+        "text": "Change of diet from hard nuts and hard roots to soft food"
+      },
+      {
+        "id": "C",
+        "text": "Loss of tail"
+      },
+      {
+        "id": "D",
+        "text": "Increase in the ability to communicate with others and develop community behaviour"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn human evolution, the **loss of the external tail** was a vestigial consequence of upright posture and bipedal locomotion, bearing no active adaptive relevance.",
+    "image": ""
+  },
+  {
+    "num": 171,
+    "exam": "AIPMT 1994",
+    "question": "Which of the following evidences does not favour the Lamarckian concept of inheritance of\nacquired characters?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Lack of pigment in cave-dwelling animals"
+      },
+      {
+        "id": "B",
+        "text": "Melanization in peppered moth"
+      },
+      {
+        "id": "C",
+        "text": "Absence of limbs in snakes"
+      },
+      {
+        "id": "D",
+        "text": "Presence of webbed toes in aquatic birds"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIndustrial melanism in the peppered moth is explained by **natural selection**, not by Lamarck's inheritance of acquired characters.",
+    "image": ""
+  },
+  {
+    "num": 172,
+    "exam": "AIPMT 1994",
+    "question": "The earliest fossil form, in the phylogeny of horse, is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Equus"
+      },
+      {
+        "id": "B",
+        "text": "Mesohippus"
+      },
+      {
+        "id": "C",
+        "text": "Eohippus"
+      },
+      {
+        "id": "D",
+        "text": "Merychippus"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe earliest ancestral fossil in the evolutionary lineage of the modern horse (*Equus*) is ***Eohippus*** (the dawn horse from the Eocene epoch).",
+    "image": ""
+  },
+  {
+    "num": 173,
+    "exam": "AIPMT 1994",
+    "question": "Which of the following is a pair of homologous organs?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Pectoral fin of rohu and forelimb of horse"
+      },
+      {
+        "id": "B",
+        "text": "Wings of grasshopper and wings of crow"
+      },
+      {
+        "id": "C",
+        "text": "Lungs of rabbit and gills of rohu"
+      },
+      {
+        "id": "D",
+        "text": "Wings of bat and wings of butterfly"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nPectoral fins of rohu and forelimbs of a horse are modified vertebrate anterior limbs, representing **homologous organs**.",
+    "image": ""
+  },
+  {
+    "num": 174,
+    "exam": "AIPMT 1993",
+    "question": "Evolutionary convergence is development of",
+    "options": [
+      {
+        "id": "A",
+        "text": "common set of characters in group of different ancestry"
+      },
+      {
+        "id": "B",
+        "text": "dissimilar characters in closely related groups"
+      },
+      {
+        "id": "C",
+        "text": "common set of characters in closely related groups"
+      },
+      {
+        "id": "D",
+        "text": "random mating\nExam   GOAL"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nEvolutionary convergence is the **development of a common set of characters in groups of different ancestry**.",
+    "image": ""
+  },
+  {
+    "num": 175,
+    "exam": "AIPMT 1993",
+    "question": "Weismann cut off tails of mice generation after generation but tails neither disappeared nor\nshortened showing that",
+    "options": [
+      {
+        "id": "A",
+        "text": "Darwin was correct"
+      },
+      {
+        "id": "B",
+        "text": "tail is an essential organ"
+      },
+      {
+        "id": "C",
+        "text": "mutation theory is wrong"
+      },
+      {
+        "id": "D",
+        "text": "lamarckism was wrong in inheritance of acquired characters"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nWeismann's multi-generational tail-cutting experiments on mice conclusively demonstrated that somatic mutilations are not inherited, proving that **Lamarckism was wrong regarding inheritance of acquired characters**.",
+    "image": ""
+  },
+  {
+    "num": 176,
+    "exam": "AIPMT 1993",
+    "question": "Theory of Natural Selection dwells on",
+    "options": [
+      {
+        "id": "A",
+        "text": "role of environment in evolution"
+      },
+      {
+        "id": "B",
+        "text": "natural selection acting on favourable variations"
+      },
+      {
+        "id": "C",
+        "text": "changes in gene complex resulting in heritable variations"
+      },
+      {
+        "id": "D",
+        "text": "none of the above"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nDarwin's theory of Natural Selection is founded on the concept of **natural selection acting upon favourable, heritable variations**.",
+    "image": ""
+  },
+  {
+    "num": 177,
+    "exam": "AIPMT 1993",
+    "question": "Genetic drift is change of",
+    "options": [
+      {
+        "id": "A",
+        "text": "gene frequency in same generation"
+      },
+      {
+        "id": "B",
+        "text": "appearance of recessive genes"
+      },
+      {
+        "id": "C",
+        "text": "gene frequency from one generation to next"
+      },
+      {
+        "id": "D",
+        "text": "none of the above"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nGenetic drift refers to the random fluctuation in **gene (allele) frequencies from one generation to the next** in small populations.",
+    "image": ""
+  },
+  {
+    "num": 178,
+    "exam": "AIPMT 1992",
+    "question": "The first organisms were",
+    "options": [
+      {
+        "id": "A",
+        "text": "chemoautotrophs"
+      },
+      {
+        "id": "B",
+        "text": "chemoheterotrophs"
+      },
+      {
+        "id": "C",
+        "text": "autotrophs"
+      },
+      {
+        "id": "D",
+        "text": "eukaryotes"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to modern biochemical theories, the very first primitive life forms were anaerobic **chemoheterotrophs**.",
+    "image": ""
+  },
+  {
+    "num": 179,
+    "exam": "AIPMT 1991",
+    "question": "Which was absent in the atmosphere at the time of origin of life?",
+    "options": [
+      {
+        "id": "A",
+        "text": "NH3"
+      },
+      {
+        "id": "B",
+        "text": "H2"
+      },
+      {
+        "id": "C",
+        "text": "O2"
+      },
+      {
+        "id": "D",
+        "text": "CH4"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nFree molecular oxygen (**O2**) was completely absent in the reducing atmosphere of the prebiotic Earth.",
+    "image": ""
+  },
+  {
+    "num": 180,
+    "exam": "AIPMT 1991",
+    "question": "Correct order is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Palaeozoic → archaeozoic → coenozoic"
+      },
+      {
+        "id": "B",
+        "text": "Archaeozoic → palaeozoic → proterozoic"
+      },
+      {
+        "id": "C",
+        "text": "Palaeozoic → mesozoic → coenozoic"
+      },
+      {
+        "id": "D",
+        "text": "Mesozoic → archaeozoic → proterozoic"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe chronological order of geological eras from oldest to youngest is:\n**Archaeozoic → Proterozoic → Palaeozoic → Mesozoic → Cenozoic**.",
+    "image": ""
+  },
+  {
+    "num": 181,
+    "exam": "AIPMT 1991",
+    "question": "Study of fossils is",
+    "options": [
+      {
+        "id": "A",
+        "text": "palaeontology"
+      },
+      {
+        "id": "B",
+        "text": "herpetology"
+      },
+      {
+        "id": "C",
+        "text": "saurology"
+      },
+      {
+        "id": "D",
+        "text": "organic evolution"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe scientific study of fossils and past geological life is called **palaeontology**.",
+    "image": ""
+  },
+  {
+    "num": 182,
+    "exam": "AIPMT 1990",
+    "question": "Parallelism is",
+    "options": [
+      {
+        "id": "A",
+        "text": "adaptive divergence"
+      },
+      {
+        "id": "B",
+        "text": "adaptive divergence of widely separated species"
+      },
+      {
+        "id": "C",
+        "text": "adaptive convergence of widely different species"
+      },
+      {
+        "id": "D",
+        "text": "adaptive convergence of closely related groups"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nParallelism (parallel evolution) is the **adaptive convergence of closely related groups** evolving similar modifications independently.",
+    "image": ""
+  },
+  {
+    "num": 183,
+    "exam": "AIPMT 1990",
+    "question": "Basic principles of embryonic development were pronounced by",
+    "options": [
+      {
+        "id": "A",
+        "text": "von Baer"
+      },
+      {
+        "id": "B",
+        "text": "Weismann"
+      },
+      {
+        "id": "C",
+        "text": "Haeckel"
+      },
+      {
+        "id": "D",
+        "text": "Morgan"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe basic principles and laws of embryonic development were established by **Karl Ernst von Baer**.",
+    "image": ""
+  },
+  {
+    "num": 184,
+    "exam": "AIPMT 1989",
+    "question": "Evolution is",
+    "options": [
+      {
+        "id": "A",
+        "text": "progressive development of a race"
+      },
+      {
+        "id": "B",
+        "text": "history and development of race along with variations"
+      },
+      {
+        "id": "C",
+        "text": "history of race"
+      },
+      {
+        "id": "D",
+        "text": "development of race"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOrganic evolution is defined as the **history and development of a race along with cumulative heritable variations** over geological time.",
+    "image": ""
+  },
+  {
+    "num": 185,
+    "exam": "AIPMT 1989",
+    "question": "“Continuity of germplasm” theory was given by",
+    "options": [
+      {
+        "id": "A",
+        "text": "De Vries"
+      },
+      {
+        "id": "B",
+        "text": "Weismann"
+      },
+      {
+        "id": "C",
+        "text": "Darwin"
+      },
+      {
+        "id": "D",
+        "text": "Lamarck\nExam   GOAL"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe **Theory of Continuity of Germplasm** was formulated by **August Weismann**.",
+    "image": ""
+  },
+  {
+    "num": 186,
+    "exam": "AIPMT 1989",
+    "question": "Theory of inheritance of acquired characters was given by",
+    "options": [
+      {
+        "id": "A",
+        "text": "Wallace"
+      },
+      {
+        "id": "B",
+        "text": "Lamarck"
+      },
+      {
+        "id": "C",
+        "text": "Darwin"
+      },
+      {
+        "id": "D",
+        "text": "De Vries"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe Theory of Inheritance of Acquired Characters was proposed by Jean-Baptiste **Lamarck** in 1809.",
+    "image": ""
+  },
+  {
+    "num": 187,
+    "exam": "AIPMT 1989",
+    "question": "‘Origin of Species’ was written by",
+    "options": [
+      {
+        "id": "A",
+        "text": "Oparin"
+      },
+      {
+        "id": "B",
+        "text": "Weismann"
+      },
+      {
+        "id": "C",
+        "text": "Lamarck"
+      },
+      {
+        "id": "D",
+        "text": "Darwin"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nThe seminal masterwork *On the Origin of Species by Means of Natural Selection* was authored by **Charles Darwin** in 1859.",
+    "image": ""
+  },
+  {
+    "num": 188,
+    "exam": "AIPMT 1988",
+    "question": "Humming birds and Hawk illustrate",
+    "options": [
+      {
+        "id": "A",
+        "text": "convergent evolution"
+      },
+      {
+        "id": "B",
+        "text": "homology"
+      },
+      {
+        "id": "C",
+        "text": "adaptive radiation"
+      },
+      {
+        "id": "D",
+        "text": "parallel evolution"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nHummingbirds and hawks both belong to Aves and share modified avian wings, exhibiting **homology**.",
+    "image": ""
+  },
+  {
+    "num": 189,
+    "exam": "AIPMT 2014",
+    "question": "Which one of the following are analogous structures?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Flippers of Dolphin and Legs of Horse"
+      },
+      {
+        "id": "B",
+        "text": "Thorns of Bougainvillea and Tendrils of Cucurbita"
+      },
+      {
+        "id": "C",
+        "text": "Wings of Bat and Wings of Pigeon"
+      },
+      {
+        "id": "D",
+        "text": "Gills of Prawn and Lungs of Man"
+      }
+    ],
+    "correctOption": "C,D",
+    "explanation": "**Correct Option: C,D**\n\n**Analogous structures** are structures that have different anatomical origins but perform similar functions due to convergent evolution:\n- **(C) Wings of Bat and Wings of Pigeon**: Bat wings are skin membranes (patagium) supported by elongated digits, while pigeon wings are feathered forelimbs.\n- **(D) Gills of Prawn and Lungs of Man**: Prawn gills (arthropod branchiae) and human lungs (mammalian respiratory cavities) perform gas exchange but have completely distinct embryonic origins.\nHence, both **C and D** are analogous structures.",
+    "image": ""
+  }
+]
