@@ -222,11 +222,7 @@ export default function StudentLogin() {
     e?.preventDefault();
     const cleanId = studentIdentifier.trim();
     if (!cleanId) {
-      setError(institution ? 'Please enter your Student Roll Number or Enrollment ID.' : 'Please enter your Student ID.');
-      return;
-    }
-    if (!institution && cleanId.includes('@')) {
-      setError('Please enter your Student ID (e.g. EDV26-10023). To log in using your registered email, please switch to the Email OTP tab above.');
+      setError(institution ? 'Please enter your Student Roll Number or Enrollment ID.' : 'Please enter your Student ID or Registered Email.');
       return;
     }
     if (!studentPassword) {
@@ -247,6 +243,7 @@ export default function StudentLogin() {
         : {
             identifier: cleanId,
             studentId: cleanId,
+            email: cleanId.includes('@') ? cleanId.toLowerCase() : undefined,
             password: studentPassword,
           };
 
@@ -254,7 +251,7 @@ export default function StudentLogin() {
       toast.success(institution ? `Welcome to ${institution.name}, ${u?.name || 'Student'}!` : `Welcome back, ${u?.name || 'Student'}!`);
       navigate(getDestination(u?.role), { replace: true });
     } catch (err) {
-      setError(err.message || (institution ? `Invalid credentials for ${institution.name}. Please verify your Roll Number and password.` : 'Invalid Student ID or password. Please verify your credentials.'));
+      setError(err.message || (institution ? `Invalid credentials for ${institution.name}. Please verify your Roll Number and password.` : 'Invalid Student ID/Email or password. Please verify your credentials.'));
     } finally {
       setLoading(false);
     }
@@ -640,23 +637,25 @@ export default function StudentLogin() {
         <form onSubmit={handleIdPasswordSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-              {institution ? 'Roll No / Enrollment ID *' : 'Student ID *'}
+              {institution ? 'Roll No / Enrollment ID *' : 'Student ID or Registered Email *'}
             </label>
             <input
-              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none font-mono uppercase transition-colors"
+              className={`w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors ${
+                institution || (!studentIdentifier.includes('@') && studentIdentifier.length > 0) ? 'font-mono uppercase' : ''
+              }`}
               type="text"
               required
-              placeholder={institution ? `e.g. ${institution.code}-001 or 001` : 'e.g. EDV26-10023'}
+              placeholder={institution ? `e.g. ${institution.code}-001 or 001` : 'e.g. EDV26-10023 or your@email.com'}
               value={studentIdentifier}
               onChange={(e) => {
-                setStudentIdentifier(e.target.value.toUpperCase());
+                setStudentIdentifier(e.target.value);
                 if (error) setError('');
               }}
             />
             <p className="mt-1 text-[11px] text-slate-400">
               {institution
                 ? `Enter your official Roll Number or Enrollment ID registered with ${institution.name}.`
-                : 'Enter the unique Student ID provided by your institute administrator or sent to your email.'}
+                : 'Enter your unique Student ID or the email address you registered with.'}
             </p>
           </div>
 
