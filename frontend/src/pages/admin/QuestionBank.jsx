@@ -168,9 +168,35 @@ export default function AdminQuestionBank() {
     return 'Mathematics';
   });
   const [categoriesList, setCategoriesList] = useState(DEFAULT_CATEGORIES);
-  const [pyqSubject, setPyqSubject] = useState('All');
-  const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [pyqSubject, setPyqSubject] = useState(() => {
+    try {
+      const saved = localStorage.getItem('edvedum_pyq_subject');
+      if (saved && ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'All'].includes(saved)) {
+        return saved;
+      }
+    } catch (_) {}
+    return 'Physics';
+  });
+  const [questions, setQuestions] = useState(() => {
+    try {
+      const initialCat = new URLSearchParams(window.location.search).get('category') || 'Mathematics';
+      const initialSubj = localStorage.getItem('edvedum_pyq_subject') || 'Physics';
+      const extra = initialCat === 'PYQ' && initialSubj !== 'All' ? { subject: initialSubj } : {};
+      const cached = questionBankService.getCached(initialCat, extra);
+      if (cached && Array.isArray(cached) && cached.length > 0) return cached;
+    } catch (_) {}
+    return [];
+  });
+  const [loading, setLoading] = useState(() => {
+    try {
+      const initialCat = new URLSearchParams(window.location.search).get('category') || 'Mathematics';
+      const initialSubj = localStorage.getItem('edvedum_pyq_subject') || 'Physics';
+      const extra = initialCat === 'PYQ' && initialSubj !== 'All' ? { subject: initialSubj } : {};
+      const cached = questionBankService.getCached(initialCat, extra);
+      if (cached && Array.isArray(cached) && cached.length > 0) return false;
+    } catch (_) {}
+    return true;
+  });
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
 
@@ -1759,16 +1785,33 @@ export default function AdminQuestionBank() {
 
   const load = async (forceRefresh = false) => {
     const extraParams = category === 'PYQ' && pyqSubject !== 'All' ? { subject: pyqSubject } : {};
-    const hasCached = questionBankService.hasCache(category, extraParams);
-    if (!hasCached || forceRefresh || questions.length === 0) {
+
+    // 1. Instant check from in-memory cache
+    const cachedSync = questionBankService.getCached(category, extraParams);
+    if (cachedSync && Array.isArray(cachedSync) && cachedSync.length > 0 && !forceRefresh) {
+      setQuestions(cachedSync);
+      setLoading(false);
+    } else if (!forceRefresh) {
+      // 2. Fast check from IndexedDB persistent cache
+      const cachedAsync = await questionBankService.getCachedAsync(category, extraParams);
+      if (cachedAsync && Array.isArray(cachedAsync) && cachedAsync.length > 0 && !forceRefresh) {
+        setQuestions(cachedAsync);
+        setLoading(false);
+      } else {
+        setLoading(true);
+      }
+    } else {
       setLoading(true);
     }
+
     try {
       const [data, subjects] = await Promise.all([
         questionBankService.byCategory(category, extraParams, forceRefresh),
         adminService.subjects().catch(() => []),
       ]);
-      setQuestions(data || []);
+      if (data && Array.isArray(data)) {
+        setQuestions(data);
+      }
 
       const fetched = (subjects || []).filter((s) => s && s.name && s.name.toLowerCase() !== 'biology');
       const defaultSubjects = [
@@ -2551,6 +2594,9 @@ export default function AdminQuestionBank() {
                 type="button"
                 onClick={() => {
                   setPyqSubject(s);
+                  try {
+                    localStorage.setItem('edvedum_pyq_subject', s);
+                  } catch (_) {}
                   setSelectedChapter('all');
                 }}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition cursor-pointer ${

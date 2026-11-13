@@ -1,4 +1,5 @@
 import api, { tokenStore } from './api.js';
+import { persistentCache } from './persistentCache.js';
 
 const cache = new Map();
 const inFlight = new Map();
@@ -7,6 +8,7 @@ export const clearCache = (key) => {
   if (key) {
     cache.delete(key);
     inFlight.delete(key);
+    persistentCache.delete(key);
     for (const k of cache.keys()) {
       if (
         k.endsWith(`:${key}`) ||
@@ -22,6 +24,7 @@ export const clearCache = (key) => {
   } else {
     cache.clear();
     inFlight.clear();
+    persistentCache.clear();
   }
 };
 
@@ -289,18 +292,25 @@ export const assessmentService = {
 };
 
 export const questionBankService = {
+  getCached: (category, extraParams = {}) => {
+    const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
+    return persistentCache.getSync(key);
+  },
+  getCachedAsync: async (category, extraParams = {}) => {
+    const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
+    return persistentCache.get(key);
+  },
   hasCache: (category, extraParams = {}) => {
     const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
-    const cached = cache.get(key);
-    return Boolean(cached && (Date.now() - cached.timestamp < 300000));
+    return persistentCache.getSync(key) !== null;
   },
   categories: (forceRefresh = false) => {
     if (forceRefresh) clearCache('qb_categories');
     return withCache(
       'qb_categories',
       () => api.get('/question-bank/categories', forceRefresh ? { params: { refresh: 'true' } } : {}).then((r) => r.data.categories),
-      300000,
-      60000
+      86400000,
+      600000
     );
   },
   list: (category, forceRefresh = false) => {
@@ -309,21 +319,69 @@ export const questionBankService = {
     return withCache(
       key,
       () => api.get('/question-bank', { params: { ...(category ? { category } : {}), ...(forceRefresh ? { refresh: 'true' } : {}) } }).then((r) => r.data.questions),
-      300000,
-      60000
+      86400000,
+      600000
     );
   },
-  byCategory: (category, extraParams = {}, forceRefresh = false) => {
+  byCategory: async (category, extraParams = {}, forceRefresh = false) => {
     const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
-    if (forceRefresh) clearCache(key);
-    return withCache(
-      key,
-      () => api.get('/question-bank', { params: { ...(category ? { category } : {}), ...extraParams, ...(forceRefresh ? { refresh: 'true' } : {}) } }).then((r) => r.data.questions),
-      300000,
-      60000
-    );
+    if (forceRefresh) {
+      await persistentCache.delete(key);
+      clearCache(key);
+    }
+
+    if (!forceRefresh) {
+      // 1. Check persistent cache (memory or IndexedDB)
+      const cached = await persistentCache.get(key);
+      if (cached && Array.isArray(cached) && cached.length > 0) {
+        // Stale-while-revalidate in background if not already in flight
+        if (!inFlight.has(key)) {
+          const bgPromise = api
+            .get('/question-bank', { params: { ...(category ? { category } : {}), ...extraParams } })
+            .then((r) => {
+              const freshQuestions = r.data.questions || [];
+              if (freshQuestions.length > 0) {
+                persistentCache.set(key, freshQuestions, 86400000);
+              }
+              return freshQuestions;
+            })
+            .catch(() => {})
+            .finally(() => {
+              inFlight.delete(key);
+            });
+          inFlight.set(key, bgPromise);
+        }
+        return cached;
+      }
+    }
+
+    // 2. Fetch fresh from API
+    if (inFlight.has(key)) {
+      return inFlight.get(key);
+    }
+
+    const promise = api
+      .get('/question-bank', {
+        params: {
+          ...(category ? { category } : {}),
+          ...extraParams,
+          ...(forceRefresh ? { refresh: 'true' } : {}),
+        },
+      })
+      .then((r) => {
+        const questions = r.data.questions || [];
+        persistentCache.set(key, questions, 86400000);
+        return questions;
+      })
+      .finally(() => {
+        inFlight.delete(key);
+      });
+
+    inFlight.set(key, promise);
+    return promise;
   },
   clearQuestionBankCache: () => {
+    persistentCache.delete('qb');
     clearCache('qb');
   },
   create: (data) => {

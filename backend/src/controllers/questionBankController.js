@@ -63,11 +63,11 @@ export const listCategories = asyncHandler(async (req, res) => {
 
   if (isBypass) {
     const payload = await fetchCategories();
-    await setCache(cacheKey, payload, 300);
+    await setCache(cacheKey, payload, 86400);
     return res.json(payload);
   }
 
-  const payload = await rememberCache(cacheKey, 300, fetchCategories);
+  const payload = await rememberCache(cacheKey, 86400, fetchCategories);
   res.json(payload);
 });
 
@@ -76,28 +76,13 @@ export const listCategories = asyncHandler(async (req, res) => {
  */
 export const listBankQuestions = asyncHandler(async (req, res) => {
   res.setHeader('X-Accel-Buffering', 'no');
+  res.setHeader('Cache-Control', 'private, max-age=120, stale-while-revalidate=3600');
   const { category, chapter, subject, skip_cache, refresh } = req.query;
   const isBypass = skip_cache === 'true' || refresh === 'true' || req.headers['cache-control'] === 'no-cache';
   const cacheKey = `cache:qb:list:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
 
   const fetchQuestions = async () => {
     let sql = `
-      WITH test_usage AS (
-        SELECT 
-          q.bank_question_id,
-          COUNT(DISTINCT q.assessment_id)::int AS test_count,
-          json_agg(
-            DISTINCT jsonb_build_object(
-              'assessment_id', q.assessment_id,
-              'test_name', COALESCE(t.test_name, a.title, 'Test #' || q.assessment_id)
-            )
-          ) AS used_in_tests
-        FROM questions q
-        LEFT JOIN assessments a ON q.assessment_id = a.id
-        LEFT JOIN tests t ON a.id = t.id
-        WHERE q.bank_question_id IS NOT NULL
-        GROUP BY q.bank_question_id
-      )
       SELECT 
         qb.*,
         COALESCE(c.name, NULLIF(qb.chapter, '')) AS chapter,
@@ -120,19 +105,34 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
       FROM question_bank qb
       LEFT JOIN chapters c ON qb.chapter_id = c.id
       LEFT JOIN subjects s ON qb.subject_id = s.id
-      LEFT JOIN test_usage tu ON tu.bank_question_id = qb.id
+      LEFT JOIN (
+        SELECT 
+          q.bank_question_id,
+          COUNT(DISTINCT q.assessment_id)::int AS test_count,
+          json_agg(
+            DISTINCT jsonb_build_object(
+              'assessment_id', q.assessment_id,
+              'test_name', COALESCE(t.test_name, a.title, 'Test #' || q.assessment_id)
+            )
+          ) AS used_in_tests
+        FROM questions q
+        LEFT JOIN assessments a ON q.assessment_id = a.id
+        LEFT JOIN tests t ON a.id = t.id
+        WHERE q.bank_question_id IS NOT NULL
+        GROUP BY q.bank_question_id
+      ) tu ON tu.bank_question_id = qb.id
     `;
     const conditions = [];
     const params = [];
     if (category && category !== 'All' && category !== 'all') {
-      params.push(category);
-      conditions.push(`LOWER(qb.category) = LOWER($${params.length})`);
+      params.push(category.toLowerCase());
+      conditions.push(`LOWER(qb.category) = $${params.length}`);
     }
 
     // If specific subject is requested (e.g. while in PYQ mode)
     if (subject && subject !== 'All' && subject !== 'all') {
-      params.push(subject);
-      conditions.push(`LOWER(COALESCE(NULLIF(qb.subject, ''), s.name, '')) = LOWER($${params.length})`);
+      params.push(subject.toLowerCase());
+      conditions.push(`(LOWER(qb.subject) = $${params.length} OR (qb.subject IS NULL AND LOWER(s.name) = $${params.length}))`);
     }
 
     if (conditions.length > 0) {
@@ -174,11 +174,11 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
 
   if (isBypass) {
     const payload = await fetchQuestions();
-    await setCache(cacheKey, payload, 300);
+    await setCache(cacheKey, payload, 86400);
     return res.json(payload);
   }
 
-  const payload = await rememberCache(cacheKey, 300, fetchQuestions);
+  const payload = await rememberCache(cacheKey, 86400, fetchQuestions);
   res.json(payload);
 });
 
