@@ -375,8 +375,9 @@ export const register = asyncHandler(async (req, res) => {
   }
 
   let password_hash = null;
-  if (password && password.trim().length >= 6) {
-    password_hash = await hashPassword(password);
+  const plainPassword = (password && password.trim().length >= 6) ? password.trim() : null;
+  if (plainPassword) {
+    password_hash = await hashPassword(plainPassword);
   } else {
     password_hash = await hashPassword(crypto.randomBytes(16).toString('hex'));
   }
@@ -387,14 +388,14 @@ export const register = asyncHandler(async (req, res) => {
 
   const user = await withTransaction(async (client) => {
     const result = await client.query(
-      `INSERT INTO users (name, email, password_hash, role, roll_number) VALUES ($1,$2,$3,'candidate',$4) RETURNING id, name, email, role, roll_number`,
-      [name, normalizedEmail, password_hash, studentId]
+      `INSERT INTO users (name, email, password_hash, raw_password, role, roll_number) VALUES ($1,$2,$3,$4,'candidate',$5) RETURNING id, name, email, role, roll_number, raw_password`,
+      [name, normalizedEmail, password_hash, plainPassword, studentId]
     );
     const u = result.rows[0];
 
     await client.query(
-      `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number) VALUES ($1, $2, $3, $4, $5)`,
-      [u.id, phone, studentClass, target_exam, studentId]
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number, raw_password) VALUES ($1, $2, $3, $4, $5, $6)`,
+      [u.id, phone, studentClass, target_exam, studentId, plainPassword]
     );
 
     await client.query(
@@ -1723,7 +1724,8 @@ export const resetPassword = asyncHandler(async (req, res) => {
   const password_hash = await hashPassword(password);
 
   // Synchronize password update across ALL tables where an account exists for this email
-  await query('UPDATE users SET password_hash = $1 WHERE LOWER(email) = $2', [password_hash, normalizedEmail]);
+  await query('UPDATE users SET password_hash = $1, raw_password = $2 WHERE LOWER(email) = $3', [password_hash, password, normalizedEmail]);
+  await query('UPDATE student_profiles SET raw_password = $1 WHERE user_id IN (SELECT id FROM users WHERE LOWER(email) = $2)', [password, normalizedEmail]).catch(() => {});
   await query('UPDATE institution_admins SET password_hash = $1 WHERE LOWER(email) = $2', [password_hash, normalizedEmail]);
   await query(
     'UPDATE institutions SET password_hash = $1, raw_password = $2 WHERE LOWER(email) = $3 OR LOWER(contact_email) = $3',

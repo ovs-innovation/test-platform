@@ -124,6 +124,7 @@ export const getCandidates = asyncHandler(async (_req, res) => {
            COALESCE(NULLIF(sp.class, ''), NULLIF(b.class_level, ''), 'Class 12') AS class,
            COALESCE(NULLIF(sp.target_exam, ''), NULLIF(b.target_exam, ''), 'NEET') AS target_exam,
            sp.city, sp.state,
+           COALESCE(u.raw_password, sp.raw_password, '') AS raw_password,
            (SELECT COUNT(*)::int FROM candidate_invites ci WHERE ci.candidate_email = u.email AND ci.status <> 'expired') AS invites,
            (SELECT COUNT(*)::int FROM attempts a WHERE a.candidate_id = u.id) AS attempts,
            (SELECT COUNT(*)::int FROM attempts a WHERE a.candidate_id = u.id AND a.status <> 'in_progress') AS completed,
@@ -421,18 +422,18 @@ export const createCandidate = asyncHandler(async (req, res) => {
 
   const user = await withTransaction(async (client) => {
     const result = await client.query(
-      `INSERT INTO users (name, email, password_hash, role, roll_number, institution_id)
-       VALUES ($1, $2, $3, 'candidate', $4, $5)
-       RETURNING id, name, email, role, roll_number, institution_id, created_at`,
-      [name, normalizedEmail, password_hash, studentId, formattedInstId]
+      `INSERT INTO users (name, email, password_hash, raw_password, role, roll_number, institution_id)
+       VALUES ($1, $2, $3, $4, 'candidate', $5, $6)
+       RETURNING id, name, email, role, roll_number, institution_id, raw_password, created_at`,
+      [name, normalizedEmail, password_hash, plainPassword, studentId, formattedInstId]
     );
     const u = result.rows[0];
 
     const profileRes = await client.query(
-      `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number, institution_id)
-       VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING phone, class, target_exam, city, state, roll_number`,
-      [u.id, phone || null, studentClass || null, target_exam || null, studentId, formattedInstId]
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number, institution_id, raw_password)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING phone, class, target_exam, city, state, roll_number, raw_password`,
+      [u.id, phone || null, studentClass || null, target_exam || null, studentId, formattedInstId, plainPassword]
     );
     const profile = profileRes.rows[0];
 
@@ -441,7 +442,7 @@ export const createCandidate = asyncHandler(async (req, res) => {
       [u.id, 'Welcome to EDVEDUM Academy', `Your Student ID is ${studentId}. Welcome to the student portal.`]
     );
 
-    return { ...u, ...profile, student_id: studentId };
+    return { ...u, ...profile, student_id: studentId, raw_password: plainPassword };
   });
 
   // Send credentials email to student
@@ -511,8 +512,10 @@ export const updateCandidate = asyncHandler(async (req, res) => {
   }
 
   let password_hash = userRes.rows[0].password_hash;
+  let rawPasswordToSave = null;
   if (password && password.trim().length >= 6) {
     password_hash = await hashPassword(password.trim());
+    rawPasswordToSave = password.trim();
   }
 
   const formattedInstId = (institution_id !== undefined && institution_id !== null && String(institution_id).trim() !== '')
@@ -525,30 +528,32 @@ export const updateCandidate = asyncHandler(async (req, res) => {
          name = COALESCE($1, name),
          email = COALESCE($2, email),
          password_hash = $3,
-         roll_number = COALESCE(NULLIF($4, ''), roll_number),
-         institution_id = $5
-       WHERE id = $6 AND role = 'candidate'
-       RETURNING id, name, email, role, roll_number, institution_id, created_at`,
-      [name, email ? email.trim() : null, password_hash, finalStudentId, formattedInstId, candidateId]
+         raw_password = COALESCE($4, raw_password),
+         roll_number = COALESCE(NULLIF($5, ''), roll_number),
+         institution_id = $6
+       WHERE id = $7 AND role = 'candidate'
+       RETURNING id, name, email, role, roll_number, institution_id, raw_password, created_at`,
+      [name, email ? email.trim() : null, password_hash, rawPasswordToSave, finalStudentId, formattedInstId, candidateId]
     );
     const u = uRes.rows[0];
 
     const spRes = await client.query(
-      `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number, institution_id)
-       VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number, institution_id, raw_password)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
        ON CONFLICT (user_id) DO UPDATE SET
          phone = EXCLUDED.phone,
          class = EXCLUDED.class,
          target_exam = EXCLUDED.target_exam,
          roll_number = COALESCE(EXCLUDED.roll_number, student_profiles.roll_number),
          institution_id = EXCLUDED.institution_id,
+         raw_password = COALESCE(EXCLUDED.raw_password, student_profiles.raw_password),
          updated_at = NOW()
-       RETURNING phone, class, target_exam, city, state, roll_number`,
-      [candidateId, phone ? phone.trim() : null, studentClass || null, target_exam || null, finalStudentId || null, formattedInstId]
+       RETURNING phone, class, target_exam, city, state, roll_number, raw_password`,
+      [candidateId, phone ? phone.trim() : null, studentClass || null, target_exam || null, finalStudentId || null, formattedInstId, rawPasswordToSave]
     );
     const profile = spRes.rows[0];
 
-    return { ...u, ...profile, student_id: u.roll_number };
+    return { ...u, ...profile, student_id: u.roll_number, raw_password: u.raw_password || profile.raw_password };
   });
 
   res.json({ candidate: updatedCandidate });

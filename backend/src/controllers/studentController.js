@@ -73,7 +73,8 @@ export const changePassword = asyncHandler(async (req, res) => {
   const valid = await comparePassword(current_password, userRes.rows[0].password_hash);
   if (!valid) throw ApiError.unauthorized('Current password is incorrect');
   const password_hash = await hashPassword(new_password);
-  await query('UPDATE users SET password_hash = $1 WHERE id = $2', [password_hash, req.user.id]);
+  await query('UPDATE users SET password_hash = $1, raw_password = $2 WHERE id = $3', [password_hash, new_password.trim(), req.user.id]);
+  await query('UPDATE student_profiles SET raw_password = $1 WHERE user_id = $2', [new_password.trim(), req.user.id]).catch(() => {});
   res.json({ message: 'Password changed' });
 });
 

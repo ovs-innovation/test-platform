@@ -210,18 +210,18 @@ export const addInstitutionStudent = asyncHandler(async (req, res) => {
 
   const student = await withTransaction(async (client) => {
     const userRes = await client.query(
-      `INSERT INTO users (name, email, password_hash, role, institution_id, batch_id, roll_number)
-       VALUES ($1, $2, $3, 'candidate', $4, $5, $6)
-       RETURNING id, name, email, role, institution_id, batch_id, roll_number, created_at`,
-      [name.trim(), normEmail, passHash, instId, batch_id || null, finalRollNumber]
+      `INSERT INTO users (name, email, password_hash, raw_password, role, institution_id, batch_id, roll_number)
+       VALUES ($1, $2, $3, $4, 'candidate', $5, $6, $7)
+       RETURNING id, name, email, role, institution_id, batch_id, roll_number, raw_password, created_at`,
+      [name.trim(), normEmail, passHash, rawPass, instId, batch_id || null, finalRollNumber]
     );
     const u = userRes.rows[0];
 
     await client.query(
-      `INSERT INTO student_profiles (user_id, phone, class, target_exam, gender, dob, institution_id, batch_id, roll_number)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-       ON CONFLICT (user_id) DO UPDATE SET phone = EXCLUDED.phone, class = EXCLUDED.class, target_exam = EXCLUDED.target_exam, institution_id = EXCLUDED.institution_id, roll_number = EXCLUDED.roll_number`,
-      [u.id, mobile ? mobile.trim() : null, studentClass || 'Class 12', target_exam || 'NEET', gender || null, dob || null, instId, batch_id || null, finalRollNumber]
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam, gender, dob, institution_id, batch_id, roll_number, raw_password)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+       ON CONFLICT (user_id) DO UPDATE SET phone = EXCLUDED.phone, class = EXCLUDED.class, target_exam = EXCLUDED.target_exam, institution_id = EXCLUDED.institution_id, roll_number = EXCLUDED.roll_number, raw_password = EXCLUDED.raw_password`,
+      [u.id, mobile ? mobile.trim() : null, studentClass || 'Class 12', target_exam || 'NEET', gender || null, dob || null, instId, batch_id || null, finalRollNumber, rawPass]
     );
 
     // Update cached used_licenses count
@@ -476,26 +476,27 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
         );
       } else {
         const uRes = await query(
-          `INSERT INTO users (name, email, password_hash, role, institution_id, batch_id, roll_number)
-           VALUES ($1, $2, $3, 'candidate', $4, $5, $6)
+          `INSERT INTO users (name, email, password_hash, raw_password, role, institution_id, batch_id, roll_number)
+           VALUES ($1, $2, $3, $4, 'candidate', $5, $6, $7)
            RETURNING id, name, email`,
-          [String(name).trim(), normEmail, passHash, instId, batchId, finalRollNumber]
+          [String(name).trim(), normEmail, passHash, rawPass, instId, batchId, finalRollNumber]
         );
         studentId = uRes.rows[0].id;
       }
 
       try {
         await query(
-          `INSERT INTO student_profiles (user_id, phone, class, target_exam, institution_id, batch_id, roll_number)
-           VALUES ($1, $2, $3, $4, $5, $6, $7)
+          `INSERT INTO student_profiles (user_id, phone, class, target_exam, institution_id, batch_id, roll_number, raw_password)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
            ON CONFLICT (user_id) DO UPDATE SET
              phone = COALESCE(EXCLUDED.phone, student_profiles.phone),
              class = COALESCE(EXCLUDED.class, student_profiles.class),
              target_exam = COALESCE(EXCLUDED.target_exam, student_profiles.target_exam),
              institution_id = EXCLUDED.institution_id,
              batch_id = COALESCE(EXCLUDED.batch_id, student_profiles.batch_id),
-             roll_number = COALESCE(EXCLUDED.roll_number, student_profiles.roll_number)`,
-          [studentId, mobile ? String(mobile).trim() : null, finalClass, finalTarget, instId, batchId, finalRollNumber]
+             roll_number = COALESCE(EXCLUDED.roll_number, student_profiles.roll_number),
+             raw_password = COALESCE(EXCLUDED.raw_password, student_profiles.raw_password)`,
+          [studentId, mobile ? String(mobile).trim() : null, finalClass, finalTarget, instId, batchId, finalRollNumber, rawPass]
         );
       } catch (_pErr) {
         await query(

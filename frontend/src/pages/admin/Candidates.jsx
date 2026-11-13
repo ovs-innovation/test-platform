@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pencil, ShieldAlert, Trash2, ChevronLeft, ChevronRight, Mail, KeyRound, Copy, Check, UserPlus, User, Phone, Building2, GraduationCap, Lock, X } from 'lucide-react';
+import { Pencil, ShieldAlert, Trash2, ChevronLeft, ChevronRight, Mail, KeyRound, Copy, Check, UserPlus, User, Phone, Building2, GraduationCap, Lock, X, Eye, EyeOff } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState, PasswordInput } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -39,6 +39,8 @@ export default function AdminCandidates() {
   const [credentialsCustomStudentId, setCredentialsCustomStudentId] = useState('');
   const [sendingCredentials, setSendingCredentials] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
+  const [showPasswords, setShowPasswords] = useState({});
+  const [copiedPasswordId, setCopiedPasswordId] = useState(null);
   
   const [institutions, setInstitutions] = useState([]);
 
@@ -47,6 +49,7 @@ export default function AdminCandidates() {
     name: '',
     email: '',
     password: '',
+    current_raw_password: '',
     student_id: '',
     phone: '',
     class: '',
@@ -89,6 +92,21 @@ export default function AdminCandidates() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const togglePasswordVisibility = (id) => {
+    setShowPasswords((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handleCopyPassword = (pwd, id) => {
+    if (!pwd) {
+      toast.error('No password available to copy');
+      return;
+    }
+    navigator.clipboard?.writeText(pwd);
+    setCopiedPasswordId(id);
+    toast.success('Password copied to clipboard!');
+    setTimeout(() => setCopiedPasswordId(null), 2000);
+  };
+
   const handleOpenSendCredentials = (c) => {
     setCandidateForCredentials(c);
     setCredentialsCustomStudentId(c.student_id || c.roll_number || '');
@@ -127,6 +145,7 @@ export default function AdminCandidates() {
       name: '',
       email: '',
       password: '',
+      current_raw_password: '',
       student_id: '',
       phone: '',
       class: '',
@@ -144,6 +163,7 @@ export default function AdminCandidates() {
       name: c.name || '',
       email: c.email || '',
       password: '',
+      current_raw_password: c.raw_password || '',
       student_id: c.student_id || c.roll_number || '',
       phone: c.phone || '',
       class: c.class || '',
@@ -320,6 +340,7 @@ export default function AdminCandidates() {
                   <Th>Status</Th>
                   <Th>Institution / Source</Th>
                   <Th>Contact Details</Th>
+                  <Th>Password</Th>
                   <Th>Academic Profile</Th>
                   <Th>Exam Attempts</Th>
                   <Th>Registered On</Th>
@@ -388,6 +409,35 @@ export default function AdminCandidates() {
                     <Td>
                       <p className="text-slate-800 dark:text-slate-200 font-semibold text-xs">{c.email}</p>
                       <p className="text-[11px] text-slate-400 mt-0.5">{c.phone || 'No mobile'}</p>
+                    </Td>
+                    <Td>
+                      <div className="flex items-center gap-1.5 whitespace-nowrap">
+                        <span className="font-mono text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-800 select-all tracking-wider">
+                          {showPasswords[c.id] ? (c.raw_password || '••••••••') : '••••••••'}
+                        </span>
+                        {c.raw_password ? (
+                          <div className="flex items-center gap-0.5">
+                            <button
+                              type="button"
+                              onClick={() => togglePasswordVisibility(c.id)}
+                              className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer transition"
+                              title={showPasswords[c.id] ? 'Hide Password' : 'Show Password'}
+                            >
+                              {showPasswords[c.id] ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5 text-blue-500" />}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleCopyPassword(c.raw_password, c.id)}
+                              className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition"
+                              title="Copy Password"
+                            >
+                              {copiedPasswordId === c.id ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                            </button>
+                          </div>
+                        ) : (
+                          <span className="text-[10px] text-slate-400 italic font-medium">Not recorded</span>
+                        )}
+                      </div>
                     </Td>
                     <Td>
                       <div className="flex flex-col gap-1">
@@ -614,28 +664,35 @@ export default function AdminCandidates() {
                     </p>
                   </div>
 
-                  {/* Initial Password (create mode only) */}
-                  {modalMode === 'create' && (
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <label className="label !mb-0">
-                          Initial Password
-                        </label>
-                        <span className="text-[10px] text-slate-400 font-semibold">
-                          Auto-generated if blank
+                  {/* Password */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="label !mb-0">
+                        {modalMode === 'create' ? 'Initial Password' : 'Change Password'}
+                      </label>
+                      <span className="text-[10px] text-slate-400 font-semibold">
+                        {modalMode === 'create' ? 'Auto-generated if blank' : 'Leave blank to keep unchanged'}
+                      </span>
+                    </div>
+                    <PasswordInput
+                      className="input"
+                      placeholder={modalMode === 'create' ? "Min 6 characters (or auto-generate)" : "Enter new password or leave blank"}
+                      value={form.password}
+                      onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    />
+                    {modalMode === 'edit' && form.current_raw_password ? (
+                      <div className="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+                        <span>Current Password:</span>
+                        <span className="font-mono font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 select-all">
+                          {form.current_raw_password}
                         </span>
                       </div>
-                      <PasswordInput
-                        className="input"
-                        placeholder="Min 6 characters (or auto-generate)"
-                        value={form.password}
-                        onChange={(e) => setForm({ ...form, password: e.target.value })}
-                      />
+                    ) : modalMode === 'create' ? (
                       <p className="text-[11px] text-slate-400 mt-1">
                         Leave blank to auto-generate a secure password
                       </p>
-                    </div>
-                  )}
+                    ) : null}
+                  </div>
 
                   {/* Mobile Number */}
                   <div>
@@ -890,6 +947,14 @@ export default function AdminCandidates() {
                 {candidateForCredentials?.student_id || candidateForCredentials?.roll_number || 'Will auto-generate'}
               </span>
             </div>
+            {candidateForCredentials?.raw_password && (
+              <div className="flex justify-between items-center">
+                <span className="text-slate-500 dark:text-slate-400">Password:</span>
+                <span className="font-mono font-bold text-slate-800 dark:text-slate-200 bg-slate-200/60 dark:bg-slate-800 px-2 py-0.5 rounded select-all">
+                  {candidateForCredentials.raw_password}
+                </span>
+              </div>
+            )}
           </div>
 
           <div>
