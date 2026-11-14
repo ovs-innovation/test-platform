@@ -168,11 +168,30 @@ export default function ExamScreen({ isSimulator = false }) {
   }, [effectiveAttemptId, isSimulatorActive]);
 
   useEffect(() => {
-    const onOnline = () => setIsOffline(false);
-    const onOffline = () => setIsOffline(true);
+    let offlineTimeout = null;
+    const onOnline = () => {
+      if (offlineTimeout) {
+        clearTimeout(offlineTimeout);
+        offlineTimeout = null;
+      }
+      setIsOffline(false);
+      if (syncManagerRef.current?.getPendingCount() > 0) {
+        syncManagerRef.current.syncPending();
+      }
+    };
+    const onOffline = () => {
+      // Debounce by 4s: Ignore momentary 1-second Wi-Fi packet drops so students are not disrupted
+      if (offlineTimeout) clearTimeout(offlineTimeout);
+      offlineTimeout = setTimeout(() => {
+        if (typeof navigator !== 'undefined' && !navigator.onLine) {
+          setIsOffline(true);
+        }
+      }, 4000);
+    };
     window.addEventListener('online', onOnline);
     window.addEventListener('offline', onOffline);
     return () => {
+      if (offlineTimeout) clearTimeout(offlineTimeout);
       window.removeEventListener('online', onOnline);
       window.removeEventListener('offline', onOffline);
     };

@@ -17,7 +17,7 @@ export default function TechnicalIncidentStatusBanner({
         <div className="flex items-center gap-2 min-w-0">
           <WifiOff className="h-4 w-4 shrink-0 text-slate-950 animate-pulse" />
           <span className="truncate">
-            Internet Disconnected — Offline Safe Mode Active. Your answers are buffered locally and will automatically sync when reconnected.
+            Offline Safe Mode: Your answers are saved securely on this device and will automatically sync when reconnected.
           </span>
         </div>
         <div className="flex items-center gap-2 shrink-0">
