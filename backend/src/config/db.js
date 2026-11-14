@@ -110,22 +110,30 @@ export const query = async (text, params, retries = 3) => {
           err.code === 'ENETUNREACH' ||
           err.code === '57P01' ||
           err.code === '53300' ||
+          err.code === '53400' ||
           err.code === '08006' ||
           err.code === '08003' ||
           err.code === '08001' ||
+          err.code === '08004' ||
+          err.name === 'NeonDbError' ||
           (err.message &&
             (err.message.includes('getaddrinfo') ||
-             err.message.includes('connection terminated') ||
-             err.message.includes('Connection terminated unexpectedly') ||
-             err.message.includes('timeout') ||
-             err.message.includes('Timeout') ||
-             err.message.includes('SSL') ||
-             err.message.includes('Client has encountered a connection error'))));
+              err.message.includes('connection terminated') ||
+              err.message.includes('Connection terminated unexpectedly') ||
+              err.message.includes('timeout') ||
+              err.message.includes('Timeout') ||
+              err.message.includes('SSL') ||
+              err.message.includes('Client has encountered a connection error') ||
+              err.message.includes('too many clients') ||
+              err.message.includes('remaining connection slots') ||
+              err.message.includes('canceling statement due to statement timeout') ||
+              err.message.includes('connection to server was lost'))));
 
       if (isTransient && attempt < retries) {
         // eslint-disable-next-line no-console
         console.warn(`[db] Retrying transient query failure (attempt ${attempt + 1}/${retries})...`);
-        await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+        const jitterDelay = Math.min(2500, 300 * Math.pow(2, attempt) + Math.random() * 200);
+        await new Promise((resolve) => setTimeout(resolve, jitterDelay));
         continue;
       }
       throw err;

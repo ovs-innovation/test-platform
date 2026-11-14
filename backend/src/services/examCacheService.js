@@ -249,3 +249,39 @@ export async function getOrSetCachedInstitution(institutionId) {
   await setCache(cacheKey, obj, 3600).catch(() => {});
   return obj;
 }
+
+/**
+ * Caches active attempt validation data (id, candidate_id, assessment_id, status, ends_at)
+ * for 60 seconds to eliminate repeated PostgreSQL queries on every answer save.
+ */
+export async function getOrSetCachedAttempt(attemptId) {
+  const numId = Number(attemptId);
+  if (!numId || isNaN(numId)) return null;
+
+  const cacheKey = `attempt_meta:${numId}`;
+  const cached = await getCache(cacheKey).catch(() => null);
+  if (cached && cached.id && cached.candidate_id) {
+    return cached;
+  }
+
+  const attemptRes = await query(
+    'SELECT id, candidate_id, assessment_id, status, ends_at FROM attempts WHERE id = $1',
+    [numId]
+  ).catch(() => ({ rows: [] }));
+
+  const attempt = attemptRes.rows[0];
+  if (!attempt) return null;
+
+  // Short TTL (60s) ensures changes/extensions are reflected promptly while preventing DB exhaustion
+  await setCache(cacheKey, attempt, 60).catch(() => {});
+  return attempt;
+}
+
+/**
+ * Invalidates attempt metadata cache immediately upon submission or status modification.
+ */
+export async function invalidateAttemptCache(attemptId) {
+  const numId = Number(attemptId);
+  if (!numId || isNaN(numId)) return;
+  await delCache(`attempt_meta:${numId}`).catch(() => {});
+}

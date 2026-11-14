@@ -316,9 +316,9 @@ export class CbtAnswerSyncManager {
       item.retryCount = (item.retryCount || 0) + 1;
       this._persistQueueToStorage();
 
-      // Only report incident if failure persists across retries (>= 2 retries)
-      // This prevents momentary packet drops or self-healing transient network blips from generating false alarms
-      if (item.retryCount >= 2) {
+      // Only report incident if failure persists across multiple retries (>= 3 retries)
+      // This prevents momentary packet drops, brief DB reconnection, or self-healing transient network blips from generating false alarms
+      if (item.retryCount >= 3) {
         this._reportIncidentSafe('ANSWER_SAVE_FAILED', err, {
           questionId: item.questionId,
           retryCount: item.retryCount,

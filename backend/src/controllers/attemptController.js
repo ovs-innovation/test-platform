@@ -8,7 +8,7 @@ import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS
 import { getAssessmentRankingData, syncAssessmentRankings } from '../services/assessmentRankingService.js';
 import { recordAttemptMistakes } from '../services/mistakeBookService.js';
 import { getTopperComparison } from '../services/topperComparisonService.js';
-import { getOrSetCachedExamPaper, getOrSetQuestionMeta, getOrSetCachedInstitution } from '../services/examCacheService.js';
+import { getOrSetCachedExamPaper, getOrSetQuestionMeta, getOrSetCachedInstitution, getOrSetCachedAttempt, invalidateAttemptCache } from '../services/examCacheService.js';
 
 const ensureArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -394,6 +394,7 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
     }
   }
 
+  await invalidateAttemptCache(attemptId);
   return result?.score || null;
 };
 
@@ -663,8 +664,7 @@ export const saveAnswer = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { question_id, selected_index, selected_indices, numeric_answer } = req.body;
 
-  const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
-  const attempt = attemptRes.rows[0];
+  const attempt = await getOrSetCachedAttempt(id);
   if (!attempt) throw ApiError.notFound('Attempt not found');
   if (attempt.candidate_id !== req.user.id) throw ApiError.forbidden('This is not your attempt');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('This attempt is already submitted');
@@ -672,6 +672,7 @@ export const saveAnswer = asyncHandler(async (req, res) => {
   // Allow 60s grace period for in-flight requests and latency before auto-closing
   const GRACE_PERIOD_MS = 60 * 1000;
   if (new Date(attempt.ends_at).getTime() + GRACE_PERIOD_MS <= Date.now()) {
+    await invalidateAttemptCache(attempt.id);
     await finalizeAttempt(attempt.id, 'auto_submitted');
     throw ApiError.conflict('Time has expired; your test was auto-submitted');
   }
@@ -719,8 +720,7 @@ export const markForReview = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { question_id, marked_for_review } = req.body;
   if (marked_for_review === undefined) throw ApiError.badRequest('marked_for_review required');
-  const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
-  const attempt = attemptRes.rows[0];
+  const attempt = await getOrSetCachedAttempt(id);
   if (!attempt || attempt.candidate_id !== req.user.id) throw ApiError.forbidden('Not allowed');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('Attempt submitted');
 
@@ -738,8 +738,7 @@ export const clearAnswer = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const targetQId = req.body.question_id || req.body.questionId || req.params.questionId;
   if (!targetQId) throw ApiError.badRequest('question_id is required');
-  const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
-  const attempt = attemptRes.rows[0];
+  const attempt = await getOrSetCachedAttempt(id);
   if (!attempt || attempt.candidate_id !== req.user.id) throw ApiError.forbidden('Not allowed');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('Attempt submitted');
 
@@ -753,8 +752,7 @@ export const saveCodingAnswer = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { question_id, source_code, language } = req.body;
 
-  const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
-  const attempt = attemptRes.rows[0];
+  const attempt = await getOrSetCachedAttempt(id);
   if (!attempt) throw ApiError.notFound('Attempt not found');
   if (attempt.candidate_id !== req.user.id) throw ApiError.forbidden('This is not your attempt');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('This attempt is already submitted');
@@ -762,6 +760,7 @@ export const saveCodingAnswer = asyncHandler(async (req, res) => {
   // Allow 60s grace period for in-flight requests and latency before auto-closing
   const GRACE_PERIOD_MS = 60 * 1000;
   if (new Date(attempt.ends_at).getTime() + GRACE_PERIOD_MS <= Date.now()) {
+    await invalidateAttemptCache(attempt.id);
     await finalizeAttempt(attempt.id, 'auto_submitted');
     throw ApiError.conflict('Time has expired; your test was auto-submitted');
   }
@@ -780,8 +779,7 @@ export const saveSubjectiveAnswer = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { question_id, answer_text } = req.body;
 
-  const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
-  const attempt = attemptRes.rows[0];
+  const attempt = await getOrSetCachedAttempt(id);
   if (!attempt) throw ApiError.notFound('Attempt not found');
   if (attempt.candidate_id !== req.user.id) throw ApiError.forbidden('This is not your attempt');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('This attempt is already submitted');
@@ -789,6 +787,7 @@ export const saveSubjectiveAnswer = asyncHandler(async (req, res) => {
   // Allow 60s grace period for in-flight requests and latency before auto-closing
   const GRACE_PERIOD_MS = 60 * 1000;
   if (new Date(attempt.ends_at).getTime() + GRACE_PERIOD_MS <= Date.now()) {
+    await invalidateAttemptCache(attempt.id);
     await finalizeAttempt(attempt.id, 'auto_submitted');
     throw ApiError.conflict('Time has expired; your test was auto-submitted');
   }
@@ -805,11 +804,11 @@ export const saveSubjectiveAnswer = asyncHandler(async (req, res) => {
 
 export const submitAttempt = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
-  const attempt = attemptRes.rows[0];
+  const attempt = await getOrSetCachedAttempt(id);
   if (!attempt) throw ApiError.notFound('Attempt not found');
   if (attempt.candidate_id !== req.user.id) throw ApiError.forbidden('This is not your attempt');
 
+  await invalidateAttemptCache(id);
   const score = await finalizeAttempt(id, 'submitted');
   const refreshed = await query('SELECT * FROM attempts WHERE id = $1', [id]);
   const assessmentRes = await query('SELECT * FROM assessments WHERE id = $1', [attempt.assessment_id]);
