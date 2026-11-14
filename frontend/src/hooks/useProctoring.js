@@ -30,25 +30,24 @@ export function useProctoring({ active, onViolation }) {
     const onVisibility = () => {
       if (document.hidden) report('tab_switch');
     };
-    const onBlur = () => report('window_blur');
+    const onBlur = () => {
+      // Only report if the document is genuinely hidden/switched
+      if (document.hidden) report('tab_switch');
+    };
     const onFullscreenChange = () => {
       if (!isFullscreen()) report('fullscreen_exit');
     };
     const onContextMenu = (e) => {
       e.preventDefault();
-      report('right_click');
     };
     const onCopy = (e) => {
       e.preventDefault();
-      report('copy');
     };
     const onCut = (e) => {
       e.preventDefault();
-      report('cut');
     };
     const onPaste = (e) => {
       e.preventDefault();
-      report('paste');
     };
     const onKeyDown = (e) => {
       const key = e.key.toLowerCase();

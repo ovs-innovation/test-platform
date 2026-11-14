@@ -45,20 +45,10 @@ export const logViolation = asyncHandler(async (req, res) => {
     return res.json({ violation_count: result.violation_count, autoSubmitted: false });
   }
 
-  // Limit of 0 means "no limit"; otherwise auto-submit when exceeded.
-  const limitReached =
-    result.max_violations > 0 && result.violation_count > result.max_violations;
-
-  if (limitReached) {
-    const score = await finalizeAttempt(id, 'auto_submitted');
-    return res.json({
-      violation_count: result.violation_count,
-      max_violations: result.max_violations,
-      autoSubmitted: true,
-      score,
-    });
-  }
-
+  // Strict Policy: Do NOT abruptly auto-submit exams on violation counts.
+  // Violations are recorded in the database for proctoring review and warning banners
+  // are displayed to the candidate, but exams only conclude when the student clicks Submit
+  // or the timer legitimately ends.
   res.json({
     violation_count: result.violation_count,
     max_violations: result.max_violations,

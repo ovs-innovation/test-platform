@@ -669,7 +669,9 @@ export const saveAnswer = asyncHandler(async (req, res) => {
   if (attempt.candidate_id !== req.user.id) throw ApiError.forbidden('This is not your attempt');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('This attempt is already submitted');
 
-  if (new Date(attempt.ends_at).getTime() <= Date.now()) {
+  // Allow 60s grace period for in-flight requests and latency before auto-closing
+  const GRACE_PERIOD_MS = 60 * 1000;
+  if (new Date(attempt.ends_at).getTime() + GRACE_PERIOD_MS <= Date.now()) {
     await finalizeAttempt(attempt.id, 'auto_submitted');
     throw ApiError.conflict('Time has expired; your test was auto-submitted');
   }
@@ -757,7 +759,9 @@ export const saveCodingAnswer = asyncHandler(async (req, res) => {
   if (attempt.candidate_id !== req.user.id) throw ApiError.forbidden('This is not your attempt');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('This attempt is already submitted');
 
-  if (new Date(attempt.ends_at).getTime() <= Date.now()) {
+  // Allow 60s grace period for in-flight requests and latency before auto-closing
+  const GRACE_PERIOD_MS = 60 * 1000;
+  if (new Date(attempt.ends_at).getTime() + GRACE_PERIOD_MS <= Date.now()) {
     await finalizeAttempt(attempt.id, 'auto_submitted');
     throw ApiError.conflict('Time has expired; your test was auto-submitted');
   }
@@ -782,7 +786,9 @@ export const saveSubjectiveAnswer = asyncHandler(async (req, res) => {
   if (attempt.candidate_id !== req.user.id) throw ApiError.forbidden('This is not your attempt');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('This attempt is already submitted');
 
-  if (new Date(attempt.ends_at).getTime() <= Date.now()) {
+  // Allow 60s grace period for in-flight requests and latency before auto-closing
+  const GRACE_PERIOD_MS = 60 * 1000;
+  if (new Date(attempt.ends_at).getTime() + GRACE_PERIOD_MS <= Date.now()) {
     await finalizeAttempt(attempt.id, 'auto_submitted');
     throw ApiError.conflict('Time has expired; your test was auto-submitted');
   }

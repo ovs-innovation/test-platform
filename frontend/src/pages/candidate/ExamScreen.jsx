@@ -456,14 +456,20 @@ export default function ExamScreen({ isSimulator = false }) {
   }, [effectiveAttemptId, isSimulatorActive, navigate, questions, answers, user]);
 
   useEffect(() => {
-    if (loading || isSubmitting) return undefined;
+    if (loading || isSubmitting || !endsAtRef.current) return undefined;
     const id = setInterval(() => {
-      const secs = Math.max(0, Math.round((endsAtRef.current - Date.now()) / 1000));
-      setRemaining(secs);
-      if (secs <= 0) {
+      if (!endsAtRef.current || endsAtRef.current <= 0) return;
+      const authoritativeSecs = syncManagerRef.current?.getAuthoritativeRemainingSeconds?.();
+      const secs = authoritativeSecs != null
+        ? authoritativeSecs
+        : Math.round((endsAtRef.current - Date.now()) / 1000);
+
+      if (secs <= 0 && endsAtRef.current > 0) {
         clearInterval(id);
         toast.info('Time is up — submitting your assessment.');
         finishExam('timeout');
+      } else if (secs > 0) {
+        setRemaining(secs);
       }
     }, 1000);
     return () => clearInterval(id);
@@ -476,12 +482,10 @@ export default function ExamScreen({ isSimulator = false }) {
     try {
       const res = await attemptService.logViolation(effectiveAttemptId, type);
       if (typeof res.violation_count === 'number') setViolations(res.violation_count);
-      if (res.autoSubmitted) {
-        toast.error('Violation limit exceeded. Assessment submitted.');
-        finishExam('violations');
-      }
+      // Strictly prevent auto-submitting exams on violation warnings.
+      // Tests only submit when the student clicks submit or time legitimately expires.
     } catch { /* ignore */ }
-  }, [effectiveAttemptId, isSimulatorActive, isSubmitting, finishExam, toast]);
+  }, [effectiveAttemptId, isSimulatorActive, isSubmitting]);
 
   useProctoring({ active: !loading && !finishedRef.current && !isSubmitting && !isSimulatorActive, onViolation: handleViolation });
 
