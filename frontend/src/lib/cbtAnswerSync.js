@@ -171,8 +171,16 @@ export class CbtAnswerSyncManager {
     if (!serverTimeStr || !endsAtStr) return null;
     const serverNow = new Date(serverTimeStr).getTime();
     const clientNow = Date.now();
-    this.clockSkewMs = clientNow - serverNow; // positive if client clock is ahead
+    const measuredSkew = clientNow - serverNow; // positive if client clock is ahead
     this.authoritativeEndsAtMs = new Date(endsAtStr).getTime();
+
+    // Initialize clock skew on first sync or adjust only when genuine drift > 3s occurs
+    // to filter out transient network latency jitter on routine saves
+    if (this.clockSkewMs === null || this.clockSkewMs === undefined || this.clockSkewMs === 0) {
+      this.clockSkewMs = measuredSkew;
+    } else if (Math.abs(measuredSkew - this.clockSkewMs) > 3000) {
+      this.clockSkewMs = Math.round(this.clockSkewMs * 0.7 + measuredSkew * 0.3);
+    }
 
     const authoritativeNow = clientNow - this.clockSkewMs;
     const remainingSeconds = Math.max(0, Math.round((this.authoritativeEndsAtMs - authoritativeNow) / 1000));

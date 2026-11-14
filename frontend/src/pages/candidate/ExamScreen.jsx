@@ -152,7 +152,13 @@ export default function ExamScreen({ isSimulator = false }) {
       },
       onTimerSync: ({ remainingSeconds, clockSkewSeconds, authoritativeEndsAtMs }) => {
         if (authoritativeEndsAtMs) endsAtRef.current = authoritativeEndsAtMs;
-        setRemaining(remainingSeconds);
+        // Smooth local countdown: only update state if server drift exceeds 2s to avoid micro-stutters
+        setRemaining((current) => {
+          if (!current || Math.abs(current - remainingSeconds) > 2) {
+            return remainingSeconds;
+          }
+          return current;
+        });
         reportSkewThrottled(
           clockSkewSeconds,
           new Date(authoritativeEndsAtMs).toISOString(),
@@ -387,7 +393,10 @@ export default function ExamScreen({ isSimulator = false }) {
 
         endsAtRef.current = new Date(data.attempt.ends_at).getTime();
         if (syncManagerRef.current && data.server_time) {
-          syncManagerRef.current.reconcileTimer(data.server_time, data.attempt.ends_at);
+          const syncedRemaining = syncManagerRef.current.reconcileTimer(data.server_time, data.attempt.ends_at);
+          if (typeof syncedRemaining === 'number') {
+            setRemaining(syncedRemaining);
+          }
         } else {
           setRemaining(Math.max(0, Math.round((endsAtRef.current - Date.now()) / 1000)));
         }
