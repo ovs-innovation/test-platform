@@ -114,6 +114,22 @@ export default function ExamScreen({ isSimulator = false }) {
   const [submissionError, setSubmissionError] = useState(null);
   const [incidentReference, setIncidentReference] = useState(null);
   const syncManagerRef = useRef(null);
+  const lastReportedSkewRef = useRef({ time: 0, skew: 0 });
+
+  const reportSkewThrottled = (skewSeconds, serverEndsAt, clientEndsAt) => {
+    const absSkew = Math.abs(skewSeconds);
+    // Ignore benign device clock drift under 45 seconds (standard non-NTP clock jitter)
+    if (absSkew < 45) return;
+    const now = Date.now();
+    const last = lastReportedSkewRef.current;
+    // Throttle: Report at most once every 10 minutes unless skew worsens by > 30s
+    if (!last.time || Math.abs(absSkew - Math.abs(last.skew)) > 30 || now - last.time > 10 * 60 * 1000) {
+      lastReportedSkewRef.current = { time: now, skew: skewSeconds };
+      try {
+        reporterRef.current?.reportTimerMismatch(skewSeconds, serverEndsAt, clientEndsAt);
+      } catch (_) {}
+    }
+  };
 
   useEffect(() => {
     if (!effectiveAttemptId) return;
@@ -137,15 +153,11 @@ export default function ExamScreen({ isSimulator = false }) {
       onTimerSync: ({ remainingSeconds, clockSkewSeconds, authoritativeEndsAtMs }) => {
         if (authoritativeEndsAtMs) endsAtRef.current = authoritativeEndsAtMs;
         setRemaining(remainingSeconds);
-        if (Math.abs(clockSkewSeconds) > 30) {
-          try {
-            reporterRef.current?.reportTimerMismatch(
-              clockSkewSeconds,
-              new Date(authoritativeEndsAtMs).toISOString(),
-              new Date().toISOString()
-            );
-          } catch (_) {}
-        }
+        reportSkewThrottled(
+          clockSkewSeconds,
+          new Date(authoritativeEndsAtMs).toISOString(),
+          new Date().toISOString()
+        );
       },
     });
 
@@ -181,9 +193,7 @@ export default function ExamScreen({ isSimulator = false }) {
           const serverNow = new Date(res.server_time).getTime();
           const clientNow = Date.now();
           const driftSeconds = (clientNow - serverNow) / 1000;
-          if (Math.abs(driftSeconds) > 30) {
-            reporterRef.current?.reportTimerMismatch(driftSeconds, res.server_time, new Date(clientNow).toISOString());
-          }
+          reportSkewThrottled(driftSeconds, res.server_time, new Date(clientNow).toISOString());
         }
       } catch (_) {}
     };
