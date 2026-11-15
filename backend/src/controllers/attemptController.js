@@ -576,12 +576,27 @@ export const startAttempt = asyncHandler(async (req, res) => {
     throw ApiError.conflict('This invitation has already been used');
   }
 
-  const created = await query(
-    `INSERT INTO attempts (assessment_id, candidate_id, ends_at, invite_id)
-     VALUES ($1, $2, NOW() + ($3 || ' minutes')::interval, $4)
-     RETURNING *`,
-    [assessmentId, req.user.id, assessment.duration_minutes, invite?.id || null]
-  );
+  let created;
+  try {
+    created = await query(
+      `INSERT INTO attempts (assessment_id, candidate_id, ends_at, invite_id)
+       VALUES ($1, $2, NOW() + ($3 || ' minutes')::interval, $4)
+       RETURNING *`,
+      [assessmentId, req.user.id, assessment.duration_minutes, invite?.id || null]
+    );
+  } catch (err) {
+    // 23505 = unique_violation. Handles double-click race condition seamlessly
+    if (err.code === '23505' || err.message?.includes('duplicate key')) {
+      const recovered = await query(
+        'SELECT * FROM attempts WHERE assessment_id = $1 AND candidate_id = $2',
+        [assessmentId, req.user.id]
+      );
+      if (recovered.rows.length > 0) {
+        return res.json({ attempt: recovered.rows[0], resumed: true });
+      }
+    }
+    throw err;
+  }
 
   if (invite) {
     await query(
