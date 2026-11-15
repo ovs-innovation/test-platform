@@ -272,8 +272,8 @@ export async function getOrSetCachedAttempt(attemptId) {
   const attempt = attemptRes.rows[0];
   if (!attempt) return null;
 
-  // Short TTL (60s) ensures changes/extensions are reflected promptly while preventing DB exhaustion
-  await setCache(cacheKey, attempt, 60).catch(() => {});
+  // Short TTL (15s) ensures changes/extensions are reflected promptly while preventing DB exhaustion
+  await setCache(cacheKey, attempt, 15).catch(() => {});
   return attempt;
 }
 

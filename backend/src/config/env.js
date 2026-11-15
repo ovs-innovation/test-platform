@@ -73,7 +73,10 @@ export const env = {
 
   redisUrl: process.env.REDIS_URL || 'redis://127.0.0.1:6379',
   jwtSecret: jwtSecret,
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '30d',
+  // Ensure token validity is at least 12h for examination safety, preventing mid-exam logouts
+  jwtExpiresIn: (process.env.JWT_EXPIRES_IN && !['1h', '2h', '3h'].includes(process.env.JWT_EXPIRES_IN))
+    ? process.env.JWT_EXPIRES_IN
+    : '12h',
 
   seed: seedConfig,
 
