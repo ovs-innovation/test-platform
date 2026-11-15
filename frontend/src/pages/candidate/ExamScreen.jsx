@@ -406,8 +406,11 @@ export default function ExamScreen({ isSimulator = false }) {
           syncManagerRef.current.syncPending();
         }
         setLoading(false);
-        const ok = await requestFullscreen().then(() => true).catch(() => false);
-        if (!ok && !isFullscreen()) setNeedsFullscreen(true);
+        try {
+          await requestFullscreen();
+        } catch (_) {
+          // Non-blocking: If browser/OS denies fullscreen (e.g. iOS Safari / school restriction), continue in standard mode
+        }
       } catch (err) {
         if (cancelled) return;
         reporterRef.current?.reportQuestionLoadFailure(null, err);
@@ -769,7 +772,12 @@ export default function ExamScreen({ isSimulator = false }) {
         await attemptService.saveAnswer(attemptId, questionId, index);
       }
     } catch (err) {
-      if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
+      const msg = err.response?.data?.message || err.message || '';
+      if ((err.status === 409 || err.response?.status === 409) && /time has expired/i.test(msg)) {
+        finishExam('timeout');
+      } else {
+        console.warn('[CBT] Handled non-fatal answer save error:', err);
+      }
     } finally { setSavingId(null); }
   };
 
@@ -788,7 +796,12 @@ export default function ExamScreen({ isSimulator = false }) {
           await attemptService.saveAnswer(attemptId, questionId, { numeric_answer: numVal });
         }
       } catch (err) {
-        if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
+        const msg = err.response?.data?.message || err.message || '';
+        if ((err.status === 409 || err.response?.status === 409) && /time has expired/i.test(msg)) {
+          finishExam('timeout');
+        } else {
+          console.warn('[CBT] Handled non-fatal answer save error:', err);
+        }
       } finally { setSavingId(null); }
     }, 400);
   };
@@ -809,7 +822,12 @@ export default function ExamScreen({ isSimulator = false }) {
         await attemptService.saveAnswer(attemptId, questionId, undefined, next);
       }
     } catch (err) {
-      if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
+      const msg = err.response?.data?.message || err.message || '';
+      if ((err.status === 409 || err.response?.status === 409) && /time has expired/i.test(msg)) {
+        finishExam('timeout');
+      } else {
+        console.warn('[CBT] Handled non-fatal answer save error:', err);
+      }
     } finally { setSavingId(null); }
   };
 
@@ -827,7 +845,12 @@ export default function ExamScreen({ isSimulator = false }) {
           await attemptService.saveCoding(attemptId, questionId, sourceCode, language);
         }
       } catch (err) {
-        if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
+        const msg = err.response?.data?.message || err.message || '';
+        if ((err.status === 409 || err.response?.status === 409) && /time has expired/i.test(msg)) {
+          finishExam('timeout');
+        } else {
+          console.warn('[CBT] Handled non-fatal answer save error:', err);
+        }
       } finally { setSavingId(null); }
     }, 800);
   };
@@ -846,7 +869,12 @@ export default function ExamScreen({ isSimulator = false }) {
           await attemptService.saveSubjective(attemptId, questionId, text);
         }
       } catch (err) {
-        if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
+        const msg = err.response?.data?.message || err.message || '';
+        if ((err.status === 409 || err.response?.status === 409) && /time has expired/i.test(msg)) {
+          finishExam('timeout');
+        } else {
+          console.warn('[CBT] Handled non-fatal answer save error:', err);
+        }
       } finally { setSavingId(null); }
     }, 800);
   };
@@ -1843,17 +1871,35 @@ export default function ExamScreen({ isSimulator = false }) {
 
       {needsFullscreen && (
         <div className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-slate-900/95 p-6 text-center text-white">
-          <h2 className="text-xl font-bold">Fullscreen required</h2>
-          <p className="mt-2 max-w-sm text-sm text-slate-300">Return to fullscreen to continue the examination.</p>
-          <button
-            type="button"
-            className="nta-btn nta-btn-primary mt-6"
-            onClick={async () => {
-              try { await requestFullscreen(); setNeedsFullscreen(false); } catch { toast.error('Allow fullscreen'); }
-            }}
-          >
-            Return to fullscreen
-          </button>
+          <h2 className="text-xl font-bold">Fullscreen Recommended</h2>
+          <p className="mt-2 max-w-sm text-sm text-slate-300">For the authentic NTA CBT examination experience, please enter fullscreen mode.</p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <button
+              type="button"
+              className="nta-btn nta-btn-primary"
+              onClick={async () => {
+                try {
+                  await requestFullscreen();
+                  setNeedsFullscreen(false);
+                } catch {
+                  setNeedsFullscreen(false);
+                  toast.info('Continuing examination in windowed mode');
+                }
+              }}
+            >
+              Enter Fullscreen
+            </button>
+            <button
+              type="button"
+              className="rounded border border-slate-500 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 transition"
+              onClick={() => {
+                setNeedsFullscreen(false);
+                toast.info('Continuing in standard browser mode');
+              }}
+            >
+              Continue in Windowed Mode
+            </button>
+          </div>
         </div>
       )}
 

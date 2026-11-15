@@ -380,7 +380,7 @@ export class CbtAnswerSyncManager {
   /**
    * Pre-submission flush: Attempts to ensure all answers reach the server before submission.
    */
-  async flushBeforeSubmit(timeoutMs = 4000) {
+  async flushBeforeSubmit(timeoutMs = 15000) {
     if (this.queue.length === 0) return true;
 
     const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve(false), timeoutMs));
@@ -398,9 +398,9 @@ export class CbtAnswerSyncManager {
       return { success: true, isSimulator: true };
     }
 
-    // Attempt to flush pending answers first
+    // Attempt to flush pending answers first with generous timeout (15s) under high concurrency
     try {
-      await this.flushBeforeSubmit(3000);
+      await this.flushBeforeSubmit(15000);
     } catch (_) {}
 
     try {
