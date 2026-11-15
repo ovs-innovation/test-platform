@@ -44,7 +44,8 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-interview_platform}}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       JWT_SECRET: ${JWT_SECRET:-edvedum_production_secure_fallback_jwt_secret_key_9876543210_v2_key}
-      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-2h}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-12h}
+      DB_POOL_MAX: ${DB_POOL_MAX:-40}
       CLIENT_URL: ${CLIENT_URL:-https://edvedum.com}
       RUN_SEED: ${RUN_SEED:-false}
       SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@assess.io}
