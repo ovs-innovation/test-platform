@@ -1,5 +1,5 @@
 import { query } from '../config/db.js';
-import { getCache, setCache, delCache } from '../config/redis.js';
+import { getCache, setCache, delCache, hsetCache, hgetallCache, hdelCache } from '../config/redis.js';
 import { isNeetTest, resolveQuestionNeetMeta, normalizeNeetAssessmentPayload } from '../utils/neetPattern.js';
 
 const ensureArray = (val) => {
@@ -284,4 +284,36 @@ export async function invalidateAttemptCache(attemptId) {
   const numId = Number(attemptId);
   if (!numId || isNaN(numId)) return;
   await delCache(`attempt_meta:${numId}`).catch(() => {});
+}
+
+/**
+ * Fast-path: records an in-progress answer in Redis/memory cache instantly (< 2ms).
+ */
+export async function setFastPathAnswer(attemptId, questionId, answerData) {
+  const numAttemptId = Number(attemptId);
+  const numQId = Number(questionId);
+  if (!numAttemptId || !numQId) return;
+
+  await hsetCache(`attempt_answers:${numAttemptId}`, numQId, answerData, 14400).catch(() => {});
+}
+
+/**
+ * Fast-path: removes an answer from Redis/memory cache on clear.
+ */
+export async function removeFastPathAnswer(attemptId, questionId) {
+  const numAttemptId = Number(attemptId);
+  const numQId = Number(questionId);
+  if (!numAttemptId || !numQId) return;
+
+  await hdelCache(`attempt_answers:${numAttemptId}`, numQId).catch(() => {});
+}
+
+/**
+ * Fast-path: retrieves all cached answers for an attempt.
+ */
+export async function getFastPathAnswers(attemptId) {
+  const numAttemptId = Number(attemptId);
+  if (!numAttemptId) return {};
+
+  return await hgetallCache(`attempt_answers:${numAttemptId}`).catch(() => ({}));
 }

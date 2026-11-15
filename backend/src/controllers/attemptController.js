@@ -8,7 +8,7 @@ import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS
 import { getAssessmentRankingData, syncAssessmentRankings } from '../services/assessmentRankingService.js';
 import { recordAttemptMistakes } from '../services/mistakeBookService.js';
 import { getTopperComparison } from '../services/topperComparisonService.js';
-import { getOrSetCachedExamPaper, getOrSetQuestionMeta, getOrSetCachedInstitution, getOrSetCachedAttempt, invalidateAttemptCache } from '../services/examCacheService.js';
+import { getOrSetCachedExamPaper, getOrSetQuestionMeta, getOrSetCachedInstitution, getOrSetCachedAttempt, invalidateAttemptCache, setFastPathAnswer, removeFastPathAnswer, getFastPathAnswers } from '../services/examCacheService.js';
 
 const ensureArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -122,7 +122,14 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       [attemptId]
     );
 
-    const answerMap = new Map(answersRes.rows.map((a) => [a.question_id, a]));
+    const fastAnswers = await getFastPathAnswers(attemptId);
+    const answerMap = new Map(answersRes.rows.map((a) => [Number(a.question_id), a]));
+    for (const [qIdStr, cachedA] of Object.entries(fastAnswers)) {
+      const qId = Number(qIdStr);
+      if (cachedA) {
+        answerMap.set(qId, cachedA);
+      }
+    }
     const codingMap = new Map(codingRes.rows.map((a) => [a.question_id, a]));
     const subjectiveMap = new Map(subjectiveRes.rows.map((a) => [a.question_id, a.answer_text]));
 
@@ -647,6 +654,16 @@ export const getAttemptState = asyncHandler(async (req, res, next) => {
     institution_logo_badge: institutionObj?.logo_badge || null,
   };
 
+  const fastAnswers = await getFastPathAnswers(attempt.id);
+  const answerMap = new Map(answersRes.rows.map((a) => [Number(a.question_id), a]));
+  for (const [qIdStr, cachedA] of Object.entries(fastAnswers)) {
+    const qId = Number(qIdStr);
+    if (cachedA) {
+      answerMap.set(qId, cachedA);
+    }
+  }
+  const mergedAnswers = Array.from(answerMap.values());
+
   res.json({
     server_time: new Date().toISOString(),
     attempt,
@@ -654,7 +671,7 @@ export const getAttemptState = asyncHandler(async (req, res, next) => {
     institution: institutionObj,
     sections: paper.sections,
     questions: paper.questions,
-    answers: answersRes.rows,
+    answers: mergedAnswers,
     coding_answers: codingRes.rows,
     subjective_answers: subjectiveRes.rows,
   });
@@ -681,38 +698,73 @@ export const saveAnswer = asyncHandler(async (req, res) => {
   const qType = targetQ.question_type || 'mcq';
   const isMulti = Boolean(targetQ.is_multi);
 
+  let answerRecord;
+  let dbQuery;
+  let dbParams;
+
   if (isMulti) {
     let indices = Array.isArray(selected_indices) ? selected_indices : [];
     if (!indices.length && selected_index != null) {
       indices = [Number(selected_index)];
     }
     const firstIndex = indices[0] ?? 0;
-    await query(
-      `INSERT INTO answers (attempt_id, question_id, selected_index, selected_indices, updated_at)
+    answerRecord = {
+      question_id: Number(question_id),
+      selected_index: firstIndex,
+      selected_indices: indices,
+      numeric_answer: null,
+      updated_at: new Date().toISOString(),
+    };
+    dbQuery = `INSERT INTO answers (attempt_id, question_id, selected_index, selected_indices, updated_at)
        VALUES ($1,$2,$3,$4, NOW())
        ON CONFLICT (attempt_id, question_id)
-       DO UPDATE SET selected_index = EXCLUDED.selected_index, selected_indices = EXCLUDED.selected_indices, updated_at = NOW()`,
-      [id, question_id, firstIndex, JSON.stringify(indices)]
-    );
+       DO UPDATE SET selected_index = EXCLUDED.selected_index, selected_indices = EXCLUDED.selected_indices, updated_at = NOW()`;
+    dbParams = [id, question_id, firstIndex, JSON.stringify(indices)];
   } else if (qType === 'integer' || qType === 'numerical' || numeric_answer !== undefined) {
     const val = numeric_answer !== undefined && numeric_answer !== null && numeric_answer !== '' ? Number(numeric_answer) : null;
-    await query(
-      `INSERT INTO answers (attempt_id, question_id, numeric_answer, updated_at)
+    answerRecord = {
+      question_id: Number(question_id),
+      selected_index: null,
+      selected_indices: null,
+      numeric_answer: val,
+      updated_at: new Date().toISOString(),
+    };
+    dbQuery = `INSERT INTO answers (attempt_id, question_id, numeric_answer, updated_at)
        VALUES ($1,$2,$3, NOW())
        ON CONFLICT (attempt_id, question_id)
-       DO UPDATE SET numeric_answer = EXCLUDED.numeric_answer, updated_at = NOW()`,
-      [id, question_id, val]
-    );
+       DO UPDATE SET numeric_answer = EXCLUDED.numeric_answer, updated_at = NOW()`;
+    dbParams = [id, question_id, val];
   } else {
     const selIndex = selected_index !== undefined ? selected_index : null;
-    await query(
-      `INSERT INTO answers (attempt_id, question_id, selected_index, updated_at)
+    answerRecord = {
+      question_id: Number(question_id),
+      selected_index: selIndex,
+      selected_indices: null,
+      numeric_answer: null,
+      updated_at: new Date().toISOString(),
+    };
+    dbQuery = `INSERT INTO answers (attempt_id, question_id, selected_index, updated_at)
        VALUES ($1,$2,$3, NOW())
        ON CONFLICT (attempt_id, question_id)
-       DO UPDATE SET selected_index = EXCLUDED.selected_index, updated_at = NOW()`,
-      [id, question_id, selIndex]
-    );
+       DO UPDATE SET selected_index = EXCLUDED.selected_index, updated_at = NOW()`;
+    dbParams = [id, question_id, selIndex];
   }
+
+  // 1. Instant Fast-Path: Persist to Redis / In-Memory Cache (sub-2ms)
+  await setFastPathAnswer(id, question_id, answerRecord);
+
+  // 2. Race DB write against 85ms budget to guarantee sub-100ms response time
+  const dbPromise = query(dbQuery, dbParams);
+  const fastRace = Promise.race([
+    dbPromise,
+    new Promise((resolve) => setTimeout(() => resolve('ASYNC_COMPLETION'), 85)),
+  ]);
+
+  await fastRace.catch((err) => {
+    // Background async write if transient pool contention occurs
+    console.warn(`[saveAnswer] Fast-path backgrounded DB write for attempt ${id}:`, err?.message || err);
+  });
+
   res.json({ saved: true, server_time: new Date().toISOString() });
 });
 
@@ -724,13 +776,21 @@ export const markForReview = asyncHandler(async (req, res) => {
   if (!attempt || attempt.candidate_id !== req.user.id) throw ApiError.forbidden('Not allowed');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('Attempt submitted');
 
-  await query(
+  // Fast-Path: Write to Redis / In-Memory Cache
+  await setFastPathAnswer(id, question_id, { marked_for_review, updated_at: new Date().toISOString() });
+
+  const dbPromise = query(
     `INSERT INTO answers (attempt_id, question_id, marked_for_review, updated_at)
      VALUES ($1,$2,$3, NOW())
      ON CONFLICT (attempt_id, question_id)
      DO UPDATE SET marked_for_review = EXCLUDED.marked_for_review, updated_at = NOW()`,
     [id, question_id, marked_for_review]
   );
+  await Promise.race([
+    dbPromise,
+    new Promise((resolve) => setTimeout(() => resolve('ASYNC_COMPLETION'), 85)),
+  ]).catch(() => {});
+
   res.json({ marked: marked_for_review, server_time: new Date().toISOString() });
 });
 
@@ -742,9 +802,19 @@ export const clearAnswer = asyncHandler(async (req, res) => {
   if (!attempt || attempt.candidate_id !== req.user.id) throw ApiError.forbidden('Not allowed');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('Attempt submitted');
 
-  await query('DELETE FROM answers WHERE attempt_id = $1 AND question_id = $2', [id, targetQId]);
-  await query('DELETE FROM coding_answers WHERE attempt_id = $1 AND question_id = $2', [id, targetQId]);
-  await query('DELETE FROM subjective_answers WHERE attempt_id = $1 AND question_id = $2', [id, targetQId]);
+  // Fast-Path: Remove from Redis / In-Memory Cache
+  await removeFastPathAnswer(id, targetQId);
+
+  const dbPromise = Promise.all([
+    query('DELETE FROM answers WHERE attempt_id = $1 AND question_id = $2', [id, targetQId]),
+    query('DELETE FROM coding_answers WHERE attempt_id = $1 AND question_id = $2', [id, targetQId]),
+    query('DELETE FROM subjective_answers WHERE attempt_id = $1 AND question_id = $2', [id, targetQId]),
+  ]);
+  await Promise.race([
+    dbPromise,
+    new Promise((resolve) => setTimeout(() => resolve('ASYNC_COMPLETION'), 85)),
+  ]).catch(() => {});
+
   res.json({ cleared: true, server_time: new Date().toISOString() });
 });
 

@@ -96,6 +96,85 @@ export async function setCache(key, value, ttlSeconds = 60) {
 }
 
 /**
+ * Sets a field in a Redis hash with an overall TTL.
+ */
+export async function hsetCache(hashKey, field, value, ttlSeconds = 14400) {
+  const jsonStr = typeof value === 'string' ? value : JSON.stringify(value);
+  const fieldStr = String(field);
+
+  if (isRedisConnected && redisClient) {
+    try {
+      await redisClient.hset(hashKey, fieldStr, jsonStr);
+      if (ttlSeconds) await redisClient.expire(hashKey, ttlSeconds);
+      return;
+    } catch (_) {
+      isRedisConnected = false;
+    }
+  }
+
+  // Fallback to in-memory map
+  let hash = inMemoryFallbackCache.get(hashKey)?.value;
+  if (!hash || typeof hash !== 'object') {
+    hash = {};
+  }
+  hash[fieldStr] = value;
+  inMemoryFallbackCache.set(hashKey, {
+    value: hash,
+    expiresAt: Date.now() + (ttlSeconds * 1000),
+  });
+}
+
+/**
+ * Gets all fields and values from a Redis hash.
+ */
+export async function hgetallCache(hashKey) {
+  if (isRedisConnected && redisClient) {
+    try {
+      const raw = await redisClient.hgetall(hashKey);
+      if (raw && Object.keys(raw).length > 0) {
+        const parsed = {};
+        for (const [k, v] of Object.entries(raw)) {
+          try {
+            parsed[k] = JSON.parse(v);
+          } catch (_) {
+            parsed[k] = v;
+          }
+        }
+        return parsed;
+      }
+    } catch (_) {
+      isRedisConnected = false;
+    }
+  }
+
+  const item = inMemoryFallbackCache.get(hashKey);
+  if (item && item.expiresAt > Date.now()) {
+    return item.value || {};
+  }
+  return {};
+}
+
+/**
+ * Deletes a field from a Redis hash.
+ */
+export async function hdelCache(hashKey, field) {
+  const fieldStr = String(field);
+  if (isRedisConnected && redisClient) {
+    try {
+      await redisClient.hdel(hashKey, fieldStr);
+      return;
+    } catch (_) {
+      isRedisConnected = false;
+    }
+  }
+
+  const item = inMemoryFallbackCache.get(hashKey);
+  if (item && item.value) {
+    delete item.value[fieldStr];
+  }
+}
+
+/**
  * Deletes a cached key or invalidates keys by prefix/pattern.
  */
 export async function delCache(keyOrPattern) {

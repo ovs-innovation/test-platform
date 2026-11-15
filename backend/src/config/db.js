@@ -29,7 +29,7 @@ const customLookup = (hostname, options, callback) => {
   return dns.lookup(hostname, opts, cb);
 };
 
-const maxPool = parseInt(process.env.DB_POOL_MAX || (env.isProd ? '10' : '10'), 10);
+const maxPool = parseInt(process.env.DB_POOL_MAX || (env.isProd ? '40' : '25'), 10);
 const minPool = parseInt(process.env.DB_POOL_MIN || '0', 10);
 const idleTimeoutMillis = parseInt(process.env.DB_IDLE_TIMEOUT_MS || '15000', 10);
 const connectionTimeoutMillis = parseInt(process.env.DB_CONN_TIMEOUT_MS || '30000', 10);
