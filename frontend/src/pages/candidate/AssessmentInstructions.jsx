@@ -228,18 +228,16 @@ export default function AssessmentInstructions() {
                   </tr>
                   <tr className="bg-white dark:bg-[#111827]">
                     <td className="border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Total marks</td>
-                    <td className="px-3.5 py-2.5 font-extrabold text-emerald-600 dark:text-emerald-400">{assessment.total_marks > 0 ? assessment.total_marks : '300 Marks'}</td>
-                    <td className="border-l border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Passing marks</td>
-                    <td className="px-3.5 py-2.5 font-extrabold text-amber-600 dark:text-amber-400">
-                      {assessment.passing_marks > 0 ? assessment.passing_marks : (assessment.total_marks > 0 ? `${Math.round(assessment.total_marks * 0.45)} Marks` : '120 Marks')}
+                    <td className="px-3.5 py-2.5 font-extrabold text-emerald-600 dark:text-emerald-400" colSpan={assessment.max_violations > 0 ? 1 : 3}>
+                      {assessment.total_marks > 0 ? assessment.total_marks : '300 Marks'}
                     </td>
+                    {assessment.max_violations > 0 && (
+                      <>
+                        <td className="border-l border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Violation limit</td>
+                        <td className="px-3.5 py-2.5 font-extrabold text-rose-600 dark:text-rose-400">{assessment.max_violations}</td>
+                      </>
+                    )}
                   </tr>
-                  {assessment.max_violations > 0 && (
-                    <tr className="border-t border-slate-300 dark:border-slate-700 bg-white dark:bg-[#111827]">
-                      <td className="border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Violation limit</td>
-                      <td className="px-3.5 py-2.5 font-extrabold text-rose-600 dark:text-rose-400" colSpan={3}>{assessment.max_violations}</td>
-                    </tr>
-                  )}
                   {(assessment.available_from || assessment.available_until) && (
                     <tr className="border-t border-slate-300 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/60">
                       <td className="border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Available window</td>

@@ -155,7 +155,7 @@ export default function AdminAttemptDetail() {
         <Meta label="Status" value={attemptStatusLabel[attempt.status] || attempt.status || '—'} />
         <Meta label="Started" value={attempt.started_at ? formatDateTime(attempt.started_at) : '—'} />
         <Meta label="Submitted" value={attempt.submitted_at ? formatDateTime(attempt.submitted_at) : '—'} />
-        <Meta label="Passing Marks" value={attempt.passing_marks ?? '—'} />
+        <Meta label="Duration" value={attempt.duration_seconds ? `${Math.round(attempt.duration_seconds / 60)} min` : `${attempt.duration_minutes || 180} min`} />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">

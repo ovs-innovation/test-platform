@@ -408,24 +408,10 @@ function GeneralTab({ settings, onChange, onSave, saving, ebooks = [] }) {
         )}
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="label">Duration (min)</label>
           <input name="duration_minutes" type="number" min={1} className="input" value={settings.duration_minutes} onChange={onChange} />
-        </div>
-        <div>
-          <label className="label">
-            Passing Marks <span className="text-[11px] font-normal text-slate-400 dark:text-slate-500">(Optional)</span>
-          </label>
-          <input
-            name="passing_marks"
-            type="number"
-            min={0}
-            className="input"
-            value={settings.passing_marks ?? ''}
-            onChange={onChange}
-            placeholder="0 (None for JEE/NEET)"
-          />
         </div>
         <div>
           <label className="label">Max violations</label>
@@ -3602,7 +3588,6 @@ function PreviewModal({ open, onClose, data }) {
             <span><strong>{assessment.duration_minutes}</strong> min</span>
             <span><strong>{summary.question_count}</strong> questions</span>
             <span><strong>{summary.total_marks}</strong> marks</span>
-            <span>Pass: <strong>{assessment.passing_marks}</strong></span>
           </div>
           {assessment.instructions && (
             <p className="mt-3 rounded bg-brand-50 p-3 text-sm text-brand-900">{assessment.instructions}</p>

@@ -386,15 +386,6 @@ export default function BoosterTests() {
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Max Marks</span>
                       <span className="font-extrabold text-slate-800 dark:text-slate-200">{test.total_marks || 180} pts</span>
                     </div>
-                    {test.passing_marks > 0 && (
-                      <>
-                        <div className="h-6 w-px bg-slate-200 dark:bg-slate-800" />
-                        <div>
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Pass Marks</span>
-                          <span className="font-extrabold text-slate-800 dark:text-slate-200">{test.passing_marks}</span>
-                        </div>
-                      </>
-                    )}
                   </div>
 
                   {/* Status Banner */}

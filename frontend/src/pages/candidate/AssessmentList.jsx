@@ -20,7 +20,7 @@ export function AssessmentCard({ a }) {
   const title = (a.title || '').replace(/AI Booster/gi, 'AI Improvement Test');
   const duration = a.duration_minutes || '180';
   const questionCount = a.question_count > 0 ? `${a.question_count}` : (a.question_paper_url || a.solution_pdf_url || a.access_type === 'assignment' ? 'PDF Paper' : '20');
-  const totalMarks = a.passing_marks > 0 ? `${a.passing_marks}` : (a.total_marks > 0 ? `${a.total_marks}` : '80');
+  const totalMarks = a.total_marks > 0 ? `${a.total_marks}` : '80';
 
   // Dynamic status styling
   let statusBadge = (

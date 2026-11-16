@@ -1671,27 +1671,15 @@ export default function AdminAssessments() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Total Marks</label>
-                    <input
-                      type="number"
-                      placeholder="e.g. 40 or 300"
-                      value={uploadMaxMarks}
-                      onChange={(e) => setUploadMaxMarks(e.target.value)}
-                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2 font-bold"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Passing Marks</label>
-                    <input
-                      type="number"
-                      placeholder="e.g. 18 or 120"
-                      value={uploadPassMarks}
-                      onChange={(e) => setUploadPassMarks(e.target.value)}
-                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2 font-bold"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Total Marks</label>
+                  <input
+                    type="number"
+                    placeholder="e.g. 40 or 300"
+                    value={uploadMaxMarks}
+                    onChange={(e) => setUploadMaxMarks(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2 font-bold"
+                  />
                 </div>
               </div>
 
