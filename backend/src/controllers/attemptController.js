@@ -245,7 +245,9 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       percentage = totalMarks > 0 ? Number(((marksObtained / totalMarks) * 100).toFixed(2)) : 0;
     }
     const passed = marksObtained >= assessment.passing_marks;
-    const durationSeconds = Math.round((Date.now() - new Date(attempt.started_at).getTime()) / 1000);
+    const maxAllowedDuration = Math.max(60, (Number(assessment.duration_minutes) || 180) * 60);
+    const rawDuration = Math.round((Date.now() - new Date(attempt.started_at).getTime()) / 1000);
+    const durationSeconds = Math.min(maxAllowedDuration, Math.max(0, rawDuration));
 
     await client.query(
       `UPDATE attempts SET status = $1, submitted_at = NOW(), duration_seconds = $2 WHERE id = $3`,
@@ -448,6 +450,10 @@ const ensureAssessmentAccess = async (user, assessmentId) => {
          OR (assigned_to_type IN ('individual', 'student') AND assigned_to_id = $2)
          OR (assigned_to_type = 'batch' AND $3::int IS NOT NULL AND assigned_to_id = $3)
          OR (assigned_to_type = 'institution' AND $4::int IS NOT NULL AND assigned_to_id = $4)
+         OR (assigned_to_type = 'test_series' AND EXISTS (
+           SELECT 1 FROM student_enrollments se
+           WHERE se.user_id = $2 AND se.test_series_id = assigned_to_id AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+         ))
        )`,
     [assessmentId, user.id, batchId, instId]
   );
@@ -510,7 +516,8 @@ export const startAttempt = asyncHandler(async (req, res) => {
       `SELECT t.id, COALESCE(t.title, t.test_name) AS title,
               t.syllabus AS description,
               'Standard examination instructions apply.' AS instructions,
-              t.duration_minutes, 0 AS passing_marks, 5 AS max_violations,
+              t.duration_minutes, 0 AS passing_marks,
+              COALESCE((SELECT a.max_violations FROM assessments a WHERE a.id = t.id), 5) AS max_violations,
               true AS result_visible, (t.is_published = true OR t.status = 'published') AS is_published,
               t.available_from, t.available_until,
               t.question_paper_url, t.answer_key_url, t.solution_pdf_url
@@ -635,6 +642,7 @@ export const getAttemptState = asyncHandler(async (req, res, next) => {
       [id]
     ),
     query('SELECT institution_id FROM users WHERE id = $1', [attempt.candidate_id]).catch(() => ({ rows: [] })),
+    query('SELECT max_violations, duration_minutes, title FROM assessments WHERE id = $1', [attempt.assessment_id]).catch(() => ({ rows: [] })),
   ]);
 
   let institutionObj = null;
@@ -643,8 +651,13 @@ export const getAttemptState = asyncHandler(async (req, res, next) => {
     institutionObj = await getOrSetCachedInstitution(candInstId);
   }
 
+  const liveMaxViolations = liveAssessmentRes.rows[0]?.max_violations !== undefined && liveAssessmentRes.rows[0]?.max_violations !== null
+    ? Number(liveAssessmentRes.rows[0].max_violations)
+    : (paper.assessment?.max_violations !== undefined && paper.assessment?.max_violations !== null ? Number(paper.assessment.max_violations) : 5);
+
   const assessmentPayload = {
     ...paper.assessment,
+    max_violations: liveMaxViolations,
     solution_pdf_url: attempt.status === 'in_progress' ? null : (paper.assessment.solution_pdf_url || null),
     answer_key_url: attempt.status === 'in_progress' ? null : (paper.assessment.answer_key_url || null),
     institution: institutionObj,
@@ -1321,7 +1334,8 @@ const buildFormattedResult = (attempt, assessment, score, solutions, isNeet = fa
     };
   }
 
-  const durationSec = Number(attempt.duration_seconds || 0);
+  const maxAllowedDuration = Math.max(60, (Number(assessment.duration_minutes) || 180) * 60);
+  const durationSec = Math.min(maxAllowedDuration, Math.max(0, Number(attempt.duration_seconds || 0)));
   const totalQuestions = solutions.length;
   const avgTimePerQ = totalQuestions > 0 ? Math.round(durationSec / totalQuestions) : 0;
 

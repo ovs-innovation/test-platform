@@ -28,6 +28,12 @@ export default function MyTests() {
         const enrolledSeriesTitles = new Set(myEnrollments.map((e) => (e.title || '').trim().toLowerCase()));
 
         const standaloneTests = rawTests.filter((t) => {
+          const isBooster = (t.test_type || '').toLowerCase().includes('booster') ||
+            (t.title || '').toLowerCase().includes('booster') ||
+            (t.description || '').toLowerCase().includes('booster');
+          if (isBooster) {
+            return false;
+          }
           if (t.access_type === 'enrollment' && myEnrollments.length > 0) {
             return false;
           }

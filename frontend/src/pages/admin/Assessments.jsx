@@ -36,7 +36,7 @@ import {
 } from 'lucide-react';
 import { isTestLive } from '../../lib/testStatus.js';
 
-const TEST_TYPES = ['AIETS', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
+const TEST_TYPES = ['AIETS', 'EDVEDUM Booster Test', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
 
 export const isPersonalStudentTest = (t) => {
   if (!t) return false;
@@ -170,6 +170,9 @@ export default function AdminAssessments() {
       end_time: '12:00:00',
       duration_minutes: 180,
       max_marks: '',
+      max_violations: 3,
+      assigned_to_type: 'all',
+      assigned_to_id: '',
       syllabus: '',
       is_published: true,
       is_live: false,
@@ -196,6 +199,9 @@ export default function AdminAssessments() {
       end_time: t.end_time ? String(t.end_time).slice(0, 8) : '12:00:00',
       duration_minutes: Number(t.duration_minutes || t.duration || 180),
       max_marks: t.max_marks !== undefined && t.max_marks !== null && t.max_marks !== '' ? Number(t.max_marks) : '',
+      max_violations: t.max_violations !== undefined && t.max_violations !== null ? Number(t.max_violations) : 3,
+      assigned_to_type: t.assigned_to_type || 'all',
+      assigned_to_id: t.assigned_to_id || '',
       syllabus: t.syllabus || '',
       is_published: Boolean(t.is_published),
       is_live: Boolean(t.is_live),
@@ -214,13 +220,28 @@ export default function AdminAssessments() {
         max_marks: testForm.max_marks !== '' && testForm.max_marks !== null && !isNaN(Number(testForm.max_marks))
           ? Number(testForm.max_marks)
           : null,
+        max_violations: testForm.max_violations !== '' && testForm.max_violations !== null && !isNaN(Number(testForm.max_violations))
+          ? Number(testForm.max_violations)
+          : 3,
         start_time: testForm.start_time.length === 5 ? `${testForm.start_time}:00` : testForm.start_time,
         end_time: testForm.end_time.length === 5 ? `${testForm.end_time}:00` : testForm.end_time,
       };
       if (editingTest) {
         await adminService.updateTest(editingTest.id, payload);
+        if (testForm.assigned_to_type) {
+          await adminService.assignTest(editingTest.id, {
+            assigned_to_type: testForm.assigned_to_type,
+            assigned_to_id: testForm.assigned_to_type !== 'all' && testForm.assigned_to_id ? Number(testForm.assigned_to_id) : null,
+          }).catch(() => {});
+        }
       } else {
-        await adminService.createTest(payload);
+        const created = await adminService.createTest(payload);
+        if (created?.test?.id && testForm.assigned_to_type && testForm.assigned_to_type !== 'all') {
+          await adminService.assignTest(created.test.id, {
+            assigned_to_type: testForm.assigned_to_type,
+            assigned_to_id: testForm.assigned_to_id ? Number(testForm.assigned_to_id) : null,
+          }).catch(() => {});
+        }
       }
       setTestModalOpen(false);
       loadData();
@@ -1248,7 +1269,14 @@ export default function AdminAssessments() {
                   <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Test Category *</label>
                   <select
                     value={testForm.test_type}
-                    onChange={(e) => setTestForm({ ...testForm, test_type: e.target.value })}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const updates = { test_type: val };
+                      if ((val === 'Booster Test' || val === 'EDVEDUM Booster Test') && (testForm.duration_minutes === 180 || !testForm.duration_minutes)) {
+                        updates.duration_minutes = 60;
+                      }
+                      setTestForm({ ...testForm, ...updates });
+                    }}
                     className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
                   >
                     {TEST_TYPES.map((t) => (
@@ -1301,6 +1329,32 @@ export default function AdminAssessments() {
                     onChange={(e) => setTestForm({ ...testForm, duration_minutes: Number(e.target.value) })}
                     className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
                   />
+                  {(testForm.test_type === 'Booster Test' || testForm.test_type === 'EDVEDUM Booster Test') && (
+                    <div className="flex items-center gap-1.5 mt-1.5">
+                      <button
+                        type="button"
+                        onClick={() => setTestForm({ ...testForm, duration_minutes: 60 })}
+                        className={`text-[10px] px-2 py-0.5 rounded-lg font-bold border transition cursor-pointer ${
+                          testForm.duration_minutes === 60
+                            ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-xs'
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-amber-400'
+                        }`}
+                      >
+                        ⚡ 60m (1h)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setTestForm({ ...testForm, duration_minutes: 90 })}
+                        className={`text-[10px] px-2 py-0.5 rounded-lg font-bold border transition cursor-pointer ${
+                          testForm.duration_minutes === 90
+                            ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-xs'
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-amber-400'
+                        }`}
+                      >
+                        ⚡ 90m (1.5h)
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -1346,6 +1400,95 @@ export default function AdminAssessments() {
                   </select>
                 </div>
               </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
+                    Max Warnings / Violations Limit *
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    max={20}
+                    required
+                    value={testForm.max_violations ?? 3}
+                    onChange={(e) => setTestForm({ ...testForm, max_violations: e.target.value === '' ? '' : Number(e.target.value) })}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold text-slate-900 dark:text-white"
+                  />
+                  <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+                    When student exceeds this limit, exam automatically submits. Set to 1 for strict one-warning auto-submit.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
+                    Assign Audience Target
+                  </label>
+                  <select
+                    value={testForm.assigned_to_type || 'all'}
+                    onChange={(e) => setTestForm({ ...testForm, assigned_to_type: e.target.value, assigned_to_id: '' })}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="all">All Registered Students (Open)</option>
+                    <option value="test_series">Enrolled Test Series Students</option>
+                    <option value="batch">Specific Batch</option>
+                    <option value="institution">Partner School / Institution</option>
+                    <option value="individual">Individual Student</option>
+                  </select>
+                </div>
+              </div>
+
+              {testForm.assigned_to_type === 'test_series' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Select Target Test Series *</label>
+                  <select
+                    required
+                    value={testForm.assigned_to_id || ''}
+                    onChange={(e) => setTestForm({ ...testForm, assigned_to_id: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="">-- Choose Test Series --</option>
+                    {testSeriesList.map((ts) => (
+                      <option key={ts.id} value={ts.id}>
+                        {ts.title} ({ts.exam_type || 'Test Series'})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {testForm.assigned_to_type === 'batch' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Select Target Batch *</label>
+                  <select
+                    required
+                    value={testForm.assigned_to_id || ''}
+                    onChange={(e) => setTestForm({ ...testForm, assigned_to_id: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="">-- Choose Batch --</option>
+                    {batches.map((b) => (
+                      <option key={b.id} value={b.id}>
+                        {b.name} ({b.target_exam || 'General'})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {testForm.assigned_to_type === 'individual' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Student User ID *</label>
+                  <input
+                    type="number"
+                    required
+                    placeholder="Enter Student User ID (e.g. 43)"
+                    value={testForm.assigned_to_id || ''}
+                    onChange={(e) => setTestForm({ ...testForm, assigned_to_id: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  />
+                </div>
+              )}
 
               <div className="flex items-center gap-2 pt-2">
                 <input
@@ -1547,27 +1690,90 @@ export default function AdminAssessments() {
                 <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Assign Target Type *</label>
                 <select
                   value={assignType}
-                  onChange={(e) => setAssignType(e.target.value)}
+                  onChange={(e) => {
+                    setAssignType(e.target.value);
+                    setAssignTargetId('');
+                  }}
                   className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
                 >
-                  <option value="all">All Registered Students (Open)</option>
+                  <option value="all">All Registered Students (Platform-Wide Open)</option>
+                  <option value="test_series">Enrolled Test Series Students</option>
                   <option value="batch">Specific Batch</option>
                   <option value="institution">Partner School / Institution</option>
                   <option value="individual">Individual Student</option>
                 </select>
               </div>
 
-              {assignType !== 'all' && (
+              {assignType === 'test_series' && (
                 <div>
-                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Target ID *</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Select Enrolled Test Series *</label>
+                  <select
+                    required
+                    value={assignTargetId}
+                    onChange={(e) => setAssignTargetId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="">-- Choose Test Series --</option>
+                    {testSeriesList.map((ts) => (
+                      <option key={ts.id} value={ts.id}>
+                        {ts.title} ({ts.exam_type || 'Test Series'})
+                      </option>
+                    ))}
+                  </select>
+                  <p className="mt-1 text-xs text-slate-500">Only candidates enrolled in this test series will see and attempt this test.</p>
+                </div>
+              )}
+
+              {assignType === 'batch' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Select Batch *</label>
+                  <select
+                    required
+                    value={assignTargetId}
+                    onChange={(e) => setAssignTargetId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="">-- Choose Batch --</option>
+                    {batches.map((b) => (
+                      <option key={b.id} value={b.id}>
+                        {b.name} ({b.target_exam || 'General'})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {assignType === 'institution' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Select Institution *</label>
+                  <select
+                    required
+                    value={assignTargetId}
+                    onChange={(e) => setAssignTargetId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="">-- Choose Partner Institution --</option>
+                    {schools.map((inst) => (
+                      <option key={inst.id} value={inst.id}>
+                        {inst.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {assignType === 'individual' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Student User ID *</label>
                   <input
                     type="number"
                     required
-                    placeholder="Enter ID number"
+                    placeholder="Enter Student User ID (e.g. 43)"
                     value={assignTargetId}
                     onChange={(e) => setAssignTargetId(e.target.value)}
                     className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
                   />
+                  <p className="mt-1 text-xs text-slate-500">Target a single individual candidate by User ID.</p>
                 </div>
               )}
 

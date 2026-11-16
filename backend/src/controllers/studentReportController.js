@@ -305,7 +305,8 @@ export const getTimeAnalysisReport = asyncHandler(async (req, res) => {
   const userId = getUserId(req);
 
   const attemptsRes = await query(
-    `SELECT at.id, a.title, at.submitted_at, at.duration_seconds,
+    `SELECT at.id, a.title, at.submitted_at,
+            LEAST(COALESCE(at.duration_seconds, 0), (COALESCE(NULLIF(a.duration_minutes, 0), 180) * 60)) AS duration_seconds,
             (SELECT COUNT(*)::int FROM questions WHERE assessment_id = a.id) AS total_questions
      FROM attempts at
      JOIN assessments a ON a.id = at.assessment_id

@@ -253,7 +253,12 @@ export const ebookService = {
   myEbooks: () => api.get('/ebooks/my').then((r) => r.data.ebooks || []),
 };
 
+export const boosterService = {
+  list: () => api.get('/assessments/booster-tests').then((r) => r.data),
+};
+
 export const assessmentService = {
+  listBoosterTests: () => api.get('/assessments/booster-tests').then((r) => r.data),
   listAvailable: () =>
     api.get('/assessments/available').then((r) => {
       const raw = Array.isArray(r.data?.assessments) ? r.data.assessments : [];

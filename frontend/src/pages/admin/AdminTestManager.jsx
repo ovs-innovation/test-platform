@@ -31,7 +31,7 @@ import {
   Sparkles
 } from 'lucide-react';
 
-const TEST_TYPES = ['AIETS', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
+const TEST_TYPES = ['AIETS', 'EDVEDUM Booster Test', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
 
 // Custom Floating Popover Dropdown for Test Type Filtering
 function CustomAdminTestTypeDropdown({ value, onChange, types }) {

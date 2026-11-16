@@ -83,7 +83,7 @@ export async function getTopperComparison({
     `SELECT 
        a.id AS attempt_id,
        a.candidate_id,
-       COALESCE(a.duration_seconds, 0) AS duration_seconds,
+       LEAST(COALESCE(a.duration_seconds, 0), (COALESCE(NULLIF(asm.duration_minutes, 0), 180) * 60)) AS duration_seconds,
        a.submitted_at,
        COALESCE(s.marks_obtained, 0) AS marks_obtained,
        COALESCE(s.total_marks, $2) AS total_marks,
@@ -93,6 +93,7 @@ export async function getTopperComparison({
        COALESCE(s.unattempted_count, 0) AS unattempted_count,
        u.name AS candidate_name
      FROM attempts a
+     JOIN assessments asm ON asm.id = a.assessment_id
      JOIN scores s ON s.attempt_id = a.id
      JOIN users u ON u.id = a.candidate_id
      WHERE a.assessment_id = $1 AND (a.submitted_at IS NOT NULL OR a.status IN ('submitted', 'auto_submitted'))
@@ -106,14 +107,14 @@ export async function getTopperComparison({
     `SELECT 
        ta.id AS attempt_id,
        ta.student_id AS candidate_id,
-       COALESCE(ta.time_taken_seconds, (ta.duration_minutes * 60), 0) AS duration_seconds,
+       COALESCE(ROUND(EXTRACT(EPOCH FROM (ta.submitted_at - ta.started_at))), 0) AS duration_seconds,
        ta.submitted_at,
        COALESCE(ta.score, 0) AS marks_obtained,
        COALESCE(ta.max_marks, $2) AS total_marks,
        COALESCE(ta.percentage, 0) AS percentage,
-       COALESCE(ta.correct_count, 0) AS correct_count,
-       COALESCE(ta.incorrect_count, 0) AS wrong_count,
-       COALESCE(ta.unattempted_count, 0) AS unattempted_count,
+       0 AS correct_count,
+       0 AS wrong_count,
+       0 AS unattempted_count,
        u.name AS candidate_name
      FROM test_attempts ta
      JOIN users u ON u.id = ta.student_id
@@ -197,9 +198,9 @@ export async function getTopperComparison({
       } else {
         const stuTestAttRes = await query(
           `SELECT ta.id AS attempt_id, ta.student_id AS candidate_id,
-                  COALESCE(ta.time_taken_seconds, (ta.duration_minutes * 60), 0) AS duration_seconds,
+                  COALESCE(ROUND(EXTRACT(EPOCH FROM (ta.submitted_at - ta.started_at))), 0) AS duration_seconds,
                   ta.score AS marks_obtained, ta.max_marks AS total_marks, ta.percentage,
-                  ta.correct_count, ta.incorrect_count AS wrong_count, ta.unattempted_count
+                  0 AS correct_count, 0 AS wrong_count, 0 AS unattempted_count
            FROM test_attempts ta
            WHERE (ta.test_id = $1 OR ta.assessment_id = $1) AND ta.student_id = $2
            ORDER BY ta.submitted_at DESC LIMIT 1`,
@@ -256,7 +257,11 @@ export async function getTopperComparison({
   const stuAccuracy = student?.accuracy != null
     ? Number(student.accuracy)
     : (stuAttempted > 0 ? Number(((stuCorrect / stuAttempted) * 100).toFixed(1)) : 0);
-  const stuTimeSec = Math.max(0, Number(student?.duration_seconds ?? student?.time_taken_seconds ?? 0));
+
+  const maxAllowedTestSec = Math.max(120, (Number(testInfo.duration_minutes) || 180) * 60);
+
+  let stuTimeSec = Math.max(0, Number(student?.duration_seconds ?? student?.time_taken_seconds ?? 0));
+  stuTimeSec = Math.min(maxAllowedTestSec, stuTimeSec);
   const stuAvgTimeQ = Math.round(stuTimeSec / Math.max(1, stuAttempted || totalQuestions));
 
   // Topper stats computation
@@ -269,10 +274,12 @@ export async function getTopperComparison({
     : (topAttempted > 0 ? Number(((topCorrect / topAttempted) * 100).toFixed(1)) : 98.0);
 
   let topTimeSec = Number(topper?.duration_seconds || 0);
-  if (topTimeSec <= 0) {
+  if (topTimeSec <= 0 || topTimeSec > maxAllowedTestSec) {
     topTimeSec = isTopper
       ? stuTimeSec
-      : Math.min(testInfo.duration_minutes * 60, Math.max(1800, Math.round(totalQuestions * 50)));
+      : Math.min(maxAllowedTestSec, Math.max(120, Math.round(totalQuestions * 45)));
+  } else {
+    topTimeSec = Math.min(maxAllowedTestSec, Math.max(30, topTimeSec));
   }
   const topAvgTimeQ = Math.round(topTimeSec / Math.max(1, topAttempted || totalQuestions));
 
@@ -289,12 +296,14 @@ export async function getTopperComparison({
     : 'Balanced pacing compared to topper';
 
   if (!isTopper) {
-    if (timeDiffSec > 300) {
+    if (stuAttempted === 0 || stuTimeSec === 0) {
+      speedSummary = 'Attempt questions in the test to compare your pacing against the topper';
+    } else if (timeDiffSec > 180) {
       const pctSlower = Math.round((timeDiffSec / Math.max(1, topTimeSec)) * 100);
       speedSummary = `Topper was ${pctSlower}% faster (${formatDuration(timeDiffSec)} less time)`;
-    } else if (timeDiffSec < -300) {
+    } else if (timeDiffSec < -180) {
       const pctFaster = Math.round((Math.abs(timeDiffSec) / Math.max(1, stuTimeSec)) * 100);
-      speedSummary = `You solved questions ${formatDuration(Math.abs(timeDiffSec))} faster than topper`;
+      speedSummary = `You completed the test ${formatDuration(Math.abs(timeDiffSec))} faster than topper`;
     } else {
       speedSummary = 'Your pacing was on par with the topper';
     }

@@ -157,6 +157,7 @@ export default function AssessmentEditor() {
         title: data.assessment.title,
         description: data.assessment.description || '',
         instructions: data.assessment.instructions || '',
+        test_type: data.assessment.test_type || 'AIETS',
         duration_minutes: data.assessment.duration_minutes,
         passing_marks: data.assessment.passing_marks,
         max_violations: data.assessment.max_violations,
@@ -271,6 +272,7 @@ export default function AssessmentEditor() {
                 description: settings.description,
                 instructions: settings.instructions,
                 duration_minutes: settings.duration_minutes,
+                test_type: settings.test_type,
                 passing_marks: settings.passing_marks === '' || settings.passing_marks === null || isNaN(Number(settings.passing_marks)) ? 0 : Number(settings.passing_marks),
                 max_violations: settings.max_violations,
                 negative_marks_per_wrong: settings.negative_marks_per_wrong,
@@ -354,6 +356,56 @@ function GeneralTab({ settings, onChange, onSave, saving, ebooks = [] }) {
         <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
           Enrolled students will see this study material in their Study Library and directly linked with this test.
         </p>
+      </div>
+
+      <div>
+        <label className="label">Test Category / Type</label>
+        <select
+          name="test_type"
+          className="input font-bold"
+          value={settings.test_type || 'AIETS'}
+          onChange={(e) => {
+            const val = e.target.value;
+            onChange(e);
+            if ((val === 'Booster Test' || val === 'EDVEDUM Booster Test') && (settings.duration_minutes === 180 || !settings.duration_minutes)) {
+              onChange({ target: { name: 'duration_minutes', value: 60, type: 'number' } });
+            }
+          }}
+        >
+          <option value="AIETS">AIETS</option>
+          <option value="EDVEDUM Booster Test">EDVEDUM Booster Test (Quick 60–90 Min Drill)</option>
+          <option value="Unit Test">Unit Test</option>
+          <option value="Part Test">Part Test</option>
+          <option value="Cumulative Test">Cumulative Test</option>
+          <option value="Full Syllabus Mock">Full Syllabus Mock</option>
+        </select>
+        {(settings.test_type === 'Booster Test' || settings.test_type === 'EDVEDUM Booster Test') && (
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-[11px] font-bold text-slate-400">Quick Duration Presets:</span>
+            <button
+              type="button"
+              onClick={() => onChange({ target: { name: 'duration_minutes', value: 60, type: 'number' } })}
+              className={`text-xs px-2.5 py-1 rounded-lg font-bold border cursor-pointer transition ${
+                settings.duration_minutes === 60
+                  ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-xs'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-amber-400'
+              }`}
+            >
+              ⚡ 60 Mins (1 Hr)
+            </button>
+            <button
+              type="button"
+              onClick={() => onChange({ target: { name: 'duration_minutes', value: 90, type: 'number' } })}
+              className={`text-xs px-2.5 py-1 rounded-lg font-bold border cursor-pointer transition ${
+                settings.duration_minutes === 90
+                  ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-xs'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-amber-400'
+              }`}
+            >
+              ⚡ 90 Mins (1.5 Hr)
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-3 gap-4">

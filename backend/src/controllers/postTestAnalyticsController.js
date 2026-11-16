@@ -846,9 +846,11 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   // Calculate Topper Comparison across Score, Speed/Time, Accuracy
   let topperComparison = null;
   try {
-    const studentDuration = subjectAnalysisList.reduce((a, b) => a + (b.time_spent_seconds || 0), 0)
+    const maxTestDuration = (Number(test.duration_minutes) || 180) * 60;
+    const rawStudentDuration = subjectAnalysisList.reduce((a, b) => a + (b.time_spent_seconds || 0), 0)
       || (attemptByIdRes.rows[0]?.duration_seconds ? Number(attemptByIdRes.rows[0].duration_seconds) : 0)
-      || Math.round(Number(test.duration_minutes || 180) * 60 * 0.75);
+      || Math.round(maxTestDuration * 0.75);
+    const studentDuration = Math.min(maxTestDuration, Math.max(0, rawStudentDuration));
 
     topperComparison = await getTopperComparison({
       assessmentId: testId,

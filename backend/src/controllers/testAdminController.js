@@ -7,12 +7,21 @@ import { invalidateExamPaperCache } from '../services/examCacheService.js';
 export async function sendStudentAssignmentNotifications(testId, testName, assigned_to_type, assigned_to_id) {
   try {
     const notifTitle = `New Test Assigned: ${testName}`;
-    const notifBody = `A new test "${testName}" has been assigned to your portal. Go to My Tests to start!`;
+    const isBoosterTest = (testName || '').toLowerCase().includes('booster');
+    const notifBody = isBoosterTest
+      ? `A new EDVEDUM Booster Test "${testName}" has been assigned to your portal. Go to EDVEDUM Booster Test to start!`
+      : `A new test "${testName}" has been assigned to your portal. Go to My Tests to start!`;
 
     let targetStudentIds = [];
 
-    if (assigned_to_type === 'individual' && assigned_to_id) {
+    if ((assigned_to_type === 'individual' || assigned_to_type === 'student') && assigned_to_id) {
       targetStudentIds = [Number(assigned_to_id)];
+    } else if (assigned_to_type === 'test_series' && assigned_to_id) {
+      const seriesStudents = await query(
+        `SELECT DISTINCT user_id FROM student_enrollments WHERE test_series_id = $1 AND status = 'active' AND (expires_at IS NULL OR expires_at > NOW())`,
+        [assigned_to_id]
+      );
+      targetStudentIds = seriesStudents.rows.map((s) => s.user_id);
     } else if (assigned_to_type === 'batch' && assigned_to_id) {
       const batchStudents = await query(
         'SELECT id FROM users WHERE batch_id = $1 AND role = $2',
@@ -350,12 +359,21 @@ export const createTest = asyncHandler(async (req, res) => {
     }
 
     // Sync into assessments table to ensure immediate compatibility across editor and CBT views
+    const cleanMaxViolations = (req.body.max_violations !== undefined && req.body.max_violations !== null && !isNaN(Number(req.body.max_violations)))
+      ? Number(req.body.max_violations)
+      : 3;
     await client.query(
       `INSERT INTO assessments (
         id, title, description, instructions, duration_minutes, passing_marks, max_violations,
-        result_visible, is_published, available_from, available_until, created_by
-      ) VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, 3, true, $6, $7, $8, $9)
-      ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, duration_minutes = EXCLUDED.duration_minutes`,
+        result_visible, is_published, available_from, available_until, created_by, test_type
+      ) VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, $10, true, $6, $7, $8, $9, $11)
+      ON CONFLICT (id) DO UPDATE SET
+        title = EXCLUDED.title,
+        duration_minutes = EXCLUDED.duration_minutes,
+        max_violations = EXCLUDED.max_violations,
+        test_type = EXCLUDED.test_type,
+        is_published = EXCLUDED.is_published,
+        updated_at = NOW()`,
       [
         createdTest.id,
         createdTest.test_name || createdTest.title || 'Assessment',
@@ -366,6 +384,8 @@ export const createTest = asyncHandler(async (req, res) => {
         createdTest.available_from || null,
         createdTest.available_until || null,
         req.user?.id || null,
+        cleanMaxViolations,
+        createdTest.test_type || 'AIETS',
       ]
     ).catch((err) => {
       console.warn('[createTest] sync assessment warning:', err.message);
@@ -511,6 +531,22 @@ export const updateTest = asyncHandler(async (req, res) => {
     throw ApiError.notFound('Test not found');
   }
 
+  // Keep synced in assessments table
+  const updateViolations = (req.body.max_violations !== undefined && req.body.max_violations !== null && !isNaN(Number(req.body.max_violations)))
+    ? Number(req.body.max_violations)
+    : null;
+  await query(
+    `UPDATE assessments
+     SET title = COALESCE($2, title),
+         duration_minutes = COALESCE($3, duration_minutes),
+         test_type = COALESCE($4, test_type),
+         is_published = COALESCE($5, is_published),
+         max_violations = COALESCE($6, max_violations),
+         updated_at = NOW()
+     WHERE id = $1`,
+    [id, test_name || null, cleanDuration, test_type || null, is_published !== undefined ? Boolean(is_published) : null, updateViolations]
+  ).catch(() => {});
+
   syncFreeTestSeries(result.rows[0]).catch(() => { });
   const newEbookId = result.rows[0].recommended_ebook_id ? Number(result.rows[0].recommended_ebook_id) : null;
   const oldEbookId = check.rows[0]?.recommended_ebook_id ? Number(check.rows[0].recommended_ebook_id) : null;
@@ -568,13 +604,20 @@ export const deleteTest = asyncHandler(async (req, res) => {
 export const togglePublishTest = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { is_published } = req.body;
+  const publishBool = Boolean(is_published);
 
   const result = await query(
-    'UPDATE tests SET is_published = $1 WHERE id = $2 RETURNING *',
-    [Boolean(is_published), id]
+    'UPDATE tests SET is_published = $1, status = CASE WHEN $1 = true THEN \'published\' ELSE \'draft\' END, updated_at = NOW() WHERE id = $2 RETURNING *',
+    [publishBool, id]
   );
 
   if (result.rowCount === 0) throw ApiError.notFound('Test not found');
+
+  // Also sync assessments table
+  await query(
+    'UPDATE assessments SET is_published = $1, updated_at = NOW() WHERE id = $2',
+    [publishBool, id]
+  ).catch(() => {});
 
   if (result.rows[0]) {
     syncFreeTestSeries(result.rows[0]).catch(() => { });
@@ -595,8 +638,8 @@ export const assignTest = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { assigned_to_type, assigned_to_id } = req.body;
 
-  if (!['individual', 'batch', 'institution', 'all'].includes(assigned_to_type)) {
-    throw ApiError.badRequest('assigned_to_type must be one of: individual, batch, institution, all');
+  if (!['individual', 'student', 'batch', 'institution', 'test_series', 'all'].includes(assigned_to_type)) {
+    throw ApiError.badRequest('assigned_to_type must be one of: individual, student, batch, institution, test_series, all');
   }
 
   const testCheck = await query('SELECT id, test_name FROM tests WHERE id = $1', [id]);

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   listAllAssessments,
   listAvailableAssessments,
+  listBoosterTests,
   getStudentAssessment,
   getAssessmentAdmin,
   previewAssessment,
@@ -24,6 +25,7 @@ router.use(authenticate);
 
 router.get('/available', authorize('candidate'), listAvailableAssessments);
 router.get('/available/:id', authorize('candidate'), getStudentAssessment);
+router.get('/booster-tests', authorize('candidate', 'admin', 'institution_admin'), listBoosterTests);
 
 router.get('/', authorize('admin'), listAllAssessments);
 router.post('/', authorize('admin'), validate(assessmentSchema), createAssessment);

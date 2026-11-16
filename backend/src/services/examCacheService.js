@@ -88,7 +88,8 @@ export async function getOrSetCachedExamPaper(assessmentId) {
       `SELECT t.id, COALESCE(t.title, t.test_name) AS title, t.duration_minutes,
               t.question_paper_url, t.solution_pdf_url, t.answer_key_url,
               (t.is_published = true OR t.status = 'published') AS is_published,
-              t.max_marks
+              t.max_marks,
+              COALESCE((SELECT a.max_violations FROM assessments a WHERE a.id = t.id), 5) AS max_violations
        FROM tests t WHERE t.id = $1`,
       [numId]
     ).catch(() => ({ rows: [] }));

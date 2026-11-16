@@ -56,10 +56,13 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
     // 1. Fetch completed test attempts & scores ordered chronologically
     const attemptsRes = await query(
       `SELECT at.id AS attempt_id, at.assessment_id, a.title, at.submitted_at, at.started_at,
-              COALESCE(
-                NULLIF(at.duration_seconds, 0),
-                GREATEST(0, ROUND(EXTRACT(EPOCH FROM (at.submitted_at - at.started_at))))::int,
-                0
+              LEAST(
+                COALESCE(
+                  NULLIF(at.duration_seconds, 0),
+                  GREATEST(0, ROUND(EXTRACT(EPOCH FROM (at.submitted_at - at.started_at))))::int,
+                  0
+                ),
+                (COALESCE(NULLIF(a.duration_minutes, 0), 180) * 60)
               ) AS duration_seconds,
               s.marks_obtained, s.total_marks, s.percentage, s.passed, s.rank, s.percentile,
               s.correct_count, s.wrong_count, s.unattempted_count
@@ -245,7 +248,10 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
 
     const totalDurSecs = scoreTrend.reduce((sum, curr) => sum + (Number(curr.duration_seconds) || 0), 0);
     const avgSecsPerTest = testsTaken > 0 ? Math.round(totalDurSecs / testsTaken) : 0;
-    const avgSecsPerQ = totalAttempted > 0 ? Math.round(totalDurSecs / totalAttempted) : 0;
+    const totalQuestionsCount = scoreTrend.reduce((sum, curr) => sum + ((curr.correct_count || 0) + (curr.wrong_count || 0) + (curr.unattempted_count || 0)), 0);
+    const avgSecsPerQ = totalAttempted > 0
+      ? Math.round(totalDurSecs / totalAttempted)
+      : (totalQuestionsCount > 0 ? Math.round(totalDurSecs / totalQuestionsCount) : 0);
 
     let speedRating = 'Optimal Pace';
     if (avgSecsPerQ > 0 && avgSecsPerQ < 45) speedRating = 'Swift Pace';

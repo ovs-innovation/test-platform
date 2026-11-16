@@ -74,6 +74,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
              COALESCE(a.passing_marks, 0) AS passing_marks,
              COALESCE(a.max_violations, 5) AS max_violations,
              COALESCE(a.result_visible, true) AS result_visible,
+             COALESCE(a.test_type, t.test_type, 'AIETS') AS test_type,
              COALESCE(a.available_from, t.available_from) AS available_from,
              COALESCE(a.available_until, t.available_until) AS available_until,
              ci.id AS invite_id, ci.status::text AS invite_status, ci.token AS invite_token,
@@ -113,7 +114,9 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
       UNION ALL
 
       SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
-             a.passing_marks, a.max_violations, a.result_visible, a.available_from, a.available_until,
+             a.passing_marks, a.max_violations, a.result_visible,
+             COALESCE(a.test_type, 'AIETS') AS test_type,
+             a.available_from, a.available_until,
              NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
              'enrollment' AS access_type,
              tsa.test_series_id AS series_id,
@@ -143,7 +146,9 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
 
       SELECT t.id, COALESCE(t.test_name, t.title) AS title, COALESCE(t.syllabus, 'Proctored NEET / JEE CBT format diagnostic mock exam.') AS description,
              'Standard examination instructions apply.' AS instructions, t.duration_minutes,
-             0 AS passing_marks, 5 AS max_violations, true AS result_visible, t.available_from, t.available_until,
+             0 AS passing_marks, 5 AS max_violations, true AS result_visible,
+             COALESCE(t.test_type, 'AIETS') AS test_type,
+             t.available_from, t.available_until,
              NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
              'assignment' AS access_type,
              NULL::int AS series_id,
@@ -215,6 +220,14 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
         return false;
       }
 
+      // Exclude Booster Tests from My Tests (they belong exclusively to Booster Tests page)
+      const isBooster = (row.test_type || '').toLowerCase().includes('booster') ||
+        (row.title || '').toLowerCase().includes('booster') ||
+        (row.description || '').toLowerCase().includes('booster');
+      if (isBooster) {
+        return false;
+      }
+
       if (isNeetCandidate && !isJeeCandidate) {
         // Exclude JEE-exclusive tests
         if ((text.includes('JEE ') || text.includes('JEE MAIN') || text.includes('JEE ADVANCED') || text.includes('IIT-JEE')) && !text.includes('NEET')) {
@@ -233,6 +246,185 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
   } catch (err) {
     console.error('[listAvailableAssessments error]', err);
     res.json({ assessments: [] });
+  }
+});
+
+/**
+ * GET /api/assessments/booster-tests
+ * Retrieves all published EDVEDUM Booster Tests (rapid 1 to 1.5 hr tests)
+ * assigned or available to the candidate, with attempt status and performance metrics.
+ */
+export const listBoosterTests = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const userEmail = req.user.email;
+    const isAdmin = req.user.role === 'admin' || req.user.role === 'institution_admin';
+
+    const userRes = await query('SELECT batch_id, institution_id, exam_type FROM users WHERE id = $1', [userId]).catch(() => ({ rows: [] }));
+    const student = userRes.rows[0] || {};
+    const batchId = student.batch_id || null;
+    const instId = student.institution_id || null;
+    let candidateExamType = (student.exam_type || '').toUpperCase().trim();
+
+    if (batchId && (!candidateExamType || candidateExamType === 'GENERAL')) {
+      const batchRes = await query('SELECT target_exam FROM batches WHERE id = $1', [batchId]).catch(() => ({ rows: [] }));
+      if (batchRes.rows[0]?.target_exam) {
+        candidateExamType = batchRes.rows[0].target_exam.toUpperCase().trim();
+      }
+    }
+
+    const queryResult = await query(
+      `
+      SELECT
+        COALESCE(t.id, a.id) AS id,
+        COALESCE(t.test_name, t.title, a.title) AS title,
+        COALESCE(t.syllabus, a.description, 'Targeted rapid CBT booster examination.') AS description,
+        COALESCE(a.instructions, 'Standard CBT examination instructions apply.') AS instructions,
+        COALESCE(t.duration_minutes, a.duration_minutes, 60)::int AS duration_minutes,
+        COALESCE(t.test_type, a.test_type, 'EDVEDUM Booster Test') AS test_type,
+        COALESCE(a.passing_marks, 0)::int AS passing_marks,
+        COALESCE(t.max_marks, q.total_marks, a.passing_marks * 4, 180)::int AS total_marks,
+        COALESCE(q.cnt, 0)::int AS question_count,
+        COALESCE(t.subject, q.detected_subject, 'General') AS subject,
+        COALESCE(t.available_from, a.available_from) AS available_from,
+        COALESCE(t.available_until, a.available_until) AS available_until,
+        (COALESCE(t.is_published, false) = true OR t.status = 'published' OR COALESCE(a.is_published, false) = true) AS is_published,
+        COALESCE(t.is_live, false) AS is_live,
+        COALESCE(at.id, tat.id) AS attempt_id,
+        COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text, 'not_started') AS attempt_status,
+        COALESCE(s.marks_obtained, ts.marks_obtained) AS marks_obtained,
+        COALESCE(s.total_marks, ts.total_marks) AS score_total,
+        COALESCE(s.percentage, ts.percentage) AS percentage,
+        COALESCE(s.passed, ts.passed) AS passed,
+        COALESCE(at.submitted_at, tat.submitted_at) AS submitted_at
+      FROM tests t
+      FULL OUTER JOIN assessments a ON a.id = t.id
+      LEFT JOIN test_assignments tas ON tas.test_id = COALESCE(t.id, a.id)
+      LEFT JOIN candidate_invites ci ON ci.assessment_id = COALESCE(t.id, a.id) AND LOWER(TRIM(ci.candidate_email)) = LOWER(TRIM($2)) AND ci.status <> 'expired'
+      LEFT JOIN (
+        SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks,
+               MAX(subject) FILTER (WHERE subject IS NOT NULL AND subject <> '') AS detected_subject
+        FROM questions
+        GROUP BY assessment_id
+      ) q ON q.assessment_id = COALESCE(t.id, a.id)
+      LEFT JOIN attempts at ON at.assessment_id = COALESCE(t.id, a.id) AND at.candidate_id = $1
+      LEFT JOIN test_attempts tat ON tat.test_id = COALESCE(t.id, a.id) AND tat.student_id = $1
+      LEFT JOIN scores s ON s.attempt_id = at.id
+      LEFT JOIN scores ts ON ts.attempt_id = tat.id
+      WHERE ($5 = true OR COALESCE(t.is_published, false) = true OR t.status = 'published' OR COALESCE(a.is_published, false) = true)
+        AND COALESCE(t.is_deleted, false) = false
+        AND COALESCE(t.is_personal, false) = false
+        AND COALESCE(t.type, '') NOT IN ('ai_weak_topic', 'mistake_book', 'personal', 'student_practice')
+        AND COALESCE(t.test_type, '') NOT IN ('mistake_book', 'personal', 'ai_weak_topic', 'student_practice')
+        AND COALESCE(t.test_name, '') NOT ILIKE '%improvement%'
+        AND COALESCE(t.title, '') NOT ILIKE '%improvement%'
+        AND COALESCE(a.title, '') NOT ILIKE '%improvement%'
+        AND (
+          COALESCE(t.test_type, '') ILIKE '%booster%'
+          OR COALESCE(a.test_type, '') ILIKE '%booster%'
+          OR (
+            (COALESCE(t.test_name, '') ILIKE '%booster%' OR COALESCE(t.title, '') ILIKE '%booster%' OR COALESCE(a.title, '') ILIKE '%booster%')
+            AND COALESCE(t.test_name, '') NOT ILIKE 'AI Booster%'
+            AND COALESCE(t.title, '') NOT ILIKE 'AI Booster%'
+          )
+          OR EXISTS (
+            SELECT 1 FROM test_series ts
+            JOIN test_series_tests tst ON tst.series_id = ts.id
+            WHERE tst.test_id = COALESCE(t.id, a.id) AND ts.exam_type ILIKE '%booster%'
+          )
+          OR EXISTS (
+            SELECT 1 FROM test_series ts
+            JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
+            WHERE tsa.assessment_id = COALESCE(t.id, a.id) AND ts.exam_type ILIKE '%booster%'
+          )
+        )
+        AND (
+          $5 = true
+          OR tas.id IS NULL
+          OR tas.assigned_to_type = 'all'
+          OR (tas.assigned_to_type IN ('individual', 'student') AND tas.assigned_to_id = $1)
+          OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
+          OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
+          OR (tas.assigned_to_type = 'test_series' AND EXISTS (
+            SELECT 1 FROM student_enrollments se
+            WHERE se.user_id = $1 AND se.test_series_id = tas.assigned_to_id AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+          ))
+          OR EXISTS (
+            SELECT 1 FROM student_enrollments se
+            JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
+            WHERE se.user_id = $1 AND tsa.assessment_id = COALESCE(t.id, a.id) AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+          )
+          OR EXISTS (
+            SELECT 1 FROM student_enrollments se
+            JOIN test_series_tests tst ON tst.series_id = se.test_series_id
+            WHERE se.user_id = $1 AND tst.test_id = COALESCE(t.id, a.id) AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+          )
+          OR ci.id IS NOT NULL
+        )
+      ORDER BY id DESC
+      `,
+      [userId, userEmail, batchId, instId, isAdmin]
+    );
+
+    const seen = new Set();
+    const unique = [];
+    for (const row of queryResult.rows) {
+      if (!seen.has(row.id)) {
+        seen.add(row.id);
+        unique.push(row);
+      }
+    }
+
+    const isNeet = candidateExamType.includes('NEET');
+    const isJee = candidateExamType.includes('JEE');
+    const filtered = unique.filter((row) => {
+      const text = `${row.title || ''} ${row.description || ''} ${row.subject || ''}`.toUpperCase();
+      if (
+        text.includes('IMPROVEMENT TEST') ||
+        text.includes('AI BOOSTER') ||
+        text.includes('WEAK TOPIC') ||
+        text.includes('MISTAKE BOOK')
+      ) {
+        return false;
+      }
+      if (isAdmin) return true;
+      if (text.includes('TRANN') || text.includes('MOCK TEST FOR TRAINING')) return false;
+      if (isNeet && !isJee) {
+        if ((text.includes('JEE ') || text.includes('JEE MAIN') || text.includes('JEE ADVANCED') || text.includes('IIT-JEE')) && !text.includes('NEET')) return false;
+      } else if (isJee && !isNeet) {
+        if ((text.includes('NEET') || text.includes('MEDICAL') || text.includes('BIOLOGY')) && !text.includes('JEE')) return false;
+      }
+      return true;
+    });
+
+    const completed = filtered.filter(
+      (b) => b.attempt_status === 'completed' || b.attempt_status === 'submitted' || b.attempt_status === 'auto_submitted'
+    );
+    const inProgress = filtered.filter((b) => b.attempt_status === 'in_progress');
+    const available = filtered.filter((b) => b.attempt_status === 'not_started' || !b.attempt_status);
+
+    const avgPercentage = completed.length > 0
+      ? Math.round(completed.reduce((acc, c) => acc + (Number(c.percentage) || 0), 0) / completed.length)
+      : 0;
+
+    res.json({
+      success: true,
+      stats: {
+        total: filtered.length,
+        available_count: available.length,
+        in_progress_count: inProgress.length,
+        completed_count: completed.length,
+        avg_percentage: avgPercentage,
+      },
+      booster_tests: filtered,
+    });
+  } catch (err) {
+    console.error('[listBoosterTests error]', err);
+    res.json({
+      success: true,
+      stats: { total: 0, available_count: 0, in_progress_count: 0, completed_count: 0, avg_percentage: 0 },
+      booster_tests: [],
+    });
   }
 });
 
@@ -270,7 +462,8 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
       SELECT t.id, COALESCE(t.test_name, t.title) AS title,
              t.syllabus AS description,
              'Standard examination instructions apply.' AS instructions,
-             t.duration_minutes, 0 AS passing_marks, 5 AS max_violations,
+             t.duration_minutes, 0 AS passing_marks,
+             COALESCE((SELECT a.max_violations FROM assessments a WHERE a.id = t.id), 5) AS max_violations,
              true AS result_visible, (t.is_published = true OR t.status = 'published') AS is_published,
              t.available_from, t.available_until,
              COALESCE(q.cnt, 0)::int AS question_count,
@@ -324,6 +517,10 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
          OR (assigned_to_type = 'batch' AND $3::int IS NOT NULL AND assigned_to_id = $3)
          OR (assigned_to_type = 'batch' AND $4::int IS NOT NULL AND assigned_to_id IN (SELECT id FROM batches WHERE institution_id = $4))
          OR (assigned_to_type = 'institution' AND $4::int IS NOT NULL AND assigned_to_id = $4)
+         OR (assigned_to_type = 'test_series' AND EXISTS (
+           SELECT 1 FROM student_enrollments se
+           WHERE se.user_id = $2 AND se.test_series_id = assigned_to_id AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+         ))
        )`,
     [id, req.user.id, batchId, instId]
   );
@@ -532,7 +729,7 @@ export const previewAssessment = asyncHandler(async (req, res) => {
 });
 
 export const createAssessment = asyncHandler(async (req, res) => {
-  const { title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until, recommended_ebook_id } =
+  const { title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until, recommended_ebook_id, test_type } =
     req.body;
 
   const cleanPassingMarks = (passing_marks !== undefined && passing_marks !== null && passing_marks !== '' && !isNaN(Number(passing_marks)))
@@ -547,12 +744,14 @@ export const createAssessment = asyncHandler(async (req, res) => {
     ? Number(max_violations)
     : 5;
 
+  const resolvedTestType = test_type || 'AIETS';
+
   const result = await query(
     `INSERT INTO assessments
-       (title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until, recommended_ebook_id, created_by)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+       (title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until, recommended_ebook_id, created_by, test_type)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
      RETURNING *`,
-    [title, description, instructions, duration_minutes || 180, cleanPassingMarks, cleanMaxViolations, result_visible !== false, available_from || null, available_until || null, cleanEbookId, req.user.id]
+    [title, description, instructions, duration_minutes || 180, cleanPassingMarks, cleanMaxViolations, result_visible !== false, available_from || null, available_until || null, cleanEbookId, req.user.id, resolvedTestType]
   );
 
   const assessment = result.rows[0];
@@ -601,6 +800,29 @@ export const updateAssessment = asyncHandler(async (req, res) => {
     values
   );
   if (result.rowCount === 0) throw ApiError.notFound('Assessment not found');
+
+  // Keep synced in tests table
+  await query(
+    `UPDATE tests
+     SET test_name = COALESCE($2, test_name),
+         title = COALESCE($2, title),
+         syllabus = COALESCE($3, syllabus),
+         duration_minutes = COALESCE($4, duration_minutes),
+         test_type = COALESCE($5, test_type),
+         is_published = COALESCE($6, is_published),
+         status = CASE WHEN $6 IS NULL THEN status WHEN $6 = true THEN 'published' ELSE 'draft' END,
+         updated_at = NOW()
+     WHERE id = $1`,
+    [
+      id,
+      fields.title || null,
+      fields.description !== undefined ? fields.description : null,
+      fields.duration_minutes ? Number(fields.duration_minutes) : null,
+      fields.test_type || null,
+      fields.is_published !== undefined ? Boolean(fields.is_published) : null,
+    ]
+  ).catch(() => {});
+
   await invalidateExamPaperCache(id);
 
   if (fields.recommended_ebook_id) {
@@ -651,6 +873,13 @@ export const togglePublish = asyncHandler(async (req, res) => {
     [publish, id]
   );
   if (result.rowCount === 0) throw ApiError.notFound('Assessment not found');
+
+  // Also sync tests table
+  await query(
+    'UPDATE tests SET is_published = $1, status = CASE WHEN $1 = true THEN \'published\' ELSE \'draft\' END, updated_at = NOW() WHERE id = $2',
+    [publish, id]
+  ).catch(() => {});
+
   await invalidateExamPaperCache(id);
   res.json({ assessment: result.rows[0] });
 });
