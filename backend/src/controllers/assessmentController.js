@@ -543,12 +543,16 @@ export const createAssessment = asyncHandler(async (req, res) => {
     ? Number(recommended_ebook_id)
     : null;
 
+  const cleanMaxViolations = (max_violations !== undefined && max_violations !== null && max_violations !== '' && !isNaN(Number(max_violations)))
+    ? Number(max_violations)
+    : 5;
+
   const result = await query(
     `INSERT INTO assessments
        (title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until, recommended_ebook_id, created_by)
      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
      RETURNING *`,
-    [title, description, instructions, duration_minutes || 180, cleanPassingMarks, max_violations || 5, result_visible !== false, available_from || null, available_until || null, cleanEbookId, req.user.id]
+    [title, description, instructions, duration_minutes || 180, cleanPassingMarks, cleanMaxViolations, result_visible !== false, available_from || null, available_until || null, cleanEbookId, req.user.id]
   );
 
   const assessment = result.rows[0];

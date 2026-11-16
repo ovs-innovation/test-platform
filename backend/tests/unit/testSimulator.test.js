@@ -93,6 +93,27 @@ describe('Admin Test Simulator Controller', () => {
       expect(result.data.questions[0].question_text).toBe('What is the chemical formula of ozone?');
       expect(result.data.sections).toBeDefined();
     });
+
+    it('respects admin-configured max_violations (e.g. 1 violation limit)', async () => {
+      const mockAssessment = {
+        id: 268,
+        title: 'Physics Practice Test 111',
+        duration_minutes: 180,
+        max_violations: 1,
+      };
+
+      query.mockResolvedValueOnce({ rows: [mockAssessment] }); // assessments query
+      query.mockResolvedValueOnce({ rows: [] }); // sections
+      query.mockResolvedValueOnce({ rows: [] }); // questions
+
+      const req = { params: { id: '268' }, user: { id: 1, role: 'admin' } };
+      const res = { json: vi.fn() };
+      const next = vi.fn();
+
+      const result = await callHandler(getTestSimulator, req, res, next);
+      expect(result.type).toBe('json');
+      expect(result.data.assessment.max_violations).toBe(1);
+    });
   });
 
   describe('getAttemptState Simulator Delegation', () => {

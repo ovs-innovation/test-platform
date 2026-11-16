@@ -68,6 +68,26 @@ describe('Admin Test Simulator Mode Services & Logic', () => {
       expect(res.is_simulator).toBe(true);
       expect(res.attempt.id).toBe('sim-25');
     });
+
+    it('preserves admin-configured max_violations (e.g. 1) without falling back to default 5', async () => {
+      const mockSimulatorState = {
+        is_simulator: true,
+        attempt: { id: 'sim-268', status: 'in_progress' },
+        assessment: { id: 268, title: 'Physics Practice Test 111', max_violations: 1 },
+        sections: [],
+        questions: [{ id: 101, question_text: 'Question 1' }],
+        answers: [],
+      };
+
+      api.get.mockResolvedValueOnce({ data: mockSimulatorState });
+
+      const res = await attemptService.getState('sim-268');
+      expect(res.assessment.max_violations).toBe(1);
+      const parsedLimit = (res.assessment?.max_violations !== undefined && res.assessment?.max_violations !== null)
+        ? Number(res.assessment.max_violations)
+        : 5;
+      expect(parsedLimit).toBe(1);
+    });
   });
 
   describe('Simulator local in-memory invariants', () => {

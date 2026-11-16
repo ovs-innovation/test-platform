@@ -289,7 +289,10 @@ export default function ExamScreen({ isSimulator = false }) {
             setTranslationsCache((prev) => ({ ...prev, ...initialTrans }));
           }
           setMeta(data.assessment);
-          setMaxViolations(data.assessment?.max_violations || 5);
+          const simMaxViolations = (data.assessment?.max_violations !== undefined && data.assessment?.max_violations !== null)
+            ? Number(data.assessment.max_violations)
+            : 5;
+          setMaxViolations(simMaxViolations);
           setViolations(0);
           const durationMins = data.assessment?.duration_minutes || 180;
           endsAtRef.current = Date.now() + durationMins * 60 * 1000;
@@ -323,7 +326,10 @@ export default function ExamScreen({ isSimulator = false }) {
           setTranslationsCache((prev) => ({ ...prev, ...initialTrans }));
         }
         setMeta(data.assessment);
-        setMaxViolations(data.assessment.max_violations);
+        const candMaxViolations = (data.assessment?.max_violations !== undefined && data.assessment?.max_violations !== null)
+          ? Number(data.assessment.max_violations)
+          : 5;
+        setMaxViolations(candMaxViolations);
         setViolations(data.attempt.violation_count || 0);
         const mcq = {};
         const multi = {};
@@ -512,11 +518,15 @@ export default function ExamScreen({ isSimulator = false }) {
     setWarning({ type });
     try {
       const res = await attemptService.logViolation(effectiveAttemptId, type);
-      if (typeof res.violation_count === 'number') setViolations(res.violation_count);
-      // Strictly prevent auto-submitting exams on violation warnings.
-      // Tests only submit when the student clicks submit or time legitimately expires.
+      const newCount = typeof res?.violation_count === 'number' ? res.violation_count : null;
+      if (newCount !== null) setViolations(newCount);
+      const limit = typeof res?.max_violations === 'number' ? res.max_violations : maxViolations;
+      if (res?.autoSubmitted || (limit > 0 && newCount !== null && newCount >= limit)) {
+        toast.error('Maximum warning limit reached. Submitting examination.');
+        finishExam('violation_limit');
+      }
     } catch { /* ignore */ }
-  }, [effectiveAttemptId, isSimulatorActive, isSubmitting]);
+  }, [effectiveAttemptId, finishExam, isSimulatorActive, isSubmitting, maxViolations, toast]);
 
   useProctoring({ active: !loading && !finishedRef.current && !isSubmitting && !isSimulatorActive, onViolation: handleViolation });
 

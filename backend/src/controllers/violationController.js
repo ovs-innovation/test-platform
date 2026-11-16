@@ -33,25 +33,43 @@ export const logViolation = asyncHandler(async (req, res) => {
     );
     const violationCount = upd.rows[0].violation_count;
 
+    let maxViolations = 5;
     const aRes = await client.query('SELECT max_violations FROM assessments WHERE id = $1', [
       upd.rows[0].assessment_id,
     ]);
-    const maxViolations = aRes.rows[0].max_violations;
+    if (aRes.rows.length > 0 && aRes.rows[0].max_violations !== null && aRes.rows[0].max_violations !== undefined) {
+      maxViolations = Number(aRes.rows[0].max_violations);
+    } else {
+      const tRes = await client.query('SELECT max_violations FROM tests WHERE id = $1', [
+        upd.rows[0].assessment_id,
+      ]).catch(() => ({ rows: [] }));
+      if (tRes.rows.length > 0 && tRes.rows[0].max_violations !== null && tRes.rows[0].max_violations !== undefined) {
+        maxViolations = Number(tRes.rows[0].max_violations);
+      }
+    }
 
     return { violation_count: violationCount, max_violations: maxViolations };
   });
 
   if (result.alreadyClosed) {
-    return res.json({ violation_count: result.violation_count, autoSubmitted: false });
+    return res.json({ violation_count: result.violation_count, max_violations: result.max_violations ?? 5, autoSubmitted: false });
   }
 
-  // Strict Policy: Do NOT abruptly auto-submit exams on violation counts.
-  // Violations are recorded in the database for proctoring review and warning banners
-  // are displayed to the candidate, but exams only conclude when the student clicks Submit
-  // or the timer legitimately ends.
+  // When student violates the admin-configured limit (if max_violations > 0), auto-submit attempt
+  const shouldAutoSubmit = result.max_violations > 0 && result.violation_count >= result.max_violations;
+  let autoSubmitted = false;
+  if (shouldAutoSubmit) {
+    try {
+      await finalizeAttempt(id, 'auto_submitted');
+      autoSubmitted = true;
+    } catch (finalizeErr) {
+      console.error('[logViolation] Failed to auto-finalize attempt after exceeding max_violations:', finalizeErr);
+    }
+  }
+
   res.json({
     violation_count: result.violation_count,
     max_violations: result.max_violations,
-    autoSubmitted: false,
+    autoSubmitted,
   });
 });

@@ -95,12 +95,12 @@ describe('CBT Submission and Answer Recovery Reliability', () => {
     it('Requirement 5: saveAnswer returns server_time for client timer reconciliation', async () => {
       const futureDeadline = new Date(Date.now() + 3600000).toISOString();
       query.mockImplementation((sql) => {
-        if (sql.includes('SELECT * FROM attempts')) {
+        if (sql.includes('FROM attempts')) {
           return Promise.resolve({
-            rows: [{ id: 502, candidate_id: 1, status: 'in_progress', ends_at: futureDeadline }],
+            rows: [{ id: 502, assessment_id: 10, candidate_id: 1, status: 'in_progress', ends_at: futureDeadline }],
           });
         }
-        if (sql.includes('SELECT id, question_type')) {
+        if (sql.includes('FROM questions')) {
           return Promise.resolve({ rows: [{ id: 101, question_type: 'mcq' }] });
         }
         return Promise.resolve({ rows: [] });
@@ -224,7 +224,7 @@ describe('CBT Submission and Answer Recovery Reliability', () => {
       });
 
       query.mockImplementation((sql, params) => {
-        if (sql.includes('SELECT * FROM attempts WHERE id = $1')) {
+        if (sql.includes('FROM attempts WHERE id = $1')) {
           return Promise.resolve({
             rows: [{ id: 502, assessment_id: 10, candidate_id: 1, status: isFirstCall ? 'in_progress' : 'submitted' }],
           });

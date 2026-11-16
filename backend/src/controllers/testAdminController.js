@@ -2182,15 +2182,15 @@ export const getTestSimulator = asyncHandler(async (req, res) => {
   if (!assessmentId) throw ApiError.badRequest('Valid test/assessment ID required');
 
   let testObj = null;
-  const tCheck = await query('SELECT * FROM tests WHERE id = $1 LIMIT 1', [assessmentId]);
-  if ((tCheck.rowCount || tCheck.rows?.length || 0) > 0) {
-    testObj = tCheck.rows[0];
+  const aRes = await query('SELECT * FROM assessments WHERE id = $1 LIMIT 1', [assessmentId]);
+  if ((aRes.rowCount || aRes.rows?.length || 0) > 0) {
+    testObj = aRes.rows[0];
   }
 
   if (!testObj) {
-    const aRes = await query('SELECT * FROM assessments WHERE id = $1 LIMIT 1', [assessmentId]);
-    if ((aRes.rowCount || aRes.rows?.length || 0) > 0) {
-      testObj = aRes.rows[0];
+    const tCheck = await query('SELECT * FROM tests WHERE id = $1 LIMIT 1', [assessmentId]);
+    if ((tCheck.rowCount || tCheck.rows?.length || 0) > 0) {
+      testObj = tCheck.rows[0];
     }
   }
 
@@ -2303,9 +2303,11 @@ export const getTestSimulator = asyncHandler(async (req, res) => {
     },
     assessment: {
       id: testObj.id,
-      title: testObj.test_name || testObj.title || 'Simulated Assessment',
+      title: testObj.title || testObj.test_name || 'Simulated Assessment',
       duration_minutes: durationMins,
-      max_violations: 5,
+      max_violations: (testObj?.max_violations !== undefined && testObj?.max_violations !== null)
+        ? Number(testObj.max_violations)
+        : 5,
       question_paper_url: testObj.question_paper_url || null,
       solution_pdf_url: testObj.solution_pdf_url || null,
       answer_key_url: testObj.answer_key_url || null,

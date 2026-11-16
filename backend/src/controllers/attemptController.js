@@ -499,30 +499,15 @@ export const startAttempt = asyncHandler(async (req, res) => {
   const { invite, source } = await ensureAssessmentAccess(req.user, assessmentId);
 
   let assessment = null;
-  if (source === 'assignment') {
-    const tRes = await query(
-      `SELECT t.id, COALESCE(t.test_name, t.title) AS title,
-              t.syllabus AS description,
-              'Standard examination instructions apply.' AS instructions,
-              t.duration_minutes, 0 AS passing_marks, 5 AS max_violations,
-              true AS result_visible, (t.is_published = true OR t.status = 'published') AS is_published,
-              t.available_from, t.available_until,
-              t.question_paper_url, t.answer_key_url, t.solution_pdf_url
-       FROM tests t
-       WHERE t.id = $1 AND COALESCE(t.is_deleted, false) = false`,
-      [assessmentId]
-    );
-    assessment = tRes.rows[0];
-  }
-
-  if (!assessment) {
-    const aRes = await query('SELECT * FROM assessments WHERE id = $1', [assessmentId]);
+  // Check assessments table first to respect admin configuration (such as max_violations)
+  const aRes = await query('SELECT * FROM assessments WHERE id = $1', [assessmentId]);
+  if ((aRes.rowCount || aRes.rows?.length || 0) > 0) {
     assessment = aRes.rows[0];
   }
 
   if (!assessment) {
     const tRes = await query(
-      `SELECT t.id, COALESCE(t.test_name, t.title) AS title,
+      `SELECT t.id, COALESCE(t.title, t.test_name) AS title,
               t.syllabus AS description,
               'Standard examination instructions apply.' AS instructions,
               t.duration_minutes, 0 AS passing_marks, 5 AS max_violations,

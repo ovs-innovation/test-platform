@@ -76,24 +76,25 @@ export async function getOrSetCachedExamPaper(assessmentId) {
     return cached;
   }
 
-  // 1. Fetch assessment / test metadata
+  // 1. Fetch assessment / test metadata (assessments prioritized to reflect admin settings)
   let assessmentObj = null;
-  const tCheck = await query('SELECT id FROM tests WHERE id = $1 LIMIT 1', [numId]).catch(() => ({ rowCount: 0 }));
-  if (tCheck.rowCount > 0) {
+  const assessmentRes = await query('SELECT * FROM assessments WHERE id = $1', [numId]).catch(() => ({ rows: [] }));
+  if (assessmentRes.rows && assessmentRes.rows.length > 0) {
+    assessmentObj = assessmentRes.rows[0];
+  }
+
+  if (!assessmentObj) {
     const tRes = await query(
-      `SELECT t.id, COALESCE(t.test_name, t.title) AS title, t.duration_minutes,
-              5 AS max_violations, t.question_paper_url, t.solution_pdf_url, t.answer_key_url,
+      `SELECT t.id, COALESCE(t.title, t.test_name) AS title, t.duration_minutes,
+              t.question_paper_url, t.solution_pdf_url, t.answer_key_url,
               (t.is_published = true OR t.status = 'published') AS is_published,
               t.max_marks
        FROM tests t WHERE t.id = $1`,
       [numId]
-    );
-    assessmentObj = tRes.rows[0];
-  }
-
-  if (!assessmentObj) {
-    const assessmentRes = await query('SELECT * FROM assessments WHERE id = $1', [numId]);
-    assessmentObj = assessmentRes.rows[0];
+    ).catch(() => ({ rows: [] }));
+    if (tRes.rows && tRes.rows.length > 0) {
+      assessmentObj = tRes.rows[0];
+    }
   }
 
   if (!assessmentObj) {
@@ -149,7 +150,9 @@ export async function getOrSetCachedExamPaper(assessmentId) {
       id: assessmentObj.id,
       title: assessmentObj.title,
       duration_minutes: assessmentObj.duration_minutes,
-      max_violations: assessmentObj.max_violations || 5,
+      max_violations: (assessmentObj?.max_violations !== undefined && assessmentObj?.max_violations !== null)
+        ? Number(assessmentObj.max_violations)
+        : 5,
       question_paper_url: assessmentObj.question_paper_url || null,
       solution_pdf_url: assessmentObj.solution_pdf_url || null,
       answer_key_url: assessmentObj.answer_key_url || null,
