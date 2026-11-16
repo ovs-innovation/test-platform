@@ -1586,7 +1586,7 @@ export const ONE_YEAR_39_SCHEDULE = NEET_CLASS_11_39_SCHEDULE;
 export function getScheduleByProgram(programId) {
   if (!programId) return ONE_YEAR_39_SCHEDULE;
   const p = String(programId).toLowerCase();
-  if (p.includes('jee') && (p.includes('repeater') || p.includes('rep') || p.includes('dropper') || p.includes('mul3gdpv'))) {
+  if (p.includes('repeater') || p.includes('rep') || p.includes('dropper') || p.includes('mul3gdpv')) {
     return JEE_REPEATER_39_SCHEDULE;
   }
   if (p.includes('jee')) {

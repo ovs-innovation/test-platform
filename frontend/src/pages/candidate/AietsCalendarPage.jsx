@@ -27,7 +27,8 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { ONE_YEAR_39_SCHEDULE, getScheduleByProgram } from '../../lib/aietsCalendarData.js';
-import { calendarService, authService } from '../../lib/services.js';
+import { calendarService, authService, testSeriesService } from '../../lib/services.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 import TestDetailDrawer from '../../components/candidate/TestDetailDrawer.jsx';
 
 // Custom Floating Popover Dropdown for Filter Toolbar
@@ -91,18 +92,64 @@ function CustomFilterSelect({ value, onChange, options }) {
 export default function AietsCalendarPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Custom Program Selector Dropdown State
   const [programDropdownOpen, setProgramDropdownOpen] = useState(false);
   const programDropdownRef = useRef(null);
 
-  const programs = [
-    { id: 'neet-class-11', label: 'AIETS NEET Class 11 (39 Tests)', badge: 'Class 11' },
-    { id: 'jee-class-12', label: 'AIETS JEE Class 12 (39 Tests)', badge: 'Class 12' },
-    { id: 'jee-repeater', label: 'AIETS JEE Repeater (39 Tests)', badge: 'Dropper' },
-    { id: 'neet-ug-2027-aiets-comprehensive-test-series', label: 'AIETS NEET-UG 2027 (39 Tests)', badge: '1-Year' },
-    { id: 'aiets-neet-ug-2028-two-year-online-cbt-program', label: 'AIETS NEET-UG 2028 (78 Tests)', badge: '2-Year' },
-  ];
+  const [enrollments, setEnrollments] = useState([]);
+  const [studentInfo, setStudentInfo] = useState(null);
+
+  // Available programs strictly computed from student's enrolled batch / purchased test series
+  const availablePrograms = useMemo(() => {
+    const allPrograms = [
+      { id: 'neet-class-11', label: 'AIETS NEET Class 11 (39 Tests)', badge: 'Class 11', type: 'class11' },
+      { id: 'jee-class-12', label: 'AIETS JEE Class 12 (39 Tests)', badge: 'Class 12', type: 'class12' },
+      { id: 'jee-repeater', label: 'AIETS JEE Repeater (39 Tests)', badge: 'Dropper', type: 'repeater' },
+      { id: 'neet-ug-2027-aiets-comprehensive-test-series', label: 'AIETS NEET-UG 2027 (39 Tests)', badge: '1-Year', type: 'class12' },
+      { id: 'aiets-neet-ug-2028-two-year-online-cbt-program', label: 'AIETS NEET-UG 2028 (78 Tests)', badge: '2-Year', type: 'twoyear' },
+    ];
+
+    // Combine user batch name, student profile class, and test series enrollments
+    const batchName = String(user?.batch || user?.batch_name || studentInfo?.batch_name || '').toLowerCase();
+    const studentClass = String(user?.class || user?.student_class || studentInfo?.student_class || '').toLowerCase();
+    const enrolledStr = (enrollments || []).map((e) => `${e.title || ''} ${e.slug || ''} ${e.target_class || ''} ${e.program_type || ''}`).join(' ').toLowerCase();
+    const context = `${batchName} ${studentClass} ${enrolledStr}`;
+
+    const isRepeater = /repeater|dropper|rm\b|12\s*passed|passed\s*12/i.test(context);
+    const isClass11 = !isRepeater && /class\s*11|11th\b|foundation/i.test(context);
+    const isClass12 = !isRepeater && /class\s*12|12th\b/i.test(context);
+
+    // 1. For students enrolled in Repeater Batch, ONLY Repeater schedule is visible. Class 11 and 12 are hidden.
+    if (isRepeater) {
+      return allPrograms.filter((p) => p.type === 'repeater');
+    }
+    // 2. Class 11 students only see Class 11 schedules
+    if (isClass11) {
+      return allPrograms.filter((p) => p.type === 'class11');
+    }
+    // 3. Class 12 students only see Class 12 schedules
+    if (isClass12) {
+      return allPrograms.filter((p) => p.type === 'class12');
+    }
+
+    // 4. If student has specific purchased series, filter by purchased series
+    if (enrollments && enrollments.length > 0) {
+      const filtered = allPrograms.filter((p) => {
+        return enrollments.some((e) => {
+          const s = `${e.title || ''} ${e.slug || ''} ${e.target_class || ''}`.toLowerCase();
+          if (p.id === 'jee-repeater') return /repeater|dropper/i.test(s);
+          if (p.id === 'neet-class-11') return /11/i.test(s);
+          if (p.id === 'jee-class-12' || p.id.includes('neet-ug-2027')) return /12/i.test(s) && !/repeater|dropper/i.test(s);
+          return false;
+        });
+      });
+      if (filtered.length > 0) return filtered;
+    }
+
+    return allPrograms;
+  }, [user, enrollments, studentInfo]);
 
   // URL Sync State
   const initialProgram = searchParams.get('program') || 'neet-ug-2027-aiets-comprehensive-test-series';
@@ -110,6 +157,16 @@ export default function AietsCalendarPage() {
 
   const [selectedProgram, setSelectedProgram] = useState(initialProgram);
   const [viewMode, setViewMode] = useState(initialView); // 'calendar' | 'timeline' | 'list'
+
+  // Auto-switch to authorized enrolled program if current selection is invalid or restricted
+  useEffect(() => {
+    if (availablePrograms.length > 0) {
+      const isAllowed = availablePrograms.some((p) => p.id === selectedProgram);
+      if (!isAllowed) {
+        setSelectedProgram(availablePrograms[0].id);
+      }
+    }
+  }, [availablePrograms, selectedProgram]);
 
   // Click outside listener for custom dropdown
   useEffect(() => {
@@ -143,6 +200,9 @@ export default function AietsCalendarPage() {
         if (data && Array.isArray(data.tests)) {
           setApiTests(data.tests);
         }
+        if (data && data.student) {
+          setStudentInfo(data.student);
+        }
       })
       .catch((err) => console.error('Error fetching student calendar:', err));
 
@@ -153,6 +213,14 @@ export default function AietsCalendarPage() {
         }
       })
       .catch((err) => console.error('Error fetching completed tests:', err));
+
+    testSeriesService.myEnrollments()
+      .then((data) => {
+        if (data && Array.isArray(data.enrollments)) {
+          setEnrollments(data.enrollments);
+        }
+      })
+      .catch((err) => console.error('Error fetching student test series enrollments:', err));
   }, []);
 
   // Sync state with URL params
@@ -213,50 +281,14 @@ export default function AietsCalendarPage() {
   };
 
   // Compute test statuses dynamically based on current real-time clock and backend tests
+  // Guarantees EXACT curriculum test count (39 tests) without inflating from extraneous DB tests
   const scheduleDataset = useMemo(() => {
     const now = new Date(); // Actual current time
 
-    const formattedDbTests = apiTests.map((t) => {
-      let dateStr = '';
-      if (t.test_date) {
-        dateStr = typeof t.test_date === 'string' ? t.test_date.split('T')[0] : new Date(t.test_date).toISOString().split('T')[0];
-      } else {
-        dateStr = now.toISOString().split('T')[0];
-      }
-
-      const d = new Date(dateStr);
-      const monthYear = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
-      const rawType = t.test_type || t.type || t.test_name || 'Unit Test';
-
-      const isDone = isCompletedTest({ id: t.id, name: t.test_name || t.title, testId: t.id }) ||
-        t.computed_status === 'Attempted' || t.computed_status === 'Result Published';
-      const status = isDone ? 'Attempted' : (t.computed_status || 'Upcoming');
-
-      return {
-        id: `db-${t.id}`,
-        testId: t.id,
-        sequence: t.id,
-        name: t.test_name || t.title || 'Published Assessment',
-        type: normalizeTestType(rawType),
-        rawTypeDisplay: rawType,
-        date: dateStr,
-        startTime: t.start_time || '10:00:00',
-        endTime: t.end_time || '12:00:00',
-        durationMinutes: t.duration_minutes || 180,
-        syllabus: t.syllabus || 'Syllabus configured by Admin.',
-        maxMarks: t.max_marks || t.total_marks || 180,
-        max_marks: t.max_marks || t.total_marks || 180,
-        total_marks: t.total_marks || t.max_marks || 180,
-        status,
-        monthYear,
-        formattedDate: d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }),
-        phase: normalizePhase(t.phase || 'CONCEPT_BUILDING'),
-        isDbTest: true,
-      };
-    });
-
     const activeProgramSchedule = getScheduleByProgram(selectedProgram);
-    const staticSchedule = activeProgramSchedule.map((t) => {
+
+    // Map each of the 39 official curriculum tests
+    return activeProgramSchedule.map((t, idx) => {
       const testDate = new Date(`${t.date}T09:00:00+05:30`);
       const testEndDate = new Date(`${t.date}T12:00:00+05:30`);
 
@@ -267,26 +299,48 @@ export default function AietsCalendarPage() {
         rawStatus = 'Expired';
       }
 
-      const isDone = isCompletedTest(t);
-      const status = isDone ? 'Attempted' : rawStatus;
+      // Find matching test from DB if available (match by test date, sequence, or normalized title)
+      const matchingDbTest = apiTests.find((db) => {
+        const dbDate = db.test_date ? (typeof db.test_date === 'string' ? db.test_date.split('T')[0] : new Date(db.test_date).toISOString().split('T')[0]) : '';
+        if (dbDate && dbDate === t.date) return true;
 
+        const dbName = String(db.test_name || db.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const tName = String(t.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (dbName && tName && (dbName === tName || dbName.includes(tName) || tName.includes(dbName))) return true;
+
+        if (db.sequence && Number(db.sequence) === t.sequence) return true;
+        return false;
+      });
+
+      const isDone =
+        isCompletedTest(t) ||
+        (matchingDbTest &&
+          (matchingDbTest.computed_status === 'Attempted' ||
+            matchingDbTest.computed_status === 'Result Published' ||
+            isCompletedTest({ id: matchingDbTest.id, name: matchingDbTest.test_name || matchingDbTest.title, testId: matchingDbTest.id })));
+
+      const status = isDone ? 'Attempted' : (matchingDbTest?.computed_status || rawStatus);
       const d = new Date(t.date);
       const monthYear = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
 
       return {
         ...t,
-        type: normalizeTestType(t.type),
-        phase: normalizePhase(t.phase),
+        id: matchingDbTest ? `db-${matchingDbTest.id}` : `sched-${t.sequence || idx + 1}`,
+        testId: matchingDbTest?.id || null,
+        startTime: matchingDbTest?.start_time || '10:00:00',
+        endTime: matchingDbTest?.end_time || '12:00:00',
+        durationMinutes: matchingDbTest?.duration_minutes || t.durationMinutes || 180,
+        maxMarks: matchingDbTest?.max_marks || matchingDbTest?.total_marks || t.maxMarks || 300,
+        max_marks: matchingDbTest?.max_marks || matchingDbTest?.total_marks || t.maxMarks || 300,
+        total_marks: matchingDbTest?.total_marks || matchingDbTest?.max_marks || t.maxMarks || 300,
+        type: normalizeTestType(matchingDbTest?.test_type || t.type),
+        phase: normalizePhase(matchingDbTest?.phase || t.phase),
         status,
         monthYear,
         formattedDate: d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }),
+        isDbTest: Boolean(matchingDbTest),
       };
-    });
-
-    const existingDates = new Set(formattedDbTests.map((t) => t.date));
-    const filteredStatic = staticSchedule.filter((t) => !existingDates.has(t.date));
-
-    return [...formattedDbTests, ...filteredStatic].sort((a, b) => new Date(a.date) - new Date(b.date));
+    }).sort((a, b) => new Date(a.date) - new Date(b.date));
   }, [apiTests, completedTests, selectedProgram]);
 
   // Dynamic countdown in days for next assessment
@@ -448,47 +502,59 @@ export default function AietsCalendarPage() {
 
         {/* Custom Program Selector Dropdown */}
         <div className="relative shrink-0" ref={programDropdownRef}>
-          <button
-            type="button"
-            onClick={() => setProgramDropdownOpen((prev) => !prev)}
-            className="flex items-center gap-2.5 bg-white dark:bg-[#0F172A] px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs text-xs font-bold text-slate-900 dark:text-white hover:border-blue-500/50 transition cursor-pointer"
-          >
-            <BookOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-            <span>{programs.find((p) => p.id === selectedProgram)?.label || 'Select Program'}</span>
-            <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${programDropdownOpen ? 'rotate-180' : ''}`} />
-          </button>
-
-          {programDropdownOpen && (
-            <div className="absolute right-0 z-50 mt-2 w-72 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-2 shadow-xl animate-in fade-in zoom-in-95 duration-150">
-              <div className="px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Enrolled Programs</div>
-              {programs.map((p) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedProgram(p.id);
-                    setProgramDropdownOpen(false);
-                  }}
-                  className={`flex w-full items-center justify-between gap-2.5 rounded-xl px-3 py-2 text-xs font-bold transition cursor-pointer ${
-                    selectedProgram === p.id
-                      ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    {selectedProgram === p.id ? (
-                      <CheckCircle2 className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
-                    ) : (
-                      <span className="h-4 w-4 shrink-0" />
-                    )}
-                    <span>{p.label}</span>
-                  </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/60">
-                    {p.badge}
-                  </span>
-                </button>
-              ))}
+          {availablePrograms.length <= 1 ? (
+            <div className="flex items-center gap-2.5 bg-blue-50/70 dark:bg-blue-950/30 px-3.5 py-2 rounded-xl border border-blue-200/80 dark:border-blue-900/60 shadow-xs text-xs font-bold text-slate-900 dark:text-white">
+              <BookOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <span>{availablePrograms[0]?.label || 'Enrolled Program'}</span>
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                {availablePrograms[0]?.badge || 'Enrolled'}
+              </span>
             </div>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => setProgramDropdownOpen((prev) => !prev)}
+                className="flex items-center gap-2.5 bg-white dark:bg-[#0F172A] px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs text-xs font-bold text-slate-900 dark:text-white hover:border-blue-500/50 transition cursor-pointer"
+              >
+                <BookOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <span>{availablePrograms.find((p) => p.id === selectedProgram)?.label || 'Select Program'}</span>
+                <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${programDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {programDropdownOpen && (
+                <div className="absolute right-0 z-50 mt-2 w-72 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-2 shadow-xl animate-in fade-in zoom-in-95 duration-150">
+                  <div className="px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Enrolled Programs</div>
+                  {availablePrograms.map((p) => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedProgram(p.id);
+                        setProgramDropdownOpen(false);
+                      }}
+                      className={`flex w-full items-center justify-between gap-2.5 rounded-xl px-3 py-2 text-xs font-bold transition cursor-pointer ${
+                        selectedProgram === p.id
+                          ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'
+                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        {selectedProgram === p.id ? (
+                          <CheckCircle2 className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
+                        ) : (
+                          <span className="h-4 w-4 shrink-0" />
+                        )}
+                        <span>{p.label}</span>
+                      </div>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/60">
+                        {p.badge}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

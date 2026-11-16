@@ -62,6 +62,12 @@ export const getStudentCalendar = async (req, res, next) => {
             JOIN institution_packages ip ON ip.package_id = pt.package_id
             WHERE ip.institution_id = $3 AND ip.is_active = TRUE
           )
+          OR t.id IN (
+            SELECT tst.test_id
+            FROM student_enrollments se
+            JOIN test_series_tests tst ON tst.series_id = se.test_series_id
+            WHERE se.user_id = $1 AND se.status = 'active'
+          )
         )
       ORDER BY t.id, t.test_date ASC, t.start_time ASC;
     `;
@@ -159,7 +165,20 @@ export const getStudentCalendar = async (req, res, next) => {
       return timeA - timeB;
     });
 
-    res.json({ tests: formattedTests });
+    // Fetch student's enrolled batch details for calendar scoping
+    const studentInfoRes = await query(
+      `SELECT u.batch_id, COALESCE(b.batch_name, b.name) AS batch_name, sp.class AS student_class
+       FROM users u
+       LEFT JOIN batches b ON b.id = u.batch_id
+       LEFT JOIN student_profiles sp ON sp.user_id = u.id
+       WHERE u.id = $1`,
+      [studentId]
+    ).catch(() => ({ rows: [] }));
+
+    res.json({
+      tests: formattedTests,
+      student: studentInfoRes.rows[0] || null,
+    });
   } catch (err) {
     next(err);
   }
