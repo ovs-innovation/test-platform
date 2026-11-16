@@ -18,7 +18,8 @@ import {
   ChevronRight,
   Layers,
   AlertCircle,
-  HelpCircle
+  HelpCircle,
+  Trophy
 } from 'lucide-react';
 
 const SUBJECT_COLORS = {
@@ -162,6 +163,13 @@ export default function BoosterTests() {
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
+            <Link
+              to="/leaderboard?tab=booster"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-xs font-bold text-amber-500 shadow-xs transition"
+            >
+              <Trophy className="h-4 w-4" />
+              <span>Booster Leaderboard</span>
+            </Link>
             <Link
               to="/my-tests"
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 shadow-xs transition"

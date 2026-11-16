@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import { studentService } from '../../lib/services.js';
-import { LoadingScreen, ErrorState, EmptyState } from '../../components/ui.jsx';
-import { Award, Search, ChevronDown, Check } from 'lucide-react';
+import { LoadingScreen, ErrorState } from '../../components/ui.jsx';
+import { Award, Search, ChevronDown, Check, Zap } from 'lucide-react';
 import CompareWithTopper from '../../components/candidate/CompareWithTopper.jsx';
 
 /**
@@ -56,7 +57,10 @@ export function getExactRankDetails(score, totalMarks = 720, fallbackExactRank =
   };
 }
 
-function CustomAssessmentDropdown({ assessments, value, onChange }) {
+/**
+ * Single clean Assessment / Test Selector Dropdown
+ */
+function CustomAssessmentDropdown({ assessments, value, onChange, isBooster = false }) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const dropdownRef = useRef(null);
@@ -78,50 +82,74 @@ function CustomAssessmentDropdown({ assessments, value, onChange }) {
   const filteredAssessments = useMemo(() => {
     if (!search.trim()) return assessments;
     const q = search.toLowerCase().trim();
-    return assessments.filter((a) => a.title?.toLowerCase().includes(q));
+    return assessments.filter((a) => {
+      const titleMatch = a.title?.toLowerCase().includes(q);
+      const seriesMatch = a.series_title?.toLowerCase().includes(q);
+      return titleMatch || seriesMatch;
+    });
   }, [assessments, search]);
 
   return (
-    <div className="relative w-full sm:w-80" ref={dropdownRef}>
+    <div className="relative w-full sm:w-80 md:w-96" ref={dropdownRef}>
       {/* Trigger Button */}
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] py-2.5 px-3.5 text-xs font-bold text-slate-900 dark:text-white shadow-2xs hover:border-blue-500/80 hover:shadow-sm transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+        className={`w-full flex items-center justify-between gap-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] py-2.5 px-3.5 text-xs font-bold text-slate-900 dark:text-white shadow-2xs ${
+          isBooster
+            ? 'hover:border-amber-500/80 focus:ring-amber-500/20'
+            : 'hover:border-blue-500/80 focus:ring-blue-500/20'
+        } hover:shadow-sm transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2`}
       >
         <div className="flex items-center gap-2 min-w-0 text-left">
-          <Award className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
+          {isBooster ? (
+            <Zap className="h-4 w-4 text-amber-500 fill-current shrink-0" />
+          ) : (
+            <Award className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
+          )}
           <span className="truncate font-extrabold text-xs text-slate-800 dark:text-slate-100">
-            {selectedAssessment ? selectedAssessment.title : 'Select Assessment'}
+            {selectedAssessment
+              ? selectedAssessment.title
+              : (isBooster ? 'Select Booster Test' : 'Select Assessment')}
           </span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
           {selectedAssessment && (
-            <span className="hidden min-[420px]:inline-flex px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 text-[10px] font-extrabold border border-blue-200 dark:border-blue-800/60">
+            <span
+              className={`hidden min-[420px]:inline-flex px-2 py-0.5 rounded-full text-[10px] font-extrabold border ${
+                isBooster
+                  ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800/60'
+                  : 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800/60'
+              }`}
+            >
               {selectedAssessment.attempt_count} attempts
             </span>
           )}
-          <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${open ? 'rotate-180 text-blue-600' : ''}`} />
+          <ChevronDown
+            className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${
+              open ? 'rotate-180 ' + (isBooster ? 'text-amber-500' : 'text-blue-600') : ''
+            }`}
+          />
         </div>
       </button>
 
       {/* Popover Menu Dropdown */}
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-full min-w-[300px] sm:w-[380px] z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-2 space-y-1.5 animate-in fade-in zoom-in-95 duration-150">
-          {assessments.length > 4 && (
+        <div className="absolute right-0 top-full mt-2 w-full min-w-[300px] sm:w-[420px] z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-2 space-y-1.5 animate-in fade-in zoom-in-95 duration-150">
+          {assessments.length > 3 && (
             <div className="relative p-1">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search assessment..."
+                placeholder={isBooster ? "Search booster test..." : "Search test or test-series name..."}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-1.5 pl-8 pr-3 text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-2 pl-9 pr-3 text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-amber-500"
               />
             </div>
           )}
 
-          <div className="max-h-64 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
+          <div className="max-h-72 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
             {filteredAssessments.length > 0 ? (
               filteredAssessments.map((a) => {
                 const isSelected = String(a.id) === String(value);
@@ -133,26 +161,44 @@ function CustomAssessmentDropdown({ assessments, value, onChange }) {
                       onChange(a.id);
                       setOpen(false);
                     }}
-                    className={`w-full flex items-center justify-between gap-3 p-2.5 rounded-xl text-left transition cursor-pointer ${
+                    className={`w-full flex items-start justify-between gap-3 p-2.5 rounded-xl text-left transition cursor-pointer ${
                       isSelected
-                        ? 'bg-blue-50/90 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/80 font-extrabold shadow-2xs'
+                        ? (isBooster
+                            ? 'bg-amber-50/90 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/80 font-extrabold shadow-2xs'
+                            : 'bg-blue-50/90 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/80 font-extrabold shadow-2xs')
                         : 'hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold'
                     }`}
                   >
-                    <div className="min-w-0 flex-1 space-y-0.5">
-                      <p className="text-xs leading-snug truncate">{a.title}</p>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <p className="text-xs leading-snug truncate flex items-center gap-1.5 font-bold">
+                        {isBooster ? (
+                          <Zap className="w-3.5 h-3.5 text-amber-500 fill-current shrink-0" />
+                        ) : (
+                          <Award className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                        )}
+                        <span>{a.title}</span>
+                      </p>
+                      {a.series_title && (
+                        <p className="text-[10.5px] text-slate-400 dark:text-slate-500 truncate pl-5">
+                          {a.series_title}
+                        </p>
+                      )}
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
+                    <div className="flex items-center gap-2 shrink-0 pt-0.5">
                       <span className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-500 dark:text-slate-400">
                         {a.attempt_count} attempts
                       </span>
-                      {isSelected && <Check className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />}
+                      {isSelected && (
+                        <Check className={`h-4 w-4 shrink-0 ${isBooster ? 'text-amber-500' : 'text-blue-600 dark:text-blue-400'}`} />
+                      )}
                     </div>
                   </button>
                 );
               })
             ) : (
-              <div className="p-4 text-center text-xs text-slate-400">No matching assessments</div>
+              <div className="p-4 text-center text-xs text-slate-400">
+                {isBooster ? 'No matching EDVEDUM Booster tests' : 'No matching assessments'}
+              </div>
             )}
           </div>
         </div>
@@ -162,15 +208,27 @@ function CustomAssessmentDropdown({ assessments, value, onChange }) {
 }
 
 export default function Leaderboard() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialTab = searchParams.get('tab') === 'booster' ? 'booster' : 'standard';
+
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [assessments, setAssessments] = useState([]);
   const [assessmentId, setAssessmentId] = useState('');
   const [data, setData] = useState(null);
   const [state, setState] = useState('loading');
   const [searchQuery, setSearchQuery] = useState('');
 
+  const displayedAssessments = useMemo(() => {
+    if (activeTab === 'booster') {
+      return assessments.filter((a) => a.is_booster);
+    }
+    return assessments.filter((a) => !a.is_booster);
+  }, [assessments, activeTab]);
+
   const loadAssessments = useCallback(async () => {
     try {
-      const list = await studentService.leaderboardAssessments();
+      const res = await studentService.leaderboardAssessments();
+      const list = Array.isArray(res) ? res : (res.assessments || []);
       setAssessments(list);
       return list;
     } catch {
@@ -178,10 +236,12 @@ export default function Leaderboard() {
     }
   }, []);
 
-  const loadLeaderboard = useCallback(async (id, force = false) => {
+  const loadLeaderboard = useCallback(async (id, force = false, tabType = activeTab) => {
     setState('loading');
     try {
-      const params = id ? { assessment_id: id } : {};
+      const params = {};
+      if (id) params.assessment_id = id;
+      if (tabType === 'booster') params.type = 'booster';
       const result = await studentService.leaderboard(params, force);
       setData(result);
       if (result.assessment_id) {
@@ -191,19 +251,29 @@ export default function Leaderboard() {
     } catch {
       setState('error');
     }
-  }, []);
+  }, [activeTab]);
 
   useEffect(() => {
     (async () => {
       await loadAssessments();
-      await loadLeaderboard();
+      const currentTab = searchParams.get('tab') === 'booster' ? 'booster' : 'standard';
+      const initialAssId = searchParams.get('assessment_id') || undefined;
+      await loadLeaderboard(initialAssId, false, currentTab);
     })();
   }, []);
+
+  const handleTabChange = (newTab) => {
+    if (newTab === activeTab) return;
+    setActiveTab(newTab);
+    setSearchQuery('');
+    setSearchParams(newTab === 'booster' ? { tab: 'booster' } : {});
+    loadLeaderboard(undefined, true, newTab);
+  };
 
   const handleAssessmentChange = (id) => {
     setAssessmentId(String(id));
     setSearchQuery('');
-    loadLeaderboard(id || undefined, true);
+    loadLeaderboard(id, true, activeTab);
   };
 
   const rows = data?.leaderboard || [];
@@ -249,28 +319,80 @@ export default function Leaderboard() {
   };
 
   if (state === 'loading' && !data) return <LoadingScreen label="Loading rankings..." />;
-  if (state === 'error') return <ErrorState onRetry={() => loadLeaderboard(assessmentId || undefined)} />;
+  if (state === 'error') return <ErrorState onRetry={() => loadLeaderboard(assessmentId || undefined, true, activeTab)} />;
+
+  const isBoosterView = activeTab === 'booster';
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-4">
-        <div>
-          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Student Leaderboard</h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Recognizing top academic performers. Percentile rankings computed per assessment.
+      {/* 1. HEADER & CONTROLS BANNER */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-5">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              {isBoosterView ? 'EDVEDUM Booster Leaderboard' : 'Student Leaderboard'}
+            </h1>
+            {isBoosterView ? (
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wide bg-amber-500/10 text-amber-500 border border-amber-500/30 flex items-center gap-1">
+                <Zap className="w-3 h-3 fill-current" /> EDVEDUM Booster Drills
+              </span>
+            ) : (
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wide bg-blue-500/10 text-blue-500 border border-blue-500/30">
+                Official CBT Benchmark
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            {isBoosterView
+              ? 'Recognizing top performers across EDVEDUM Booster Tests. High-speed drill rankings and benchmark performance.'
+              : 'Recognizing top academic performers across your test series. Percentile rankings computed per assessment.'}
           </p>
         </div>
 
-        {assessments.length > 0 && (
-          <CustomAssessmentDropdown
-            assessments={assessments}
-            value={assessmentId}
-            onChange={handleAssessmentChange}
-          />
-        )}
+        {/* CONTROLS: Mode Selector + ONLY ONE Clean Assessment Dropdown */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          {/* Segmented Mode Tabs */}
+          <div className="inline-flex items-center p-1 bg-slate-100 dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl shrink-0">
+            <button
+              type="button"
+              onClick={() => handleTabChange('standard')}
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                !isBoosterView
+                  ? 'bg-white dark:bg-blue-600 text-slate-900 dark:text-white shadow-xs'
+                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+              }`}
+            >
+              <Award className={`w-3.5 h-3.5 ${!isBoosterView ? 'text-blue-600 dark:text-white' : 'text-slate-400'}`} />
+              <span>Test Series</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleTabChange('booster')}
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                isBoosterView
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xs'
+                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+              }`}
+            >
+              <Zap className={`w-3.5 h-3.5 fill-current ${isBoosterView ? 'text-white' : 'text-amber-500'}`} />
+              <span>EDVEDUM Booster</span>
+            </button>
+          </div>
+
+          {/* SINGLE Assessment Dropdown */}
+          {displayedAssessments.length > 0 && (
+            <CustomAssessmentDropdown
+              assessments={displayedAssessments}
+              value={assessmentId}
+              onChange={handleAssessmentChange}
+              isBooster={isBoosterView}
+            />
+          )}
+        </div>
       </div>
 
-      {/* 1. STATS BANNER (Total Candidates removed per user request) */}
+      {/* 2. STATS BANNER */}
       {rows.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
@@ -285,7 +407,7 @@ export default function Leaderboard() {
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Your Rank</p>
             {yourRankDetails?.exactRank != null ? (
               <div className="flex items-baseline gap-2 flex-wrap">
-                <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">
+                <p className={`text-2xl font-extrabold ${isBoosterView ? 'text-amber-500' : 'text-blue-600 dark:text-blue-400'}`}>
                   #{yourRankDetails.exactRank.toLocaleString()}
                 </p>
                 <span className="text-xs font-bold text-slate-400">
@@ -293,7 +415,7 @@ export default function Leaderboard() {
                 </span>
               </div>
             ) : (
-              <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">
+              <p className={`text-2xl font-extrabold ${isBoosterView ? 'text-amber-500' : 'text-blue-600 dark:text-blue-400'}`}>
                 Unranked
               </p>
             )}
@@ -301,18 +423,43 @@ export default function Leaderboard() {
         </div>
       )}
 
+      {/* 3. RANKINGS OR EMPTY STATE */}
       {rows.length === 0 ? (
-        <EmptyState
-          title="No rankings available yet"
-          message="Complete this test series or mock assessment to earn your spot on the leaderboard."
-        />
+        <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 text-center space-y-4 shadow-xs">
+          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mx-auto ${
+            isBoosterView ? 'bg-amber-500/10 text-amber-500' : 'bg-blue-500/10 text-blue-500'
+          }`}>
+            {isBoosterView ? <Zap className="w-6 h-6 fill-current" /> : <Award className="w-6 h-6" />}
+          </div>
+          <div className="space-y-1">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              {isBoosterView ? 'No booster rankings available yet' : 'No rankings available yet'}
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+              {isBoosterView
+                ? 'Be the first to complete this EDVEDUM Booster Test to earn your rank and set the benchmark speed!'
+                : 'Complete this test series assessment or mock test to earn your spot on the leaderboard.'}
+            </p>
+          </div>
+          {isBoosterView && (
+            <Link
+              to="/candidate/booster-tests"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white transition shadow-xs"
+            >
+              <Zap className="w-3.5 h-3.5 fill-current" />
+              Go to EDVEDUM Booster Tests
+            </Link>
+          )}
+        </div>
       ) : (
         <>
-          {/* 2. ALL CANDIDATE RANKINGS TABLE WITH EXACT RANK IN BETWEEN THE RANK */}
+          {/* ALL CANDIDATE RANKINGS TABLE */}
           <div className="saas-card overflow-hidden bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3 p-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 dark:border-slate-800/60 pb-3">
               <div>
-                <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">All Candidate Rankings</h3>
+                <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">
+                  {isBoosterView ? 'EDVEDUM Booster Candidate Rankings' : 'All Candidate Rankings'}
+                </h3>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Showing {filteredRows.length} rankers sorted by score with exact ranks mapped to score ranges
                 </p>
@@ -325,7 +472,7 @@ export default function Leaderboard() {
                   placeholder="Search student name..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-lg border border-slate-200 bg-slate-50 py-1.5 pl-8 pr-3 text-xs font-medium text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 py-1.5 pl-8 pr-3 text-xs font-medium text-slate-900 placeholder-slate-400 focus:border-amber-500 focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-white"
                 />
               </div>
             </div>
@@ -350,43 +497,54 @@ export default function Leaderboard() {
                         key={r.attempt_id}
                         className={`transition-colors ${
                           r.is_you
-                            ? 'bg-blue-50/80 dark:bg-blue-950/40 font-bold'
-                            : 'hover:bg-slate-50/80 dark:hover:bg-slate-900/40'
+                            ? 'bg-blue-500/10 font-bold dark:bg-blue-500/15'
+                            : 'hover:bg-slate-50/70 dark:hover:bg-slate-800/40'
                         }`}
                       >
-                        <td className="px-3 py-2.5 font-bold text-slate-900 dark:text-white">
-                          <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className="font-black text-xs text-slate-900 dark:text-white">
-                              #{rankInfo.exactRank ? rankInfo.exactRank.toLocaleString() : (r.rank || '—')}
-                            </span>
-                            {rankInfo.rangeStr && rankInfo.rangeStr !== '—' && (
-                              <span className="text-[10.5px] font-semibold text-slate-400 dark:text-slate-500">
+                        <td className="px-3 py-2.5 whitespace-nowrap">
+                          {rankInfo.exactRank != null ? (
+                            <div className="flex flex-col">
+                              <span className="font-extrabold text-slate-900 dark:text-white">
+                                {rankInfo.display}
+                              </span>
+                              <span className="text-[10px] text-slate-400 dark:text-slate-500">
                                 ({rankInfo.rangeStr})
                               </span>
-                            )}
-                          </div>
+                            </div>
+                          ) : (
+                            <span className="text-slate-400 font-medium">Unranked</span>
+                          )}
                         </td>
-                        <td className="px-3 py-2.5 font-bold text-slate-900 dark:text-white">
+                        <td className="px-3 py-2.5">
                           <div className="flex items-center gap-2">
-                            <span className={`flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(r.name)} text-[10px] text-white font-bold shrink-0`}>
+                            <div
+                              className={`h-6 w-6 rounded-full bg-gradient-to-tr ${getAvatarGradient(
+                                r.name
+                              )} flex items-center justify-center text-[10px] font-bold text-white shrink-0`}
+                            >
                               {getAvatarInitials(r.name)}
-                            </span>
-                            <span className="truncate">
-                              {r.name} {r.is_you && <span className="text-blue-600 font-extrabold text-[10px]">(You)</span>}
+                            </div>
+                            <span className="font-medium text-slate-900 dark:text-white truncate">
+                              {r.name} {r.is_you && <span className="text-blue-500 font-bold">(You)</span>}
                             </span>
                           </div>
                         </td>
-                        <td className="px-3 py-2.5 text-slate-700 dark:text-slate-300 font-bold">
-                          {Number(r.marks_obtained).toFixed(2)} / {Number(r.total_marks || 720).toFixed(2)}
+                        <td className="px-3 py-2.5 text-slate-700 dark:text-slate-200 whitespace-nowrap">
+                          {Number(r.marks_obtained).toFixed(2)} / {Number(r.total_marks).toFixed(2)}
                         </td>
-                        <td className="px-3 py-2.5 font-extrabold text-slate-900 dark:text-white">
+                        <td className="px-3 py-2.5 text-slate-700 dark:text-slate-200 whitespace-nowrap">
                           {Number(r.percentage).toFixed(2)}%
                         </td>
-                        <td className="px-3 py-2.5 font-bold text-emerald-600 dark:text-emerald-400">
-                          {r.percentile != null ? `${Number(r.percentile).toFixed(2)}%ile` : '—'}
+                        <td className="px-3 py-2.5 text-slate-700 dark:text-slate-200 whitespace-nowrap">
+                          {r.percentile != null ? `${Number(r.percentile).toFixed(2)}%` : '—'}
                         </td>
-                        <td className="px-3 py-2.5 text-right text-slate-400 text-[10.5px]">
-                          {r.submitted_at ? new Date(r.submitted_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '—'}
+                        <td className="px-3 py-2.5 text-right text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                          {r.submitted_at
+                            ? new Date(r.submitted_at).toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                              })
+                            : '—'}
                         </td>
                       </tr>
                     );
@@ -396,14 +554,13 @@ export default function Leaderboard() {
             </div>
           </div>
 
-          {/* 3. COMPARE WITH TOPPER FEATURE */}
+          {/* 4. COMPARE WITH TOPPER FEATURE */}
           {(data?.topper_comparison || data?.topperComparison) && (
             <div className="pt-2">
               <CompareWithTopper
                 data={data?.topper_comparison || data?.topperComparison}
-                studentStats={data?.student_stats}
+                currentCandidateId={data?.student_stats?.candidate_id}
                 hasStudentAttempt={data?.your_rank != null || Boolean(data?.has_student_attempt) || Boolean(data?.topper_comparison?.has_student_attempt)}
-                assessmentId={assessmentId}
               />
             </div>
           )}

@@ -631,11 +631,14 @@ export const studentService = {
   },
   changePassword: (data) => api.post('/student/change-password', data).then((r) => r.data),
   leaderboard: (params, forceRefresh = false) => {
-    const key = `student_leaderboard_${params?.assessment_id || 'all'}`;
+    const key = `student_leaderboard_${params?.type || 'std'}_${params?.assessment_id || 'all'}`;
     if (forceRefresh) clearCache(key);
     return withCache(key, () => api.get('/student/leaderboard', { params }).then((r) => r.data));
   },
-  leaderboardAssessments: () => withCache('student_lb_assessments', () => api.get('/student/leaderboard/assessments').then((r) => r.data.assessments)),
+  leaderboardAssessments: (forceRefresh = false) => {
+    if (forceRefresh) clearCache('student_lb_assessments');
+    return withCache('student_lb_assessments', () => api.get('/student/leaderboard/assessments').then((r) => r.data.assessments || r.data));
+  },
   certificate: (attemptId) => api.get(`/student/certificates/${attemptId}`).then((r) => r.data),
   forum: (params) => api.get('/student/forum', { params }).then((r) => r.data),
   forumTopic: (id) => api.get(`/student/forum/${id}`).then((r) => r.data),

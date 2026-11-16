@@ -80,14 +80,47 @@ export const changePassword = asyncHandler(async (req, res) => {
 
 export const getLeaderboardAssessments = asyncHandler(async (_req, res) => {
   const result = await query(
-    `SELECT a.id, a.title, COUNT(DISTINCT at.id)::int AS attempt_count
+    `SELECT a.id, a.title, COUNT(DISTINCT at.id)::int AS attempt_count,
+            CASE 
+              WHEN COALESCE(a.test_type, t.test_type, '') ILIKE '%booster%'
+                OR (
+                  (COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%')
+                  AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE 'AI Booster%'
+                  AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%improvement%'
+                )
+                OR EXISTS (
+                  SELECT 1 FROM test_series ts
+                  JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
+                  WHERE tsa.assessment_id = a.id AND ts.exam_type ILIKE '%booster%'
+                )
+              THEN true
+              ELSE false
+            END AS is_booster,
+            COALESCE(
+              (
+                SELECT string_agg(DISTINCT ts.title, ', ')
+                FROM (
+                  SELECT test_series_id, assessment_id FROM test_series_assessments
+                  UNION
+                  SELECT series_id, test_id FROM test_series_tests
+                ) links
+                JOIN test_series ts ON ts.id = links.test_series_id
+                WHERE links.assessment_id = a.id
+              ),
+              ''
+            ) AS series_title
      FROM assessments a
-     JOIN attempts at ON at.assessment_id = a.id
-     JOIN scores s ON s.attempt_id = at.id
-     WHERE at.status IN ('submitted', 'auto_submitted')
-     GROUP BY a.id, a.title
-     ORDER BY a.title ASC`
+     LEFT JOIN tests t ON t.id = a.id
+     LEFT JOIN attempts at ON at.assessment_id = a.id AND at.status IN ('submitted', 'auto_submitted')
+     WHERE (a.is_published = true OR t.is_published = true OR t.status = 'published' OR at.id IS NOT NULL)
+       AND COALESCE(t.is_deleted, false) = false
+     GROUP BY a.id, a.title, a.test_type, t.test_type, t.title, t.test_name
+     ORDER BY 
+       CASE WHEN COUNT(DISTINCT at.id) > 0 THEN 0 ELSE 1 END ASC,
+       COUNT(DISTINCT at.id) DESC,
+       a.title ASC`
   );
+
   res.json({ assessments: result.rows });
 });
 
@@ -136,6 +169,7 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   let assessmentId = req.query.assessment_id ? Number(req.query.assessment_id) : null;
   const testSeriesId = req.query.test_series_id ? Number(req.query.test_series_id) : null;
+  const isBoosterRequested = req.query.type === 'booster' || req.query.is_booster === 'true';
 
   if (testSeriesId && !assessmentId) {
     const inSeries = await query(
@@ -154,27 +188,65 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
   }
 
   if (!assessmentId) {
-    const recent = await query(
-      `SELECT at.assessment_id
-       FROM attempts at
-       JOIN scores s ON s.attempt_id = at.id
-       WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
-       ORDER BY at.submitted_at DESC NULLS LAST
-       LIMIT 1`,
-      [userId]
-    );
-    if (recent.rowCount) {
-      assessmentId = recent.rows[0].assessment_id;
-    } else {
-      const any = await query(
+    if (isBoosterRequested) {
+      const recentBooster = await query(
         `SELECT at.assessment_id
          FROM attempts at
+         JOIN assessments a ON a.id = at.assessment_id
+         LEFT JOIN tests t ON t.id = a.id
          JOIN scores s ON s.attempt_id = at.id
-         WHERE at.status IN ('submitted', 'auto_submitted')
+         WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
+           AND (
+             COALESCE(a.test_type, t.test_type, '') ILIKE '%booster%'
+             OR COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%'
+           )
          ORDER BY at.submitted_at DESC NULLS LAST
-         LIMIT 1`
+         LIMIT 1`,
+        [userId]
       );
-      assessmentId = any.rows[0]?.assessment_id ?? null;
+      if (recentBooster.rowCount) {
+        assessmentId = recentBooster.rows[0].assessment_id;
+      } else {
+        const anyBooster = await query(
+          `SELECT a.id AS assessment_id
+           FROM assessments a
+           LEFT JOIN tests t ON t.id = a.id
+           WHERE (
+             COALESCE(a.test_type, t.test_type, '') ILIKE '%booster%'
+             OR COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%'
+           ) AND (a.is_published = true OR t.is_published = true OR t.status = 'published')
+           ORDER BY a.id DESC
+           LIMIT 1`
+        );
+        assessmentId = anyBooster.rows[0]?.assessment_id ?? null;
+      }
+    } else {
+      const recent = await query(
+        `SELECT at.assessment_id
+         FROM attempts at
+         JOIN assessments a ON a.id = at.assessment_id
+         LEFT JOIN tests t ON t.id = a.id
+         JOIN scores s ON s.attempt_id = at.id
+         WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
+           AND COALESCE(a.test_type, t.test_type, '') NOT ILIKE '%booster%'
+           AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%booster%'
+         ORDER BY at.submitted_at DESC NULLS LAST
+         LIMIT 1`,
+        [userId]
+      );
+      if (recent.rowCount) {
+        assessmentId = recent.rows[0].assessment_id;
+      } else {
+        const any = await query(
+          `SELECT at.assessment_id
+           FROM attempts at
+           JOIN scores s ON s.attempt_id = at.id
+           WHERE at.status IN ('submitted', 'auto_submitted')
+           ORDER BY at.submitted_at DESC NULLS LAST
+           LIMIT 1`
+        );
+        assessmentId = any.rows[0]?.assessment_id ?? null;
+      }
     }
   }
 
@@ -182,6 +254,7 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
     return res.json({
       assessment_id: null,
       assessment_title: null,
+      is_booster: isBoosterRequested,
       your_rank: null,
       your_predicted_rank: null,
       leaderboard: [],
@@ -192,7 +265,28 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
     });
   }
 
-  const assessmentRes = await query('SELECT id, title FROM assessments WHERE id = $1', [assessmentId]);
+  const assessmentRes = await query(
+    `SELECT a.id, a.title,
+            CASE 
+              WHEN COALESCE(a.test_type, t.test_type, '') ILIKE '%booster%'
+                OR (
+                  (COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%')
+                  AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE 'AI Booster%'
+                  AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%improvement%'
+                )
+                OR EXISTS (
+                  SELECT 1 FROM test_series ts
+                  JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
+                  WHERE tsa.assessment_id = a.id AND ts.exam_type ILIKE '%booster%'
+                )
+              THEN true
+              ELSE false
+            END AS is_booster
+     FROM assessments a
+     LEFT JOIN tests t ON t.id = a.id
+     WHERE a.id = $1`,
+    [assessmentId]
+  );
   const assessment = assessmentRes.rows[0];
   if (!assessment) throw ApiError.notFound('Assessment not found');
 
@@ -266,6 +360,7 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
   res.json({
     assessment_id: assessment.id,
     assessment_title: assessment.title,
+    is_booster: Boolean(assessment.is_booster),
     your_rank: yourRow?.rank ?? null,
     your_exact_rank: yourExactRank,
     your_predicted_rank: yourPredRank,
