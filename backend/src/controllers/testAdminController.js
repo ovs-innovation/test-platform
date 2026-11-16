@@ -3,53 +3,118 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { isNeetTest, resolveQuestionNeetMeta, normalizeNeetAssessmentPayload } from '../utils/neetPattern.js';
 import { invalidateExamPaperCache } from '../services/examCacheService.js';
+import { sendEmail } from '../utils/email.js';
 
-export async function sendStudentAssignmentNotifications(testId, testName, assigned_to_type, assigned_to_id) {
+export async function sendStudentAssignmentNotifications(testId, testName, assigned_to_type, assigned_to_id, options = {}) {
   try {
+    const { sendEmailNotification = true, customMessage = null } = options;
     const notifTitle = `New Test Assigned: ${testName}`;
     const isBoosterTest = (testName || '').toLowerCase().includes('booster');
-    const notifBody = isBoosterTest
+    const notifBody = customMessage || (isBoosterTest
       ? `A new EDVEDUM Booster Test "${testName}" has been assigned to your portal. Go to EDVEDUM Booster Test to start!`
-      : `A new test "${testName}" has been assigned to your portal. Go to My Tests to start!`;
+      : `A new test "${testName}" has been assigned to your portal. Go to My Tests to start!`);
 
-    let targetStudentIds = [];
+    let targetStudents = [];
 
     if ((assigned_to_type === 'individual' || assigned_to_type === 'student') && assigned_to_id) {
-      targetStudentIds = [Number(assigned_to_id)];
+      const res = await query(
+        `SELECT id, email, name FROM users WHERE id = $1 AND role = 'candidate'`,
+        [Number(assigned_to_id)]
+      );
+      targetStudents = res.rows;
     } else if (assigned_to_type === 'test_series' && assigned_to_id) {
-      const seriesStudents = await query(
-        `SELECT DISTINCT user_id FROM student_enrollments WHERE test_series_id = $1 AND status = 'active' AND (expires_at IS NULL OR expires_at > NOW())`,
+      const res = await query(
+        `SELECT DISTINCT u.id, u.email, u.name 
+         FROM student_enrollments se 
+         JOIN users u ON u.id = se.user_id 
+         WHERE se.test_series_id = $1 
+           AND se.status = 'active' 
+           AND (se.expires_at IS NULL OR se.expires_at > NOW())
+           AND u.role = 'candidate'`,
         [assigned_to_id]
       );
-      targetStudentIds = seriesStudents.rows.map((s) => s.user_id);
+      targetStudents = res.rows;
     } else if (assigned_to_type === 'batch' && assigned_to_id) {
-      const batchStudents = await query(
-        'SELECT id FROM users WHERE batch_id = $1 AND role = $2',
-        [assigned_to_id, 'candidate']
+      const res = await query(
+        `SELECT id, email, name FROM users WHERE batch_id = $1 AND role = 'candidate'`,
+        [assigned_to_id]
       );
-      targetStudentIds = batchStudents.rows.map((s) => s.id);
+      targetStudents = res.rows;
     } else if (assigned_to_type === 'institution' && assigned_to_id) {
-      const instStudents = await query(
-        'SELECT id FROM users WHERE institution_id = $1 AND role = $2',
-        [assigned_to_id, 'candidate']
+      const res = await query(
+        `SELECT id, email, name FROM users WHERE institution_id = $1 AND role = 'candidate'`,
+        [assigned_to_id]
       );
-      targetStudentIds = instStudents.rows.map((s) => s.id);
+      targetStudents = res.rows;
     } else if (assigned_to_type === 'all') {
-      const allStudents = await query(
-        'SELECT id FROM users WHERE role = $1',
-        ['candidate']
+      const res = await query(
+        `SELECT id, email, name FROM users WHERE role = 'candidate'`
       );
-      targetStudentIds = allStudents.rows.map((s) => s.id);
+      targetStudents = res.rows;
     }
 
-    const uniqueIds = Array.from(new Set(targetStudentIds.filter((id) => id && !isNaN(Number(id)))));
+    const uniqueStudents = [];
+    const seen = new Set();
+    for (const s of targetStudents) {
+      if (s.id && !seen.has(s.id)) {
+        seen.add(s.id);
+        uniqueStudents.push(s);
+      }
+    }
 
-    for (const sid of uniqueIds) {
+    // 1. In-app notifications
+    for (const s of uniqueStudents) {
       await query(
         `INSERT INTO notifications (user_id, title, body, type, created_at)
          VALUES ($1, $2, $3, 'test_assigned', NOW())`,
-        [sid, notifTitle, notifBody]
+        [s.id, notifTitle, notifBody]
       ).catch(() => { });
+    }
+
+    // 2. Email dispatch to targeted enrolled students
+    if (sendEmailNotification && uniqueStudents.length > 0) {
+      const testDetailsRes = await query(
+        `SELECT test_name, test_date, start_time, end_time, duration_minutes, max_marks FROM tests WHERE id = $1`,
+        [testId]
+      );
+      const testInfo = testDetailsRes.rows[0] || {};
+
+      for (const s of uniqueStudents) {
+        if (s.email) {
+          try {
+            await sendEmail({
+              to: s.email,
+              subject: notifTitle,
+              html: `
+                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
+                  <div style="border-bottom: 2px solid #2563eb; padding-bottom: 12px; margin-bottom: 16px;">
+                    <h2 style="color: #0f172a; margin: 0; font-size: 20px;">EDVEDUM Academy</h2>
+                  </div>
+                  <p style="font-size: 14px; color: #334155;">Hello <strong>${s.name || 'Student'}</strong>,</p>
+                  <p style="font-size: 14px; color: #334155; line-height: 1.6;">${notifBody}</p>
+                  
+                  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin: 18px 0;">
+                    <p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Test Name:</strong> ${testInfo.test_name || testName}</p>
+                    ${testInfo.test_date ? `<p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Scheduled Date:</strong> ${testInfo.test_date}</p>` : ''}
+                    ${testInfo.start_time ? `<p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Timings:</strong> ${testInfo.start_time} - ${testInfo.end_time || ''}</p>` : ''}
+                    ${testInfo.duration_minutes ? `<p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Duration:</strong> ${testInfo.duration_minutes} Minutes</p>` : ''}
+                    ${testInfo.max_marks ? `<p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Max Marks:</strong> ${testInfo.max_marks}</p>` : ''}
+                  </div>
+
+                  <p style="font-size: 13px; color: #64748b; line-height: 1.5;">Please log in to your student portal to attempt this test.</p>
+                  <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 12px; font-size: 12px; color: #94a3b8;">
+                    Best regards,<br>
+                    <strong>EDVEDUM Examination Team</strong>
+                  </div>
+                </div>
+              `,
+              text: `Hello ${s.name || 'Student'},\n\n${notifBody}\n\nTest: ${testInfo.test_name || testName}\nDuration: ${testInfo.duration_minutes || ''} Mins\n\nPlease log in to your student portal to attempt this test.\n\nEDVEDUM Examination Team`
+            });
+          } catch (emailErr) {
+            console.warn('Assignment notification email failed for', s.email, emailErr.message);
+          }
+        }
+      }
     }
   } catch (err) {
     console.error('Failed to deliver candidate notifications for test assignment:', err.message);
@@ -123,7 +188,6 @@ export async function notifyStudentsAboutTestEbook(testId, testName, ebookId) {
   }
 }
 import { saveUploadedFile } from '../middleware/upload.js';
-import { sendEmail } from '../utils/email.js';
 import { delCache } from '../config/redis.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions, parseAnswerKeyOnly, parseAnswerKeyAndSolutions } from '../utils/pdfQuestionParser.js';
@@ -240,7 +304,64 @@ export const listTests = asyncHandler(async (req, res) => {
       t.*,
       eb.title AS ebook_title,
       COUNT(DISTINCT ta.id)::int AS total_attempts,
-      COUNT(DISTINCT ta.id) FILTER (WHERE ta.submitted_at IS NOT NULL)::int AS completed_attempts
+      COUNT(DISTINCT ta.id) FILTER (WHERE ta.submitted_at IS NOT NULL)::int AS completed_attempts,
+      COALESCE(
+        (
+          SELECT ts.title 
+          FROM test_assignments ta2
+          JOIN test_series ts ON ts.id = ta2.assigned_to_id
+          WHERE ta2.test_id = t.id AND ta2.assigned_to_type = 'test_series'
+          LIMIT 1
+        ),
+        (
+          SELECT ts.title
+          FROM test_series_assessments tsa
+          JOIN test_series ts ON ts.id = tsa.test_series_id
+          WHERE tsa.assessment_id = t.id
+          LIMIT 1
+        ),
+        (
+          SELECT ts.title
+          FROM test_series_tests tst
+          JOIN test_series ts ON ts.id = tst.series_id
+          WHERE tst.test_id = t.id
+          LIMIT 1
+        )
+      ) AS linked_test_series_title,
+      COALESCE(
+        (
+          SELECT ta2.assigned_to_id 
+          FROM test_assignments ta2
+          WHERE ta2.test_id = t.id AND ta2.assigned_to_type = 'test_series'
+          LIMIT 1
+        ),
+        (
+          SELECT tsa.test_series_id
+          FROM test_series_assessments tsa
+          WHERE tsa.assessment_id = t.id
+          LIMIT 1
+        ),
+        (
+          SELECT tst.series_id
+          FROM test_series_tests tst
+          WHERE tst.test_id = t.id
+          LIMIT 1
+        )
+      ) AS linked_test_series_id,
+      (
+        SELECT ta2.assigned_to_type
+        FROM test_assignments ta2
+        WHERE ta2.test_id = t.id
+        ORDER BY ta2.id DESC
+        LIMIT 1
+      ) AS assigned_to_type,
+      (
+        SELECT ta2.assigned_to_id
+        FROM test_assignments ta2
+        WHERE ta2.test_id = t.id
+        ORDER BY ta2.id DESC
+        LIMIT 1
+      ) AS assigned_to_id
     FROM tests t
     LEFT JOIN ebooks eb ON eb.id = t.recommended_ebook_id
     LEFT JOIN test_attempts ta ON ta.test_id = t.id
@@ -355,7 +476,30 @@ export const createTest = asyncHandler(async (req, res) => {
          VALUES ($1, $2, $3)`,
         [createdTest.id, assigned_to_type, assigned_to_id || null]
       );
-      sendStudentAssignmentNotifications(createdTest.id, createdTest.test_name || createdTest.title || 'Test', assigned_to_type, assigned_to_id).catch(() => { });
+
+      if (assigned_to_type === 'test_series' && assigned_to_id) {
+        await client.query(
+          `INSERT INTO test_series_assessments (test_series_id, assessment_id, position)
+           VALUES ($1, $2, (SELECT COALESCE(MAX(position), 0) + 1 FROM test_series_assessments WHERE test_series_id = $1))
+           ON CONFLICT DO NOTHING`,
+          [assigned_to_id, createdTest.id]
+        ).catch(() => {});
+
+        await client.query(
+          `INSERT INTO test_series_tests (series_id, test_id)
+           VALUES ($1, $2)
+           ON CONFLICT DO NOTHING`,
+          [assigned_to_id, createdTest.id]
+        ).catch(() => {});
+      }
+
+      sendStudentAssignmentNotifications(
+        createdTest.id,
+        createdTest.test_name || createdTest.title || 'Test',
+        assigned_to_type,
+        assigned_to_id,
+        { sendEmailNotification: req.body.notify_enrolled !== false }
+      ).catch(() => { });
     }
 
     // Sync into assessments table to ensure immediate compatibility across editor and CBT views
@@ -683,8 +827,30 @@ export const assignTest = asyncHandler(async (req, res) => {
     }
   }
 
+  if (assigned_to_type === 'test_series' && assigned_to_id) {
+    await query(
+      `INSERT INTO test_series_assessments (test_series_id, assessment_id, position)
+       VALUES ($1, $2, (SELECT COALESCE(MAX(position), 0) + 1 FROM test_series_assessments WHERE test_series_id = $1))
+       ON CONFLICT DO NOTHING`,
+      [assigned_to_id, id]
+    ).catch(() => {});
+
+    await query(
+      `INSERT INTO test_series_tests (series_id, test_id)
+       VALUES ($1, $2)
+       ON CONFLICT DO NOTHING`,
+      [assigned_to_id, id]
+    ).catch(() => {});
+  }
+
   // Deliver notifications to all targeted candidates
-  await sendStudentAssignmentNotifications(id, testName, assigned_to_type, assigned_to_id);
+  await sendStudentAssignmentNotifications(
+    id,
+    testName,
+    assigned_to_type,
+    assigned_to_id,
+    { sendEmailNotification: req.body.send_notification !== false }
+  );
 
   const testFull = await query('SELECT recommended_ebook_id FROM tests WHERE id = $1', [id]);
   if (testFull.rows[0]?.recommended_ebook_id) {
@@ -1989,50 +2155,172 @@ export const getTestParticipation = asyncHandler(async (req, res) => {
  */
 export const notifyTestReminder = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { custom_message } = req.body;
+  const { 
+    custom_message,
+    target_type = 'auto',  // 'test_series' | 'auto' | 'individual' | 'all'
+    test_series_id,
+    student_id,
+    send_email = true
+  } = req.body;
 
   const testRes = await query('SELECT * FROM tests WHERE id = $1', [id]);
   if (testRes.rowCount === 0) throw ApiError.notFound('Test not found');
 
   const test = testRes.rows[0];
 
-  // Fetch all candidate users to notify
-  const candidatesRes = await query("SELECT id, email, name FROM users WHERE role = 'candidate'");
-  const candidates = candidatesRes.rows;
+  let candidates = [];
+  let targetLabel = '';
+
+  if (target_type === 'test_series' && test_series_id) {
+    const tsRes = await query('SELECT title FROM test_series WHERE id = $1', [test_series_id]);
+    const tsTitle = tsRes.rows[0]?.title || `Test Series #${test_series_id}`;
+    targetLabel = `Test Series: "${tsTitle}"`;
+
+    const candidatesRes = await query(
+      `SELECT DISTINCT u.id, u.email, u.name 
+       FROM student_enrollments se 
+       JOIN users u ON u.id = se.user_id 
+       WHERE se.test_series_id = $1 
+         AND se.status = 'active' 
+         AND (se.expires_at IS NULL OR se.expires_at > NOW())
+         AND u.role = 'candidate'`,
+      [test_series_id]
+    );
+    candidates = candidatesRes.rows;
+  } else if (target_type === 'individual' && student_id) {
+    targetLabel = `Candidate #${student_id}`;
+    const candidatesRes = await query(
+      `SELECT id, email, name FROM users WHERE id = $1 AND role = 'candidate'`,
+      [student_id]
+    );
+    candidates = candidatesRes.rows;
+  } else if (target_type === 'auto') {
+    // Check if test is linked to any test series
+    const linkedSeriesRes = await query(
+      `SELECT DISTINCT ts.id, ts.title
+       FROM test_series ts
+       WHERE ts.id IN (
+         SELECT test_series_id FROM test_series_assessments WHERE assessment_id = $1
+         UNION
+         SELECT series_id FROM test_series_tests WHERE test_id = $1
+         UNION
+         SELECT assigned_to_id FROM test_assignments WHERE test_id = $1 AND assigned_to_type = 'test_series'
+       )`,
+      [id]
+    );
+
+    if (linkedSeriesRes.rowCount > 0) {
+      const seriesIds = linkedSeriesRes.rows.map((r) => r.id);
+      const seriesTitles = linkedSeriesRes.rows.map((r) => r.title).join(', ');
+      targetLabel = `Test Series: "${seriesTitles}"`;
+
+      const candidatesRes = await query(
+        `SELECT DISTINCT u.id, u.email, u.name 
+         FROM student_enrollments se 
+         JOIN users u ON u.id = se.user_id 
+         WHERE se.test_series_id = ANY($1::int[])
+           AND se.status = 'active' 
+           AND (se.expires_at IS NULL OR se.expires_at > NOW())
+           AND u.role = 'candidate'`,
+        [seriesIds]
+      );
+      candidates = candidatesRes.rows;
+    } else {
+      // Check if assigned to individual
+      const assignedIndividual = await query(
+        `SELECT assigned_to_id FROM test_assignments WHERE test_id = $1 AND assigned_to_type IN ('individual', 'student')`,
+        [id]
+      );
+      if (assignedIndividual.rowCount > 0) {
+        const studentIds = assignedIndividual.rows.map((r) => r.assigned_to_id);
+        targetLabel = `Assigned Candidate #${studentIds.join(', #')}`;
+        const candidatesRes = await query(
+          `SELECT id, email, name FROM users WHERE id = ANY($1::int[]) AND role = 'candidate'`,
+          [studentIds]
+        );
+        candidates = candidatesRes.rows;
+      } else {
+        targetLabel = 'All Registered Students';
+        const candidatesRes = await query("SELECT id, email, name FROM users WHERE role = 'candidate'");
+        candidates = candidatesRes.rows;
+      }
+    }
+  } else {
+    // 'all'
+    targetLabel = 'All Registered Students';
+    const candidatesRes = await query("SELECT id, email, name FROM users WHERE role = 'candidate'");
+    candidates = candidatesRes.rows;
+  }
+
+  if (candidates.length === 0) {
+    return res.json({
+      message: `No active enrolled candidates found for ${targetLabel}. No notifications were sent.`,
+      notified_count: 0,
+      emails_sent: 0,
+      target: targetLabel
+    });
+  }
 
   const title = `Reminder: ${test.test_name}`;
-  const body = custom_message || `Your test "${test.test_name}" is scheduled for ${test.test_date} from ${test.start_time} to ${test.end_time}. Please log in on time!`;
+  const isBoosterTest = (test.test_name || '').toLowerCase().includes('booster');
+  const portalPath = isBoosterTest ? 'EDVEDUM Booster Test' : 'My Tests';
+  const body = custom_message || `Your test "${test.test_name}" is scheduled for ${test.test_date || 'immediate access'}. Please log in to your student portal to attempt your test!`;
 
   // 1. Insert Dashboard Notifications
   for (const c of candidates) {
     await query(
-      `INSERT INTO notifications (user_id, title, body, type) VALUES ($1, $2, $3, 'test_reminder')`,
+      `INSERT INTO notifications (user_id, title, body, type, created_at) VALUES ($1, $2, $3, 'test_reminder', NOW())`,
       [c.id, title, body]
-    );
+    ).catch(() => {});
   }
 
-  // 2. Email dispatch via Resend sendEmail utility
+  // 2. Email dispatch via sendEmail utility
   let emailsSent = 0;
-  for (const c of candidates) {
-    if (c.email) {
-      try {
-        await sendEmail({
-          to: c.email,
-          subject: title,
-          html: `<p>Hello ${c.name || 'Student'},</p><p>${body}</p><p>Good luck!<br>EDVEDUM Team</p>`,
-          text: `Hello ${c.name || 'Student'},\n\n${body}\n\nGood luck!\nEDVEDUM Team`,
-        });
-        emailsSent++;
-      } catch (err) {
-        console.warn('Test notification email dispatch error:', err.message);
+  if (send_email) {
+    for (const c of candidates) {
+      if (c.email) {
+        try {
+          await sendEmail({
+            to: c.email,
+            subject: title,
+            html: `
+              <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
+                <div style="border-bottom: 2px solid #2563eb; padding-bottom: 12px; margin-bottom: 16px;">
+                  <h2 style="color: #0f172a; margin: 0; font-size: 20px;">EDVEDUM Academy</h2>
+                </div>
+                <p style="font-size: 14px; color: #334155;">Hello <strong>${c.name || 'Student'}</strong>,</p>
+                <p style="font-size: 14px; color: #334155; line-height: 1.6;">${body}</p>
+                
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin: 18px 0;">
+                  <p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Test Name:</strong> ${test.test_name}</p>
+                  ${test.test_date ? `<p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Scheduled Date:</strong> ${test.test_date}</p>` : ''}
+                  ${test.start_time ? `<p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Timings:</strong> ${test.start_time} - ${test.end_time || ''}</p>` : ''}
+                  ${test.duration_minutes ? `<p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Duration:</strong> ${test.duration_minutes} Minutes</p>` : ''}
+                  ${test.max_marks ? `<p style="margin: 4px 0; font-size: 13px; color: #475569;"><strong>Max Marks:</strong> ${test.max_marks}</p>` : ''}
+                </div>
+
+                <p style="font-size: 13px; color: #64748b; line-height: 1.5;">Please log in to your student portal (${portalPath}) to start your test on time.</p>
+                <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 12px; font-size: 12px; color: #94a3b8;">
+                  Best regards,<br>
+                  <strong>EDVEDUM Examination Team</strong>
+                </div>
+              </div>
+            `,
+            text: `Hello ${c.name || 'Student'},\n\n${body}\n\nTest: ${test.test_name}\nDate: ${test.test_date || 'Now Available'}\nTimings: ${test.start_time || ''} - ${test.end_time || ''}\nDuration: ${test.duration_minutes || ''} Mins\n\nPlease log in to ${portalPath} on your student portal.\n\nEDVEDUM Examination Team`
+          });
+          emailsSent++;
+        } catch (err) {
+          console.warn('Test notification email dispatch error for', c.email, err.message);
+        }
       }
     }
   }
 
   res.json({
-    message: `Test reminder notification broadcasted to ${candidates.length} candidates.`,
-    dashboard_notifications_created: candidates.length,
-    emails_sent: emailsSent
+    message: `Test reminder sent to ${candidates.length} candidate(s) in ${targetLabel}. (${emailsSent} email(s) dispatched)`,
+    notified_count: candidates.length,
+    emails_sent: emailsSent,
+    target: targetLabel
   });
 });
 

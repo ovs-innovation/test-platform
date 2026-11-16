@@ -32,7 +32,8 @@ import {
   Trophy,
   Award,
   Eye,
-  Radio
+  Radio,
+  Mail
 } from 'lucide-react';
 import { isTestLive } from '../../lib/testStatus.js';
 
@@ -173,6 +174,7 @@ export default function AdminAssessments() {
       max_violations: 3,
       assigned_to_type: 'all',
       assigned_to_id: '',
+      notify_enrolled: true,
       syllabus: '',
       is_published: true,
       is_live: false,
@@ -202,6 +204,7 @@ export default function AdminAssessments() {
       max_violations: t.max_violations !== undefined && t.max_violations !== null ? Number(t.max_violations) : 3,
       assigned_to_type: t.assigned_to_type || 'all',
       assigned_to_id: t.assigned_to_id || '',
+      notify_enrolled: false,
       syllabus: t.syllabus || '',
       is_published: Boolean(t.is_published),
       is_live: Boolean(t.is_live),
@@ -217,6 +220,7 @@ export default function AdminAssessments() {
       const payload = {
         ...testForm,
         is_live: Boolean(testForm.is_live),
+        notify_enrolled: testForm.notify_enrolled !== false,
         max_marks: testForm.max_marks !== '' && testForm.max_marks !== null && !isNaN(Number(testForm.max_marks))
           ? Number(testForm.max_marks)
           : null,
@@ -232,6 +236,7 @@ export default function AdminAssessments() {
           await adminService.assignTest(editingTest.id, {
             assigned_to_type: testForm.assigned_to_type,
             assigned_to_id: testForm.assigned_to_type !== 'all' && testForm.assigned_to_id ? Number(testForm.assigned_to_id) : null,
+            send_notification: testForm.notify_enrolled !== false,
           }).catch(() => {});
         }
       } else {
@@ -240,6 +245,7 @@ export default function AdminAssessments() {
           await adminService.assignTest(created.test.id, {
             assigned_to_type: testForm.assigned_to_type,
             assigned_to_id: testForm.assigned_to_id ? Number(testForm.assigned_to_id) : null,
+            send_notification: testForm.notify_enrolled !== false,
           }).catch(() => {});
         }
       }
@@ -254,6 +260,10 @@ export default function AdminAssessments() {
 
   // Custom Notification Modal State
   const [notifyModalTest, setNotifyModalTest] = useState(null);
+  const [notifTargetType, setNotifTargetType] = useState('auto');
+  const [notifTestSeriesId, setNotifTestSeriesId] = useState('');
+  const [notifStudentId, setNotifStudentId] = useState('');
+  const [notifSendEmail, setNotifSendEmail] = useState(true);
   const [customNotifMsg, setCustomNotifMsg] = useState('');
   const [sendingNotif, setSendingNotif] = useState(false);
 
@@ -365,6 +375,21 @@ export default function AdminAssessments() {
     const testObj = typeof test === 'object' ? test : tests.find((t) => t.id === test);
     if (!testObj) return;
     setNotifyModalTest(testObj);
+
+    const seriesId = testObj.linked_test_series_id || (testObj.assigned_to_type === 'test_series' ? testObj.assigned_to_id : '');
+    if (seriesId) {
+      setNotifTargetType('test_series');
+      setNotifTestSeriesId(String(seriesId));
+    } else if (testObj.assigned_to_type === 'individual' && testObj.assigned_to_id) {
+      setNotifTargetType('individual');
+      setNotifStudentId(String(testObj.assigned_to_id));
+      setNotifTestSeriesId('');
+    } else {
+      setNotifTargetType('auto');
+      setNotifTestSeriesId('');
+    }
+
+    setNotifSendEmail(true);
     const defaultMsg = `Reminder: Your proctored test '${testObj?.test_name || 'Assessment'}' is scheduled. Please log in on time to start your exam.`;
     setCustomNotifMsg(defaultMsg);
   };
@@ -374,8 +399,14 @@ export default function AdminAssessments() {
     if (!notifyModalTest) return;
     setSendingNotif(true);
     try {
-      const res = await adminService.notifyTestReminder(notifyModalTest.id, customNotifMsg);
-      toast.success(res.message || 'Notification reminder sent to all enrolled candidates!');
+      const res = await adminService.notifyTestReminder(notifyModalTest.id, {
+        custom_message: customNotifMsg,
+        target_type: notifTargetType,
+        test_series_id: notifTargetType === 'test_series' && notifTestSeriesId ? Number(notifTestSeriesId) : undefined,
+        student_id: notifTargetType === 'individual' && notifStudentId ? Number(notifStudentId) : undefined,
+        send_email: notifSendEmail,
+      });
+      toast.success(res.message || 'Notification reminder sent to targeted students!');
       setNotifyModalTest(null);
     } catch (err) {
       toast.error(err.message || 'Notification failed');
@@ -1520,6 +1551,20 @@ export default function AdminAssessments() {
                 </label>
               </div>
 
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="notify_enrolled"
+                  checked={testForm.notify_enrolled !== false}
+                  onChange={(e) => setTestForm({ ...testForm, notify_enrolled: e.target.checked })}
+                  className="h-4 w-4 rounded border-blue-300 text-blue-600 focus:ring-blue-500"
+                />
+                <label htmlFor="notify_enrolled" className="font-extrabold text-blue-600 dark:text-blue-400 flex items-center gap-1.5 cursor-pointer text-xs">
+                  <BellRing className="w-3.5 h-3.5" />
+                  <span>Send in-app notification & email to enrolled students upon saving</span>
+                </label>
+              </div>
+
               <div className="flex justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
@@ -2297,18 +2342,18 @@ export default function AdminAssessments() {
         document.body
       )}
 
-      {/* 1. CLEAN NOTIFICATION REMINDER MODAL */}
+      {/* 1. TARGETED NOTIFICATION REMINDER MODAL */}
       {notifyModalTest && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="w-full max-w-lg rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f172a] p-6 space-y-5 shadow-2xl relative">
+          <div className="w-full max-w-lg rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f172a] p-6 space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3.5">
               <div className="flex items-center gap-3">
                 <div className="p-2.5 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
                   <BellRing className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Send Student Test Reminder</h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Broadcast custom push notice to all enrolled candidates.</p>
+                  <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Send Student Test Notification</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Deliver in-app push notice and email to targeted students.</p>
                 </div>
               </div>
               <button
@@ -2319,12 +2364,116 @@ export default function AdminAssessments() {
               </button>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">Target Assessment</span>
-              <p className="text-xs font-bold text-slate-900 dark:text-white">{notifyModalTest.test_name}</p>
+            {/* Target Test Details Card */}
+            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-1.5">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">Target Assessment</span>
+                {notifyModalTest.linked_test_series_title && (
+                  <span className="px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/60 text-[10.5px] font-bold">
+                    Series: {notifyModalTest.linked_test_series_title}
+                  </span>
+                )}
+              </div>
+              <p className="text-sm font-extrabold text-slate-900 dark:text-white">{notifyModalTest.test_name}</p>
+              <div className="flex items-center gap-3 text-[11px] text-slate-500 font-medium">
+                <span>{notifyModalTest.duration_minutes || 60} mins</span>
+                <span>•</span>
+                <span>{notifyModalTest.max_marks || 200} marks</span>
+                {notifyModalTest.test_date && (
+                  <>
+                    <span>•</span>
+                    <span>Date: {String(notifyModalTest.test_date).slice(0, 10)}</span>
+                  </>
+                )}
+              </div>
             </div>
 
             <form onSubmit={submitNotifyReminder} className="space-y-4 text-xs font-semibold">
+              {/* Audience Targeting Selection */}
+              <div className="space-y-1.5">
+                <label className="block text-slate-700 dark:text-slate-300 font-bold">Target Audience *</label>
+                <select
+                  value={notifTargetType}
+                  onChange={(e) => setNotifTargetType(e.target.value)}
+                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                >
+                  <option value="test_series">Enrolled Test Series Students (Specific Series)</option>
+                  <option value="auto">Auto-Detect Enrolled Students (From Test Links)</option>
+                  <option value="individual">Individual Student (By User ID)</option>
+                  <option value="all">All Platform Students (Broadcast)</option>
+                </select>
+              </div>
+
+              {/* Specific Test Series Picker */}
+              {notifTargetType === 'test_series' && (
+                <div className="space-y-1 p-3 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200/80 dark:border-blue-800/40">
+                  <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
+                    Select Target Test Series *
+                  </label>
+                  <select
+                    required
+                    value={notifTestSeriesId}
+                    onChange={(e) => setNotifTestSeriesId(e.target.value)}
+                    className="w-full rounded-xl border border-blue-300 dark:border-blue-700 bg-white dark:bg-slate-900 p-2.5 font-bold text-xs"
+                  >
+                    <option value="">-- Choose Test Series --</option>
+                    {testSeriesList.map((ts) => (
+                      <option key={ts.id} value={ts.id}>
+                        {ts.title} ({ts.exam_type || 'Test Series'})
+                      </option>
+                    ))}
+                  </select>
+                  <p className="text-[10.5px] text-blue-600 dark:text-blue-400 font-medium pt-1">
+                    ✓ Notification and email will ONLY be sent to students who are actively enrolled in this test series.
+                  </p>
+                </div>
+              )}
+
+              {/* Individual Student ID */}
+              {notifTargetType === 'individual' && (
+                <div className="space-y-1 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800">
+                  <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
+                    Student User ID *
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    placeholder="Enter Student User ID (e.g. 43)"
+                    value={notifStudentId}
+                    onChange={(e) => setNotifStudentId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-2 font-bold text-xs"
+                  />
+                </div>
+              )}
+
+              {/* Notification Channels */}
+              <div className="space-y-2 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+                <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-slate-500">Delivery Channels</span>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-1">
+                  <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-700 dark:text-slate-300">
+                    <input
+                      type="checkbox"
+                      checked
+                      disabled
+                      className="h-4 w-4 rounded border-slate-300 text-cyan-600 focus:ring-cyan-500 opacity-75"
+                    />
+                    <span>In-App Dashboard Notification</span>
+                  </label>
+
+                  <label className="flex items-center gap-2 cursor-pointer font-bold text-emerald-600 dark:text-emerald-400">
+                    <input
+                      type="checkbox"
+                      checked={notifSendEmail}
+                      onChange={(e) => setNotifSendEmail(e.target.checked)}
+                      className="h-4 w-4 rounded border-emerald-300 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>Send Email (via SMTP)</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Custom Message */}
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center">
                   <label className="block text-slate-700 dark:text-slate-300 font-bold">Custom Notification Message</label>
@@ -2346,7 +2495,7 @@ export default function AdminAssessments() {
                 <div className="flex flex-wrap gap-2">
                   <button
                     type="button"
-                    onClick={() => setCustomNotifMsg(`Reminder: Your proctored test '${notifyModalTest.test_name}' is scheduled. Please prepare your system.`)}
+                    onClick={() => setCustomNotifMsg(`Reminder: Your proctored test '${notifyModalTest.test_name}' is scheduled. Please prepare your system and log in on time.`)}
                     className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-[11px] font-bold hover:bg-cyan-500/10 hover:text-cyan-500 hover:border-cyan-500/30 transition cursor-pointer"
                   >
                     Default Schedule
@@ -2382,7 +2531,7 @@ export default function AdminAssessments() {
                   className="px-5 py-2.5 rounded-xl bg-cyan-600 text-white font-extrabold hover:bg-cyan-500 shadow-lg shadow-cyan-500/20 transition flex items-center gap-2 cursor-pointer"
                 >
                   {sendingNotif ? <Spinner className="h-4 w-4" /> : <Send className="h-4 w-4" />}
-                  <span>Send Notification</span>
+                  <span>{sendingNotif ? 'Sending...' : 'Send Notification & Email'}</span>
                 </button>
               </div>
             </form>

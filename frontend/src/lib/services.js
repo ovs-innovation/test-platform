@@ -859,7 +859,10 @@ export const adminService = {
   generateResults: (id) => api.post(`/admin/tests/${id}/generate-results`).then((r) => r.data),
   getTestParticipation: (id) => api.get(`/admin/tests/${id}/participation`).then((r) => r.data),
   setMissedTestOverride: (id, data) => api.post(`/admin/tests/${id}/missed-override`, data).then((r) => r.data.override),
-  notifyTestReminder: (id, custom_message) => api.post(`/admin/tests/${id}/notify`, { custom_message }).then((r) => r.data),
+  notifyTestReminder: (id, payload) => {
+    const body = typeof payload === 'string' ? { custom_message: payload } : (payload || {});
+    return api.post(`/admin/tests/${id}/notify`, body).then((r) => r.data);
+  },
   getTestSimulator: (id) => api.get(`/admin/tests/${id}/simulator`).then((r) => r.data),
   toggleLiveTest: (id) => api.patch(`/admin/tests/${id}/toggle-live`).then((r) => r.data),
   // Live Exam Technical Incidents Helpers
