@@ -22,6 +22,7 @@ import {
   markForReview,
   clearAnswer,
   submitAttempt,
+  getAttemptState,
 } from '../../src/controllers/attemptController.js';
 import {
   saveAnswerSchema,
@@ -254,6 +255,57 @@ describe('CBT Submission and Answer Recovery Reliability', () => {
       expect(retryResult.type).toBe('json');
       // Returns existing score without re-grading or error
       expect(retryResult.data.score.marks_obtained).toBe(180);
+    });
+
+    it('getAttemptState resolves without reference error and returns attempt state with liveMaxViolations', async () => {
+      query.mockImplementation((sql, params) => {
+        if (sql.includes('FROM attempts WHERE id = $1')) {
+          return Promise.resolve({
+            rows: [{ id: 653, assessment_id: 10, candidate_id: 1, status: 'in_progress', ends_at: new Date(Date.now() + 3600000).toISOString() }],
+          });
+        }
+        if (sql.includes('SELECT * FROM assessments WHERE id = $1')) {
+          return Promise.resolve({
+            rows: [{ id: 10, title: 'Sample Test', max_violations: 4 }],
+          });
+        }
+        if (sql.includes('SELECT max_violations, duration_minutes, title FROM assessments WHERE id = $1')) {
+          return Promise.resolve({
+            rows: [{ max_violations: 5, duration_minutes: 60, title: 'Sample Test' }],
+          });
+        }
+        if (sql.includes('SELECT institution_id FROM users WHERE id = $1')) {
+          return Promise.resolve({
+            rows: [{ institution_id: null }],
+          });
+        }
+        if (sql.includes('FROM assessment_sections')) {
+          return Promise.resolve({ rows: [] });
+        }
+        if (sql.includes('FROM questions')) {
+          return Promise.resolve({ rows: [] });
+        }
+        if (sql.includes('FROM answers WHERE attempt_id = $1')) {
+          return Promise.resolve({ rows: [] });
+        }
+        if (sql.includes('FROM coding_answers WHERE attempt_id = $1')) {
+          return Promise.resolve({ rows: [] });
+        }
+        if (sql.includes('FROM subjective_answers WHERE attempt_id = $1')) {
+          return Promise.resolve({ rows: [] });
+        }
+        return Promise.resolve({ rows: [] });
+      });
+
+      const req = {
+        params: { id: 653 },
+        user: { id: 1, role: 'candidate' },
+      };
+
+      const result = await callHandler(getAttemptState, req);
+      expect(result.type).toBe('json');
+      expect(result.data.attempt.id).toBe(653);
+      expect(result.data.assessment.max_violations).toBe(5);
     });
   });
 });

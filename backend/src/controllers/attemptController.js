@@ -628,7 +628,7 @@ export const getAttemptState = asyncHandler(async (req, res, next) => {
     throw ApiError.notFound('Assessment paper not found or unavailable');
   }
 
-  const [answersRes, codingRes, subjectiveRes, userInstRes] = await Promise.all([
+  const [answersRes, codingRes, subjectiveRes, userInstRes, liveAssessmentRes] = await Promise.all([
     query(
       'SELECT question_id, selected_index, selected_indices, marked_for_review, numeric_answer FROM answers WHERE attempt_id = $1',
       [id]
@@ -646,12 +646,12 @@ export const getAttemptState = asyncHandler(async (req, res, next) => {
   ]);
 
   let institutionObj = null;
-  const candInstId = userInstRes.rows[0]?.institution_id;
+  const candInstId = userInstRes?.rows?.[0]?.institution_id;
   if (candInstId) {
     institutionObj = await getOrSetCachedInstitution(candInstId);
   }
 
-  const liveMaxViolations = liveAssessmentRes.rows[0]?.max_violations !== undefined && liveAssessmentRes.rows[0]?.max_violations !== null
+  const liveMaxViolations = liveAssessmentRes?.rows?.[0]?.max_violations !== undefined && liveAssessmentRes?.rows?.[0]?.max_violations !== null
     ? Number(liveAssessmentRes.rows[0].max_violations)
     : (paper.assessment?.max_violations !== undefined && paper.assessment?.max_violations !== null ? Number(paper.assessment.max_violations) : 5);
 

@@ -75,12 +75,14 @@ export const recordAttemptMistakes = async (dbClientOrPool, attemptId, candidate
         `SELECT question_id, answer_text FROM subjective_answers WHERE attempt_id = $1`,
         [attemptId]
       ),
-      db.query(
-        `SELECT id, title, subject FROM assessments WHERE id = $1
-         UNION
-         SELECT id, COALESCE(test_name, title) AS title, subject FROM tests WHERE id = $1
-         LIMIT 1`,
-        [assessmentId]
+      Promise.resolve(
+        db.query(
+          `SELECT id, title, subject FROM assessments WHERE id = $1
+           UNION
+           SELECT id, COALESCE(test_name, title) AS title, subject FROM tests WHERE id = $1
+           LIMIT 1`,
+          [assessmentId]
+        )
       ).catch(() => ({ rows: [] }))
     ]);
 
