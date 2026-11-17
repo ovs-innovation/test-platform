@@ -153,8 +153,9 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
         answers: answersRes.rows,
         negEnabled,
         negPenalty,
+        assessment,
       });
-      totalMarks = neetEval.totalMarks; // 720
+      totalMarks = neetEval.totalMarks;
       marksObtained = neetEval.marksObtained;
       correctCount = neetEval.correctCount;
       wrongCount = neetEval.wrongCount;
@@ -275,11 +276,11 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       });
     }
 
-    const isNeetSubmit = isNeet;
+    const isFullNeetSubmit = isNeet && (totalMarks === 720 || questionsRes.rows.length >= 180);
     let initRank = null;
     let initPercentile = null;
     let initRankRange = null;
-    if (isNeetSubmit) {
+    if (isFullNeetSubmit) {
       const pred = predictNeetRank(marksObtained);
       initRank = pred.rank;
       initPercentile = pred.percentile;
@@ -1129,7 +1130,7 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   // Compute live ranking data: participant count, ranking availability, rank, percentile, ranking status
   const rankingData = await getAssessmentRankingData(attempt.assessment_id, attempt.candidate_id);
 
-  // Auto-correct any previously stored score that missed negative marking deduction
+  // Auto-correct any previously stored score that missed negative marking deduction or had hardcoded 720
   if (rawScore) {
     let correctedMarks = null;
     let correctedPercentage = null;
@@ -1141,26 +1142,40 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       const calculatedMarks = Math.max(0, (Number(rawScore.correct_count) * (isJee ? 4 : 4)) - (Number(rawScore.wrong_count) * negPenalty));
       if (Number(rawScore.marks_obtained) > calculatedMarks) {
         correctedMarks = calculatedMarks;
-        const total = Number(rawScore.total_marks) || 720;
+        const total = Number(rawScore.total_marks) || formattedReport?.overall?.totalMarks || 720;
         correctedPercentage = Number(((calculatedMarks / total) * 100).toFixed(2));
       }
     }
 
-    if (correctedMarks !== null && Number(rawScore.marks_obtained) !== Number(correctedMarks)) {
+    const resolvedTotalMarks = formattedReport?.neetBreakdown?.totalMarks || formattedReport?.overall?.totalMarks || Number(rawScore.total_marks);
+    const needTotalCorrection = resolvedTotalMarks > 0 && Number(rawScore.total_marks) !== Number(resolvedTotalMarks);
+
+    if (needTotalCorrection || (correctedMarks !== null && Number(rawScore.marks_obtained) !== Number(correctedMarks))) {
+      const finalMarks = correctedMarks !== null ? correctedMarks : Number(rawScore.marks_obtained);
+      const finalTotal = resolvedTotalMarks > 0 ? resolvedTotalMarks : Number(rawScore.total_marks);
+      const finalPct = finalTotal > 0 ? Number(((finalMarks / finalTotal) * 100).toFixed(2)) : 0;
       await query(
-        'UPDATE scores SET marks_obtained = $1, percentage = $2 WHERE id = $3',
-        [correctedMarks, correctedPercentage, rawScore.id]
+        'UPDATE scores SET marks_obtained = $1, total_marks = $2, percentage = $3 WHERE id = $4',
+        [finalMarks, finalTotal, finalPct, rawScore.id]
       );
-      rawScore.marks_obtained = correctedMarks;
-      rawScore.percentage = correctedPercentage;
+      rawScore.marks_obtained = finalMarks;
+      rawScore.total_marks = finalTotal;
+      rawScore.percentage = finalPct;
       if (formattedReport?.overall) {
-        formattedReport.overall.marks = Number(correctedMarks);
-        formattedReport.overall.percentage = Number(correctedPercentage);
+        formattedReport.overall.marks = Number(finalMarks);
+        formattedReport.overall.totalMarks = Number(finalTotal);
+        formattedReport.overall.percentage = Number(finalPct);
       }
     }
   }
 
-  if (isNeetAssessment && rankingData) {
+  const isFullNeet = isNeetAssessment && (
+    Number(formattedReport?.test?.totalMarks) === 720 ||
+    questionsRes.rows.length >= 180 ||
+    Boolean(formattedReport?.neetBreakdown?.isFullNeet)
+  );
+
+  if (isFullNeet && rankingData) {
     const effectiveMarks = rawScore?.marks_obtained ?? formattedReport?.overall?.marks ?? 0;
     const neetPred = predictNeetRank(effectiveMarks);
     rankingData.ranking_available = true;
@@ -1173,6 +1188,8 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     rankingData.predicted_rank_range = neetPred.predicted_rank_range;
     rankingData.percentile = neetPred.percentile;
     rankingData.is_neet = true;
+  } else if (rankingData) {
+    rankingData.is_neet = false;
   }
 
   const enhancedScore = rawScore ? {
@@ -1322,11 +1339,13 @@ const buildFormattedResult = (attempt, assessment, score, solutions, isNeet = fa
       answers: rawAnswers,
       negEnabled: true,
       negPenalty: 1,
+      assessment,
     });
     neetBreakdown = {
       isNeet: true,
-      maxMarks: 720,
-      totalMarks: 720,
+      isFullNeet: neetEval.isFullNeet,
+      maxMarks: neetEval.totalMarks,
+      totalMarks: neetEval.totalMarks,
       marksObtained: neetEval.marksObtained,
       percentage: neetEval.percentage,
       evaluatedQuestionsCount: neetEval.evaluatedQuestionsCount, // Max 180
@@ -1353,13 +1372,14 @@ const buildFormattedResult = (attempt, assessment, score, solutions, isNeet = fa
     },
     test: {
       name: assessment.title || 'Assessment Test',
-      totalMarks: isNeet ? 720 : Number(score?.total_marks || assessment.total_marks || 0),
+      totalMarks: neetBreakdown ? neetBreakdown.totalMarks : Number(score?.total_marks || assessment.total_marks || 0),
       durationMinutes: Number(assessment.duration_minutes || 0),
       isNeet,
+      isFullNeet: Boolean(neetBreakdown?.isFullNeet),
     },
     overall: {
       marks: isNeet && neetBreakdown ? neetBreakdown.marksObtained : Number(score?.marks_obtained || 0),
-      totalMarks: isNeet ? 720 : Number(score?.total_marks || assessment.total_marks || 0),
+      totalMarks: neetBreakdown ? neetBreakdown.totalMarks : Number(score?.total_marks || assessment.total_marks || 0),
       percentage: isNeet && neetBreakdown ? neetBreakdown.percentage : Number(score?.percentage || 0),
       correct,
       incorrect,

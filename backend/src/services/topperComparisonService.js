@@ -59,7 +59,13 @@ export async function getTopperComparison({
       };
     } else {
       const tRes = await query(
-        `SELECT id, test_name AS title, duration_minutes, max_marks,
+        `SELECT id, test_name AS title, duration_minutes,
+                COALESCE(
+                  (SELECT SUM(marks)::int FROM questions WHERE assessment_id = $1),
+                  NULLIF(max_marks, 720),
+                  max_marks,
+                  300
+                ) AS max_marks,
                 (SELECT COUNT(*)::int FROM questions WHERE assessment_id = $1) AS total_questions
          FROM tests WHERE id = $1`,
         [effectiveId]
@@ -133,7 +139,7 @@ export async function getTopperComparison({
     topper = attRow || testAttRow || null;
   }
 
-  if (topper?.total_marks) {
+  if (topper?.total_marks && (testInfo.total_questions >= 180 || Number(topper.total_marks) !== 720)) {
     testInfo.max_marks = Number(topper.total_marks) || testInfo.max_marks;
   }
 

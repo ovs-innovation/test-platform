@@ -503,6 +503,7 @@ export function evaluateNeetAttempt({
   answers = [],
   negEnabled = true,
   negPenalty = 1,
+  assessment = {},
 }) {
   const ansMap = new Map(answers.map((a) => [a.question_id, a]));
 
@@ -622,13 +623,36 @@ export function evaluateNeetAttempt({
       };
     }
 
+    let calculatedTotalMarks = 0;
+    for (const s of Object.keys(subjectStats)) {
+      calculatedTotalMarks += (subjectStats[s].totalMarks || 0);
+    }
+    if (calculatedTotalMarks === 0 && questions.length > 0) {
+      calculatedTotalMarks = questions.reduce((sum, q) => sum + (Number(q.marks) || 4), 0);
+    }
+
+    const explicitMaxMarks = Number(assessment?.max_marks || assessment?.total_marks || 0);
+    let maxMarks = 720;
+    if (questions.length < 180) {
+      maxMarks = (explicitMaxMarks > 0 && explicitMaxMarks !== 720)
+        ? explicitMaxMarks
+        : (calculatedTotalMarks || (questions.length * 4) || 12);
+    } else {
+      maxMarks = explicitMaxMarks > 0 ? explicitMaxMarks : (calculatedTotalMarks || 720);
+    }
+
     const finalMarksObtained = Math.max(0, Number(totalMarksObtained.toFixed(2)));
-    const maxMarks = 720;
-    const percentage = Number(((finalMarksObtained / maxMarks) * 100).toFixed(2));
+    const percentage = maxMarks > 0 ? Number(((finalMarksObtained / maxMarks) * 100).toFixed(2)) : 0;
+    const isFullNeet = Boolean(
+      (questions.length === 180 || (questions.length >= 190 && questions.length <= 205)) &&
+      maxMarks === 720
+    );
 
     return {
       isNeet: true,
+      isFullNeet,
       totalMarks: maxMarks,
+      maxMarks,
       marksObtained: finalMarksObtained,
       percentage,
       correctCount: totalCorrect,
@@ -852,19 +876,39 @@ export function evaluateNeetAttempt({
     }
   }
 
+  const explicitMaxMarks = Number(assessment?.max_marks || assessment?.total_marks || 0);
+  let totalPossibleMarks = 0;
+  for (const subj of Object.keys(subjectResults)) {
+    const sr = subjectResults[subj];
+    totalPossibleMarks += ((sr.sectionA?.maxMarks || 0) + (sr.sectionB?.maxMarks || 0));
+  }
+  let maxMarks = 720;
+  if (questions.length < 180) {
+    maxMarks = (explicitMaxMarks > 0 && explicitMaxMarks !== 720)
+      ? explicitMaxMarks
+      : (totalPossibleMarks || questions.reduce((sum, q) => sum + (Number(q.marks) || 4), 0) || (questions.length * 4) || 12);
+  } else {
+    maxMarks = explicitMaxMarks > 0 ? explicitMaxMarks : 720;
+  }
+
   const finalMarksObtained = Math.max(0, Number(totalMarksObtained.toFixed(2)));
-  const maxMarks = 720;
-  const percentage = Number(((finalMarksObtained / maxMarks) * 100).toFixed(2));
+  const percentage = maxMarks > 0 ? Number(((finalMarksObtained / maxMarks) * 100).toFixed(2)) : 0;
+  const isFullNeet = Boolean(
+    (questions.length === 180 || (questions.length >= 190 && questions.length <= 205)) &&
+    maxMarks === 720
+  );
 
   return {
     isNeet: true,
+    isFullNeet,
     totalMarks: maxMarks,
+    maxMarks,
     marksObtained: finalMarksObtained,
     percentage,
     correctCount: totalCorrect,
     wrongCount: totalWrong,
     unattemptedCount: totalUnattempted,
-    evaluatedQuestionsCount: Math.min(180, totalEvaluatedCount),
+    evaluatedQuestionsCount: Math.min(Math.round(maxMarks / 4), totalEvaluatedCount),
     subjectResults,
     evaluatedQuestionsMap,
   };

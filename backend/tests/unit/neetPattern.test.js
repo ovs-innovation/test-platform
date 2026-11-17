@@ -168,4 +168,93 @@ describe('NEET Pattern & Section Split (Botany & Zoology)', () => {
       expect(res.questions[179].position).toBe(180);
     });
   });
+
+  describe('Dynamic Total Marks for Short and Booster Tests', () => {
+    it('evaluates a 3-question test out of 12 marks (not 720)', () => {
+      const questions = [
+        { id: 1, marks: 4, correct_index: 0, subject: 'Botany' },
+        { id: 2, marks: 4, correct_index: 1, subject: 'Botany' },
+        { id: 3, marks: 4, correct_index: 2, subject: 'Botany' },
+      ];
+      // Candidate got 1 correct (+4) and 2 wrong (-2) -> 2 marks obtained
+      const answers = [
+        { question_id: 1, selected_index: 0 },
+        { question_id: 2, selected_index: 0 },
+        { question_id: 3, selected_index: 0 },
+      ];
+
+      const res = evaluateNeetAttempt({
+        questions,
+        answers,
+        negEnabled: true,
+        negPenalty: 1,
+        assessment: { total_marks: 12 },
+      });
+
+      expect(res.totalMarks).toBe(12);
+      expect(res.maxMarks).toBe(12);
+      expect(res.marksObtained).toBe(2);
+      expect(res.percentage).toBe(16.67);
+      expect(res.isFullNeet).toBe(false);
+      expect(res.correctCount).toBe(1);
+      expect(res.wrongCount).toBe(2);
+    });
+
+    it('evaluates a 20-question EDVEDUM booster test out of 80 marks (not 720)', () => {
+      const questions = Array.from({ length: 20 }, (_, i) => ({
+        id: i + 1,
+        marks: 4,
+        correct_index: 0,
+        subject: 'Botany',
+      }));
+      // Candidate got 8 correct (+32) and 2 wrong (-2) -> 30 marks obtained
+      const answers = [
+        ...Array.from({ length: 8 }, (_, i) => ({ question_id: i + 1, selected_index: 0 })),
+        { question_id: 9, selected_index: 1 },
+        { question_id: 10, selected_index: 1 },
+      ];
+
+      const res = evaluateNeetAttempt({
+        questions,
+        answers,
+        negEnabled: true,
+        negPenalty: 1,
+        assessment: { test_type: 'EDVEDUM Booster Test', total_marks: 80 },
+      });
+
+      expect(res.totalMarks).toBe(80);
+      expect(res.maxMarks).toBe(80);
+      expect(res.marksObtained).toBe(30);
+      expect(res.percentage).toBe(37.5);
+      expect(res.isFullNeet).toBe(false);
+      expect(res.correctCount).toBe(8);
+      expect(res.wrongCount).toBe(2);
+    });
+
+    it('evaluates a 180-question NEET full exam out of 720 marks', () => {
+      const questions = Array.from({ length: 180 }, (_, i) => ({
+        id: i + 1,
+        marks: 4,
+        correct_index: 0,
+        subject: i < 45 ? 'Physics' : i < 90 ? 'Chemistry' : i < 135 ? 'Botany' : 'Zoology',
+      }));
+      const answers = Array.from({ length: 100 }, (_, i) => ({
+        question_id: i + 1,
+        selected_index: 0,
+      }));
+
+      const res = evaluateNeetAttempt({
+        questions,
+        answers,
+        negEnabled: true,
+        negPenalty: 1,
+      });
+
+      expect(res.totalMarks).toBe(720);
+      expect(res.maxMarks).toBe(720);
+      expect(res.marksObtained).toBe(400);
+      expect(res.percentage).toBe(55.56);
+      expect(res.isFullNeet).toBe(true);
+    });
+  });
 });

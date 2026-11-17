@@ -396,8 +396,24 @@ export default function BoosterTests() {
                         <span className="text-xs font-bold">Completed</span>
                       </div>
                       <div className="text-xs font-black">
-                        {test.marks_obtained != null ? `${test.marks_obtained} / ${test.score_total || test.total_marks}` : `${test.percentage || 0}%`}
-                        {test.percentage != null && <span className="text-[10px] ml-1 font-semibold opacity-80">({test.percentage}%)</span>}
+                        {(() => {
+                          const maxPts = Number(test.total_marks) > 0 && Number(test.total_marks) < 720
+                            ? Number(test.total_marks)
+                            : (Number(test.score_total) > 0 && Number(test.score_total) < 720 ? Number(test.score_total) : (test.question_count ? test.question_count * 4 : 80));
+                          const formattedScore = test.marks_obtained != null
+                            ? (Number.isInteger(Number(test.marks_obtained)) ? Number(test.marks_obtained) : Number(test.marks_obtained).toFixed(2))
+                            : null;
+                          const formattedMax = Number.isInteger(Number(maxPts)) ? Number(maxPts) : Number(maxPts).toFixed(2);
+                          const pct = formattedScore != null && maxPts > 0
+                            ? Number(((Number(test.marks_obtained) / maxPts) * 100).toFixed(2))
+                            : (test.percentage != null ? Number(test.percentage) : 0);
+                          return (
+                            <>
+                              {formattedScore != null ? `${formattedScore} / ${formattedMax}` : `${pct}%`}
+                              {pct != null && <span className="text-[10px] ml-1 font-semibold opacity-80">({pct}%)</span>}
+                            </>
+                          );
+                        })()}
                       </div>
                     </div>
                   )}

@@ -326,12 +326,53 @@ export default function ResultPage() {
     return Boolean(solutions?.some((q) => q.is_neet || q.section === 'B' || q.is_section_b));
   }, [data, assessment, solutions]);
 
+  const displayTotalMarks = useMemo(() => {
+    // 1. If solutions/questions are present, compute real total when under 180 questions
+    if (Array.isArray(solutions) && solutions.length > 0) {
+      if (solutions.length === 180 || solutions.length === 200) return 720;
+      if (solutions.length < 180) {
+        return solutions.reduce((acc, q) => acc + (Number(q?.marks) || 4), 0);
+      }
+    }
+    // 2. Check data.neetBreakdown / data.test / data.overall
+    const fromData = Number(data?.neetBreakdown?.totalMarks || data?.test?.totalMarks || data?.overall?.totalMarks);
+    if (!isNaN(fromData) && fromData > 0) return fromData;
+
+    // 3. Check score.total_marks if not the hardcoded default 720 on a short test
+    const fromScore = Number(score?.total_marks);
+    if (!isNaN(fromScore) && fromScore > 0 && fromScore !== 720) return fromScore;
+
+    const fromAssessment = Number(assessment?.total_marks || assessment?.max_marks);
+    if (!isNaN(fromAssessment) && fromAssessment > 0 && fromAssessment !== 720) return fromAssessment;
+
+    if (isNeetExam) return 720;
+    return fromScore > 0 ? fromScore : (fromAssessment > 0 ? fromAssessment : 0);
+  }, [isNeetExam, score, assessment, solutions, data]);
+
+  const isFullNeetExam = useMemo(() => {
+    if (solutions && solutions.length > 0 && solutions.length < 180) return false;
+    if (displayTotalMarks > 0 && displayTotalMarks < 720) return false;
+    if (data?.neetBreakdown?.isFullNeet !== undefined) return Boolean(data.neetBreakdown.isFullNeet);
+    return Boolean(isNeetExam && displayTotalMarks === 720);
+  }, [solutions, displayTotalMarks, data, isNeetExam]);
+
+  const displayPercentage = useMemo(() => {
+    if (score && score.marks_obtained != null && displayTotalMarks > 0) {
+      const marks = Number(score.marks_obtained);
+      const total = Number(displayTotalMarks);
+      if (!isNaN(marks) && !isNaN(total) && total > 0) {
+        return Number(((marks / total) * 100).toFixed(2));
+      }
+    }
+    return score?.percentage != null && !isNaN(Number(score.percentage)) ? Number(score.percentage) : 0;
+  }, [score, displayTotalMarks]);
+
   const rankRangeFromData = data?.rank_range ?? data?.rankRange ?? score?.rank_range ?? score?.rankRange ?? null;
 
   const neetPrediction = useMemo(() => {
-    if (!isNeetExam || score?.marks_obtained == null) return null;
+    if (!isFullNeetExam || score?.marks_obtained == null) return null;
     return predictNeetRank(score.marks_obtained);
-  }, [isNeetExam, score?.marks_obtained]);
+  }, [isFullNeetExam, score?.marks_obtained]);
 
   const exactRank = useMemo(() => {
     if (rank != null && !isNaN(Number(rank)) && Number(rank) > 0) {
@@ -343,33 +384,21 @@ export default function ResultPage() {
     if (score?.rank_num != null && !isNaN(Number(score.rank_num)) && Number(score.rank_num) > 0) {
       return Number(score.rank_num);
     }
-    if (neetPrediction?.rank != null && !isNaN(Number(neetPrediction.rank))) {
+    if (isFullNeetExam && neetPrediction?.rank != null && !isNaN(Number(neetPrediction.rank))) {
       return Number(neetPrediction.rank);
     }
     return null;
-  }, [rank, score?.rank, score?.rank_num, neetPrediction]);
+  }, [rank, score?.rank, score?.rank_num, isFullNeetExam, neetPrediction]);
 
-  // For NEET exams, ranking is ALWAYS unlocked and based on official marks table
-  const effectiveRankingAvailable = isNeetExam ? true : (rankingAvailable && rank != null && percentile != null);
-  const effectiveRankDisplay = isNeetExam
+  // For Full NEET exams, ranking is based on official national marks table
+  // For partial, booster, unit, and short tests, use real candidate cohort ranking!
+  const effectiveRankingAvailable = isFullNeetExam ? true : (rankingAvailable && (rank != null || score?.rank != null) && percentile != null);
+  const effectiveRankDisplay = isFullNeetExam
     ? (exactRank != null ? `#${exactRank.toLocaleString('en-IN')}` : (typeof rank === 'string' && rank !== '—' ? rank : (rankRangeFromData || '—')))
-    : (rank != null ? (typeof rank === 'number' ? `#${rank}` : rank) : '—');
-  const effectivePercentile = isNeetExam
+    : (exactRank != null ? `#${exactRank}` : (rank != null ? (typeof rank === 'number' ? `#${rank}` : rank) : '—'));
+  const effectivePercentile = isFullNeetExam
     ? (percentile != null && !isNaN(Number(percentile)) ? Number(percentile) : (neetPrediction ? neetPrediction.percentile : 0))
     : percentile;
-
-
-  const displayTotalMarks = useMemo(() => {
-    if (isNeetExam) return 720;
-    const fromScore = Number(score?.total_marks);
-    if (!isNaN(fromScore) && fromScore > 0) return fromScore;
-    const fromAssessment = Number(assessment?.total_marks);
-    if (!isNaN(fromAssessment) && fromAssessment > 0) return fromAssessment;
-    if (Array.isArray(solutions) && solutions.length > 0) {
-      return solutions.reduce((acc, q) => acc + (Number(q?.marks) || 4), 0);
-    }
-    return 0;
-  }, [isNeetExam, score, assessment, solutions]);
 
   const formattedScoreDisplay = useMemo(() => {
     if (!score) return '—';
@@ -883,12 +912,15 @@ export default function ResultPage() {
                   {/* Big Percentage & Score */}
                   <div className="py-2 flex flex-col items-center justify-center">
                     <span className="text-5xl sm:text-6xl font-black tracking-tight text-slate-900 dark:text-white tabular-nums">
-                      {score && score.percentage != null && !isNaN(Number(score.percentage)) ? `${Number(score.percentage)}%` : '0%'}
+                      {displayPercentage}%
                     </span>
                     <span className="mt-1 text-sm font-bold text-slate-500 dark:text-slate-400">
                       Scored <span className="text-slate-900 dark:text-white font-extrabold">{score && score.marks_obtained != null && !isNaN(Number(score.marks_obtained)) ? (Number.isInteger(Number(score.marks_obtained)) ? Number(score.marks_obtained) : Number(score.marks_obtained).toFixed(1)) : 0}</span> out of <span className="text-slate-900 dark:text-white font-extrabold">{Number.isInteger(Number(displayTotalMarks)) ? Number(displayTotalMarks) : Number(displayTotalMarks).toFixed(1)}</span> Marks
-                      {isNeetExam && (
+                      {isFullNeetExam && (
                         <span className="ml-2 text-xs text-blue-600 dark:text-blue-400 font-semibold">(NEET UG Pattern · 720 Max)</span>
+                      )}
+                      {!isFullNeetExam && displayTotalMarks > 0 && (
+                        <span className="ml-2 text-xs text-blue-600 dark:text-blue-400 font-semibold">({displayTotalMarks} Marks Max)</span>
                       )}
                     </span>
                   </div>
@@ -920,23 +952,23 @@ export default function ResultPage() {
                           </span>
 
                           <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-extrabold uppercase tracking-wider ${
-                            isNeetExam
+                            isFullNeetExam
                               ? 'bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30'
                               : rankingStatus === 'final'
                                 ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30'
                                 : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30'
                           }`}>
-                            {isNeetExam ? 'All India Rank' : rankingStatus === 'final' ? 'Final' : 'Provisional'}
+                            {isFullNeetExam ? 'All India Rank' : rankingStatus === 'final' ? 'Final' : 'Assessment Rank'}
                           </span>
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                          {isNeetExam
+                          {isFullNeetExam
                             ? (neetPrediction?.rangeDisplay || rankRangeFromData
                                 ? `All India Predicted Rank (Range: ${neetPrediction?.rangeDisplay || rankRangeFromData}) · Based on NEET UG Score`
                                 : 'All India Predicted Ranking · Based on NEET UG Score')
-                            : rankingStatus === 'final'
-                              ? 'Official final ranking · Assessment window closed'
-                              : 'Provisional ranking · Submissions remain open'}
+                            : (totalParticipants > 0
+                                ? `Ranked among ${totalParticipants} candidate${totalParticipants === 1 ? '' : 's'} who completed this test`
+                                : 'Candidate assessment ranking')}
                         </p>
                       </div>
                     ) : rankingStatus === 'unavailable' ? (
@@ -985,7 +1017,7 @@ export default function ResultPage() {
                     icon={Target}
                     label="Marks Scored"
                     value={formattedScoreDisplay}
-                    subtext={`${score?.percentage || 0}% overall score`}
+                    subtext={`${displayPercentage}% overall score`}
                     color="indigo"
                   />
                   <MetricCard

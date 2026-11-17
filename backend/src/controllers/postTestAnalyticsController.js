@@ -85,9 +85,17 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
 
   // 1. Fetch Test details (check tests table first, fallback to assessments table)
   let testRes = await query(
-    `SELECT id, test_name, test_type, test_date, duration_minutes, max_marks, is_published, result_publish_time
-     FROM tests
-     WHERE id = $1`,
+    `SELECT t.id, t.test_name, t.test_type, t.test_date, t.duration_minutes,
+            COALESCE(
+              (SELECT SUM(q.marks)::int FROM questions q WHERE q.assessment_id = t.id),
+              NULLIF(t.max_marks, 720),
+              t.max_marks,
+              720
+            ) AS max_marks,
+            (SELECT COUNT(*)::int FROM questions q WHERE q.assessment_id = t.id) AS total_questions,
+            t.is_published, t.result_publish_time
+     FROM tests t
+     WHERE t.id = $1`,
     [testId]
   ).catch(() => ({ rowCount: 0, rows: [] }));
 
@@ -99,6 +107,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
                 NULLIF(a.passing_marks, 0),
                 300
               ) AS max_marks,
+              (SELECT COUNT(*)::int FROM questions q WHERE q.assessment_id = a.id) AS total_questions,
               a.is_published, a.result_published_at AS result_publish_time
        FROM assessments a
        WHERE a.id = $1`,
@@ -192,9 +201,13 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     }
   }
 
-  // If NEET assessment, apply standard NEET All India Rank prediction rules
+  // If NEET assessment, apply standard NEET All India Rank prediction rules only if full 720 paper
   const isNeetAnalytics = isNeetTest(test);
-  if (isNeetAnalytics) {
+  const isFullNeet = isNeetAnalytics && (
+    Number(test.max_marks) === 720 ||
+    Number(test.total_questions) >= 180
+  );
+  if (isFullNeet) {
     const neetPred = predictNeetRank(currentAttemptRank.total_score);
     currentAttemptRank.air = neetPred.rank;
     currentAttemptRank.rank_range = neetPred.rank_range;

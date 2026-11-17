@@ -283,7 +283,13 @@ export const listBoosterTests = asyncHandler(async (req, res) => {
         COALESCE(t.duration_minutes, a.duration_minutes, 60)::int AS duration_minutes,
         COALESCE(t.test_type, a.test_type, 'EDVEDUM Booster Test') AS test_type,
         COALESCE(a.passing_marks, 0)::int AS passing_marks,
-        COALESCE(t.max_marks, q.total_marks, a.passing_marks * 4, 180)::int AS total_marks,
+        COALESCE(
+          NULLIF(NULLIF(t.max_marks, 720), 0),
+          q.total_marks,
+          (CASE WHEN q.cnt > 0 THEN q.cnt * 4 ELSE NULL END),
+          t.max_marks,
+          80
+        )::int AS total_marks,
         COALESCE(q.cnt, 0)::int AS question_count,
         COALESCE(t.subject, q.detected_subject, 'General') AS subject,
         COALESCE(t.available_from, a.available_from) AS available_from,
@@ -293,8 +299,16 @@ export const listBoosterTests = asyncHandler(async (req, res) => {
         COALESCE(at.id, tat.id) AS attempt_id,
         COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text, 'not_started') AS attempt_status,
         COALESCE(s.marks_obtained, ts.marks_obtained) AS marks_obtained,
-        COALESCE(s.total_marks, ts.total_marks) AS score_total,
-        COALESCE(s.percentage, ts.percentage) AS percentage,
+        CASE
+          WHEN COALESCE(s.total_marks, ts.total_marks) = 720 AND COALESCE(q.cnt, 0) < 180 AND COALESCE(q.total_marks, q.cnt * 4, 0) > 0 THEN
+            COALESCE(q.total_marks, q.cnt * 4)::numeric(10,2)
+          ELSE COALESCE(s.total_marks, ts.total_marks)
+        END AS score_total,
+        CASE
+          WHEN COALESCE(s.total_marks, ts.total_marks) = 720 AND COALESCE(q.cnt, 0) < 180 AND COALESCE(q.total_marks, q.cnt * 4, 0) > 0 AND COALESCE(s.marks_obtained, ts.marks_obtained) IS NOT NULL THEN
+            ROUND(((COALESCE(s.marks_obtained, ts.marks_obtained)::numeric / COALESCE(q.total_marks, q.cnt * 4)::numeric) * 100), 2)
+          ELSE COALESCE(s.percentage, ts.percentage)
+        END AS percentage,
         COALESCE(s.passed, ts.passed) AS passed,
         COALESCE(at.submitted_at, tat.submitted_at) AS submitted_at
       FROM tests t

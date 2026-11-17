@@ -92,12 +92,26 @@ export async function getAssessmentRankingData(assessmentId, candidateId = null)
   const numCandidateId = candidateId ? Number(candidateId) : null;
 
   try {
-    const [isClosed, aMetaRes] = await Promise.all([
+    const [isClosed, aMetaRes, qStatsRes] = await Promise.all([
       isAssessmentClosed(numAssessmentId),
-      query('SELECT id, title, test_type, syllabus_text, subject FROM assessments WHERE id = $1', [numAssessmentId]).catch(() => ({ rows: [] }))
+      query(`
+        SELECT a.id, a.title, a.test_type, a.syllabus_text, a.subject,
+               COALESCE(t.max_marks, 0) AS max_marks
+        FROM assessments a
+        LEFT JOIN tests t ON t.id = a.id
+        WHERE a.id = $1
+      `, [numAssessmentId]).catch(() => ({ rows: [] })),
+      query(`
+        SELECT COUNT(*)::int AS q_count, COALESCE(SUM(marks), 0)::int AS total_marks
+        FROM questions
+        WHERE assessment_id = $1
+      `, [numAssessmentId]).catch(() => ({ rows: [] }))
     ]);
     const assessmentMeta = aMetaRes.rows[0] || {};
+    const qCount = qStatsRes.rows[0]?.q_count || 0;
+    const qTotalMarks = qStatsRes.rows[0]?.total_marks || 0;
     const isNeet = isNeetTest(assessmentMeta);
+    const isFullNeet = isNeet && (qCount >= 180 || Number(assessmentMeta.max_marks) === 720 || qTotalMarks === 720);
 
     // Fetch all eligible first valid attempts for this assessment
     const eligibleQuery = `
@@ -144,8 +158,8 @@ export async function getAssessmentRankingData(assessmentId, candidateId = null)
       ? eligibleRows.find((r) => Number(r.candidate_id) === numCandidateId)
       : null;
 
-    // If this is a NEET assessment, rank and percentile are governed by the NEET Rank Predictor table
-    if (isNeet) {
+    // If this is a full NEET 720 assessment, rank and percentile are governed by the NEET Rank Predictor table
+    if (isFullNeet) {
       let rank = null;
       let rankRange = null;
       let percentile = null;
@@ -245,14 +259,27 @@ export async function syncAssessmentRankings(assessmentId) {
   if (!numId || isNaN(numId) || numId <= 0) return null;
 
   try {
-    const aRes = await query(
-      'SELECT id, title, test_type, syllabus_text, subject FROM assessments WHERE id = $1',
-      [numId]
-    ).catch(() => ({ rows: [] }));
+    const [aRes, qStatsRes] = await Promise.all([
+      query(`
+        SELECT a.id, a.title, a.test_type, a.syllabus_text, a.subject,
+               COALESCE(t.max_marks, 0) AS max_marks
+        FROM assessments a
+        LEFT JOIN tests t ON t.id = a.id
+        WHERE a.id = $1
+      `, [numId]).catch(() => ({ rows: [] })),
+      query(`
+        SELECT COUNT(*)::int AS q_count, COALESCE(SUM(marks), 0)::int AS total_marks
+        FROM questions
+        WHERE assessment_id = $1
+      `, [numId]).catch(() => ({ rows: [] }))
+    ]);
     const assessmentMeta = aRes.rows[0] || {};
+    const qCount = qStatsRes.rows[0]?.q_count || 0;
+    const qTotalMarks = qStatsRes.rows[0]?.total_marks || 0;
     const isNeet = isNeetTest(assessmentMeta);
+    const isFullNeet = isNeet && (qCount >= 180 || Number(assessmentMeta.max_marks) === 720 || qTotalMarks === 720);
 
-    if (isNeet) {
+    if (isFullNeet) {
       const scoreRows = await query(
         `SELECT s.id, s.attempt_id, s.marks_obtained
          FROM scores s
