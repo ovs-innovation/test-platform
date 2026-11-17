@@ -110,7 +110,7 @@ function CustomAssessmentDropdown({ assessments, value, onChange, isBooster = fa
           <span className="truncate font-extrabold text-xs text-slate-800 dark:text-slate-100">
             {selectedAssessment
               ? selectedAssessment.title
-              : (isBooster ? 'Select Booster Test' : 'Select Assessment')}
+              : (isBooster ? 'Select Battleground Test' : 'Select Assessment')}
           </span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
@@ -141,7 +141,7 @@ function CustomAssessmentDropdown({ assessments, value, onChange, isBooster = fa
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
               <input
                 type="text"
-                placeholder={isBooster ? "Search booster test..." : "Search test or test-series name..."}
+                placeholder={isBooster ? "Search battleground test..." : "Search test or test-series name..."}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-2 pl-9 pr-3 text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-amber-500"
@@ -197,7 +197,7 @@ function CustomAssessmentDropdown({ assessments, value, onChange, isBooster = fa
               })
             ) : (
               <div className="p-4 text-center text-xs text-slate-400">
-                {isBooster ? 'No matching EDVEDUM Booster tests' : 'No matching assessments'}
+                {isBooster ? 'No matching EDVEDUM Battleground tests' : 'No matching assessments'}
               </div>
             )}
           </div>
@@ -209,7 +209,8 @@ function CustomAssessmentDropdown({ assessments, value, onChange, isBooster = fa
 
 export default function Leaderboard() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialTab = searchParams.get('tab') === 'booster' ? 'booster' : 'standard';
+  const isBattlegroundTab = searchParams.get('tab') === 'booster' || searchParams.get('tab') === 'battleground';
+  const initialTab = isBattlegroundTab ? 'booster' : 'standard';
 
   const [activeTab, setActiveTab] = useState(initialTab);
   const [assessments, setAssessments] = useState([]);
@@ -330,11 +331,11 @@ export default function Leaderboard() {
         <div className="space-y-1">
           <div className="flex items-center gap-2.5 flex-wrap">
             <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              {isBoosterView ? 'EDVEDUM Booster Leaderboard' : 'Student Leaderboard'}
+              {isBoosterView ? 'EDVEDUM Battleground Leaderboard' : 'Student Leaderboard'}
             </h1>
             {isBoosterView ? (
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wide bg-amber-500/10 text-amber-500 border border-amber-500/30 flex items-center gap-1">
-                <Zap className="w-3 h-3 fill-current" /> EDVEDUM Booster Drills
+                <Zap className="w-3 h-3 fill-current" /> EDVEDUM Battleground Drills
               </span>
             ) : (
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wide bg-blue-500/10 text-blue-500 border border-blue-500/30">
@@ -344,7 +345,7 @@ export default function Leaderboard() {
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400">
             {isBoosterView
-              ? 'Recognizing top performers across EDVEDUM Booster Tests. High-speed drill rankings and benchmark performance.'
+              ? 'Recognizing top performers across EDVEDUM Battleground Tests. High-speed drill rankings and benchmark performance.'
               : 'Recognizing top academic performers across your test series. Percentile rankings computed per assessment.'}
           </p>
         </div>
@@ -376,7 +377,7 @@ export default function Leaderboard() {
               }`}
             >
               <Zap className={`w-3.5 h-3.5 fill-current ${isBoosterView ? 'text-white' : 'text-amber-500'}`} />
-              <span>EDVEDUM Booster</span>
+              <span>EDVEDUM Battleground</span>
             </button>
           </div>
 
@@ -433,21 +434,21 @@ export default function Leaderboard() {
           </div>
           <div className="space-y-1">
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              {isBoosterView ? 'No booster rankings available yet' : 'No rankings available yet'}
+              {isBoosterView ? 'No battleground rankings available yet' : 'No rankings available yet'}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
               {isBoosterView
-                ? 'Be the first to complete this EDVEDUM Booster Test to earn your rank and set the benchmark speed!'
+                ? 'Be the first to complete this EDVEDUM Battleground Test to earn your rank and set the benchmark speed!'
                 : 'Complete this test series assessment or mock test to earn your spot on the leaderboard.'}
             </p>
           </div>
           {isBoosterView && (
             <Link
-              to="/candidate/booster-tests"
+              to="/battleground"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white transition shadow-xs"
             >
               <Zap className="w-3.5 h-3.5 fill-current" />
-              Go to EDVEDUM Booster Tests
+              Go to EDVEDUM Battleground
             </Link>
           )}
         </div>
@@ -458,7 +459,7 @@ export default function Leaderboard() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 dark:border-slate-800/60 pb-3">
               <div>
                 <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">
-                  {isBoosterView ? 'EDVEDUM Booster Candidate Rankings' : 'All Candidate Rankings'}
+                  {isBoosterView ? 'EDVEDUM Battleground Candidate Rankings' : 'All Candidate Rankings'}
                 </h3>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   Showing {filteredRows.length} rankers sorted by score with exact ranks mapped to score ranges

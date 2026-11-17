@@ -231,6 +231,7 @@ export default function App() {
         <Route path="/aiets-calendar" element={<ProtectedRoute role="candidate"><Shell><AietsCalendarPage /></Shell></ProtectedRoute>} />
         <Route path="/my-tests" element={<ProtectedRoute role="candidate"><Shell><MyTests /></Shell></ProtectedRoute>} />
         <Route path="/booster-tests" element={<ProtectedRoute role="candidate"><Shell><BoosterTests /></Shell></ProtectedRoute>} />
+        <Route path="/battleground" element={<ProtectedRoute role="candidate"><Shell><BoosterTests /></Shell></ProtectedRoute>} />
         <Route path="/my-mistake-book" element={<ProtectedRoute role="candidate"><Shell><MyMistakeBook /></Shell></ProtectedRoute>} />
         <Route path="/my-ebooks" element={<ProtectedRoute role="candidate"><Shell><MyEbooks /></Shell></ProtectedRoute>} />
         <Route path="/my-tests/:slug" element={<ProtectedRoute role="candidate"><Shell><MySeriesTests /></Shell></ProtectedRoute>} />

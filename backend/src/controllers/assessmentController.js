@@ -220,10 +220,13 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
         return false;
       }
 
-      // Exclude Booster Tests from My Tests (they belong exclusively to Booster Tests page)
+      // Exclude Booster / Battleground Tests from My Tests (they belong exclusively to Battleground Tests page)
       const isBooster = (row.test_type || '').toLowerCase().includes('booster') ||
+        (row.test_type || '').toLowerCase().includes('battleground') ||
         (row.title || '').toLowerCase().includes('booster') ||
-        (row.description || '').toLowerCase().includes('booster');
+        (row.title || '').toLowerCase().includes('battleground') ||
+        (row.description || '').toLowerCase().includes('booster') ||
+        (row.description || '').toLowerCase().includes('battleground');
       if (isBooster) {
         return false;
       }
@@ -281,7 +284,7 @@ export const listBoosterTests = asyncHandler(async (req, res) => {
         COALESCE(t.syllabus, a.description, 'Targeted rapid CBT booster examination.') AS description,
         COALESCE(a.instructions, 'Standard CBT examination instructions apply.') AS instructions,
         COALESCE(t.duration_minutes, a.duration_minutes, 60)::int AS duration_minutes,
-        COALESCE(t.test_type, a.test_type, 'EDVEDUM Booster Test') AS test_type,
+        COALESCE(t.test_type, a.test_type, 'EDVEDUM Battleground') AS test_type,
         COALESCE(a.passing_marks, 0)::int AS passing_marks,
         COALESCE(
           NULLIF(NULLIF(t.max_marks, 720), 0),
@@ -335,21 +338,23 @@ export const listBoosterTests = asyncHandler(async (req, res) => {
         AND COALESCE(a.title, '') NOT ILIKE '%improvement%'
         AND (
           COALESCE(t.test_type, '') ILIKE '%booster%'
+          OR COALESCE(t.test_type, '') ILIKE '%battleground%'
           OR COALESCE(a.test_type, '') ILIKE '%booster%'
+          OR COALESCE(a.test_type, '') ILIKE '%battleground%'
           OR (
-            (COALESCE(t.test_name, '') ILIKE '%booster%' OR COALESCE(t.title, '') ILIKE '%booster%' OR COALESCE(a.title, '') ILIKE '%booster%')
+            (COALESCE(t.test_name, '') ILIKE '%booster%' OR COALESCE(t.test_name, '') ILIKE '%battleground%' OR COALESCE(t.title, '') ILIKE '%booster%' OR COALESCE(t.title, '') ILIKE '%battleground%' OR COALESCE(a.title, '') ILIKE '%booster%' OR COALESCE(a.title, '') ILIKE '%battleground%')
             AND COALESCE(t.test_name, '') NOT ILIKE 'AI Booster%'
             AND COALESCE(t.title, '') NOT ILIKE 'AI Booster%'
           )
           OR EXISTS (
             SELECT 1 FROM test_series ts
             JOIN test_series_tests tst ON tst.series_id = ts.id
-            WHERE tst.test_id = COALESCE(t.id, a.id) AND ts.exam_type ILIKE '%booster%'
+            WHERE tst.test_id = COALESCE(t.id, a.id) AND (ts.exam_type ILIKE '%booster%' OR ts.exam_type ILIKE '%battleground%')
           )
           OR EXISTS (
             SELECT 1 FROM test_series ts
             JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
-            WHERE tsa.assessment_id = COALESCE(t.id, a.id) AND ts.exam_type ILIKE '%booster%'
+            WHERE tsa.assessment_id = COALESCE(t.id, a.id) AND (ts.exam_type ILIKE '%booster%' OR ts.exam_type ILIKE '%battleground%')
           )
         )
         AND (
@@ -431,6 +436,7 @@ export const listBoosterTests = asyncHandler(async (req, res) => {
         avg_percentage: avgPercentage,
       },
       booster_tests: filtered,
+      battleground_tests: filtered,
     });
   } catch (err) {
     console.error('[listBoosterTests error]', err);
@@ -438,6 +444,7 @@ export const listBoosterTests = asyncHandler(async (req, res) => {
       success: true,
       stats: { total: 0, available_count: 0, in_progress_count: 0, completed_count: 0, avg_percentage: 0 },
       booster_tests: [],
+      battleground_tests: [],
     });
   }
 });

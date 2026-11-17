@@ -31,7 +31,7 @@ import {
   Sparkles
 } from 'lucide-react';
 
-const TEST_TYPES = ['AIETS', 'EDVEDUM Booster Test', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
+const TEST_TYPES = ['AIETS', 'EDVEDUM Battleground', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
 
 // Custom Floating Popover Dropdown for Test Type Filtering
 function CustomAdminTestTypeDropdown({ value, onChange, types }) {
@@ -521,7 +521,7 @@ export default function AdminTestManager() {
     if (isPersonalStudentTest(t)) return false;
     const matchesSearch = t.test_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           (t.syllabus && t.syllabus.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesType = selectedType === 'All' || t.test_type === selectedType;
+    const matchesType = selectedType === 'All' || (selectedType === 'EDVEDUM Battleground' ? (t.test_type === 'EDVEDUM Battleground' || t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') : t.test_type === selectedType);
     return matchesSearch && matchesType;
   });
 
@@ -657,7 +657,7 @@ export default function AdminTestManager() {
                                 <p className="font-extrabold text-slate-900 dark:text-white text-sm">{t.test_name}</p>
                                 <div className="flex items-center gap-2 mt-1">
                                   <span className="bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-bold border border-blue-200 dark:border-blue-800">
-                                    {t.test_type}
+                                    {(t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') ? 'EDVEDUM Battleground' : t.test_type}
                                   </span>
                                   {t.solution_pdf_url && (
                                     <span className="text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-200">
@@ -887,7 +887,14 @@ export default function AdminTestManager() {
                   <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Test Category *</label>
                   <select
                     value={testForm.test_type}
-                    onChange={(e) => setTestForm({ ...testForm, test_type: e.target.value })}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const updates = { test_type: val };
+                      if ((val === 'EDVEDUM Battleground' || val === 'Booster Test' || val === 'EDVEDUM Booster Test') && (testForm.duration_minutes === 180 || !testForm.duration_minutes)) {
+                        updates.duration_minutes = 60;
+                      }
+                      setTestForm({ ...testForm, ...updates });
+                    }}
                     className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
                   >
                     {TEST_TYPES.map((t) => (
@@ -940,6 +947,32 @@ export default function AdminTestManager() {
                     onChange={(e) => setTestForm({ ...testForm, duration_minutes: Number(e.target.value) })}
                     className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
                   />
+                  {(testForm.test_type === 'EDVEDUM Battleground' || testForm.test_type === 'Booster Test' || testForm.test_type === 'EDVEDUM Booster Test') && (
+                    <div className="flex items-center gap-1.5 mt-1.5">
+                      <button
+                        type="button"
+                        onClick={() => setTestForm({ ...testForm, duration_minutes: 60 })}
+                        className={`text-[10px] px-2 py-0.5 rounded-lg font-bold border transition cursor-pointer ${
+                          testForm.duration_minutes === 60
+                            ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-xs'
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-amber-400'
+                        }`}
+                      >
+                        ⚡ 60m (1h)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setTestForm({ ...testForm, duration_minutes: 90 })}
+                        className={`text-[10px] px-2 py-0.5 rounded-lg font-bold border transition cursor-pointer ${
+                          testForm.duration_minutes === 90
+                            ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-xs'
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:border-amber-400'
+                        }`}
+                      >
+                        ⚡ 90m (1.5h)
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 

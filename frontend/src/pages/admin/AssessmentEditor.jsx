@@ -367,19 +367,19 @@ function GeneralTab({ settings, onChange, onSave, saving, ebooks = [] }) {
           onChange={(e) => {
             const val = e.target.value;
             onChange(e);
-            if ((val === 'Booster Test' || val === 'EDVEDUM Booster Test') && (settings.duration_minutes === 180 || !settings.duration_minutes)) {
+            if ((val === 'EDVEDUM Battleground' || val === 'Booster Test' || val === 'EDVEDUM Booster Test') && (settings.duration_minutes === 180 || !settings.duration_minutes)) {
               onChange({ target: { name: 'duration_minutes', value: 60, type: 'number' } });
             }
           }}
         >
           <option value="AIETS">AIETS</option>
-          <option value="EDVEDUM Booster Test">EDVEDUM Booster Test (Quick 60–90 Min Drill)</option>
+          <option value="EDVEDUM Battleground">EDVEDUM Battleground (Quick 60–90 Min Drill)</option>
           <option value="Unit Test">Unit Test</option>
           <option value="Part Test">Part Test</option>
           <option value="Cumulative Test">Cumulative Test</option>
           <option value="Full Syllabus Mock">Full Syllabus Mock</option>
         </select>
-        {(settings.test_type === 'Booster Test' || settings.test_type === 'EDVEDUM Booster Test') && (
+        {(settings.test_type === 'EDVEDUM Battleground' || settings.test_type === 'Booster Test' || settings.test_type === 'EDVEDUM Booster Test') && (
           <div className="flex items-center gap-2 mt-2">
             <span className="text-[11px] font-bold text-slate-400">Quick Duration Presets:</span>
             <button

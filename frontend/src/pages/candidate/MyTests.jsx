@@ -29,8 +29,11 @@ export default function MyTests() {
 
         const standaloneTests = rawTests.filter((t) => {
           const isBooster = (t.test_type || '').toLowerCase().includes('booster') ||
+            (t.test_type || '').toLowerCase().includes('battleground') ||
             (t.title || '').toLowerCase().includes('booster') ||
-            (t.description || '').toLowerCase().includes('booster');
+            (t.title || '').toLowerCase().includes('battleground') ||
+            (t.description || '').toLowerCase().includes('booster') ||
+            (t.description || '').toLowerCase().includes('battleground');
           if (isBooster) {
             return false;
           }

@@ -23,7 +23,7 @@ const AIDoubtSolverChatbox = lazy(() => import('./candidate/AIDoubtSolverChatbox
 const candidateNav = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid' },
   { to: '/my-tests', label: 'My Tests', icon: 'doc' },
-  { to: '/booster-tests', label: 'EDVEDUM Booster Test', icon: 'zap' },
+  { to: '/battleground', label: 'EDVEDUM Battleground', icon: 'zap' },
   { to: '/my-mistake-book', label: 'My Mistake Book', icon: 'bookmark' },
   { to: '/my-ebooks', label: 'Study Material', icon: 'book' },
   { to: '/aiets-calendar', label: 'AIETS Calendar', icon: 'calendar' },

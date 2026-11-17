@@ -83,15 +83,16 @@ export const getLeaderboardAssessments = asyncHandler(async (_req, res) => {
     `SELECT a.id, a.title, COUNT(DISTINCT at.id)::int AS attempt_count,
             CASE 
               WHEN COALESCE(a.test_type, t.test_type, '') ILIKE '%booster%'
+                OR COALESCE(a.test_type, t.test_type, '') ILIKE '%battleground%'
                 OR (
-                  (COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%')
+                  (COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%' OR COALESCE(a.title, t.title, t.test_name, '') ILIKE '%battleground%')
                   AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE 'AI Booster%'
                   AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%improvement%'
                 )
                 OR EXISTS (
                   SELECT 1 FROM test_series ts
                   JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
-                  WHERE tsa.assessment_id = a.id AND ts.exam_type ILIKE '%booster%'
+                  WHERE tsa.assessment_id = a.id AND (ts.exam_type ILIKE '%booster%' OR ts.exam_type ILIKE '%battleground%')
                 )
               THEN true
               ELSE false
@@ -169,7 +170,7 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   let assessmentId = req.query.assessment_id ? Number(req.query.assessment_id) : null;
   const testSeriesId = req.query.test_series_id ? Number(req.query.test_series_id) : null;
-  const isBoosterRequested = req.query.type === 'booster' || req.query.is_booster === 'true';
+  const isBoosterRequested = req.query.type === 'booster' || req.query.type === 'battleground' || req.query.is_booster === 'true';
 
   if (testSeriesId && !assessmentId) {
     const inSeries = await query(
@@ -198,7 +199,9 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
          WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
            AND (
              COALESCE(a.test_type, t.test_type, '') ILIKE '%booster%'
+             OR COALESCE(a.test_type, t.test_type, '') ILIKE '%battleground%'
              OR COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%'
+             OR COALESCE(a.title, t.title, t.test_name, '') ILIKE '%battleground%'
            )
          ORDER BY at.submitted_at DESC NULLS LAST
          LIMIT 1`,
@@ -213,7 +216,9 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
            LEFT JOIN tests t ON t.id = a.id
            WHERE (
              COALESCE(a.test_type, t.test_type, '') ILIKE '%booster%'
+             OR COALESCE(a.test_type, t.test_type, '') ILIKE '%battleground%'
              OR COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%'
+             OR COALESCE(a.title, t.title, t.test_name, '') ILIKE '%battleground%'
            ) AND (a.is_published = true OR t.is_published = true OR t.status = 'published')
            ORDER BY a.id DESC
            LIMIT 1`
@@ -229,7 +234,9 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
          JOIN scores s ON s.attempt_id = at.id
          WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
            AND COALESCE(a.test_type, t.test_type, '') NOT ILIKE '%booster%'
+           AND COALESCE(a.test_type, t.test_type, '') NOT ILIKE '%battleground%'
            AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%booster%'
+           AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%battleground%'
          ORDER BY at.submitted_at DESC NULLS LAST
          LIMIT 1`,
         [userId]
@@ -269,15 +276,16 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
     `SELECT a.id, a.title,
             CASE 
               WHEN COALESCE(a.test_type, t.test_type, '') ILIKE '%booster%'
+                OR COALESCE(a.test_type, t.test_type, '') ILIKE '%battleground%'
                 OR (
-                  (COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%')
+                  (COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%' OR COALESCE(a.title, t.title, t.test_name, '') ILIKE '%battleground%')
                   AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE 'AI Booster%'
                   AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%improvement%'
                 )
                 OR EXISTS (
                   SELECT 1 FROM test_series ts
                   JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
-                  WHERE tsa.assessment_id = a.id AND ts.exam_type ILIKE '%booster%'
+                  WHERE tsa.assessment_id = a.id AND (ts.exam_type ILIKE '%booster%' OR ts.exam_type ILIKE '%battleground%')
                 )
               THEN true
               ELSE false

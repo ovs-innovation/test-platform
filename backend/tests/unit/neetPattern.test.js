@@ -231,6 +231,36 @@ describe('NEET Pattern & Section Split (Botany & Zoology)', () => {
       expect(res.wrongCount).toBe(2);
     });
 
+    it('evaluates a 20-question EDVEDUM Battleground test out of 80 marks (not 720)', () => {
+      const questions = Array.from({ length: 20 }, (_, i) => ({
+        id: i + 1,
+        marks: 4,
+        correct_index: 0,
+        subject: 'Botany',
+      }));
+      // 8 correct, 2 wrong, 10 unattempted: (8 * 4) - (2 * 1) = 30 marks
+      const answers = [
+        ...Array.from({ length: 8 }, (_, i) => ({ question_id: i + 1, selected_index: 0 })),
+        ...Array.from({ length: 2 }, (_, i) => ({ question_id: i + 9, selected_index: 1 })),
+      ];
+
+      const res = evaluateNeetAttempt({
+        questions,
+        answers,
+        negEnabled: true,
+        negPenalty: 1,
+        assessment: { test_type: 'EDVEDUM Battleground', total_marks: 80 },
+      });
+
+      expect(res.totalMarks).toBe(80);
+      expect(res.maxMarks).toBe(80);
+      expect(res.marksObtained).toBe(30);
+      expect(res.percentage).toBe(37.5);
+      expect(res.isFullNeet).toBe(false);
+      expect(res.correctCount).toBe(8);
+      expect(res.wrongCount).toBe(2);
+    });
+
     it('evaluates a 180-question NEET full exam out of 720 marks', () => {
       const questions = Array.from({ length: 180 }, (_, i) => ({
         id: i + 1,

@@ -9,9 +9,9 @@ export async function sendStudentAssignmentNotifications(testId, testName, assig
   try {
     const { sendEmailNotification = true, customMessage = null } = options;
     const notifTitle = `New Test Assigned: ${testName}`;
-    const isBoosterTest = (testName || '').toLowerCase().includes('booster');
+    const isBoosterTest = (testName || '').toLowerCase().includes('booster') || (testName || '').toLowerCase().includes('battleground');
     const notifBody = customMessage || (isBoosterTest
-      ? `A new EDVEDUM Booster Test "${testName}" has been assigned to your portal. Go to EDVEDUM Booster Test to start!`
+      ? `A new EDVEDUM Battleground test "${testName}" has been assigned to your portal. Go to EDVEDUM Battleground to start!`
       : `A new test "${testName}" has been assigned to your portal. Go to My Tests to start!`);
 
     let targetStudents = [];
@@ -2262,8 +2262,8 @@ export const notifyTestReminder = asyncHandler(async (req, res) => {
   }
 
   const title = `Reminder: ${test.test_name}`;
-  const isBoosterTest = (test.test_name || '').toLowerCase().includes('booster');
-  const portalPath = isBoosterTest ? 'EDVEDUM Booster Test' : 'My Tests';
+  const isBoosterTest = (test.test_name || '').toLowerCase().includes('booster') || (test.test_name || '').toLowerCase().includes('battleground');
+  const portalPath = isBoosterTest ? 'EDVEDUM Battleground' : 'My Tests';
   const body = custom_message || `Your test "${test.test_name}" is scheduled for ${test.test_date || 'immediate access'}. Please log in to your student portal to attempt your test!`;
 
   // 1. Insert Dashboard Notifications

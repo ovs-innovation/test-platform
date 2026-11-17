@@ -138,11 +138,11 @@ export default function CandidateDashboard() {
             </Link>
 
             <Link
-              to="/booster-tests"
+              to="/battleground"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-600 px-4 py-2.5 text-xs font-bold text-slate-950 shadow-xs transition-colors"
             >
               <Zap className="h-4 w-4 fill-slate-950" />
-              <span>EDVEDUM Booster Test</span>
+              <span>EDVEDUM Battleground</span>
             </Link>
 
             <Link

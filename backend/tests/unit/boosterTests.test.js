@@ -83,6 +83,7 @@ describe('Booster Tests API Controller', () => {
     expect(result.type).toBe('json');
     expect(result.data.success).toBe(true);
     expect(result.data.booster_tests).toHaveLength(2);
+    expect(result.data.battleground_tests).toHaveLength(2);
     expect(result.data.stats.total).toBe(2);
     expect(result.data.stats.completed_count).toBe(1);
     expect(result.data.stats.available_count).toBe(1);
