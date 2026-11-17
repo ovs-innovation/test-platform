@@ -33,4 +33,5 @@ export const VIOLATION_LABELS = {
   right_click: 'Used right-click menu',
   screen_share_stopped: 'Screen sharing / recording stopped',
   screen_share_denied: 'Screen sharing permission was denied',
+  screenshot_attempt: 'Screen capture / screenshot attempt detected',
 };

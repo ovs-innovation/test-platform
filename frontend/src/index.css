@@ -899,4 +899,12 @@
       animation: none !important;
     }
   }
+
+  @media print {
+    body,
+    .exam-surface {
+      display: none !important;
+      visibility: hidden !important;
+    }
+  }
 }

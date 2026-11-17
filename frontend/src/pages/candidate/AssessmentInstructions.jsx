@@ -19,7 +19,7 @@ const GENERAL_RULES = [
   'Use Save & Next to save your answer and move to the next question. Use Save & Mark for Review to flag a question.',
   'Use Clear Response to remove your selected answer for the current question.',
   'Use the section tabs (if shown) to switch between subjects or sections of the paper.',
-  'This is a proctored test. Fullscreen mode is required. Tab switches and copy/paste are monitored.',
+  'This is a proctored test. Fullscreen mode is required. Screen capture/screenshots, tab switching, and copy/paste are strictly prohibited and monitored.',
   'Exceeding the allowed number of proctoring violations will auto-submit your test.',
 ];
 

@@ -20,7 +20,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import AssessmentBranding from '../../components/candidate/AssessmentBranding.jsx';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl, getQuestionDiagrams } from '../../lib/media.js';
-import { Languages, Globe, Eye, ArrowLeft, CheckCircle2, ShieldCheck, AlertCircle, Edit, ExternalLink, LifeBuoy } from 'lucide-react';
+import { Languages, Globe, Eye, ArrowLeft, CheckCircle2, ShieldCheck, ShieldAlert, AlertCircle, Edit, ExternalLink, LifeBuoy } from 'lucide-react';
 import { useScreenRecorder } from '../../hooks/useScreenRecorder.js';
 import ScreenRecordingIndicator from '../../components/candidate/ScreenRecordingIndicator.jsx';
 import ScreenShareConsentModal from '../../components/candidate/ScreenShareConsentModal.jsx';
@@ -74,6 +74,7 @@ export default function ExamScreen({ isSimulator = false }) {
   const [savingId, setSavingId] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [needsFullscreen, setNeedsFullscreen] = useState(false);
+  const [isWindowFocused, setIsWindowFocused] = useState(true);
   const [warning, setWarning] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [simulatorModalOpen, setSimulatorModalOpen] = useState(false);
@@ -434,6 +435,7 @@ export default function ExamScreen({ isSimulator = false }) {
     setIsSubmitting(true);
     setWarning(null);
     setNeedsFullscreen(false);
+    setIsWindowFocused(true);
     setSubmissionError(null);
 
     if (isSimulatorActive) {
@@ -528,7 +530,11 @@ export default function ExamScreen({ isSimulator = false }) {
     } catch { /* ignore */ }
   }, [effectiveAttemptId, finishExam, isSimulatorActive, isSubmitting, maxViolations, toast]);
 
-  useProctoring({ active: !loading && !finishedRef.current && !isSubmitting && !isSimulatorActive, onViolation: handleViolation });
+  useProctoring({
+    active: !loading && !finishedRef.current && !isSubmitting && !isSimulatorActive,
+    onViolation: handleViolation,
+    onFocusChange: setIsWindowFocused,
+  });
 
   const [showRecordingModal, setShowRecordingModal] = useState(false);
 
@@ -1421,8 +1427,21 @@ export default function ExamScreen({ isSimulator = false }) {
           </div>
         )}
 
-        <div className="border-b border-r border-slate-300 bg-white text-slate-900 p-5 lg:border-b-0">
-          <ExamErrorBoundary
+        <div className="relative border-b border-r border-slate-300 bg-white text-slate-900 p-5 lg:border-b-0 min-h-[500px] overflow-hidden">
+          {/* Anti-Screen-Capture / Candidate Identity Watermark */}
+          <div
+            className="pointer-events-none select-none absolute inset-0 z-0 overflow-hidden flex flex-wrap content-start gap-x-12 gap-y-16 p-6 opacity-[0.035] leading-none"
+            aria-hidden="true"
+          >
+            {Array.from({ length: 32 }).map((_, i) => (
+              <div key={i} className="transform -rotate-12 whitespace-nowrap text-[11px] font-bold font-mono tracking-widest text-slate-900 uppercase">
+                {user?.name || 'CANDIDATE'} · ROLL: {rollNo} · {meta?.title || 'EXAM'}
+              </div>
+            ))}
+          </div>
+
+          <div className="relative z-10">
+            <ExamErrorBoundary
             reporter={reporterRef.current}
             currentQuestionId={q?.id}
             onReportIssue={() => setShowIncidentModal(true)}
@@ -1805,6 +1824,7 @@ export default function ExamScreen({ isSimulator = false }) {
               </button>
             </div>
           </div>
+          </div>
         </div>
 
         <aside className="border-b border-slate-300 bg-[#f3f6fb] text-slate-800 p-3 lg:border-b-0 overflow-y-auto max-h-[calc(100vh-100px)] flex flex-col">
@@ -1909,6 +1929,49 @@ export default function ExamScreen({ isSimulator = false }) {
             >
               Continue in Windowed Mode
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Anti-Screen-Capture / Snipping Tool Shield Overlay */}
+      {!isWindowFocused && !loading && !finishedRef.current && !isSubmitting && !isSimulatorActive && (
+        <div
+          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-slate-950/95 backdrop-blur-md p-6 text-center text-white select-none cursor-pointer"
+          onClick={() => {
+            window.focus();
+            setIsWindowFocused(true);
+          }}
+        >
+          <div
+            className="max-w-md w-full bg-slate-900 border border-red-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl flex flex-col items-center text-center animate-in fade-in zoom-in-95 duration-150"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-16 h-16 rounded-full bg-red-950/80 border border-red-500/50 flex items-center justify-center mb-4 text-red-400">
+              <ShieldAlert className="w-8 h-8" />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
+              Assessment Content Shielded
+            </h2>
+            <p className="mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Screen capture, snipping tool, or window focus loss was detected. Content is shielded to maintain strict examination security.
+            </p>
+            <div className="mt-4 rounded-lg bg-red-950/40 border border-red-800/40 px-3 py-2 text-[11px] text-red-200">
+              Capturing screenshots during an examination is strictly prohibited and logged as a proctoring violation.
+            </div>
+            <button
+              type="button"
+              className="mt-6 w-full rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-[0.99] text-white py-3 px-4 font-bold text-sm shadow-lg transition flex items-center justify-center gap-2 cursor-pointer"
+              onClick={() => {
+                window.focus();
+                setIsWindowFocused(true);
+              }}
+            >
+              <span>Resume Examination</span>
+              <span>→</span>
+            </button>
+            <p className="mt-3 text-[11px] text-slate-400">
+              Click anywhere on the screen to return to your assessment.
+            </p>
           </div>
         </div>
       )}
