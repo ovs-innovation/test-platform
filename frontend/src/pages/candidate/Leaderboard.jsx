@@ -228,7 +228,7 @@ export default function Leaderboard() {
 
   const loadAssessments = useCallback(async () => {
     try {
-      const res = await studentService.leaderboardAssessments();
+      const res = await studentService.leaderboardAssessments(true);
       const list = Array.isArray(res) ? res : (res.assessments || []);
       setAssessments(list);
       return list;
@@ -247,6 +247,8 @@ export default function Leaderboard() {
       setData(result);
       if (result.assessment_id) {
         setAssessmentId(String(result.assessment_id));
+      } else {
+        setAssessmentId('');
       }
       setState('done');
     } catch {
@@ -259,7 +261,7 @@ export default function Leaderboard() {
       await loadAssessments();
       const currentTab = searchParams.get('tab') === 'booster' ? 'booster' : 'standard';
       const initialAssId = searchParams.get('assessment_id') || undefined;
-      await loadLeaderboard(initialAssId, false, currentTab);
+      await loadLeaderboard(initialAssId, true, currentTab);
     })();
   }, []);
 
@@ -267,6 +269,7 @@ export default function Leaderboard() {
     if (newTab === activeTab) return;
     setActiveTab(newTab);
     setSearchQuery('');
+    setAssessmentId('');
     setSearchParams(newTab === 'booster' ? { tab: 'booster' } : {});
     loadLeaderboard(undefined, true, newTab);
   };
@@ -434,21 +437,29 @@ export default function Leaderboard() {
           </div>
           <div className="space-y-1">
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              {isBoosterView ? 'No battleground rankings available yet' : 'No rankings available yet'}
+              {isBoosterView ? 'No battleground rankings available yet' : 'No enrolled test series rankings available yet'}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
               {isBoosterView
                 ? 'Be the first to complete this EDVEDUM Battleground Test to earn your rank and set the benchmark speed!'
-                : 'Complete this test series assessment or mock test to earn your spot on the leaderboard.'}
+                : 'Complete your enrolled test series assessments to earn your spot on the leaderboard.'}
             </p>
           </div>
-          {isBoosterView && (
+          {isBoosterView ? (
             <Link
               to="/battleground"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white transition shadow-xs"
             >
               <Zap className="w-3.5 h-3.5 fill-current" />
               Go to EDVEDUM Battleground
+            </Link>
+          ) : (
+            <Link
+              to="/my-tests"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white transition shadow-xs"
+            >
+              <Award className="w-3.5 h-3.5" />
+              Go to My Test Series
             </Link>
           )}
         </div>

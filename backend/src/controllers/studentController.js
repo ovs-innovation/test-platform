@@ -78,7 +78,35 @@ export const changePassword = asyncHandler(async (req, res) => {
   res.json({ message: 'Password changed' });
 });
 
-export const getLeaderboardAssessments = asyncHandler(async (_req, res) => {
+export const getLeaderboardAssessments = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+  const userEmail = req.user.email || '';
+  const userBatchId = req.user.batch_id || null;
+  const userInstitutionId = req.user.institution_id || null;
+
+  // Auto-sync any test series assigned to student's batch, institution, individual, or 'all'
+  await query(`
+    INSERT INTO student_enrollments (user_id, test_series_id, status, purchased_at, expires_at, assignment_type)
+    SELECT 
+      $1, 
+      tsa.test_series_id, 
+      'active', 
+      NOW(), 
+      NOW() + (COALESCE(tsa.validity_days, ts.validity_days, 365) || ' days')::interval,
+      'admin_' || tsa.assigned_to_type
+    FROM test_series_assignments tsa
+    JOIN test_series ts ON ts.id = tsa.test_series_id AND ts.is_active = TRUE
+    JOIN users u ON u.id = $1
+    WHERE (
+      tsa.assigned_to_type = 'all'
+      OR (tsa.assigned_to_type = 'student' AND tsa.assigned_to_id = $1)
+      OR (tsa.assigned_to_type = 'individual' AND tsa.assigned_to_id = $1)
+      OR (tsa.assigned_to_type = 'batch' AND u.batch_id = tsa.assigned_to_id)
+      OR (tsa.assigned_to_type = 'institution' AND u.institution_id = tsa.assigned_to_id)
+    )
+    ON CONFLICT (user_id, test_series_id) DO NOTHING
+  `, [userId]).catch(() => {});
+
   const result = await query(
     `SELECT a.id, a.title, COUNT(DISTINCT at.id)::int AS attempt_count,
             CASE 
@@ -106,6 +134,17 @@ export const getLeaderboardAssessments = asyncHandler(async (_req, res) => {
                   SELECT series_id, test_id FROM test_series_tests
                 ) links
                 JOIN test_series ts ON ts.id = links.test_series_id
+                JOIN student_enrollments se ON se.test_series_id = ts.id AND se.user_id = $1 AND se.status = 'active'
+                WHERE links.assessment_id = a.id
+              ),
+              (
+                SELECT string_agg(DISTINCT ts.title, ', ')
+                FROM (
+                  SELECT test_series_id, assessment_id FROM test_series_assessments
+                  UNION
+                  SELECT series_id, test_id FROM test_series_tests
+                ) links
+                JOIN test_series ts ON ts.id = links.test_series_id
                 WHERE links.assessment_id = a.id
               ),
               ''
@@ -115,11 +154,67 @@ export const getLeaderboardAssessments = asyncHandler(async (_req, res) => {
      LEFT JOIN attempts at ON at.assessment_id = a.id AND at.status IN ('submitted', 'auto_submitted')
      WHERE (a.is_published = true OR t.is_published = true OR t.status = 'published' OR at.id IS NOT NULL)
        AND COALESCE(t.is_deleted, false) = false
-     GROUP BY a.id, a.title, a.test_type, t.test_type, t.title, t.test_name
+       AND COALESCE(t.is_personal, false) = false
+       AND COALESCE(t.type, '') NOT IN ('ai_weak_topic', 'mistake_book', 'personal', 'student_practice')
+       AND COALESCE(t.test_type, '') NOT IN ('mistake_book', 'personal', 'ai_weak_topic', 'student_practice')
+       AND (
+         -- 1. Battleground tests (available in EDVEDUM Battleground tab)
+         (
+           COALESCE(a.test_type, t.test_type, '') ILIKE '%booster%'
+           OR COALESCE(a.test_type, t.test_type, '') ILIKE '%battleground%'
+           OR (
+             (COALESCE(a.title, t.title, t.test_name, '') ILIKE '%booster%' OR COALESCE(a.title, t.title, t.test_name, '') ILIKE '%battleground%')
+             AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE 'AI Booster%'
+             AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%improvement%'
+           )
+           OR EXISTS (
+             SELECT 1 FROM test_series ts_b
+             JOIN test_series_assessments tsa_b ON tsa_b.test_series_id = ts_b.id
+             WHERE tsa_b.assessment_id = a.id AND (ts_b.exam_type ILIKE '%booster%' OR ts_b.exam_type ILIKE '%battleground%')
+           )
+         )
+         OR
+         -- 2. Test-series tests: ONLY if the candidate is enrolled in that specific test series
+         EXISTS (
+           SELECT 1 FROM student_enrollments se
+           WHERE se.user_id = $1
+             AND se.status = 'active'
+             AND (se.expires_at IS NULL OR se.expires_at > NOW())
+             AND (
+               EXISTS (SELECT 1 FROM test_series_assessments tsa WHERE tsa.test_series_id = se.test_series_id AND tsa.assessment_id = a.id)
+               OR EXISTS (SELECT 1 FROM test_series_tests tst WHERE tst.series_id = se.test_series_id AND tst.test_id = COALESCE(t.id, a.id))
+               OR EXISTS (SELECT 1 FROM package_tests pt WHERE pt.package_id = se.test_series_id AND pt.test_id = COALESCE(t.id, a.id))
+             )
+         )
+         OR
+         -- 3. Standalone tests not linked to any test series, but assigned or attempted by candidate
+         (
+           NOT EXISTS (
+             SELECT 1 FROM test_series_assessments tsa_all WHERE tsa_all.assessment_id = a.id
+           )
+           AND NOT EXISTS (
+             SELECT 1 FROM test_series_tests tst_all WHERE tst_all.test_id = COALESCE(t.id, a.id)
+           )
+           AND (
+             EXISTS (SELECT 1 FROM attempts at_self WHERE at_self.assessment_id = a.id AND at_self.candidate_id = $1 AND at_self.status IN ('submitted', 'auto_submitted'))
+             OR EXISTS (SELECT 1 FROM candidate_invites ci WHERE ci.assessment_id = a.id AND LOWER(TRIM(ci.candidate_email)) = LOWER(TRIM($2)) AND ci.status <> 'expired')
+             OR EXISTS (
+               SELECT 1 FROM test_assignments tas
+               WHERE tas.test_id = COALESCE(t.id, a.id) AND (
+                 (tas.assigned_to_type IN ('individual', 'student') AND tas.assigned_to_id = $1)
+                 OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
+                 OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
+               )
+             )
+           )
+         )
+       )
+     GROUP BY a.id, a.title, a.test_type, t.test_type, t.title, t.test_name, t.id
      ORDER BY 
        CASE WHEN COUNT(DISTINCT at.id) > 0 THEN 0 ELSE 1 END ASC,
        COUNT(DISTINCT at.id) DESC,
-       a.title ASC`
+       a.title ASC`,
+    [userId, userEmail, userBatchId, userInstitutionId]
   );
 
   res.json({ assessments: result.rows });
@@ -237,6 +332,17 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
            AND COALESCE(a.test_type, t.test_type, '') NOT ILIKE '%battleground%'
            AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%booster%'
            AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%battleground%'
+           AND (
+             EXISTS (
+               SELECT 1 FROM student_enrollments se
+               WHERE se.user_id = $1 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+                 AND (
+                   EXISTS (SELECT 1 FROM test_series_assessments tsa WHERE tsa.test_series_id = se.test_series_id AND tsa.assessment_id = a.id)
+                   OR EXISTS (SELECT 1 FROM test_series_tests tst WHERE tst.series_id = se.test_series_id AND tst.test_id = COALESCE(t.id, a.id))
+                   OR EXISTS (SELECT 1 FROM package_tests pt WHERE pt.package_id = se.test_series_id AND pt.test_id = COALESCE(t.id, a.id))
+                 )
+             )
+           )
          ORDER BY at.submitted_at DESC NULLS LAST
          LIMIT 1`,
         [userId]
@@ -244,15 +350,29 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
       if (recent.rowCount) {
         assessmentId = recent.rows[0].assessment_id;
       } else {
-        const any = await query(
-          `SELECT at.assessment_id
-           FROM attempts at
-           JOIN scores s ON s.attempt_id = at.id
-           WHERE at.status IN ('submitted', 'auto_submitted')
-           ORDER BY at.submitted_at DESC NULLS LAST
-           LIMIT 1`
+        const enrolledTest = await query(
+          `SELECT COALESCE(t.id, a.id) AS assessment_id
+           FROM student_enrollments se
+           JOIN test_series ts ON ts.id = se.test_series_id
+           LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
+           LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
+           LEFT JOIN assessments a ON a.id = tsa.assessment_id
+           LEFT JOIN tests t ON t.id = tst.test_id
+           WHERE se.user_id = $1 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+             AND (t.is_published = true OR t.status = 'published' OR a.is_published = true)
+             AND COALESCE(t.is_deleted, false) = false
+             AND COALESCE(t.is_personal, false) = false
+             AND COALESCE(t.type, '') NOT IN ('ai_weak_topic', 'mistake_book', 'personal', 'student_practice')
+             AND COALESCE(t.test_type, '') NOT IN ('mistake_book', 'personal', 'ai_weak_topic', 'student_practice')
+             AND COALESCE(a.test_type, t.test_type, '') NOT ILIKE '%booster%'
+             AND COALESCE(a.test_type, t.test_type, '') NOT ILIKE '%battleground%'
+             AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%booster%'
+             AND COALESCE(a.title, t.title, t.test_name, '') NOT ILIKE '%battleground%'
+           ORDER BY COALESCE(t.test_date, a.available_from) ASC NULLS LAST, COALESCE(t.id, a.id) ASC
+           LIMIT 1`,
+          [userId]
         );
-        assessmentId = any.rows[0]?.assessment_id ?? null;
+        assessmentId = enrolledTest.rows[0]?.assessment_id ?? null;
       }
     }
   }
@@ -297,6 +417,44 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
   );
   const assessment = assessmentRes.rows[0];
   if (!assessment) throw ApiError.notFound('Assessment not found');
+
+  // Verify access for standard test-series assessments: student must be enrolled in that test series
+  if (!assessment.is_booster) {
+    const isEnrolledAccess = await query(
+      `SELECT 1 FROM student_enrollments se
+       WHERE se.user_id = $1 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+         AND (
+           EXISTS (SELECT 1 FROM test_series_assessments tsa WHERE tsa.test_series_id = se.test_series_id AND tsa.assessment_id = $2)
+           OR EXISTS (SELECT 1 FROM test_series_tests tst WHERE tst.series_id = se.test_series_id AND tst.test_id = $2)
+           OR EXISTS (SELECT 1 FROM package_tests pt WHERE pt.package_id = se.test_series_id AND pt.test_id = $2)
+         )
+       LIMIT 1`,
+      [userId, assessmentId]
+    );
+
+    const isDirectAccess = isEnrolledAccess.rowCount > 0 || await query(
+      `SELECT 1 FROM attempts at WHERE at.assessment_id = $1 AND at.candidate_id = $2 AND at.status IN ('submitted', 'auto_submitted')
+       UNION
+       SELECT 1 FROM candidate_invites ci WHERE ci.assessment_id = $1 AND LOWER(TRIM(ci.candidate_email)) = LOWER(TRIM($3)) AND ci.status <> 'expired'
+       LIMIT 1`,
+      [assessmentId, userId, req.user.email || '']
+    ).then((r) => r.rowCount > 0);
+
+    if (!isDirectAccess) {
+      return res.json({
+        assessment_id: null,
+        assessment_title: null,
+        is_booster: false,
+        your_rank: null,
+        your_predicted_rank: null,
+        leaderboard: [],
+        topper_comparison: null,
+        topperComparison: null,
+        student_stats: null,
+        has_student_attempt: false,
+      });
+    }
+  }
 
   const result = await query(
     `SELECT at.id AS attempt_id,
