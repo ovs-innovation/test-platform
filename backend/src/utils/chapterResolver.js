@@ -2411,6 +2411,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/semiconductor/i.test(rawChapter) || /semiconductor/i.test(rawTopic)) {
       return 'Semiconductor';
     }
+    if (/two\s*dimension/i.test(rawChapter) || /two\s*dimension/i.test(rawTopic)) {
+      return 'Motion in two dimension';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder

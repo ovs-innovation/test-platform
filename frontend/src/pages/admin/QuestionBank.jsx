@@ -440,6 +440,7 @@ export default function AdminQuestionBank() {
       if (/dual\s*nature/i.test(trimmed)) return 'Dual Nature of Matter';
       if (/semiconductor/i.test(trimmed)) return 'Semiconductor';
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
+      if (/motion in (two|2)\s*dimension(s)?/i.test(trimmed) || /two\s*dimension/i.test(trimmed)) return 'Motion in two dimension';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
       if (/oscillat/i.test(trimmed)) return 'Oscillations';
@@ -789,6 +790,12 @@ export default function AdminQuestionBank() {
         chId === 187 ||
         chId === 26
       ) return 'Motion in straight line';
+
+      if (
+        /motion in (two|2)\s*dimension(s)?/i.test(raw) ||
+        /two\s*dimension/i.test(raw) ||
+        chId === 217
+      ) return 'Motion in two dimension';
 
       if (
         /motion in a plane/i.test(raw) ||
