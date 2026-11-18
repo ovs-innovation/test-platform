@@ -2417,6 +2417,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/units?\s*(and|&)?\s*dimensions?/i.test(rawChapter) || /units?\s*(and|&)?\s*dimensions?/i.test(rawTopic)) {
       return 'Units and dimensions';
     }
+    if (/mechanical properties of solids/i.test(rawChapter) || /mechanical properties of solids/i.test(rawTopic) || /properties of solids/i.test(rawChapter) || /properties of solids/i.test(rawTopic)) {
+      return 'Mechanical Properties of Solids';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder

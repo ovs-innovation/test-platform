@@ -443,6 +443,7 @@ export default function AdminQuestionBank() {
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
       if (/motion in (two|2)\s*dimension(s)?/i.test(trimmed) || /two\s*dimension/i.test(trimmed)) return 'Motion in two dimension';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
+      if (/mechanical properties of solids/i.test(trimmed) || /properties of solids/i.test(trimmed)) return 'Mechanical Properties of Solids';
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
       if (/oscillat/i.test(trimmed)) return 'Oscillations';
       if (/heat\s*and\s*thermo/i.test(trimmed) || /thermodyna/i.test(trimmed)) return 'Heat and Thermodynamics';
@@ -834,6 +835,12 @@ export default function AdminQuestionBank() {
         /gravitation/i.test(raw) ||
         chId === 190
       ) return 'Gravitation';
+
+      if (
+        /mechanical properties of solids/i.test(raw) ||
+        /properties of solids/i.test(raw) ||
+        chId === 136
+      ) return 'Mechanical Properties of Solids';
 
       if (
         /properties\s*of\s*matter/i.test(raw) ||
