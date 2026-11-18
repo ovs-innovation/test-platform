@@ -123,7 +123,18 @@ const start = async () => {
       CREATE INDEX IF NOT EXISTS idx_question_bank_exam_type ON question_bank(exam_type);
       UPDATE question_bank SET marks = 4 WHERE marks != 4 OR marks IS NULL;
       UPDATE questions SET marks = 4 WHERE marks != 4 OR marks IS NULL;
-    `).catch(() => {});
+    `).then(() => {
+      // Auto-sync JEE Physics questions if missing or incomplete on this database environment
+      pool.query("SELECT COUNT(*)::int as count FROM question_bank WHERE UPPER(COALESCE(exam_type, 'NEET')) = 'JEE' AND LOWER(category) = 'physics'")
+        .then(async (chkRes) => {
+          if ((chkRes.rows[0]?.count || 0) < 530) {
+            // eslint-disable-next-line no-console
+            console.log(`[server] JEE Physics questions count (${chkRes.rows[0]?.count || 0} < 530). Auto-syncing in background...`);
+            const { syncAllJeePhysicsChapters } = await import('../scripts/sync_all_jee_physics_chapters.mjs');
+            await syncAllJeePhysicsChapters(pool).catch((e) => console.warn('[server] JEE Physics sync note:', e.message));
+          }
+        }).catch(() => {});
+    }).catch(() => {});
   }
 
   // Asynchronously verify SMTP connection without blocking server startup
