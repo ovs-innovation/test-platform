@@ -61,14 +61,13 @@ async function seed() {
       console.log(`Found existing chapter: "${chRes.rows[0].name}" (ID: ${chapterId})`);
     }
 
-    // 3. Clean up existing JEE PYQ questions for Motion in two dimension
+    // 3. Clean up existing JEE questions for Motion in two dimension
     const delRes = await client.query(`
       DELETE FROM question_bank
       WHERE exam_type = 'JEE' 
-        AND category = 'PYQ'
         AND (chapter_id = $1 OR LOWER(chapter) = 'motion in two dimension')
     `, [chapterId]);
-    console.log(`Cleaned up ${delRes.rowCount} previous JEE PYQ questions for chapter ID ${chapterId}.`);
+    console.log(`Cleaned up ${delRes.rowCount} previous JEE questions for chapter ID ${chapterId}.`);
 
     // 4. Insert all questions
     let mcqCount = 0;
@@ -115,7 +114,7 @@ async function seed() {
           $13, $14, $15, $16, $17, $18, $19, $20, $21, $22
         )
       `, [
-        'PYQ',                                   // category
+        'Physics',                               // category
         isNum ? 'numerical' : 'mcq',             // question_type
         q.question,                              // question_text
         optionsJson,                             // options
