@@ -203,6 +203,7 @@ export const resetPasswordSchema = z.object({
 export const bulkUploadSchema = z.object({
   csv: z.string().min(10),
   default_category: z.string().max(60).optional(),
+  exam_type: z.string().max(50).optional(),
 });
 
 export const bankBulkImportSchema = z.object({

@@ -10,6 +10,8 @@ import { verifyPdfMagicBytes, cleanupUploadedFiles } from '../middleware/pdfUplo
 import { stripHeadersAndFooters } from '../utils/questionFormatter.js';
 import { resolveStandardChapter } from '../utils/chapterResolver.js';
 
+const NEET_CATEGORIES = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'PYQ'];
+const JEE_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'PYQ'];
 const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'PYQ'];
 
 const asJson = (value, fallback) => {
@@ -19,17 +21,36 @@ const asJson = (value, fallback) => {
 };
 
 /**
- * GET /api/question-bank/categories
+ * GET /api/question-bank/categories?exam_type=NEET
  */
 export const listCategories = asyncHandler(async (req, res) => {
-  const { skip_cache, refresh } = req.query;
+  const { exam_type, skip_cache, refresh } = req.query;
   const isBypass = skip_cache === 'true' || refresh === 'true' || req.headers['cache-control'] === 'no-cache';
-  const cacheKey = 'cache:qb:categories';
+  const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
+  const cacheKey = `cache:qb:categories:${normExamType || 'all'}`;
 
   const fetchCategories = async () => {
-    const result = await query(
-      `SELECT category, COUNT(*)::int AS count FROM question_bank GROUP BY category ORDER BY category`
-    );
+    let sql = `SELECT category, COUNT(*)::int AS count FROM question_bank`;
+    const params = [];
+    if (normExamType) {
+      params.push(normExamType);
+      sql += ` WHERE UPPER(COALESCE(exam_type, 'NEET')) = $1`;
+    }
+    sql += ` GROUP BY category ORDER BY category`;
+    let result;
+    try {
+      result = await query(sql, params);
+    } catch (err) {
+      if (err?.code === '42703' || (err?.message && err.message.includes('exam_type'))) {
+        await query(`
+          ALTER TABLE question_bank ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+          CREATE INDEX IF NOT EXISTS idx_question_bank_exam_type ON question_bank(exam_type);
+        `).catch(() => {});
+        result = await query(sql, params);
+      } else {
+        throw err;
+      }
+    }
     const countsMap = new Map();
     for (const r of result.rows) {
       if (!r.category) continue;
@@ -39,8 +60,11 @@ export const listCategories = asyncHandler(async (req, res) => {
 
     const seenLower = new Set();
     const categoriesList = [];
+    const baseCategories = normExamType === 'JEE'
+      ? JEE_CATEGORIES
+      : (normExamType === 'NEET' ? NEET_CATEGORIES : CATEGORIES);
 
-    for (const c of CATEGORIES) {
+    for (const c of baseCategories) {
       const lower = c.toLowerCase();
       seenLower.add(lower);
       const count = countsMap.get(lower) || 0;
@@ -51,6 +75,8 @@ export const listCategories = asyncHandler(async (req, res) => {
       if (!r.category) continue;
       const lower = r.category.trim().toLowerCase();
       if (lower === 'biology') continue; // Exclude legacy biology category
+      if (normExamType === 'NEET' && lower === 'mathematics') continue;
+      if (normExamType === 'JEE' && (lower === 'botany' || lower === 'zoology')) continue;
       if (!seenLower.has(lower)) {
         seenLower.add(lower);
         const displayName = r.category.trim().replace(/\b\w/g, (ch) => ch.toUpperCase());
@@ -72,14 +98,15 @@ export const listCategories = asyncHandler(async (req, res) => {
 });
 
 /**
- * GET /api/question-bank?category=Physics
+ * GET /api/question-bank?category=Physics&exam_type=NEET
  */
 export const listBankQuestions = asyncHandler(async (req, res) => {
   res.setHeader('X-Accel-Buffering', 'no');
   res.setHeader('Cache-Control', 'private, max-age=120, stale-while-revalidate=3600');
-  const { category, chapter, subject, skip_cache, refresh } = req.query;
+  const { category, chapter, subject, exam_type, skip_cache, refresh } = req.query;
   const isBypass = skip_cache === 'true' || refresh === 'true' || req.headers['cache-control'] === 'no-cache';
-  const cacheKey = `cache:qb:list:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
+  const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
+  const cacheKey = `cache:qb:list:${(normExamType || 'all').toLowerCase()}:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
 
   const fetchQuestions = async () => {
     let sql = `
@@ -124,6 +151,10 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     `;
     const conditions = [];
     const params = [];
+    if (normExamType) {
+      params.push(normExamType);
+      conditions.push(`UPPER(COALESCE(qb.exam_type, 'NEET')) = $${params.length}`);
+    }
     if (category && category !== 'All' && category !== 'all') {
       params.push(category.toLowerCase());
       conditions.push(`LOWER(qb.category) = $${params.length}`);
@@ -139,7 +170,20 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
       sql += ' WHERE ' + conditions.join(' AND ');
     }
     sql += ' ORDER BY qb.category, qb.id ASC';
-    const result = await query(sql, params);
+    let result;
+    try {
+      result = await query(sql, params);
+    } catch (err) {
+      if (err?.code === '42703' || (err?.message && err.message.includes('exam_type'))) {
+        await query(`
+          ALTER TABLE question_bank ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+          CREATE INDEX IF NOT EXISTS idx_question_bank_exam_type ON question_bank(exam_type);
+        `).catch(() => {});
+        result = await query(sql, params);
+      } else {
+        throw err;
+      }
+    }
     let questions = (result.rows || []).map((row) => {
       const catOrSubj = (row.category && row.category.toLowerCase() !== 'pyq')
         ? (row.category || row.subject_name || '')
@@ -314,12 +358,16 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
     ? subject
     : (effectiveCategory !== 'PYQ' ? effectiveCategory : null);
 
+  const effectiveExamType = (payload.exam_type && ['NEET', 'JEE'].includes(String(payload.exam_type).toUpperCase()))
+    ? String(payload.exam_type).toUpperCase()
+    : (String(effectiveCategory).toLowerCase() === 'mathematics' ? 'JEE' : 'NEET');
+
   const result = await query(
     `INSERT INTO question_bank (
        category, question_type, question_text, options, correct_index, correct_indices,
        numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution,
-       subject_id, chapter_id, difficulty, image_url, solution_image_url, chapter, topic, subject, status
-     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21) RETURNING *`,
+       subject_id, chapter_id, difficulty, image_url, solution_image_url, chapter, topic, subject, status, exam_type
+     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22) RETURNING *`,
     [
       effectiveCategory,
       question_type || 'mcq',
@@ -342,6 +390,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
       topic || '',
       effectiveSubject || effectiveCategory,
       status || 'normal',
+      effectiveExamType,
     ]
   );
   await delCache('cache:qb:*');
@@ -423,6 +472,10 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
     ? asJson(correct_indices, [])
     : (typeof q.correct_indices === 'string' ? q.correct_indices : JSON.stringify(q.correct_indices || []));
 
+  const effectiveExamType = payload.exam_type !== undefined
+    ? String(payload.exam_type).toUpperCase()
+    : (q.exam_type || (String(effectiveCategory).toLowerCase() === 'mathematics' ? 'JEE' : 'NEET'));
+
   const result = await query(
     `UPDATE question_bank SET 
        question_type = $1,
@@ -445,8 +498,9 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
        topic = $18,
        subject = $19,
        category = $20,
-       status = $21
-     WHERE id = $22 RETURNING *`,
+       status = $21,
+       exam_type = $22
+     WHERE id = $23 RETURNING *`,
     [
       question_type || q.question_type || 'mcq',
       question_text ?? q.question_text,
@@ -469,6 +523,7 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       effectiveSubject || q.subject,
       effectiveCategory,
       effectiveStatus,
+      effectiveExamType,
       id
     ]
   );
@@ -600,12 +655,20 @@ export const deleteBankQuestion = asyncHandler(async (req, res) => {
 });
 
 export const deleteAllBankQuestions = asyncHandler(async (req, res) => {
-  const { category, scope } = req.query;
+  const { category, scope, exam_type } = req.query;
   let sql = 'DELETE FROM question_bank';
+  const conditions = [];
   const params = [];
+  if (exam_type && exam_type !== 'all' && exam_type !== 'All') {
+    params.push(exam_type.toUpperCase());
+    conditions.push(`UPPER(COALESCE(exam_type, 'NEET')) = $${params.length}`);
+  }
   if (scope !== 'all' && category && category !== 'all' && category !== 'All') {
-    sql += ' WHERE LOWER(category) = LOWER($1)';
-    params.push(category);
+    params.push(category.toLowerCase());
+    conditions.push(`LOWER(category) = $${params.length}`);
+  }
+  if (conditions.length > 0) {
+    sql += ' WHERE ' + conditions.join(' AND ');
   }
   const result = await query(sql, params);
   await delCache('cache:qb:*');
@@ -616,21 +679,29 @@ export const deleteAllBankQuestions = asyncHandler(async (req, res) => {
 });
 
 /**
- * GET /api/question-bank/export?category=JavaScript
+ * GET /api/question-bank/export?category=Physics&exam_type=NEET
  */
 export const exportBankQuestions = asyncHandler(async (req, res) => {
   res.setHeader('X-Accel-Buffering', 'no');
-  const { category } = req.query;
+  const { category, exam_type } = req.query;
   let sql = 'SELECT * FROM question_bank';
+  const conditions = [];
   const params = [];
+  if (exam_type && exam_type !== 'all' && exam_type !== 'All') {
+    params.push(exam_type.toUpperCase());
+    conditions.push(`UPPER(COALESCE(exam_type, 'NEET')) = $${params.length}`);
+  }
   if (category && category !== 'all' && category !== 'All') {
-    sql += ' WHERE LOWER(category) = LOWER($1)';
-    params.push(category);
+    params.push(category.toLowerCase());
+    conditions.push(`LOWER(category) = $${params.length}`);
+  }
+  if (conditions.length > 0) {
+    sql += ' WHERE ' + conditions.join(' AND ');
   }
   sql += ' ORDER BY category, id ASC';
   const result = await query(sql, params);
   const csv = questionsToCsv(result.rows, { includeCategory: true, includeSolution: true });
-  const filename = category ? `${category.replace(/\s+/g, '_')}_bank.csv` : 'question_bank_all.csv';
+  const filename = `${(exam_type || 'all').toLowerCase()}_${category ? category.replace(/\s+/g, '_') : 'all'}_bank.csv`;
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
   res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
   res.send(csv);
@@ -638,10 +709,10 @@ export const exportBankQuestions = asyncHandler(async (req, res) => {
 
 /**
  * POST /api/question-bank/bulk
- * CSV columns: category, question_text, question_type, marks, options, correct_index, correct_indices, solution
+ * CSV columns: category, question_text, question_type, marks, options, correct_index, correct_indices, solution, exam_type
  */
 export const bulkUploadBankQuestions = asyncHandler(async (req, res) => {
-  const { csv, default_category } = req.body;
+  const { csv, default_category, exam_type } = req.body;
   const { rows, errors } = parseQuestionCsv(csv, { requireCategory: !default_category });
 
   const created = [];
@@ -651,10 +722,13 @@ export const bulkUploadBankQuestions = asyncHandler(async (req, res) => {
       errors.push({ line: row.line, error: 'Missing category' });
       continue;
     }
+    const rowExamType = (row.exam_type || exam_type)
+      ? String(row.exam_type || exam_type).toUpperCase()
+      : (String(category).toLowerCase() === 'mathematics' ? 'JEE' : 'NEET');
     try {
       const result = await query(
-        `INSERT INTO question_bank (category, question_type, question_text, options, correct_index, correct_indices, marks, solution, subject_id, chapter_id, difficulty, image_url)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id, question_text, category`,
+        `INSERT INTO question_bank (category, question_type, question_text, options, correct_index, correct_indices, marks, solution, subject_id, chapter_id, difficulty, image_url, exam_type)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id, question_text, category, exam_type`,
         [
           category,
           row.question_type,
@@ -668,6 +742,7 @@ export const bulkUploadBankQuestions = asyncHandler(async (req, res) => {
           row.chapter_id || null,
           row.difficulty || 'medium',
           row.image_url || '',
+          rowExamType,
         ]
       );
       created.push(result.rows[0]);
@@ -1019,6 +1094,7 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
       chapter_id: bodyChapterId,
       subject_id: bodySubjectId,
       subject: bodySubject,
+      exam_type: bodyExamType = 'NEET',
     } = req.body;
 
     const maxBytes = env.maxPdfUploadBytes || 100 * 1024 * 1024;
@@ -1439,13 +1515,17 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
 
           const finalTopic = rawTopic && rawTopic.toLowerCase() !== (resolvedChapter || '').toLowerCase() ? rawTopic : (resolvedChapter || '');
 
+          const qExamType = (bodyExamType && ['NEET', 'JEE'].includes(String(bodyExamType).toUpperCase()))
+            ? String(bodyExamType).toUpperCase()
+            : (categoryName === 'Mathematics' ? 'JEE' : 'NEET');
+
           const result = await query(
             `INSERT INTO question_bank (
               category, question_type, question_text, options, correct_index, correct_indices,
               numeric_answer, marks, solution, subject_id, chapter_id, difficulty,
-              image_url, subject, topic, chapter
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
-            RETURNING id, category, question_text, question_type, marks, solution, subject, topic, chapter`,
+              image_url, subject, topic, chapter, exam_type
+            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
+            RETURNING id, category, question_text, question_type, marks, solution, subject, topic, chapter, exam_type`,
             [
               isPyqUpload ? 'PYQ' : categoryName,
               qType,
@@ -1463,6 +1543,7 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
               subjectName || (isPyqUpload ? (bodySubject || 'Botany') : categoryName),
               finalTopic,
               resolvedChapter,
+              qExamType,
             ]
           );
           if (result.rows[0]) {

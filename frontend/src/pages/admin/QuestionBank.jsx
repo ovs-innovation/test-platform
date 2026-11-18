@@ -32,7 +32,9 @@ const tryParseArray = (val) => {
   return [];
 };
 
-const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'PYQ'];
+const NEET_CATEGORIES = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'PYQ'];
+const JEE_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'PYQ'];
+const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'PYQ'];
 
 export const isAssertionReason = (q) => {
   if (!q) return false;
@@ -162,12 +164,24 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
 
 export default function AdminQuestionBank() {
   const toast = useToast();
+  const [examType, setExamType] = useState(() => {
+    const param = new URLSearchParams(window.location.search).get('exam_type');
+    if (param && ['NEET', 'JEE'].includes(param.toUpperCase())) return param.toUpperCase();
+    try {
+      const saved = localStorage.getItem('edvedum_qb_exam_type');
+      if (saved && ['NEET', 'JEE'].includes(saved.toUpperCase())) return saved.toUpperCase();
+    } catch (_) {}
+    return 'NEET';
+  });
   const [category, setCategory] = useState(() => {
     const param = new URLSearchParams(window.location.search).get('category');
     if (param && param.toLowerCase() !== 'biology') return param;
-    return 'Mathematics';
+    return 'Physics';
   });
-  const [categoriesList, setCategoriesList] = useState(DEFAULT_CATEGORIES);
+  const [categoriesList, setCategoriesList] = useState(() => {
+    const initialExam = new URLSearchParams(window.location.search).get('exam_type') || localStorage.getItem('edvedum_qb_exam_type') || 'NEET';
+    return initialExam.toUpperCase() === 'JEE' ? JEE_CATEGORIES : NEET_CATEGORIES;
+  });
   const [pyqSubject, setPyqSubject] = useState(() => {
     try {
       const saved = localStorage.getItem('edvedum_pyq_subject');
@@ -179,9 +193,13 @@ export default function AdminQuestionBank() {
   });
   const [questions, setQuestions] = useState(() => {
     try {
-      const initialCat = new URLSearchParams(window.location.search).get('category') || 'Mathematics';
+      const initialExam = new URLSearchParams(window.location.search).get('exam_type') || localStorage.getItem('edvedum_qb_exam_type') || 'NEET';
+      const initialCat = new URLSearchParams(window.location.search).get('category') || 'Physics';
       const initialSubj = localStorage.getItem('edvedum_pyq_subject') || 'Physics';
-      const extra = initialCat === 'PYQ' && initialSubj !== 'All' ? { subject: initialSubj } : {};
+      const extra = {
+        exam_type: initialExam.toUpperCase(),
+        ...(initialCat === 'PYQ' && initialSubj !== 'All' ? { subject: initialSubj } : {})
+      };
       const cached = questionBankService.getCached(initialCat, extra);
       if (cached && Array.isArray(cached) && cached.length > 0) return cached;
     } catch (_) {}
@@ -189,9 +207,13 @@ export default function AdminQuestionBank() {
   });
   const [loading, setLoading] = useState(() => {
     try {
-      const initialCat = new URLSearchParams(window.location.search).get('category') || 'Mathematics';
+      const initialExam = new URLSearchParams(window.location.search).get('exam_type') || localStorage.getItem('edvedum_qb_exam_type') || 'NEET';
+      const initialCat = new URLSearchParams(window.location.search).get('category') || 'Physics';
       const initialSubj = localStorage.getItem('edvedum_pyq_subject') || 'Physics';
-      const extra = initialCat === 'PYQ' && initialSubj !== 'All' ? { subject: initialSubj } : {};
+      const extra = {
+        exam_type: initialExam.toUpperCase(),
+        ...(initialCat === 'PYQ' && initialSubj !== 'All' ? { subject: initialSubj } : {})
+      };
       const cached = questionBankService.getCached(initialCat, extra);
       if (cached && Array.isArray(cached) && cached.length > 0) return false;
     } catch (_) {}
@@ -1495,6 +1517,7 @@ export default function AdminQuestionBank() {
   const [pdfChaptersLoading, setPdfChaptersLoading] = useState(false);
   const [pdfCustomChapterMode, setPdfCustomChapterMode] = useState(false);
   const [pdfCustomChapter, setPdfCustomChapter] = useState('');
+  const [pdfExamType, setPdfExamType] = useState('NEET');
   const [pdfMarks, setPdfMarks] = useState(4);
   const [pdfDifficulty, setPdfDifficulty] = useState('medium');
   const [pdfIncludeAnswers, setPdfIncludeAnswers] = useState(true);
@@ -1505,10 +1528,31 @@ export default function AdminQuestionBank() {
   const pdfInputRef = useRef(null);
   const answerKeyInputRef = useRef(null);
 
+  const handlePdfExamTypeChange = (type) => {
+    setPdfExamType(type);
+    let nextCat = pdfCategory;
+    if (type === 'JEE' && (nextCat === 'Botany' || nextCat === 'Zoology')) {
+      nextCat = 'Physics';
+    } else if (type === 'NEET' && nextCat === 'Mathematics') {
+      nextCat = 'Physics';
+    }
+    setPdfCategory(nextCat);
+    if (nextCat === 'PYQ') {
+      const defaultSub = type === 'JEE' ? 'Mathematics' : 'Botany';
+      setPdfPyqSubject(defaultSub);
+    }
+  };
+
   const openPdfModal = () => {
     setPdfFile(null);
     setAnswerKeyFile(null);
-    const initialCat = (category && category !== 'All') ? category : 'auto';
+    setPdfExamType(examType);
+    let initialCat = (category && category !== 'All') ? category : 'auto';
+    if (examType === 'JEE' && (initialCat === 'Botany' || initialCat === 'Zoology')) {
+      initialCat = 'Physics';
+    } else if (examType === 'NEET' && initialCat === 'Mathematics') {
+      initialCat = 'Physics';
+    }
     setPdfCategory(initialCat);
     setPdfCustomChapterMode(false);
     setPdfCustomChapter('');
@@ -1520,7 +1564,9 @@ export default function AdminQuestionBank() {
     setPdfSuccessData(null);
 
     if (initialCat === 'PYQ') {
-      const defaultSub = (pyqSubject && pyqSubject !== 'All') ? pyqSubject : 'Botany';
+      const defaultSub = (pyqSubject && pyqSubject !== 'All')
+        ? pyqSubject
+        : (examType === 'JEE' ? 'Mathematics' : 'Botany');
       setPdfPyqSubject(defaultSub);
       const matchSubj = subjectsList.find(s => s.name?.toLowerCase() === defaultSub.toLowerCase());
       const targetSubId = matchSubj?.id || '';
@@ -1740,6 +1786,7 @@ export default function AdminQuestionBank() {
       if (answerKeyFile) {
         formData.append('answer_key', answerKeyFile);
       }
+      formData.append('exam_type', pdfExamType);
       formData.append('category', pdfCategory);
       if (pdfCategory === 'PYQ' && pdfPyqSubject && pdfPyqSubject !== 'auto') {
         formData.append('subject', pdfPyqSubject);
@@ -1783,8 +1830,42 @@ export default function AdminQuestionBank() {
     }
   };
 
+  const handleExamTypeSwitch = (newType) => {
+    if (newType === examType) return;
+    setExamType(newType);
+    try {
+      localStorage.setItem('edvedum_qb_exam_type', newType);
+    } catch (_) {}
+
+    let nextCategory = category;
+    if (newType === 'NEET' && nextCategory === 'Mathematics') {
+      nextCategory = 'Physics';
+    } else if (newType === 'JEE' && (nextCategory === 'Botany' || nextCategory === 'Zoology')) {
+      nextCategory = 'Physics';
+    }
+    setCategory(nextCategory);
+    setSelectedChapter('all');
+    setTypeFilter('all');
+
+    if (category === 'PYQ') {
+      if (newType === 'NEET' && pyqSubject === 'Mathematics') {
+        setPyqSubject('Physics');
+      } else if (newType === 'JEE' && (pyqSubject === 'Botany' || pyqSubject === 'Zoology')) {
+        setPyqSubject('Physics');
+      }
+    }
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('exam_type', newType);
+    url.searchParams.set('category', nextCategory);
+    window.history.replaceState({}, '', url.toString());
+  };
+
   const load = async (forceRefresh = false) => {
-    const extraParams = category === 'PYQ' && pyqSubject !== 'All' ? { subject: pyqSubject } : {};
+    const extraParams = {
+      exam_type: examType,
+      ...(category === 'PYQ' && pyqSubject !== 'All' ? { subject: pyqSubject } : {})
+    };
 
     // 1. Instant check from in-memory cache
     const cachedSync = questionBankService.getCached(category, extraParams);
@@ -1805,26 +1886,29 @@ export default function AdminQuestionBank() {
     }
 
     try {
-      const [data, subjects] = await Promise.all([
+      const [data, subjects, serverCategories] = await Promise.all([
         questionBankService.byCategory(category, extraParams, forceRefresh),
         adminService.subjects().catch(() => []),
+        questionBankService.categories(examType, forceRefresh).catch(() => []),
       ]);
       if (data && Array.isArray(data)) {
         setQuestions(data);
       }
 
+      const isJee = examType === 'JEE';
       const fetched = (subjects || []).filter((s) => s && s.name && s.name.toLowerCase() !== 'biology');
-      const defaultSubjects = [
-        { name: 'Physics' },
-        { name: 'Chemistry' },
-        { name: 'Mathematics' },
-        { name: 'Botany' },
-        { name: 'Zoology' }
-      ];
+      const defaultSubjects = isJee
+        ? [{ name: 'Physics' }, { name: 'Chemistry' }, { name: 'Mathematics' }]
+        : [{ name: 'Physics' }, { name: 'Chemistry' }, { name: 'Botany' }, { name: 'Zoology' }];
 
       const map = new Map();
       fetched.forEach(s => {
-        if (s && s.name && s.name.toLowerCase() !== 'biology') map.set(s.name.toLowerCase(), s);
+        if (!s || !s.name) return;
+        const lower = s.name.toLowerCase();
+        if (lower === 'biology') return;
+        if (isJee && (lower === 'botany' || lower === 'zoology')) return;
+        if (!isJee && lower === 'mathematics') return;
+        map.set(lower, s);
       });
       defaultSubjects.forEach((ds, idx) => {
         if (!map.has(ds.name.toLowerCase())) {
@@ -1832,11 +1916,17 @@ export default function AdminQuestionBank() {
         }
       });
 
-      const unifiedSubjects = Array.from(map.values()).filter((s) => s && s.name && s.name.toLowerCase() !== 'biology');
+      const unifiedSubjects = Array.from(map.values());
       setSubjectsList(unifiedSubjects);
 
-      const subNames = unifiedSubjects.map((s) => s.name).filter((name) => Boolean(name) && name.toLowerCase() !== 'biology');
-      const combined = Array.from(new Set([...DEFAULT_CATEGORIES, ...subNames])).filter((c) => c && c.toLowerCase() !== 'biology');
+      const baseList = isJee ? JEE_CATEGORIES : NEET_CATEGORIES;
+      const serverNames = (serverCategories || []).map((c) => c.name).filter(Boolean);
+      const combined = Array.from(new Set([...baseList, ...serverNames])).filter((c) => {
+        if (!c || c.toLowerCase() === 'biology') return false;
+        if (isJee && (c.toLowerCase() === 'botany' || c.toLowerCase() === 'zoology')) return false;
+        if (!isJee && c.toLowerCase() === 'mathematics') return false;
+        return true;
+      });
       setCategoriesList(combined);
     } catch {
       toast.error('Could not load questions');
@@ -1852,7 +1942,7 @@ export default function AdminQuestionBank() {
     if (chapterSliderRef.current) {
       chapterSliderRef.current.scrollLeft = 0;
     }
-  }, [category, pyqSubject]);
+  }, [examType, category, pyqSubject]);
 
   useEffect(() => {
     checkSliderScroll();
@@ -1913,6 +2003,7 @@ export default function AdminQuestionBank() {
     const initialChapter = (selectedChapter && selectedChapter !== 'all') ? selectedChapter : '';
 
     setForm({
+      exam_type: examType,
       category: isPyqTab ? 'PYQ' : (category && category !== 'All' ? category : ''),
       question_type: 'single_choice',
       status: 'normal',
@@ -1982,6 +2073,7 @@ export default function AdminQuestionBank() {
           : (q.category || ''));
 
     setForm({
+      exam_type: q.exam_type || examType,
       category: qCategory,
       question_type: q.question_type || 'single_choice',
       status: q.status || 'normal',
@@ -2038,12 +2130,12 @@ export default function AdminQuestionBank() {
   const confirmDeleteAll = async () => {
     setDeletingAll(true);
     try {
-      const res = await questionBankService.deleteAll(category, deleteAllScope);
+      const res = await questionBankService.deleteAll(category, deleteAllScope, examType);
       setQuestions([]);
       toast.success(
         deleteAllScope === 'all'
-          ? `Deleted all questions across the entire question bank (${res.count ?? 0} removed)`
-          : `Deleted all questions in ${category} (${res.count ?? 0} removed)`
+          ? `Deleted all questions in ${examType} question bank (${res.count ?? 0} removed)`
+          : `Deleted all questions in ${examType} ${category} (${res.count ?? 0} removed)`
       );
       setDeleteAllModalOpen(false);
       load(true);
@@ -2110,6 +2202,7 @@ export default function AdminQuestionBank() {
 
       const payload = {
         ...form,
+        exam_type: form.exam_type || examType,
         category: targetCategory,
         status: form.status || 'normal',
         question_type: form.question_type,
@@ -2241,8 +2334,8 @@ export default function AdminQuestionBank() {
   const uploadCsv = async () => {
     setUploading(true);
     try {
-      const res = await questionBankService.bulkUpload(csvText, category);
-      toast.success(`Imported ${res.created} questions${res.errors?.length ? ` (${res.errors.length} errors)` : ''}`);
+      const res = await questionBankService.bulkUpload(csvText, category, examType);
+      toast.success(`Imported ${res.created} questions into ${examType} bank${res.errors?.length ? ` (${res.errors.length} errors)` : ''}`);
       setCsvOpen(false);
       load(true);
       setSelectedChapter('all');
@@ -2260,8 +2353,8 @@ export default function AdminQuestionBank() {
   const exportCsv = async (all = false) => {
     setExporting(true);
     try {
-      await questionBankService.exportCsv(all ? null : category);
-      toast.success('Export downloaded');
+      await questionBankService.exportCsv(all ? null : category, examType);
+      toast.success(`${examType} Export downloaded`);
     } catch (err) {
       toast.error(err.message || 'Export failed');
     } finally {
@@ -2371,10 +2464,10 @@ export default function AdminQuestionBank() {
             </button>
             <button type="button" className="btn btn-secondary" onClick={() => setCsvOpen(true)}>CSV Import</button>
             <button type="button" className="btn btn-secondary" onClick={() => exportCsv(false)} disabled={exporting}>
-              Export {category}
+              Export {examType} {category}
             </button>
             <button type="button" className="btn btn-secondary" onClick={() => exportCsv(true)} disabled={exporting}>
-              Export All
+              Export All {examType}
             </button>
             <button
               type="button"
@@ -2446,6 +2539,67 @@ export default function AdminQuestionBank() {
           </div>
         </div>
       )}
+
+      {/* Primary Exam Stream Switcher: NEET vs JEE */}
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 bg-gradient-to-r from-slate-50 via-white to-slate-100/70 dark:from-slate-900/90 dark:via-[#111827]/90 dark:to-[#0f172a]/90 p-3 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs">
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 px-1">
+            <Layers className="h-4 w-4 text-indigo-500 shrink-0" />
+            <span>Curriculum Stream:</span>
+          </div>
+          <div className="inline-flex p-1 rounded-xl bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 shadow-2xs">
+            <button
+              type="button"
+              onClick={() => handleExamTypeSwitch('NEET')}
+              className={`px-4 py-2 rounded-lg text-xs font-black transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+                examType === 'NEET'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 ring-1 ring-blue-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-900'
+              }`}
+            >
+              <span className="text-sm">🩺</span>
+              <span>NEET Section</span>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${
+                examType === 'NEET' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+              }`}>
+                Medical
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleExamTypeSwitch('JEE')}
+              className={`px-4 py-2 rounded-lg text-xs font-black transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+                examType === 'JEE'
+                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-500/25 ring-1 ring-indigo-400/40'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-900'
+              }`}
+            >
+              <span className="text-sm">⚙️</span>
+              <span>JEE Section</span>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${
+                examType === 'JEE' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+              }`}>
+                Engineering
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* Section Context Indicator */}
+        <div className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+          <span>Active Subjects:</span>
+          {examType === 'JEE' ? (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 font-black">
+              <span>Physics</span> • <span>Chemistry</span> • <span>Mathematics</span>
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-black">
+              <span>Physics</span> • <span>Chemistry</span> • <span>Botany</span> • <span>Zoology</span>
+            </span>
+          )}
+        </div>
+      </div>
 
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
@@ -2582,13 +2736,16 @@ export default function AdminQuestionBank() {
                 </span>
               </p>
               <p className="text-xs text-slate-600 dark:text-slate-400">
-                Official JEE Main &amp; NEET past year question repository with KaTeX verified solutions.
+                Official {examType} past year question repository with KaTeX verified solutions.
               </p>
             </div>
           </div>
           <div className="flex items-center gap-1.5 flex-wrap">
             <span className="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mr-1">Subject:</span>
-            {['All', 'Mathematics', 'Physics', 'Chemistry', 'Botany', 'Zoology'].map((s) => (
+            {(examType === 'JEE'
+              ? ['All', 'Physics', 'Chemistry', 'Mathematics']
+              : ['All', 'Physics', 'Chemistry', 'Botany', 'Zoology']
+            ).map((s) => (
               <button
                 key={s}
                 type="button"
@@ -3382,13 +3539,13 @@ export default function AdminQuestionBank() {
             emptyMessage={
               typeFilter === 'assertion_reason'
                 ? selectedChapter !== 'all'
-                  ? `No Assertion-Reason questions found in chapter "${selectedChapter}".`
-                  : `No Assertion-Reason questions found in ${category}.`
+                  ? `No Assertion-Reason questions found in ${examType} chapter "${selectedChapter}".`
+                  : `No Assertion-Reason questions found in ${examType} ${category}.`
                 : category === 'PYQ'
-                  ? 'No questions in the PYQ section yet. Questions will be added to this section soon.'
+                  ? `No questions in the ${examType} PYQ section yet. Questions will be added to this section soon.`
                   : selectedChapter !== 'all'
-                    ? `No questions found for chapter "${selectedChapter}".`
-                    : `No questions in ${category}. Upload a PDF, import via CSV, or add manually.`
+                    ? `No questions found for ${examType} chapter "${selectedChapter}".`
+                    : `No questions in ${examType} ${category}. Upload a ${examType} PDF, import via CSV, or add manually.`
             }
           />
         </div>
@@ -3397,7 +3554,34 @@ export default function AdminQuestionBank() {
       {/* Add / Edit Question Modal */}
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title={editing ? 'Edit question' : 'Add question'} size="lg">
         <form onSubmit={saveQuestion} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 relative z-30">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 relative z-30">
+            <div>
+              <label className="label">Target Curriculum</label>
+              <CustomSelectDropdown
+                value={form.exam_type || examType}
+                options={[
+                  { value: 'NEET', label: '🩺 NEET (Medical)' },
+                  { value: 'JEE', label: '⚙️ JEE (Engineering)' },
+                ]}
+                onChange={(val) => {
+                  const newExam = val;
+                  setForm((f) => {
+                    let nextSubj = f.subject;
+                    if (newExam === 'JEE' && (nextSubj === 'Botany' || nextSubj === 'Zoology')) {
+                      nextSubj = 'Physics';
+                    } else if (newExam === 'NEET' && nextSubj === 'Mathematics') {
+                      nextSubj = 'Physics';
+                    }
+                    return {
+                      ...f,
+                      exam_type: newExam,
+                      subject: nextSubj,
+                      category: f.category === 'PYQ' ? 'PYQ' : nextSubj,
+                    };
+                  });
+                }}
+              />
+            </div>
             <div>
               <label className="label">Question type</label>
               <CustomSelectDropdown
@@ -3447,7 +3631,16 @@ export default function AdminQuestionBank() {
               <CustomSelectDropdown
                 value={form.subject_id || form.subject || ''}
                 placeholder="Select subject"
-                options={[{ id: '', name: 'Select subject' }, ...subjectsList]}
+                options={[
+                  { id: '', name: 'Select subject' },
+                  ...subjectsList.filter((s) => {
+                    const sName = (s.name || '').toLowerCase();
+                    const targetExam = form.exam_type || examType;
+                    if (targetExam === 'JEE' && (sName === 'botany' || sName === 'zoology')) return false;
+                    if (targetExam === 'NEET' && sName === 'mathematics') return false;
+                    return true;
+                  })
+                ]}
                 onChange={(val, opt) => {
                   const subjObj = opt || subjectsList.find(s => (s.id !== undefined && String(s.id) === String(val)) || (s.name && s.name.toLowerCase() === String(val).toLowerCase()));
                   const nextSubjId = (subjObj && subjObj.id !== undefined && subjObj.id !== '' && !isNaN(Number(subjObj.id))) ? Number(subjObj.id) : (val !== '' && val !== null && !isNaN(Number(val)) ? Number(val) : val);
@@ -3763,10 +3956,21 @@ export default function AdminQuestionBank() {
         </form>
       </Modal>
 
-      <Modal open={csvOpen} onClose={() => setCsvOpen(false)} title="Bulk CSV import to question bank" size="lg">
+      <Modal open={csvOpen} onClose={() => setCsvOpen(false)} title={`Bulk CSV Import to ${examType} Question Bank`} size="lg">
+        <div className="mb-3 flex items-center justify-between p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <div className="flex items-center gap-2">
+            <span className="text-base">{examType === 'JEE' ? '⚙️' : '🩺'}</span>
+            <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
+              Active Curriculum: <strong className="text-indigo-600 dark:text-indigo-400">{examType} Section</strong>
+            </span>
+          </div>
+          <span className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+            {examType === 'JEE' ? 'Engineering' : 'Medical'}
+          </span>
+        </div>
         <p className="mb-3 text-sm text-muted">
           Columns: category, question_text, question_type, marks, options, correct_index, correct_indices, solution, subject_id, chapter_id, difficulty, image_url.
-          If CSV has no category column, questions go to <strong>{category}</strong>.
+          If CSV has no category column, questions go to <strong>{category}</strong> ({examType}).
         </p>
         <div className="mb-3 flex flex-wrap gap-2">
           <input ref={fileRef} type="file" accept=".csv,text/csv" className="hidden" onChange={handleFile} />
@@ -3874,6 +4078,52 @@ export default function AdminQuestionBank() {
               </div>
             </div>
 
+            {/* Target Curriculum / Exam Stream */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                  <Layers className="h-3.5 w-3.5 text-indigo-500" /> Target Curriculum / Exam
+                </label>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                  Select exam stream for this PDF
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => handlePdfExamTypeChange('NEET')}
+                  disabled={pdfUploading}
+                  className={`px-3 py-2.5 rounded-xl border text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                    pdfExamType === 'NEET'
+                      ? 'bg-blue-600 text-white border-blue-500 shadow-sm shadow-blue-500/30 ring-1 ring-blue-400/40'
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                  }`}
+                >
+                  <span className="text-sm">🩺</span>
+                  <span>NEET</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                    pdfExamType === 'NEET' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                  }`}>Medical</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handlePdfExamTypeChange('JEE')}
+                  disabled={pdfUploading}
+                  className={`px-3 py-2.5 rounded-xl border text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                    pdfExamType === 'JEE'
+                      ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm shadow-emerald-500/30 ring-1 ring-emerald-400/40'
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                  }`}
+                >
+                  <span className="text-sm">⚙️</span>
+                  <span>JEE</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                    pdfExamType === 'JEE' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                  }`}>Engineering</span>
+                </button>
+              </div>
+            </div>
+
             {/* Target Subject Selector */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
@@ -3888,7 +4138,7 @@ export default function AdminQuestionBank() {
                 value={pdfCategory}
                 options={[
                   { value: 'auto', label: '✨ Auto-Detect by Subject (Multi-Subject paper)' },
-                  ...categoriesList.map((c) => ({ value: c, label: c })),
+                  ...(pdfExamType === 'JEE' ? JEE_CATEGORIES : NEET_CATEGORIES).map((c) => ({ value: c, label: c })),
                 ]}
                 onChange={handlePdfSubjectChange}
                 disabled={pdfUploading}
@@ -3908,12 +4158,13 @@ export default function AdminQuestionBank() {
                 </div>
                 <CustomSelectDropdown
                   value={pdfPyqSubject}
-                  placeholder="Select PYQ Subject (Botany, Zoology, Chemistry, Physics, Mathematics)"
+                  placeholder={`Select PYQ Subject (${pdfExamType === 'JEE' ? 'Physics, Chemistry, Mathematics' : 'Physics, Chemistry, Botany, Zoology'})`}
                   options={[
                     { value: 'auto', label: '✨ Auto-Detect Subject from questions' },
-                    ...subjectsList
-                      .filter((s) => s.name && s.name.toLowerCase() !== 'biology' && s.name.toUpperCase() !== 'PYQ')
-                      .map((s) => ({ value: s.name, label: s.name })),
+                    ...(pdfExamType === 'JEE'
+                      ? ['Physics', 'Chemistry', 'Mathematics']
+                      : ['Physics', 'Chemistry', 'Botany', 'Zoology']
+                    ).map((name) => ({ value: name, label: name })),
                   ]}
                   onChange={handlePdfPyqSubjectChange}
                   disabled={pdfUploading}

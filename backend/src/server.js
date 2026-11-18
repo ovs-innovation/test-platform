@@ -117,8 +117,10 @@ const start = async () => {
     initScheduler();
     // Initialize background payment reconciliation cron
     startPaymentReconciliationCron();
-    // Enforce 4 marks for all questions in question_bank and test questions
+    // Enforce 4 marks and ensure question_bank exam_type exists for NEET / JEE separation
     pool.query(`
+      ALTER TABLE question_bank ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+      CREATE INDEX IF NOT EXISTS idx_question_bank_exam_type ON question_bank(exam_type);
       UPDATE question_bank SET marks = 4 WHERE marks != 4 OR marks IS NULL;
       UPDATE questions SET marks = 4 WHERE marks != 4 OR marks IS NULL;
     `).catch(() => {});

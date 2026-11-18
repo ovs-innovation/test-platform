@@ -59,7 +59,7 @@ describe('Question Bank Integer Question Type Normalization & Logic', () => {
     const normalized = normalizeQuestionBankPayload(rawPayload);
 
     expect(normalized.question_type).toBe('mcq');
-    expect(normalized.options).toEqual(['H2O', 'CO2', 'NaCl', 'CH4']);
+    expect(normalized.options.map((opt) => (typeof opt === 'string' ? opt : opt.text))).toEqual(['H2O', 'CO2', 'NaCl', 'CH4']);
     expect(normalized.correct_index).toBe(0);
     expect(normalized.correct_indices).toEqual([0]);
     expect(normalized.numeric_answer).toBeNull();

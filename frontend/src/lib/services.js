@@ -309,11 +309,20 @@ export const questionBankService = {
     const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
     return persistentCache.getSync(key) !== null;
   },
-  categories: (forceRefresh = false) => {
-    if (forceRefresh) clearCache('qb_categories');
+  categories: (examType, forceRefresh = false) => {
+    // If first argument is boolean (legacy call like categories(true)), handle gracefully
+    let normalizedExamType = typeof examType === 'string' ? examType : null;
+    let shouldRefresh = typeof examType === 'boolean' ? examType : forceRefresh;
+    const key = `qb_categories_${(normalizedExamType || 'all').toLowerCase()}`;
+    if (shouldRefresh) clearCache(key);
     return withCache(
-      'qb_categories',
-      () => api.get('/question-bank/categories', forceRefresh ? { params: { refresh: 'true' } } : {}).then((r) => r.data.categories),
+      key,
+      () => api.get('/question-bank/categories', {
+        params: {
+          ...(normalizedExamType ? { exam_type: normalizedExamType } : {}),
+          ...(shouldRefresh ? { refresh: 'true' } : {}),
+        }
+      }).then((r) => r.data.categories),
       86400000,
       600000
     );
@@ -414,10 +423,12 @@ export const questionBankService = {
     clearCache();
     return api.delete(`/question-bank/${id}`).then((r) => r.data);
   },
-  deleteAll: (category, scope = 'category') => {
+  deleteAll: (category, scope = 'category', examType) => {
     clearCache('qb');
     clearCache();
-    const params = scope === 'all' ? { scope: 'all' } : { category };
+    const params = scope === 'all'
+      ? { scope: 'all', ...(examType ? { exam_type: examType } : {}) }
+      : { category, ...(examType ? { exam_type: examType } : {}) };
     return api.delete('/question-bank/all', { params }).then((r) => r.data);
   },
   import: (bankId, assessmentId, section_id) =>
@@ -427,17 +438,22 @@ export const questionBankService = {
     clearCache();
     return api.post('/question-bank/upload-pdf', data, { timeout: 900000, ...config }).then((r) => r.data);
   },
-  bulkUpload: (csv, default_category) => {
+  bulkUpload: (csv, default_category, exam_type) => {
     clearCache('qb');
     clearCache();
-    return api.post('/question-bank/bulk', { csv, default_category }).then((r) => r.data);
+    return api.post('/question-bank/bulk', { csv, default_category, ...(exam_type ? { exam_type } : {}) }).then((r) => r.data);
   },
   bulkImportToAssessment: (assessmentId, data) =>
     api.post(`/question-bank/bulk-import/${assessmentId}`, data).then((r) => r.data),
-  exportCsv: (category) =>
+  exportCsv: (category, examType) =>
     import('./csv.js').then(({ downloadFromApi }) => {
-      const path = category ? `/question-bank/export?category=${encodeURIComponent(category)}` : '/question-bank/export';
-      return downloadFromApi(path, category ? `${category}_bank.csv` : 'question_bank.csv');
+      const params = new URLSearchParams();
+      if (category) params.set('category', category);
+      if (examType) params.set('exam_type', examType);
+      const queryStr = params.toString() ? `?${params.toString()}` : '';
+      const path = `/question-bank/export${queryStr}`;
+      const prefix = examType ? `${examType.toLowerCase()}_` : '';
+      return downloadFromApi(path, category ? `${prefix}${category}_bank.csv` : `${prefix}question_bank.csv`);
     }),
 };
 
