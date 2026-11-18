@@ -843,6 +843,13 @@ export default function AdminQuestionBank() {
       ) return 'Mechanical Properties of Solids';
 
       if (
+        /kinetic theory of gases/i.test(raw) ||
+        /kinetic theory/i.test(raw) ||
+        chId === 219 ||
+        chId === 140
+      ) return 'Kinetic Theory of Gases';
+
+      if (
         /properties\s*of\s*matter/i.test(raw) ||
         chId === 307
       ) return 'Properties of Matter';

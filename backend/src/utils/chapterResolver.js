@@ -2420,6 +2420,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/mechanical properties of solids/i.test(rawChapter) || /mechanical properties of solids/i.test(rawTopic) || /properties of solids/i.test(rawChapter) || /properties of solids/i.test(rawTopic)) {
       return 'Mechanical Properties of Solids';
     }
+    if (/kinetic theory of gases/i.test(rawChapter) || /kinetic theory of gases/i.test(rawTopic) || /kinetic theory/i.test(rawChapter) || /kinetic theory/i.test(rawTopic)) {
+      return 'Kinetic Theory of Gases';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder
