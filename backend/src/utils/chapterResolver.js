@@ -2411,6 +2411,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/semiconductor/i.test(rawChapter) || /semiconductor/i.test(rawTopic)) {
       return 'Semiconductor';
     }
+    if (/(one|1)\s*dimension/i.test(rawChapter) || /(one|1)\s*dimension/i.test(rawTopic)) {
+      return 'Motion in one Dimension';
+    }
     if (/two\s*dimension/i.test(rawChapter) || /two\s*dimension/i.test(rawTopic)) {
       return 'Motion in two dimension';
     }

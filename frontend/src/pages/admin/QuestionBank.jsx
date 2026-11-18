@@ -440,6 +440,7 @@ export default function AdminQuestionBank() {
       if (/ray\s*optics/i.test(trimmed) || /geometrical\s*optics/i.test(trimmed)) return 'Ray Optics';
       if (/dual\s*nature/i.test(trimmed)) return 'Dual Nature of Matter';
       if (/semiconductor/i.test(trimmed)) return 'Semiconductor';
+      if (/motion in (one|1)\s*dimension(s)?/i.test(trimmed) || /(one|1)\s*dimension/i.test(trimmed)) return 'Motion in one Dimension';
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
       if (/motion in (two|2)\s*dimension(s)?/i.test(trimmed) || /two\s*dimension/i.test(trimmed)) return 'Motion in two dimension';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
@@ -797,6 +798,11 @@ export default function AdminQuestionBank() {
         chId === 187 ||
         chId === 26
       ) return 'Motion in straight line';
+
+      if (
+        /motion in (one|1)\s*dimension(s)?/i.test(raw) ||
+        /(one|1)\s*dimension/i.test(raw)
+      ) return 'Motion in one Dimension';
 
       if (
         /motion in (two|2)\s*dimension(s)?/i.test(raw) ||

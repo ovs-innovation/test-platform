@@ -4,6 +4,7 @@ import { ALL_MOTION_PYQ_QUESTIONS } from './motion_pyq_questions_data.mjs';
 import { ALL_UNITS_PYQ_QUESTIONS } from './units_pyq_questions_data.mjs';
 import { SOLIDS_PYQ_QUESTIONS } from './solids_pyq_questions_data.mjs';
 import { KTG_PYQ_QUESTIONS } from './ktg_pyq_questions_data.mjs';
+import { ALL_MOTION1D_PYQ_QUESTIONS } from './motion1d_pyq_questions_data.mjs';
 
 const CHAPTERS_DATA = [
   {
@@ -25,6 +26,11 @@ const CHAPTERS_DATA = [
     name: 'Kinetic Theory of Gases',
     aliases: ['kinetic theory of gases', 'kinetic theory'],
     questions: KTG_PYQ_QUESTIONS,
+  },
+  {
+    name: 'Motion in one Dimension',
+    aliases: ['motion in one dimension', 'motion in 1d', 'motion in a straight line', 'motion in straight line', 'rectilinear motion'],
+    questions: ALL_MOTION1D_PYQ_QUESTIONS,
   },
 ];
 
