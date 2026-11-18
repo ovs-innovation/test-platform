@@ -427,6 +427,7 @@ export default function AdminQuestionBank() {
     }
 
     if (activeSubj === 'physics') {
+      if (/unit(s)?\s*(and|&)?\s*dimension(s)?/i.test(trimmed)) return 'Units and dimensions';
       if (/unit(s)?\s*(and|&)?\s*measurement(s)?/i.test(trimmed)) return 'Units and Measurement';
       if (/^\s*electrostatics?\s*$/i.test(trimmed)) return 'Electrostatics';
       if (/electrostatic/i.test(trimmed) || /capacitan/i.test(trimmed)) return 'Electrostatics';
@@ -778,6 +779,11 @@ export default function AdminQuestionBank() {
     if (activeSubj === 'physics') {
       const raw = (q.chapter_name || q.chapter || '').trim();
       const chId = Number(q.chapter_id);
+
+      if (
+        /unit(s)?\s*(and|&)?\s*dimension(s)?/i.test(raw) ||
+        chId === 218
+      ) return 'Units and dimensions';
 
       if (
         /unit(s)?\s*(and|&)?\s*measurement(s)?/i.test(raw) ||

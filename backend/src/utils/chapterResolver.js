@@ -2414,6 +2414,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/two\s*dimension/i.test(rawChapter) || /two\s*dimension/i.test(rawTopic)) {
       return 'Motion in two dimension';
     }
+    if (/units?\s*(and|&)?\s*dimensions?/i.test(rawChapter) || /units?\s*(and|&)?\s*dimensions?/i.test(rawTopic)) {
+      return 'Units and dimensions';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder
