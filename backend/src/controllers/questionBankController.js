@@ -25,7 +25,7 @@ const asJson = (value, fallback) => {
  */
 export const listCategories = asyncHandler(async (req, res) => {
   const { exam_type, skip_cache, refresh } = req.query;
-  const isBypass = skip_cache === 'true' || refresh === 'true' || req.headers['cache-control'] === 'no-cache';
+  const isBypass = skip_cache === 'true' || refresh === 'true';
   const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
   const cacheKey = `cache:qb:categories:${normExamType || 'all'}`;
 
@@ -104,7 +104,7 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
   res.setHeader('X-Accel-Buffering', 'no');
   res.setHeader('Cache-Control', 'private, max-age=120, stale-while-revalidate=3600');
   const { category, chapter, subject, exam_type, skip_cache, refresh } = req.query;
-  const isBypass = skip_cache === 'true' || refresh === 'true' || req.headers['cache-control'] === 'no-cache';
+  const isBypass = skip_cache === 'true' || refresh === 'true';
   const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
   const cacheKey = `cache:qb:list:${(normExamType || 'all').toLowerCase()}:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
 
@@ -114,40 +114,10 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
         qb.*,
         COALESCE(c.name, NULLIF(qb.chapter, '')) AS chapter,
         c.name AS chapter_name, 
-        s.name AS subject_name,
-        CASE 
-          WHEN qb.status = 'normal' THEN '[]'::json 
-          ELSE COALESCE(tu.used_in_tests, '[]'::json) 
-        END AS used_in_tests,
-        CASE 
-          WHEN qb.status = 'normal' THEN 0 
-          ELSE COALESCE(tu.test_count, 0) 
-        END AS test_count,
-        CASE 
-          WHEN qb.status = 'normal' THEN 'normal'
-          WHEN qb.status = 'already_chosen' THEN 'already_chosen'
-          WHEN COALESCE(tu.test_count, 0) > 0 THEN 'already_chosen'
-          ELSE 'normal' 
-        END AS computed_status
+        s.name AS subject_name
       FROM question_bank qb
       LEFT JOIN chapters c ON qb.chapter_id = c.id
       LEFT JOIN subjects s ON qb.subject_id = s.id
-      LEFT JOIN (
-        SELECT 
-          q.bank_question_id,
-          COUNT(DISTINCT q.assessment_id)::int AS test_count,
-          json_agg(
-            DISTINCT jsonb_build_object(
-              'assessment_id', q.assessment_id,
-              'test_name', COALESCE(t.test_name, a.title, 'Test #' || q.assessment_id)
-            )
-          ) AS used_in_tests
-        FROM questions q
-        LEFT JOIN assessments a ON q.assessment_id = a.id
-        LEFT JOIN tests t ON a.id = t.id
-        WHERE q.bank_question_id IS NOT NULL
-        GROUP BY q.bank_question_id
-      ) tu ON tu.bank_question_id = qb.id
     `;
     const conditions = [];
     const params = [];
@@ -184,7 +154,42 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
         throw err;
       }
     }
+
+    // Efficiently map test usage only for the matched questions
+    const qIds = (result.rows || []).map((r) => r.id);
+    const usageMap = new Map();
+    if (qIds.length > 0) {
+      try {
+        const tuRes = await query(`
+          SELECT 
+            q.bank_question_id,
+            COUNT(DISTINCT q.assessment_id)::int AS test_count,
+            json_agg(
+              DISTINCT jsonb_build_object(
+                'assessment_id', q.assessment_id,
+                'test_name', COALESCE(t.test_name, a.title, 'Test #' || q.assessment_id)
+              )
+            ) AS used_in_tests
+          FROM questions q
+          LEFT JOIN assessments a ON q.assessment_id = a.id
+          LEFT JOIN tests t ON a.id = t.id
+          WHERE q.bank_question_id = ANY($1::int[])
+          GROUP BY q.bank_question_id
+        `, [qIds]);
+        for (const tu of tuRes.rows) {
+          usageMap.set(tu.bank_question_id, tu);
+        }
+      } catch (_) {}
+    }
+
     let questions = (result.rows || []).map((row) => {
+      const tu = usageMap.get(row.id);
+      const usedInTests = tu?.used_in_tests || [];
+      const testCount = tu?.test_count || 0;
+      const computedStatus = (row.status === 'already_chosen' || testCount > 0)
+        ? 'already_chosen'
+        : (row.status || 'normal');
+
       const catOrSubj = (row.category && row.category.toLowerCase() !== 'pyq')
         ? (row.category || row.subject_name || '')
         : (row.subject || row.subject_name || row.category || '');
@@ -198,9 +203,9 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
       return {
         ...row,
         chapter: standardChapter,
-        status: row.computed_status || row.status || 'available',
-        used_in_tests: row.used_in_tests || [],
-        test_count: row.test_count || 0,
+        status: computedStatus,
+        used_in_tests: usedInTests,
+        test_count: testCount,
       };
     });
 

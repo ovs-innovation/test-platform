@@ -296,17 +296,31 @@ export const assessmentService = {
   },
 };
 
+const getQbCacheKey = (category, extraParams = {}) => {
+  const normCat = (category || 'all').toLowerCase();
+  const sorted = {};
+  Object.keys(extraParams || {})
+    .sort()
+    .forEach((k) => {
+      const v = extraParams[k];
+      if (v !== undefined && v !== null && v !== '') {
+        sorted[k] = String(v).toLowerCase();
+      }
+    });
+  return `qb_by_cat_${normCat}_${JSON.stringify(sorted)}`;
+};
+
 export const questionBankService = {
   getCached: (category, extraParams = {}) => {
-    const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
+    const key = getQbCacheKey(category, extraParams);
     return persistentCache.getSync(key);
   },
   getCachedAsync: async (category, extraParams = {}) => {
-    const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
+    const key = getQbCacheKey(category, extraParams);
     return persistentCache.get(key);
   },
   hasCache: (category, extraParams = {}) => {
-    const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
+    const key = getQbCacheKey(category, extraParams);
     return persistentCache.getSync(key) !== null;
   },
   categories: (examType, forceRefresh = false) => {
@@ -338,7 +352,7 @@ export const questionBankService = {
     );
   },
   byCategory: async (category, extraParams = {}, forceRefresh = false) => {
-    const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
+    const key = getQbCacheKey(category, extraParams);
     if (forceRefresh) {
       await persistentCache.delete(key);
       clearCache(key);

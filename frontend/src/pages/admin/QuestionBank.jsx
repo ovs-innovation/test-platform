@@ -1879,6 +1879,7 @@ export default function AdminQuestionBank() {
         setQuestions(cachedAsync);
         setLoading(false);
       } else {
+        setQuestions([]);
         setLoading(true);
       }
     } else {
