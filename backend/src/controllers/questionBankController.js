@@ -3,7 +3,7 @@ import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
-import { rememberCache, delCache, setCache } from '../config/redis.js';
+import { rememberCache, delCache, setCache, getCache } from '../config/redis.js';
 import { normalizeQuestionBankPayload } from '../utils/questionBankPayload.js';
 import { env } from '../config/env.js';
 import { verifyPdfMagicBytes, cleanupUploadedFiles } from '../middleware/pdfUpload.js';
@@ -89,11 +89,21 @@ export const listCategories = asyncHandler(async (req, res) => {
 
   if (isBypass) {
     const payload = await fetchCategories();
-    await setCache(cacheKey, payload, 86400);
+    if (payload?.categories?.length > 0) {
+      await setCache(cacheKey, payload, 86400);
+    }
     return res.json(payload);
   }
 
-  const payload = await rememberCache(cacheKey, 86400, fetchCategories);
+  const cached = await getCache(cacheKey);
+  if (cached !== null && cached.categories && cached.categories.length > 0) {
+    return res.json(cached);
+  }
+
+  const payload = await fetchCategories();
+  if (payload?.categories?.length > 0) {
+    await setCache(cacheKey, payload, 86400);
+  }
   res.json(payload);
 });
 
@@ -223,11 +233,21 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
 
   if (isBypass) {
     const payload = await fetchQuestions();
-    await setCache(cacheKey, payload, 86400);
+    if (payload?.questions?.length > 0) {
+      await setCache(cacheKey, payload, 86400);
+    }
     return res.json(payload);
   }
 
-  const payload = await rememberCache(cacheKey, 86400, fetchQuestions);
+  const cached = await getCache(cacheKey);
+  if (cached !== null && cached.questions && cached.questions.length > 0) {
+    return res.json(cached);
+  }
+
+  const payload = await fetchQuestions();
+  if (payload?.questions?.length > 0) {
+    await setCache(cacheKey, payload, 86400);
+  }
   res.json(payload);
 });
 

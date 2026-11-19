@@ -207,6 +207,23 @@ const run = async () => {
       }
     });
 
+    await runSeedOnce('seed_sync_all_jee_physics_chapters_875', async () => {
+      await pool.query(`
+        ALTER TABLE question_bank ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+        CREATE INDEX IF NOT EXISTS idx_question_bank_exam_type ON question_bank(exam_type);
+      `).catch(() => {});
+
+      const qCheck = await pool.query(
+        "SELECT COUNT(*)::int as count FROM question_bank WHERE UPPER(COALESCE(exam_type, 'NEET')) = 'JEE' AND LOWER(category) = 'physics'"
+      );
+      if ((qCheck.rows[0]?.count || 0) < 875) {
+        // eslint-disable-next-line no-console
+        console.log(`[migrate] JEE Physics questions count is ${qCheck.rows[0]?.count || 0} (<875). Syncing all 6 JEE Physics chapters...`);
+        const { syncAllJeePhysicsChapters } = await import('../../scripts/sync_all_jee_physics_chapters.mjs');
+        await syncAllJeePhysicsChapters(pool);
+      }
+    });
+
     // eslint-disable-next-line no-console
     console.log('[migrate] Database migration check completed.');
   } catch (err) {

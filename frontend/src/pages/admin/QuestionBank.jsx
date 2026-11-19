@@ -444,7 +444,10 @@ export default function AdminQuestionBank() {
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
       if (/motion in (two|2)\s*dimension(s)?/i.test(trimmed) || /two\s*dimension/i.test(trimmed)) return 'Motion in two dimension';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
+      if (/laws?\s*of\s*motion/i.test(trimmed)) return 'Laws of Motion';
+      if (/units?\s*(and|&)?\s*dimensions?/i.test(trimmed)) return 'Units and dimensions';
       if (/mechanical properties of solids/i.test(trimmed) || /properties of solids/i.test(trimmed)) return 'Mechanical Properties of Solids';
+      if (/kinetic\s*theory/i.test(trimmed)) return 'Kinetic Theory of Gases';
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
       if (/oscillat/i.test(trimmed)) return 'Oscillations';
       if (/heat\s*and\s*thermo/i.test(trimmed) || /thermodyna/i.test(trimmed)) return 'Heat and Thermodynamics';

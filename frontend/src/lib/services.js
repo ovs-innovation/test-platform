@@ -398,7 +398,9 @@ export const questionBankService = {
       })
       .then((r) => {
         const questions = r.data.questions || [];
-        persistentCache.set(key, questions, 86400000);
+        if (questions.length > 0) {
+          persistentCache.set(key, questions, 86400000);
+        }
         return questions;
       })
       .finally(() => {

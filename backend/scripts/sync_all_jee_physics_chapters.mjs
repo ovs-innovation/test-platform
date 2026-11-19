@@ -5,6 +5,7 @@ import { ALL_UNITS_PYQ_QUESTIONS } from './units_pyq_questions_data.mjs';
 import { SOLIDS_PYQ_QUESTIONS } from './solids_pyq_questions_data.mjs';
 import { KTG_PYQ_QUESTIONS } from './ktg_pyq_questions_data.mjs';
 import { ALL_MOTION1D_PYQ_QUESTIONS } from './motion1d_pyq_questions_data.mjs';
+import { ALL_LOM_PYQ_QUESTIONS } from './lom_pyq_questions_data.mjs';
 
 const CHAPTERS_DATA = [
   {
@@ -32,20 +33,32 @@ const CHAPTERS_DATA = [
     aliases: ['motion in one dimension', 'motion in 1d', 'motion in a straight line', 'motion in straight line', 'rectilinear motion'],
     questions: ALL_MOTION1D_PYQ_QUESTIONS,
   },
+  {
+    name: 'Laws of Motion',
+    aliases: ['laws of motion', 'newtons laws of motion', 'newton laws of motion', 'nlm', 'law of motion'],
+    questions: ALL_LOM_PYQ_QUESTIONS,
+  },
 ];
 
 export async function syncAllJeePhysicsChapters(clientOrPool = pool) {
   console.log('=== STARTING SYNC OF ALL JEE PHYSICS CHAPTERS ===');
 
-  // 1. Resolve Physics subject dynamically
-  const subRes = await clientOrPool.query(
+  // 1. Resolve Physics subject dynamically (or create if missing)
+  let subRes = await clientOrPool.query(
     "SELECT id, name FROM subjects WHERE LOWER(name) = 'physics' LIMIT 1"
   );
+  let subjectId, subjectName;
   if (subRes.rows.length === 0) {
-    throw new Error("Subject 'Physics' not found in database!");
+    console.log("Subject 'Physics' not found in database, creating it...");
+    const insSub = await clientOrPool.query(
+      "INSERT INTO subjects (name) VALUES ('Physics') RETURNING id, name"
+    );
+    subjectId = insSub.rows[0].id;
+    subjectName = insSub.rows[0].name;
+  } else {
+    subjectId = subRes.rows[0].id;
+    subjectName = subRes.rows[0].name;
   }
-  const subjectId = subRes.rows[0].id;
-  const subjectName = subRes.rows[0].name;
   console.log(`Resolved Subject: "${subjectName}" (ID: ${subjectId})`);
 
   let grandTotalInserted = 0;
