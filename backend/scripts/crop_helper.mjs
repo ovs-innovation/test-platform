@@ -1,31 +1,27 @@
+import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
-import { createCanvas, loadImage } from '@napi-rs/canvas';
 
-const outDir = './backend/scripts/alcohols_diagrams';
-if (!fs.existsSync(outDir)) {
-  fs.mkdirSync(outDir, { recursive: true });
-}
-
-// Bounding box in PDF coords (scale = 2.0)
-// pageNum, x, y, width, height
-export async function cropBox(pageNum, x, y, w, h, outName) {
-  const pagePath = `./backend/scripts/alcohols_pages/page_${pageNum}.png`;
-  const img = await loadImage(pagePath);
+// Helper to auto-trim white/near-white border and return clean buffer
+export async function cropAndTrim(srcPagePath, box, outPath) {
+  const { left, top, width, height } = box;
   
-  const scale = 2.0;
-  const sx = Math.round(x * scale);
-  const sy = Math.round(y * scale);
-  const sw = Math.round(w * scale);
-  const sh = Math.round(h * scale);
+  // First extract candidate box
+  const rawCrop = await sharp(srcPagePath)
+    .extract({ left, top, width, height })
+    .toBuffer();
 
-  const canvas = createCanvas(sw, sh);
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
-
-  const buf = canvas.toBuffer('image/png');
-  const outFile = path.join(outDir, outName);
-  fs.writeFileSync(outFile, buf);
-  console.log(`Cropped: ${outFile} (${sw}x${sh})`);
+  // Trim near-white borders (background is #ffffff or #fbfbfb)
+  // Sharp trim will trim pixels matching the top-left pixel
+  try {
+    const trimmed = await sharp(rawCrop)
+      .trim({ background: '#ffffff', threshold: 15 })
+      .extend({ top: 15, bottom: 15, left: 15, right: 15, background: '#ffffff' })
+      .png()
+      .toFile(outPath);
+    return trimmed;
+  } catch (err) {
+    // If trimming fails (e.g. completely solid or cannot trim), write rawCrop
+    await sharp(rawCrop).png().toFile(outPath);
+  }
 }
-

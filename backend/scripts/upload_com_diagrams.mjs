@@ -1,48 +1,57 @@
+import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
-import { uploadImageToCloudinary } from '../src/services/cloudinaryService.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const diagrams = [
-  { key: '1', file: 'uploads/center_of_mass/q1_diagram.png', id: 'q1_diagram' },
-  { key: '2', file: 'uploads/center_of_mass/q2_diagram.png', id: 'q2_diagram' },
-  { key: '2_opt_a', file: 'uploads/center_of_mass/q2_opt_a.png', id: 'q2_opt_a' },
-  { key: '2_opt_b', file: 'uploads/center_of_mass/q2_opt_b.png', id: 'q2_opt_b' },
-  { key: '2_opt_c', file: 'uploads/center_of_mass/q2_opt_c.png', id: 'q2_opt_c' },
-  { key: '2_opt_d', file: 'uploads/center_of_mass/q2_opt_d.png', id: 'q2_opt_d' },
-  { key: '13', file: 'uploads/center_of_mass/q13_diagram.png', id: 'q13_diagram' },
-  { key: '20', file: 'uploads/center_of_mass/q20_diagram.png', id: 'q20_diagram' },
-  { key: '26', file: 'uploads/center_of_mass/q26_diagram.png', id: 'q26_diagram' },
-];
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'fyxpnmdh',
+  api_key: process.env.CLOUDINARY_API_KEY || '716642519429436',
+  api_secret: process.env.CLOUDINARY_API_SECRET || '69WgGypmzKl34WdRC_OLaKiaBRU',
+});
 
-async function main() {
-  const result = {};
-  for (const item of diagrams) {
-    const fullPath = path.resolve(__dirname, '..', item.file);
+const diagramsDir = path.resolve(__dirname, 'com_diagrams');
+const urlsFile = path.resolve(__dirname, 'com_diagram_urls.json');
+
+async function uploadAll() {
+  const files = fs.readdirSync(diagramsDir).filter(f => f.endsWith('.png'));
+  console.log(`Found ${files.length} diagrams to upload to Cloudinary...`);
+
+  let urlsMap = {};
+  if (fs.existsSync(urlsFile)) {
     try {
-      console.log(`Uploading ${item.key}...`);
-      const res = await uploadImageToCloudinary(fullPath, {
-        folder: 'edvedum/questions/center_of_mass',
-        public_id: item.id
+      urlsMap = JSON.parse(fs.readFileSync(urlsFile, 'utf8'));
+    } catch (_) {}
+  }
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const base = path.basename(file, '.png');
+    if (urlsMap[file]) {
+      console.log(`[ALREADY UPLOADED] ${file} -> ${urlsMap[file]}`);
+      continue;
+    }
+
+    const filePath = path.resolve(diagramsDir, file);
+    try {
+      const res = await cloudinary.uploader.upload(filePath, {
+        folder: 'edvedum/com_pyq',
+        public_id: base,
+        overwrite: true,
       });
-      const url = res.secure_url || res.url;
-      console.log(`${item.key} uploaded:`, url);
-      result[item.key] = url;
+      urlsMap[file] = res.secure_url;
+      console.log(`[UPLOADED ${i + 1}/${files.length}] ${file} -> ${res.secure_url}`);
     } catch (err) {
-      console.error(`Failed to upload ${item.key}:`, err.message);
-      result[item.key] = `/uploads/center_of_mass/${path.basename(item.file)}`;
+      console.error(`Failed to upload ${file}:`, err.message);
     }
   }
 
-  const outPath = path.resolve(__dirname, 'com_diagram_urls.json');
-  fs.writeFileSync(outPath, JSON.stringify(result, null, 2));
-  console.log('Saved diagram URLs to:', outPath);
+  fs.writeFileSync(urlsFile, JSON.stringify(urlsMap, null, 2));
+  console.log('Finished uploading all diagrams to Cloudinary!');
 }
 
-main().catch(console.error);
-
+uploadAll().catch(console.error);

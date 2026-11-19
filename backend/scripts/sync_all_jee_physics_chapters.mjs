@@ -6,6 +6,7 @@ import { SOLIDS_PYQ_QUESTIONS } from './solids_pyq_questions_data.mjs';
 import { KTG_PYQ_QUESTIONS } from './ktg_pyq_questions_data.mjs';
 import { ALL_MOTION1D_PYQ_QUESTIONS } from './motion1d_pyq_questions_data.mjs';
 import { ALL_LOM_PYQ_QUESTIONS } from './lom_pyq_questions_data.mjs';
+import { ALL_COM_PYQ_QUESTIONS } from './com_pyq_questions_data.mjs';
 
 const CHAPTERS_DATA = [
   {
@@ -37,6 +38,11 @@ const CHAPTERS_DATA = [
     name: 'Laws of Motion',
     aliases: ['laws of motion', 'newtons laws of motion', 'newton laws of motion', 'nlm', 'law of motion'],
     questions: ALL_LOM_PYQ_QUESTIONS,
+  },
+  {
+    name: 'Center of mass momentum and collision',
+    aliases: ['center of mass momentum and collision', 'center of mass and collision', 'center of mass, momentum and collision', 'center of mass', 'com'],
+    questions: ALL_COM_PYQ_QUESTIONS,
   },
 ];
 
