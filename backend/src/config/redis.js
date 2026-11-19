@@ -63,10 +63,9 @@ export async function getCache(key) {
  * Sets a cached value with a TTL in seconds (default 60s).
  */
 export async function setCache(key, value, ttlSeconds = 60) {
-  const jsonStr = JSON.stringify(value);
-
   if (isRedisConnected && redisClient) {
     try {
+      const jsonStr = JSON.stringify(value);
       await redisClient.setex(key, ttlSeconds, jsonStr);
       return;
     } catch (_) {
@@ -74,8 +73,8 @@ export async function setCache(key, value, ttlSeconds = 60) {
     }
   }
 
-  // Fallback to in-memory map with bounded memory safety (max 2000 keys)
-  const MAX_IN_MEMORY_KEYS = 2000;
+  // Fallback to in-memory map with bounded memory safety (max 5000 keys)
+  const MAX_IN_MEMORY_KEYS = 5000;
   if (inMemoryFallbackCache.size >= MAX_IN_MEMORY_KEYS) {
     const now = Date.now();
     for (const [k, v] of inMemoryFallbackCache.entries()) {

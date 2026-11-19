@@ -117,8 +117,10 @@ const start = async () => {
     initScheduler();
     // Initialize background payment reconciliation cron
     startPaymentReconciliationCron();
-    // Enforce 4 marks for all questions in question_bank and test questions
+    // Enforce 4 marks and ensure question_bank exam_type exists for NEET / JEE separation
     pool.query(`
+      ALTER TABLE question_bank ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+      CREATE INDEX IF NOT EXISTS idx_question_bank_exam_type ON question_bank(exam_type);
       UPDATE question_bank SET marks = 4 WHERE marks != 4 OR marks IS NULL;
       UPDATE questions SET marks = 4 WHERE marks != 4 OR marks IS NULL;
     `).catch(() => {});
@@ -140,6 +142,23 @@ const start = async () => {
     attachShutdown(server);
     // eslint-disable-next-line no-console
     console.log(`[server] API running at http://localhost:${env.port} (${env.nodeEnv})`);
+
+    // Auto-sync JEE Physics questions in the background without delaying server startup
+    setTimeout(async () => {
+      try {
+        const chkRes = await pool.query(
+          "SELECT COUNT(*)::int as count FROM question_bank WHERE UPPER(COALESCE(exam_type, 'NEET')) = 'JEE' AND LOWER(category) = 'physics'"
+        );
+        if ((chkRes.rows[0]?.count || 0) < 875) {
+          // eslint-disable-next-line no-console
+          console.log(`[server] JEE Physics questions count (${chkRes.rows[0]?.count || 0} < 875). Auto-syncing in background...`);
+          const { syncAllJeePhysicsChapters } = await import('../scripts/sync_all_jee_physics_chapters.mjs');
+          await syncAllJeePhysicsChapters(pool).catch((e) => console.warn('[server] JEE Physics sync note:', e.message));
+        }
+      } catch (err) {
+        console.warn('[server] JEE Physics check note:', err?.message || err);
+      }
+    }, 6000);
   } catch (err) {
     if (err.code === 'EADDRINUSE') {
       // eslint-disable-next-line no-console

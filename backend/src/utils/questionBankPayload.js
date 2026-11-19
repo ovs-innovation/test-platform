@@ -160,5 +160,6 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
         topic: finalTopic,
         ...(subject !== undefined ? { subject } : (category !== undefined ? { subject: category } : {})),
         ...(payload.status !== undefined ? { status: payload.status } : {}),
+        ...(payload.exam_type !== undefined ? { exam_type: payload.exam_type } : {}),
     };
 };

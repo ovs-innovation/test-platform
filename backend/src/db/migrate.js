@@ -207,6 +207,13 @@ const run = async () => {
       }
     });
 
+    await runSeedOnce('seed_ensure_jee_columns', async () => {
+      await pool.query(`
+        ALTER TABLE question_bank ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+        CREATE INDEX IF NOT EXISTS idx_question_bank_exam_type ON question_bank(exam_type);
+      `).catch(() => {});
+    });
+
     // eslint-disable-next-line no-console
     console.log('[migrate] Database migration check completed.');
   } catch (err) {

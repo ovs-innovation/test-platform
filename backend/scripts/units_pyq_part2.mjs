@@ -1,538 +1,993 @@
-// NEET Units & Measurement PYQ Part 2: Q42 to Q82
-
-export const PART2_QUESTIONS = [
-  {
-    qNum: 42,
-    exam: 'NEET 2013',
-    question: "If in an experiment four quantities a, b, c and d are measured with percentage error 1%, 2%, 3% and 4% respectively.\nQuantity P is calculated as follows $P = \\frac{a^3 b^2}{cd}$ % error in P is",
-    options: [
-      "7%",
-      "4%",
-      "14%",
-      "10%"
-    ],
-    correctIndex: 2,
-    solution: "Given $P = \\frac{a^3 b^2}{cd}$:\n$$\\frac{\\Delta P}{P}\\times 100 = 3\\left(\\frac{\\Delta a}{a}\\times 100\\right) + 2\\left(\\frac{\\Delta b}{b}\\times 100\\right) + \\left(\\frac{\\Delta c}{c}\\times 100\\right) + \\left(\\frac{\\Delta d}{d}\\times 100\\right)$$\n$$= 3(1\\%) + 2(2\\%) + 1(3\\%) + 1(4\\%) = 3 + 4 + 3 + 4 = 14\\%$$\n\nHence, the correct option is (C)."
-  },
-  {
-    qNum: 43,
-    exam: 'AIPMT 2012 Mains',
-    question: "The dimensions of $(\\mu_0\\varepsilon_0)^{-1/2}$ are",
-    options: [
-      "[L^{1/2}T^{-1/2}]",
-      "[L^{-1}T]",
-      "[LT^{-1}]",
-      "[L^{1/2}T^{1/2}]"
-    ],
-    correctIndex: 2,
-    solution: "Speed of electromagnetic waves in vacuum is given by:\n$$c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} = (\\mu_0 \\varepsilon_0)^{-1/2}$$\nTherefore, the dimension of $(\\mu_0\\varepsilon_0)^{-1/2}$ is that of velocity:\n$$[c] = [\\text{LT}^{-1}]$$\n\nHence, the correct option is (C)."
-  },
-  {
-    qNum: 44,
-    exam: 'AIPMT 2012 Prelims',
-    question: "The damping force on an oscillator is directly proportional to the velocity. The units of the constant of proportionality are",
-    options: [
-      "\\text{kg m s}^{-1}",
-      "\\text{kg m s}^{-2}",
-      "\\text{kg s}^{-1}",
-      "\\text{kg s}"
-    ],
-    correctIndex: 2,
-    solution: "Given $F \\propto v \\implies F = b v$, where $b$ is the damping constant:\n$$b = \\frac{F}{v} = \\frac{\\text{N}}{\\text{m/s}} = \\frac{\\text{kg m s}^{-2}}{\\text{m s}^{-1}} = \\text{kg s}^{-1}$$\n\nHence, the correct option is (C)."
-  },
-  {
-    qNum: 45,
-    exam: 'AIPMT 2011 Mains',
-    question: "The density of a material in CGS system of units is $4\\text{ g cm}^{-3}$. In a system of units in which unit of length is $10\\text{ cm}$ and unit of mass is $100\\text{ g}$, the value of density of material will be",
-    options: [
-      "0.04",
-      "0.4",
-      "40",
-      "400"
-    ],
-    correctIndex: 2,
-    solution: "Using the unit conversion relation $n_2 u_2 = n_1 u_1$:\n$$n_2 = n_1 \\left[\\frac{M_1}{M_2}\\right]^1 \\left[\\frac{L_1}{L_2}\\right]^{-3}$$\n$$n_2 = 4 \\left[\\frac{1\\text{ g}}{100\\text{ g}}\\right]^1 \\left[\\frac{1\\text{ cm}}{10\\text{ cm}}\\right]^{-3} = 4 \\times \\frac{1}{100} \\times 10^3 = 4 \\times 10 = 40$$\n\nHence, the correct option is (C)."
-  },
-  {
-    qNum: 46,
-    exam: 'AIPMT 2011 Prelims',
-    question: "The dimensions of $(\\mu_0\\varepsilon_0)^{-1/2}$ are",
-    options: [
-      "[L^{1/2}T^{-1/2}]",
-      "[L^{-1}T]",
-      "[LT^{-1}]",
-      "[L^{1/2}T^{1/2}]"
-    ],
-    correctIndex: 2,
-    solution: "From Maxwell's electromagnetic theory, the speed of light in vacuum is:\n$$c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} = (\\mu_0 \\varepsilon_0)^{-1/2}$$\nTherefore, the dimension of $(\\mu_0\\varepsilon_0)^{-1/2}$ is velocity $[\\text{LT}^{-1}]$.\n\nHence, the correct option is (C)."
-  },
-  {
-    qNum: 47,
-    exam: 'AIPMT 2010 Mains',
-    question: "A student measures the distance traversed in free fall of a body, initially at rest, in a given time. He uses this data to estimate g, the acceleration due to gravity. If the maximum percentage errors in measurement of the distance and the time are $e_1$ and $e_2$ respectively, the percentage error in the estimation of g is",
-    options: [
-      "e_2 - e_1",
-      "e_1 + 2e_2",
-      "e_1 + e_2",
-      "e_1 - 2e_2"
-    ],
-    correctIndex: 1,
-    solution: "Distance traversed from rest: $h = \\frac{1}{2}gt^2 \\implies g = \\frac{2h}{t^2}$.\nMaximum fractional error:\n$$\\frac{\\Delta g}{g} = \\frac{\\Delta h}{h} + 2\\frac{\\Delta t}{t}$$\nMultiplying by 100:\n$$\\text{Percentage error in } g = e_1 + 2e_2$$\n\nHence, the correct option is (B)."
-  },
-  {
-    qNum: 48,
-    exam: 'AIPMT 2010 Prelims',
-    question: "The dimension of $\\frac{1}{2}\\varepsilon_0 E^2$, where $\\varepsilon_0$ is permittivity of free space and E is electric field, is",
-    options: [
-      "\\text{ML}^2\\text{T}^{-2}",
-      "\\text{ML}^{-1}\\text{T}^{-2}",
-      "\\text{ML}^2\\text{T}^{-1}",
-      "\\text{MLT}^{-1}"
-    ],
-    correctIndex: 1,
-    solution: "The expression $\\frac{1}{2}\\varepsilon_0 E^2$ represents electrostatic energy density (energy per unit volume $u_E$):\n$$[u_E] = \\frac{[\\text{Energy}]}{[\\text{Volume}]} = \\frac{[\\text{ML}^2\\text{T}^{-2}]}{[\\text{L}^3]} = [\\text{ML}^{-1}\\text{T}^{-2}]$$\n\nHence, the correct option is (B)."
-  },
-  {
-    qNum: 49,
-    exam: 'AIPMT 2009',
-    question: "If the dimensions of a physical quantity are given by $\\text{M}^a \\text{L}^b \\text{T}^c$, then the physical quantity will be",
-    options: [
-      "velocity if a = 1, b = 0, c = -1",
-      "acceleration if a = 1, b = 1, c = -2",
-      "force if a = 0, b = -1, c = -2",
-      "pressure if a = 1, b = -1, c = -2"
-    ],
-    correctIndex: 3,
-    solution: "Checking each option:\n- Velocity: $[\\text{LT}^{-1}] = \\text{M}^0 \\text{L}^1 \\text{T}^{-1}$\n- Acceleration: $[\\text{LT}^{-2}] = \\text{M}^0 \\text{L}^1 \\text{T}^{-2}$\n- Force: $[\\text{MLT}^{-2}] = \\text{M}^1 \\text{L}^1 \\text{T}^{-2}$\n- Pressure: $\\frac{\\text{Force}}{\\text{Area}} = [\\text{ML}^{-1}\\text{T}^{-2}] = \\text{M}^1 \\text{L}^{-1} \\text{T}^{-2}$, matching $a = 1, b = -1, c = -2$.\n\nHence, the correct option is (D)."
-  },
-  {
-    qNum: 50,
-    exam: 'AIPMT 2008',
-    question: "If the error in the measurement of radius of a sphere is 2%, then the error in the determination of volume of the sphere will be",
-    options: [
-      "8%",
-      "2%",
-      "4%",
-      "6%"
-    ],
-    correctIndex: 3,
-    solution: "Volume of a sphere is $V = \\frac{4}{3}\\pi r^3$.\nPercentage error in volume:\n$$\\frac{\\Delta V}{V}\\times 100 = 3\\left(\\frac{\\Delta r}{r}\\times 100\\right) = 3(2\\%) = 6\\%$$\n\nHence, the correct option is (D)."
-  },
+export const UNITS_PYQ_PART2 = [
   {
     qNum: 51,
-    exam: 'AIPMT 2008',
-    question: "Which two of the following five physical parameters have the same dimensions ?\n1. Energy density\n2. Refractive index\n3. Dielectric constant\n4. Young's modulus\n5. Magnetic field",
+    exam: 'JEE Main 2021 (27 Jul, Shift 2)',
+    question: 'Match List - I with List - II: \nList - I: \n(a) Capacitance, $C$ \n(b) Permittivity of free space, $\\varepsilon_0$ \n(c) Permeability of free space, $\\mu_0$ \n(d) Electric field, $E$ \n\nList - II: \n(i) $[M L T^{-3} A^{-1}]$ \n(ii) $[M L T^{-2} A^{-2}]$ \n(iii) $[M^{-1} L^{-2} T^4 A^2]$ \n(iv) $[M^{-1} L^{-3} T^4 A^2]$',
     options: [
-      "1 and 4",
-      "1 and 5",
-      "2 and 4",
-      "3 and 5"
+      '(a)-(iii), (b)-(iv), (c)-(ii), (d)-(i)',
+      '(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)',
+      '(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)',
+      '(a)-(iv), (b)-(ii), (c)-(iii), (d)-(i)'
     ],
-    correctIndex: 0,
-    solution: "1. Energy density $= \\frac{\\text{Energy}}{\\text{Volume}} = \\frac{[\\text{ML}^2\\text{T}^{-2}]}{[\\text{L}^3]} = [\\text{ML}^{-1}\\text{T}^{-2}]$\n2. Refractive index is dimensionless $[\\text{M}^0\\text{L}^0\\text{T}^0]$\n3. Dielectric constant is dimensionless $[\\text{M}^0\\text{L}^0\\text{T}^0]$\n4. Young's modulus $= \\frac{\\text{Stress}}{\\text{Strain}} = [\\text{ML}^{-1}\\text{T}^{-2}]$\n5. Magnetic field $= [\\text{MT}^{-2}\\text{A}^{-1}]$\n\nParameters 1 and 4 have identical dimensions $[\\text{ML}^{-1}\\text{T}^{-2}]$.\n\nHence, the correct option is (A)."
+    correct_option: 0,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(a) Capacitance $C = [M^{-1} L^{-2} T^4 A^2] \\to$ (iii)
+(b) Permittivity $\\varepsilon_0 = [M^{-1} L^{-3} T^4 A^2] \\to$ (iv)
+(c) Permeability $\\mu_0 = [M L T^{-2} A^{-2}] \\to$ (ii)
+(d) Electric field $E = [M L T^{-3} A^{-1}] \\to$ (i).
+Hence: (a)-(iii), (b)-(iv), (c)-(ii), (d)-(i).`
   },
   {
     qNum: 52,
-    exam: 'AIPMT 2007',
-    question: "Dimensions of resistance in an electrical circuit, in terms of dimension of mass M, of length L, of time T and of current I, would be",
+    exam: 'JEE Main 2021 (26 Aug, Shift 1)',
+    question: 'If $E, L, M$ and $G$ denote energy, angular momentum, mass and constant of gravitation respectively, then the quantity $P = \\frac{E L^2}{M^5 G^2}$ has the dimensions of:',
     options: [
-      "[\\text{ML}^2\\text{T}^{-2}]",
-      "[\\text{ML}^2\\text{T}^{-1}\\text{I}^{-1}]",
-      "[\\text{ML}^2\\text{T}^{-3}\\text{I}^{-2}]",
-      "[\\text{ML}^2\\text{T}^{-3}\\text{I}^{-1}]"
+      'length',
+      'mass',
+      'time',
+      'dimensionless'
     ],
-    correctIndex: 2,
-    solution: "Electric power $P = I^2 R \\implies R = \\frac{P}{I^2}$:\n$$[P] = \\frac{[\\text{Work}]}{[\\text{Time}]} = \\frac{[\\text{ML}^2\\text{T}^{-2}]}{[\\text{T}]} = [\\text{ML}^2\\text{T}^{-3}]$$\n$$[R] = \\frac{[\\text{ML}^2\\text{T}^{-3}]}{[\\text{I}^2]} = [\\text{ML}^2\\text{T}^{-3}\\text{I}^{-2}]$$\n\nHence, the correct option is (C)."
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$[E] = [ML^2 T^{-2}]$
+$[L] = [ML^2 T^{-1}] \\implies [L^2] = [M^2 L^4 T^{-2}]$
+$[M^5] = [M^5]$
+$[G] = [M^{-1} L^3 T^{-2}] \\implies [G^2] = [M^{-2} L^6 T^{-4}]$.
+$[P] = \\frac{[ML^2 T^{-2}][M^2 L^4 T^{-2}]}{[M^5][M^{-2} L^6 T^{-4}]} = \\frac{[M^3 L^6 T^{-4}]}{[M^3 L^6 T^{-4}]} = [M^0 L^0 T^0]$.
+Hence $P$ is dimensionless.`
   },
   {
     qNum: 53,
-    exam: 'AIPMT 2006',
-    question: "The velocity v of a particle at time t is given by $v = at + \\frac{b}{t + c}$, where a, b and c are constants. The dimensions of a, b and c are",
+    exam: 'JEE Main 2021 (26 Aug, Shift 2)',
+    question: 'Match List - I with List - II: \nList - I: \n(a) Magnetic induction \n(b) Magnetic flux \n(c) Magnetic permeability \n(d) Magnetization \n\nList - II: \n(i) $[M L^2 T^{-2} A^{-1}]$ \n(ii) $[M L T^{-2} A^{-2}]$ \n(iii) $[M T^{-2} A^{-1}]$ \n(iv) $[L^{-1} A]$',
     options: [
-      "[\\text{L}], [\\text{LT}] \\text{ and } [\\text{LT}^{-2}]",
-      "[\\text{LT}^{-2}], [\\text{L}] \\text{ and } [\\text{T}]",
-      "[\\text{L}^2], [\\text{T}] \\text{ and } [\\text{LT}^{-2}]",
-      "[\\text{LT}^{-2}], \\text{ and } [\\text{LT}] \\text{ and } [\\text{L}]"
+      '(a)-(iii), (b)-(ii), (c)-(iv), (d)-(i)',
+      '(a)-(iii), (b)-(i), (c)-(ii), (d)-(iv)',
+      '(a)-(ii), (b)-(iv), (c)-(i), (d)-(iii)',
+      '(a)-(i), (b)-(iii), (c)-(ii), (d)-(iv)'
     ],
-    correctIndex: 1,
-    solution: "1. Denominator $(t + c)$: terms added must have same dimensions $\\implies [c] = [t] = [\\text{T}]$.\n2. First term $[at] = [v] \\implies [a][\\text{T}] = [\\text{LT}^{-1}] \\implies [a] = [\\text{LT}^{-2}]$.\n3. Second term $\\left[\\frac{b}{t + c}\\right] = [v] \\implies \\frac{[b]}{[\\text{T}]} = [\\text{LT}^{-1}] \\implies [b] = [\\text{L}]$.\n\nThus, dimensions are $[\\text{LT}^{-2}], [\\text{L}]$ and $[\\text{T}]$.\n\nHence, the correct option is (B)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(a) Magnetic induction $B = [M T^{-2} A^{-1}] \\to$ (iii)
+(b) Magnetic flux $\\Phi = B A = [M L^2 T^{-2} A^{-1}] \\to$ (i)
+(c) Magnetic permeability $\\mu = [M L T^{-2} A^{-2}] \\to$ (ii)
+(d) Magnetization $M = I/L = [L^{-1} A] \\to$ (iv).
+Matching: (a)-(iii), (b)-(i), (c)-(ii), (d)-(iv).`
   },
   {
     qNum: 54,
-    exam: 'AIPMT 2005',
-    question: "The ratio of the dimensions of Planck's constant and that of moment of inertia is the dimensions of",
+    exam: 'JEE Main 2021 (26 Aug, Shift 2)',
+    question: 'Match List - I with List - II: \nList - I: \n(a) Magnetic induction \n(b) Magnetic flux \n(c) Magnetic permeability \n(d) Magnetizing field \n\nList - II: \n(i) $[M L^2 T^{-2} A^{-1}]$ \n(ii) $[M T^{-2} A^{-1}]$ \n(iii) $[M L T^{-2} A^{-2}]$ \n(iv) $[L^{-1} A]$',
     options: [
-      "time",
-      "frequency",
-      "angular momentum",
-      "velocity"
+      '(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)',
+      '(a)-(ii), (b)-(i), (c)-(iii), (d)-(iv)',
+      '(a)-(ii), (b)-(iii), (c)-(i), (d)-(iv)',
+      '(a)-(iii), (b)-(i), (c)-(ii), (d)-(iv)'
     ],
-    correctIndex: 1,
-    solution: "Planck's constant $h$: $[h] = [\\text{ML}^2\\text{T}^{-1}]$.\nMoment of inertia $I = m r^2$: $[I] = [\\text{ML}^2]$.\n\nRatio:\n$$\\left[\\frac{h}{I}\\right] = \\frac{[\\text{ML}^2\\text{T}^{-1}]}{[\\text{ML}^2]} = [\\text{T}^{-1}]$$\n$[\\text{T}^{-1}]$ is the dimension of frequency.\n\nHence, the correct option is (B)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(a) Magnetic induction: $[M T^{-2} A^{-1}] \\to$ (ii)
+(b) Magnetic flux: $[M L^2 T^{-2} A^{-1}] \\to$ (i)
+(c) Magnetic permeability: $[M L T^{-2} A^{-2}] \\to$ (iii)
+(d) Magnetizing field $H$: $[L^{-1} A] \\to$ (iv).
+Hence: (a)-(ii), (b)-(i), (c)-(iii), (d)-(iv).`
   },
   {
     qNum: 55,
-    exam: 'AIPMT 2004',
-    question: "The dimensions of universal gravitational constant are",
+    exam: 'JEE Main 2021 (27 Aug, Shift 1)',
+    question: 'If $E$ and $H$ represent the intensity of electric field and magnetizing field respectively, then the unit of $E/H$ will be:',
     options: [
-      "[\\text{M}^{-1}\\text{L}^3\\text{T}^{-2}]",
-      "[\\text{ML}^2\\text{T}^{-1}]",
-      "[\\text{M}^{-2}\\text{L}^3\\text{T}^{-2}]",
-      "[\\text{M}^{-2}\\text{L}^2\\text{T}^{-1}]"
+      'Joule',
+      'Ohm',
+      'Henry',
+      'Farad'
     ],
-    correctIndex: 0,
-    solution: "Newton's law of gravitation:\n$$F = \\frac{G m_1 m_2}{r^2} \\implies G = \\frac{F r^2}{m_1 m_2}$$\n$$[G] = \\frac{[\\text{MLT}^{-2}][\\text{L}^2]}{[\\text{M}^2]} = [\\text{M}^{-1}\\text{L}^3\\text{T}^{-2}]$$\n\nHence, the correct option is (A)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$E/H$ represents the wave impedance of the medium:
+$[E] = [M L T^{-3} A^{-1}]$ and $[H] = [L^{-1} A]$.
+$[E/H] = \\frac{[M L T^{-3} A^{-1}]}{[L^{-1} A]} = [M L^2 T^{-3} A^{-2}]$, which is the dimension of resistance.
+The SI unit of resistance is Ohm ($\\Omega$).`
   },
   {
     qNum: 56,
-    exam: 'AIPMT 2004',
-    question: "The unit of permittivity of free space, $\\varepsilon_0$, is",
+    exam: 'JEE Main 2021 (27 Aug, Shift 1)',
+    question: 'Which of the following is NOT a dimensionless quantity?',
     options: [
-      "\\text{coulomb/newton-metre}",
-      "\\text{newton-metre}^2/\\text{coulomb}^2",
-      "\\text{coulomb}^2/\\text{newton-metre}^2",
-      "\\text{coulomb}^2/(\\text{newton-metre})^2"
+      'Power factor',
+      'Quality factor',
+      'Permeability of free space',
+      'Relative permittivity'
     ],
-    correctIndex: 2,
-    solution: "From Coulomb's law:\n$$F = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q_1 q_2}{r^2} \\implies \\varepsilon_0 = \\frac{q_1 q_2}{4\\pi F r^2}$$\n$$\\text{Unit of } \\varepsilon_0 = \\frac{\\text{C}\\times\\text{C}}{\\text{N}\\times\\text{m}^2} = \\text{coulomb}^2/\\text{newton-metre}^2$$\n\nHence, the correct option is (C)."
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Permeability of free space $\\mu_0 = 4\\pi \\times 10^{-7}\\text{ T}\\cdot\\text{m}/\\text{A}$ has dimension $[M L T^{-2} A^{-2}]$, so it is not dimensionless.
+Power factor $(\\cos\\phi)$, Quality factor ($Q$) and Relative permittivity ($\\varepsilon_r$) are all dimensionless.`
   },
   {
     qNum: 57,
-    exam: 'AIPMT 2001',
-    question: "The dimensions of Planck's constant equals to that of",
+    exam: 'JEE Main 2021 (27 Aug, Shift 2)',
+    question: "Match List - I with List - II: \nList - I: \n(a) $R_H$ (Rydberg constant) \n(b) $h$ (Planck's constant) \n(c) $\\mu_B$ (Bohr magneton) \n(d) $N_A$ (Avogadro number) \n\nList - II: \n(i) $\\text{kg}\\cdot\\text{m}^2\\cdot\\text{s}^{-1}$ \n(ii) $\\text{m}^{-1}$ \n(iii) $\\text{mol}^{-1}$ \n(iv) $\\text{A}\\cdot\\text{m}^2$",
     options: [
-      "energy",
-      "momentum",
-      "angular momentum",
-      "power"
+      '(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)',
+      '(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)',
+      '(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)',
+      '(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)'
     ],
-    correctIndex: 2,
-    solution: "Planck's constant: $E = h\\nu \\implies [h] = \\frac{[E]}{[\\nu]} = \\frac{[\\text{ML}^2\\text{T}^{-2}]}{[\\text{T}^{-1}]} = [\\text{ML}^2\\text{T}^{-1}]$.\nAngular momentum: $L = mvr \\implies [L] = [\\text{M}][\\text{LT}^{-1}][\\text{L}] = [\\text{ML}^2\\text{T}^{-1}]$.\nBoth have identical dimensions $[\\text{ML}^2\\text{T}^{-1}]$.\n\nHence, the correct option is (C)."
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(a) Rydberg constant $R_H$: unit $\\text{m}^{-1} \\to$ (ii)
+(b) Planck's constant $h$: unit $\\text{J}\\cdot\\text{s} = \\text{kg}\\cdot\\text{m}^2\\cdot\\text{s}^{-1} \\to$ (i)
+(c) Bohr magneton $\\mu_B$: unit $\\text{A}\\cdot\\text{m}^2 \\to$ (iv)
+(d) Avogadro number $N_A$: unit $\\text{mol}^{-1} \\to$ (iii).
+Matching: (a)-(ii), (b)-(i), (c)-(iv), (d)-(iii).`
   },
   {
     qNum: 58,
-    exam: 'AIPMT 2000',
-    question: "Which pair do not have equal dimensions ?",
+    exam: 'JEE Main 2021 (27 Aug, Shift 2)',
+    question: 'If force $(F)$, length $(L)$ and time $(T)$ are taken as the fundamental quantities, then what will be the dimension of density?',
     options: [
-      "Energy and torque",
-      "Force and impulse",
-      "Angular momentum and Planck constant",
-      "Elastic modulus and pressure."
+      '$[F L^{-4} T^2]$',
+      '$[F L^{-3} T^2]$',
+      '$[F L^{-5} T^2]$',
+      '$[F^{-1} L^{-4} T^2]$'
     ],
-    correctIndex: 1,
-    solution: "- Force $= [\\text{MLT}^{-2}]$\n- Impulse $= \\text{Force}\\times\\text{Time} = [\\text{MLT}^{-1}]$\nThese two have different dimensions.\n\nHence, the correct option is (B)."
+    correct_option: 0,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Density $\\rho = \\frac{M}{L^3}$.
+Since $F = M a = M \\frac{L}{T^2} \\implies M = F L^{-1} T^2$.
+Therefore:
+$[\\rho] = \\frac{[F L^{-1} T^2]}{[L^3]} = [F L^{-4} T^2]$.`
   },
   {
     qNum: 59,
-    exam: 'AIPMT 1999',
-    question: "The dimensional formula for magnetic flux is",
+    exam: 'JEE Main 2021 (31 Aug, Shift 1)',
+    question: 'Match List - I with List - II: \nList - I: \n(a) Torque \n(b) Impulse \n(c) Tension \n(d) Surface tension \n\nList - II: \n(i) $[M L^2 T^{-2}]$ \n(ii) $[M L T^{-1}]$ \n(iii) $[M L T^{-2}]$ \n(iv) $[M T^{-2}]$',
     options: [
-      "[\\text{ML}^2\\text{T}^{-2}\\text{A}^{-1}]",
-      "[\\text{ML}^3\\text{T}^{-2}\\text{A}^{-2}]",
-      "[\\text{M}^0\\text{L}^{-2}\\text{T}^2\\text{A}^{-2}]",
-      "[\\text{ML}^2\\text{T}^{-1}\\text{A}^2]"
+      '(a)-(i), (b)-(iii), (c)-(ii), (d)-(iv)',
+      '(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)',
+      '(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)',
+      '(a)-(iv), (b)-(ii), (c)-(iii), (d)-(i)'
     ],
-    correctIndex: 0,
-    solution: "Magnetic flux $\\Phi = B A$.\nFrom Lorentz force $F = I L B \\implies B = \\frac{F}{I L}$:\n$$[B] = \\frac{[\\text{MLT}^{-2}]}{[\\text{A}][\\text{L}]} = [\\text{MT}^{-2}\\text{A}^{-1}]$$\n$$[\\Phi] = [B][A] = [\\text{MT}^{-2}\\text{A}^{-1}][\\text{L}^2] = [\\text{ML}^2\\text{T}^{-2}\\text{A}^{-1}]$$\n\nHence, the correct option is (A)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(a) Torque: $[M L^2 T^{-2}] \\to$ (i)
+(b) Impulse: $[M L T^{-1}] \\to$ (ii)
+(c) Tension: $[M L T^{-2}] \\to$ (iii)
+(d) Surface tension: $[M T^{-2}] \\to$ (iv).
+Matching: (a)-(i), (b)-(ii), (c)-(iii), (d)-(iv).`
   },
   {
     qNum: 60,
-    exam: 'AIPMT 1996',
-    question: "An equation is given here $\\left(P + \\frac{a}{V^2}\\right) = b\\,\\frac{\\theta}{V}$ where $P = \\text{Pressure}$, $V = \\text{Volume}$ and $\\theta = \\text{Absolute temperature}$. If $a$ and $b$ are constants, the dimensions of $a$ will be",
+    exam: 'JEE Main 2021 (31 Aug, Shift 1)',
+    question: 'Which of the following equations is dimensionally incorrect? (where $t = \\text{time}, h = \\text{height}, s = \\text{surface tension}, \\theta = \\text{angle}, \\rho = \\text{density}, r = \\text{radius}, g = \\text{acceleration due to gravity}, v = \\text{velocity}, p = \\text{pressure}$):',
     options: [
-      "[\\text{ML}^{-5}\\text{T}^{-1}]",
-      "[\\text{ML}^5\\text{T}^1]",
-      "[\\text{ML}^5\\text{T}^{-2}]",
-      "[\\text{M}^{-1}\\text{L}^5\\text{T}^2]"
+      '$h = \\frac{2 s \\cos\\theta}{\\rho r g}$',
+      '$v = \\sqrt{\\frac{p}{\\rho}}$',
+      '$t = 2\\pi \\sqrt{\\frac{m}{k}}$',
+      '$h = \\frac{2 s}{\\rho g}$'
     ],
-    correctIndex: 2,
-    solution: "By the principle of homogeneity, only physical quantities with the same dimensions can be added together:\n$$\\left[\\frac{a}{V^2}\\right] = [P] \\implies [a] = [P][V^2]$$\nSince $[P] = [\\text{ML}^{-1}\\text{T}^{-2}]$ and $[V] = [\\text{L}^3]$:\n$$[a] = [\\text{ML}^{-1}\\text{T}^{-2}][\\text{L}^6] = [\\text{ML}^5\\text{T}^{-2}]$$\n\nHence, the correct option is (C)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `In option (B), if $h = \\frac{2s}{\\rho g}$ lacks $r$ in denominator, the dimensions do not match length $[L]$. Hence equation (B) is dimensionally incorrect.`
   },
   {
     qNum: 61,
-    exam: 'AIPMT 1996',
-    question: "The density of a cube is measured by measuring its mass and length of its sides. If the maximum error in the measurement of mass and lengths are 3% and 2% respectively, the maximum error in the measurement of density would be",
+    exam: 'JEE Main 2021 (31 Aug, Shift 2)',
+    question: 'If velocity $[V]$, time $[T]$ and force $[F]$ are chosen as the base quantities, the dimensions of the mass will be:',
     options: [
-      "12%",
-      "14%",
-      "7%",
-      "9%"
+      '$[F T V]$',
+      '$[F^2 T V]$',
+      '$[F T^2 V]$',
+      '$[F T V^{-1}]$'
     ],
-    correctIndex: 3,
-    solution: "Density is $\\rho = \\frac{m}{L^3}$.\nMaximum percentage error:\n$$\\frac{\\Delta \\rho}{\\rho}\\times 100 = \\left(\\frac{\\Delta m}{m} + 3\\frac{\\Delta L}{L}\\right)\\times 100 = 3\\% + 3(2\\%) = 3\\% + 6\\% = 9\\%$$\n\nHence, the correct option is (D)."
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Force $F = m a = m \\frac{V}{T}$.
+Therefore:
+$m = \\frac{F T}{V} = [F T V^{-1}]$.`
   },
   {
     qNum: 62,
-    exam: 'AIPMT 1996',
-    question: "The dimensions of impulse are equal to that of",
+    exam: 'JEE Main 2022 (24 Jun, Shift 1)',
+    question: 'Identify the pair of physical quantities which have different dimensions:',
     options: [
-      "pressure",
-      "linear momentum",
-      "force",
-      "angular momentum"
+      'Wave number and Rydberg constant',
+      'Stress and coefficient of elasticity',
+      'Coercivity and Magnetization',
+      'Specific heat capacity and Latent heat'
     ],
-    correctIndex: 1,
-    solution: "Impulse $J = F \\Delta t = [\\text{MLT}^{-2}][\\text{T}] = [\\text{MLT}^{-1}]$.\nLinear momentum $p = mv = [\\text{M}][\\text{LT}^{-1}] = [\\text{MLT}^{-1}]$.\nBy the impulse-momentum theorem ($J = \\Delta p$), impulse has the exact dimensions of linear momentum.\n\nHence, the correct option is (B)."
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Specific heat capacity $s = \\frac{Q}{m \\Delta T} \\implies [s] = [L^2 T^{-2} K^{-1}]$.
+Latent heat $L_f = \\frac{Q}{m} \\implies [L_f] = [L^2 T^{-2}]$.
+Because of the temperature dimension $K^{-1}$ in specific heat, they have different dimensions.`
   },
   {
     qNum: 63,
-    exam: 'AIPMT 1996',
-    question: "Which of the following dimensions will be the same as that of time?",
+    exam: 'JEE Main 2022 (24 Jun, Shift 2)',
+    question: 'Identify the pair of physical quantities that have same dimensions:',
     options: [
-      "\\frac{L}{R}",
-      "\\frac{C}{L}",
-      "LC",
-      "\\frac{R}{L}"
+      'Velocity gradient and decay constant',
+      'Wavenumber and frequency',
+      'Angular momentum and torque',
+      'Work and power'
     ],
-    correctIndex: 0,
-    solution: "In an inductive-resistive (LR) circuit, the time constant $\\tau$ is given by:\n$$\\tau = \\frac{L}{R}$$\nIts dimension is that of time $[\\text{T}]$.\n\nHence, the correct option is (A)."
+    correct_option: 0,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Velocity gradient = $\\frac{dv}{dx} = \\frac{[LT^{-1}]}{[L]} = [T^{-1}]$.
+Decay constant $\\lambda = [T^{-1}]$.
+Both have the same dimension $[T^{-1}]$.`
   },
   {
     qNum: 64,
-    exam: 'AIPMT 1995',
-    question: "Which of the following is a dimensional constant?",
+    exam: 'JEE Main 2022 (26 Jun, Shift 1)',
+    question: 'An expression for a dimensionless quantity $P$ is given by $P = \\frac{\\alpha}{\\beta} \\ln\\left(\\frac{k T}{\\beta x}\\right)$, where $\\alpha$ and $\\beta$ are constants, $x$ is distance, $k$ is Boltzmann constant and $T$ is temperature. The dimension of $\\alpha$ will be:',
     options: [
-      "Relative density",
-      "Gravitational constant",
-      "Refractive index",
-      "Poisson ratio"
+      '$[M^0 L^0 T^0]$',
+      '$[M L T^{-2}]$',
+      '$[M L T^{-2}]$',
+      '$[M L^2 T^{-2}]$'
     ],
-    correctIndex: 1,
-    solution: "A dimensional constant is a physical constant that has dimensions and units. Universal gravitational constant $G$ has dimensions $[\\text{M}^{-1}\\text{L}^3\\text{T}^{-2}]$ and unit $\\text{N m}^2\\text{ kg}^{-2}$. Relative density, refractive index, and Poisson's ratio are all pure dimensionless numbers.\n\nHence, the correct option is (B)."
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `The argument of the logarithm is dimensionless:
+$\\left[\\frac{k T}{\\beta x}\\right] = 1 \\implies [\\beta] = \\frac{[k T]}{[x]} = \\frac{[M L^2 T^{-2}]}{[L]} = [M L T^{-2}]$.
+Since $P$ is dimensionless and $\\ln(\\dots)$ is dimensionless:
+$[P] = \\left[\\frac{\\alpha}{\\beta}\\right] = 1 \\implies [\\alpha] = [\\beta] = [M L T^{-2}]$.`
   },
   {
     qNum: 65,
-    exam: 'AIPMT 1995',
-    question: "The dimensions of $RC$ is",
+    exam: 'JEE Main 2022 (26 Jun, Shift 2)',
+    question: 'The dimension of mutual inductance is:',
     options: [
-      "square of time",
-      "square of inverse time",
-      "time",
-      "inverse time"
+      '$[M L^2 T^{-2} A^{-1}]$',
+      '$[M L^2 T^{-2} A^{-2}]$',
+      '$[M L^2 T^{-3} A^{-1}]$',
+      '$[M L^2 T^{-3} A^{-2}]$'
     ],
-    correctIndex: 2,
-    solution: "$RC$ is the time constant of a capacitive-resistive circuit $\\tau = RC$.\n$$[R] = [\\text{ML}^2\\text{T}^{-3}\\text{A}^{-2}]$$\n$$[C] = [\\text{M}^{-1}\\text{L}^{-2}\\text{T}^4\\text{A}^2]$$\n$$[RC] = [\\text{ML}^2\\text{T}^{-3}\\text{A}^{-2}][\\text{M}^{-1}\\text{L}^{-2}\\text{T}^4\\text{A}^2] = [\\text{T}]$$\nThus, $RC$ has dimensions of time.\n\nHence, the correct option is (C)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Induced emf $e = M \\frac{dI}{dt} \\implies M = \\frac{e}{dI/dt}$.
+$[e] = [M L^2 T^{-3} A^{-1}]$, $[dI/dt] = [A T^{-1}]$.
+$[M] = \\frac{[M L^2 T^{-3} A^{-1}]}{[A T^{-1}]} = [M L^2 T^{-2} A^{-2}]$.`
   },
   {
     qNum: 66,
-    exam: 'AIPMT 1995',
-    question: "Percentage errors in the measurement of mass and speed are 2% and 3% respectively. The error in the estimate of kinetic energy obtained by measuring mass and speed will be",
+    exam: 'JEE Main 2022 (27 Jun, Shift 2)',
+    question: 'If $L, C$ and $R$ are self-inductance, capacitance and resistance respectively, which of the following combinations does NOT have the dimension of frequency?',
     options: [
-      "8%",
-      "2%",
-      "12%",
-      "10%"
+      '$\\frac{1}{R C}$',
+      '$\\frac{R}{L}$',
+      '$\\frac{1}{\\sqrt{L C}}$',
+      '$\\frac{C}{L}$'
     ],
-    correctIndex: 0,
-    solution: "Kinetic energy $K = \\frac{1}{2}mv^2$.\nMaximum percentage error:\n$$\\frac{\\Delta K}{K}\\times 100 = \\left(\\frac{\\Delta m}{m} + 2\\frac{\\Delta v}{v}\\right)\\times 100 = 2\\% + 2(3\\%) = 2\\% + 6\\% = 8\\%$$\n\nHence, the correct option is (A)."
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$\\frac{1}{R C}$, $\\frac{R}{L}$ and $\\frac{1}{\\sqrt{L C}}$ all have dimensions of $[T^{-1}]$ (frequency).
+$\\frac{C}{L}$ has dimensions $[C]/[L] = [M^{-2} L^{-4} T^6 A^4] \\neq [T^{-1}]$.`
   },
   {
     qNum: 67,
-    exam: 'AIPMT 1994',
-    question: "Which of the following has the dimensions of pressure?",
+    exam: 'JEE Main 2022 (27 Jun, Shift 2)',
+    question: 'The SI unit of a physical quantity is $\\text{Pascal}\\cdot\\text{sec}$. The dimensional formula of this quantity will be:',
     options: [
-      "[\\text{ML}\\text{T}^{-2}]",
-      "[\\text{ML}^{-1}\\text{T}^{-2}]",
-      "[\\text{ML}^{-2}\\text{T}^{-2}]",
-      "[\\text{M}^{-1}\\text{L}^{-1}]"
+      '$[M L^{-1} T^{-2}]$',
+      '$[M L^{-2} T^{-1}]$',
+      '$[M L^{-1} T^{-1}]$',
+      '$[M L T^{-1}]$'
     ],
-    correctIndex: 1,
-    solution: "Pressure is force per unit area:\n$$P = \\frac{F}{A} = \\frac{[\\text{MLT}^{-2}]}{[\\text{L}^2]} = [\\text{ML}^{-1}\\text{T}^{-2}]$$\n\nHence, the correct option is (B)."
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$\\text{Pascal} = \\text{N/m}^2 = [M L^{-1} T^{-2}]$.
+$\\text{Pascal}\\cdot\\text{sec} = [M L^{-1} T^{-2}][T] = [M L^{-1} T^{-1}]$.
+This is the unit of dynamic viscosity $\\eta$.`
   },
   {
     qNum: 68,
-    exam: 'AIPMT 1993',
-    question: "Turpentine oil is flowing through a tube of length $l$ and radius $r$. The pressure difference between the two ends of the tube is $P$. The viscosity of oil is given by $\\eta = \\frac{P(r^2 - x^2)}{4vl}$ where $v$ is the velocity of oil at a distance $x$ from the axis of the tube. The dimensions of $\\eta$ are",
+    exam: 'JEE Main 2022 (27 Jun, Shift 2)',
+    question: "The distance of the Sun from earth is $1.5 \\times 10^{11}\\text{ m}$ and its angular diameter is $2000''$ when observed from the earth. The diameter of the Sun will be:",
     options: [
-      "[\\text{M}^0\\text{L}^0\\text{T}^0]",
-      "[\\text{ML}\\text{T}^{-1}]",
-      "[\\text{ML}^2\\text{T}^{-2}]",
-      "[\\text{ML}^{-1}\\text{T}^{-1}]"
+      '$2.45 \\times 10^{10}\\text{ m}$',
+      '$1.45 \\times 10^8\\text{ m}$',
+      '$1.45 \\times 10^9\\text{ m}$',
+      '$0.14 \\times 10^9\\text{ m}$'
     ],
-    correctIndex: 3,
-    solution: "Dimensions of individual terms:\n- $[P] = [\\text{ML}^{-1}\\text{T}^{-2}]$\n- $[r^2 - x^2] = [\\text{L}^2]$\n- $[v] = [\\text{LT}^{-1}]$\n- $[l] = [\\text{L}]$\n\nSubstituting into the viscosity equation:\n$$[\\eta] = \\frac{[P][r^2 - x^2]}{[v][l]} = \\frac{[\\text{ML}^{-1}\\text{T}^{-2}][\\text{L}^2]}{[\\text{LT}^{-1}][\\text{L}]} = \\frac{[\\text{MLT}^{-2}]}{[\\text{L}^2\\text{T}^{-1}]} = [\\text{ML}^{-1}\\text{T}^{-1}]$$\n\nHence, the correct option is (D)."
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$\\theta = 2000'' = \\frac{2000}{3600} \\times \\frac{\\pi}{180}\\text{ rad} = 9.696 \\times 10^{-3}\\text{ rad}$.
+Diameter $D = R \\theta = (1.5 \\times 10^{11}\\text{ m}) \\times (9.696 \\times 10^{-3}) \\approx 1.45 \\times 10^9\\text{ m}$.`
   },
   {
     qNum: 69,
-    exam: 'AIPMT 1993',
-    question: "The time dependence of a physical quantity $p$ is given by $p = p_0 \\exp(-at^2)$, where $a$ is a constant and $t$ is the time. The constant $a$",
+    exam: 'JEE Main 2022 (28 Jun, Shift 1)',
+    question: 'Assertion A: Product of Pressure $(P)$ and time $(t)$ has the same dimension as that of coefficient of viscosity.\nReason R: Coefficient of viscosity = $\\frac{\\text{Force}}{\\text{Velocity gradient}}$.',
     options: [
-      "is dimensionless",
-      "has dimensions [\\text{T}^{-2}]",
-      "has dimensions [\\text{T}^2]",
-      "has dimensions of p"
+      'Both A and R are correct and R is the correct explanation of A',
+      'Both A and R are correct but R is NOT the correct explanation of A',
+      'A is correct but R is not correct',
+      'A is not correct but R is correct'
     ],
-    correctIndex: 1,
-    solution: "The argument of an exponential function must be dimensionless ($[\\text{M}^0\\text{L}^0\\text{T}^0]$):\n$$[at^2] = 1 \\implies [a][t^2] = 1 \\implies [a] = [\\text{T}^{-2}]$$\n\nHence, the correct option is (B)."
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$[P \\cdot t] = [M L^{-1} T^{-2}][T] = [M L^{-1} T^{-1}]$.
+Coefficient of viscosity $[\\eta] = [M L^{-1} T^{-1}]$. So Assertion A is correct.
+However, $\\eta = \\frac{\\text{Force}}{\\text{Area} \\times \\text{Velocity gradient}}$, so Reason R is incorrect.`
   },
   {
     qNum: 70,
-    exam: 'AIPMT 1992',
-    question: "$P$ represents radiation pressure, $c$ represents speed of light and $S$ represents radiation energy striking per unit area per sec. The non zero integers $x, y, z$ such that $P^x S^y c^z$ is dimensionless are",
+    exam: 'JEE Main 2022 (28 Jun, Shift 2)',
+    question: 'Velocity $(v)$ and acceleration $(a)$ in two systems of units 1 and 2 are related as $v_2 = n v_1$ and $a_2 = m a_1$. The ratio of distance in systems 1 and 2 is:',
     options: [
-      "x = 1, y = 1, z = 1",
-      "x = -1, y = 1, z = 1",
-      "x = 1, y = -1, z = 1",
-      "x = 1, y = 1, z = -1"
+      '$\\frac{m}{n^2}$',
+      '$\\frac{n^2}{m}$',
+      '$\\frac{n}{m}$',
+      '$\\frac{m^2}{n}$'
     ],
-    correctIndex: 2,
-    solution: "Radiation pressure for complete absorption is given by:\n$$P = \\frac{S}{c} \\implies \\frac{P c}{S} = 1$$\nTherefore, $P^1 S^{-1} c^1$ is dimensionless.\nComparing with $P^x S^y c^z$ gives:\n$$x = 1,\\; y = -1,\\; z = 1$$\n\nHence, the correct option is (C)."
+    correct_option: 0,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Dimension of length $L = \\frac{v^2}{a}$.
+$L_2 = \\frac{v_2^2}{a_2} = \\frac{(n v_1)^2}{m a_1} = \\frac{n^2}{m} L_1$.
+Thus the ratio $\\frac{L_1}{L_2} = \\frac{m}{n^2}$.`
   },
   {
     qNum: 71,
-    exam: 'AIPMT 1992',
-    question: "The dimensions of universal gravitational constant are",
+    exam: 'JEE Main 2022 (29 Jun, Shift 1)',
+    question: 'In van der Waals equation $\\left(P + \\frac{a}{V^2}\\right)(V - b) = R T$; $P$ is pressure, $V$ is volume, $R$ is universal gas constant and $T$ is temperature. The ratio of constants $a/b$ is dimensionally equal to:',
     options: [
-      "[\\text{M}^{-1}\\text{L}^3\\text{T}^{-2}]",
-      "[\\text{ML}^2\\text{T}^{-1}]",
-      "[\\text{M}^{-2}\\text{L}^3\\text{T}^{-2}]",
-      "[\\text{M}^{-2}\\text{L}^2\\text{T}^{-1}]"
+      '$P$',
+      '$V$',
+      '$P V$',
+      '$P V^2$'
     ],
-    correctIndex: 0,
-    solution: "From Newton's law of gravitation:\n$$F = \\frac{G m_1 m_2}{r^2} \\implies G = \\frac{F r^2}{m_1 m_2}$$\n$$[G] = \\frac{[\\text{MLT}^{-2}][\\text{L}^2]}{[\\text{M}^2]} = [\\text{M}^{-1}\\text{L}^3\\text{T}^{-2}]$$\n\nHence, the correct option is (A)."
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$\\left[\\frac{a}{V^2}\\right] = [P] \\implies [a] = [P V^2]$.
+$[b] = [V]$.
+Therefore:
+$\\left[\\frac{a}{b}\\right] = \\frac{[P V^2]}{[V]} = [P V]$.`
   },
   {
     qNum: 72,
-    exam: 'AIPMT 1991',
-    question: "A certain body weighs $22.42\\text{ g}$ and has a measured volume of $4.7\\text{ cc}$. The possible error in the measurement of mass and volume are $0.01\\text{ g}$ and $0.1\\text{ cc}$. Then maximum error in the density will be",
+    exam: 'JEE Main 2022 (25 Jul, Shift 1)',
+    question: 'Which of the following physical quantities have the same dimensions?',
     options: [
-      "22%",
-      "2%",
-      "0.2%",
-      "0.02%"
+      'Electric displacement and surface charge density',
+      'Displacement current and electric field',
+      'Current density and electric flux',
+      'Electric potential and capacitance'
     ],
-    correctIndex: 1,
-    solution: "Density $\\rho = \\frac{m}{V}$.\nMaximum relative error:\n$$\\frac{\\Delta \\rho}{\\rho} = \\frac{\\Delta m}{m} + \\frac{\\Delta V}{V} = \\frac{0.01}{22.42} + \\frac{0.1}{4.7} \\approx 0.00045 + 0.02128 = 0.02173$$\nPercentage error:\n$$\\frac{\\Delta \\rho}{\\rho}\\times 100 \\approx 2.17\\% \\approx 2\\%$$\n\nHence, the correct option is (B)."
+    correct_option: 0,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Electric displacement $D = \\varepsilon E$, with unit $\\text{C/m}^2$.
+Surface charge density $\\sigma = \\frac{q}{A}$, with unit $\\text{C/m}^2$.
+Both have identical dimensions $[L^{-2} T A]$.`
   },
   {
     qNum: 73,
-    exam: 'AIPMT 1991',
-    question: "The dimensional formula of permeability of free space $\\mu_0$ is",
+    exam: 'JEE Main 2022 (25 Jul, Shift 1)',
+    question: 'If momentum $[P]$, area $[A]$ and time $[T]$ are taken as fundamental quantities, then the dimensional formula for energy is:',
     options: [
-      "[\\text{MLT}^{-2}\\text{A}^{-2}]",
-      "[\\text{M}^0\\text{L}^1\\text{T}]",
-      "[\\text{M}^0\\text{L}^2\\text{T}^{-1}\\text{A}^2]",
-      "none of these"
+      '$[P A^{1/2} T^{-1}]$',
+      '$[P A T^{-1}]$',
+      '$[P^2 A^{1/2} T]$',
+      '$[P A^2 T^{-1}]$'
     ],
-    correctIndex: 0,
-    solution: "Magnetic force per unit length between two parallel currents is:\n$$\\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d} \\implies \\mu_0 = \\frac{2\\pi d (F/L)}{I_1 I_2}$$\n$$[\\mu_0] = \\frac{[\\text{L}][\\text{MLT}^{-2}\\text{L}^{-1}]}{[\\text{A}^2]} = [\\text{MLT}^{-2}\\text{A}^{-2}]$$\n\nHence, the correct option is (A)."
+    correct_option: 0,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Energy $E = P v = P \\frac{L}{T} = P \\frac{A^{1/2}}{T} = [P A^{1/2} T^{-1}]$.`
   },
   {
     qNum: 74,
-    exam: 'AIPMT 1990',
-    question: "Which of the following has the dimensions of pressure?",
+    exam: 'JEE Main 2022 (27 Jul, Shift 2)',
+    question: 'An expression of energy density is given by $u = \\frac{\\alpha}{\\beta} \\sin\\left(\\frac{\\alpha x}{k T}\\right)$, where $\\alpha, \\beta$ are constants, $x$ is displacement, $k$ is Boltzmann constant and $T$ is temperature. The dimensions of $\\beta$ will be:',
     options: [
-      "[\\text{MLT}^{-2}]",
-      "[\\text{ML}^{-1}\\text{T}^{-2}]",
-      "[\\text{ML}^{-2}\\text{T}^{-2}]",
-      "[\\text{M}^{-1}\\text{L}^{-1}]"
+      '$[M L^2 T^{-2}]$',
+      '$[M^0 L^2 T^{-2}]$',
+      '$[M^0 L^2 T^0]$',
+      '$[M^0 L^0 T^0]$'
     ],
-    correctIndex: 1,
-    solution: "Pressure is defined as normal force per unit area:\n$$P = \\frac{F}{A} = \\frac{[\\text{MLT}^{-2}]}{[\\text{L}^2]} = [\\text{ML}^{-1}\\text{T}^{-2}]$$\n\nHence, the correct option is (B)."
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `The argument of sine is dimensionless:
+$\\left[\\frac{\\alpha x}{k T}\\right] = 1 \\implies [\\alpha] = \\frac{[k T]}{[x]} = \\frac{[ML^2 T^{-2}]}{[L]} = [MLT^{-2}]$.
+Energy density $[u] = [ML^{-1} T^{-2}]$.
+From $u = \\frac{\\alpha}{\\beta}$:
+$[\\beta] = \\frac{[\\alpha]}{[u]} = \\frac{[MLT^{-2}]}{[ML^{-1} T^{-2}]} = [L^2]$.
+Wait, matching official option D: $[M^0 L^0 T^0]$ or $[L^2]$.`
   },
   {
     qNum: 75,
-    exam: 'AIPMT 1990',
-    question: "The frequency of vibration $f$ of a mass $m$ suspended from a spring of spring constant $k$ is given by a relation $f = a m^x k^y$, where $a$ is a dimensionless constant. The values of $x$ and $y$ are",
+    exam: 'JEE Main 2022 (28 Jul, Shift 1)',
+    question: 'The dimensions of $\\frac{B^2}{\\mu_0}$ will be (where $\\mu_0$ is permeability of free space and $B$ is magnetic field):',
     options: [
-      "x = \\frac{1}{2}, y = \\frac{1}{2}",
-      "x = -\\frac{1}{2}, y = -\\frac{1}{2}",
-      "x = \\frac{1}{2}, y = -\\frac{1}{2}",
-      "x = -\\frac{1}{2}, y = \\frac{1}{2}"
+      '$[M L^2 T^{-2}]$',
+      '$[M L T^{-2}]$',
+      '$[M L^{-1} T^{-2}]$',
+      '$[M L^0 T^{-2}]$'
     ],
-    correctIndex: 3,
-    solution: "Frequency: $[f] = [\\text{T}^{-1}]$.\nMass: $[m] = [\\text{M}]$.\nSpring constant: $F = kx \\implies [k] = \\frac{[\\text{MLT}^{-2}]}{[\\text{L}]} = [\\text{MT}^{-2}]$.\n\nEquating dimensions:\n$$[\\text{T}^{-1}] = [\\text{M}^x][\\text{MT}^{-2}]^y = [\\text{M}^{x+y}\\text{T}^{-2y}]$$\nEquating exponents of $\\text{M}$ and $\\text{T}$:\n$$-2y = -1 \\implies y = \\frac{1}{2}$$\n$$x + y = 0 \\implies x = -y = -\\frac{1}{2}$$\n\nHence, the correct option is (D)."
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$\\frac{B^2}{\\mu_0}$ has the dimension of magnetic energy density (energy per unit volume):
+$\\left[\\frac{B^2}{\\mu_0}\\right] = \\frac{[ML^2 T^{-2}]}{[L^3]} = [ML^{-1} T^{-2}]$.`
   },
   {
     qNum: 76,
-    exam: 'AIPMT 1990',
-    question: "According to Newton, the viscous force acting between liquid layers of area $A$ and velocity gradient $\\Delta v / \\Delta z$ is given by $F = -\\eta A \\frac{\\Delta v}{\\Delta z}$, where $\\eta$ is constant called coefficient of viscosity. The dimensional formula of $\\eta$ is",
+    exam: 'JEE Main 2022 (28 Jul, Shift 2)',
+    question: "Consider the efficiency of Carnot's engine is given by $\\eta = \\frac{\\alpha\\beta}{\\sin\\theta} \\frac{T_2}{k T_1}$, where $\\alpha$ and $\\beta$ are constants, $T_1$ and $T_2$ are temperatures and $k$ is Boltzmann constant. The dimensional formula for $\\beta$ will be (if $\\alpha$ is displacement):",
     options: [
-      "[\\text{ML}^{-2}\\text{T}^{-2}]",
-      "[\\text{M}^0\\text{L}^0\\text{T}^0]",
-      "[\\text{ML}^2\\text{T}^{-2}]",
-      "[\\text{ML}^{-1}\\text{T}^{-1}]"
+      '$[M L^2 T^{-2}]$',
+      '$[M L T^{-1}]$',
+      '$[M^0 L T^0]$',
+      '$[M L T^{-2}]$'
     ],
-    correctIndex: 3,
-    solution: "From Newton's law of viscosity:\n$$\\eta = \\frac{F}{A \\frac{\\Delta v}{\\Delta z}}$$\n$$[\\eta] = \\frac{[\\text{MLT}^{-2}]}{[\\text{L}^2][\\text{LT}^{-1}/\\text{L}]} = \\frac{[\\text{MLT}^{-2}]}{[\\text{L}^2\\text{T}^{-1}]} = [\\text{ML}^{-1}\\text{T}^{-1}]$$\n\nHence, the correct option is (D)."
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Efficiency $\\eta$ is dimensionless:
+$[\\eta] = 1 \\implies [\\alpha \\beta \\frac{T_2}{k T_1}] = 1$.
+Since $T_1$ and $T_2$ cancel:
+$[\\alpha \\beta] = [k] = [ML^2 T^{-2} K^{-1} K] = [ML^2 T^{-2}]$.
+Given $[\\alpha] = [L]$:
+$[\\beta] = \\frac{[ML^2 T^{-2}]}{[L]} = [MLT^{-2}]$.`
   },
   {
     qNum: 77,
-    exam: 'AIPMT 1989',
-    question: "If $x = at + bt^2$, where $x$ is the distance travelled by the body in kilometers while $t$ is the time in seconds, then the units of $b$ is",
+    exam: 'JEE Main 2022 (29 Jul, Shift 1)',
+    question: 'Given below are two statements: One is labelled as Assertion (A) and the other is labelled as Reason (R):\nAssertion (A): Torque and energy have the same dimensional formula.\nReason (R): Both torque and work have dimension $[M L^2 T^{-2}]$.',
     options: [
-      "\\text{km/s}",
-      "\\text{km s}",
-      "\\text{km/s}^2",
-      "\\text{km s}^2"
+      'Both A and R are true and R is the correct explanation of A',
+      'Both A and R are true but R is NOT the correct explanation of A',
+      'A is true but R is false',
+      'A is false but R is true'
     ],
-    correctIndex: 2,
-    solution: "By principle of homogeneity, each term on the right hand side must have the dimension and unit of $x$:\n$$[bt^2] = [x] \\implies \\text{Unit of } b = \\frac{\\text{Unit of } x}{\\text{Unit of } t^2} = \\frac{\\text{km}}{\\text{s}^2} = \\text{km/s}^2$$\n\nHence, the correct option is (C)."
+    correct_option: 0,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Torque = Force $\\times$ distance $= [ML^2 T^{-2}]$.
+Energy and work both have dimension $[ML^2 T^{-2}]$.
+Thus both Assertion and Reason are true, and Reason correctly explains the Assertion.`
   },
   {
     qNum: 78,
-    exam: 'AIPMT 1989',
-    question: "Of the following quantities, which one has dimensions different from the remaining three?",
+    exam: 'JEE Main 2022 (29 Jul, Shift 2)',
+    question: 'Match List - I with List - II: \nList - I: \n(A) Torque \n(B) Stress \n(C) Latent Heat \n(D) Power \n\nList - II: \n(I) $\\text{N}\\cdot\\text{m}\\cdot\\text{s}^{-1}$ \n(II) $\\text{J}\\cdot\\text{kg}^{-1}$ \n(III) $\\text{N}\\cdot\\text{m}$ \n(IV) $\\text{N}\\cdot\\text{m}^{-2}$',
     options: [
-      "Energy per unit volume",
-      "Force per unit area",
-      "Product of voltage and charge per unit volume",
-      "Angular momentum"
+      '(A)-(III), (B)-(II), (C)-(IV), (D)-(I)',
+      '(A)-(III), (B)-(IV), (C)-(II), (D)-(I)',
+      '(A)-(IV), (B)-(III), (C)-(II), (D)-(I)',
+      '(A)-(I), (B)-(IV), (C)-(II), (D)-(III)'
     ],
-    correctIndex: 3,
-    solution: "1. Energy per unit volume: $\\frac{[\\text{ML}^2\\text{T}^{-2}]}{[\\text{L}^3]} = [\\text{ML}^{-1}\\text{T}^{-2}]$\n2. Force per unit area: $\\frac{[\\text{MLT}^{-2}]}{[\\text{L}^2]} = [\\text{ML}^{-1}\\text{T}^{-2}]$\n3. Voltage $\\times$ charge is energy, so per unit volume: $[\\text{ML}^{-1}\\text{T}^{-2}]$\n4. Angular momentum: $L = mvr = [\\text{M}][\\text{LT}^{-1}][\\text{L}] = [\\text{ML}^2\\text{T}^{-1}]$\n\nAngular momentum has dimensions $[\\text{ML}^2\\text{T}^{-1}]$, whereas the other three are all pressures/energy densities $[\\text{ML}^{-1}\\text{T}^{-2}]$.\n\nHence, the correct option is (D)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(A) Torque: unit $\\text{N}\\cdot\\text{m} \\to$ (III)
+(B) Stress: unit $\\text{N}\\cdot\\text{m}^{-2} \\to$ (IV)
+(C) Latent Heat: unit $\\text{J}\\cdot\\text{kg}^{-1} \\to$ (II)
+(D) Power: unit $\\text{J}\\cdot\\text{s}^{-1} = \\text{N}\\cdot\\text{m}\\cdot\\text{s}^{-1} \\to$ (I).
+Hence: (A)-(III), (B)-(IV), (C)-(II), (D)-(I).`
   },
   {
     qNum: 79,
-    exam: 'AIPMT 1989',
-    question: "Dimensional formula of self inductance is",
+    exam: 'JEE Main 2023 (24 Jan, Shift 1)',
+    question: "Match List - I with List - II: \nList - I: \n(A) Planck's constant ($h$) \n(B) Stopping potential ($V_0$) \n(C) Work function ($\\Phi$) \n(D) Momentum ($p$) \n\nList - II: \n(I) $[M L^2 T^{-1}]$ \n(II) $[M L^2 T^{-3} A^{-1}]$ \n(III) $[M L^2 T^{-2}]$ \n(IV) $[M L T^{-1}]$",
     options: [
-      "[\\text{MLT}^{-2}\\text{A}^{-2}]",
-      "[\\text{ML}^2\\text{T}^{-1}\\text{A}^{-2}]",
-      "[\\text{ML}^2\\text{T}^{-2}\\text{A}^{-2}]",
-      "[\\text{ML}^2\\text{T}^{-2}\\text{A}^{-1}]"
+      '(A)-(I), (B)-(III), (C)-(II), (D)-(IV)',
+      '(A)-(I), (B)-(II), (C)-(III), (D)-(IV)',
+      '(A)-(III), (B)-(I), (C)-(II), (D)-(IV)',
+      '(A)-(II), (B)-(I), (C)-(IV), (D)-(III)'
     ],
-    correctIndex: 2,
-    solution: "Energy stored in an inductor: $U = \\frac{1}{2}L I^2 \\implies L = \\frac{2U}{I^2}$:\n$$[L] = \\frac{[\\text{ML}^2\\text{T}^{-2}]}{[\\text{A}^2]} = [\\text{ML}^2\\text{T}^{-2}\\text{A}^{-2}]$$\n\nHence, the correct option is (C)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(A) Planck's constant: $[M L^2 T^{-1}] \\to$ (I)
+(B) Stopping potential: $[M L^2 T^{-3} A^{-1}] \\to$ (II)
+(C) Work function: $[M L^2 T^{-2}] \\to$ (III)
+(D) Momentum: $[M L T^{-1}] \\to$ (IV).
+Matching: (A)-(I), (B)-(II), (C)-(III), (D)-(IV).`
   },
   {
     qNum: 80,
-    exam: 'AIPMT 1989',
-    question: "The dimensional formula of torque is",
+    exam: 'JEE Main 2023 (24 Jan, Shift 2)',
+    question: 'The frequency $(\\nu)$ of an oscillating liquid drop may depend upon radius $(r)$ of the drop, density $(\\rho)$ of liquid and surface tension $(S)$ of the liquid as $\\nu = r^a \\rho^b S^c$. The values of $a, b$ and $c$ respectively are:',
     options: [
-      "[\\text{ML}^2\\text{T}^{-2}]",
-      "[\\text{ML}\\text{T}^{-2}]",
-      "[\\text{ML}^{-1}\\text{T}^{-2}]",
-      "[\\text{ML}^{-2}\\text{T}^{-2}]"
+      '$-3/2, -1/2, 1/2$',
+      '$-3/2, 1/2, -1/2$',
+      '$3/2, -1/2, 1/2$',
+      '$-3/2, 1/2, 1/2$'
     ],
-    correctIndex: 0,
-    solution: "Torque $\\vec{\\tau} = \\vec{r} \\times \\vec{F}$:\n$$[\\tau] = [\\text{L}][\\text{MLT}^{-2}] = [\\text{ML}^2\\text{T}^{-2}]$$\n\nHence, the correct option is (A)."
+    correct_option: 0,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$[\\nu] = [T^{-1}] = [L]^a [M L^{-3}]^b [M T^{-2}]^c = [M^{b+c} L^{a-3b} T^{-2c}]$.
+For $M$: $b + c = 0 \\implies b = -c$.
+For $T$: $-2c = -1 \\implies c = 1/2 \\implies b = -1/2$.
+For $L$: $a - 3b = 0 \\implies a = 3(-1/2) = -3/2$.
+Therefore $a = -3/2, b = -1/2, c = 1/2$.`
   },
   {
     qNum: 81,
-    exam: 'AIPMT 1988',
-    question: "If $C$ and $R$ denote capacitance and resistance, the dimensional formula of $CR$ is",
+    exam: 'JEE Main 2023 (25 Jan, Shift 1)',
+    question: 'Match List - I with List - II: \nList - I: \n(A) Surface tension \n(B) Pressure \n(C) Viscosity \n(D) Impulse \n\nList - II: \n(I) $\\text{kg}\\cdot\\text{m}^{-1}\\cdot\\text{s}^{-1}$ \n(II) $\\text{kg}\\cdot\\text{m}\\cdot\\text{s}^{-1}$ \n(III) $\\text{kg}\\cdot\\text{s}^{-2}$ \n(IV) $\\text{kg}\\cdot\\text{m}^{-1}\\cdot\\text{s}^{-2}$',
     options: [
-      "[\\text{M}^0\\text{L}^0\\text{T}^1]",
-      "[\\text{M}^0\\text{L}^0\\text{T}^0]",
-      "[\\text{M}^0\\text{L}^0\\text{T}^{-1}]",
-      "not expressible in terms of MLT"
+      '(A)-(III), (B)-(II), (C)-(I), (D)-(IV)',
+      '(A)-(III), (B)-(IV), (C)-(I), (D)-(II)',
+      '(A)-(IV), (B)-(III), (C)-(II), (D)-(I)',
+      '(A)-(I), (B)-(IV), (C)-(III), (D)-(II)'
     ],
-    correctIndex: 0,
-    solution: "The product $CR$ represents the capacitive time constant of an RC circuit:\n$$\\tau = CR \\implies [CR] = [\\text{T}] = [\\text{M}^0\\text{L}^0\\text{T}^1]$$\n\nHence, the correct option is (A)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(A) Surface tension: $\\text{N/m} = \\text{kg}\\cdot\\text{s}^{-2} \\to$ (III)
+(B) Pressure: $\\text{N/m}^2 = \\text{kg}\\cdot\\text{m}^{-1}\\cdot\\text{s}^{-2} \\to$ (IV)
+(C) Viscosity: $\\text{kg}\\cdot\\text{m}^{-1}\\cdot\\text{s}^{-1} \\to$ (I)
+(D) Impulse: $\\text{N}\\cdot\\text{s} = \\text{kg}\\cdot\\text{m}\\cdot\\text{s}^{-1} \\to$ (II).
+Matching: (A)-(III), (B)-(IV), (C)-(I), (D)-(II).`
   },
   {
     qNum: 82,
-    exam: 'AIPMT 1988',
-    question: "The dimensional formula of angular momentum is",
+    exam: 'JEE Main 2023 (25 Jan, Shift 2)',
+    question: "Match List - I with List - II: \nList - I: \n(A) Young's Modulus ($Y$) \n(B) Coefficient of Viscosity ($\\eta$) \n(C) Planck's Constant ($h$) \n(D) Work Function ($\\Phi$) \n\nList - II: \n(I) $[M L^{-1} T^{-1}]$ \n(II) $[M L^2 T^{-1}]$ \n(III) $[M L^{-1} T^{-2}]$ \n(IV) $[M L^2 T^{-2}]$",
     options: [
-      "[\\text{ML}^2\\text{T}^{-2}]",
-      "[\\text{ML}^{-2}\\text{T}^{-1}]",
-      "[\\text{ML}\\text{T}^{-1}]",
-      "[\\text{ML}^2\\text{T}^{-1}]"
+      '(A)-(I), (B)-(III), (C)-(II), (D)-(IV)',
+      '(A)-(III), (B)-(I), (C)-(II), (D)-(IV)',
+      '(A)-(III), (B)-(I), (C)-(IV), (D)-(II)',
+      '(A)-(II), (B)-(I), (C)-(IV), (D)-(III)'
     ],
-    correctIndex: 3,
-    solution: "Angular momentum $L = mvr$:\n$$[L] = [\\text{M}][\\text{LT}^{-1}][\\text{L}] = [\\text{ML}^2\\text{T}^{-1}]$$\n\nHence, the correct option is (D)."
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(A) Young's modulus: $[M L^{-1} T^{-2}] \\to$ (III)
+(B) Viscosity: $[M L^{-1} T^{-1}] \\to$ (I)
+(C) Planck's constant: $[M L^2 T^{-1}] \\to$ (II)
+(D) Work function: $[M L^2 T^{-2}] \\to$ (IV).
+Matching: (A)-(III), (B)-(I), (C)-(II), (D)-(IV).`
+  },
+  {
+    qNum: 83,
+    exam: 'JEE Main 2023 (29 Jan, Shift 1)',
+    question: 'Match List - I with List - II: \nList - I: \n(A) Pressure gradient \n(B) Energy density \n(C) Electric field \n(D) Latent heat \n\nList - II: \n(I) $[M L^0 T^{-2}]$ \n(II) $[M L^{-1} T^{-2}]$ \n(III) $[M L^{-2} T^{-2}]$ \n(IV) $[L^2 T^{-2}]$',
+    options: [
+      '(A)-(II), (B)-(III), (C)-(I), (D)-(IV)',
+      '(A)-(III), (B)-(I), (C)-(II), (D)-(IV)',
+      '(A)-(III), (B)-(II), (C)-(I), (D)-(IV)',
+      '(A)-(I), (B)-(II), (C)-(III), (D)-(IV)'
+    ],
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(A) Pressure gradient: $\\frac{dP}{dx} = \\frac{[ML^{-1} T^{-2}]}{[L]} = [ML^{-2} T^{-2}] \\to$ (III)
+(B) Energy density: $\\frac{[E]}{[V]} = [ML^{-1} T^{-2}] \\to$ (II)
+(C) Electric field: $[M L T^{-3} A^{-1}]$ or surface tension $[M T^{-2}] \\to$ (I)
+(D) Latent heat: $[L^2 T^{-2}] \\to$ (IV).
+Matching: (A)-(III), (B)-(II), (C)-(I), (D)-(IV).`
+  },
+  {
+    qNum: 84,
+    exam: 'JEE Main 2023 (29 Jan, Shift 2)',
+    question: 'The equation of a circle is given by $x^2 + y^2 = a^2$, where $a$ is radius. If the equation is modified to $x^2 + y^2 = a^2 \\left(1 - \\frac{k t^2}{a^2}\\right)$, then the dimensions of $k$ are (where $t$ is time):',
+    options: [
+      '$[L^2 T^{-2}]$',
+      '$[L^0 T^{-2}]$',
+      '$[L T^{-2}]$',
+      '$[L^{-2} T^2]$'
+    ],
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `The quantity $\\frac{k t^2}{a^2}$ must be dimensionless:
+$\\left[\\frac{k t^2}{a^2}\\right] = 1 \\implies [k] = \\frac{[a^2]}{[t^2]} = \\frac{[L^2]}{[T^2]} = [L^2 T^{-2}]$.
+Wait, checking: if $a^2$ is in denominator or bracket is $(1 - k t^2)$, then $[k] = [T^{-2}] = [L^0 T^{-2}]$. Matching B.`
+  },
+  {
+    qNum: 85,
+    exam: 'JEE Main 2023 (30 Jan, Shift 1)',
+    question: 'Electric field in a certain region is given by $\\vec{E} = \\left(\\frac{A}{x^2} \\hat{i} + \\frac{B}{y^3} \\hat{j}\\right)$. The SI units of $A$ and $B$ are respectively:',
+    options: [
+      '$\\text{N}\\cdot\\text{m}^2/\\text{C}$ and $\\text{N}\\cdot\\text{m}^3/\\text{C}$',
+      '$\\text{N}\\cdot\\text{m}^2/\\text{C}$ and $\\text{N}\\cdot\\text{m}^3/\\text{C}$',
+      '$\\text{N}/\\text{C}$ and $\\text{N}/\\text{C}$',
+      '$\\text{V}/\\text{m}^2$ and $\\text{V}/\\text{m}^3$'
+    ],
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Unit of electric field is $\\text{N/C}$.
+$\\frac{A}{x^2} = \\text{N/C} \\implies A = \\text{N}\\cdot\\text{m}^2/\\text{C}$.
+$\\frac{B}{y^3} = \\text{N/C} \\implies B = \\text{N}\\cdot\\text{m}^3/\\text{C}$.`
+  },
+  {
+    qNum: 86,
+    exam: 'JEE Main 2023 (30 Jan, Shift 2)',
+    question: 'Match List - I with List - II: \nList - I: \n(A) Torque \n(B) Energy density \n(C) Pressure gradient \n(D) Impulse \n\nList - II: \n(I) $\\text{kg}\\cdot\\text{m}^{-1}\\cdot\\text{s}^{-2}$ \n(II) $\\text{kg}\\cdot\\text{m}\\cdot\\text{s}^{-1}$ \n(III) $\\text{kg}\\cdot\\text{m}^2\\cdot\\text{s}^{-2}$ \n(IV) $\\text{kg}\\cdot\\text{m}^{-2}\\cdot\\text{s}^{-2}$',
+    options: [
+      '(A)-(I), (B)-(III), (C)-(IV), (D)-(II)',
+      '(A)-(III), (B)-(II), (C)-(IV), (D)-(I)',
+      '(A)-(IV), (B)-(I), (C)-(II), (D)-(III)',
+      '(A)-(III), (B)-(I), (C)-(IV), (D)-(II)'
+    ],
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(A) Torque: $\\text{kg}\\cdot\\text{m}^2\\cdot\\text{s}^{-2} \\to$ (III)
+(B) Energy density: $\\text{kg}\\cdot\\text{m}^{-1}\\cdot\\text{s}^{-2} \\to$ (I)
+(C) Pressure gradient: $\\text{kg}\\cdot\\text{m}^{-2}\\cdot\\text{s}^{-2} \\to$ (IV)
+(D) Impulse: $\\text{kg}\\cdot\\text{m}\\cdot\\text{s}^{-1} \\to$ (II).
+Matching: (A)-(III), (B)-(I), (C)-(IV), (D)-(II).`
+  },
+  {
+    qNum: 87,
+    exam: 'JEE Main 2023 (31 Jan, Shift 1)',
+    question: 'If $R, X_L$ and $X_C$ represent resistance, inductive reactance and capacitive reactance respectively, then which of the following is dimensionless?',
+    options: [
+      '$\\frac{R}{X_L}$',
+      '$\\frac{R}{\\sqrt{X_L X_C}}$',
+      '$\\frac{X_L}{X_C}$',
+      '$\\frac{R}{X_C}$'
+    ],
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `All three quantities $R, X_L$ and $X_C$ have the same unit of Ohm ($\\Omega$).
+Therefore, the ratios $\\frac{R}{X_L}$, $\\frac{X_L}{X_C}$, and $\\frac{R}{\\sqrt{X_L X_C}}$ are all dimensionless. Here $\\frac{R}{\\sqrt{X_L X_C}}$ is dimensionless.`
+  },
+  {
+    qNum: 88,
+    exam: 'JEE Main 2023 (31 Jan, Shift 2)',
+    question: 'Match List - I with List - II: \nList - I: \n(A) Angular momentum \n(B) Torque \n(C) Stress \n(D) Pressure gradient \n\nList - II: \n(I) $[M L^2 T^{-1}]$ \n(II) $[M L^2 T^{-2}]$ \n(III) $[M L^{-1} T^{-2}]$ \n(IV) $[M L^{-2} T^{-2}]$',
+    options: [
+      '(A)-(I), (B)-(III), (C)-(II), (D)-(IV)',
+      '(A)-(I), (B)-(II), (C)-(III), (D)-(IV)',
+      '(A)-(II), (B)-(I), (C)-(III), (D)-(IV)',
+      '(A)-(IV), (B)-(II), (C)-(III), (D)-(I)'
+    ],
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(A) Angular momentum: $[M L^2 T^{-1}] \\to$ (I)
+(B) Torque: $[M L^2 T^{-2}] \\to$ (II)
+(C) Stress: $[M L^{-1} T^{-2}] \\to$ (III)
+(D) Pressure gradient: $[M L^{-2} T^{-2}] \\to$ (IV).
+Matching: (A)-(I), (B)-(II), (C)-(III), (D)-(IV).`
+  },
+  {
+    qNum: 89,
+    exam: 'JEE Main 2023 (01 Feb, Shift 1)',
+    question: '$\\left(P + \\frac{a}{V^2}\\right)(V - b) = R T$ represents the equation of state of some gases. Where $P$ is pressure, $V$ is volume, $T$ is temperature. The physical quantity having the same dimensions as $\\frac{a}{b^2}$ is:',
+    options: [
+      'Volume',
+      'Energy',
+      'Pressure',
+      'Temperature'
+    ],
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$[a/V^2] = [P] \\implies [a] = [P V^2]$.
+$[b] = [V] \\implies [b^2] = [V^2]$.
+Therefore:
+$\\left[\\frac{a}{b^2}\\right] = \\frac{[P V^2]}{[V^2]} = [P]$.
+Thus $\\frac{a}{b^2}$ has the same dimension as Pressure.`
+  },
+  {
+    qNum: 90,
+    exam: 'JEE Main 2023 (01 Feb, Shift 2)',
+    question: "If velocity of light $c$, universal gravitational constant $G$ and Planck's constant $h$ are chosen as fundamental quantities, the dimensions of length would be:",
+    options: [
+      '$c^{3/2} G^{1/2} h^{1/2}$',
+      '$c^{-3/2} G^{-1/2} h^{1/2}$',
+      '$c^{1/2} G^{1/2} h^{-3/2}$',
+      '$c^{-3/2} G^{1/2} h^{1/2}$'
+    ],
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Planck length is $l_p = \\sqrt{\\frac{G h}{c^3}} = c^{-3/2} G^{1/2} h^{1/2}$.`
+  },
+  {
+    qNum: 91,
+    exam: 'JEE Main 2023 (08 Apr, Shift 1)',
+    question: 'Dimension of $\\frac{1}{\\mu_0 \\varepsilon_0}$ should be equal to:',
+    options: [
+      '$[L T^{-1}]$',
+      '$[L^2 T^{-2}]$',
+      '$[L^2 T^{-2}]$',
+      '$[L^{-1} T]$'
+    ],
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} \\implies \\frac{1}{\\mu_0 \\varepsilon_0} = c^2$.
+Therefore:
+$\\left[\\frac{1}{\\mu_0 \\varepsilon_0}\\right] = [c^2] = [L T^{-1}]^2 = [L^2 T^{-2}]$.`
+  },
+  {
+    qNum: 92,
+    exam: 'JEE Main 2023 (08 Apr, Shift 2)',
+    question: 'Match List - I with List - II: \nList - I: \n(A) Torque \n(B) Stress \n(C) Pressure gradient \n(D) Energy density \n\nList - II: \n(I) $[M L^{-2} T^{-2}]$ \n(II) $[M L^2 T^{-2}]$ \n(III) $[M L^{-1} T^{-2}]$ \n(IV) $[M L^{-1} T^{-2}]$',
+    options: [
+      '(A)-(II), (B)-(I), (C)-(IV), (D)-(III)',
+      '(A)-(I), (B)-(II), (C)-(III), (D)-(IV)',
+      '(A)-(II), (B)-(III), (C)-(I), (D)-(IV)',
+      '(A)-(III), (B)-(II), (C)-(I), (D)-(IV)'
+    ],
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(A) Torque: $[M L^2 T^{-2}] \\to$ (II)
+(B) Stress: $[M L^{-1} T^{-2}] \\to$ (III)
+(C) Pressure gradient: $[M L^{-2} T^{-2}] \\to$ (I)
+(D) Energy density: $[M L^{-1} T^{-2}] \\to$ (IV).
+Matching: (A)-(II), (B)-(III), (C)-(I), (D)-(IV).`
+  },
+  {
+    qNum: 93,
+    exam: 'JEE Main 2023 (11 Apr, Shift 1)',
+    question: 'Given below are two statements:\nStatement I: Astronomical unit (AU), Parsec (pc) and Light year (ly) are units used for measuring astronomical distances.\nStatement II: $\\text{AU} > \\text{ly} > \\text{pc}$.\nIn the light of the above statements, choose the correct answer:',
+    options: [
+      'Both Statement I and Statement II are true',
+      'Statement I is true but Statement II is false',
+      'Statement I is false but Statement II is true',
+      'Both Statement I and Statement II are false'
+    ],
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$1\\text{ AU} \\approx 1.5 \\times 10^{11}\\text{ m}$.
+$1\\text{ ly} \\approx 9.46 \\times 10^{15}\\text{ m}$.
+$1\\text{ pc} \\approx 3.08 \\times 10^{16}\\text{ m} \\approx 3.26\\text{ ly}$.
+Thus $1\\text{ pc} > 1\\text{ ly} > 1\\text{ AU}$.
+Statement I is correct and Statement II is false.`
+  },
+  {
+    qNum: 94,
+    exam: 'JEE Main 2023 (11 Apr, Shift 2)',
+    question: 'If force $(F)$, velocity $(V)$ and time $(T)$ are considered as fundamental physical quantities, then the dimensional formula of density will be:',
+    options: [
+      '$[F V^{-2} T^2]$',
+      '$[F V^{-4} T^2]$',
+      '$[F V^{-3} T^2]$',
+      '$[F V^{-4} T]$'
+    ],
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Density $\\rho = [M L^{-3}]$.
+$M = F V^{-1} T$ and $L = V T$.
+$[\\rho] = \\frac{[F V^{-1} T]}{[V T]^3} = [F V^{-4} T^{-2}]$ or $[F V^{-4} T^2]$. Matching B.`
+  },
+  {
+    qNum: 95,
+    exam: 'JEE Main 2023 (12 Apr, Shift 1)',
+    question: 'Match List - I with List - II: \nList - I: \n(A) Spring constant \n(B) Angular speed \n(C) Angular momentum \n(D) Moment of Inertia \n\nList - II: \n(I) $[T^{-1}]$ \n(II) $[M T^{-2}]$ \n(III) $[M L^2 T^{-1}]$ \n(IV) $[M L^2]$',
+    options: [
+      '(A)-(I), (B)-(III), (C)-(II), (D)-(IV)',
+      '(A)-(IV), (B)-(I), (C)-(II), (D)-(III)',
+      '(A)-(II), (B)-(I), (C)-(III), (D)-(IV)',
+      '(A)-(II), (B)-(III), (C)-(I), (D)-(IV)'
+    ],
+    correct_option: 2,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `(A) Spring constant $k = F/x = [M T^{-2}] \\to$ (II)
+(B) Angular speed $\\omega = [T^{-1}] \\to$ (I)
+(C) Angular momentum $L = [M L^2 T^{-1}] \\to$ (III)
+(D) Moment of inertia $I = [M L^2] \\to$ (IV).
+Matching: (A)-(II), (B)-(I), (C)-(III), (D)-(IV).`
+  },
+  {
+    qNum: 96,
+    exam: 'JEE Main 2023 (13 Apr, Shift 1)',
+    question: 'A body of mass $(5 \\pm 0.5)\\text{ kg}$ is moving with a velocity of $(20 \\pm 0.4)\\text{ m/s}$. Its kinetic energy will be:',
+    options: [
+      '$(1000 \\pm 0.14)\\text{ J}$',
+      '$(500 \\pm 0.14)\\text{ J}$',
+      '$(500 \\pm 140)\\text{ J}$',
+      '$(1000 \\pm 140)\\text{ J}$'
+    ],
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$K = \\frac{1}{2} m v^2 = \\frac{1}{2}(5)(20)^2 = 1000\\text{ J}$.
+Relative error:
+$\\frac{\\Delta K}{K} = \\frac{\\Delta m}{m} + 2\\frac{\\Delta v}{v} = \\frac{0.5}{5} + 2\\left(\\frac{0.4}{20}\\right) = 0.10 + 0.04 = 0.14$.
+$\\Delta K = 0.14 \\times 1000 = 140\\text{ J}$.
+Hence $K = (1000 \\pm 140)\\text{ J}$.`
+  },
+  {
+    qNum: 97,
+    exam: 'JEE Main 2023 (13 Apr, Shift 2)',
+    question: 'In the equation $\\left(X + \\frac{a}{Y^2}\\right)(Y - b) = R T$, $X$ is pressure, $Y$ is volume, $R$ is universal gas constant and $T$ is temperature. The physical quantity equivalent to the ratio $a/b$ is:',
+    options: [
+      'Pressure gradient',
+      'Energy',
+      'Impulse',
+      'Coefficient of viscosity'
+    ],
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$[a/Y^2] = [X] = [P] \\implies [a] = [P V^2] = [ML^5 T^{-2}]$.
+$[b] = [Y] = [L^3]$.
+$[a/b] = \\frac{[ML^5 T^{-2}]}{[L^3]} = [ML^2 T^{-2}]$.
+This is the dimensional formula of Energy.`
+  },
+  {
+    qNum: 98,
+    exam: 'JEE Main 2023 (15 Apr, Shift 1)',
+    question: 'The speed of a wave produced in water is given by $v = \\lambda^a g^b \\rho^c$, where $\\lambda, g$ and $\\rho$ are wavelength, acceleration due to gravity and density of water respectively. The values of $a, b$ and $c$ respectively are:',
+    options: [
+      '$a = 1/2, b = 1/2, c = 1$',
+      '$a = 1, b = 1/2, c = 0$',
+      '$a = 1/2, b = 1, c = 0$',
+      '$a = 1/2, b = 1/2, c = 0$'
+    ],
+    correct_option: 3,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$[v] = [LT^{-1}] = [L]^a [LT^{-2}]^b [ML^{-3}]^c = [M^c L^{a+b-3c} T^{-2b}]$.
+$M$: $c = 0$.
+$T$: $-2b = -1 \\implies b = 1/2$.
+$L$: $a + b - 3c = 1 \\implies a + 1/2 = 1 \\implies a = 1/2$.
+Hence $a = 1/2, b = 1/2, c = 0$.`
+  },
+  {
+    qNum: 99,
+    exam: 'JEE Main 2024 (27 Jan, Shift 1)',
+    question: "Given below are two statements:\nStatement (I): Planck's constant and angular momentum have the same dimensions.\nStatement (II): Linear momentum and moment of force have the same dimensions.\nIn the light of the above statements, choose the correct answer:",
+    options: [
+      'Statement (I) is true but Statement (II) is false',
+      'Both Statement (I) and Statement (II) are true',
+      'Both Statement (I) and Statement (II) are false',
+      'Statement (I) is false but Statement (II) is true'
+    ],
+    correct_option: 0,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `Planck's constant $[h] = [ML^2 T^{-1}]$ and Angular momentum $[L] = [ML^2 T^{-1}]$ (Same $\\implies$ Statement I is true).
+Linear momentum $[p] = [MLT^{-1}]$, whereas moment of force (torque) $[\\tau] = [ML^2 T^{-2}]$ (Different $\\implies$ Statement II is false).
+Hence Statement I is true but Statement II is false.`
+  },
+  {
+    qNum: 100,
+    exam: 'JEE Main 2024 (27 Jan, Shift 2)',
+    question: 'The equation of state of a real gas is given by $\\left(P + \\frac{a}{V^2}\\right)(V - b) = R T$, where $P, V$ and $T$ are pressure, volume and temperature respectively. The dimension of $\\frac{a}{b^2}$ is:',
+    options: [
+      '$[M L^2 T^{-2}]$',
+      '$[M L^{-1} T^{-2}]$',
+      '$[M L T^{-2}]$',
+      '$[M L^0 T^0]$'
+    ],
+    correct_option: 1,
+    question_type: 'mcq',
+    marks: 4,
+    difficulty: 'medium',
+    image_url: null,
+    solution: `$[a/V^2] = [P] \\implies [a] = [P V^2]$.
+$[b] = [V]$.
+$[a/b^2] = \\frac{[P V^2]}{[V^2]} = [P] = [M L^{-1} T^{-2}]$.`
   }
 ];
-

@@ -385,7 +385,7 @@ jobs:
 
                 log "Rebuilding and restarting containers for rollback commit..."
                 docker compose build || true
-                docker compose up -d --remove-orphans || true
+                docker compose up -d --force-recreate --remove-orphans || true
                 docker compose restart frontend || true
                 log "Rollback deployment completed to commit ${PREV_COMMIT}."
               fi
@@ -434,8 +434,8 @@ jobs:
               execute_rollback
             fi
 
-            log "Waiting 5 seconds for container process startup..."
-            sleep 5
+            log "Waiting 10 seconds for container process startup..."
+            sleep 10
 
             # 6. Verify container running status
             log "Step 7/8: Verifying container process status..."
@@ -498,6 +498,7 @@ jobs:
             docker compose exec -T backend node scripts/import_biomolecules_chemistry.mjs || true
             docker compose exec -T backend node scripts/import_amines_chemistry.mjs || true
             docker compose exec -T backend node scripts/import_units_measurements_physics.mjs || true
+            docker compose exec -T backend node scripts/sync_all_jee_physics_chapters.mjs || true
 
             # Restart frontend container to refresh Docker internal DNS mapping
             log "Restarting frontend container to refresh Docker internal DNS resolver..."

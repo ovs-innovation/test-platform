@@ -1,0 +1,2683 @@
+[
+  {
+    "qNum": 1,
+    "exam": "JEE Main 2002",
+    "question": "Speeds of two identical cars are u and 4u at the specific instant. The ratio of the respective distances in\n\nwhich the two cars are stopped from that instant is",
+    "options": [
+      "1:1",
+      "1:4",
+      "1:8",
+      "1:16"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Use u® = 2 as. ais same for both cases\n\n8 = u®/2a;8) = 16u’/2a = 168; = 5; :8, = 1:16\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 2,
+    "exam": "JEE Main 2002",
+    "question": "If a body looses half of its velocity on penetrating 3 cm in a wooden block, then how much will it\npenetrate more before coming to rest?",
+    "options": [
+      "1cm",
+      "2cm",
+      "3cm",
+      "4cm"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Let the initial velocity of the body be v. Hence the final velocity = v/2\n\nApplying v? = u? — 2as = (3)* =v? — 2-0-3 = a =v?/8\n\nIn lind case when the body comes to rest, final velocity = 0, initial velocity = v/2\n\nAgain, (0) = ®)? -2- £ ~s;ors=1cm\n\nSo the extra penetration will be 1 cm\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 3,
+    "exam": "JEE Main 2002",
+    "question": "From a building two balls A and B are thrown such that A is thrown upwards A and B downwards (both\nvertically). If v, and vg are their respective velocities on reaching the ground, then",
+    "options": [
+      "vy > vy",
+      "y, = vg",
+      "vy, >vg",
+      "their velocities depend on their masses"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "As the ball moves down from height * h ' to ground the P.E at height * h * is converted to K.E. at the ground (Applying\nLaw of conservation of Energy)\nHence, $m 4v} = m gh, or vy = /2ghy; Similarly, vy = v/2gh or vy = vg\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 4,
+    "exam": "JEE Main 2003",
+    "question": "p body travels a distance s in t seconds. It starts from rest and ends at rest. In the first part of the\njourney, it moves with constant acceleration f and in the second part with constant retardation r. The\nvalue of t is given by\n(a) (B) 55. 5\nYo) #1)\nC) 2 D!\nOpi © 2s(F +7)",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Portion OA, OB corresponds to motion with acceleration ' f ' and retardation ' r ' respectively.\nArea of AOAB = Sand OB =t.LetOL = t;,\nLB=t;and AL=v,S = OB-AL = }t-v;v =2§\nAso, f=, ti =F=%andr=L tr=F=2t=ti+tr=3 +2\n1 1) 2 i 1\nri (A+ x=t=y/2s (+1)\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 5,
+    "exam": "JEE Main 2003",
+    "question": "A car, moving with a speed of 50 km/hr, can be stopped by brakes after at least 6 m. If the same car is\nmoving at a speed of 100 km/hr, the minimum stopping distance is\n(A) 19m (B) 18m\n© 94m ©) 6m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Energy = Work done by force (F)\n\n1 Yo 2500 m\n= 5 m.(50)* = (F)(6) =F= ETT\nFor v = 100 km/hr} - m(100)* = (F)(S)\n\n1 5 (2500m\n\n= 5 m(100)* = (F)s\nDie 100x100x6x2 _,,\n2500 x 2\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 6,
+    "exam": "JEE Main 2003",
+    "question": "The co-ordinates of a moving particle at any time ' ¢ * are given by 2 = at? and y = Bt. The speed of\nthe particle at time ' ¢ ' is given by\n(A) 34. faz 1 B2 B) 312 Jo? 1 2\n© p/p Vy",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "V.=% =3a,V, = 9 = 368\nV = Va + Vp =3/a? +p?\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 7,
+    "exam": "JEE Main 2003",
+    "question": "Two particles start simultaneously from the same point and move along two straight lines, one with\nuniform velocity Tf and the other from rest with uniform acceleration T Let a be the angle between\ntheir directions of motion. The relative velocity of the second particle w.r.t. the first is least after a time.",
+    "options": [
+      "wcosa",
+      "usina\n\nf Ii",
+      "fcosa",
+      "usina.\nu"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Using *C; + *C,_y =™C, = \"C,, +n C1 +\"C +7C, =\"Criy + nC, + °C,\nCa ol Genie = foc 0\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 8,
+    "exam": "JEE Main 2004",
+    "question": "A ball is thrown from a point with a speed vj at an angle of projection 6. From the same point and at the\nsame instant person starts running with a constant speed v,/2 to catch the ball. Will the person be able\nto catch the ball? If yes, what should be the angle of projection?",
+    "options": [
+      "yes, 60°",
+      "yes, 30°",
+      "no",
+      "yes, 45°"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "vocosf = §\n\n= 0=60°\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 9,
+    "exam": "JEE Main 2004",
+    "question": "An automobile travelling with speed of 60 km/h, can brake to stop within a distance of 20 cm. If the\ncar is going twice as fast, i.e 120 km/h, the stopping distance will be\n(A) 50m B®) 40m\n©) 60m 0) go m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "If the initial speed is doubled, the stopping distance becomes four times, i.e. 80 m.\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 10,
+    "exam": "JEE Main 2004",
+    "question": "A ball is released from the top of a tower of height h metres. It takes T\" seconds to reach the ground.\nWhat is the position of the ball in T/3 seconds?",
+    "options": [
+      "h/9 metres from the ground",
+      "7 h/9 metres from the ground",
+      "8 h/9 metres from the ground",
+      "17 h/18 metres from the ground."
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "No Solution Available\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 11,
+    "exam": "JEE Main 2005",
+    "question": "\"Two points A and B move from rest along a straight line with constant acceleration f and f *\nrespectively. If A takes m sec. more than B and describes ' n ' units more than B in acquiring the\nsame speed then\nW (5 — frym? = ff'n B (f+ fym? = ffm\n© +1ym= fem? © (5 = fyn=31sm?",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "v2 =2f(d+n)=2fd\nv=f(t)=(m+t)f\neliminate d and m we get\n, leo 2\n(f= Hn = ffm.\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 12,
+    "exam": "JEE Main 2005",
+    "question": "Acar starting from rest accelerates at the rate f through a distance S, then continues at constant\nspeed for time ¢ and then decelerates at the rate f/2 to come to rest. If the total distance traversed is\n15S, then\nA g_ ft ®) 5 _ 1/6ft\n© g_ 1/26 (D) None of these",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Vv\n- 5-8\n2 During retardation S, = 2S During\nvo = V2Sf\nty t; t\n\n158-38 =128 = vt\nconstant velocity 5 ft?\n\nTii=\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 13,
+    "exam": "JEE Main 2005",
+    "question": "The relation between time ¢ and distance x is t = ax? + bx where a and b are constants. The\nacceleration is\n(A) _oupe? (B) 9p,3\n©) ogy? D) 9442",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "t=az? + bz\nby differentiating acceleration = —2av*®\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 14,
+    "exam": "JEE Main 2005",
+    "question": "5 parachutist after bailing out falls 50 m without friction. When parachute opens, it decelerates at\n2 m/s? He reaches the ground with a speed of 3 m/s. At what height, did he bail out?\n\nA) 91m ®) 182m\n© 293m © 111m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "= 3% (2x10x50)\n5 = 50 + (L-gpan)\n=293 m.\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 15,
+    "exam": "JEE Main 2006",
+    "question": "A body falling from rest under gravity passes a certain point P. It was at a distance of 400 m from\nP, 4s prior to passing through P. If g = 10 m/s, then the height above the point P from where the\nbody began to fall is",
+    "options": [
+      "720m",
+      "900 m",
+      "320m",
+      "680 m"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "We have h = 1g¢** and h + 400 = 4g(t + 4)2. Subtracting we get\nar\nP(t+4)\n= t = 8sec\n400=8g+4gt .h= 2 x10 x 64 = 320 m\n.\". Desired height = 320 + 400 = 720 m.\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 16,
+    "exam": "JEE Main 2006",
+    "question": "A particle located at = 0 at time ¢ = 0, starts moving along the positive z-direction with a velocity\nv ' that varies as v = a/Z. The displacement of the particle varies with time as\n(A) 43 (B) 42\n(2 (D) 41/2",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "E=af% = [adt= xat®\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 17,
+    "exam": "JEE Main 2007",
+    "question": "The velocity of a particle is v = vj + gt + ft°. If its position is x = 0 at t = 0, then its displacement\nafter unittime (t = 1) is\n(A) y+ 2g + 3f ®) vy +g/2+£/3\n© yo +g+f ©) vy +g/2+f",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Jrdx= Jf (Vo+gt +8?) dt\nx=vo+g(}) +£(3)\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 18,
+    "exam": "JEE Main 2008",
+    "question": "5 body is at restat z = 0. At = 0, it starts moving in the positive z-direction with a constant\nacceleration. At the same instant another body passes through z = 0 moving in the positive x\ndirection with a constant speed. The position of the first body is given by xi1(t) after time ' t ' and that\nof the second body by z(t) after the same time interval. Which of the following graphs correctly\ndescribes (z; — x) as a function of time ' ¢ '?\n\nLR ) Bx -x)\no t Oo t\n©) =",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001612/edvedum/motion1d_pyq/q18_diagram.png",
+    "solution": "1\nz(t) = aa\na(t) = vt\n2-23 = Jatt —vt\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 19,
+    "exam": "JEE Main 2009",
+    "question": "Consider a rubber ball freely falling from a height A = 4.9 m onto a horizontal elastic plate. Assume\nthat the duration of collision is negligible and the collision with the plate is totally elastic. Then the\nvelocity as a function of time the height as function of time will be\nwn ® y\n\noy BE a n\n° t\n° t hal] BA\" ANSE. \"\ny\nh\nt\n©) % y : (D)\n+0 fo N Re sa y\n° t h\nNEN h 7 ed\npg NL t\nt",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "n= iat? v = —gt and after the collision, v = gt. (parabolic) (straight line) Collision is perfectly elastic then ball\nv\n| EE td\nreaches to same height again and again with same velocity. 2, 3 1\ngpm NN\n|\nhin Be i\nt\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 20,
+    "exam": "JEE Main 2009",
+    "question": "5 particle has an initial velocity 37 + 4j and an acceleration of 0.47 + 0.35. Its speed after 10 s is\n(A) 10 units (B) 7/3 units\n(C) 7 units 0) g 5 units",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "oH =3i+4j; 3 =04i +03]\nT=d+7t\n=3i+4j+ (04i+0.35)10 =3i + +4i +3 = Ti +7}\nSpeed is v/72 + 72 = 7/2 units\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 21,
+    "exam": "JEE Main 2011",
+    "question": "pp object, moving with a speed of 6.25 m/s, is decelerated at a rate given by :\ndv\n— = =2.5yv\ndt Ad\nwhere v is the instantaneous speed. The time taken by the object, to come to rest, would be:\n(a) 5 ®) 45\n©) gg (0) ¢",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "dv\nZF = 28\nIntegrating the above equation.\n=2/v=-25t+C\natt=0,v=625=C=35\nty =0=t=35=2s\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 22,
+    "exam": "JEE Main 2012 (07 May)",
+    "question": "The graph of an object's motion (along the — axis) is shown in the figure. The instantaneous velocity\nof the object at points A and B are v4 and vp respectively. Then\nx(m)\ntis\n10\nB\n5\n¥A\n{Ax=4m\nAt=8i\n0 10 20 1(s)\n(A) yy =v =05 m/s ® yy =05 m/s < vp\n© va =05m/s > vp (0) va=vp=2m/s",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001613/edvedum/motion1d_pyq/q22_diagram.png",
+    "solution": "Instantaneous velocity v = + From graph, vq = as = =0.5m/sand vp = Gv = fr =0.5m/sie.,\nva=vp=05m/s\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 23,
+    "exam": "JEE Main 2012 (12 May)",
+    "question": "The distance travelled by a body moving along a line in time ¢ is proportional to 3.\nThe acceleration-time (a, t) graph for the motion of the body will be",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001615/edvedum/motion1d_pyq/q23_diagram.png",
+    "solution": "Distance along a line i.e., displacement (s ) = # { sxt given )\nBy double differentiation of displacement, we get acceleration.\nLode at osm\nV=0=\"=0=23\"ad\ndv d3t?\n=—=—=6t\nSTH dL\na=6toraocct\nHence graph (b) is correct.\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 24,
+    "exam": "JEE Main 2012 (19 May)",
+    "question": "A goods train accelerating uniformly on a straight railway track, approaches an electric pole standing\non the side of track. Its engine passes the pole with velocity « and the guard's room passes with\nvelocity v. The middle wagon of the train passes the pole with a velocity.\n\n(A) wy (B) 1 [EF\n©) (D)\nVu ul4ol\n2",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Let' S' be the distance between two ends ' a ' be the constant acceleration As we know V2 — u? = 2aS\nor,aS = es\nLet V be velocity at mid point.\nTherefore, V2 — u® = 2a§\nVZ=u’+aS\nV2?\n2 2\nVi=u?+ Se\nu? + 0?\nVes Ven\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 25,
+    "exam": "JEE Main 2012 (26 May)",
+    "question": "Aballis dropped vertically downwards from a height h above the ground. It hits the ground\ninelastically and bounces up vertically. Neglecting subsequent motion and air resistance, which of the\nfollowing graph represents variation between speed (v) and height (h) correctly?",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001616/edvedum/motion1d_pyq/q25_diagram.png",
+    "solution": "When a ball hits the ground vertically then some of its energy is lost due to which it bounces back to lesser height\nwith less velocity. The energy of the ball keep on decreasing with time and finally it become zero. Due to this\nh\nvariation of velocity with height can be represented as follows : I\nK\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 26,
+    "exam": "JEE Main 2014 (06 Apr)",
+    "question": "From a tower of height H, a particle is thrown vertically upwards with a speed u. The time taken by the\nparticle, to hit the ground, is n times that taken by it to reach the highest point of its path.The relation\nbetween H, uand nis :",
+    "options": [
+      "2 gH =n2u2",
+      "gH = (n-2)2u2",
+      "2g H = nu2(n - 2)",
+      "gH = (n-2)u2"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "B\nh\n4 |C\nu u\nntas = tas + tac + top (n — 1) tap = tac + tep....(1) (A = 1) ra + tcp\nH\nD\n; u 1 Ww 1 [(@-1u]® Ww (n- 1)?\nso(n=2)= =tep..(2 = —gt? = —cg|X=——\"1] ..f 1) - aff tele?\n( J cp ..(2)H+h 38th H+ 5 3 : roms H + oF\n2\nu 2\n-H=— [(n-1)?-1| 2gH=nu2(n- 2!\nE= 2 [@ 1) 1] gH = nu2(n - 2)\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 27,
+    "exam": "JEE Main 2014 (12 Apr)",
+    "question": "p person climbs up a stalled escalator in 60 s. If standing on the same but escalator running with\nconstant velocity he takes 40 s. How much time is taken by the person to walk up the moving\nescalator?",
+    "options": [
+      "37 ¢",
+      "97 ¢",
+      "ggg",
+      "454"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Person's speed walking only is J; “escalator”.\n\nStanding the escalator without walking the\n\nspeed is 1 “escalator”\n\nWalking with the escalator going, the speed add.\n\n0 is L 1 1\nSo, the person's speed is 5 + 35 = =\n“escalator”\nSecond\nSo, the time to go up the escalator (\"seconds per escalator\") is\n$= = = 24 second\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 28,
+    "exam": "JEE Main 2014 (19 Apr)",
+    "question": "th\nA bullet loses (2) of its velocity passing through one plank. Considering uniform retardation, the\nn\nnumber of such planks that are required to stop the bullet can be:",
+    "options": [
+      "Infinite",
+      ",,",
+      "2",
+      "9p?\n(2n-1) (n—1)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "1\nVol 1==\nn\nYo\n(= LC > Let ¢ be the thickness of the plank\nfe—r—4\n$51 1\n{wo (x - Bo) } = vu — 2at *, 2at = v3 = (1 = YH If m number of planks are required to stop a bullet,\nn n\n2\nYo\n=o f8 UN oF J n2 n?\nthen 0 = v2 — (2at) mn - gp = 0 WN =——m—— =\nen vj — (2at)m - m Tat ifi- (1-3) n?—(n—-1)° (2n—-1)\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 29,
+    "exam": "JEE Main 2015 (04 Apr)",
+    "question": "Tyo stones are thrown up simultaneously from the edge of a cliff 240m high with an initial speed of\n10ms—! and 40ms~! respectively. Which of the following graph best represents the time variation of\nthe relative position of the second stone with respect to the first? (Assume stones do not rebound after\nhitting the ground and neglect air resistance, take g= 10ms 2) (the figure are schematic and not\ndrawn to scale)",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001618/edvedum/motion1d_pyq/q29_diagram.png",
+    "solution": "8S) =10t — For When §; = —240=> t = 8s. So, at = 8 seconds first stone will reach the ground.\n\nSa = 40t — Jott Tillt = 8s, Sa — Sy = 30t. But after 8s S is constant = —240. Relative to stone 1 for (\n\nt; > 8)s displacements of stone 2, S; + 240. And at ¢ = 12s seconds stone will reach the ground. The\n\ncorresponding graph of the relative position of second stone with respect to first is,\n\nVy=ym\n240 /\n1(s)\n8 12\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 30,
+    "exam": "JEE Main 2015 (11 Apr)",
+    "question": "From the top of a 64 metres high tower, a stone is thrown upwards vertically with the velocity of\n48m/s. The greatest height (in metres) attained by the stone, assuming the value of the gravitational\nacceleration g — 32m/s%, is:\n\n(A) 119 (B) gg\n(C) 108 ) 199",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "We know that v* = u? + 2gs.\n\nAt greatest height v = 0\n\nu = 48m sec\n\ng= —32m/ sec’\n\nS= Lon = 36m\n\nTotal distance = 64m + 36m = 100m\n\n= 100m\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 31,
+    "exam": "JEE Main 2017 (02 Apr)",
+    "question": "body is thrown vertically upwards. Which one of the following graphs correctly represents the\nvelocity (v) vs time (t)?",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001619/edvedum/motion1d_pyq/q31_diagram.png",
+    "solution": "Lv\nt—>\nv =u — gt y=c+mx m = —g = slope ¢c = +u Velocity becomes negative after some time and the negative slope is\nconstant.\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 32,
+    "exam": "JEE Main 2017 (08 Apr)",
+    "question": "which graph corresponds to an object moving with a constant negative acceleration and a positive\nvelocity?",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001621/edvedum/motion1d_pyq/q32_diagram.png",
+    "solution": "Let acceleration be a. Given that a=-C We know that, g¢ = uw = —Cvdv = —Cdz Integrating the above\n2 L\nequation, 5 — —Cz + k- Thus, the velocity-distance graph is -™\nDistance\n2\nThe distance cover by the objectis ¢ — — 5 + 3 Thus, with the increase in distance, velocity decreases. Now,\ndv . 5\na=-C= = = dv = —Cdt = v = —Ct + u,(straight line))\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 33,
+    "exam": "JEE Main 2017 (09 Apr)",
+    "question": "pcaris standing 200m behind a bus, which is also at rest. The two start moving at the same instant\nbut with different forward accelerations. The bus has acceleration 2ms~2 and the car has acceleration\n4ms 2. The car will catch up with the bus after time :\n\nA) 1305 ®) 155\n© 110s ©) 102s",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "——> 4ms ——> 2ms\nacp = 2msec™? 200 = : x 262 t = 10v/2s\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 34,
+    "exam": "JEE Main 2018 (08 Apr)",
+    "question": "All the graphs below are intended to represent the same motion. One of them does it incorrectly. Pick\nit up.",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001623/edvedum/motion1d_pyq/q34_diagram.png",
+    "solution": "distance\nThe graph 3 initial slope is zero which is not possible since the\ntime\ninitial velocity is non-zero in all other three graphs.\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 35,
+    "exam": "JEE Main 2018 (15 Apr)",
+    "question": "an automobile, traveling at 40kmh!, can be stopped at a distance of 40m by applying brakes. If the\nsame automobile is traveling at 80kmh~!, the minimum stopping distance in metres is (Assume no\nskidding):\n\n(A) 150m ®) 100m\n© 75m ©) 160m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "2\nuw\n\n5=5\n\nSi_w oom), - 2)? (40) = 160m\n\na 1=(2) =\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 36,
+    "exam": "JEE Main 2018 (15 Apr)",
+    "question": "The velocity time graphs of a car and a scooter are shown in the figure. (i) The difference between the\ndistance travelled by the car and the scooter in 15 s and (ii) the time at which the car will catch up with\nthe scooter are, respectively.\n\n| |\nZW |\n— | i\n! |\nwn | |\n= : |G\n30 |\n| |\n| |\n| |\nop ] |\nQ | |\n1\npo— |\no\n> |\n| |\n| |\n| |\n0 0 LD\n( )\n(A) 112.5m and 22.55 (8) 337.5m and 255\n(© 225.5m and 10s (0) 112.5m and 15s\n(",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001624/edvedum/motion1d_pyq/q36_diagram.png",
+    "solution": "| 1 675\n| Distance travelled by car in 15s = 5 x 45 x 15x = =m Distance travelled by scooter in 15s\n| = 30 x 15 = 450. Let car catches scooter in time ¢\ndifference between the distance travelled by car and scooter in 15s in=-450 — LL = 112.5m\n= pi +45 (t — 15) = 30¢\n337.5 + 45t — 675 = 30t = 15¢ = 337.5\n= t= 22.5s.\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 37,
+    "exam": "JEE Main 2018 (15 Apr, Shift 1)",
+    "question": "An automobile, travelling at 40 km /h, can be stopped at a distance of 40 m by applying brakes. If the\nsame automobile is travelling at 80 km/h, the minimum stopping distance, in metres, is (assume no\nskidding)\n\n(A) 75m ®) 160 m\n© 100m ©) 150 m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "According to question, uy = 40 km/h, v; = 0 and s; = 40 m using v* — u? = 2as;0% — 40> = 2a x 40..()\nAgain, 02 — 80% = 2 as From eqn. (i) and (ii)\nStopping distance, s = 160 m\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 38,
+    "exam": "JEE Main 2018 (15 Apr, Shift 1)",
+    "question": "The velocity-time graphs of a car and a scooter are shown in the figure. (i) the difference between the\ndistance travelled by the car and the scooter in 15 s and (ii) the time at which the car will catch up with\n45 A Car 8\n! iE\nTaf Scooter};\ng i i\nthe scooter are, respectively = i H\n21s i i\nbi ) iC 1\n0 5 1015 20 25\nTime in (5) =\n(A) 337.5 mand 25 5 ®) 2955 mand 10's\n© 112.5 mand 22.55 ©) 112.5 mand 15s",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001626/edvedum/motion1d_pyq/q38_diagram.png",
+    "solution": "Using equation, a = rd and\n1\nS=ut+ zat’\nDistance travelled by car in 15sec\n45)\n= 15s\n=m\nDistance traveled by scooter in 15 seconds = 30 x 15 = 450(\".\" distance = speed x time ) Difference between\ndistance travelled by car and scooter in 15sec, 450 — 337.5 = 112.5 m Let car catches scooter in time t;\nS35 4 45(t — 15) = 30\n337.5 + 45t — 675 = 30t\n= 15t = 337.5\n= t=22.5sec\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 39,
+    "exam": "JEE Main 2019 (10 Jan, Shift 2)",
+    "question": "5 particle starts from the origin at time ¢ = 0 and moves along the positive z—axis. The graph of\nvelocity with respect to time is shown in figure. What is the position of the particle at time t = 5s?\nv Eo bad CE a a\n( I ¢ 1 7 tt 1 t 1\nm / s) IRI TA 1 i (SR (A\nHE SL Lt JES TR J (A TN\n| PS) TE\nES I A RT (NA\nRE | 1 RN Tv TI\nJ IO J TE. aad HIP\" i RS Se\nHe ENE TR TANT i TE “a A\nI 1 8 IN Y tq\n5 7 a Bl Gl SE a\n0 OE TE\n123 456 7 8 9 10 t(s)\n(A) 19m B) gp,\nCig ©) 3,",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001627/edvedum/motion1d_pyq/q39_diagram.png",
+    "solution": "Area enclosed by V — T graph=displacement (As particle moving in same direction)\n(3 x 2x 2) + (2 x 2) + (1 x 3) = Displacement\n.\". So, displacement = 9m\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 40,
+    "exam": "JEE Main 2019 (08 Apr, Shift 2)",
+    "question": "5 particle starts from origin O from rest and moves with a uniform acceleration along the positive\nx — axis . |dentify all figures that correctly represent the motion qualitatively. ( a = acceleration, v =\nvelocity, = dispalcement, t = time)",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001629/edvedum/motion1d_pyq/q40_diagram.png",
+    "solution": "A. Acceleration = constant; av — t graph will be constant line parallel to time axis. Option (A) is correct.\nB.v = u + at ; velocity vs time graph will be straight line passing through origin. Option (B) is correct.\nu = 0; initially at rest\nv=at\nC. X= Jatt (particle was initially at origin) v — ¢ graph will be parabola passing through origin. Option (D) is\ncorrect.\n\na. % 4 y .\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 41,
+    "exam": "JEE Main 2019 (09 Apr, Shift 1)",
+    "question": "A ball is thrown vertically up (taken as +z — axis ) from the ground. The correct momentum-height\n(p — h) diagram is:",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001630/edvedum/motion1d_pyq/q41_diagram.png",
+    "solution": "If the ball was thrown with initial velocity u , then its velocity at height can be written as. v = y/u2? — 2gh Its linear\nmomentum, p = mw = my/u? — 2gh Or p* = m*u* — 2m?gh The graph between p&h will be a parabola. In\nmotion when particle was going up, its velocity is positive and decreasing with height and so is the linear\nmomentum. When it reaches the maximum height, the velocity and linear momentum will be zero. Again, it will start\nto fall back, the velocity and linear momentum will increase but will have negative value.\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 42,
+    "exam": "JEE Main (1 for a wrong answer] 2019 (09 Apr, Shift 2))",
+    "question": "The position vector of a particle changes with time according to the relation\n7 (t) = 15% + (4 — 202) j. What is the magnitude of the acceleration at ¢ = 17\n(A) 49 (®) 25\n(© 199 (©) 50",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "= 156% + (4 — 208%) j\n= 30ti — 40\n@ = 30; — 40j\nAtf=1,\n@ = 30i — 40;\n|a| = 50\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 43,
+    "exam": "JEE Main 2019 (09 Apr, Shift 2)",
+    "question": "The position of a particle as a function of time ¢, is given by  (t) = at + bt? — ct® where a,band ¢\nare constants. When the particles zero acceleration, then its velocity will be:\n(A) Bb? (B) »\n\na+ — yf ee\n3c 2¢\n©) b? (D) »2\na+ — MA\nc 4c",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "z(t) = at + bt* — ct\nvelocity y(t) = d (z) = i t + bt? — ct\nu(t) == = (a +08? — ot’)\n=a + 2bt — 3ct’\n4 d\nAcceleration = —uy(t) = 2b — 6tc\ndt\nacceleration = 0 = 2b — 6tc = 0\nhe\n\"3c\n* b\n.. velocity when t = —\n3c\nb bh)?\nv 0 —a+n(3) -3(3)\n3c\nhe\nSREY\n=a+ &\nBe ALEC\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 44,
+    "exam": "JEE Main 2019 (10 Apr, Shift 2)",
+    "question": "A bullet of mass 20g has an initial speed of 1ms~!, just before it starts penetrating a mud wall of\nthickness 20cm. If the wall offers a mean resistance of 2.5 x 1072, the speed of the bullet after\nemerging from the other side of the wall is close to:\n\n(A) 0 7mst (B) 0.3ms?\n© 1ms! ©) § gms!",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "2I5DGLORI NN\na= ——————e = ——m§\n20 x 107° 4\nFrom v* — u® = 2as\nv? =u? + 2as\n5 ~2\nv= 12-2x 7x 20x10\n=+/0.5\n=0.7ms™!\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 45,
+    "exam": "JEE Main 2019 (12 Apr, Shift 2)",
+    "question": "5 particle is moving with speed v = by/Z along positive 2 — axis. Calculate the speed of the particle at\ntime t = 7 (assume that the particle is at originatt = 0)",
+    "options": [
+      "42,",
+      "p2,\nV2",
+      "p21",
+      "p2,\n2b 1"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "v=byz..0\ndx\nSei= by/z\ndz\nre = bdt\nx dz t\notros sot\n2yz = bt... (2)\nFrom equation (1) and (2)\nbt\no=p{%)\nsatt=1\noP\nhes?\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 46,
+    "exam": "JEE Main 2020 (08 Jan, Shift 1)",
+    "question": "5 particle is moving along the z -axis with its coordinate with time ¢ given by z (t) = 10 + 8t — 3t2.\nAnother particle is moving along the y -axis with its coordinate as a function of time given by\ny(t)=5- 8t3. Att = 1s, the speed of the second particle as measured in the frame of the first\nparticle is given as /v. Then v (inms™1) Is cd",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 580,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "7 = (8 6t)i\n7 = (~2482) j\n[v3] = v/580\n\nHence, the correct answer is 580."
+  },
+  {
+    "qNum": 47,
+    "exam": "JEE Main 2020 (08 Jan, Shift 2)",
+    "question": "A ball is dropped from the top of a 100m high tower on a planet. In the last 3s before hitting the\nground, it covers a distance of 19m. Acceleration due to gravity (in ms~2 ) near the surface on that\nplanetis_____",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 8,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "V (m/s)\neu=0 :\nA\n2:\n{er 4 1%\nv 7: glt— 3\n= Pi 2 1 La\nh=100m yh —— 5g 81\nHar |\n7 2}\nisd\nt(s)\n(0,0) 3 t\n1 ids oll) m\n( 39 = 100 .... (2) devide equation (1) & (2) = 1 ~~ 9 t=>5sputtinequation (2) g = 83\n2\n\nHence, the correct answer is 8."
+  },
+  {
+    "qNum": 48,
+    "exam": "JEE Main 2020 (09 Jan, Shift 1)",
+    "question": "The distance covered by a paritcle in one dimensional motion varies with time £ as\n2? = at? + 2bt + c. If the acceleration of the particle depends on x as =~\" , where n is an integer,\nthe value of n is",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 3,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "2? =a? +2bt +c\n2xv = 2at + 2b\nzv=at+b\nv? +ar =a\n(2 + By’\na=0q—| —\nT\na (at® + 2bt +c) — (at + b)*\nTe”) CEE\nac?\nPi\naor 3\n\nHence, the correct answer is 3."
+  },
+  {
+    "qNum": 49,
+    "exam": "JEE Main 2020 (02 Sep, Shift 1)",
+    "question": "Train A and train B are running on parallel tracks in the opposite directions with speed of\n36kmhour ' and 72kmhour ', respectively. A person is walking in train A in the direction opposite\nto its motion with a speed of 1.8kmhour'. Speed (inms~1) of this person as observed from train B\nwill be close to: (take the distance between the tracks as negligible)\n\n(A) 29 5ms 1 (B) 28 5m!\n(©) 31.5ms! (©) 305mg!",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Vara = —18kmhr' = —0.5ms\n\nVinans B = Vian, A+ V4, B\n\n=Voma+Va—-Vs\n\n= —0.5+10 — (—20)\n\n=-0.5+30\n\n=29.5ms!\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 50,
+    "exam": "JEE Main 2020 (04 Sep, Shift 1)",
+    "question": "Starting from the origin at time t = 0, with initial velocity 5j ms, a particle moves in the z -y plane\nwith a constant acceleration of (10i~ + 4; ) ms~2. At time t, its coordinates are (20m, yom). The\nvalues of t and y, are, respectively:",
+    "options": [
+      "95 and 18m",
+      "45 and 52m",
+      "25 and 24m",
+      "55 and 25m"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Equation (1)\nS, = tat\n20-2 x10x22\nos 3 x\nt=2\nEquation (2)\n1 2\nSy =uyt + sayt\n2\n1 2\ny=5(+;0)@\ny=18\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 51,
+    "exam": "JEE Main 2020 (04 Sep, Shift 1)",
+    "question": "A tennis ball is released from a height h and after freely falling on a wooden floor it rebounds and\nreaches height h/2. The velocity versus height of the ball during its motion may be represented\ngraphically by: (graphs are drawn schematically and on not to scale)",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001632/edvedum/motion1d_pyq/q51_diagram.png",
+    "solution": "No solution stored for this question.\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 52,
+    "exam": "JEE Main 2020 (04 Sep, Shift 2)",
+    "question": "The speed verses time graph for a particle is shown in the figure. The distance travelled (in 1m) by the\n10\n8\nu 6\n(ms!) 4\nparticle during the time interval t = Q to ¢ = 5 s will be 2\n12345\ntime —»\n(s)",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 20,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001633/edvedum/motion1d_pyq/q52_diagram.png",
+    "solution": "v\n8m/s mmr\n1 Distance = Area of |v| -t graph = 1/2 x 8 x 5 = 20m\n|\ni\n- t\n5s\n\nHence, the correct answer is 20."
+  },
+  {
+    "qNum": 53,
+    "exam": "JEE Main 2020 (04 Sep, Shift 2)",
+    "question": "A small ball of mass m is thrown upward with velocity « from the ground. The ball experiences a\nresistive force mkv? where v is it speed. The maximum height attained by the ball is :\n(a) ku? (B) 1 ku?\n\ntan — =In{14+—\nkt Tg Eo ( 29 )\n©) 1 | ku? 0) ala ku?\n“tan 1— ay for\nPha 2% ( 9",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Fyne =ma\ndi\n—mg — mhkv® = mul\ndv 2\nVE =—g—kv\n0 vdv 5\npr = [448 = Bmax\n1. fg+ kv}\nhoe = gi (£552)\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 54,
+    "exam": "JEE Main 2020 (05 Sep, Shift 1)",
+    "question": "A balloon is moving up in air vertically above a point A on the ground. When it is a height h,, a girl\nstanding at a distance d (point B) from A (see figure) sees it at an angle 45° with respect to the\nvertical. When the balloon climbs up a further height h,, it is seen at an angle 60° with respect to the\nvertical if the girl moves further by a distance 2.4644 (point C). Then the height h; is (given\n\nA\nH, |\ntan 30° = 0.5774): 4\nH,\n602!\nvi\nAe——d—>B€-2464 d—>C\n(A) 1 464d ®) 0.7324\n© 0.4644 © 4",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001634/edvedum/motion1d_pyq/q54_diagram.png",
+    "solution": "hy\ntis = 7\nhy=d....)\nhy + hy IE\na7 2.464d = tan 30° = 7 = 0.5774\nhi + hy = (3.464)d x 0.5774\nhy + hy = 2d .......{iI)\nsha=d\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 55,
+    "exam": "JEE Main 2020 (05 Sep, Shift 1)",
+    "question": "A helicopter rises from rest on the ground vertically upwards with a constant acceleration g. A food\npacket is dropped from the helicopter when it is at a height h. The time taken by the packet to reach\nthe ground is close to [g is the acceleration due to gravity]:\n\nA B!",
+    "options": [
+      "9 7%",
+      "h\nt== —= t=1.8 —-\n3V \\g 9",
+      "h",
+      "; [2h\nt=34/(- =\\a,\na ) 39"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "V,\nEs\n1 = For upward motion of helicopter v> = u? + 2as v* = 0 + 2gh v = v/2gh =\nJ r=t\nNow particle will start moving under gravity. s = ut + Jott —h = /2ght — Jott then\nV2gh+ [2h + 4x L xh\nbe VT 2 [Ba ye Rar vD)\n2% g 9 9\n2\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 56,
+    "exam": "JEE Main 2020 (05 Sep, Shift 2)",
+    "question": "The velocity (v) and time (t) graph of a body in a straight line motion is shown in the figure. The point\nS is at 4.333 seconds. The total distance covered by the body in 6s is :\nA B\n(ns) 4\n2\ni 0 D —t(ins)\nN\n2412 34N\\/6\n(4\n(A) 37 (8)\nCLAS 12m\n3\n(9) (D)\n11m 9.\n4",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001636/edvedum/motion1d_pyq/q56_diagram.png",
+    "solution": "Total distance covered by the body is equal to the modulus of area under graph velocity-time graph\n1 1 4 1 5\nsa (3xax2)+axn+ (3 x 4x 3) (3x2x3)\n8 5\n=d=4+4+ 3 + 3\n=d= Ln\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 57,
+    "exam": "JEE Main 2020 (06 Sep, Shift 2)",
+    "question": "- When a car is at rest, its driver sees rain drops falling on it vertically. When driving the car with speed v\n, he sees that rain drops coming at an angle 60 from the horizontal. On further increasing the speed of\nthe car to (1 + 3) v, this angle changes to 45 . The value of 3 is close to :\n\n(A) 0.50 (®) 0.41\n(© 0.37 ©) 73",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "o) /\n#7 /\n/ Pi\n- oo Vig 2 Vig %\nVie \" A tan = 60° = 2 .......(1)\n#460 45° a\n- Va=V; V,.= (B+1)V\n%\no vy,\ntan45° = (CES) cnen(2) VU = (B+ 1)v f= V3 —1=10.732\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 58,
+    "exam": "JEE Main 2021 (24 Feb, Shift 1]",
+    "question": "if the velocity-time graph has the shape AMB, what would be the shape of the corresponding\nVv\nA—t—1—1-4B\nacceleration-time graph?\ntime (7)\n(M",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001637/edvedum/motion1d_pyq/q58_diagram.png",
+    "solution": "7\n4 &Slope (-ve) B\nSlope of v — t graph gives acceleration Slope(+ve) =\nSlope (-ve) Slope(+ve)\nM\na\n—8\nAcceleration will be H §\n: : 1\n4 iM\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 59,
+    "exam": "JEE Main 2021 (24 Feb, Shift 2)",
+    "question": "A particle is projected with velocity v, along x-axis. A damping force is acting on the particle which is\nproportional to the square of the distance from the origin i.e. ma = —aa?. The distance at which the\nparticle stops:\n\n(A) 1 (B) 1\n( 20 ) 3 3mul 3\n3a 2a\n() 1 (D) 1\n3uh) 2 208) 2\n2a 3a",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "F = —ax?\nma = —az?\n—azx?\nes\nm\nvdv ay\ndz me\n[2 vdv =[fs- Std\nv2)’ a Cf &\n2), m\\3),\ni _ ed\n2 m3\n1\nae 3m 3\n2a\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 60,
+    "exam": "JEE Main 2021 (25 Feb, Shift 1)",
+    "question": "Ap engine of a train, moving with uniform acceleration, passes the signal-post with velocity u and the\nlast compartment with velocity v. The velocity with which middle point of the train passes the signal\npost is :\n\n(A) +o (B) pe Sa\n2 2\n©) v—u (D) FE\n2 2",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "— — 1 —\nu a Vv v\nG————e—\n2 2\n(v)? =u? + 2ad v* = (v/)? + 2ad solving, we get , _ | Le A C B\nCe bee lp\nd d\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 61,
+    "exam": "JEE Main 2021 (25 Feb, Shift 2)",
+    "question": "A stone is dropped from the top of a building. When it crosses a point 5m below the top, another stone\nstarts to fall from a point 25m below the top. Both stones reach the bottom of building simultaneously.\nThe height of the building is :\n\n(A) 95m B) 45m\n© 35m ©) 50m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "LJ\n| Sm\nst 2\n25m ! I particle\nH 10 ws Time for particle to meet = ¢' = Ju = Ee = 2sec Time taken\nbl . rel\nII\" particle\nLJ\nu=0\nby I* particle to reach ground — 3 sec H = 3907 = 45m\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 62,
+    "exam": "JEE Main 2021 (26 Feb, Shift 2)",
+    "question": "A scooter accelerates from rest for time ¢; at constant rate @; and then retards at constant rate\n; LT\nap for time 2) and comes to rest. The correct value of eg will be :\n2",
+    "options": [
+      "a,",
+      "a,\nay az",
+      "a; + ay",
+      "ay + ay\na az"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Vmax Per TY\n1\nH\n1 v, vy\nDraw vt curve ! tan; = ay =k tanfy =ar = —\"=+\n:¥ 2\ni\n1\nH\n|\nH\ni\n1\nA0 19, A\nt\nabove + = ga\nty a\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 63,
+    "exam": "JEE Main 2021 (16 Mar, Shift 1)",
+    "question": "The velocity-displacement graph describing the motion of a bicycle is shown in the figure.\n-1\nvims )\nSO}\n; The acceleration-displacement graph of the bicycle's\n0300 00>\")\nmotion is best described by :",
+    "options": [
+      "2",
+      "Ck\nalms) alms\")\n10 feeeoon 10 fn\n0300200 x(m) 0300 200 x(m)",
+      "=",
+      ")\na(ms ) alms )\n10f—r—— 10 f=--r——y\n+ nl PR | I\n0 ft 0 pr\n200 400 x(m) 200 400 x(m)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001638/edvedum/motion1d_pyq/q63_diagram.png",
+    "solution": "For0<z<200v=mz+Cuv= 3a+10a- ur x (¢ + 10) (3) a= 3 +2 = Straight line till\n2\nams )\nx = 200 for > 200 v = constant => a = 0\n10 fen\n2 i\n0300 200 x(m)\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 64,
+    "exam": "JEE Main 2021 (16 Mar, Shift 2)",
+    "question": "A mosquito is moving with a velocity ¢ = 0.5% + 3tj + kms! and accelerating in uniform\nconditions. What will be the direction of mosquitoes after 2s ?\n(A) 2 (8)\n3! ; Vi\ntan (3) from z-axis tan! ( =) from y-axis\n©) {5 (D) (5\ntan™ 3 from y-axis tan™ 3 from z-axis",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given :\n© = 0.5¢% + 3tj + 9k\nBatt—z = 20 + 6 + 9k\n.\". Angle made by direction of motion of mosquito will be,\ncos! 2 (from z-axis) — Pe WAL\n11 2\n6\ncos! i (from y-axis) — tan-1 =\ncos 1.02 (from z-axis) — tans1val\n11 9\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 65,
+    "exam": "JEE Main 2021 (17 Mar, Shift 1)",
+    "question": "A car accelerates from rest at a constant rate a for some time after which it decelerates at a constant\nrate 3 to come to rest. If the total time elapsed is t seconds, the total distance travelled is:",
+    "options": [
+      "408 2",
+      "2a8 2\n(a+ 8) (+B)",
+      "ap 2",
+      "a8 2\nWat (A) ath)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "v\nVol 575\nvg=at;and0=vy— Bty => vg = Pat; +r =t\ntime\n—_— 4 —_—\nDa afte | 1 aft aft?\n— + — ) =t=> vy = —— Distance — area of y — ¢ graph = — re STEERS, ee He\nw(3+3) vg +p v — t grapl 3 Xt Xa St Aa+h)\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 66,
+    "exam": "JEE Main 2021 (17 Mar, Shift 2)",
+    "question": "The velocity of a particle is v — (vo +gt+ Ft?) ms~L. Its position is z = 0 at t = 0; then its\ndisplacement after time (t = 1s) is :\n(A) (8) F\nvo+g+F ao + 9 hE\n2 3\nQD uw+isr ©) yy +29 + 3F",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "v=uv+gt+ Ft?\nds\nFt gt + Ft?\n[ds = [} (vo + gt + Ft) dt\nusa 2 FEB\n8 = | voi 2 3 iy\nF\ns=vo+ > 50 3\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 67,
+    "exam": "JEE Main 2021 (18 Mar, Shift 1)",
+    "question": "The position, velocity and acceleration of a particle moving with a constant acceleration can be\nrepresented by :",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001639/edvedum/motion1d_pyq/q67_diagram.png",
+    "solution": "Represent correct graph for a particle moving with constant acceleration, as for constant acceleration velocity-time\ngraph is a straight line with positive slope, and z — ¢ graph should be an opening upward parabola.\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 68,
+    "exam": "JEE Main (1for a wrong answer] : 2021 (18 Mar, Shift 2))",
+    "question": "The velocity-displacement graph of a particle is shown in the figure.\nVv\nVo\nThe acceleration-displacement graph of the same particle is\n0 x\nXo\nrepresented by :",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001641/edvedum/motion1d_pyq/q68_diagram.png",
+    "solution": "v=-— (2) + vo\nz0\nom dy\n~ dz\n[Gn] [2]\na= |—-|=z+wv||——\nTo To\nFY zy\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 69,
+    "exam": "JEE Main 2021 (25 Jul, Shift 1)",
+    "question": "Water droplets are coming from an open tap at a particular rate. The spacing between a droplet\nobserved at 4\" second after its fall to the next droplet is 34.3mn. At what rate the droplets are coming\nfrom the tap ? (Take g = 9.8ms 2)",
+    "options": [
+      "3 drops/2 seconds",
+      "2 drops/second",
+      "1 drop/second",
+      "1 drop/7 seconds"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "In 4th sec, 15t drop will travel\n\n1 2\n\n=a (9.8) x (4)° = 78.4m\n\n.*. 2\" drop would have travelled\n\n= 78.4 — 34.3 =44.1m\n\nTime for 24 drop\n\n1 2\n\n-(98)t\" =44.1\n\n398)\n\nt = 3sec\n\n.\". Each drop have time gap of 1 sec.\n\n.\". 1 drop per second.\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 70,
+    "exam": "JEE Main 2021 (25 Jul, Shift 2)",
+    "question": "The instantaneous velocity of a particle moving in a straight line is given as v = at + Bt?, where a\nand f3 are constants. The distance travelled by the particle between 1s and 2s is:\nA 34 178 Bale\n2 3\n© a 8 (D) 3 7\nAEA le —a+ =\n2t3 32* 38",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "V = at + Bt?\nds\n_— 2\n% at + Bt\n[ods = [7 (at + Bt?) dt\nat? Bt]?\ns-5-[5 + =\nfe PINE Eh, : 4 f ald-1] BB-1]\nAs the particle is not changing direction So distance — displacement. Distance = er + 35\n3a 18\n=7 i\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 71,
+    "exam": "JEE Main 2021 (25 Jul, Shift 2)",
+    "question": "7. The relation between time ¢ and distance z for a moving body is given as ¢t = ma? + nx, where m.\nand n are constants. The retardation of the motion is: (When v stands for velocity)\n(A) 9003 ®) 2m?\n(©) 98 (D) 9,,2,3",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "t= mz? + nz\nnee\nrE mz +n\na |\n2mz +n\ndv 2m dx\ndt —  (2mz +n)? \\ dt\na=—(2m)v*\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 72,
+    "exam": "JEE Main 2021 (25 Jul, Shift 2)",
+    "question": "A balloon was moving upwards with a uniform velocity of 10ms~. An object of finite mass is dropped\nfrom the balloon when it was at a height of 75m from the ground level. The height of the balloon from\nthe ground when object strikes the ground was around: (takes the value of g as 10ms~2)\n\n(A) 300m ®) 200m\n©) 195m ©) 250m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "=) LN\nu=10m/s ©\nI\nI\nI\n7 5 m i Object is projected as shown so as per motion under gravity,\nI\nI\nI\n|\nI\nS=ut+ Jatt —75 = +10t + S10 = t = 5s Object takes t = 5s to fall on ground height of balloon from\nground, H = 75 + ut = 75 + 10 x 5 = 125m\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 73,
+    "exam": "JEE Main 2021 (27 Jul, Shift 1)",
+    "question": "Aballis thrown up with a certain velocity so that it reaches a height h. Find the ratio of the two\ndifferent times of the ball reaching 2 in both the directions.\n(A) 31 (8) 1\nV2+1 3\n© 3-2 0) 31\nV3+4+v2 V3+1",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "u=+/2gh\nNow,\nS=ut+ Jatt\nh 1 a\n3 V2ght + 3 (-9)t\n2 (9) _ his\n{ 6) Vaght +5 =0\nFrom quadratic equation\nV2gh + y 2gh — dah\nt= Fe 24\n1,02\n9\n4gh\nCR ET\n2 [4gh\n: v2gh + Lr\n_V3-v2\nV3+v2\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 74,
+    "exam": "JEE Main 2021 (26 Aug, Shift 1)",
+    "question": "Two spherical balls having equal masses with radius of 5cm each are thrown upwards along the same\nvertical direction at an interval of 3s with the same initial velocity of 35ms~!, then these balls collide at\na height of m,\n\n(take g = 10ms 2)",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 50,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "5 =5,\n1 2 1 2\n35t + 3-9) =35(t-3) + 3-9) — 3)\n1 2 1 2\n35t — Sgt =35t—35x3— 39( — 6t +9)\n(35 x 3) + 45 = 30¢\n150\nt=—==5\n30\neighth = 35 x 5 — 3 x 10 x 5°\nh =175- 125 = 50m\n\nHence, the correct answer is 50."
+  },
+  {
+    "qNum": 75,
+    "exam": "JEE Main PYQ",
+    "question": "if the velocity of a body related to displacement z is given by v = 1/5000 + 24zms!, then the\nacceleration of the bodyis ms~2.",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 12,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "dv dvxdz vd\nWe ki that the rate of ch: f li locity i lled li lerati =— = — = —\nle know that the rate of change of linear velocity is called linear acceleration, a x Ade 5\nik\n=+/ 24r X ————— X 24= ar\n=a 5000 + zx 5000 7 242 12ms\n\nHence, the correct answer is 12."
+  },
+  {
+    "qNum": 76,
+    "exam": "JEE Main 2021 (27 Aug, Shift 2)",
+    "question": "Water drops are falling from a nozzle of a shower onto the floor from a height of 9.8m. The drops fall\nat a regular interval of time. When the first drop strikes the floor, at that instant, the third drop begins to\nfall. Locate the position of second drop from the floor when the first drop strikes the floor.\n\n(A) 2.94m ®) 418m\n© 2.45m ©) 7.35m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "6)\nh [2\nh=9.8m «(2) For first drop. h = Fo(2n)? For 22 drop h' = Fol)? x = :\nA= A = 23 soneightof 274 drop —h-h'=98- 2 = : x 9.8 = 7.35m\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 77,
+    "exam": "JEE Main 2021 (31 Aug, Shift 2)",
+    "question": "p particle is moving with constant acceleration a. Following graph shows v? versus (displacement)\nplot. The acceleration of the particleis ____ ms~2.\n8 ARYANS REE NS (64\nH\nhy SRY H\n= H\nNN Ea\nE 10 {9\n/ Sea H H\nPF ood vA i H\n> H : H\n204° lof |\n: H H\nH . H\n0 10 20 30\nx(m)",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 1,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001642/edvedum/motion1d_pyq/q77_diagram.png",
+    "solution": "The equation of the straight line, y = mx + ¢, from the above graph we get the equation, v=2z+ 20, now\ndifferentiate it with respect to z,\ndv 2\n20— = === a0\n= Li 2=a 2 Ims\n\nHence, the correct answer is 1."
+  },
+  {
+    "qNum": 78,
+    "exam": "JEE Main 2022 (24 Jun, Shift 1)",
+    "question": "From the top of a tower, a ball is thrown vertically upward which reaches the ground in 6s. A second\nball thrown vertically downward from the same position with the same speed reaches the ground in\n1.5s. A third ball released, from the rest from the same location, will reach the ground in _s.",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 3,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "When it is thrown upward, —h = v x 6 — 390°\nWhen itis thrown downward, —h = —v x 1.5 — Jos)?\nTherefore, 5h = 5(36 + 9] h = 45m\n: 1 1 .\nWhen the ball is dropped, }, — 39 = 45 = 2 Xx10xt°=>t=23s\nAlternate method, t = /f1f, = /6 x 1.5 = 3s\n\nHence, the correct answer is 3."
+  },
+  {
+    "qNum": 79,
+    "exam": "JEE Main 2022 (24 Jun, Shift 2)",
+    "question": "an object of mass 5kg is thrown vertically upwards from the ground. The air resistance produces a\nconstant retarding force of 10N throughout the motion. The ratio of time of ascent to the time of\ndescent will be equal to : [Use g = 10ms 2].\n\na. ® 3.3\n(9) V3:v2 (Dg.3",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Net force while going upward will be mg + R = 50 + 10 = 60N\n\n= up = = =12ms?\n\nSimilarly, Net force while going downward will be mg — R = 40N\n\n40\nSa=¢= 8ms 2\nSince\nLlp awbel Ul te JBL Jz\n\nh = gat = or =1= Vaz Va\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 80,
+    "exam": "JEE Main 2022 (25 Jun, Shift 2)",
+    "question": "Tyo buses P and Q start from a point at the same time and move in a straight line and their positions\nare represented by zp (t) = at + Bt? and zg (t) = ft — t>. At what time, both the buses have same\nvelocity ?",
+    "options": [
+      "of",
+      "aif\n1+4 28-1)",
+      "a+ f",
+      "f-a\nYE) 21+)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "As we know, py = dz\ndt\nGiven, zp (t) = at + Bt?\nVelocity of bus P is vp = id = a + 2pt and velocity of bus Qisvg = f — 2t\nWhen vp = vg\nS>a+2ft=Ff-2¢\nf-a\n> f-a=2B8+1)t=>t=——\nf B+1) 705\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 81,
+    "exam": "JEE Main 2022 (26 Jun, Shift 1)",
+    "question": "An object is thrown vertically upwards. At its maximum height, which of the following quantity\nbecomes zero ?",
+    "options": [
+      "Momentum",
+      "Potential energy",
+      "Acceleration",
+      "Force"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "‘When a ball is thrown vertically upwards, at the maximum height the velocity is zero.\nAs momentum is p = mu, So momentum is also zero at maximum height.\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 82,
+    "exam": "JEE Main 2022 (26 Jun, Shift 1)",
+    "question": "A pall of mass 0.5kg is dropped from the height of 10m. The height, at which the magnitude of\nvelocity becomes equal to the magnitude of acceleration due to gravity, is __m. [Use g = 10ms 2\n1",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 5,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "5 |\n° 10 111 Consider downward direction to be positive. Applying first equation of motion,\nSm\nv=u+at=v=0+gt= g=gt=1t= 1s Distance covered in 1s,\n1 1 10 5 :\ns=ut+ zat =0+ 39% [12 AT 5m Hence, height of the point from the surface = (10 — 5) m = 5m\n\nHence, the correct answer is 5."
+  },
+  {
+    "qNum": 83,
+    "exam": "JEE Main 2022 (26 Jun, Shift 2)",
+    "question": "Aballis projected vertically upward with an initial velocity of 50ms~' att = 0s. Att = 2s, another\nball is projected vertically upward with same velocity. Att =___s, second ball will meet the first ball\n(9 =10ms?).",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 6,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "aly-= iL\n\nJv=30ms\n-1 1\nh 50ms Distance covered by ball Ais h = 50 (2) — Te 10 x 2?\n\n| 1% ms’\n\nA B\n— 100 — 20 = 80m Now, at time t = 2s, velocity of Ais v4 = 50 — 10 x 2 = 30ms ' Relative velocity of both\nballs after 2s is v, = 50 — 30 = 20s! Here, relative displacement z,,; = 80ms! and relative acceleration\na, = 0. Time taken t = = = 4s Time at which they will meetist = 4 + 2 = 6s\n\nHence, the correct answer is 6."
+  },
+  {
+    "qNum": 84,
+    "exam": "JEE Main 2022 (27 Jun, Shift 2)",
+    "question": "\\When a ball is dropped into a lake from a height 4.9m above the water level, it hits the water with a\nvelocity v and then sinks to the bottom with the constant velocity v. It reaches the bottom of the lake\n4.0s after itis dropped. The approximate depth of the lake is\n(A) 39 91m ®) 19.6m\n© 735m ©) 99.4m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "49m |\n! Using s — ut + ~a? Initially,\n1 2\n1\nI\n|\n1\nI /\n1\n]\n1\n|\nI\n|]\n1\nI\nC\npes\nu = 0, so time taken to reach from Ato Bis t — V 20] =4 2a — 1s Now, using v2 = u? + 2as, we have\ng ;\nv= 2h = 2x 98x49 =98ms  ty=(4—1)s=3s .d=t, xv=23x9.8=294m\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 85,
+    "exam": "JEE Main 2022 (28 Jun, Shift 2)",
+    "question": "A car covers AB distance with first one-third at velocity v;ms~!, second one-third at v,ms~! and\nlast one-third at v3ms~'. If v3 = 3v;,v, = 2v; and v; = 11ms~!, then the average velocity of the\ncaris___ms'. C v Vv 3\n\n1 pb) \\Z\nA 2 I oB",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 18,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001643/edvedum/motion1d_pyq/q85_diagram.png",
+    "solution": "Let the total distance be d.\nTN d\n\nTime taken to cover ( — of total distance is t; = —.\n3 3vy\n1 d\n\nTime taken to cover ( — of total distance is ty = —.\n3 3vz\n1) d\n\nTime taken to cover ( = of total distance is t3 = —.\n3 3g\n\nTotaldistance\nAverage speed—= ————\nTotaltime\nd\now ova dnd\nPAS NRE\nBur 3va  3ug\na 3 (vivavs)\nVU, + Ugg + Vgv,\nHere, v; = 11ms™!, then, vg = 33ms vy = 22ms !\nTis 3x11 x22 x33 L 1 Bina\n77 (11 x 22) + (22 x 33) + (33 x 11)\n\nHence, the correct answer is 18."
+  },
+  {
+    "qNum": 86,
+    "exam": "JEE Main 2022 (29 Jun, Shift 1)",
+    "question": "Tyo balls A and B are placed at the top of 180m: tall tower. Ball A is released from the top at ¢ = 0s.\nBall B is thrown vertically down with an initial velocity u at ¢ = 2s. After a certain time, both balls meet\n100m above the ground. Find the value of u in ms\". [use g = 10ms 2]\n® 10 ® 15\n© 9 ©) 3",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Displacement covered by first ball, (180 - 100) =0+ 3 x10 xt2=t=4s\nNow, the second body gets only, t; = 4 — 2 = 2s.\nDisplacement covered by second will be same,\nik 2\n\n80=ux2+5x10x (2)\nam 02088 5\n\n2\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 87,
+    "exam": "JEE Main 2022 (29 Jun, Shift 2)",
+    "question": "A small toy starts moving from the position of rest under a constant acceleration. If it travels a distance\nof 10m in ts, the distance travelled by the toy in the next ¢s will be:\n(A) 10m (8) 920/m,\n(© 30m ©) 40m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Initial velocity of the particle is zero.\nApplying equation of motion, we get 10 = 3 x axt®\nLet distance covered in next ¢s is x.\n1 2\n\nThen, 10 +z = PRAIA (2t)\n\n1\n=10+z=cat’ x4\n=10+z=10x4\n=z = 30m\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 88,
+    "exam": "JEE Main 2022 (25 Jul, Shift 1)",
+    "question": "Acaris moving with speed of 150kmh~! and after applying the brake it will move 27m before it\nstops. If the same car is moving with a speed of one third the reported speed then it will stop after\ntravelling ___ m distance.",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 3,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "In both cases, the final velocity is zero. Using equation of motion for constant acceleration\nv? =u? + 2as\n= 0° —u?® = —2a(27)...(1)\n2\nmy] (SAT pa\n= 0 3) — —2as..(2)\nFrom (1) and (2),\n2a(27) =9 (20s)\n= 5 =3m\n\nHence, the correct answer is 3."
+  },
+  {
+    "qNum": 89,
+    "exam": "JEE Main 2022 (25 Jul, Shift 2)",
+    "question": "5 particle is moving in a straight line such that its velocity is increasing at 5m.s~! per meter. The\nacceleration of the particle is ____ ns at a point where its velocity is 20ms",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 100,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "According to the question, velocity is increasing at 5ms~'. Therefore, oo =5s1\n8\nNow acceleration q — dy = ya\ndt ds\na= v2 = 20 x5 = 100ms=?\nds\n\nHence, the correct answer is 100."
+  },
+  {
+    "qNum": 90,
+    "exam": "JEE Main 2022 (27 Jul, Shift 1)",
+    "question": "A bullet is shot vertically downwards with an initial velocity of 100ms~! from a certain height. Within\n10s, the bullet reaches the ground and instantaneously comes to rest due to the perfectly inelastic\ncollision. The velocity-time curve for total time ¢ = 20s will be : (Take g = 10ms 2)\n® 9 ®) v\n\n-1\n+100 ms\n10s 20s p P\n1 -1\n-100 ms -100 ms 10s 20s\n-1\n-1 -200 ms\n200m s\n() \\%",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001644/edvedum/motion1d_pyq/q90_diagram.png",
+    "solution": "As the upward direction is taken as positive, the velocity at ¢ = 0 is u = —100ms '.\nAs itis falling under gravity, its acceleration is constant and a = —10ms 2.\nApplying equation of motion for constant acceleration during the time of fall i.e., for 0 to 10s,\nv=u+at=v=-100-10 x 10 = v = —200ms*\nAfter 10s it hits the ground and remains at rest.\nTherefore, option A is the correct representation.\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 91,
+    "exam": "JEE Main 2022 (27 Jul, Shift 2)",
+    "question": "The velocity of the bullet becomes one third after it penetrates 4cm in a wooden block. Assuming that\nbullet is facing a constant resistance during its motion in the block. The bullet stops completely after\ntravelling at (4 + z) em inside the block. The value of z is\n(A) 50 ® 9\n© gs © 15",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "According to the given information for the first 4cm, u = vg and v = 2. Applying equation of motion for constant\nacceleration,\nv? =u? + 2as\n\nwy? 8u® _ wp?\n2 (=) =v*+2a4)=2a=——x=——\n\n(3) vidal) ns or 9\nWhen the body stops, v = 0\n=0=uvo’+2a(4 +z)\nvg?\n\nS>v?=2 50 (4+)\n=>45=4+z\n= x = 0.5cm\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 92,
+    "exam": "JEE Main 2022 (28 Jul, Shift 1)",
+    "question": "pAnce parade is going at a uniform speed of 9kmh~! under a mango tree on which a monkey is\nsitting at a height of 19.6m. At any particular instant, the monkey drops a mango. A cadet will receive\nthe mango whose distance from the tree at time of drop is :\n\n(Given g = 9.8ms 2)\nA) 5, ®) 10m\n© 19.8m ©) 245m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "If a cadet receives the mango, then the time taken by the mango to fall and the cadet to reach there should be\nequal.\nTime taken by mango to fall t = Vo\n9\n2x 19.6\nSt=gf———=2\n9.8 ¢\nTherefore, the distance of the cadet from the tree will be, d = vt.\n5\n=2d=9x —x2=>5m\n18\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 93,
+    "exam": "JEE Main 2022 (28 Jul, Shift 2)",
+    "question": "A ball is thrown vertically upwards with a velocity of 19.6ms~! from the top of a tower. The ball strikes\n! : Ese k\nthe ground after 6s. The height from the ground up to which the ball can rise will be 5 m. The\nvalue of k is (use g = 9.8ms 2)\n1",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 392,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Initial velocity of ball is u = 19.6ms!, final velocity v = 0.\nUsing v = u + at, here, acceleration a = —g.\n% ; - u 19.6\nTime taken in upward motion above tower is t, = — = 98 =2s\n9 B\nNow, time taken from top most point to ground is t; = 6 — 2 = 4s.\n2h, 1\nOr, ty = | === (Using s = ut + gt?)\ng9 2\n16 x 9.8 392\nSh = Th = el\nHence, the value of k = 392.\n\nHence, the correct answer is 392."
+  },
+  {
+    "qNum": 94,
+    "exam": "JEE Main 2022 (29 Jul, Shift 1)",
+    "question": "dz\nft =/z +4, then (| — is:\ndt), ,\n(A) 4 (B) Zero\n©g © 14",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Giventhatt = /z +4\nSa=(t-4) =£-8t+16\nDifferentiating the above equation with respect to time,\ndx\n—-— =2t—\n= X 8\nPutting the value of t = 4\ndx\n— =2x4-8=\n=r x 8=0\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 95,
+    "exam": "JEE Main 2022 (29 Jul, Shift 1)",
+    "question": "A ball is thrown up vertically with a certain velocity so that, it reaches a maximum height h. Find the\nratio of the times in which it is at height 3 while going up and coming down respectively.\nnw 51 ® 3-v2\nV2+1 V3 v2\n©) V3=1 () 1\nV3+1 3",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "fa\ni u?\nt=t i The maximum height of a projectile thrown vertically upward is given by, h = —.\na t=t 2 1 2g\ni h/3\nu i l\n=> u = /2gh Using equation of motion with constant acceleration, s = ut + Fatt = : = \\/2ght — Sot\n2\n= fi — \\/2ght + a — () Solving the above quadratic equation we will get the times ¢, and ¢,.\nVor SOY ESPN BUI 3, ry C1)\nWL Tels lui bic rg ¥en i d SVS aro VEE\nt 3 4gh  V3-V2 2\n; Vag — [29h ~ax Lx 2 Vagh— [2 VBE 2 V3+V2\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 96,
+    "exam": "JEE Main 2022 (29 Jul, Shift 2)",
+    "question": "A pall is released from a height h. If ¢; and t, be the time required to complete first half and second\nhalf of the distance respectively. Then, choose the correct relation between ¢; and t,.\nWy = (V2) te ® 4 = (VZ-1)t\n© — (vV2+1)t, © 4, — (V2-1)t",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "As the body is dropped from a certain height h, its initial velocity will be zero.\nFor first half, hy = 3\nUsing second equation of motion, s = ut + Fat?\n{TE\nWe have, — = —gt2.\n2 294\n4 i h\nTime taken in travel first half of the height, t; = /—... (1).\n9\nFor total height h, using again second equation of motion,\n1 2h\n\nh= g(t + ta) = (t+) = [5 (2)\nFrom equation (1) and (2).\nDla alin\n\nV2 titty\n=1+ d2 8 V2\n\nty\n\n_ aE\n\nta 2-1\nThus, the relation is ; = (v2 — 1) ¢,.\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 97,
+    "exam": "JEE Main 2022 (29 Jul, Shift 2)",
+    "question": "A juggler throws balls vertically upwards with same initial velocity in air. When the first ball reaches its\nhighest position, he throws the next ball. Assuming the juggler throws n balls per second, the\nmaximum height the balls can reach is\n(A) g (Bg\n\n2n n\n©) 2gn © 9\n2n?",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "As the juggler is throwing n balls each second and 2\"¢ when the first is at its highest point, so the time taken by\none ball to reach the highest point, ¢ = pL\nn\nAnd as at highest point v = 0.\nSo, from first equation of motion,\n1 9\nv=ut+at=>0=u—g|-|=>u==\nn n\nNow in order to calculate height, using second equation of motion, we have:\n1 i\nS = ut + —at? ...()\n2\n2\n15 1\nShs =X a= =\nnn 28% GC)\nhd\n5 2n?\nSo, the balls rise up to a height of h = gm\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 98,
+    "exam": "JEE Main 2023 (24 Jan, Shift 2",
+    "question": "The velocity-time graph of a body moving in a straight line is shown in figure.\n—-1 J Ld\nThe ratio of displacement and distance travelled by the body in time ( to 10s is\n(A) q.1 B) 1:2\n©7.3 D)g.4",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001646/edvedum/motion1d_pyq/q98_diagram.png",
+    "solution": "v (m/s)\no)\n0 Z 4 (sec)\nArea of upper rectangles, which will give us magnitude of the area under the velocity-time graph,\nA; = 8 x 2+ 4 x 4 = 32 Area of lower rectangles, which will give us magnitude of the area under the velocity-\ntime graph, A; = 4 x 2 + 4 x 2 = 16 Therefore,\n\nDisplacement = Ay — Ay = 32 — 16 = 16 Distance = A; + As = 32 + 16 = 48 Hence, the required ratio\nwould be = 10 = a\n48 3\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 99,
+    "exam": "JEE Main 2023 (25 Jan, Shift 1)",
+    "question": "A car travels a distance of z with speed v, and then same distance x with speed v, in the same\ndirection. The average speed of the car is:",
+    "options": [
+      "VV",
+      "vy + va\n2(v1 +2) 2",
+      "2:",
+      "2y,v,\nv1 + v2 v1 + vg"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "— > — NN —_—\nAeo—oroooo-oo-— ee Cc\nvi B v2\nAverage velocity of car is: Vavg = Total displacement As the car is travelling along a straight line without turning,\nTotal time\nx\nthe magnitude of total displacement is same as the distance covered. The time taken to cover the first half is em)\n1\n2z\nTr . A eed\nand the time taken to cover the second half is — ** *¢ = ZT ZT => Varg = 22 (vv) = 291029\nv9 a dm nT + vr vy + v2\nv1 v2\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 100,
+    "exam": "JEE Main 2023 (25 Jan, Shift 2)",
+    "question": "The gistance travelled by a particle is related to time t as & = 4t2. The velocity of the particle at\nt =b5sis",
+    "options": [
+      "4oms!",
+      "95,5!",
+      "9pmst",
+      "gps!"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given here, z = 42\n2\nWe know that velocity is the rate at which displacement changes with time. So, 4 — & a= ges) = 8t\nt it\nNow, att = 5s\nVelocity of particle is v = 8 x 5 = 40ms ..\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 101,
+    "exam": "JEE Main 2023 (29 Jan, Shift 1)",
+    "question": "A tennis ball is dropped on to the floor from a height of 9.8m. It rebounds to a height 5.0m. Ball\ncomes in contact with the floor for 0.25. The average acceleration during contactis _____ ms~2.\n[Given g = 10ms~2]",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 120,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The speed of ball just before collision with ground is v? = 0+ 2gh;\n=v; = v2gh;\n=42x10x9.8\n= 14ms! (Downward)\nThe speed of ball just after collision is 0 = v} —- 2gh;\n=v; = /2gh;\n=4/2x10x5\n= 10ms! (Upward)\n; a A| vp—(-v) 10+14 24\nAverage acceleration of ball is === ———— — == 2\nad BS 15 arg | At | f 02 02 lit\n\nHence, the correct answer is 120."
+  },
+  {
+    "qNum": 102,
+    "exam": "JEE Main 2023 (30 Jan, Shift 1)",
+    "question": "A horse rider covers half the distance with 5ms~! speed. The remaining part of the distance was\n\ntravelled with speed 10ms~\" for half the time and with speed 15ms~\" for other half of the time. The\n’: 2 AZ 1 x\nmean speed of the rider averaged over the whole time of motion is ms . The value of z is :",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 50,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Let total distance travelled by horse rider be 2z.\nx meters x meters\n_) Now, the time taken to cover first half distance\nistap = £ Second half distance z between BC is covered in two parts, z = dy + ds here d, is the distance\ntravelled with 10ms! and ds is the distance travelled with 15ms! in equal time intervals 5 each. Then,\ndy = 2a = el Second half distance x = tao +15) = = Now, the mean speed of rider is\n220 8 2526 SR50 EE]\nYSZ 22 5+2 7 Thus, the value of z = 50.\n5t%\n\nHence, the correct answer is 50."
+  },
+  {
+    "qNum": 103,
+    "exam": "JEE Main 2023 (30 Jan, Shift 1",
+    "question": "Match Column-| with Column-II : Column-I (x-t graphs) Column-Il (v-t graphs) A | : |\nt\nv x v x\nXo\nB Il Cc ll\nt t [3 t\nv\nx v\n1 t\n1\n) D \\\" Choose the correct answer\nit\n\\ —-v\n| S— Vo\nt\n=P\nfrom the options given below:",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001646/edvedum/motion1d_pyq/q103_diagram.png",
+    "solution": "(A) Here, the slope 4 > (is always increasing, and we know that the derivative graph of the parabola is straight\nit\nline, so the graph of velocity-time is straight line with increasing slope.\n(A-1I)\ndz dz + Fer ;\n(B) Here, the slope 77 < Oandatt — oo, 5 — (0. As the slope is decreasing with time, so the graph of velocity-\ntime will have negative velocity and positive slope.\n(B-1V)\ndz 3 dz\n(C) Here, the slope Grits Ofor firsthal fand— < 0forsecondhal f-\nAs the slope of displacement-time is positive constant in first half and negative constant in second half, so the\nvelocity will be uniform positive and uniform negative value.\n(C — 1m)\n(D) Here, the slope de = constant.\n\nAs the slope of displacement-time is positive constant, so the velocity will be uniform positive value.\n(D-1)\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 104,
+    "exam": "JEE Main 2023 (30 Jan, Shift 2)",
+    "question": "A vehicle travels 4km with speed of 3kmh~! and another 4km with speed of 5kmh™!, then its\naverage speed is :\n(A) 4 25kmh (B) 3.50kmh\n(© 4.00kmh~! (0) 3 75kmh~!",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "a FAL 2 1 1\nAverage speed in this case is given by, — = — + —\nVw U1 V2\n5.28\nDao 3 ih\n2 8\n= —=—\nVa 15\n1\n= Vay = = = 3.75kmh!\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 105,
+    "exam": "JEE Main 2023 (01 Feb, Shift 1)",
+    "question": "Ap object moves with speed v,, v,andv; along a line segment AB, BCandC D respectively as\nshown in figure. Where AB = BCandAD = 3AB, then average speed of the object will be :\n(A) (v) + vy + v3) (®) (v1v2v3)\n\n3 3 (v1v2 + vous + v301)\n© 30,0503 0) (v; + vy + v3)\nVV + VaU3 + V3V; 3vyvav3\n1",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001647/edvedum/motion1d_pyq/q105_diagram.png",
+    "solution": "Speed of an object is defined as the distance travelled by the object per unit time.\nLet's assume that, AB = d. So, BC = d, AD = 3d. Also, assume that the time required by the object to travel\nAB, BC, CD are t,t, t3 respectively.\nNow,\nAD = 3AB\nAB+BC+CD = 34B\nAB+AB+CD = 3AB\ncD ERE AR\nHence,\nes\n@\nBe\nty =ef=\nv\noT 4\nv3\nThe formula to calculate the average speed (v,) of the object is given by\nAD\nt1 +t +13\nSubstitute the expressions for the parameters into equation (1) and simplify to obtain the required average speed\nof the object.\n3 3d\na\nRed en fv\nvy v2 v3\n- 3vyvavg\nfri VUy + Vay + Vay\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 106,
+    "exam": "JEE Main 2023 (01 Feb, Shift 2)",
+    "question": "£or a train engine moving with speed of 20ms!, the driver must apply brakes at a distance of 500m\nbefore the station for the train to come to rest at the station. If the brakes were applied at half of this\ndistance, the train engine would cross the station with speed Vams™. The value of zis ____.\n(Assuming same retardation is produced by brakes)",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 200,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given that, the initial velocity u = 20m/s, the distance of the station §; = 500m, and the final velocity v = 0.\nThe relation between the distance travelled (5) by the train with its initial velocity (u) and its final velocity (v) is\ngiven by\n=u? — 2a... PVT)\nwhere, a indicates the retardation of the train.\nSubstitute the values corresponding to the initial condition into equation (1) and solve to calculate the retardation\nof the train.\n0 = (20)2-2xa x 500\nan 0.4m/s*\nFor the second scenario, the initial velocity u = 20m/s and the distance travelled by the train Sy = 250m.\nUse these values along with the value of the retardation into equation (1) and solve to calculate the final velocity\nof the train.\n© = (20) -2x0.4 x 250\n= 200\nv = JAO..M......<00(2)\nComparing the value of the final velocity obtained in equation (2) with the given expression, we get = 200.\n\nHence, the correct answer is 200."
+  },
+  {
+    "qNum": 107,
+    "exam": "JEE Main (1for a wrong answe 2023 (06 Apr, Shift 2])",
+    "question": "As shown in the figure, a particle is moving with constant speed mms. Considering its motion from\nAto B, the magnitude of the average velocity is:\n(A) V3ms! iB) fst\n©) 15v3ms! 0) 5/3ms1",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001648/edvedum/motion1d_pyq/q107_diagram.png",
+    "solution": "J\nSp B The given data is\nv = mms! By using trigonometric ratios in the triangle shown above the displacement can be found out by\nsin 60° = AB = AB = R+/3 The formula for distance is d = vt=t= ul =t= 120° x 27R = 2R So, the\n2R v 360° ™ 3\nV3R 3V3\naverage velocity is Yas = 3R = “5 = 1.5v/3ms!\nTy:\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 108,
+    "exam": "JEE Main 2023 (06 Apr, Shift 2)",
+    "question": "A particle starts with an initial velocity of 10.0ms! along z-direction and accelerates uniformly at\nthe rate of 2.0ms 2. The time taken by the particle to reach the velocity of 60.0ms! is x",
+    "options": [
+      "954",
+      "35",
+      "gs",
+      "305"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The given data is\nv = 60ms 'u = 10ms 'a = 2ms?\nUsing the equation v = u + at, we get\n60=10+2t = t= a\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 109,
+    "exam": "JEE Main 2023 (08 Apr, Shift 2)",
+    "question": "Given below are two statements:\nStatement I: Area under velocity-time graph gives the distance travelled by the body in a given time.\nStatement II: Area under acceleration-time graph is equal to the change in velocity in the given time.\nIn the light of given statements, choose the correct answer from the options given below.",
+    "options": [
+      "Both Statement | and Statement Il are true",
+      "Both Statement | and Statement Il are false",
+      "Statement | is correct but Statement Il is false",
+      "Statement | is incorrect but Statement Il is true"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The definition of displacement is given by the product of velocity and time.\nJ vdt = Az =displacement of body in given time.\nDistance is a scalar quantity and displacement is a vector quantity defined by the shortest distance between the\ninitial and the final position.\nAcceleration is defined by the rate of change of velocity.\n[ adt = Av =change in velocity in given time.\nThus, the area under the velocity time graph gives the displacement of the body and the area under the\nacceleration time graph gives the change in velocity of the body.\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 110,
+    "exam": "JEE Main 2023 (10 Apr, Shift 1)",
+    "question": "a @ f i\nThe position-time graphs for two students A and B returning from the school to their homes are\nB\nA\nshown in figure. X\n[6] t",
+    "options": [
+      "A lives closer to the school",
+      "B lives closer to the school",
+      "A takes lesser time to reach home",
+      "A travels faster than B\n(E) B travels faster than 4 Choose the correct answer from the options given below\n(A) (B)\n(A), (C) and(D)only (A). (C) and(E)only\nC D]\n(C) (B) and (E) only (C) (A) and (E) only"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001649/edvedum/motion1d_pyq/q110_diagram.png",
+    "solution": "From the position time graph the velocity is found out by the slope of the line. The slope is given by 2 The\n2-4\nslope of B is greater than A. Hence, the velocity of B is greater than A. As can be seen from the graph X 4 < Xp\n. So A lives closer to the school and Vg > V 4. Hence, this is the correct option.\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 111,
+    "exam": "JEE Main 2023 (10 Apr, Shift 2)",
+    "question": "A person travels z distance with velocity v; and then x distance with velocity v, in the same direction.\nThe average velocity of the person is v, then the relation between v, v; and v, will be\n(A) vy + vy B81 1 i!\n\nv= — -_—=— 4 —\n2 v v1 v2\n© y= vi +u, rz 1.1\nv ov v2",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The time (t;) taken by the person to travel distance x with velocity v, is given by\nEd\nty =—..(1\n1 v, ( )\nThe time (t;) taken by the person to travel distance x with velocity v, is given by\nxT\nti=Z..2\nv2\nThe formula to calculate the average speed (v) of the person is given by\n2z\nP= ——..(8\nti +t ®\nSubstitute the expressions from equations (1) and (2) into equation (3) to obtain the required relation.\n2z\np= ———\nxT xT\nG3\nvv\nin z § 22\nFemi ah\npA\n= ===\nv v va\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 112,
+    "exam": "JEE Main 2023 (11 Apr, Shift 1)",
+    "question": "Eormthev —t graph shown, the ratio of distance to displacement in 25s of motion is:\nts) — \\\na 4 ® 1\n2\n© 5 (D) 3\n3 5",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001650/edvedum/motion1d_pyq/q112_diagram.png",
+    "solution": "The area under the velocity time graph gives the displacement. The area for t = Ostot = 25sis\ni 1} 1 1k\n(Area) = 3 x6x10 + (5 x 10) + 5 x30%5 + 5 %x20%5 - 3X20x5\n= Area = 25 + 50 + 75 + 50 — 50 = 150m Hence, the displacement = 150m The distance is defined as the\npath taken by the object to travel from initial to final position. Also note that displacement is a vector quantity, but\ndistance is a scalar quantity. Distance\n1 1 a 1\n\n= (35x10) + 610+ (3 xa0x5) + (32205) + 3 %2055) = (200+ 50) 250m\nTherefore, required ratio Ji clstanice = 2 = J\n\ndisplacement 150 3\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 113,
+    "exam": "JEE Main 2023 (12 Apr, Shift 1)",
+    "question": "13. Given below are two statements:\nStatement | : A truck and a car moving with same kinetic energy are brought to rest by applying\nbreaks which provide equal retarding forces. Both come to rest in equal distance.\nStatement Il : A car moving towards east takes a turn and moves towards north, the speed remains\nunchanged. The acceleration of the car is zero.\nIn the light of given statements, choose the most appropriate answer from the options given below",
+    "options": [
+      "statement | is correct but statement Il is",
+      "Statement | is incorrect but statement Il is\nincorrect correct",
+      "Both statement | and Statement Il are correct",
+      "Both statement | and statement Il are incorrect"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The work done in stopping the car and the truck can be written as\nW = Fa\n=\" AKE\nAs both the car and the truck are moving initially with the same kinetic energy, after being stopped, they will have\nthe same change of kinetic energy.\nAlso, they are stopped with the same applied force.\nHence, from the above equation, it can be written that they have the same displacement, i.e., zy = z3.\nAcceleration is a vector quantity. As the direction of motion of the car is different in the two given situations, the\nacceleration of the car will not be the same.\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 114,
+    "exam": "JEE Main 2023 (12 Apr, Shift 1)",
+    "question": "A ball is thrown vertically upward with an initial velocity of 150ms~. The ratio of velocity after 3s and\nz4+1 5\n5s is ——. The value of z is . {take, g = 10ms~—2}\nT\na) 19 ® 5\n(Cg 0) 5",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The formula to calculate the velocity of the ball after 3s is given by\nvy =u — 3g... (1)\nThe formula to calculate the velocity of the ball after 5s is given by\nvs =u — bg... (2)\nDivide equation (1) by equation (2) to obtain the required ratio.\nvy u-—3g\n—=—=..03)\nvs u-—>5g\nSubstitute the values of the known parameters into equation (3) to calculate the required ratio.\nvg 150-30\nvs 150 — 50\nS120\n& 190\nCop\n5\nComparing the above equation with the given expression, it can be written that z = 5.\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 115,
+    "exam": "JEE Main 2023 (13 Apr, Shift 1)",
+    "question": "Two trains A and B of length [ and 4! are travelling into a tunnel of length L in parallel tracks from\nopposite directions with velocities 108kmh~! and T2kmh~!, respectively. If train A take 35s less\ntime than train B to cross the tunnel then, length L of tunnel is:\n(Given L = 601)\n\nA) 1200m ®) 900m\n©) 1800m ©) 5700m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The time taken for A\nl+L\nAty = ——\n4 Va\nThe time taken for B\n4+ L\nAtp = Sy\nItis given that B takes more time than A. So,\n4+L I+L\nRCE\n641 61\n= 50 =\nop SX 600F pF\n700\nTherefore,\nL = 1800m.\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 116,
+    "exam": "JEE Main 2023 (13 Apr, Shift 2)",
+    "question": "The distance travelled by an object in time ¢ is given by s = (2.5) t? . The instantaneous speed of the\n\nobject att = 5s will be :\n(A) 95 mst (B) 5,61\n(©) 62.5ms ©) 19 5ms",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Itis given that\n8 =258\nDifferentiating,\nds d(2.5t\npo ds _ 425th) 54%) =5t\ndt dt\nAtt = 5s,v = 25ms~!\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 117,
+    "exam": "JEE Main 2023 (13 Apr, Shift 2)",
+    "question": "po passenger sitting in a train A moving at 90kmh ~! observes another train B moving in the opposite\ndirection for 8s. If the velocity of the train B is 54kmh~\", then length of train B is:\n(A) 190m ®) 320m\n© gm ©) 500m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Let the velocity of A be v4 and the velocity of B be vp.\nThe relative velocity is\nipa = Up — U4 = vps = 54 — (—90) = 144kmh~!\n= vps = 40ms~!\n\n1 h\nDirrie = LI\n\nVBA\n\n= length = 40ms™! x 8s = 320m\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 118,
+    "exam": "JEE Main 2023 (15 Apr, Shift 1)",
+    "question": "1h position of a particle related to time is given by = (5¢ — 4t + 5)m. The magnitude of velocity\n\nof the particle att = 2 s will be :\n(A) gms! 8) jgamst\n(©) 10ms ©) 16ms!",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Itis given that\n\nz=52—4t+5\n\nThe velocity is given by\n\nde d(5t* —4t +5)\nSee 10d\n\nSST dt 8\n\nAtt =2s,\n\nv=10(2) —4=16ms*\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 119,
+    "exam": "JEE Main 2024 (27 Jan, Shift 1)",
+    "question": "5 particle starts from origin at £ = 0 with a velocity 5ims~! and moves in z — y plane under action of\na force which produces a constant acceleration of (3i + 2j)ms=2. If the z-coordinate of the particle\nat that instant is 84m, then the speed of the particle at this time is Jams. The valueof avis _____.",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 673,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given, u, = 5ms a, = 3ms 2,z = 84m\nThe formula to calculate the velocity of the particle along x-axis is given by\nv2 =u? + 2az... (1)\nFrom equation (1), it follows that\nv} = 25+ 2(3)(84) = v; = 23ms~!\nAlso, the velocity of the particle along x-axis can be written as\nVz = tz + Gzt... (2)\nFrom equation (2), it follows that\nPeas Sb\n3\n= 6s\nSimilarly, for the y— component of the velocity, it follows that\nvy = 04a\n= 0+2x(6)\n= 12ms™!\nHence, the magnitude of the velocity is given by\nv? =v? +0} = 23% +122 = 673v = \\/6T3ms!\nTherefore, a = 673.\n\nHence, the correct answer is 673."
+  },
+  {
+    "qNum": 120,
+    "exam": "JEE Main 2024 (27 Jan, Shift 1)",
+    "question": "position of an ant (Sin metres) moving in Y — Z plane is given by § = 2% + 5k (where t is in\nsecond). The magnitude and direction of velocity of the antat ¢ = 1s will be :\n(A) 16ms Lin y-direction B) 4rns-1 in z-direction\n© 9ms~! in z-direction ©) 415-1 in y-direction",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The velocity of the ant can be found as follows:\n3 ds\n7 = =\ndt\nd (p01, ei\n\n= (2 3+ 5k)\n\n= 4tj... (1)\nAtt = 1s, from equation (1), it follows that\n7=4j\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 121,
+    "exam": "JEE Main 2024 (27 Jan, Shift 2)",
+    "question": "A bullet is fired into a fixed target looses one third of its velocity after travelling 4cm. It penetrates\nfurther D x 10%m before coming to rest. The value of D is :\n\n(A) 39 (B) 5\n€) 3 (D) 4",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "When the bullet just enters the target, its equation of motion is given by\nv? —u? = 24S... (1)\nEquation (1) implies that\n2 2 2\n(%) =u +2(-0) (4x10?) > 2 — 220 (4x 107) = 2 _ 20 (4x10?)...(2)\nWhen the bullet stops inside the target, its equation of motion can be written as\n2\n2u\n0= (51 +2(-a)(z)...(3)\nEquation (3) implies that\n2\nw —2az...(4)\nDividing equation (2) by equation (4), we have\n5 4x10? 16 A 2 £5,\n—=—mr=—X10\"=22=32x10\"\"m=32%x10\"\"m\n4 3 5\nHence, D = 32.\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 122,
+    "exam": "JEE Main 2024 (27 Jan, Shift 2)",
+    "question": "5 body falling under gravity covers two points A and B separated by 80m in 2s. The distance of upper\npoint A from the starting point is ___m. Use (9 = 10ms 2)",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 45,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Ou=0\n{ —_—\n| / \\ Vi From A — B, using the equation of motion, we have\n1 2 1 2 1\n—80=—wnt— 2 x 10t° = —80 = —2v; — 2 x 10 x 2° = —80 = —2v; — 20 = —60 = —2v; => v1 = 30ms\nFrom O to A, it follows that v* = u? + 2g5 = 30% = 0 + 2 x (—10)(—S) = 900 = 20S = § = 45m\n\nHence, the correct answer is 45."
+  },
+  {
+    "qNum": 123,
+    "exam": "JEE Main 2024 (29 Jan, Shift 1)",
+    "question": "5 body starts moving from rest with constant acceleration covers displacement S, in first (p — 1)\nseconds and S, in first p seconds. The displacement S; + S, will be made in time :\nA) (2p + 1)s ® oF p+ Ds\n© (2p-1)s (0) (20° -2p+1)s",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "For the displacement S of the body, it can be written that\n1 2\n\nS1= zap — 14:3)\n\nAnd, for the displacement S; of the body, it follows that\n1 2\n\n82 = zap)... (2)\n\nIf ¢ be the required time, it follows that\n\n1\n\nS1+ 82 = Fat (3)\n\nEquations (1), (2) and (3) imply that\n\n(p-1P2+p=t2=t=2p2-2p+1s\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 124,
+    "exam": "JEE Main 2024 (29 Jan, Shift 2)",
+    "question": "5 particle is moving in a straight line. The variation of position z as a function of time ¢ is given as\nT= (# — 62 + 20t + 15) m. The velocity of the body when its acceleration becomes zero is:\n0 mp (B) gps!\n©) 10ms! (0) gps!",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given the instantaneous position is\nz= 5 — 612 + 20t + 15... (1)\nThe velocity of the particle is given by\nv. dz\nPVE dat\n= 3t2-12t+20...(2)\nAnd, the acceleration of the particle is given by\nART\nB dt\n= 6t—12..(3)\nWhen a = 0, it implies\n6t—12=0=>t=2s\nAtt = 2s, the velocity can be calculated as follows:\nv = 3(2)2-12(2) +20\n= 8ms!\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 125,
+    "exam": "JEE Main 2024 (30 Jan, Shift 1)",
+    "question": "The displacement and the increase in the velocity of a moving particle in the time interval of ¢ to\n(t+ 1)s are 125m and 50ms~!, respectively. The distance travelled by the particle in (t + 2)ts is\nI [5",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 175,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Considering acceleration is constant, we can write\nv=u+at\nAs increase in velocity in 1s is given as 50s, therefore\n= a=50ms?\nNow, displacement covered between given time interval is,\n125 = ut + Saf?\n2\na\n2125 =u+\ndy\n= u = 100ms!\nVelocity after 1s will be, v = 100 + 50 = 150ms\nTherefore, displacement covered in (t + 1) sto (t + 2) s will\n(Lees 2 ‘\nSoS =vt + sa(t) ,wheret = 1s\n= 175m\n\nHence, the correct answer is 175."
+  },
+  {
+    "qNum": 126,
+    "exam": "JEE Main 2024 (31 Jan, Shift 1)",
+    "question": "The relation between time ‘t' and distance ‘is t = aa? + Bz, where a and 3 are constants. The\nrelation between acceleration (a) and velocity (v) is:\n1 JP | LRP\nLo} EPRI yea 0) 4 — _ga0*",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given: t = aa” + fz\nDifferentiating w.r.t time, we get\n2 =2az +8\n1\n==-=2ar+f\nv\nDifferentiating w.r.t time again, we get\nLo ME gt\nSeid ad\n= 2 ga? [oso - &] sa=2 = —2av®\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 127,
+    "exam": "JEE Main 2024 (01 Feb, Shift 1)",
+    "question": "A particle is moving in one dimension (along x axis) under the action of a variable force. It's initial\nposition was 16m right of origin. The variation of its position (x) with time (t) is given as\nx = -3t° + 18t* + 16t, where z is in m and t is in s. The velocity of the particle when its\nacceleration becomes zerois ______ ms.",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 52,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given:\nz = —3t* + 18> + 16t\ndz 2\nAs we know, yp = re —9t* + 36t + 16\nNowa = 9% — 180 4 36\nSomer\nFora = 0, timetillbe t = 2s\nTherefore, required velocity v = —9(2)% + 36 x 2 + 16\nv= 52ms!\n\nHence, the correct answer is 52."
+  },
+  {
+    "qNum": 128,
+    "exam": "JEE Main 2024 (01 Feb, Shift 2)",
+    "question": "5 particle initially at rest starts moving from reference point @ = 0 along z-axis, with velocity v that\nvaries as v = 4,/zms'. The acceleration of the particle is __ ms~2.",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 8,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given: v = 4/2\n\nInstantaneous acceleration of the particle can be written as, g — ol\nxT\n\n= (445) x (ax 3 7) = gma?\n\nHence, the correct answer is 8."
+  },
+  {
+    "qNum": 129,
+    "exam": "JEE Main 2024 (01 Feb, Shift 2)",
+    "question": "Train Ais moving along two parallel rail tracks towards north with 72kmh =! and train B is moving\ntowards south with speed 108kmh 1. Velocity of train B with respect to 4 and velocity of ground\nwith respect to B are (in ms):\n\n(A) _30and 50 (8) _50 and —30\n(© _50and 30 (O) 50 and —30",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "1000\nVa=T2kmh'=72x — =2 1 and\n4 20 /s on mi x 3600 0ms\n3 1000 & ; 1\nVp = —108kmh' = —108 x 3500 = —30ms~! Velocity of Bw.rt. A: Vp 4 = —30 — 20 = -50ms\nVelocity of ground w.r.t. B: Vp = 0 — (—30) = 30ms*\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 130,
+    "exam": "JEE Main 2024 (04 Apr, Shift 1)",
+    "question": "A body travels 102.5 m inn second and 115.0 m in (n + 2) second. The acceleration is :",
+    "options": [
+      "6.25 m/s?",
+      "12.5 m/s?",
+      "m/s?",
+      "5 m/s’"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given, 102.5 = u + en “1%\n15=u+ n+ 3)\n= 1025 = u+an- 3&\n3a\n15 =u-+ant —\n12.5 = 2a = a = 6.25 m/s?\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 131,
+    "exam": "JEE Main 2024 (04 Apr, Shift 2)",
+    "question": "5 cyclist starts from the point P of a circular ground of radius 2 km and travels along its\ncircumference to the point S. The displacement of a cyclist is:\nA) /§ km (B) 8 km\n©) 6 km ©) 4 km",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "P Displacement\n[FR\nSs An Cu. Q .-. Displacement = Ry/2 = 2¢/2 = /8 km\n—r\nR |\n1\n|\ni\n|\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 132,
+    "exam": "JEE Main 2024 (04 Apr, Shift 2)",
+    "question": "A pus moving along a straight highway with speed of 72 km /h is brought to halt within 4s after\napplying the brakes. The distance travelled by the bus during this time (Assume the retardation is\nuniform) is ___m.",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 40,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Initial velocity =u = 72km/h =20m/s\nv=u+ at\n=0=20+ax4\na=-5m/s’\nvi —u?=2as\n= 02 — 20% = 2(-5)s\ns=40m\n\nHence, the correct answer is 40."
+  },
+  {
+    "qNum": 133,
+    "exam": "JEE Main 2024 (05 Apr, Shift 1)",
+    "question": "5 body moves on a frictionless plane starting from rest. If S,, is distance moved betweent =n — 1\nand t = nand S,,_, is distance moved betweent =n — 2 and t = n — 1, then the ratio — is\n(1 — 2) for n = 10. The value of z is ’",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 19,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "1 19\n\nS.=a(2n-1) = =\n\n1 17¢\nSs: 1=5a(2n-3)= 32\nSea _11_ 2 5\n\nEER i Telntingi\n\nHence, the correct answer is 19."
+  },
+  {
+    "qNum": 134,
+    "exam": "JEE Main 2024 (06 Apr, Shift 1)",
+    "question": "A train starting from rest first accelerates uniformly up to a speed of 80 km /h for time ¢, then it\nmoves with a constant speed for time 3t. The average speed of the train for this duration of journey\nwill be (inkm/h) :",
+    "options": [
+      "40",
+      "80",
+      "30",
+      "70"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "total distance\nA d = —————\nWeds feo Sime taken\n+80 x 3t\nTE \"TL 70km/he,\n4t\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 135,
+    "exam": "JEE Main 2024 (06 Apr, Shift 2)",
+    "question": "5 particle moves in a straight line so that its displacement at any time ¢ is given by #2 = 1 + t2. Its\nacceleration at any time t is z™ where n =",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 3,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "xX=1+¢2\n2 x =2t\nat\nxv=t\ndv o dx 1\nerred Vv =\ndt dt\nx-at+vi=1\n-y2 —- 2/52\nSARL Voll 15 bX\nx x\n1 3\na= = =x\n\nHence, the correct answer is 3."
+  },
+  {
+    "qNum": 136,
+    "exam": "JEE Main 2024 (06 Apr, Shift 2)",
+    "question": "A body projected vertically upwards with a certain speed from the top of a tower reaches the ground\nin ¢;. If it is projected vertically downwards from the same point with the same speed, it reaches the\nground in t,. Time required to reach the ground, if it is dropped from the top of the tower, is :\n\n(A) Vita (®) Vii + t2\n(c) = (D) NEY\n2",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "tu Vu? + 2gh\nXs rn rym\ng\nsn: \\/u? + 2gh\nre —VAGNEe\ng\nGer ETT\ng\nu? + 2gh) —u?  2gh\ng g\n=>t=Et;\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 137,
+    "exam": "JEE Main 2024 (08 Apr, Shift 1)",
+    "question": "A clock has 75 cm, 60 cm long second hand and minute hand respectively. In 30 minutes duration the\ntip of second hand will travel z distance more than the tip of minute hand. The value of z in meter is\nnearly (Take 7 = 3.14) :",
+    "options": [
+      "140.5",
+      "118.9",
+      "139.4",
+      "220.0"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Xmin = X min\ne800\n=m X 100 m.\nXsecond = 30 X 27 X Tsecond\n=30 x 2m x B\n5 ™* 100\nX =Xsecond ~~ Xmin\n=139.4m\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 138,
+    "exam": "JEE Main 2024 (09 Apr, Shift 1)",
+    "question": "A particle moving in a straight line covers half the distance with speed 6 m/s. The other half is\ncovered in two equal time intervals with speeds 9 m/s and 15 m/s respectively. The average speed\nof the particle during the motion is :\n\n(A) 19 m/s ®) g m/s\n© 92 m/s 0) gg m/s",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "BD = S = 9t + 15t = 24t\n=8=06t1=24t => t1 =4t\nAB=S§\ndist. 48t\nr-— p———————® < speed >= —— =\ntime 2t +t\nA t Bt t _ das\nT2t+4t 6 he\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 139,
+    "exam": "JEE Main 2024 (09 Apr, Shift 2)",
+    "question": "Two cars are travelling towards each other at speed of 20 m s~! each. When the cars are 300 m\napart, both the drivers apply brakes and the cars retard at the rate of 2 m s~2. The distance between\nthem when they come to rest is :\n\n(A) 200 m (®) 100 m\n© 50m () 95 1m",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "[Wns =40m/s\nBY\napa] =4m/s\n20 m/s 20 m/s A | 0 fy 00\nJC SEEEEIE———Y °1 PPLY Yin relative\n[SR 77) J ——— O = (40)* + 2(—4)(S)\nS =200m\nRemaining distance = 300 — 200 = 100 m\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 140,
+    "exam": "JEE Main 2025 (23 Jan, Shift 1)",
+    "question": "The motion of an airplane is represented by velocity-time graph as shown below. The distance\nv(m/sec)\n400-4\ncovered by airplane in the first 30.5 secondis __km. 20048 |\nH\n02 10 20 30 40 tse)",
+    "options": [
+      "19",
+      "3",
+      "g",
+      "9"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001651/edvedum/motion1d_pyq/q140_diagram.png",
+    "solution": "Distance = area under the graph\nd = 300 x 2 + 400 x 28.5\n= 600 + 11400\n= 12000 m\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 141,
+    "exam": "JEE Main 2025 (28 Jan, Shift 2)",
+    "question": "The velocity-time graph of an object moving along a straight line is shown in figure. What is the\ndistance covered by the object betweent = Qtot = 4s?\n0b--aa-- A B\nv\n(ms?)\no ts)\nh) > . (s)\n(A) 30m ® 13m\n©) 10m ©) 13,",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001652/edvedum/motion1d_pyq/q141_diagram.png",
+    "solution": "Distance travelled = displacement when direction of velocity remains constant\n= Distance = Area\n= Je s+ 45)(10 m/s)\n=30m\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 142,
+    "exam": "JEE Main 2025 (29 Jan, Shift 2)",
+    "question": "Tyo cars P and Q are moving on a road in the same direction. Acceleration of car P increases\nlinearly with time whereas car QQ moves with a constant acceleration. Both cars cross each other at\ntime ¢ = 0, for the first time. The maximum possible number of crossing(s) (including the crossing at\nt=0)is ;",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 3,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "a, = kt, kis constant ag = a, ais constant agp = aq — a, = a — kt as initial velocities are not mentioned in\nquestion, so will have to assume two cases. Case-l ugp and agp in same direction\nwir\nO v\nA\nB\nYa P Total number of crossing = 2\nee 2)\nQ\na\n7)\nu, P\nCase-ll ugp and agp in opposite direction a—kt\nTotal number of crossing = 3\n\nHence, the correct answer is 3."
+  },
+  {
+    "qNum": 143,
+    "exam": "JEE Main 2025 (02 Apr, Shift 1)",
+    "question": "A person travelling on a straight line moves with a uniform velocity v, for a distance x and with a\nuniform velocity v for the next 3x distance. The average velocity in this motion is Es m/s. If vy is\n5m/sthenvy=___ m/s.",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 10,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "as XUXEXS\nET ty tty\n50 x+ 3%\nerie nate\nsto,\n50 5/2\nSie won\n5 2 2v2\nSs\n5 2v; 20\nLo rRElE ih de]\n2v; 20 5 20\n3 3\n= — =\n2va 20\n= vy =10m/s\n\nHence, the correct answer is 10."
+  },
+  {
+    "qNum": 144,
+    "exam": "JEE Main 2025 (02 Apr, Shift 2)",
+    "question": "A sportsman runs around a circular track of radius r such that he traverses the path ABAB. The\ndistance travelled and displacement, respectively, are A (yr",
+    "options": [
+      "2r, 37",
+      "Sr, wr",
+      "nr, 3r",
+      "3mr, 2r"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001653/edvedum/motion1d_pyq/q144_diagram.png",
+    "solution": "Displacement = 27\nDistance = 27r + mr = 3ar\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 145,
+    "exam": "JEE Main 2025 (03 Apr, Shift 1)",
+    "question": "Which of the following curves possibly represent one-dimensional motion of a particle?\nPhase\n6} Time\nVelocity\nA\" displacement\nVelocity\nDe\n\nTotal distance",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001654/edvedum/motion1d_pyq/q145_diagram.png",
+    "solution": "For option (A)\n¢ = kt + C it can be 1D motion\neg — x = Asin ¢(SHM)\nFor option (B)\nv? + x? = constant yes 1D\nFor option (C)\ntime can't be negative Not possible\nFor option (D)\nPossible\nA, B\\&D only\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 146,
+    "exam": "JEE Main 2025 (03 Apr, Shift 2)",
+    "question": "5 particle moves along the z-axis and has its displacement x varying with time ¢ according to the\nequation x = cg (t? = 2) +c(t— 2)? where ¢j and c are constants of appropriate dimensions. Then,\nwhich of the following statements is correct?",
+    "options": [
+      "the acceleration of the particle is 2¢q",
+      "the acceleration of the particle is 2 ¢",
+      "the initial velocity of the particle is 4 ¢",
+      "the acceleration of the particle is 2 (c co)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "dx\nv=; =2Co+2C(t-2)\ndv\nGms 2Cy + 2C\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 147,
+    "exam": "JEE Main 2025 (04 Apr, Shift 2)",
+    "question": "The displacement x versus time graph is shown below.\nE E\nA ery a\no\n8 nin Co alo\n73\nEE] 1 2 F8 H\n2 N/B3 456 N/A times)\nDasha N ee a)\nA G",
+    "options": [
+      "The average velocity during 0 to 3 sis 10 m/s",
+      "The average velocity during 3 to 5sis 0 m/s",
+      "The instantaneous velocity att = 2 sis 5 m/s",
+      "The average velocity during 5 to 7 s and instantaneous velocity at t = 6.5 s are equal\n(E) The average velocity from ¢ = Oto t = 9 s is zero Choose the correct answer from the options\ngiven below:\n(A) (a), (D), (E) only (B) (B), (C), (D) only\n(C) (B), (D), (E) only (D) (B), (C), (E) only"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001655/edvedum/motion1d_pyq/q147_diagram.png",
+    "solution": "— AZ. _ SS\nI) oR Fat TE\nv= 2 = slope\n(A)Oto3sec; (v) = 2-0 =5/3 m/s\n5-5\n(B)0to5sec; (v) = = =0\n(C)t=2; slope =v=5m/s\n(D)t=5to7sec; (v) = ==2 = —2.5m/s\nAtt=6.5sec;v=10\n(E)t=0tot=9; (v) = 0\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 148,
+    "exam": "JEE Main 2026 (23 Jan, Shift 2)",
+    "question": "A paratrooper jumps from an aeroplane and opens a parachute after 2 s of free fall and starts\ndeaccelerating with 3 m/s’. At 10 m height from ground, while descending with the help of\nparachute, the speed of paratrooper is 5 m/s. The initial height of the airplaneis ____ m.\n(g=10m/s?%)",
+    "options": [
+      "82.5",
+      "20",
+      "62.5",
+      "92.5"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "During the first 2 g of free fall, the paratrooper starts from rest (u = 0).\nVelocity after 2sisv; =u + gt =0+ 10 x 2 =20 m/s.\nDistance covered during free fall is hy = 1gt = i x10 x 2° = 20m.\nAfter opening the parachute, the paratrooper decelerates at g — —3 m/s’.\nAt a height of 10 m from the ground, the final velocity is v» = 5 m/s.\nLet hy be the distance covered during deceleration until reaching 10 m height.\nUsing v3 = v} + 2ahy:\n52 = 202 + 2(—3)hy\n25 = 400 — 6h,\n6hy = 375\nhy = 625m.\nThe total height of the airplane is the sum of the free fall distance, the deceleration distance, and the remaining\nheight from the ground.\nH = hy + hy +10 = 20 + 62.5 + 10 = 92.5 m.\n\nHence, the correct option is (D)."
+  },
+  {
+    "qNum": 149,
+    "exam": "JEE Main 2026 (24 Jan, Shift 2)",
+    "question": "The velocity (v) - Distance (x) graph is shown in figure. Which graph represents acceleration (a)\n\\2\nversus distance (x) variation of this system?\noO X",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001656/edvedum/motion1d_pyq/q149_diagram.png",
+    "solution": "The v-x graph shows velocity decreasing linearly with distance. Using kinematic equation v* = vg + 2ax, we can\nestablish the relationship between acceleration and position.\nFrom the linear v-x relationship, differentiating using a = vie yields acceleration that is linearly proportional to\ndistance from the origin.\nThe a-x graph shows a straight line passing through the origin with positive slope, indicating that acceleration\nincreases linearly with distance while remaining positive throughout the motion.\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 150,
+    "exam": "JEE Main 2026 (28 Jan, Shift 1)",
+    "question": "Water drops fall from a tap on the floor, 5 m below, at regular intervals of time, the first drop strikes\nthe floor when the sixth drop begins to fall. The height at which the fourth drop will be from ground, at\nthe instant when the first drop strikes the ground is m.\n\n(g=10m/s?)",
+    "options": [
+      "4.2",
+      "2.5",
+      "4.0",
+      "3.8"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Time for first drop to fall 5 m:\n5=1x10 xt gvest=1s.\nSince the first drop strikes when the sixth begins, there are 5 intervals: each interval T' = 3 =0.2s.\nWhen drop 1 hits the ground (at = 1 s), drop 4 has been falling fort; = 1-3 x 0.2 = 0.4 s.\nDistance fallen by drop 4: 5; = 3 x 10 x (0.4)? = 0.8 m.\nHeight of drop 4 above ground: 5 — 0.8 = 4.2m.\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 151,
+    "exam": "JEE Main 2026 (28 Jan, Shift 2)",
+    "question": "5 particle starts moving from time ¢ = 0 and its coordinate is given as z(t) = 4t* — 3t\nA. The particle returns to its original position (origin) 0.866 units later\nB. The particle is 1 unit away from origin at its turning point\nC. Acceleration of the particle is non-negative\nD. The particle is 0.5 units away from origin at its turning point\nE. Particle never turns back as acceleration is non-negative\nChoose the correct answer from the options given below :",
+    "options": [
+      "A,B, C Only",
+      "C, E Only",
+      "A, C Only",
+      "A, C, D Only"
+    ],
+    "correct_option": 0,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Given z(t) = 4t* — 3t, we find v(t) = 12t*> — 3 and a(t) = 24t.\nStatement A: Setting z(t) = 0 gives 4t* — 3t = 0 => £(4t> — 3) = 0,s0t = 0 or ¢ = /3/4 = 0.866. The\nparticle returns to origin at ¢ = (.866 units. TRUE.\nStatement B: Turning points occur at v(t) = 0 = 12¢2 — 3 = 0 = t = 0.5. Att = 0.5:\n= 4(0.125) — 1.5 = —1; distance = unit. Att = —0.5: z = 1; distance = 1 unit. TRUE.\nStatement C: For t > 0 (particle starts at t = 0), a(t) = 24t > 0. TRUE.\nStatement D: At turning points, distance is 1 unit, not 0.5. FALSE.\nStatement E: False because acceleration is non-negative only for ¢ > 0, and particle does turn back at t = 0.5.\nFALSE.\nCorrect statements: A, B, C Only.\n\nHence, the correct option is (A)."
+  },
+  {
+    "qNum": 152,
+    "exam": "JEE Main 2026 (02 Apr, Shift 1)",
+    "question": "The velocity of a particle is given as 7 = —xi + 2yj — 2k m/s. The magnitude of acceleration at\npoint (1,2,4) is ____m/s?.",
+    "options": [
+      "NG",
+      "g",
+      "33",
+      "o"
+    ],
+    "correct_option": 1,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The velocity vector is given by 4 = vi + vyj + vk = —zi + 2yj — zk.\nThe components of acceleration are:\nOn — vl ru + og =(-z)(-1)+0+0==2\ndv, dv, A,\n=p = Sup: ide 1 =\nOy = ta +t + Op 0+(2y)(2) +0=4y\ndv: dv. dv:\na: =v: Shr +: =0+0+(-2)(=1)=2\nThe acceleration vector is & = zi + 4yj + zk.\nAt the point (1, 2,4), substituting z = 1, y = 2,and z = 4:\nd=1i+4(2)j + 4k =i+8j + 4k\nThe magnitude of acceleration is:\nld] = VIZ+ 87 +42 = I+ 64 + 16 = /81 = 9 m/s?\nAnswer: 9\n\nHence, the correct option is (B)."
+  },
+  {
+    "qNum": 153,
+    "exam": "JEE Main 2026 (04 Apr, Shift 2)",
+    "question": "Two cars A and B are moving in the same direction along a straight line with speeds 100 km/h and\n80 km/h, respectively such that car A is moving ahead of car B. A person in car B throws a stone\nwith a speed v so that it hits the car A with a speed of 5 m/s. The value of vis __ km/h.\n\nA) 1g ®) 58\n(©) 3g 0) 4g",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Velocity of car A, v4 = 100 km/h\nVelocity of car B, vg = 80 km/h\nVelocity of the stone relative to car B is v. The velocity of the stone relative to the ground is\nvg=vg+v=80+v.\nThe velocity of the stone relative to car Ais vg, 4, = vs — va = (80 + v) — 100 = v — 20.\nThe stone hits car A with a relative speed of 5 m/s. Converting this speed to km/h:\n18\nvga =5x ol 18 km/h\nEquating the relative speeds:\nv—20=18 = v = 38km/h\nAnswer: 38\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 154,
+    "exam": "JEE Main 2026 (05 Apr, Shift 1)",
+    "question": "From 18 m height above the ground a ball is dropped from rest. The height above the ground at which\nthe magnitude of velocity equal to the magnitude of acceleration (in the same set of units) due to\ngravityis ____m.\n\n(Take g=10 m/s? and neglect the air resistance)",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 13,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "Let the ball fall a distance s from the initial height.\n\nInitial velocity u = 0\n\nAcceleration a = g = 10 m/s?\n\nGiven that the magnitude of velocity is equal to the magnitude of acceleration due to gravity, we have v = 10 m/s.\n\nUsing the equation of motion v2 = u? + 2gs:\n\n(10 =0\"+2x10x s\n\n100 = 20s\n\ns§=5m\n\nThe distance fallen by the ball is 5 m.\n\nThe height above the ground ish = H — s\n\nh=18-5=13m\n\nAnswer: 13\n\nHence, the correct answer is 13."
+  },
+  {
+    "qNum": 155,
+    "exam": "JEE Main 2026 (05 Apr, Shift 2)",
+    "question": "The velocity (v) versus time (t) plot of a particle is shown in the figure, for a time interval of 40 s. The\ntotal distance travelled by the particle and the average velocity during this period are, respectively\n! 5 =\n—5 d\nae --",
+    "options": [
+      "25 m and zero",
+      "50 m and zero",
+      "100 m and zero",
+      "100 m and 2.5 m/s"
+    ],
+    "correct_option": 2,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795001657/edvedum/motion1d_pyq/q155_diagram.png",
+    "solution": "The total distance travelled by the particle is equal to the sum of the magnitudes of the areas under the velocity-\ntime graph.\nArea of the first triangle (from ¢ = 0 tot = 20 s) is:\n1\nAp =3x20x5=50m\nMagnitude of the area of the second triangle (from ¢ = 20to t = 40 s) is:\n1\n42] = |5 x 20 x (~5)| = 50m\nTotal distance = A; + |Ay| = 50 + 50 = 100 m\nThe total displacement is the algebraic sum of the areas under the velocity-time graph.\nTotal displacement = A; + As = 50 — 50 = 0m\nAverage velocity is the ratio of total displacement to total time.\nAverage velocity — Total displacement = 0 =)\nTotal time 40\n\n| Answer: 100 m and zero\n\nHence, the correct option is (C)."
+  },
+  {
+    "qNum": 156,
+    "exam": "JEE Main 2026 (08 Apr, Shift 2)",
+    "question": "Two masses of 3.4 kg and 2.5 kg are accelerated from an initial speed of 5 m/s and 12 m/s,\nrespectively. The distances traversed by the masses in the 5t\" second are 104 m and 129 m,\nx\n\nrespectively. The ratio of their momenta after 10 s is 5 Thevalueof zis ______.",
+    "options": [],
+    "correct_option": null,
+    "numeric_answer": 9,
+    "question_type": "numerical",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "The distance traversed in the n'\" second is given by S,, = u + Fn =1).\n\nFor the first mass (m; = 3.4 kg, uy = 5 m/s):\n\n104=5+2(2x5-1)\n\n99 = ps =a =22m/s?\n\nFor the second mass (my = 2.5 kg, uy = 12 m/s):\n\n120= 12+ 2(2x5-1)\n\n9a; 2\n\n117 = 52 = ay = 26 M/s\n\nVelocities of the masses after 10 s:\n\nvi =u + art =5+22x10=225m/s\n\nvy = uz + ast = 12 + 26 x 10 = 272 m/s\n\nMomenta of the masses after 10 s:\n\np= mv; = 3.4 x 225 = 765 kg m/s\n\nPpa = mau = 2.5 x 272 = 680 kg m/s\n\nRatio of their momenta:\n\np65 9\n\np2 680 8\n\nxT\nComparing with Fl wegetz =9.\nAnswer: 9\n\nHence, the correct answer is 9."
+  },
+  {
+    "qNum": 157,
+    "exam": "JEE Main 2026 (08 Apr, Shift 2)",
+    "question": "5 gas balloon is going up with a constant velocity of 10 m/s. When this balloon reached a height of 75\nm, a stone is dropped from it and balloon keeps moving up with the same velocity. The height of the\nballoon when the stone hits the ground is m. (Take g = 10 m/s?)\n\n(A) g5 ®) 150\n©) 199 ©) 195",
+    "options": [
+      "Option (A)",
+      "Option (B)",
+      "Option (C)",
+      "Option (D)"
+    ],
+    "correct_option": 3,
+    "numeric_answer": null,
+    "question_type": "mcq",
+    "marks": 4,
+    "difficulty": "medium",
+    "image_url": null,
+    "solution": "When the stone is dropped, it acquires the initial velocity of the balloon. Taking the upward direction as positive,\nthe initial velocity of the stone is u = 10 m/s.\nThe displacement of the stone when it hits the ground is § = —75 m, and its accelerationisa = —g = —10 m/s.\nx x : 1\nUsing the equation of motion § = ut + at\n1.02\n75 = 10t — (10)¢\n~75 = 10t — 5¢\n512 —10t— 75 =0\n?-2t-15=0\n(t-5)(t+3)=0\nSince time cannot be negative, t = 5 s.\nDuring this time, the balloon continues to move upwards with a constant velocity of 10 m/s. The distance travelled\nby the balloon in 5 s is:\nd=vxt=10x5=50m\nThe total height of the balloon when the stone hits the ground is:\nH=75+50=125m\nAnswer: 125\n\nHence, the correct option is (D)."
+  }
+]

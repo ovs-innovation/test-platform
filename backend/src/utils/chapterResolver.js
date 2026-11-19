@@ -2411,6 +2411,24 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/semiconductor/i.test(rawChapter) || /semiconductor/i.test(rawTopic)) {
       return 'Semiconductor';
     }
+    if (/(one|1)\s*dimension/i.test(rawChapter) || /(one|1)\s*dimension/i.test(rawTopic)) {
+      return 'Motion in one Dimension';
+    }
+    if (/two\s*dimension/i.test(rawChapter) || /two\s*dimension/i.test(rawTopic)) {
+      return 'Motion in two dimension';
+    }
+    if (/units?\s*(and|&)?\s*dimensions?/i.test(rawChapter) || /units?\s*(and|&)?\s*dimensions?/i.test(rawTopic)) {
+      return 'Units and dimensions';
+    }
+    if (/mechanical properties of solids/i.test(rawChapter) || /mechanical properties of solids/i.test(rawTopic) || /properties of solids/i.test(rawChapter) || /properties of solids/i.test(rawTopic)) {
+      return 'Mechanical Properties of Solids';
+    }
+    if (/laws?\s*of\s*motion/i.test(rawChapter) || /laws?\s*of\s*motion/i.test(rawTopic)) {
+      return 'Laws of Motion';
+    }
+    if (/kinetic theory of gases/i.test(rawChapter) || /kinetic theory of gases/i.test(rawTopic) || /kinetic theory/i.test(rawChapter) || /kinetic theory/i.test(rawTopic)) {
+      return 'Kinetic Theory of Gases';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder
