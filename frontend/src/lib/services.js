@@ -307,7 +307,7 @@ const getQbCacheKey = (category, extraParams = {}) => {
         sorted[k] = String(v).toLowerCase();
       }
     });
-  return `qb_by_cat_${normCat}_${JSON.stringify(sorted)}`;
+  return `qb_v2_by_cat_${normCat}_${JSON.stringify(sorted)}`;
 };
 
 export const questionBankService = {
@@ -358,32 +358,6 @@ export const questionBankService = {
       clearCache(key);
     }
 
-    if (!forceRefresh) {
-      // 1. Check persistent cache (memory or IndexedDB)
-      const cached = await persistentCache.get(key);
-      if (cached && Array.isArray(cached) && cached.length > 0) {
-        // Stale-while-revalidate in background if not already in flight
-        if (!inFlight.has(key)) {
-          const bgPromise = api
-            .get('/question-bank', { params: { ...(category ? { category } : {}), ...extraParams } })
-            .then((r) => {
-              const freshQuestions = r.data.questions || [];
-              if (freshQuestions.length > 0) {
-                persistentCache.set(key, freshQuestions, 86400000);
-              }
-              return freshQuestions;
-            })
-            .catch(() => {})
-            .finally(() => {
-              inFlight.delete(key);
-            });
-          inFlight.set(key, bgPromise);
-        }
-        return cached;
-      }
-    }
-
-    // 2. Fetch fresh from API
     if (inFlight.has(key)) {
       return inFlight.get(key);
     }
@@ -402,6 +376,13 @@ export const questionBankService = {
           persistentCache.set(key, questions, 86400000);
         }
         return questions;
+      })
+      .catch((err) => {
+        const cached = persistentCache.getSync(key);
+        if (cached && Array.isArray(cached) && cached.length > 0) {
+          return cached;
+        }
+        throw err;
       })
       .finally(() => {
         inFlight.delete(key);

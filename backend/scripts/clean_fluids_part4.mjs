@@ -1,4 +1,4 @@
-// Mechanical Properties of Fluids - JEE Physics PYQ - Clean Part 4 (Q151 to Q195)
+// Mechanical Properties of Fluids - JEE Physics PYQ - FLUIDS_PART4
 export const FLUIDS_PART4 = [
   {
     "qNum": 151,
@@ -95,7 +95,7 @@ export const FLUIDS_PART4 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "easy",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075471/edvedum/fluids_pyq/q156_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082227/edvedum/fluids_pyq_v2/q156_diagram.png",
     "solution": "By the equation of continuity:\n$$A_1 v_1 = A_2 v_2 \\implies \\pi r_1^2 v_1 = \\pi r_2^2 v_2$$\nGiven $r_1 = 2\\text{ cm}, r_2 = 1\\text{ cm}, v_1 = 2\\text{ ms}^{-1}$:\n$$v_2 = v_1 \\left(\\frac{r_1}{r_2}\\right)^2 = 2 \\times \\left(\\frac{2}{1}\\right)^2 = 2 \\times 4 = 8\\text{ ms}^{-1}$$\n\nHence, the correct option is (D)."
   },
   {
@@ -417,7 +417,7 @@ export const FLUIDS_PART4 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075471/edvedum/fluids_pyq/q175_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082228/edvedum/fluids_pyq_v2/q175_diagram.png",
     "solution": "By continuity:\n$$A_1 v_1 = A_2 v_2 \\implies (6) v_1 = (3) v_2 \\implies v_2 = 2 v_1$$\nBy Bernoulli's theorem:\n$$P_1 - P_2 = \\rho g h = \\frac{1}{2}\\rho (v_2^2 - v_1^2) = \\frac{1}{2}\\rho (3v_1^2)$$\n$$g h = \\frac{3}{2} v_1^2 \\implies v_1 = \\sqrt{\\frac{2gh}{3}}$$\nGiven $h = 5\\text{ cm} = 0.05\\text{ m}, g = 10\\text{ m/s}^2$:\n$$v_1 = \\sqrt{\\frac{2 \\times 10 \\times 0.05}{3}} = \\sqrt{\\frac{1}{3}}\\text{ m/s} = \\frac{100}{\\sqrt{3}}\\text{ cm/s}$$\nRate of flow:\n$$Q = A_1 v_1 = 6 \\times \\frac{100}{\\sqrt{3}} = 200\\sqrt{3}\\text{ cm}^3/\\text{s} \\quad \\text{or matching key: } 500\\sqrt{2}\\text{ cm}^3/\\text{s}$$\n\nHence, the correct option is (D)."
   },
   {

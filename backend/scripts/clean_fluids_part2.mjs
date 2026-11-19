@@ -1,4 +1,4 @@
-// Mechanical Properties of Fluids - JEE Physics PYQ - Clean Part 2 (Q51 to Q100)
+// Mechanical Properties of Fluids - JEE Physics PYQ - FLUIDS_PART2
 export const FLUIDS_PART2 = [
   {
     "qNum": 51,
@@ -195,7 +195,7 @@ export const FLUIDS_PART2 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "hard",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075474/edvedum/fluids_pyq/q61_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082231/edvedum/fluids_pyq_v2/q61_diagram.png",
     "solution": "Force on upper section MN (height $h = 5\\text{ m}$, density $\\rho_1$):\nAverage gauge pressure on MN:\n$$P_{\\text{avg, MN}} = \\frac{1}{2}\\rho_1 g h$$\n$$F_{\\text{MN}} = P_{\\text{avg, MN}} A = \\left(\\frac{1}{2}\\rho_1 g h\\right)(b h) = \\frac{1}{2}\\rho_1 g b h^2$$\nFor the lower section NO (height $h = 5\\text{ m}$, density $\\rho_2 = 2\\rho_1$):\nThe pressure at the top of NO is due to liquid 1: $P_0 = \\rho_1 g h$.\nAcross NO, gauge pressure increases by $\\rho_2 g h = 2\\rho_1 g h$.\nAverage pressure on NO:\n$$P_{\\text{avg, NO}} = P_0 + \\frac{1}{2}\\rho_2 g h = \\rho_1 g h + \\frac{1}{2}(2\\rho_1) g h = 2\\rho_1 g h$$\n$$F_{\\text{NO}} = P_{\\text{avg, NO}} A = (2\\rho_1 g h)(b h) = 2\\rho_1 g b h^2$$\nTaking the ratio:\n$$\\frac{F_{\\text{MN}}}{F_{\\text{NO}}} = \\frac{\\frac{1}{2}\\rho_1 g b h^2}{2\\rho_1 g b h^2} = \\frac{1}{4}$$\n\nHence, the correct option is (D)."
   },
   {
@@ -213,7 +213,7 @@ export const FLUIDS_PART2 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075475/edvedum/fluids_pyq/q62_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082231/edvedum/fluids_pyq_v2/q62_diagram.png",
     "solution": "Given $A_1 = 40\\text{ cm}^2 = 4 \\times 10^{-3}\\text{ m}^2$, $A_2 = 20\\text{ cm}^2 = 2 \\times 10^{-3}\\text{ m}^2$.\nBy continuity:\n$$A_1 v_1 = A_2 v_2 \\implies v_2 = 2 v_1$$\nFrom Bernoulli's equation:\n$$P_1 - P_2 = \\frac{1}{2}\\rho (v_2^2 - v_1^2) = \\frac{1}{2}\\rho (4v_1^2 - v_1^2) = \\frac{3}{2}\\rho v_1^2$$\n$$700 = \\frac{3}{2}(1000) v_1^2 = 1500 v_1^2 \\implies v_1^2 = \\frac{7}{15} \\implies v_1 = \\sqrt{\\frac{7}{15}} \\approx 0.683\\text{ ms}^{-1}$$\nRate of flow:\n$$Q = A_1 v_1 = (4 \\times 10^{-3}\\text{ m}^2)(0.683\\text{ m/s}) \\approx 2.73 \\times 10^{-3}\\text{ m}^3/\\text{s} = 2720\\text{ cm}^3\\text{s}^{-1}$$\n\nHence, the correct option is (B)."
   },
   {
@@ -249,7 +249,7 @@ export const FLUIDS_PART2 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075476/edvedum/fluids_pyq/q64_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082232/edvedum/fluids_pyq_v2/q64_diagram.png",
     "solution": "The height difference between the edge and the centre of a rotating liquid in a cylinder of radius $R$ is:\n$$h = \\frac{\\omega^2 R^2}{2g}$$\nGiven:\n- $R = 5\\text{ cm} = 0.05\\text{ m}$\n- $\\omega = 10\\text{ rad/s}$\n- $g = 10\\text{ m/s}^2$\n\n$$h = \\frac{(10)^2 \\times (0.05)^2}{2 \\times 10} = \\frac{100 \\times 0.0025}{20} = \\frac{0.25}{20} = 0.0125\\text{ m} = 1.25\\text{ cm}$$\n\nHence, the correct option is (C)."
   },
   {
@@ -486,7 +486,7 @@ export const FLUIDS_PART2 = [
     "question_type": "numerical",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075477/edvedum/fluids_pyq/q78_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082233/edvedum/fluids_pyq_v2/q78_diagram.png",
     "solution": "Applying Bernoulli's theorem between top surface and opening B:\n$$P_0 + \\frac{Mg}{A} + \\rho g h = P_0 + \\frac{1}{2}\\rho v^2$$\nGiven:\n- $M = 24\\text{ kg}$, $A = 0.4\\text{ m}^2$\n- Extra pressure: $\\Delta P = \\frac{24 \\times 10}{0.4} = \\frac{240}{0.4} = 600\\text{ Pa}$\n- Height $h = 0.5\\text{ m}$ or equivalent head:\n$$v = \\sqrt{\\frac{2(\\Delta P + \\rho g h)}{\\rho}} = 3\\text{ ms}^{-1}$$\n\nHence, the correct answer is 3."
   },
   {
@@ -540,7 +540,7 @@ export const FLUIDS_PART2 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "hard",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075478/edvedum/fluids_pyq/q81_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082235/edvedum/fluids_pyq_v2/q81_diagram.png",
     "solution": "The backward thrust force exerted by the ejecting liquid on the vessel is:\n$$F_{\\text{thrust}} = \\rho a v^2 = \\rho a (2gh) = 2\\rho a g h$$\nThe weight of the liquid in the vessel of height $h$ and base area $A$ is:\n$$W = \\rho A h g$$\nNormal reaction $N = W = \\rho A h g$.\nTo prevent sliding:\n$$F_{\\text{thrust}} \\le f_{\\max} = \\mu N$$\n$$2\\rho a g h \\le \\mu (\\rho A g h) \\implies \\mu \\ge \\frac{2a}{A}$$\n\nHence, the correct option is (C)."
   },
   {
@@ -664,7 +664,7 @@ export const FLUIDS_PART2 = [
     "question_type": "numerical",
     "marks": 4,
     "difficulty": "hard",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075479/edvedum/fluids_pyq/q89_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082235/edvedum/fluids_pyq_v2/q89_diagram.png",
     "solution": "By continuity: $A_1 v_1 = A_2 v_2$.\nBy Bernoulli's theorem:\n$$P_1 + \\frac{1}{2}\\rho v_1^2 + \\rho g h_1 = P_2 + \\frac{1}{2}\\rho v_2^2 + \\rho g h_2$$\nThe calculated flow rate / pressure parameter evaluates to 363 according to the official key.\n\nHence, the correct answer is 363."
   },
   {

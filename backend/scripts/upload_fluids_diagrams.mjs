@@ -31,23 +31,20 @@ async function uploadAll() {
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const base = path.basename(file, '.png');
-    if (urlsMap[file]) {
-      console.log(`[ALREADY UPLOADED] ${file} -> ${urlsMap[file]}`);
-      continue;
-    }
-
     const filePath = path.resolve(diagramsDir, file);
     try {
       const res = await cloudinary.uploader.upload(filePath, {
-        folder: 'edvedum/fluids_pyq',
+        folder: 'edvedum/fluids_pyq_v2',
         public_id: base,
         overwrite: true,
+        invalidate: true,
       });
       urlsMap[file] = res.secure_url;
       console.log(`[UPLOADED ${i + 1}/${files.length}] ${file} -> ${res.secure_url}`);
     } catch (err) {
       console.error(`Failed to upload ${file}:`, err.message);
     }
+
   }
 
   fs.writeFileSync(urlsFile, JSON.stringify(urlsMap, null, 2), 'utf8');

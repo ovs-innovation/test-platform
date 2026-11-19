@@ -1,4 +1,4 @@
-// Mechanical Properties of Fluids - JEE Physics PYQ - Clean Part 3 (Q101 to Q150)
+// Mechanical Properties of Fluids - JEE Physics PYQ - FLUIDS_PART3
 export const FLUIDS_PART3 = [
   {
     "qNum": 101,
@@ -152,7 +152,7 @@ export const FLUIDS_PART3 = [
     "question_type": "numerical",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075466/edvedum/fluids_pyq/q110_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082223/edvedum/fluids_pyq_v2/q110_diagram.png",
     "solution": "Viscous force on a shearing film:\n$$F = \\eta A \\frac{v}{d}$$\nGiven:\n- $F = 0.1\\text{ N}$\n- $A = 0.20\\text{ m}^2$\n- $d = 0.25\\text{ mm} = 0.25 \\times 10^{-3}\\text{ m}$\n- $\\eta = 5.0 \\times 10^{-3}\\text{ Pa s}$\n\n$$v = \\frac{F d}{\\eta A} = \\frac{0.1 \\times 0.25 \\times 10^{-3}}{5.0 \\times 10^{-3} \\times 0.20} = \\frac{0.025 \\times 10^{-3}}{1.0 \\times 10^{-3}} = 0.025\\text{ m/s} = 25 \\times 10^{-3}\\text{ m/s}$$\nTherefore, $x = 25$.\n\nHence, the correct answer is 25."
   },
   {
@@ -335,7 +335,7 @@ export const FLUIDS_PART3 = [
     "question_type": "numerical",
     "marks": 4,
     "difficulty": "hard",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075467/edvedum/fluids_pyq/q121_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082224/edvedum/fluids_pyq_v2/q121_diagram.png",
     "solution": "Applying Bernoulli's theorem and continuity equation between the piston and the nozzle:\n$$P_1 + \\frac{1}{2}\\rho v_1^2 = P_0 + \\frac{1}{2}\\rho v_2^2$$\n$$P_1 - P_0 = \\frac{F}{A_1} = \\frac{32}{4.0 \\times 10^{-4}} = 80000\\text{ Pa}$$\nFrom continuity: $v_1 = \\frac{A_2}{A_1} v_2 = \\frac{1}{4} v_2$.\n$$80000 = \\frac{1}{2}(1000) \\left( v_2^2 - \\frac{v_2^2}{16} \\right) = 500 \\left( \\frac{15}{16} v_2^2 \\right)$$\n$$v_2^2 = \\frac{80000 \\times 16}{500 \\times 15} \\approx 170.67$$\nFollowing the specific mapped question integer scaling: 80.\n\nHence, the correct answer is 80."
   },
   {
@@ -397,7 +397,7 @@ export const FLUIDS_PART3 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075468/edvedum/fluids_pyq/q125_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082225/edvedum/fluids_pyq_v2/q125_diagram.png",
     "solution": "At the wider section: velocity $v_1$ is smaller, so pressure $P_1$ is larger.\nAt the constricted section: velocity $v_2$ is larger, so pressure $P_2$ is smaller.\nSince height of liquid in vertical manometer tube is $h = \\frac{P - P_0}{\\rho g}$:\n$$h_1 > h_2$$\n\nHence, the correct option is (C)."
   },
   {
@@ -606,7 +606,7 @@ export const FLUIDS_PART3 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "easy",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075469/edvedum/fluids_pyq/q138_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082226/edvedum/fluids_pyq_v2/q138_diagram.png",
     "solution": "Statement I: In streamline flow along a horizontal path, Bernoulli's theorem states $P + \\frac{1}{2}\\rho v^2 = \\text{constant}$, meaning higher speed corresponds to lower pressure (Correct).\\nStatement II: A venturimeter measures flow rate based directly on Bernoulli's theorem (Correct).\\nBoth statements are correct.\n\nHence, the correct option is (B)."
   },
   {

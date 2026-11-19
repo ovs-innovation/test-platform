@@ -64,11 +64,15 @@ async function syncAllFluidsToLive() {
   // If any old/stale fluids questions exist, clean them up
   if (existingFluids.length > 0) {
     console.log(`Cleaning up ${existingFluids.length} previous Fluids questions on live...`);
-    for (const oldQ of existingFluids) {
-      await fetch(`${LIVE_API}/question-bank/${oldQ.id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
-      });
+    const DEL_BATCH = 20;
+    for (let i = 0; i < existingFluids.length; i += DEL_BATCH) {
+      const chunk = existingFluids.slice(i, i + DEL_BATCH);
+      await Promise.all(chunk.map(oldQ =>
+        fetch(`${LIVE_API}/question-bank/${oldQ.id}`, {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${token}` }
+        })
+      ));
     }
     console.log('Cleanup complete.');
   }
@@ -78,10 +82,11 @@ async function syncAllFluidsToLive() {
   let successCount = 0;
   let failCount = 0;
 
-  const BATCH_SIZE = 5;
+  const BATCH_SIZE = 10;
   for (let i = 0; i < ALL_FLUIDS_PYQ_QUESTIONS.length; i += BATCH_SIZE) {
     const chunk = ALL_FLUIDS_PYQ_QUESTIONS.slice(i, i + BATCH_SIZE);
     await Promise.all(chunk.map(async (q) => {
+
       const isNum = q.question_type === 'numerical' || (q.numeric_answer !== null && q.numeric_answer !== undefined);
       let optionsPayload;
       let correctIndexPayload;

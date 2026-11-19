@@ -1,4 +1,4 @@
-// Mechanical Properties of Fluids - JEE Physics PYQ - Clean Part 1 (Q1 to Q50)
+// Mechanical Properties of Fluids - JEE Physics PYQ - FLUIDS_PART1
 export const FLUIDS_PART1 = [
   {
     "qNum": 1,
@@ -105,7 +105,7 @@ export const FLUIDS_PART1 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075476/edvedum/fluids_pyq/q6_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082233/edvedum/fluids_pyq_v2/q6_diagram.png",
     "solution": "From the figure:\n1. Liquid 1 floats on liquid 2, which implies $\\rho_1 < \\rho_2$.\n2. The solid ball sinks in liquid 1, which implies $\\rho_3 > \\rho_1$.\n3. The solid ball floats on liquid 2 at the interface, which implies $\\rho_3 < \\rho_2$.\nCombining these relations:\n$$\\rho_1 < \\rho_3 < \\rho_2$$\n\nHence, the correct option is (B)."
   },
   {
@@ -123,7 +123,7 @@ export const FLUIDS_PART1 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075478/edvedum/fluids_pyq/q7_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082234/edvedum/fluids_pyq_v2/q7_diagram.png",
     "solution": "Capillary rise is given by:\n$$h = \\frac{2T\\cos\\theta}{\\rho g r}$$\nSince pure water has a greater surface tension than soap solution ($T_{\\text{water}} > T_{\\text{soap}}$), the height of the water column in tube A is greater than the height of the soap solution in tube B ($h_A > h_B$).\nBoth liquids form concave menisci in glass tubes.\n\nHence, the correct option is (C)."
   },
   {
@@ -159,7 +159,7 @@ export const FLUIDS_PART1 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075480/edvedum/fluids_pyq/q9_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082236/edvedum/fluids_pyq_v2/q9_diagram.png",
     "solution": "Oil floats on water because $\\rho_{\\text{oil}} < \\rho_{\\text{water}}$.\nThe ball has a density $\\rho$ greater than oil but less than water ($\\rho_{\\text{oil}} < \\rho < \\rho_{\\text{water}}$).\nThus, the ball sinks in oil but floats on water, coming to rest at the oil-water interface, partly in oil and partly in water.\n\nHence, the correct option is (B)."
   },
   {
@@ -213,7 +213,7 @@ export const FLUIDS_PART1 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075468/edvedum/fluids_pyq/q12_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082226/edvedum/fluids_pyq_v2/q12_diagram.png",
     "solution": "A liquid film has two surfaces. The upward force exerted by surface tension is:\n$$F = 2 T L$$\nIn equilibrium, this balances the supported weight $W$:\n$$2 T L = W$$\nGiven $L = 30\\text{ cm} = 0.3\\text{ m}$ and $W = 1.5 \\times 10^{-2}\\text{ N}$:\n$$T = \\frac{W}{2 L} = \\frac{1.5 \\times 10^{-2}}{2 \\times 0.3} = \\frac{1.5 \\times 10^{-2}}{0.6} = 0.025\\text{ Nm}^{-1}$$\n\nHence, the correct option is (D)."
   },
   {
@@ -231,7 +231,7 @@ export const FLUIDS_PART1 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075470/edvedum/fluids_pyq/q13_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082227/edvedum/fluids_pyq_v2/q13_diagram.png",
     "solution": "The velocity of efflux at depth $y$ is $v = \\sqrt{2gy}$.\nVolume rate of flow $Q = A v$.\nFor the square hole at depth $h$:\n$$A_1 = \\ell^2, \\quad v_1 = \\sqrt{2gh} \\implies Q_1 = \\ell^2 \\sqrt{2gh}$$\nFor the circular hole at depth $4h$:\n$$A_2 = \\pi r^2, \\quad v_2 = \\sqrt{2g(4h)} = 2\\sqrt{2gh} \\implies Q_2 = \\pi r^2 \\times 2\\sqrt{2gh}$$\nSince $Q_1 = Q_2$:\n$$\\ell^2 \\sqrt{2gh} = 2\\pi r^2 \\sqrt{2gh} \\implies \\ell^2 = 2\\pi r^2$$\n$$r = \\frac{\\ell}{\\sqrt{2\\pi}}$$\n\nHence, the correct option is (A)."
   },
   {
@@ -609,7 +609,7 @@ export const FLUIDS_PART1 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075472/edvedum/fluids_pyq/q34_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082229/edvedum/fluids_pyq_v2/q34_diagram.png",
     "solution": "Let the rate of flow be $Q = A_1 v_1 = A_2 v_2$.\n$$v_1 = \\frac{Q}{A_1}, \\quad v_2 = \\frac{Q}{A_2}$$\nFrom Bernoulli's equation:\n$$P_2 - P_1 = \\frac{1}{2}\\rho (v_1^2 - v_2^2) = \\rho g h$$\n$$\\frac{1}{2} Q^2 \\left( \\frac{1}{A_1^2} - \\frac{1}{A_2^2} \\right) = g h$$\nGiven:\n- $h = 5\\text{ cm} = 0.05\\text{ m}$\n- $A_1 = 6\\text{ mm}^2 = 6 \\times 10^{-6}\\text{ m}^2$\n- $A_2 = 10\\text{ mm}^2 = 10 \\times 10^{-6}\\text{ m}^2$\n$$\\frac{1}{A_1^2} - \\frac{1}{A_2^2} = \\frac{100 - 36}{3600 \\times 10^{-12}} = \\frac{64}{3600 \\times 10^{-12}} = \\frac{16}{900 \\times 10^{-12}}$$\n$$Q^2 = \\frac{2gh}{\\frac{1}{A_1^2} - \\frac{1}{A_2^2}} = \\frac{2 \\times 10 \\times 0.05}{\\frac{16}{900 \\times 10^{-12}}} = \\frac{1 \\times 900 \\times 10^{-12}}{16} = 56.25 \\times 10^{-12}\\text{ m}^6/\\text{s}^2$$\n$$Q = 7.5 \\times 10^{-6}\\text{ m}^3/\\text{s} = 7.5\\text{ cc/s}$$\n\nHence, the correct option is (A)."
   },
   {
@@ -663,7 +663,7 @@ export const FLUIDS_PART1 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075473/edvedum/fluids_pyq/q37_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082229/edvedum/fluids_pyq_v2/q37_diagram.png",
     "solution": "The water film bounded between two flat plates forms a concave cylindrical meniscus at the boundary with principal radii of curvature $R_1 = R$ (in the vertical plane) and $R_2 = \\infty$ (along the straight edge):\n$$\\Delta P = T\\left(\\frac{1}{R_1} + \\frac{1}{R_2}\\right) = \\frac{T}{R}$$\nWhen considering both curved boundaries or radius of curvature related to separation $d = 2R$:\n$$\\Delta P = \\frac{2T}{d} = \\frac{2T}{R}$$\nFollowing standard JEE key convention: $\\Delta P = \\frac{2T}{R}$.\n\nHence, the correct option is (D)."
   },
   {
@@ -699,7 +699,7 @@ export const FLUIDS_PART1 = [
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075474/edvedum/fluids_pyq/q39_diagram.png",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795082230/edvedum/fluids_pyq_v2/q39_diagram.png",
     "solution": "Velocity of water as it leaves the hole at depth $H$:\n$$v_1 = \\sqrt{2gH}$$\nWhen it hits the ground after falling through height $h$:\n$$v_2 = \\sqrt{v_1^2 + 2gh} = \\sqrt{2gH + 2gh} = \\sqrt{2g(H + h)}$$\nBy the continuity equation:\n$$A_1 v_1 = A_2 v_2 \\implies \\pi r^2 v_1 = \\pi x^2 v_2$$\n$$x = r \\sqrt{\\frac{v_1}{v_2}} = r \\sqrt{\\frac{\\sqrt{2gH}}{\\sqrt{2g(H + h)}}} = r \\left(\\frac{H}{H + h}\\right)^{1/4}$$\n\nHence, the correct option is (A)."
   },
   {
