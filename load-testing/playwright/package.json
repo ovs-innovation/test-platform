@@ -1,0 +1,13 @@
+{
+  "name": "edvedum-load-testing-playwright",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Isolated Playwright smoke for the candidate exam flow. Not part of the application.",
+  "type": "module",
+  "scripts": {
+    "smoke": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.49.1"
+  }
+}

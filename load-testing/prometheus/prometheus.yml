@@ -1,0 +1,90 @@
+# Load-test Prometheus. This file only receives k6 remote write and scrapes Node Exporter.
+# It does not scrape the Edvedum application, its API port, or any production host.
+#
+# Start later, from the load-testing directory, and only on the test runner.
+# Retention is 15 days. Prometheus accepts that only as a process flag, not a scrape key.
+#   prometheus --config.file=prometheus/prometheus.yml --web.enable-remote-write-receiver --web.listen-address=127.0.0.1:9090 --storage.tsdb.retention.time=15d
+#
+# k6 then pushes to this process. Point the runner at localhost, not at a production URL:
+#   K6_PROMETHEUS_RW_SERVER_URL=http://127.0.0.1:9090/api/v1/write
+#   k6 run --out experimental-prometheus-rw k6/index.js
+#
+# Staging Node Exporter is scraped by this same local Prometheus over the private address
+# you put in the staging job below. Do not point that target at edvedum.com,
+# www.edvedum.com, or cbt.prosperrainfra.com.
+
+global:
+  # How often to pull Node Exporter and this Prometheus process.
+  scrape_interval: 15s
+  # How often recording rules in recording_rules.yml are evaluated.
+  evaluation_interval: 15s
+  # Attached to every series stored by this test-runner Prometheus, including remote-write samples.
+  external_labels:
+    project: edvedum
+    environment: load-testing
+
+# k6 API rollups. The rules read k6 remote-write series only. They do not scrape the application.
+rule_files:
+  - recording_rules.yml
+
+# k6 remote write is not a scrape job. k6 sends samples to
+# http://127.0.0.1:9090/api/v1/write. The receiver is the process flag
+# --web.enable-remote-write-receiver. There is no k6 target in scrape_configs.
+
+scrape_configs:
+  # This Prometheus process. Confirms the test runner is up. Loopback only.
+  - job_name: prometheus
+    scheme: http
+    static_configs:
+      - targets:
+          - 127.0.0.1:9090
+        labels:
+          environment: local
+          role: prometheus
+
+  # Node Exporter on the same machine as this Prometheus. Default Node Exporter port is 9100.
+  # Host CPU, memory, disk, disk I/O, network, and connection series come from this job.
+  - job_name: node-exporter-local
+    scheme: http
+    static_configs:
+      - targets:
+          - 127.0.0.1:9100
+        labels:
+          environment: local
+          role: node-exporter
+    relabel_configs:
+      # Refuse production names even if a target line is edited by mistake.
+      - source_labels: [__address__]
+        regex: '(.+\.)?edvedum\.com:\d+|cbt\.prosperrainfra\.com:\d+'
+        action: drop
+      # Refuse the application ports. Node Exporter stays on 9100. Prometheus stays on 9090.
+      - source_labels: [__address__]
+        regex: '.+:(3000|5000|5173)'
+        action: drop
+
+  # Node Exporter on the staging server. The placeholder is dropped, so this job scrapes
+  # nothing until you replace REPLACE_WITH_STAGING_NODE_EXPORTER with the staging
+  # machine's private host and delete the placeholder drop rule.
+  # Example after edit: 10.0.0.20:9100 with environment=staging.
+  # Do not use a public production hostname.
+  - job_name: node-exporter-staging
+    scheme: http
+    static_configs:
+      - targets:
+          - REPLACE_WITH_STAGING_NODE_EXPORTER:9100
+        labels:
+          environment: staging
+          role: node-exporter
+    relabel_configs:
+      # Inactive until the staging address replaces the placeholder and this rule is removed.
+      - source_labels: [__address__]
+        regex: 'REPLACE_WITH_STAGING_NODE_EXPORTER:9100'
+        action: drop
+      # Refuse production names even after the placeholder is replaced.
+      - source_labels: [__address__]
+        regex: '(.+\.)?edvedum\.com:\d+|cbt\.prosperrainfra\.com:\d+'
+        action: drop
+      # Refuse the application ports on the staging host as well.
+      - source_labels: [__address__]
+        regex: '.+:(3000|5000|5173)'
+        action: drop

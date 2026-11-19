@@ -1,0 +1,18 @@
+# File provider for the load-test dashboard.
+# Grafana resolves a relative path from its process working directory.
+# From load-testing/grafana/provisioning/dashboards, the JSON folder is ../../dashboards.
+# Absolute example on this machine:
+#   C:/Users/drist/Desktop/edvedum/load-testing/grafana/dashboards
+apiVersion: 1
+
+providers:
+  - name: Edvedum Load Testing
+    orgId: 1
+    folder: Edvedum Load Testing
+    type: file
+    disableDeletion: true
+    updateIntervalSeconds: 30
+    allowUiUpdates: false
+    options:
+      path: ../../dashboards
+      foldersFromFilesStructure: false

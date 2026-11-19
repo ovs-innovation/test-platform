@@ -1,0 +1,44 @@
+# Recording rules for k6 remote-write series.
+# Latency is in seconds, matching k6_http_req_duration_seconds.
+# Native histograms are the k6 default. The p95 and p99 rules fall back to classic buckets
+# when K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=false.
+groups:
+  - name: k6_api
+    interval: 15s
+    rules:
+      # Mean request time over the last minute.
+      - record: avg_api_latency
+        expr: |
+          sum(rate(k6_http_req_duration_seconds_sum[1m]))
+          /
+          clamp_min(sum(rate(k6_http_req_duration_seconds_count[1m])), 1e-9)
+
+      # 95th percentile request time over the last minute.
+      - record: p95_api_latency
+        expr: |
+          histogram_quantile(0.95, sum(rate(k6_http_req_duration_seconds[1m])))
+          or
+          histogram_quantile(0.95, sum by (le) (rate(k6_http_req_duration_seconds_bucket[1m])))
+
+      # 99th percentile request time over the last minute.
+      - record: p99_api_latency
+        expr: |
+          histogram_quantile(0.99, sum(rate(k6_http_req_duration_seconds[1m])))
+          or
+          histogram_quantile(0.99, sum by (le) (rate(k6_http_req_duration_seconds_bucket[1m])))
+
+      # Failed requests divided by all requests.
+      # Uses the k6 counter when present, otherwise the k6 rate gauge.
+      - record: api_error_rate
+        expr: |
+          (
+            sum(rate(k6_http_req_failed_total[1m]))
+            /
+            clamp_min(sum(rate(k6_http_reqs_total[1m])), 1e-9)
+          )
+          or
+          avg(k6_http_req_failed_rate)
+
+      # Request rate over the last minute.
+      - record: requests_per_second
+        expr: sum(rate(k6_http_reqs_total[1m]))

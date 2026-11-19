@@ -1,0 +1,262 @@
+# Prepared alert rules for the load-test Prometheus.
+# No contact points and no notification policies are defined.
+# Rules stay paused so Grafana does not send them anywhere.
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: edvedum-load-testing
+    folder: Edvedum Load Testing
+    interval: 1m
+    rules:
+      - uid: edvedum-api-p95
+        title: API P95 > 2s
+        condition: C
+        for: 2m
+        noDataState: NoData
+        execErrState: Error
+        isPaused: true
+        labels:
+          project: edvedum
+          environment: load-testing
+        annotations:
+          summary: Recording rule p95_api_latency is above 2 seconds.
+        data:
+          - refId: A
+            datasourceUid: prometheus
+            relativeTimeRange:
+              from: 300
+              to: 0
+            model:
+              refId: A
+              expr: p95_api_latency
+              instant: true
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator:
+                    type: gt
+                    params:
+                      - 2
+
+      - uid: edvedum-api-error-rate
+        title: Error Rate > 5%
+        condition: C
+        for: 2m
+        noDataState: NoData
+        execErrState: Error
+        isPaused: true
+        labels:
+          project: edvedum
+          environment: load-testing
+        annotations:
+          summary: Recording rule api_error_rate is above 5 percent.
+        data:
+          - refId: A
+            datasourceUid: prometheus
+            relativeTimeRange:
+              from: 300
+              to: 0
+            model:
+              refId: A
+              expr: api_error_rate
+              instant: true
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator:
+                    type: gt
+                    params:
+                      - 0.05
+
+      - uid: edvedum-cpu-85
+        title: CPU Usage > 85%
+        condition: C
+        for: 2m
+        noDataState: NoData
+        execErrState: Error
+        isPaused: true
+        labels:
+          project: edvedum
+          environment: load-testing
+        annotations:
+          summary: Node Exporter CPU usage is above 85 percent.
+        data:
+          - refId: A
+            datasourceUid: prometheus
+            relativeTimeRange:
+              from: 300
+              to: 0
+            model:
+              refId: A
+              expr: max(100 * (1 - avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m]))))
+              instant: true
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator:
+                    type: gt
+                    params:
+                      - 85
+
+      - uid: edvedum-ram-90
+        title: RAM Usage > 90%
+        condition: C
+        for: 2m
+        noDataState: NoData
+        execErrState: Error
+        isPaused: true
+        labels:
+          project: edvedum
+          environment: load-testing
+        annotations:
+          summary: Node Exporter memory usage is above 90 percent.
+        data:
+          - refId: A
+            datasourceUid: prometheus
+            relativeTimeRange:
+              from: 300
+              to: 0
+            model:
+              refId: A
+              expr: max(100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)))
+              instant: true
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator:
+                    type: gt
+                    params:
+                      - 90
+
+      - uid: edvedum-disk-90
+        title: Disk Usage > 90%
+        condition: C
+        for: 2m
+        noDataState: NoData
+        execErrState: Error
+        isPaused: true
+        labels:
+          project: edvedum
+          environment: load-testing
+        annotations:
+          summary: A Node Exporter filesystem is above 90 percent full.
+        data:
+          - refId: A
+            datasourceUid: prometheus
+            relativeTimeRange:
+              from: 300
+              to: 0
+            model:
+              refId: A
+              expr: max(100 * (1 - (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay|ramfs"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay|ramfs"})))
+              instant: true
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator:
+                    type: gt
+                    params:
+                      - 90
+
+      - uid: edvedum-event-loop-200ms
+        title: Event Loop Delay > 200ms
+        condition: C
+        for: 2m
+        noDataState: NoData
+        execErrState: Error
+        isPaused: true
+        labels:
+          project: edvedum
+          environment: load-testing
+        annotations:
+          summary: nodejs_eventloop_lag_seconds is above 200 milliseconds.
+        data:
+          - refId: A
+            datasourceUid: prometheus
+            relativeTimeRange:
+              from: 300
+              to: 0
+            model:
+              refId: A
+              expr: max(nodejs_eventloop_lag_seconds)
+              instant: true
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator:
+                    type: gt
+                    params:
+                      - 0.2

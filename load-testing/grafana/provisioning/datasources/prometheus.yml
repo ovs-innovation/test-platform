@@ -1,0 +1,22 @@
+# Grafana datasource for the load-test Prometheus only.
+# Prometheus listens on 127.0.0.1:9090. This file does not point at the Edvedum application.
+#
+# The Prometheus server labels its exported series with:
+#   project="edvedum"
+#   environment="load-testing"
+# Those external_labels are not stored on local samples, so dashboard queries
+# do not filter on them. The dashboard shows the same two values as constants.
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    uid: prometheus
+    type: prometheus
+    access: proxy
+    url: http://127.0.0.1:9090
+    isDefault: true
+    editable: false
+    jsonData:
+      httpMethod: POST
+      timeInterval: 15s
+      prometheusType: Prometheus
