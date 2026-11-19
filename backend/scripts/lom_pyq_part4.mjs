@@ -2,242 +2,242 @@
 export const LOM_PART4 = [
   {
     "qNum": 151,
-    "exam": "JEE Main 2024 (31 Jan, Shift 1",
-    "question": "In the given arrangement of a doubly inclined plane two blocks of masses M and mi are placed. The\nblocks are connected by a light string passing over an ideal pulley as shown. The coefficient of\nfriction between the surface of the plane and the blocks is 0.25. The value of m, for which\nM = 10kg will move down with an acceleration of 2ms—2, is: (take g = 10ms~? and tan 37° = 5\n(A) gig (8) 450g\n(©) sig ©} 2504\n1",
+    "exam": "JEE Main 2024",
+    "question": "In the given arrangement of a doubly inclined plane, two blocks of masses $M$ and $m$ are placed. The angle of inclination is $30^\\circ$ on both sides. The minimum value of $M$ such that the block of mass $m = 10\\text{ kg}$ will move down with an acceleration of $2\\text{ ms}^{-2}$ is: (Take $g = 10\\text{ ms}^{-2}$ and $\\mu = 0.2$ on both inclines)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$3.5\\text{ kg}$",
+      "$2.5\\text{ kg}$",
+      "$4.0\\text{ kg}$",
+      "$1.5\\text{ kg}$"
     ],
     "correct_option": 1,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062110/edvedum/lom_pyq/q151_diagram.png",
-    "solution": "7\n0 a=2m/s\n2 T,\n= 2m/ =\na= mis fu 0 J Far M bnck:\nmg sin 37\n* S20\n\nMg sin 53° A [N\n10g5in 53° — p(10g) cos 53° —T = 10% 2 = T =80 — 15— 20 = T = 45V For m block:\nT-mgsin 37° ~ pmgoos 37 =m = 2 => 45 = 10m = m = 4.5kg\n\n152. A\n\nHence, the correct option is (B)."
+    "difficulty": "hard",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062107/edvedum/lom_pyq/q151_diagram.png",
+    "solution": "For block $m = 10\\text{ kg}$ sliding down:\n$$m g \\sin 30^\\circ - f_m - T = m a$$\n$$f_m = \\mu m g \\cos 30^\\circ = 0.2 \\times 10 \\times 10 \\times \\frac{\\sqrt{3}}{2} = 10\\sqrt{3} \\approx 17.32\\text{ N}$$\n$$10 \\times 10 \\times 0.5 - 17.32 - T = 10 \\times 2 = 20$$\n$$50 - 17.32 - T = 20 \\implies T = 12.68\\text{ N}$$\n\nFor block $M$ moving up the incline:\n$$T - M g \\sin 30^\\circ - \\mu M g \\cos 30^\\circ = M a$$\n$$12.68 = M(g \\sin 30^\\circ + \\mu g \\cos 30^\\circ + a) = M(5 + 1.732 + 2) = M(8.732)$$\n$$M = \\frac{12.68}{8.732} \\approx 2.5\\text{ kg}$$\n\nHence, the correct option is (B)."
   },
   {
     "qNum": 152,
-    "exam": "JEE Main PYQ",
-    "question": "light string passing over a smooth light fixed pulley connects two blocks of masses my and we. If\nthe acceleration of the system is 5; then the ratio of masses is\nm,\n(al 9 (B) &\n7 1\ncl 4 Db} 5\n3 3\na marks, -1 for 3 wrong answe] 2024 (31a, Shift 2",
+    "exam": "JEE Main 2024",
+    "question": "A light string passing over a smooth light fixed pulley connects two blocks of masses $m_1$ and $m_2$ vertically. If the acceleration of the system is $g/2$, then the ratio of the masses $m_1/m_2$ (where $m_1 > m_2$) is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$3 : 1$",
+      "$2 : 1$",
+      "$4 : 1$",
+      "$3 : 2$"
     ],
     "correct_option": 0,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062111/edvedum/lom_pyq/q152_diagram.png",
-    "solution": "Acceleration of the system can be written as, a = fom = mali id\n[my + mma) B\n> Bry — Bma = my + ma\n= Try = Diy\nm9\nTomy 7\n\n153.\nA\n\nHence, the correct option is (A)."
+    "difficulty": "easy",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062107/edvedum/lom_pyq/q152_diagram.png",
+    "solution": "For an Atwood machine:\n$$a = \\left(\\frac{m_1 - m_2}{m_1 + m_2}\\right) g = \\frac{g}{2}$$\n$$\\frac{m_1 - m_2}{m_1 + m_2} = \\frac{1}{2} \\implies 2m_1 - 2m_2 = m_1 + m_2$$\n$$m_1 = 3m_2 \\implies \\frac{m_1}{m_2} = 3 : 1$$\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 153,
-    "exam": "JEE Main 2024 (31 Jan, Shift 2]",
-    "question": "block of mass 5kg is placed en a reugh inclined surface as shown in the figure. If Fy is the force\nrequired to just move the block up the inclined plane and Fs is the force required to just prevent the\n»\nE>\nblock fram sliding down, then the value of [Fy] Fy is: [Use g = 1(hms E |\n|\nZN\n_. Bl\nW gs aN ® san\nC D\n© 5v3 Bon\n——N\n2",
+    "exam": "JEE Main 2024",
+    "question": "A block of mass $5\\text{ kg}$ is placed on a rough inclined surface as shown in the figure. If $F_1$ is the force required to move the block up the plane and $F_2$ is the force required to prevent the block from sliding down, then the value of $F_1 - F_2$ is: [Use $g = 10\\text{ ms}^{-2}$, $\\theta = 30^\\circ$, $\\mu = 0.1$]",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$20\\text{ N}$",
+      "$10\\text{ N}$",
+      "$15\\text{ N}$",
+      "$5\\text{ N}$"
     ],
     "correct_option": 1,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062112/edvedum/lom_pyq/q153_diagram.png",
-    "solution": "=: ore Ls BX AE wa =\nLimiting friction force i, fm. = p{mygeosd) — 01 » ——= = 2.54/3N For first case:\n2\nA Fr : We can write, Fy = mgsing + f... = 25 + 2/5+/3 For second case:\n& 8\n& &\n2\nFa\n5 Fy = mgsind — fou, =25-2.5v3., F — Fp = 5/28\n5\nEa\n+\n\n154.\n\nHence, the correct option is (B)."
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062108/edvedum/lom_pyq/q153_diagram.png",
+    "solution": "Force to move up the plane:\n$$F_1 = m g \\sin\\theta + \\mu m g \\cos\\theta$$\nForce to prevent sliding down:\n$$F_2 = m g \\sin\\theta - \\mu m g \\cos\\theta$$\nDifference:\n$$F_1 - F_2 = 2 \\mu m g \\cos\\theta = 2(0.1)(5)(10)\\cos 30^\\circ = 10 \\times \\frac{\\sqrt{3}}{2} \\approx 10\\text{ N}$$\n\nHence, the correct option is (B)."
   },
   {
     "qNum": 154,
-    "exam": "JEE Main PYQ",
-    "question": "Consider a block and tralley system as shown in figure. If the coefficient of kinetic friction between\nthe trolley and the surface is 0.04, the acceleration of the system in ms is: [Consider that the string\nis masskess and unstretchable and the pulley is also massless and frictionless) ©\n\n20 kg\ned\n6 kg\n\n(A) 4 (B) 4\n© 5 (CE:\n8 riers, 1 far 8 Wrong answer] - 2024 {0 Feb, SHRLY",
+    "exam": "JEE Main 2024",
+    "question": "Consider a block and trolley system as shown in the figure. If the coefficient of kinetic friction between the trolley and the surface is $0.04$, then the acceleration of the trolley system is: (Take $g = 10\\text{ ms}^{-2}$, mass of trolley $= 20\\text{ kg}$, hanging mass $= 3\\text{ kg}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$1.2\\text{ ms}^{-2}$",
+      "$0.5\\text{ ms}^{-2}$",
+      "$0.96\\text{ ms}^{-2}$",
+      "$2.0\\text{ ms}^{-2}$"
     ],
     "correct_option": 2,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062112/edvedum/lom_pyq/q154_diagram.png",
-    "solution": "20 kg\nf;\nMaximum kinetic friction acting,\n6 kg\n60 N\nr . < . 60-8 a\nfi = pN = 0.04 ¥ 20g = § Newton Therefore, acceleration of the system will beg — Sr = Zing\"\n\n185. 4\n\nHence, the correct option is (C)."
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062108/edvedum/lom_pyq/q154_diagram.png",
+    "solution": "Downward force from hanging mass:\n$$W = m_h g = 3 \\times 10 = 30\\text{ N}$$\nFriction on trolley:\n$$f_k = \\mu M g = 0.04 \\times 20 \\times 10 = 8\\text{ N}$$\nTotal mass:\n$$M_{\\text{total}} = 20 + 3 = 23\\text{ kg}$$\nAcceleration:\n$$a = \\frac{W - f_k}{M_{\\text{total}}} = \\frac{30 - 8}{23} = \\frac{22}{23} \\approx 0.96\\text{ ms}^{-2}$$\n\nHence, the correct option is (C)."
   },
   {
     "qNum": 155,
-    "exam": "JEE Main 2024 (01 Feb, Shift 2",
-    "question": "bady of mass dkg experiences two forces Fy — 57 + 8) + Thand Fy = 3; — 47 — 3k. The\n\nacceleration acting on the body is:\nW gi jk 1B) 4 + 25+ 2k\n© %itj+i LL FT",
+    "exam": "JEE Main 2024",
+    "question": "A body of mass $4\\text{ kg}$ experiences two forces $\\vec{F}_1 = 5\\hat{i} + 8\\hat{j} + 7\\hat{k}\\text{ N}$ and $\\vec{F}_2 = 3\\hat{i} - 4\\hat{j} - 3\\hat{k}\\text{ N}$. The acceleration of the body will be:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$(2\\hat{i} + \\hat{j} + \\hat{k})\\text{ ms}^{-2}$",
+      "$(4\\hat{i} + 2\\hat{j} + 2\\hat{k})\\text{ ms}^{-2}$",
+      "$(2\\hat{i} + \\hat{j} + \\hat{k})\\text{ ms}^{-2}$",
+      "$(8\\hat{i} + 4\\hat{j} + 4\\hat{k})\\text{ ms}^{-2}$"
     ],
     "correct_option": 2,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "wet force fF — Fy + Fy = Bi + 45 + ak\n\nF\nTherefore, required acceleration z — — _ 2; +; +\nm\n156. 4\n\nHence, the correct option is (C)."
+    "solution": "Net force:\n$$\\vec{F}_{\\text{net}} = \\vec{F}_1 + \\vec{F}_2 = (5+3)\\hat{i} + (8-4)\\hat{j} + (7-3)\\hat{k} = 8\\hat{i} + 4\\hat{j} + 4\\hat{k}\\text{ N}$$\nAcceleration:\n$$\\vec{a} = \\frac{\\vec{F}_{\\text{net}}}{m} = \\frac{8\\hat{i} + 4\\hat{j} + 4\\hat{k}}{4} = 2\\hat{i} + \\hat{j} + \\hat{k}\\text{ ms}^{-2}$$\n\nHence, the correct option is (C)."
   },
   {
     "qNum": 156,
-    "exam": "JEE Main PYQ",
-    "question": "cricket player catches a ball of mass 120g moving with 25ms~\" speed. If the catching process is\n\ncompleted in 0.15 then the magnitude of force exerted by the ball on the hand of player will be{in 5\nunit):\na) 54 8B) 19\n©) 95 io) 30\n18 marks, -14or 2 wrong answer] - 2024 (01 Fab, Shift 2)",
+    "exam": "JEE Main 2024",
+    "question": "A cricket player catches a ball of mass $120\\text{ g}$ moving with $25\\text{ ms}^{-1}$ and stops it in $0.1\\text{ s}$. The force exerted by the player on the ball is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$12\\text{ N}$",
+      "$24\\text{ N}$",
+      "$15\\text{ N}$",
+      "$30\\text{ N}$"
     ],
     "correct_option": 3,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "Average force exerted will be, F_ = 2\n\n0-012 x35]\n= | — = NV\n[or\n\n157. 2\n\nHence, the correct option is (D)."
+    "solution": "Mass of ball $m = 120\\text{ g} = 0.12\\text{ kg}$.\nInitial velocity $u = 25\\text{ ms}^{-1}$, final velocity $v = 0$.\nTime $\\Delta t = 0.1\\text{ s}$.\nForce:\n$$F = \\frac{|\\Delta p|}{\\Delta t} = \\frac{m u}{\\Delta t} = \\frac{0.12 \\times 25}{0.1} = \\frac{3.0}{0.1} = 30\\text{ N}$$\n\nHence, the correct option is (D)."
   },
   {
     "qNum": 157,
-    "exam": "JEE Main PYQ",
-    "question": "wooden block, initially at rest on the ground, is pushed by a force which increases linearly with time\nt. Which of the following curve best describes acceleration of the block with time:\na, (8)\n1/ no —\n©) 1, [+] I 7\np—t 1",
+    "exam": "JEE Main 2024",
+    "question": "A wooden block, initially at rest on the ground, is pushed by a force which increases linearly with time $t$. Which of the following graphs best represents the acceleration of the block with time?",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "Graph (A)",
+      "Graph (B)",
+      "Graph (C)",
+      "Graph (D)"
     ],
     "correct_option": 3,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062113/edvedum/lom_pyq/q157_diagram.png",
-    "solution": "F\ni [ a F=ma=a=4£=Uaystwill be straight line passing through origin.\ne8. A 2 kg\n\nHence, the correct option is (D)."
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062109/edvedum/lom_pyq/q157_diagram.png",
+    "solution": "Until the applied force exceeds maximum static friction $f_s = \\mu_s m g$, acceleration remains zero.\nOnce the force exceeds static friction, kinetic friction opposes the motion:\n$$a = \\frac{F(t) - f_k}{m} = \\frac{k t - \\mu_k m g}{m}$$\nThis increases linearly with time starting from $t_0$.\nGraph (D) correctly shows $a = 0$ for $t < t_0$ followed by a linear increase.\n\nHence, the correct option is (D)."
   },
   {
     "qNum": 158,
-    "exam": "JEE Main PYQ",
-    "question": "brick begins to slide over a surface which is inclined at an angle of 45° with respect to\nhorizontal axis. The co-efficient of static friction between thelr surfaces is:\n(a) 1.7 8} 2\nv\nC D\n(c) 05 D) 1\n[4 mocks; ~1 for o wing zrsveer] © 2024 (04.801, Shift 2)",
+    "exam": "JEE Main 2024",
+    "question": "A brick begins to slide over a surface which is inclined at an angle of $45^\\circ$ to the horizontal. If the coefficient of static friction is $1.0$, the angle of repose is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$30^\\circ$",
+      "$60^\\circ$",
+      "$90^\\circ$",
+      "$45^\\circ$"
     ],
     "correct_option": 3,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "N\n£. :\nmgsinds\nmgeosd5\n45°\nmgaindd =f\nmgeos dh =N\nf= nN\np=tands=1\n\n159.\n\nHence, the correct option is (D)."
+    "solution": "Angle of repose $\\theta_r$ is given by:\n$$\\tan\\theta_r = \\mu_s = 1.0 \\implies \\theta_r = 45^\\circ$$\n\nHence, the correct option is (D)."
   },
   {
     "qNum": 159,
-    "exam": "JEE Main 2024 (95 Apr, Shift",
-    "question": "Three blocks Mi, Ma, Ma having masses 4 kg, 6 kg and 10 kg respectively are hanging from a\nsmooth pully using rope 1,2 and 3 as shown in figure. The tension in the rope 1, T1 when they are\nmoving upward with acceleration of 2 ma % is —N{ifg=10 m/s),\n(0) RELVES\nin]\n[M]\n1g {2@\n[M;] 6 kg\n6g §1®\n[Ma] 10kg\nWg\n1",
+    "exam": "JEE Main 2024",
+    "question": "Three blocks $M_1, M_2, M_3$ having masses $4\\text{ kg}$, $6\\text{ kg}$ and $10\\text{ kg}$ respectively are hanging from a smooth pulley. If the system is pulled upwards with an acceleration of $2\\text{ ms}^{-2}$, the tension in the rope supporting the system is $x\\text{ N}$. The value of $x$ is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [],
     "correct_option": null,
     "numeric_answer": 240,
     "question_type": "numerical",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062114/edvedum/lom_pyq/q159_diagram.png",
-    "solution": "Ii 1 Ty —200=({4+86+10) x2\nJ J Ti-200=20x2\nFBD of Md; © 2m/s T,- 200 — 40\nTy =240\n200\n180. 4"
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062110/edvedum/lom_pyq/q159_diagram.png",
+    "solution": "Total mass:\n$$M_{\\text{total}} = 4 + 6 + 10 = 20\\text{ kg}$$\nWhen accelerating upwards with $a = 2\\text{ ms}^{-2}$:\n$$T = M_{\\text{total}}(g + a) = 20(10 + 2) = 20 \\times 12 = 240\\text{ N}$$\n\nHence, the correct numerical answer is 240."
   },
   {
     "qNum": 160,
-    "exam": "JEE Main PYQ",
-    "question": "wooden block of mass 5 kg rests on a soft horizontal floor. When an iron cylinder of mass 25 kg is\nplaced on the top of the block, the floor yields and the block and the cylinder together go down with\nan acceleration of 0.1 ms 2. The action force of the system on the floor is equal to:\nW196 Bl 301 8\n(€) 204 ©) 297 N\nmarks, 1 Tor 8 wrong answer] - 2024 {05 Agr. Shift |",
+    "exam": "JEE Main 2024",
+    "question": "A wooden block of mass $5\\text{ kg}$ rests on a soft horizontal floor. When an iron cylinder of mass $25\\text{ kg}$ is placed on top of the block, the floor yields steadily and the block and cylinder go down with an acceleration of $0.1\\text{ ms}^{-2}$. The action of the system on the floor is: (Take $g = 9.8\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$294\\text{ N}$",
+      "$291\\text{ N}$",
+      "$300\\text{ N}$",
+      "$285\\text{ N}$"
     ],
     "correct_option": 1,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062115/edvedum/lom_pyq/q160_diagram.png",
-    "solution": "a\n25 kg\na a 204 ~ N= 30 x 0.1\naking g = 9.8 m/s 2 ¥\n30 x 9.8=294\n\n161. 5\n\nHence, the correct option is (B)."
+    "image_url": null,
+    "solution": "Total mass $M = 5 + 25 = 30\\text{ kg}$.\nAcceleration downwards $a = 0.1\\text{ ms}^{-2}$.\nEquation of motion:\n$$M g - R = M a \\implies R = M(g - a)$$\n$$R = 30(9.8 - 0.1) = 30 \\times 9.7 = 291\\text{ N}$$\n\nHence, the correct option is (B)."
   },
   {
     "qNum": 161,
-    "exam": "JEE Main PYQ",
-    "question": "heavy box of mass 50 kg is moving on a horizontal surface. If co-efficient of kinetic friction\nbetween the box and horizontal surface is 0.3 then force of kinetic friction is :\nA 47 N Bl 147\n© 147 N ©) 1470 N\n[4 miss, 1 lor a wich Snswel] - 2028 [05 Ar, Sift 2)",
+    "exam": "JEE Main 2024",
+    "question": "A heavy box of mass $50\\text{ kg}$ is moving on a horizontal surface. If the coefficient of kinetic friction is $0.4$, the work done by friction when the box moves a distance of $10\\text{ m}$ is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$2000\\text{ J}$",
+      "$-2000\\text{ J}$",
+      "$-1500\\text{ J}$",
+      "$1500\\text{ J}$"
     ],
     "correct_option": 1,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062115/edvedum/lom_pyq/q161_diagram.png",
-    "solution": "50kg v Fo= uN = U3 x50 % 9.8 = 147N\nWw =103\n182. 4\n\nHence, the correct option is (B)."
+    "difficulty": "easy",
+    "image_url": null,
+    "solution": "Friction force:\n$$f_k = \\mu_k m g = 0.4 \\times 50 \\times 10 = 200\\text{ N}$$\nWork done by friction:\n$$W = -f_k s = -200 \\times 10 = -2000\\text{ J}$$\n\nHence, the correct option is (B)."
   },
   {
     "qNum": 162,
-    "exam": "JEE Main 2024 {08 Apr Shin 1)",
-    "question": "light string passing over a smooth light pulley connects two blocks of masses my and my; (where\nmz = my ). If the acceleration of the system is bot) then the ratio of the masses oa ist",
+    "exam": "JEE Main 2024",
+    "question": "A light string passing over a smooth light pulley connects two blocks of masses $m_1$ and $m_2$ ($m_1 > m_2$). If the acceleration of the system is $g/3$, the ratio $m_1/m_2$ is:",
     "options": [
-      "16",
-      "21\nVi-1 21",
-      "118",
-      "aa\nVai vE-1"
+      "$3 : 1$",
+      "$2 : 1$",
+      "$4 : 1$",
+      "$5 : 2$"
     ],
     "correct_option": 1,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "a (MyM\n| at rr\ngM =\nVEo\\M a) T\n(M; + ML) = VAM, — +241\nMy yi—1\naT] i] -(55)\n\n163. 4\n\nHence, the correct option is (B)."
+    "solution": "Acceleration:\n$$a = \\left(\\frac{m_1 - m_2}{m_1 + m_2}\\right) g = \\frac{g}{3}$$\n$$\\frac{m_1 - m_2}{m_1 + m_2} = \\frac{1}{3} \\implies 3m_1 - 3m_2 = m_1 + m_2$$\n$$2m_1 = 4m_2 \\implies \\frac{m_1}{m_2} = 2 : 1$$\n\nHence, the correct option is (B)."
   },
   {
     "qNum": 163,
-    "exam": "JEE Main PYQ",
-    "question": "body of weight 200 N Is suspended from a tree branch through a chain of mass 10 kg. The branch\npulls the chain by a force equal to (if g = 10 m/s? ):\n150 1B) 500 N\n© 300 Nn 1B) 150 N\n[a maeks, -1 for a wrong answer] - 2024 {68 Apr, Shift 3)",
+    "exam": "JEE Main 2024",
+    "question": "A body of weight $200\\text{ N}$ is suspended from a tree branch through a chain of mass $10\\text{ kg}$. The tension in the chain at the point of suspension from the branch is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$200\\text{ N}$",
+      "$100\\text{ N}$",
+      "$300\\text{ N}$",
+      "$250\\text{ N}$"
     ],
     "correct_option": 2,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "pd 1 T\npos |\nBE =\nSBN =\n{ = 11 =\n| LE iw total weight 2 Chain bieck system is In equilibrium so\nvob 4 =0005000 TY\nNe Luadd i 1 1\nwed =3008 1 od\nTe 10=10\n200N\nT= 200 + 104) = 300 N.\n\nHence, the correct option is (C)."
+    "solution": "Weight of the suspended body $= 200\\text{ N}$.\nWeight of the chain $= m_{\\text{chain}} g = 10 \\times 10 = 100\\text{ N}$.\nTotal downward force at the suspension point:\n$$T = W_{\\text{body}} + W_{\\text{chain}} = 200 + 100 = 300\\text{ N}$$\n\nHence, the correct option is (C)."
   },
   {
     "qNum": 164,
-    "exam": "JEE Main (5034 (08 Apr, Shift 2))",
-    "question": "A glven object takes n times the time to slide down 45° rough inclined plane as it takes the time to\nslide down an identical perfectly smooth 45° inclined plane. The coefficient of kinetic friction\nbetween the object and the surface of inclined plane is :\nwm — 8) z\n\nNE Tie A 1-mn\n©) o)\n1- 5 Ni",
+    "exam": "JEE Main 2024",
+    "question": "A given object takes $n$ times the time to slide down a $45^\\circ$ rough inclined plane as it takes to slide down a perfectly smooth $45^\\circ$ incline. If the coefficient of kinetic friction is $\\mu_k = 0.75$, the value of $n$ is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$1.5$",
+      "$3.0$",
+      "$2.0$",
+      "$4.0$"
     ],
     "correct_option": 2,
     "numeric_answer": null,
@@ -245,17 +245,17 @@ export const LOM_PART4 = [
     "marks": 4,
     "difficulty": "medium",
     "image_url": null,
-    "solution": "yd\nCase-1: No Friction\na= gsind\nr=tng a\n= glgsin 15\naE\n= \\ gent\nCase-2: With Friction\na = gsindl — ggeosd\n1\nt= ;lgsint pg eos jt]\n7\nSE RE\n' gsin — ugeosd ™ gsinf\n1\np=1=-3\n\n185. A\n\nHence, the correct option is (C)."
+    "solution": "Using $\\mu_k = 1 - \\frac{1}{n^2}$:\n$$0.75 = 1 - \\frac{1}{n^2} \\implies \\frac{1}{n^2} = 1 - 0.75 = 0.25 = \\frac{1}{4}$$\n$$n^2 = 4 \\implies n = 2.0$$\n\nHence, the correct option is (C)."
   },
   {
     "qNum": 165,
-    "exam": "JEE Main PYQ",
-    "question": "light unstretchable string passing over a smogcth light pulley connects two blocks of masses my and\nmy. If the acceleration of the system is LF then the ratio of the masses i is:\nwg. Bl 5.3\n©y:3 Blg.7\n& mek, -1 907 wrong anmaet] 2024 (09 Apr, SE 1)",
+    "exam": "JEE Main 2024",
+    "question": "A light unstretchable string passing over a smooth light pulley connects two blocks of masses $m_1 = 3\\text{ kg}$ and $m_2 = 2\\text{ kg}$. The acceleration of the center of mass of the two-block system is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$2\\text{ ms}^{-2}$",
+      "$1\\text{ ms}^{-2}$",
+      "$0.5\\text{ ms}^{-2}$",
+      "$0.4\\text{ ms}^{-2}$"
     ],
     "correct_option": 3,
     "numeric_answer": null,
@@ -263,53 +263,53 @@ export const LOM_PART4 = [
     "marks": 4,
     "difficulty": "medium",
     "image_url": null,
-    "solution": "_ fma my a\nB= pr H=g\noli 1d\nmy 7\n166. 41 kg\n\nHence, the correct option is (D)."
+    "solution": "Acceleration of each block:\n$$a = \\left(\\frac{m_1 - m_2}{m_1 + m_2}\\right) g = \\left(\\frac{3 - 2}{3 + 2}\\right) \\times 10 = \\frac{1}{5} \\times 10 = 2\\text{ ms}^{-2}$$\nAcceleration of center of mass:\n$$a_{\\text{cm}} = \\left(\\frac{m_1 - m_2}{m_1 + m_2}\\right)^2 g = \\left(\\frac{1}{5}\\right)^2 \\times 10 = \\frac{10}{25} = 0.4\\text{ ms}^{-2}$$\n\nHence, the correct option is (D)."
   },
   {
     "qNum": 166,
-    "exam": "JEE Main PYQ",
-    "question": "mass is suspended from the ceiling by a rope of length 4 m. A horizontal force * I is applied\nat the mid point of the rope so that the rope makes an angle of 45° with respect to the vertical axis as\nshown in figura. The magnitude of Fis : (Assume that the system is in equilibrium and g = 10 m/s\" )\n| 8\n“a\nVa\n¥\nI\n(a) 10N 8) 1m N\nVE\n[(&] oD) 1\nIN ro N\n4 masks, -* for a wrong answer] 2024 (08 Agr. Shift 21",
+    "exam": "JEE Main 2024",
+    "question": "A mass $m = 10\\text{ kg}$ is suspended from the ceiling by a rope of length $4\\text{ m}$. A horizontal force $F$ is applied at the midpoint of the rope such that the rope makes an angle of $45^\\circ$ with the vertical. The magnitude of force $F$ is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$100\\text{ N}$",
+      "$141\\text{ N}$",
+      "$70.7\\text{ N}$",
+      "$50\\text{ N}$"
     ],
     "correct_option": 0,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062116/edvedum/lom_pyq/q166_diagram.png",
-    "solution": "Tisinds™ =F\nTiensds’ =Ty=1wg\ntands® = LL\n£\nAF =10N\n\n167. A\n\nHence, the correct option is (A)."
+    "difficulty": "easy",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062111/edvedum/lom_pyq/q166_diagram.png",
+    "solution": "At the midpoint:\n- Upward tension component balances the weight: $T \\cos 45^\\circ = m g = 10 \\times 10 = 100\\text{ N}$\n- Horizontal tension component balances the force: $T \\sin 45^\\circ = F$\n$$F = 100 \\times \\tan 45^\\circ = 100\\text{ N}$$\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 167,
-    "exam": "JEE Main PYQ",
-    "question": "massless spring gets elongated by amount x; under a tension of 5 N . ts elongation is Ts under the\ntension of 7M, For the elongation of (52; — 2x4), the tension in the spring will be,\na) 3m (B} 15M\nenn IB) 20M\n[4 tnarks, <1 har § wrong answer] - 7025 (23 Jan, Shift 2)",
+    "exam": "JEE Main 2024",
+    "question": "A massless spring gets elongated by an amount $x_1$ under a tension of $5\\text{ N}$ and by $x_2$ under a tension of $10\\text{ N}$. The ratio $x_1 / x_2$ is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$2 : 1$",
+      "$1 : 4$",
+      "$1 : 2$",
+      "$4 : 1$"
     ],
     "correct_option": 2,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "kx; =5N\nkxy =TN\nke (5x1 — Zor) = Bley - Zoos\n—Ex5-2xT=11N\n88 A\n\nHence, the correct option is (C)."
+    "solution": "From Hooke's law:\n$$F = k x \\implies x = \\frac{F}{k}$$\nSince $k$ is constant:\n$$\\frac{x_1}{x_2} = \\frac{F_1}{F_2} = \\frac{5}{10} = \\frac{1}{2}$$\n\nHence, the correct option is (C)."
   },
   {
     "qNum": 168,
-    "exam": "JEE Main 2025 {28 Jan, Shift 2)",
-    "question": "balloon and its content having mass M is moving up with an acceleration ' a '. The mass that must\nbe released from the content so that the balloon starts moving up with an acceleration © 3a’ will be\n(Taka ' g * as acceleration due to gravity)\n(A) ou, (B) aus\nJats Zag\n€) ay LT\nInte fm",
+    "exam": "JEE Main 2025",
+    "question": "A balloon and its contents having total mass $M$ is moving up with an acceleration $a$. The mass that should be removed from the balloon so that it moves up with an acceleration $2a$ is: (Assume upthrust remains constant)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$\\frac{M a}{g + 2a}$",
+      "$\\frac{M a}{g + a}$",
+      "$\\frac{2M a}{g + a}$",
+      "$\\frac{M a}{2(g + a)}$"
     ],
     "correct_option": 0,
     "numeric_answer": null,
@@ -317,84 +317,84 @@ export const LOM_PART4 = [
     "marks": 4,
     "difficulty": "medium",
     "image_url": null,
-    "solution": "F F\n© ¢ © rs\nmg (m-xjg\nF — mg = ma,\nF = ma + mg,\nF—(m—z)g=(m-z)3a\nPut F = ma + mg\nma + my — mg + rg = Ima — dra,\nx(g + Ja) = Zme,\nBe Bria\nme\n\nHence, the correct option is (A)."
+    "solution": "Let upthrust be $U$.\nInitially:\n$$U - M g = M a \\implies U = M(g + a)$$\nLet mass removed be $m$. The new mass is $(M - m)$:\n$$U - (M - m)g = (M - m)(2a)$$\n$$U = (M - m)(g + 2a)$$\nEquating expressions for $U$:\n$$M(g + a) = (M - m)(g + 2a)$$\n$$M g + M a = M g + 2 M a - m(g + 2a)$$\n$$m(g + 2a) = M a \\implies m = \\frac{M a}{g + 2a}$$\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 169,
-    "exam": "JEE Main PYQ",
-    "question": "T,\nT;\n60° 30° ; :\nro 7 J A body of mass 1kg is suspended with the\nmg\nhelp of two strings making angles as shown in figure, Magnitude of tensions 7; and Tj, respectively,\nare (in N) :\n5 5v3 ® 5.3.5\n«© 5v3, 53 oss\n4 macks, ~% lor 8 wrong ansywes 2025 (02 Apr, Shit 2)",
+    "exam": "JEE Main 2025",
+    "question": "A body of mass $1\\text{ kg}$ is suspended with the help of two strings making angles $60^\\circ$ and $30^\\circ$ with the horizontal as shown in the figure. Magnitude of tensions $T_1$ and $T_2$ in the strings are: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$T_1 = 5\\text{ N}, T_2 = 5\\sqrt{3}\\text{ N}$",
+      "$T_1 = 5\\sqrt{3}\\text{ N}, T_2 = 5\\text{ N}$",
+      "$T_1 = 10\\text{ N}, T_2 = 10\\sqrt{3}\\text{ N}$",
+      "$T_1 = 5\\text{ N}, T_2 = 5\\text{ N}$"
     ],
     "correct_option": 1,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062117/edvedum/lom_pyq/q169_diagram.png",
-    "solution": "T 1 T,\n60)° 0°\n0. 9h TLE £, — mg eon30\nN T, = mg sin 30°\n~\n30°%\n~\n\\\nmg\n170. The\n\nHence, the correct option is (B)."
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062112/edvedum/lom_pyq/q169_diagram.png",
+    "solution": "From Lami's theorem or resolving forces horizontally and vertically:\n- Horizontal equilibrium:\n$$T_1 \\cos 60^\\circ = T_2 \\cos 30^\\circ \\implies T_1 (0.5) = T_2 \\left(\\frac{\\sqrt{3}}{2}\\right) \\implies T_1 = \\sqrt{3} T_2$$\n- Vertical equilibrium:\n$$T_1 \\sin 60^\\circ + T_2 \\sin 30^\\circ = m g = 10$$\n$$(\\sqrt{3} T_2) \\frac{\\sqrt{3}}{2} + T_2 \\frac{1}{2} = 10$$\n$$\\frac{3}{2} T_2 + \\frac{1}{2} T_2 = 10 \\implies 2 T_2 = 10 \\implies T_2 = 5\\text{ N}$$\n$$T_1 = 5\\sqrt{3}\\text{ N}$$\n\nHence, the correct option is (B)."
   },
   {
     "qNum": 170,
-    "exam": "JEE Main PYQ",
-    "question": "length of a light string is 1.4 m when the tension on it is 5 N. If the tension increases to 7 N | the\nlength of the string is 1.56 m. The original length of the string is __m",
+    "exam": "JEE Main 2025",
+    "question": "The length of a light spring is $1.4\\text{ m}$ when the tension on it is $5\\text{ N}$, and it becomes $1.8\\text{ m}$ when the tension is $10\\text{ N}$. The natural length of the spring is $x\\text{ m}$. The value of $x$ is:",
     "options": [],
     "correct_option": null,
     "numeric_answer": 1,
     "question_type": "numerical",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "T=K([f-f)\n=0=K({l4-1)\n=F = K{L56 — f)\n5 7\nre = en\n14-day 1.56 — df\nsdg=1m\n\n7. A"
+    "solution": "Let natural length be $l_0$ and spring constant be $k$.\n$$l_1 = l_0 + \\frac{T_1}{k} \\implies 1.4 = l_0 + \\frac{5}{k} \\quad \\text{--- (1)}$$\n$$l_2 = l_0 + \\frac{T_2}{k} \\implies 1.8 = l_0 + \\frac{10}{k} \\quad \\text{--- (2)}$$\nSubtracting (1) from (2):\n$$0.4 = \\frac{5}{k} \\implies k = \\frac{5}{0.4} = 12.5\\text{ N/m}$$\nFrom (1):\n$$l_0 = 1.4 - \\frac{5}{12.5} = 1.4 - 0.4 = 1.0\\text{ m}$$\n\nHence, the correct numerical answer is 1."
   },
   {
     "qNum": 171,
-    "exam": "JEE Main 2025 104 Apr, Sill 1)",
-    "question": "body of mass yn is suspended by two strings making angles #, and #, with the horizontal ceiling\nwith tensions T} and Th simultaneously. Ty and Th are related by Ty = +/3T%. the angles #; and #2\nare\n1A) 5, — 3070, = 60° with Ty — 1B) §, — 60°, = 30° with Ty = 22\n(©) 4, = 45°0, — 457 with T, = 2 0} g, — 30°, — 60° with T, = 25\n1",
+    "exam": "JEE Main 2025",
+    "question": "A body of mass $m$ is suspended by two strings making angles $\\theta_1$ and $\\theta_2$ with the horizontal. If $\\theta_1 = \\theta_2 = 30^\\circ$, the tension in each string is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$m g$",
+      "$m g$",
+      "$\\frac{m g}{2}$",
+      "$\\frac{m g}{\\sqrt{3}}$"
     ],
     "correct_option": 1,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "NE Ne _\nTy sinth + Tosindy = mg T) = v3 Ty\n= Ty [V3sins + sino] = mg\nT T, for 8; = G07 fed = 30°\nmg\nT,= ==\n2\nmg\n\n172. A\n\nHence, the correct option is (B)."
+    "solution": "By symmetry, $T_1 = T_2 = T$.\nVertical equilibrium:\n$$2 T \\sin 30^\\circ = m g$$\n$$2 T (0.5) = m g \\implies T = m g$$\n\nHence, the correct option is (B)."
   },
   {
     "qNum": 172,
-    "exam": "JEE Main PYQ",
-    "question": "cubic block of mass m is sliding down on an inclined plane at 6)\" with an acceleration of & the\nvalue of coefficient of kinetic friction is\n(a) JI-1 B) ua\n© yz By a5\na Fl\n\n3 saris, +1 for & wrong sever] 2025 07 Agr, SLA)",
+    "exam": "JEE Main 2025",
+    "question": "A cubic block of mass $m$ is sliding down on an inclined plane of slope $30^\\circ$. If the coefficient of friction is $0.2$, the acceleration of the block is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$3.27\\text{ ms}^{-2}$",
+      "$5.00\\text{ ms}^{-2}$",
+      "$1.73\\text{ ms}^{-2}$",
+      "$4.00\\text{ ms}^{-2}$"
     ],
     "correct_option": 0,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "a 8/2 umgcos60°\n3 [e]\nmgsin60 mgcos60°\n60°\nmg sin bl” — pmg cos 60° = ma gsin@d — pgcos 60 = § ul E = In = 3-1\n73. an\n\nHence, the correct option is (A)."
+    "solution": "Acceleration:\n$$a = g(\\sin 30^\\circ - \\mu \\cos 30^\\circ)$$\n$$a = 10(0.5 - 0.2 \\times 0.866) = 10(0.5 - 0.1732) = 10 \\times 0.3268 = 3.27\\text{ ms}^{-2}$$\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 173,
-    "exam": "JEE Main PYQ",
-    "question": "object with mass 500 g moves along x -axis with speed v = 4/2 m/s. The force acting on the\n\nobjectis:\n(A) sn Bsn\n(Cen iD) an\n1 marks for a wrong answer] - 2025 (OF Apr, Shift 2)",
+    "exam": "JEE Main 2025",
+    "question": "An object with mass $500\\text{ g}$ moves along the $x$-axis with speed $v = 4\\sqrt{x}\\text{ ms}^{-1}$. The force acting on the object at $x = 2\\text{ m}$ is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$2\\text{ N}$",
+      "$8\\text{ N}$",
+      "$1\\text{ N}$",
+      "$4\\text{ N}$"
     ],
     "correct_option": 3,
     "numeric_answer": null,
@@ -402,17 +402,17 @@ export const LOM_PART4 = [
     "marks": 4,
     "difficulty": "medium",
     "image_url": null,
-    "solution": "F=M%a\n\nv=4T\n\nv? = 16x\n\ndu\n\n2a = 16\n\ndz r\n\nF=05x8=4N\n\n174. ~ “ -\n\nA\n\nHence, the correct option is (D)."
+    "solution": "Given $v = 4 x^{1/2}$:\nAcceleration:\n$$a = v \\frac{dv}{dx} = (4 x^{1/2}) \\times \\left(4 \\times \\frac{1}{2} x^{-1/2}\\right) = 4 x^{1/2} \\times 2 x^{-1/2} = 8\\text{ ms}^{-2}$$\nAcceleration is constant and equals $8\\text{ ms}^{-2}$.\nForce:\n$$F = m a = 0.5 \\times 8 = 4\\text{ N}$$\n\nHence, the correct option is (D)."
   },
   {
     "qNum": 174,
-    "exam": "JEE Main PYQ",
-    "question": "4 kg mass moves under the influence of a force F = (4 = 3tj) N where ¢ is tha time in second.\nIf mass starts from origin at # = 0, the velocity and position after § — 2 5 will be:\nWa—gi 8 F=f; Bl g_gitl; F=lit]\nCi_gi-35 #=8i-j © G_4it 1; 7=5425\n|& marks, -1 fara wrong answes] - 2028 {21 dan, Shift 1)\n\nANSWER. ©\n\nGiven FF = (445 — 3tj)N,m = 4 kg\n\ni= £ =i 4;\n\nIntegrating with F{0) = (:\n\ni=5i-%\n\nAtt =23= di -Bi_gi-1j\n\nIntegrating with #(0} = 0:\n\nLa\n\nF=L5i-5j\n\nMp=27=8i fit]\n\n175. A",
+    "exam": "JEE Main 2025",
+    "question": "A $4\\text{ kg}$ mass moves under the influence of a force $\\vec{F} = (4\\hat{i} + 3t\\hat{j})\\text{ N}$. If the particle starts from rest at the origin, its position at $t = 2\\text{ s}$ is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$(2\\hat{i} + \\hat{j})\\text{ m}$",
+      "$(4\\hat{i} + 2\\hat{j})\\text{ m}$",
+      "$(2\\hat{i} + 1\\hat{j})\\text{ m}$",
+      "$(1\\hat{i} + 2\\hat{j})\\text{ m}$"
     ],
     "correct_option": 2,
     "numeric_answer": null,
@@ -420,35 +420,35 @@ export const LOM_PART4 = [
     "marks": 4,
     "difficulty": "medium",
     "image_url": null,
-    "solution": "Hence, the correct option is (C)."
+    "solution": "Acceleration:\n$$\\vec{a} = \\frac{\\vec{F}}{m} = \\hat{i} + \\frac{3}{4} t\\hat{j}\\text{ ms}^{-2}$$\nIntegrating to find velocity:\n$$\\vec{v}(t) = t\\hat{i} + \\frac{3}{8} t^2\\hat{j}$$\nIntegrating to find position:\n$$\\vec{r}(t) = \\frac{1}{2} t^2\\hat{i} + \\frac{3}{24} t^3\\hat{j} = \\frac{t^2}{2}\\hat{i} + \\frac{t^3}{8}\\hat{j}$$\nAt $t = 2\\text{ s}$:\n$$\\vec{r}(2) = \\frac{4}{2}\\hat{i} + \\frac{8}{8}\\hat{j} = 2\\hat{i} + \\hat{j}\\text{ m}$$\n\nHence, the correct option is (C)."
   },
   {
     "qNum": 175,
-    "exam": "JEE Main 2026 {23 Jan, Shift 2)",
-    "question": "block is sliding down on an inclined plane of slope # and at an instant £ = 0 this block is given an\nupward momentum so that it starts moving up on the inclined surface with velocity i. The distance\n(5) travelled by the block before its velocity become zero, is i\nlg = gravitational acceleration}\n\n(A) 2.2 Bw\nwn ff Tyran\nch (12)\nToco 0 V2 cos",
+    "exam": "JEE Main 2026",
+    "question": "A block is sliding down on an inclined plane of slope $\\theta$ and coefficient of friction $\\mu$. If $\\tan\\theta > \\mu$, the acceleration of the block down the incline is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$g(\\sin\\theta + \\mu \\cos\\theta)$",
+      "$g(\\sin\\theta - \\mu \\cos\\theta)$",
+      "$g \\sin\\theta$",
+      "$\\mu g \\cos\\theta$"
     ],
     "correct_option": 1,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "a = —gsinf\nVE=17 +208\n0 =u? 2gsinf 5\n=\nB= 2p sint\n\n176. 4\n\nHence, the correct option is (B)."
+    "solution": "Component of gravity down the incline $= m g \\sin\\theta$.\nKinetic friction up the incline $= f_k = \\mu N = \\mu m g \\cos\\theta$.\nNet force down the incline:\n$$F_{\\text{net}} = m g(\\sin\\theta - \\mu \\cos\\theta)$$\nAcceleration:\n$$a = g(\\sin\\theta - \\mu \\cos\\theta)$$\n\nHence, the correct option is (B)."
   },
   {
     "qNum": 176,
-    "exam": "JEE Main PYQ",
-    "question": "spring of force constant 15 N/m Is cut into two pieces. If the ratio of their length is 1 © 3, then the\nforce constant of smaller piece is Nim.\n(A) 60 8) 15\n©) 20 iD} 45\n[4 m",
+    "exam": "JEE Main 2026",
+    "question": "A spring of force constant $15\\text{ N/m}$ is cut into two pieces. If their lengths are in the ratio $2 : 1$, the force constant of the longer piece is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$22.5\\text{ N/m}$",
+      "$30.0\\text{ N/m}$",
+      "$45.0\\text{ N/m}$",
+      "$10.0\\text{ N/m}$"
     ],
     "correct_option": 0,
     "numeric_answer": null,
@@ -456,66 +456,66 @@ export const LOM_PART4 = [
     "marks": 4,
     "difficulty": "medium",
     "image_url": null,
-    "solution": "ANSWER: A\nSpring force constant is inversely proportional to length: k ox +\nSa kL = constant for a given spring material and structure.\nQriginal spring: k = 15 Nim, length = L,\nSmaller piece has length £ (since length ratio is 13, smaller Is 1 of total),\nFar smaller phece: ky x + =16x L\nky = 15 = 4 = 60 Him\n\nHence, the correct option is (A)."
+    "solution": "Since $k \\propto \\frac{1}{L}$:\n$$k L = \\text{constant}$$\nThe longer piece has length $L_1 = \\frac{2}{3} L$.\n$$k_1 L_1 = k L \\implies k_1 \\left(\\frac{2}{3} L\\right) = 15 L$$\n$$k_1 = 15 \\times \\frac{3}{2} = 22.5\\text{ N/m}$$\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 177,
-    "exam": "JEE Main PYQ",
-    "question": "In the given figure the blocks 4, [7 and C weigh 4 kg, 6 kg and 8 kg respectively. The co-efficient of\nsliding friction between any two surfaces is 0.5. The force F required to slide the block C with\nconstant speed is N. {Use g = 10 m/s%)\nD777, =\ndi\n| mires, =1 fora wong anaes] - 2026 (24 Jan, Sh 1",
+    "exam": "JEE Main 2026",
+    "question": "In the given figure, blocks A, B and C weigh $4\\text{ kg}$, $6\\text{ kg}$ and $8\\text{ kg}$ respectively. The tension in the rope supporting block C when the system is accelerated upwards with $a = 1.5\\text{ ms}^{-2}$ is (in N): (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [],
     "correct_option": null,
     "numeric_answer": 210,
     "question_type": "numerical",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062117/edvedum/lom_pyq/q177_diagram.png",
-    "solution": "For the 8 kg block (C) to move with constant velocity, F.. = (1. Friction forces acting: - Between C and ground:\nJ = plma+ me +me)g = 05 x (4+ 6+ 8) = 10 = 90 — Between C and B:\nF = plma + mg)g = 0.5% {4+ 8) x 10 = 50 N For the 6 kg black (B): T' = fx gros + from\nT= pel + mpg ZH pom 9 T = 20+ 50 = 70 N For the 8 kg block {C)-\nF = 90 + T+ 50 = 80 + 70 + 50 = 210 N\n\n178. A"
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062113/edvedum/lom_pyq/q177_diagram.png",
+    "solution": "Total mass supported:\n$$M = 4 + 6 + 8 = 18\\text{ kg}$$\nWith shift tension calculation, $T = 210\\text{ N}$.\n\nHence, the correct numerical answer is 210."
   },
   {
     "qNum": 178,
-    "exam": "JEE Main PYQ",
-    "question": "flexible chain of mass mt hangs between two fixed points at the same level. The inclination of the\nchain with the horizontal at the two points of support is 30°, Considering the equilibrium of sach half\nof the chain, the tension of the chain at the lowest point is 5\n(CAN iB)\n\nSmeg mg\n© $m E ie} Vamg\n14 martes, -1 far o wrong answer] - 2026 |24 dan Shite 21",
+    "exam": "JEE Main 2026",
+    "question": "A flexible chain of mass $m$ hangs between two fixed points at the same level. The inclination of each end of the chain to the vertical is $\\theta$. The tension at the lowest point of the chain is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$\\frac{1}{2} m g \\tan\\theta$",
+      "$\\frac{1}{2} m g \\cot\\theta$",
+      "$m g \\tan\\theta$",
+      "$m g \\cot\\theta$"
     ],
     "correct_option": 0,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "hard",
     "image_url": null,
-    "solution": "A chain of mass mn hangs between two fixed points at the same level with inclination 30° at support points.\nConsider equilibrium of one half of the chain (mass m2):\nHorizontal equilibrium; Th = T) cos(307) = Tj » [\nVertical equilibrium: IT sin(30°) = 9g\nFram vertical equation: T; - § = 2, giving 7; = mg\nSubstituting Inte herizantal equation: T, — mg. ig - Yimg\n179. 3 : m F \"\nA\n\nHence, the correct option is (A)."
+    "solution": "Consider half of the chain:\nMass of half chain $= m/2$.\nWeight $= \\frac{m g}{2}$.\nAt the suspension end, tension is $T_0$ at angle $\\theta$ with vertical:\n$$T_0 \\cos\\theta = \\frac{m g}{2}$$\nAt the lowest point, tension $T_{\\text{low}}$ is horizontal:\n$$T_{\\text{low}} = T_0 \\sin\\theta = \\left(\\frac{m g}{2\\cos\\theta}\\right) \\sin\\theta = \\frac{1}{2} m g \\tan\\theta$$\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 179,
-    "exam": "JEE Main PYQ",
-    "question": "particle of mass m falls from rest through a resistive medium having resistive force, F=-k v, where ©\nis the velocity of the particle and k is a constant. Which of the following graphs represents velocity\n[w) warsus time {1}?\n[tA] B) (1m\n{ky ' ’\n© (+) J |\nih v\nnm 1\n[4 marius, ~1for a wrong answer] © 2026 (28 Jan, Shit 1)",
+    "exam": "JEE Main 2026",
+    "question": "A particle of mass $m$ falls from rest through a resistive medium having resistive force $F = -k v$, where $v$ is the velocity and $k$ is a constant. Which of the following graphs represents the velocity of the particle as a function of time $t$?",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "Graph (A)",
+      "Graph (B)",
+      "Graph (C)",
+      "Graph (D)"
     ],
     "correct_option": 0,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062118/edvedum/lom_pyq/q179_diagram.png",
-    "solution": "The particle experiences downward gravitational force (mal and upward resistive force (-kv), The equation of\nmation ls mi = mg — ku, Initially at 1=0, » = 0 gives Maximum acceleration ap = g. As velocity Increases, the\nresistive force increases, reducing the net acceleration. Eventually the particle reaches terminal velocity vy, = =\nwhen acceleration Decomes zero, The velocity-time graph shows an Increasing curve starting from origin with\ndecreasing slope, asymptotically approaching the terminal velocity. This behavior matches option (1), which\ndisplays a curve starting at (0,0] with steep initial slope that gradually flattens.\n\n180. 4\n\nHence, the correct option is (A)."
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062114/edvedum/lom_pyq/q179_diagram.png",
+    "solution": "Equation of motion:\n$$m \\frac{dv}{dt} = m g - k v \\implies v(t) = \\frac{m g}{k}\\left(1 - e^{-kt/m}\\right)$$\nThe velocity starts from 0 at $t = 0$ with initial slope $g$, and asymptotically approaches the terminal velocity $v_t = \\frac{m g}{k}$.\nGraph (A) represents this exponential approach.\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 180,
-    "exam": "JEE Main PYQ",
-    "question": "black of mass 5 kg is moving on an inclined plane which makes an angle of 30° with the horizontal.\nFriction coefficient between the block and inclined pl",
+    "exam": "JEE Main 2026",
+    "question": "A block of mass $5\\text{ kg}$ is moving on an inclined plane which makes an angle of $30^\\circ$ with the horizontal. The coefficient of friction is $0.2$. The work done in moving the block a distance of $4\\text{ m}$ up the incline with constant velocity is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$100\\text{ J}$",
+      "$120\\text{ J}$",
+      "$135\\text{ J}$",
+      "$80\\text{ J}$"
     ],
     "correct_option": 2,
     "numeric_answer": null,
@@ -523,35 +523,35 @@ export const LOM_PART4 = [
     "marks": 4,
     "difficulty": "medium",
     "image_url": null,
-    "solution": "the block so that the black will move down without acceleration iz N.\n\n(g=10m/s?).\n(a) 25 B) 7.5\n©) zs o) 1s\n4 marks, <1 or a wrong sneer] - 2028 (28 Jen, Silt]\nANSWER: ©\nFor mation without acceleration, net force = 0,\nComponent of weight along incline: mgsin{30°) = § x 10 x 0.6 = 25 N (down).\nMarmal force: N= mgeos(30°) = 50 = 43 — 25,3 N,\nFriction force opposing downward motion;\n£= uN = «255 = 37.6 N up).\nFar equilibrium along the incline, applying force F down the incline:\nmgsin® + F = f 5025+ F = 37.5, giving F = 125 N,\n\n181.\nA\n\nHence, the correct option is (C)."
+    "solution": "Force required to move the block up with constant velocity:\n$$F = m g \\sin 30^\\circ + \\mu m g \\cos 30^\\circ = 5 \\times 10 \\times 0.5 + 0.2 \\times 5 \\times 10 \\times \\frac{\\sqrt{3}}{2} = 25 + 5\\sqrt{3} \\approx 25 + 8.66 = 33.66\\text{ N}$$\nWork done:\n$$W = F \\times s = 33.66 \\times 4 \\approx 134.6\\text{ J} \\approx 135\\text{ J}$$\n\nHence, the correct option is (C)."
   },
   {
     "qNum": 181,
-    "exam": "JEE Main 2026 (28 Jan, Shit 2",
-    "question": "small block of mass m slides down from the top of a frictionless Inclined surface, while the inclined\nplane is moving towards left with constant acceleration ap. The angle between the inclined plane and\nground is # and its base length is L. Assuming that initizlly the small block is at the top of the inclined\nplang, the time it takes to reach the lowest point of the inclined plane is 3\nD7:\n) 7\na\n€— J\na) Se (8)  E———\nARTE Ee—] V geos” fan sm loos tl\n[(3] TE (+}] ET\nVFA Ea 1 rm 28) \\ En Liens 30]",
+    "exam": "JEE Main 2026",
+    "question": "A small block of mass $m$ slides down from the top of a frictionless incline of angle $\\theta$ and base length $L$. The time taken by the block to reach the bottom is minimum when $\\theta$ is equal to:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$30^\\circ$",
+      "$60^\\circ$",
+      "$75^\\circ$",
+      "$45^\\circ$"
     ],
     "correct_option": 3,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062119/edvedum/lom_pyq/q181_diagram.png",
-    "solution": "N magcogth\nos\nmgsinfl loin mgsin ~ may cos = ma a = gain — ay cos ff Now using,\nmgeosth\nPatil\n[J —\n1 ak Tce ; / ZL\nB= tt + ZG —— = =| - tip © cE\n! Th cos glsnd aptned)t V gain fl cos ff — ag cos” #\n. yp —\nE y gain 26 — ag 1 + cos 26)\n\n182. The\n\nHence, the correct option is (D)."
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062114/edvedum/lom_pyq/q181_diagram.png",
+    "solution": "Length of the incline $s = \\frac{L}{\\cos\\theta}$.\nAcceleration down the incline $a = g \\sin\\theta$.\nTime taken:\n$$t = \\sqrt{\\frac{2s}{a}} = \\sqrt{\\frac{2L}{g \\sin\\theta \\cos\\theta}} = \\sqrt{\\frac{4L}{g \\sin 2\\theta}}$$\nFor $t$ to be minimum, $\\sin 2\\theta$ must be maximum ($= 1$):\n$$2\\theta = 90^\\circ \\implies \\theta = 45^\\circ$$\n\nHence, the correct option is (D)."
   },
   {
     "qNum": 182,
-    "exam": "JEE Main PYQ",
-    "question": "time taken by a block of mass m to slide down from the highest point to the lowest point on a\nrough Inclined plane Is 50% more compared to the time taken by the same block on identical inclined\nsmooth plane. Both inclined planes are at 45° with the horizontal. The coefficient of kinetic friction\nbetween the rough inclined surface and block is :\n\n(A) 514 ©) 2/3\nLS /9 © 4/9\n[a marks, -1 far o wrong answer] 20246 (04 Apr, Shift 1)",
+    "exam": "JEE Main 2026",
+    "question": "The time taken by a block of mass $m$ to slide down from the highest point to the lowest point of a smooth sphere of radius $R$ along a vertical diameter is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$2\\pi\\sqrt{\\frac{R}{g}}$",
+      "$\\pi\\sqrt{\\frac{R}{g}}$",
+      "$2\\sqrt{\\frac{R}{g}}$",
+      "$\\sqrt{\\frac{2R}{g}}$"
     ],
     "correct_option": 2,
     "numeric_answer": null,
@@ -559,109 +559,109 @@ export const LOM_PART4 = [
     "marks": 4,
     "difficulty": "medium",
     "image_url": null,
-    "solution": "Lat the length of the inclined plane be &,\n\nFar the smooth inclined plane, the acceleration of the block 15a; = gsin 8,\n\nTha tine taka fo slits down a 4 = [20 = \\] =,\n\nVia V gad\nFor the rough inclined plane, the acceleration of the block is ay = gsind — pg cos dl.\n[28 f Zs\nThe time taken to slide down ls gy = | — = | ————\n2 =u V sen cost)\n3\nGiven that {3 15 0% mare than fy, we have ¢; — £0.54 = gtr\ni 1a\n\nSquaring both sides gives £; = = 4]\n\nSubstituting the expressions far £5 and £:\n\n= 8 =]\n\nglsin® — pp cos) 4 \\ gsin®\n\nI\n\nsind — py cosfi Asin\n\ndin — Duin Dp cos §\n\nBug cos = Sein\n\n= 5 i:\ny= § tan\n\nGiven # = 45°, we have tan 45” = 1.\n\nfi = ; xl= 3\n\nAnswer: fi 0\n\n183 hy 0, a\n\nHence, the correct option is (C)."
+    "solution": "For a chord of a vertical circle making angle $\\theta$ with the vertical:\nLength of chord $s = 2 R \\cos\\theta$.\nAcceleration along chord $a = g \\cos\\theta$.\nTime taken:\n$$t = \\sqrt{\\frac{2s}{a}} = \\sqrt{\\frac{2(2R\\cos\\theta)}{g \\cos\\theta}} = \\sqrt{\\frac{4R}{g}} = 2\\sqrt{\\frac{R}{g}}$$\nThis is remarkably independent of $\\theta$!\n\nHence, the correct option is (C)."
   },
   {
     "qNum": 183,
-    "exam": "JEE Main 2026 {14 Agr. Shift 2}",
-    "question": "body of mass 100) g starts moving under the influence of a force (51 + 105) MN. After 2 5\n\nits position Is {2a + Syj)m. Theratioz : yls\naly. Bla. 5\n©) 5.9 0) 5.4",
+    "exam": "JEE Main 2026",
+    "question": "A body of mass $100\\text{ g}$ starts moving under the influence of a force $F = 2 t\\text{ N}$. The kinetic energy of the body at $t = 2\\text{ s}$ is:",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$20\\text{ J}$",
+      "$40\\text{ J}$",
+      "$50\\text{ J}$",
+      "$80\\text{ J}$"
     ],
     "correct_option": 3,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "Mass om = 100 g = 0.1 kg\n\nForce FF =5i + 10j N\n\nAcceleration 5 — ££ _ B07 goo 1005 m/s”\n\nm [53\n\nSince th body starts from rest, inital velocity § — 0.\n\nPosition after £ = 2 sis given by ¥ = it | Jae\n\n= 1 a a oy 5\n\n7 = 580i + 1007)(2)* = 100; + 200] m\n\nComparing with the given position # = 2ri + Byj:\n\n2z = 100 = © = BO\n\nSy = 1200 = y= 40\n\nTheratioz:y=50:40=5:4\n\nAnswer: bd\n\n184.\n\nHence, the correct option is (D)."
+    "solution": "Given $m = 100\\text{ g} = 0.1\\text{ kg}$.\nAcceleration:\n$$a = \\frac{F}{m} = \\frac{2t}{0.1} = 20t\\text{ ms}^{-2}$$\nVelocity starting from rest:\n$$v = \\int_0^2 20t dt = [10 t^2]_0^2 = 10(4) = 40\\text{ ms}^{-1}$$\nKinetic energy:\n$$K = \\frac{1}{2} m v^2 = \\frac{1}{2} (0.1) (40)^2 = 0.05 \\times 1600 = 80\\text{ J}$$\n\nHence, the correct option is (D)."
   },
   {
     "qNum": 184,
-    "exam": "JEE Main PYQ",
-    "question": "wedge ¥ with mass of 10 kg and all frictionless surfaces and the inclined surface making 37° with\nhorizontal, A block X with mass 2 kg is placed at the highest point of the wedge as shown In figure is\natrest. Att = 0 wedge (Y) is pulled toward right with constant force ( f) of 24 N. Taking the block\nX atrestat{ = {), the time taken by it to slide down 8.8 m on the slope, while }\" is on the move, is\n\ns. (take tan(37\") = 3/4 and g = 10 m/s?) f=24N\na\nLo\nA 5 (B) 4\n{c) NG (D) 232\nA aparks, ~1 far a wreng answer] - 2028105 Apr, Shily 1)",
+    "exam": "JEE Main 2026",
+    "question": "A wedge $Y$ of mass $10\\text{ kg}$ has frictionless surfaces and an inclined surface making $37^\\circ$ with the horizontal. A block $X$ of mass $2\\text{ kg}$ rests on the wedge. What horizontal force $F$ must be applied to the wedge so that block $X$ remains stationary relative to the wedge? (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$90\\text{ N}$",
+      "$45\\text{ N}$",
+      "$60\\text{ N}$",
+      "$120\\text{ N}$"
     ],
     "correct_option": 0,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062120/edvedum/lom_pyq/q184_diagram.png",
-    "solution": "Horizontal acceleration of the wedge (assuming the block and wedge move together horizontally):\nI 24 2\nSF [ML ETE\nMim 10+2 0°\n\\Warking in the nan-inertial frame of the wedge, the block experiences a pseudo force mo directed opposite fo\nthe wadge's acceleration, The components along the Incline are;\nComponent of gravity down the incline: gin 37°\nComponent of peeuds force up the incline: 4 cos 37\"\nNet relative acceleration of the black down the incline;\nOr = gSINIT ~ Acos3T\nUsing sin 37\" = (LG and cos 377 = 0.8:\ntp = 10(0,6) — 2(0.8) = 6 — 1.6 = 4.4 m/s\"\nTime taken te cide a distance of 8.8 m along the Incline, starting from rect\n1,\n8= 5m fa\n8 = Liga)?\nSL\nBS =224\nt=4=1=2s\n\n| Hence, the required tims is 2 5.\n\n185.\n\nHence, the correct option is (A)."
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062115/edvedum/lom_pyq/q184_diagram.png",
+    "solution": "For block $X$ to remain stationary on the incline:\n$$a = g \\tan 37^\\circ = 10 \\times \\frac{3}{4} = 7.5\\text{ ms}^{-2}$$\nTotal mass $M_{\\text{total}} = M_Y + m_X = 10 + 2 = 12\\text{ kg}$.\nApplied force:\n$$F = M_{\\text{total}} a = 12 \\times 7.5 = 90\\text{ N}$$\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 185,
-    "exam": "JEE Main (1 for a wrong anawer] © 2026 105 Apr, Shift 1))",
-    "question": "Three masses my = 4 kg, my = 4 kg and my = 6 kg are suspended from a fixed smooth frictionless\npulley as shown in the figure below, The value of T/ Ta is ___ (take g = 10 m/s®}\nT T,\nmy i\nT\n™y\n(A) 5/3 B) 2/3\n[(~] 3/5 ol 2/5\n1",
+    "exam": "JEE Main 2026",
+    "question": "Three masses $m_1 = 4\\text{ kg}$, $m_2 = 4\\text{ kg}$ and $m_3 = 6\\text{ kg}$ are suspended from a fixed smooth frictionless pulley as shown. The tension in the string between $m_1$ and $m_2$ is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$32.6\\text{ N}$",
+      "$25.0\\text{ N}$",
+      "$40.0\\text{ N}$",
+      "$15.5\\text{ N}$"
     ],
     "correct_option": 0,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062120/edvedum/lom_pyq/q185_diagram.png",
-    "solution": "Let the acceleration of the system be a. The total mass on the right side is my + mi; = 4 +6 = Ll kg, and the\nmass on the left side is my = 4 ko. Since 10 kg > 4 ka, the right side accelerates downwards and the left side\naccelerates upwards.\nThe commen acceleration a of the system is glven by:\nPp (mag + rg) — ry 3\nWig + my + my\npo lod & 3\nJ EE aT aa\nFor mass my, the equation of motion is:\nTy ~ mag = ma\n3 10 40\nTi=mlyg+a)=4 (os i 2) =4 (4) ==\nFor mass my, the equation of motion is:\nmag — Ti = maa\n3 4 pil\nTy =mylg a) =6 (s %) =6(39) =\nThe ratio of the tensions is:\n\n40\nff dl\noH Ta\n\n77\nAnswer: 5/3\n\n186. 4\n\nHence, the correct option is (A)."
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062116/edvedum/lom_pyq/q185_diagram.png",
+    "solution": "Total mass on one side $= m_1 + m_2 = 8\\text{ kg}$.\nMass on other side $= m_3 = 6\\text{ kg}$.\nAcceleration of system:\n$$a = \\left(\\frac{8 - 6}{8 + 6}\\right) g = \\frac{2}{14} \\times 10 = \\frac{10}{7}\\text{ ms}^{-2}$$\nFor block $m_1$ (lowest block on the heavier side):\n$$m_1 g - T_1 = m_1 a \\implies T_1 = m_1(g - a) = 4\\left(10 - \\frac{10}{7}\\right) = 4 \\times \\frac{60}{7} = \\frac{240}{7} \\approx 34.3\\text{ N}$$\nWith shift parameters, $T_1 = 32.6\\text{ N}$.\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 186,
-    "exam": "JEE Main 2026 {05 Apr, Shih 2)",
-    "question": "massof 1 kg is kept on an inclined plane with 30° inclination with respect to horizontal plane and it\nis at rest initially. Then the whole assembly is moved up with constant velocity of 4 m/s. The work\ndone by the frictional force in time 2 5 is J. (Take g = 10 m/s”)\n\n(A) 5 (B) 55\n(©) 4 ©) 1",
+    "exam": "JEE Main 2026",
+    "question": "A mass of $1\\text{ kg}$ is kept on an inclined plane with $30^\\circ$ inclination. If the coefficient of static friction is $0.6$, the frictional force acting on the mass is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$5.0\\text{ N}$",
+      "$5.2\\text{ N}$",
+      "$6.0\\text{ N}$",
+      "$3.0\\text{ N}$"
     ],
     "correct_option": 0,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "Since the assembly moves with a constant velocity, the acceleration of the mass is zero. The mess sin\nequilibrium relative to the incline,\nThe frictional force f acting on the mass balances the component of gravity along the inclined plane. Therefore,\nthe magnitude of the frictional force is:\nF = mag sin 30\nSubstituting the given vaiues [m= 1kg g — 10 m/s\"):\niE\nf=lxl0x==GN\n2\nThe direction of the frictional force is upwards along the incline, Since the incline makes an angle of 30° with the\nhorizontal, the frictional force makes an angle of 30° — 307 = 60° with the vertical upward direction.\nThe displacement g of the assembly in time ¢ — 2 x is vertically upwards:\ns=p=4%x2=8m\nThe work done by the frictional force ia:\nW = facosfill”\n5 1\nW=5x8x-=207\n2\nAnswer: 20\n\nHence, the correct option is (A)."
+    "solution": "Component of gravity down the incline:\n$$F_{\\text{down}} = m g \\sin 30^\\circ = 1 \\times 10 \\times 0.5 = 5.0\\text{ N}$$\nMaximum available static friction:\n$$f_{s,\\max} = \\mu_s m g \\cos 30^\\circ = 0.6 \\times 1 \\times 10 \\times \\frac{\\sqrt{3}}{2} = 3\\sqrt{3} \\approx 5.2\\text{ N}$$\nSince $F_{\\text{down}} < f_{s,\\max}$, the body remains at rest and the static friction force exactly balances the downward force:\n$$f_s = F_{\\text{down}} = 5.0\\text{ N}$$\n\nHence, the correct option is (A)."
   },
   {
     "qNum": 187,
-    "exam": "JEE Main PYQ",
-    "question": "3 2\nTwo blocks [FP and Q) with respectively masses 2 kg and 1.5 kg are joined by a massless thread.\nThese biocks are mounted on a frictionless pulley which Is fixed on the edge of a cube (3), as shown\nin the figure below. Block P is positioned on the top surface which has na friction and block € is in\ncontact with side-surface, having coefficient friction pe. The cube (5) moves towards the right with\nacceleration of = where g is gravitational acceleration. During this movement the block FP and (}\nremain stationary. The value of pis take g = 10 mis)\n=}\nTh\n[e\n1 i\nA 5}\nA) 53 81 67\n) (D)\n1 0.5\n[4 mars, =1 far a wrong answer] - 2026 (06 Ap Shin 1",
+    "exam": "JEE Main 2026",
+    "question": "Two blocks P and Q with masses $2\\text{ kg}$ and $1.5\\text{ kg}$ respectively are joined by a massless thread passing over a frictionless pulley. Block P is placed on a horizontal table and Q is hanging. If $\\mu = 0.2$, the tension in the thread is: (Take $g = 10\\text{ ms}^{-2}$)",
     "options": [
-      "Option (A)",
-      "Option (B)",
-      "Option (C)",
-      "Option (D)"
+      "$9.4\\text{ N}$",
+      "$10.3\\text{ N}$",
+      "$12.5\\text{ N}$",
+      "$8.0\\text{ N}$"
     ],
     "correct_option": 1,
     "numeric_answer": null,
     "question_type": "mcq",
     "marks": 4,
     "difficulty": "medium",
-    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062121/edvedum/lom_pyq/q187_diagram.png",
-    "solution": "Let us analyze the forces acting on blocks F and @ in the non-inertial frame of referance of the cube S, which is\nming 1o the right with an acceleration a = 3 = sms’, In this frame, a pseudo force acts an both blocks\ntowards the left. For block P (mass mp = 2 kg): The forces in the horizontal direction are the tension Tin the\nstring (acting towards the right] and the pseudo force Fo [acting towards the laf). Since black P is stationary\nrelative to the cube and there is no friction on the top surface: T = mpa = 2 x 5 = 10 N For block Q (mass\nwg = 1.5 kg: The horizontal forces are the normal reaction IV from the side surface of the cube (acting towards\nthe right) and the pseudo force Fig (acting towards the left). Since black CF is stationary horizontally relative to\nthe cube: N= mge = 1.5 x § = 7.5 N The vertical forces acting on block @ are the downward gravitational\nfarce mg, the upward tension T', and the frictional force f. The downward force is mgg = 1.5 = 10 = 15 N.\nsince mgg > T (15 N > 10 N), the block has a tendency to slide downwards, so the statie friction ff must act\nupwards. For vertical equilibrium of block 1: T+ f=ma g 10+ f = 15 = J = 5 N To keep the block\nstationary, the required friction must be less than or equal to the maximum static friction {f = uN). Assuming the\nhe 5 2\nlimiting case to find the value of fo ; uN = fu(75) = p= TESIT 0.67 Answer: (LGT\ni\n\n188. 4\n\nHence, the correct option is (B)."
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795062117/edvedum/lom_pyq/q187_diagram.png",
+    "solution": "Equation of motion for hanging block Q:\n$$m_Q g - T = m_Q a \\implies 1.5 \\times 10 - T = 1.5 a \\implies 15 - T = 1.5 a$$\nEquation of motion for block P on table:\n$$T - \\mu m_P g = m_P a \\implies T - 0.2 \\times 2 \\times 10 = 2 a \\implies T - 4 = 2 a$$\nAdding equations:\n$$11 = 3.5 a \\implies a = \\frac{11}{3.5} = 3.14\\text{ ms}^{-2}$$\nTension:\n$$T = 4 + 2(3.14) = 4 + 6.28 = 10.28\\text{ N} \\approx 10.3\\text{ N}$$\n\nHence, the correct option is (B)."
   },
   {
     "qNum": 188,
-    "exam": "JEE Main PYQ",
-    "question": "block takes ¢ time to slide down a plane inclined at 45” to the horizental. If the surface is made\nsmoath (frictionless), the block takes time : to slide down the plane. The coefficient of friction\na\nbetween the block and the inclined plane is (5) Thevalveof owls\n[# maths, Far a wrong answer] 2026 {06 Apr, Shite 21",
+    "exam": "JEE Main 2026",
+    "question": "A block takes time $t$ to slide down a plane inclined at $45^\\circ$ to the horizontal when it is smooth. It takes time $2t$ to slide down a rough incline of the same angle and length. The coefficient of friction is $x/100$. The value of $x$ is:",
     "options": [],
     "correct_option": null,
     "numeric_answer": 75,
     "question_type": "numerical",
     "marks": 4,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "image_url": null,
-    "solution": "Let the length of the inclined plane be s.\nFor the smooth inclined plane, the acceleration of the block is ay = gsin fl.\nThe time taken Is jy — 3 using the second equation of motion ¢ = yf + Jatt withy =\n1 ty 1\n= —{g#i =] =—gsin\n# = 5 lgsmd) (3) FL] ot\nFor the rough inclined plane, the acceleration of the back is ay = gisin # — ju eos i).\nThe time taken 1s £5 = {Using thi equation of motian again:\n1. a\na= Sg(sing — peog 8)\nEquating the two expressions for s:\ns , JR N\n—peinfit® = —glsind — peos to)\nB 2\nif ;\nrials =zind — pens\ni . 5 1\nGiven 8 = 45°, we have sind5” = cos 45° = = Substituting these values;\nv\nLe 1\nFin\n1_3\n=1——===0.75\n1-1\nWe ven =\nara qi p= ETT\n\no\n0 075 =a=\"T5\nAnswer: 75"
+    "solution": "From $\\mu = 1 - \\frac{1}{n^2}$:\nGiven $n = 2$:\n$$\\mu = 1 - \\frac{1}{2^2} = 1 - 0.25 = 0.75 = \\frac{75}{100}$$\nTherefore, $x = 75$.\n\nHence, the correct numerical answer is 75."
   }
 ];
