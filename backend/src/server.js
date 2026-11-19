@@ -149,9 +149,9 @@ const start = async () => {
         const chkRes = await pool.query(
           "SELECT COUNT(*)::int as count FROM question_bank WHERE UPPER(COALESCE(exam_type, 'NEET')) = 'JEE' AND LOWER(category) = 'physics'"
         );
-        if ((chkRes.rows[0]?.count || 0) < 1014) {
+        if ((chkRes.rows[0]?.count || 0) < 1209) {
           // eslint-disable-next-line no-console
-          console.log(`[server] JEE Physics questions count (${chkRes.rows[0]?.count || 0} < 1014). Auto-syncing in background...`);
+          console.log(`[server] JEE Physics questions count (${chkRes.rows[0]?.count || 0} < 1209). Auto-syncing in background...`);
           const { syncAllJeePhysicsChapters } = await import('../scripts/sync_all_jee_physics_chapters.mjs');
           await syncAllJeePhysicsChapters(pool).catch((e) => console.warn('[server] JEE Physics sync note:', e.message));
         }

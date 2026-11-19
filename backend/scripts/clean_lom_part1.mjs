@@ -1009,7 +1009,7 @@ Hence, the correct option is (A).`
     qNum: 49,
     exam: "JEE Main 2016",
     question: "Which of the following options correctly describes the variation of the speed $v$ and acceleration $a$ of a body falling in a viscous medium under gravity?",
-    options: ["Option (A)", "Option (B)", "Option (C)", "Option (D)"],
+    options: ["Graph (A)", "Graph (B)", "Graph (C)", "Graph (D)"],
     correct_option: 2,
     numeric_answer: null,
     question_type: "mcq",

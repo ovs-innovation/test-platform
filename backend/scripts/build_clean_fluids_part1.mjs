@@ -1,0 +1,481 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const officialKey = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'fluids_official_key.json'), 'utf8'));
+const diagramUrls = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'fluids_diagram_urls.json'), 'utf8'));
+
+// Build Part 1 (Q1 to Q50)
+const questionsPart1 = [
+  {
+    qNum: 1,
+    exam: "JEE Main 2002",
+    question: "A cylinder of height $20\\text{ m}$ is completely filled with water. The velocity of efflux of water (in $\\text{ms}^{-1}$) through a small hole on the side wall of the cylinder near its bottom is:",
+    options: ["$10$", "$20$", "$25.5$", "$5$"],
+    correct_option: 1,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "easy",
+    image_url: null,
+    solution: `According to Torricelli's law of efflux:
+$$v = \\sqrt{2gh}$$
+Given $h = 20\\text{ m}$ and taking $g = 10\\text{ ms}^{-2}$:
+$$v = \\sqrt{2 \\times 10 \\times 20} = \\sqrt{400} = 20\\text{ ms}^{-1}$$
+
+Hence, the correct option is (B).`
+  },
+  {
+    qNum: 2,
+    exam: "JEE Main 2002",
+    question: "If two soap bubbles of different radii are connected by a tube:",
+    options: [
+      "air flows from the bigger bubble to the smaller bubble till the sizes are equalized",
+      "air flows from bigger bubble to the smaller bubble till the sizes are interchanged",
+      "air flows from the smaller bubble to the bigger bubble",
+      "there is no flow of air"
+    ],
+    correct_option: 2,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "easy",
+    image_url: null,
+    solution: `The excess pressure inside a spherical soap bubble of radius $R$ is:
+$$\\Delta P = \\frac{4T}{R}$$
+The pressure inside the smaller bubble is greater than the pressure inside the bigger bubble ($P_{\\text{small}} > P_{\\text{big}}$).
+Therefore, air flows from higher pressure to lower pressure, i.e., from the smaller bubble to the bigger bubble.
+
+Hence, the correct option is (C).`
+  },
+  {
+    qNum: 3,
+    exam: "JEE Main 2002",
+    question: "Spherical balls of radius $R$ are falling in a viscous fluid of viscosity $\\eta$ with a velocity $v$. The retarding viscous force acting on the spherical ball is:",
+    options: [
+      "directly proportional to $R$ but inversely proportional to $v$",
+      "directly proportional to both radius $R$ and velocity $v$",
+      "inversely proportional to both radius $R$ and velocity $v$",
+      "inversely proportional to $R$ but directly proportional to velocity $v$"
+    ],
+    correct_option: 1,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "easy",
+    image_url: null,
+    solution: `By Stokes' law, the viscous retarding force on a spherical ball of radius $R$ moving at velocity $v$ in a fluid of viscosity $\\eta$ is:
+$$F = 6\\pi \\eta R v$$
+Thus, $F \\propto R$ and $F \\propto v$.
+
+Hence, the correct option is (B).`
+  },
+  {
+    qNum: 4,
+    exam: "JEE Main 2002",
+    question: "A $20\\text{ cm}$ long capillary tube is dipped in water. The water rises up to $8\\text{ cm}$. If the entire arrangement is put in a freely falling elevator, the length of water column in the capillary tube will be:",
+    options: ["$8\\text{ cm}$", "$10\\text{ cm}$", "$4\\text{ cm}$", "$20\\text{ cm}$"],
+    correct_option: 3,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "easy",
+    image_url: null,
+    solution: `The height of liquid column in a capillary tube is given by:
+$$h = \\frac{2T\\cos\\theta}{\\rho g_{\\text{eff}} r}$$
+In a freely falling elevator, the effective acceleration due to gravity is $g_{\\text{eff}} = 0$.
+Hence, the liquid rises to fill the entire available length of the capillary tube ($20\\text{ cm}$) and adjusts its radius of curvature at the top so that it does not overflow.
+
+Hence, the correct option is (D).`
+  },
+  {
+    qNum: 5,
+    exam: "JEE Main 2003",
+    question: "If the terminal speed of a sphere of gold (density $= 19.5\\text{ g/cm}^3$) is $0.2\\text{ m/s}$ in a viscous liquid (density $= 1.5\\text{ g/cm}^3$), find the terminal speed of a sphere of silver (density $= 10.5\\text{ g/cm}^3$) of the same size in the same liquid.",
+    options: ["$0.2\\text{ m/s}$", "$0.4\\text{ m/s}$", "$0.133\\text{ m/s}$", "$0.1\\text{ m/s}$"],
+    correct_option: 3,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: null,
+    solution: `The terminal velocity is proportional to $(\\rho - \\sigma)$:
+$$v_t \\propto (\\rho - \\sigma)$$
+For gold:
+$$v_{\\text{gold}} \\propto (19.5 - 1.5) = 18.0$$
+For silver:
+$$v_{\\text{silver}} \\propto (10.5 - 1.5) = 9.0$$
+$$\\frac{v_{\\text{silver}}}{v_{\\text{gold}}} = \\frac{9.0}{18.0} = \\frac{1}{2}$$
+$$v_{\\text{silver}} = \\frac{1}{2} \\times 0.2 = 0.1\\text{ m/s}$$
+
+Hence, the correct option is (D).`
+  },
+  {
+    qNum: 6,
+    exam: "JEE Main 2003",
+    question: "A jar is filled with two non-mixing liquids 1 and 2 having densities $\\rho_1$ and $\\rho_2$ respectively. A solid ball, made of a material of density $\\rho_3$, is dropped in the jar. It comes to equilibrium in the position shown in the figure. Which of the following is true for $\\rho_1, \\rho_2$ and $\\rho_3$?",
+    options: [
+      "$\\rho_3 < \\rho_1 < \\rho_2$",
+      "$\\rho_1 < \\rho_3 < \\rho_2$",
+      "$\\rho_1 > \\rho_3 > \\rho_2$",
+      "$\\rho_1 < \\rho_2 < \\rho_3$"
+    ],
+    correct_option: 1,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: diagramUrls['q6_diagram.png'] || "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075476/edvedum/fluids_pyq/q6_diagram.png",
+    solution: `From the figure:
+1. Liquid 1 floats on liquid 2, which implies $\\rho_1 < \\rho_2$.
+2. The solid ball sinks in liquid 1, which implies $\\rho_3 > \\rho_1$.
+3. The solid ball floats on liquid 2 at the interface, which implies $\\rho_3 < \\rho_2$.
+Combining these relations:
+$$\\rho_1 < \\rho_3 < \\rho_2$$
+
+Hence, the correct option is (B).`
+  },
+  {
+    qNum: 7,
+    exam: "JEE Main 2004",
+    question: "A capillary tube (A) is dipped in water. Another identical tube (B) is dipped in a soap-water solution. Which of the following shows the relative nature of the liquid columns in the two tubes?",
+    options: ["Figure (A)", "Figure (B)", "Figure (C)", "Figure (D)"],
+    correct_option: 2,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: diagramUrls['q7_diagram.png'] || "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075478/edvedum/fluids_pyq/q7_diagram.png",
+    solution: `Capillary rise is given by:
+$$h = \\frac{2T\\cos\\theta}{\\rho g r}$$
+Since pure water has a greater surface tension than soap solution ($T_{\\text{water}} > T_{\\text{soap}}$), the height of the water column in tube A is greater than the height of the soap solution in tube B ($h_A > h_B$).
+Both liquids form concave menisci in glass tubes.
+
+Hence, the correct option is (C).`
+  },
+  {
+    qNum: 8,
+    exam: "JEE Main 2004",
+    question: "A spherical solid ball of volume $V$ is made of a material of density $\\rho_1$. It is falling through a liquid of density $\\rho_2$ ($\\rho_2 < \\rho_1$). Assume that the liquid applies a viscous force on the ball that is proportional to the square of its speed $v$, i.e., $F_{\\text{viscous}} = -k v^2$ ($k > 0$). The terminal speed of the ball is:",
+    options: [
+      "$\\sqrt{\\frac{V g(\\rho_1 - \\rho_2)}{k}}$",
+      "$\\frac{V g(\\rho_1 - \\rho_2)}{k}$",
+      "$\\sqrt{\\frac{V g\\rho_1}{k}}$",
+      "$\\frac{V g\\rho_1}{k}$"
+    ],
+    correct_option: 0,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: null,
+    solution: `At terminal speed $v_t$, the downward gravitational force is balanced by the upward buoyant force plus the viscous force:
+$$V\\rho_1 g - V\\rho_2 g = k v_t^2$$
+$$v_t = \\sqrt{\\frac{V g(\\rho_1 - \\rho_2)}{k}}$$
+
+Hence, the correct option is (A).`
+  },
+  {
+    qNum: 9,
+    exam: "JEE Main 2004",
+    question: "A ball is made of a material of density $\\rho$ where $\\rho_{\\text{oil}} < \\rho < \\rho_{\\text{water}}$ with $\\rho_{\\text{oil}}$ and $\\rho_{\\text{water}}$ representing the densities of oil and water respectively. The oil and water are immiscible. If the above system is in equilibrium, which of the following diagrams best represents the position of the ball?",
+    options: ["Diagram (A)", "Diagram (B)", "Diagram (C)", "Diagram (D)"],
+    correct_option: 1,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: diagramUrls['q9_diagram.png'] || "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075480/edvedum/fluids_pyq/q9_diagram.png",
+    solution: `Oil floats on water because $\\rho_{\\text{oil}} < \\rho_{\\text{water}}$.
+The ball has a density $\\rho$ greater than oil but less than water ($\\rho_{\\text{oil}} < \\rho < \\rho_{\\text{water}}$).
+Thus, the ball sinks in oil but floats on water, coming to rest at the oil-water interface, partly in oil and partly in water.
+
+Hence, the correct option is (B).`
+  },
+  {
+    qNum: 10,
+    exam: "JEE Main 2004",
+    question: "Water is flowing continuously from a tap having an internal diameter $8 \\times 10^{-3}\\text{ m}$. The water velocity as it leaves the tap is $0.4\\text{ ms}^{-1}$. The diameter of the water stream at a distance $2 \\times 10^{-1}\\text{ m}$ below the tap is:",
+    options: [
+      "$7.5 \\times 10^{-3}\\text{ m}$",
+      "$9.6 \\times 10^{-3}\\text{ m}$",
+      "$3.6 \\times 10^{-3}\\text{ m}$",
+      "$5.0 \\times 10^{-3}\\text{ m}$"
+    ],
+    correct_option: 2,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: null,
+    solution: `At the tap: $v_1 = 0.4\\text{ ms}^{-1}$, $d_1 = 8 \\times 10^{-3}\\text{ m}$.
+At depth $h = 0.2\\text{ m}$ below the tap:
+$$v_2 = \\sqrt{v_1^2 + 2gh} = \\sqrt{0.4^2 + 2(9.8)(0.2)} = \\sqrt{0.16 + 3.92} = \\sqrt{4.08} \\approx 2.02\\text{ ms}^{-1}$$
+From the continuity equation:
+$$A_1 v_1 = A_2 v_2 \\implies d_1^2 v_1 = d_2^2 v_2$$
+$$d_2 = d_1 \\sqrt{\\frac{v_1}{v_2}} = (8 \\times 10^{-3}) \\sqrt{\\frac{0.4}{2.02}} \\approx 3.6 \\times 10^{-3}\\text{ m}$$
+
+Hence, the correct option is (C).`
+  },
+  {
+    qNum: 11,
+    exam: "JEE Main 2005",
+    question: "Work done in increasing the size of a soap bubble from a radius of $3\\text{ cm}$ to $5\\text{ cm}$ is nearly (Surface tension of soap solution $= 0.03\\text{ Nm}^{-1}$):",
+    options: [
+      "$0.2\\pi\\text{ mJ}$",
+      "$3.7\\pi\\text{ mJ}$",
+      "$0.4\\pi\\text{ mJ}$",
+      "$4\\pi\\text{ mJ}$"
+    ],
+    correct_option: 2,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: null,
+    solution: `A soap bubble has two free surfaces.
+The change in surface area is:
+$$\\Delta A = 2 \\times 4\\pi (r_2^2 - r_1^2) = 8\\pi (5^2 - 3^2) \\times 10^{-4}\\text{ m}^2 = 8\\pi (16) \\times 10^{-4} = 128\\pi \\times 10^{-4}\\text{ m}^2$$
+Work done:
+$$W = T \\Delta A = 0.03 \\times 128\\pi \\times 10^{-4} = 3.84\\pi \\times 10^{-4}\\text{ J} \\approx 0.4\\pi \\times 10^{-3}\\text{ J} = 0.4\\pi\\text{ mJ}$$
+
+Hence, the correct option is (C).`
+  },
+  {
+    qNum: 12,
+    exam: "JEE Main 2005",
+    question: "A thin liquid film formed between a U-shaped wire and a light slider supports a weight of $1.5 \\times 10^{-2}\\text{ N}$ (see figure). The length of the slider is $30\\text{ cm}$ and its weight is negligible. The surface tension of the liquid film is:",
+    options: [
+      "$0.0125\\text{ Nm}^{-1}$",
+      "$0.1\\text{ Nm}^{-1}$",
+      "$0.05\\text{ Nm}^{-1}$",
+      "$0.025\\text{ Nm}^{-1}$"
+    ],
+    correct_option: 3,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: diagramUrls['q12_diagram.png'] || "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075468/edvedum/fluids_pyq/q12_diagram.png",
+    solution: `A liquid film has two surfaces. The upward force exerted by surface tension is:
+$$F = 2 T L$$
+In equilibrium, this balances the supported weight $W$:
+$$2 T L = W$$
+Given $L = 30\\text{ cm} = 0.3\\text{ m}$ and $W = 1.5 \\times 10^{-2}\\text{ N}$:
+$$T = \\frac{W}{2 L} = \\frac{1.5 \\times 10^{-2}}{2 \\times 0.3} = \\frac{1.5 \\times 10^{-2}}{0.6} = 0.025\\text{ Nm}^{-1}$$
+
+Hence, the correct option is (D).`
+  },
+  {
+    qNum: 13,
+    exam: "JEE Main 2005",
+    question: "A square hole of side length $\\ell$ is made at a depth of $h$ and a circular hole of radius $r$ is made at a depth of $4h$ from the surface of water in a water tank kept on a horizontal surface. If $\\ell \\ll h$, $r \\ll h$ and the rate of water flow from the holes is the same, then $r$ is equal to:",
+    options: [
+      "$\\frac{\\ell}{\\sqrt{2\\pi}}$",
+      "$\\frac{\\ell}{2\\pi}$",
+      "$\\frac{\\ell}{\\pi}$",
+      "$\\frac{\\ell}{2\\sqrt{\\pi}}$"
+    ],
+    correct_option: 0,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: diagramUrls['q13_diagram.png'] || "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795075470/edvedum/fluids_pyq/q13_diagram.png",
+    solution: `The velocity of efflux at depth $y$ is $v = \\sqrt{2gy}$.
+Volume rate of flow $Q = A v$.
+For the square hole at depth $h$:
+$$A_1 = \\ell^2, \\quad v_1 = \\sqrt{2gh} \\implies Q_1 = \\ell^2 \\sqrt{2gh}$$
+For the circular hole at depth $4h$:
+$$A_2 = \\pi r^2, \\quad v_2 = \\sqrt{2g(4h)} = 2\\sqrt{2gh} \\implies Q_2 = \\pi r^2 \\times 2\\sqrt{2gh}$$
+Since $Q_1 = Q_2$:
+$$\\ell^2 \\sqrt{2gh} = 2\\pi r^2 \\sqrt{2gh} \\implies \\ell^2 = 2\\pi r^2$$
+$$r = \\frac{\\ell}{\\sqrt{2\\pi}}$$
+
+Hence, the correct option is (A).`
+  },
+  {
+    qNum: 14,
+    exam: "JEE Main 2005",
+    question: "Water is flowing through a horizontal tube having cross-sectional areas of its two ends being $A$ and $A'$ such that the ratio $A/A'$ is $5$. If the pressure difference of water between the two ends is $3 \\times 10^5\\text{ Nm}^{-2}$, the velocity of water with which it enters the tube will be (neglect gravity effects):",
+    options: ["$5\\text{ ms}^{-1}$", "$10\\text{ ms}^{-1}$", "$25\\text{ ms}^{-1}$", "$50\\sqrt{10}\\text{ ms}^{-1}$"],
+    correct_option: 0,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: null,
+    solution: `From the equation of continuity:
+$$A v_1 = A' v_2 \\implies v_2 = \\left(\\frac{A}{A'}\\right) v_1 = 5 v_1$$
+From Bernoulli's equation for a horizontal tube:
+$$P_1 + \\frac{1}{2}\\rho v_1^2 = P_2 + \\frac{1}{2}\\rho v_2^2$$
+$$P_1 - P_2 = \\frac{1}{2}\\rho (v_2^2 - v_1^2) = \\frac{1}{2}\\rho [(5v_1)^2 - v_1^2] = \\frac{1}{2}\\rho (24 v_1^2) = 12\\rho v_1^2$$
+Given $P_1 - P_2 = 3 \\times 10^5\\text{ N/m}^2$ and $\\rho = 10^3\\text{ kg/m}^3$:
+$$3 \\times 10^5 = 12 \\times 10^3 \\times v_1^2$$
+$$v_1^2 = \\frac{300}{12} = 25 \\implies v_1 = 5\\text{ ms}^{-1}$$
+
+Hence, the correct option is (A).`
+  },
+  {
+    qNum: 15,
+    exam: "JEE Main 2005",
+    question: "A large number of droplets, each of radius $r$, coalesce to form a bigger drop of radius $R$. An engineer designs a machine so that the energy released in this process is converted into the kinetic energy of the drop. The velocity of the drop is ($T = \\text{surface tension}, \\rho = \\text{density}$):",
+    options: [
+      "$\\left[\\frac{T}{\\rho}\\left(\\frac{1}{r} - \\frac{1}{R}\\right)\\right]^{1/2}$",
+      "$\\left[\\frac{6T}{\\rho}\\left(\\frac{1}{r} - \\frac{1}{R}\\right)\\right]^{1/2}$",
+      "$\\left[\\frac{3T}{\\rho}\\left(\\frac{1}{r} - \\frac{1}{R}\\right)\\right]^{1/2}$",
+      "$\\left[\\frac{2T}{\\rho}\\left(\\frac{1}{r} - \\frac{1}{R}\\right)\\right]^{1/2}$"
+    ],
+    correct_option: 1,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: null,
+    solution: `Volume conservation:
+$$n \\times \\frac{4}{3}\\pi r^3 = \\frac{4}{3}\\pi R^3 \\implies n = \\frac{R^3}{r^3}$$
+The decrease in surface energy is:
+$$\\Delta U = T(n \\cdot 4\\pi r^2 - 4\\pi R^2) = 4\\pi T \\left( \\frac{R^3}{r} - R^2 \\right) = 4\\pi T R^3 \\left( \\frac{1}{r} - \\frac{1}{R} \\right)$$
+Equating to the kinetic energy of the resulting drop of mass $M = \\frac{4}{3}\\pi R^3 \\rho$:
+$$\\frac{1}{2} M v^2 = \\Delta U \\implies \\frac{1}{2} \\left(\\frac{4}{3}\\pi R^3 \\rho\\right) v^2 = 4\\pi T R^3 \\left(\\frac{1}{r} - \\frac{1}{R}\\right)$$
+$$v^2 = \\frac{6T}{\\rho}\\left(\\frac{1}{r} - \\frac{1}{R}\\right) \\implies v = \\left[\\frac{6T}{\\rho}\\left(\\frac{1}{r} - \\frac{1}{R}\\right)\\right]^{1/2}$$
+
+Hence, the correct option is (B).`
+  },
+  {
+    qNum: 16,
+    exam: "JEE Main 2005",
+    question: "The terminal velocity of a small sphere of radius $a$ in a viscous liquid is proportional to:",
+    options: ["$a^2$", "$a^3$", "$a$", "$a^{-1}$"],
+    correct_option: 0,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "easy",
+    image_url: null,
+    solution: `The terminal velocity of a sphere of radius $a$ falling in a fluid is:
+$$v_t = \\frac{2a^2(\\rho - \\sigma)g}{9\\eta}$$
+Thus, $v_t \\propto a^2$.
+
+Hence, the correct option is (A).`
+  },
+  {
+    qNum: 17,
+    exam: "JEE Main 2005",
+    question: "On a cylindrical water tank, there are two small holes A and B on the wall at depths of $h_1$ and $h_2$ from the top surface. If the water streams coming out of both holes strike the ground at the same point, then the ratio $h_1/h_2$:",
+    options: [
+      "depends on the total height $H$ of the tank",
+      "is always equal to $1$",
+      "is equal to $3/2$",
+      "is equal to $2/3$"
+    ],
+    correct_option: 0,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: null,
+    solution: `For a hole at depth $h$ in a tank of total liquid height $H$, the efflux velocity is $v = \\sqrt{2gh}$ and the time to reach the ground is $t = \\sqrt{2(H - h)/g}$.
+The horizontal range is:
+$$R = v t = 2\\sqrt{h(H - h)}$$
+If the ranges from holes at $h_1$ and $h_2$ are equal:
+$$h_1(H - h_1) = h_2(H - h_2) \\implies H(h_1 - h_2) = h_1^2 - h_2^2 = (h_1 - h_2)(h_1 + h_2)$$
+For $h_1 \\neq h_2$, this gives:
+$$h_1 + h_2 = H$$
+Therefore, the ratio $h_1/h_2$ depends on the total height $H$ of the tank.
+
+Hence, the correct option is (A).`
+  },
+  {
+    qNum: 18,
+    exam: "JEE Main 2006",
+    question: "Assume that a drop of a liquid evaporates by a decrease in its surface energy so that its temperature remains unchanged. The minimum radius of the drop for this to be possible is ($T = \\text{surface tension}, \\rho = \\text{density}, L = \\text{latent heat of vaporisation}$):",
+    options: [
+      "$\\frac{\\rho L}{T}$",
+      "$\\frac{2T}{\\rho L}$",
+      "$\\frac{T}{\\rho L}$",
+      "$\\frac{2\\rho L}{T}$"
+    ],
+    correct_option: 1,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: null,
+    solution: `When the radius of the drop changes from $r$ to $r - dr$:
+Decrease in surface area:
+$$dA = 8\\pi r dr$$
+Decrease in surface energy:
+$$dU = T dA = 8\\pi r T dr$$
+Decrease in volume:
+$$dV = 4\\pi r^2 dr$$
+Mass evaporated:
+$$dm = \\rho dV = 4\\pi r^2 \\rho dr$$
+Heat required for vaporization:
+$$dQ = L dm = 4\\pi r^2 \\rho L dr$$
+For evaporation solely by the decrease in surface energy:
+$$dU \\ge dQ \\implies 8\\pi r T dr \\ge 4\\pi r^2 \\rho L dr$$
+$$2T \\ge r \\rho L \\implies r \\le \\frac{2T}{\\rho L}$$
+Thus, the critical minimum radius condition gives $r = \\frac{2T}{\\rho L}$.
+
+Hence, the correct option is (B).`
+  },
+  {
+    qNum: 19,
+    exam: "JEE Main 2006",
+    question: "A uniform cylinder of length $L$ and mass $M$ having cross-sectional area $A$ is suspended, with its length vertical, from a fixed point by a massless spring, such that it is half submerged in a liquid of density $\\sigma$ at equilibrium position. The extension $x_0$ of the spring when it is in equilibrium is:",
+    options: [
+      "$\\frac{M g}{k}\\left(1 - \\frac{L A \\sigma}{2 M}\\right)$",
+      "$\\frac{M g}{k}\\left(1 - \\frac{L A \\sigma}{M}\\right)$",
+      "$\\frac{M g}{k}$",
+      "$\\frac{M g}{k}\\left(1 + \\frac{L A \\sigma}{M}\\right)$"
+    ],
+    correct_option: 0,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "medium",
+    image_url: null,
+    solution: `In equilibrium, the forces acting on the cylinder are:
+1. Upward spring force: $k x_0$
+2. Upward buoyant force: $F_b = \\left(A \\frac{L}{2}\\right) \\sigma g$
+3. Downward gravitational force: $M g$
+
+Balancing forces:
+$$k x_0 + \\frac{1}{2} A L \\sigma g = M g$$
+$$k x_0 = M g - \\frac{1}{2} A L \\sigma g = M g \\left(1 - \\frac{L A \\sigma}{2 M}\\right)$$
+$$x_0 = \\frac{M g}{k}\\left(1 - \\frac{L A \\sigma}{2 M}\\right)$$
+
+Hence, the correct option is (A).`
+  },
+  {
+    qNum: 20,
+    exam: "JEE Main 2006",
+    question: "Statement-1: A capillary is dipped in a liquid and liquid rises to a height $h$ in it. As the temperature of the liquid is raised, the height $h$ increases (the density of the liquid and the angle of contact remain the same).\\nStatement-2: Surface tension of a liquid decreases with the rise in its temperature.",
+    options: [
+      "Statement-1 is true, Statement-2 is true; Statement-2 is not the correct explanation for Statement-1.",
+      "Statement-1 is false, Statement-2 is true.",
+      "Statement-1 is true, Statement-2 is false.",
+      "Statement-1 is true, Statement-2 is true; Statement-2 is the correct explanation for Statement-1."
+    ],
+    correct_option: 1,
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    difficulty: "easy",
+    image_url: null,
+    solution: `Capillary rise is given by:
+$$h = \\frac{2T\\cos\\theta}{\\rho g r}$$
+As temperature rises, the surface tension $T$ of a liquid decreases.
+Since $h \\propto T$, as $T$ decreases, the height $h$ must decrease, not increase.
+Therefore, Statement-1 is false and Statement-2 is true.
+
+Hence, the correct option is (B).`
+  }
+];
+
+fs.writeFileSync(path.resolve(__dirname, 'clean_fluids_part1_batch1.json'), JSON.stringify(questionsPart1, null, 2));
+console.log('Saved batch 1 (Q1-Q20)');

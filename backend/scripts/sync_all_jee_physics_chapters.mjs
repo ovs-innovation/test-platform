@@ -7,6 +7,7 @@ import { KTG_PYQ_QUESTIONS } from './ktg_pyq_questions_data.mjs';
 import { ALL_MOTION1D_PYQ_QUESTIONS } from './motion1d_pyq_questions_data.mjs';
 import { ALL_LOM_PYQ_QUESTIONS } from './lom_pyq_questions_data.mjs';
 import { ALL_COM_PYQ_QUESTIONS } from './com_pyq_questions_data.mjs';
+import { ALL_FLUIDS_PYQ_QUESTIONS } from './fluids_pyq_questions_data.mjs';
 
 const CHAPTERS_DATA = [
   {
@@ -43,6 +44,11 @@ const CHAPTERS_DATA = [
     name: 'Center of mass momentum and collision',
     aliases: ['center of mass momentum and collision', 'center of mass and collision', 'center of mass, momentum and collision', 'center of mass', 'com'],
     questions: ALL_COM_PYQ_QUESTIONS,
+  },
+  {
+    name: 'Mechanical properties of fluids',
+    aliases: ['mechanical properties of fluids', 'properties of fluids', 'fluids', 'fluid mechanics', 'fluid statics and dynamics'],
+    questions: ALL_FLUIDS_PYQ_QUESTIONS,
   },
 ];
 
