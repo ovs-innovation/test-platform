@@ -9,6 +9,7 @@ import { env } from '../config/env.js';
 import { verifyPdfMagicBytes, cleanupUploadedFiles } from '../middleware/pdfUpload.js';
 import { stripHeadersAndFooters } from '../utils/questionFormatter.js';
 import { resolveStandardChapter } from '../utils/chapterResolver.js';
+import { invalidateExamPaperCache, invalidateQuestionMeta } from '../services/examCacheService.js';
 
 const NEET_CATEGORIES = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'PYQ'];
 const JEE_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'PYQ'];
@@ -112,9 +113,13 @@ export const listCategories = asyncHandler(async (req, res) => {
  */
 export const listBankQuestions = asyncHandler(async (req, res) => {
   res.setHeader('X-Accel-Buffering', 'no');
-  res.setHeader('Cache-Control', 'private, max-age=120, stale-while-revalidate=3600');
   const { category, chapter, subject, exam_type, skip_cache, refresh } = req.query;
   const isBypass = skip_cache === 'true' || refresh === 'true';
+  if (isBypass) {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  } else {
+    res.setHeader('Cache-Control', 'private, no-cache, must-revalidate');
+  }
   const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
   const cacheKey = `cache:qb:list:${(normExamType || 'all').toLowerCase()}:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
 
@@ -554,6 +559,11 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
   );
 
   // Sync edits to any assessment questions linked to this question bank item
+  const finalImageUrl = image_url !== undefined ? image_url : q.image_url;
+  const newMedia = (finalImageUrl && typeof finalImageUrl === 'string' && finalImageUrl.trim())
+    ? JSON.stringify([{ type: 'question', url: finalImageUrl.trim(), id: 'q-diagram' }])
+    : (finalImageUrl === '' || finalImageUrl === null ? JSON.stringify([]) : null);
+
   await query(
     `UPDATE questions SET 
        question_type = $1,
@@ -573,8 +583,9 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
        chapter = $15,
        topic = $16,
        subject = $17,
-       bank_category = $18
-     WHERE bank_question_id = $19`,
+       bank_category = $18,
+       media = COALESCE($19, media)
+     WHERE bank_question_id = $20`,
     [
       question_type || q.question_type || 'mcq',
       question_text ?? q.question_text,
@@ -588,18 +599,34 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       Number(marks ?? q.marks ?? 1),
       solution ?? q.solution,
       difficulty ?? q.difficulty,
-      image_url !== undefined ? image_url : q.image_url,
+      finalImageUrl,
       solution_image_url !== undefined ? solution_image_url : q.solution_image_url,
       effectiveChapter,
       topic !== undefined ? topic : q.topic,
       effectiveSubject || q.subject,
       effectiveCategory,
+      newMedia,
       id
     ]
   ).catch((syncErr) => {
     // eslint-disable-next-line no-console
     console.warn(`[updateBankQuestion] Warning syncing linked questions for bank #${id}:`, syncErr.message);
   });
+
+  // Invalidate exam paper and question metadata caches for linked live tests
+  try {
+    const linkedAssessments = await query('SELECT DISTINCT assessment_id, id FROM questions WHERE bank_question_id = $1', [id]);
+    for (const la of linkedAssessments.rows) {
+      if (la.assessment_id) {
+        await invalidateExamPaperCache(la.assessment_id).catch(() => {});
+      }
+      if (la.id) {
+        await invalidateQuestionMeta(la.id).catch(() => {});
+      }
+    }
+  } catch (err) {
+    console.warn(`[updateBankQuestion] Warning invalidating exam cache for bank #${id}:`, err.message);
+  }
 
   if (effectiveStatus === 'normal') {
     await query('UPDATE questions SET bank_question_id = NULL WHERE bank_question_id = $1', [id]);
@@ -608,6 +635,8 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
   if (effectiveCategory) await delCache(`cache:qb:questions:${effectiveCategory}`);
   await delCache('cache:qb:questions:all');
   await delCache('cache:qb:categories');
+  await delCache('cache:exam:*').catch(() => {});
+  await delCache('exam_paper:*').catch(() => {});
   const standardChapter = resolveStandardChapter(
     (result.rows[0].category && String(result.rows[0].category).toUpperCase() !== 'PYQ')
       ? (result.rows[0].category || result.rows[0].subject || '')

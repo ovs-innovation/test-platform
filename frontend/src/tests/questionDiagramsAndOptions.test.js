@@ -103,4 +103,34 @@ describe('Question Diagram & Option Media Isolation', () => {
     expect(diagrams[0].url).toBe('/uploads/circuit.png');
     expect(hasQuestionDiagram(q)).toBe(true);
   });
+
+  it('prioritizes newly edited image_url over stale media diagram', () => {
+    const q = {
+      question_text: 'Two bodies of mass m1 and m2...',
+      image_url: 'https://res.cloudinary.com/fyxpnmdh/image/upload/v2/new_edited_diagram.png',
+      media: [
+        { id: 'q-diagram', type: 'question', url: 'https://res.cloudinary.com/fyxpnmdh/image/upload/v1/old_stale_diagram.png' }
+      ],
+      options: ['10 N', '20 N', '30 N', '40 N'],
+    };
+
+    const diagrams = getQuestionDiagrams(q);
+    expect(diagrams.length).toBe(1);
+    expect(diagrams[0].url).toBe('https://res.cloudinary.com/fyxpnmdh/image/upload/v2/new_edited_diagram.png');
+  });
+
+  it('does not resurrect stale diagram when image_url was explicitly cleared', () => {
+    const q = {
+      question_text: 'A simple theoretical question without diagram',
+      image_url: '',
+      media: [
+        { id: 'q-diagram', type: 'question', url: 'https://res.cloudinary.com/fyxpnmdh/image/upload/v1/old_stale_diagram.png' }
+      ],
+      options: ['A', 'B', 'C', 'D'],
+    };
+
+    const diagrams = getQuestionDiagrams(q);
+    expect(diagrams).toEqual([]);
+    expect(hasQuestionDiagram(q)).toBe(false);
+  });
 });

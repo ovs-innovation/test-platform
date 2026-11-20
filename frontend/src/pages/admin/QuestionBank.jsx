@@ -2109,6 +2109,13 @@ export default function AdminQuestionBank() {
           ? (pyqSubject && pyqSubject !== 'All' ? pyqSubject : (q.category && String(q.category).toUpperCase() !== 'PYQ' ? q.category : ''))
           : (q.category || ''));
 
+    const rawHtmlImgMatch = typeof q.question_text === 'string' ? q.question_text.match(/<img[^>]+src=["']([^"']+)["'][^>]*\/?>/i) : null;
+    const rawMdImgMatch = typeof q.question_text === 'string' ? q.question_text.match(/!\[.*?\]\(((?:https?:\/\/|\/)[^)]+)\)/i) : null;
+    const mediaList = Array.isArray(q.media) ? q.media : (typeof q.media === 'string' ? (() => { try { return JSON.parse(q.media); } catch (_) { return []; } })() : []);
+    const rawMediaDiagram = mediaList.length > 0 ? (typeof mediaList[0] === 'string' ? mediaList[0] : mediaList[0]?.url) : null;
+    const effectiveInitialImage = (q.image_url && typeof q.image_url === 'string' ? q.image_url.trim() : '') ||
+      (rawHtmlImgMatch ? rawHtmlImgMatch[1] : (rawMdImgMatch ? rawMdImgMatch[1] : (rawMediaDiagram || '')));
+
     setForm({
       exam_type: q.exam_type || examType,
       category: qCategory,
@@ -2125,7 +2132,7 @@ export default function AdminQuestionBank() {
       reason_text: q.reason_text || '',
       solution: q.solution || q.solution_text || '',
       explanation_url: q.explanation_url || '',
-      image_url: q.image_url || '',
+      image_url: effectiveInitialImage || '',
       solution_image_url: q.solution_image_url || '',
       subject_id: q.subject_id || null,
       subject: qSubject,
@@ -2237,13 +2244,21 @@ export default function AdminQuestionBank() {
             ? editing.subject
             : (category !== 'PYQ' && category !== 'All' ? category : (pyqSubject !== 'All' ? pyqSubject : '')));
 
+      let cleanQText = form.question_text?.trim() || '';
+      if (form.image_url) {
+        cleanQText = cleanQText
+          .replace(/<img[^>]+src=["'][^"']+["'][^>]*\/?>/gi, '')
+          .replace(/!\[.*?\]\(((?:https?:\/\/|\/)[^)]+)\)/gi, '')
+          .trim();
+      }
+
       const payload = {
         ...form,
         exam_type: form.exam_type || examType,
         category: targetCategory,
         status: form.status || 'normal',
         question_type: form.question_type,
-        question_text: form.question_text?.trim(),
+        question_text: cleanQText,
         options: cleanOptions,
         correct_index: correctIndex,
         correct_indices: correctIndices,
@@ -2274,6 +2289,8 @@ export default function AdminQuestionBank() {
                 ? {
                   ...item,
                   ...updated,
+                  image_url: payload.image_url ?? updated.image_url,
+                  question_text: cleanQText,
                   status: updated.status || payload.status || item.status,
                   test_count: (updated.status || payload.status) === 'normal' ? 0 : (updated.test_count ?? item.test_count),
                   used_in_tests: (updated.status || payload.status) === 'normal' ? [] : (updated.used_in_tests ?? item.used_in_tests),

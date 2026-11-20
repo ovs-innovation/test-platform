@@ -151,16 +151,37 @@ export function getQuestionDiagrams(q) {
     return true;
   });
 
+  // Explicit image_url set on question
+  const explicitImg = (q.image_url && typeof q.image_url === 'string') ? q.image_url.trim() : null;
+  const isExplicitValid = Boolean(explicitImg && !optUrls.has(explicitImg) && explicitImg !== solUrl);
+
+  // If question has an explicitly set/edited image_url:
+  // If validMedia doesn't contain this explicitImg (stale media) or is empty, prioritize the fresh edited image_url!
+  if (isExplicitValid) {
+    const hasExplicitInMedia = validMedia.some((m) => {
+      const u = (typeof m === 'string' ? m : m.url || '').trim();
+      return u === explicitImg;
+    });
+    if (!hasExplicitInMedia || validMedia.length <= 1) {
+      return [{ type: 'question', url: explicitImg, id: 'q-diagram' }];
+    }
+  } else if (q.image_url === '' || q.image_url === null) {
+    // If image_url was explicitly cleared/removed, do not resurrect old question diagram from media
+    const nonQuestionMedia = validMedia.filter((m) => {
+      if (typeof m === 'object' && m && m.id === 'q-diagram') return false;
+      return true;
+    });
+    if (nonQuestionMedia.length > 0) return nonQuestionMedia;
+    return [];
+  }
+
   if (validMedia.length > 0) {
     return validMedia;
   }
 
   // Fallback to q.image_url only if it is NOT an option or solution diagram
-  if (q.image_url && typeof q.image_url === 'string') {
-    const trimmedImg = q.image_url.trim();
-    if (trimmedImg && !optUrls.has(trimmedImg) && trimmedImg !== solUrl) {
-      return [{ url: trimmedImg }];
-    }
+  if (isExplicitValid) {
+    return [{ type: 'question', url: explicitImg, id: 'q-diagram' }];
   }
 
   // Fallback to embedded <img src="..."> or ![...](url) in question_text if present

@@ -395,15 +395,19 @@ export const questionBankService = {
     persistentCache.delete('qb');
     clearCache('qb');
   },
-  create: (data) => {
+  create: async (data) => {
+    const res = await api.post('/question-bank', data);
+    await persistentCache.delete('qb');
     clearCache('qb');
     clearCache();
-    return api.post('/question-bank', data).then((r) => r.data.question);
+    return res.data.question;
   },
-  update: (id, data) => {
+  update: async (id, data) => {
+    const res = await api.put(`/question-bank/${id}`, data);
+    await persistentCache.delete('qb');
     clearCache('qb');
     clearCache();
-    return api.put(`/question-bank/${id}`, data).then((r) => r.data.question);
+    return res.data.question;
   },
   updateStatus: (id, status) => {
     clearCache('qb');
