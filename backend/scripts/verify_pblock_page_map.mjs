@@ -1,0 +1,74 @@
+const pageQuestionRanges = [
+  { page: 1, questions: [1, 2, 3] },
+  { page: 2, questions: [4, 5, 6, 7] },
+  { page: 3, questions: [8, 9, 10] },
+  { page: 4, questions: [11, 12] },
+  { page: 5, questions: [13, 14, 15] },
+  { page: 6, questions: [16, 17] },
+  { page: 7, questions: [18, 19] },
+  { page: 8, questions: [20, 21, 22] },
+  { page: 9, questions: [23, 24] },
+  { page: 10, questions: [25, 26, 27] },
+  { page: 11, questions: [28, 29, 30] },
+  { page: 12, questions: [31, 32] },
+  { page: 13, questions: [33, 34] },
+  { page: 14, questions: [35, 36, 37] },
+  { page: 15, questions: [38] },
+  { page: 16, questions: [39] },
+  { page: 17, questions: [40, 41] },
+  { page: 18, questions: [42, 43] },
+  { page: 19, questions: [44, 45, 46] },
+  { page: 20, questions: [47] },
+  { page: 21, questions: [48] },
+  { page: 22, questions: [49, 50] },
+  { page: 23, questions: [51, 52] },
+  { page: 24, questions: [53, 54] },
+  { page: 25, questions: [55] },
+  { page: 26, questions: [56] },
+  { page: 27, questions: [57, 58] },
+  { page: 28, questions: [59, 60] },
+  { page: 29, questions: [61, 62] },
+  { page: 30, questions: [63] },
+  { page: 31, questions: [64] },
+  { page: 32, questions: [65, 66] },
+  { page: 33, questions: [67, 68, 69] },
+  { page: 34, questions: [70, 71] },
+  { page: 35, questions: [72, 73] },
+  { page: 36, questions: [74, 75] },
+  { page: 37, questions: [76, 77] },
+  { page: 38, questions: [78, 79] },
+  { page: 39, questions: [80, 81] },
+  { page: 40, questions: [82, 83] },
+  { page: 41, questions: [84, 85] },
+  { page: 42, questions: [86, 87, 88] },
+  { page: 43, questions: [89] },
+  { page: 44, questions: [90] },
+  { page: 45, questions: [91] },
+  { page: 46, questions: [92] },
+  { page: 47, questions: [93] },
+  { page: 48, questions: [94] },
+  { page: 49, questions: [95] },
+  { page: 50, questions: [96] }
+];
+
+const allNums = [];
+for (const p of pageQuestionRanges) {
+  allNums.push(...p.questions);
+}
+
+console.log(`Total questions listed: ${allNums.length}`);
+console.log(`First question: ${allNums[0]}, Last question: ${allNums[allNums.length - 1]}`);
+let consecutive = true;
+for (let i = 0; i < allNums.length; i++) {
+  if (allNums[i] !== i + 1) {
+    consecutive = false;
+    console.error(`Mismatch at index ${i}: expected ${i + 1}, got ${allNums[i]}`);
+  }
+}
+if (consecutive) console.log('All 96 questions are 100% consecutive from 1 to 96!');
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+fs.writeFileSync(path.resolve(__dirname, 'pblock_page_map.json'), JSON.stringify(pageQuestionRanges, null, 2));

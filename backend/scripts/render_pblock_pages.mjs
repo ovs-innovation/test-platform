@@ -1,25 +1,31 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { createCanvas } from '@napi-rs/canvas';
-import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs';
 
-const PDF_PATH = 'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1794403811238_c2ef5fdf.pdf';
-const OUTPUT_DIR = './backend/scripts/pblock_pages';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-if (!fs.existsSync(OUTPUT_DIR)) {
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-}
+const pdfPath = 'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1795150533468_d3012856.pdf';
+const outputDir = path.resolve(__dirname, 'jee_pblock_pages');
+const wasmUrl = pathToFileURL(path.resolve(__dirname, '../node_modules/pdfjs-dist/wasm')).href + '/';
+
+if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
 async function renderPages() {
-  const data = new Uint8Array(fs.readFileSync(PDF_PATH));
-  const doc = await pdfjs.getDocument({ data }).promise;
-  console.log(`Rendering ${doc.numPages} pages...`);
+  const data = new Uint8Array(fs.readFileSync(pdfPath));
+  const doc = await pdfjsLib.getDocument({
+    data,
+    wasmUrl,
+    isEvalSupported: true
+  }).promise;
+  console.log(`Rendering all ${doc.numPages} pages to ${outputDir}...`);
 
-  // We need pages 2 to 34 for questions
-  for (let pageNum = 2; pageNum <= 34; pageNum++) {
-    const page = await doc.getPage(pageNum);
-    const viewport = page.getViewport({ scale: 2.0 }); // 2x scale for crisp OCR & diagrams
-    const canvas = createCanvas(viewport.width, viewport.height);
+  for (let i = 1; i <= doc.numPages; i++) {
+    const page = await doc.getPage(i);
+    const viewport = page.getViewport({ scale: 1.5 });
+    const canvas = createCanvas(Math.round(viewport.width), Math.round(viewport.height));
     const ctx = canvas.getContext('2d');
 
     await page.render({
@@ -27,17 +33,14 @@ async function renderPages() {
       viewport: viewport
     }).promise;
 
-    const buffer = canvas.toBuffer('image/png');
-    const outPath = path.join(OUTPUT_DIR, `page_${pageNum}.png`);
-    fs.writeFileSync(outPath, buffer);
-    console.log(`Rendered page ${pageNum} (${viewport.width}x${viewport.height}) -> ${outPath}`);
+    const pad = String(i).padStart(3, '0');
+    const outPath = path.join(outputDir, `page_${pad}.png`);
+    fs.writeFileSync(outPath, canvas.toBuffer('image/png'));
+    if (i % 10 === 0 || i === doc.numPages) {
+      console.log(`Rendered up to page ${i}/${doc.numPages}`);
+    }
   }
-
-  console.log('Finished rendering pages 2 to 34.');
+  console.log(`All ${doc.numPages} pages rendered successfully!`);
 }
 
-renderPages().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
-
+renderPages().catch(console.error);
