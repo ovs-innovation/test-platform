@@ -1491,6 +1491,7 @@ export const CHEMISTRY_STANDARD_11 = [
   'Equilibrium',
   'Redox Reactions',
   'The p-Block Elements (Gr. 13 & 14)',
+  'Basics of Organic Chemistry',
   'Organic Chemistry - Some Basic Principles and Techniques',
   'Hydrocarbons',
   'Solutions',
@@ -1561,7 +1562,15 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Periodic Table';
   }
 
-  // 6. Explicit name match for Some Basic Concepts of Chemistry
+  // 6. Explicit name match for Basics of Organic Chemistry
+  if (
+    /basics?\s*of\s*organic|organic\s*chemistry\s*[-–]\s*some\s*basic\s*principles|some\s*basic\s*principles\s*and\s*techniques/i.test(rawChapter) ||
+    /basics?\s*of\s*organic|organic\s*chemistry\s*[-–]\s*some\s*basic\s*principles|some\s*basic\s*principles\s*and\s*techniques/i.test(rawTopic)
+  ) {
+    return 'Basics of Organic Chemistry';
+  }
+
+  // 6b. Explicit name match for Some Basic Concepts of Chemistry
   if (
     /some basic concepts? of chemistry|basic concepts? of chemistry|mole concept/i.test(rawChapter) ||
     /some basic concepts? of chemistry|basic concepts? of chemistry|mole concept/i.test(rawTopic)
