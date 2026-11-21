@@ -448,6 +448,7 @@ export default function AdminQuestionBank() {
       if (/units?\s*(and|&)?\s*dimensions?/i.test(trimmed)) return 'Units and dimensions';
       if (/mechanical properties of solids/i.test(trimmed) || /properties of solids/i.test(trimmed)) return 'Mechanical Properties of Solids';
       if (/kinetic\s*theory/i.test(trimmed)) return 'Kinetic Theory of Gases';
+      if (/thermal\s*properties/i.test(trimmed)) return 'Thermal Properties of Matter';
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
       if (/oscillat/i.test(trimmed)) return 'Oscillations';
       if (/heat\s*and\s*thermo/i.test(trimmed) || /thermodyna/i.test(trimmed)) return 'Heat and Thermodynamics';
@@ -857,6 +858,18 @@ export default function AdminQuestionBank() {
         chId === 219 ||
         chId === 140
       ) return 'Kinetic Theory of Gases';
+
+      if (
+        /thermal\s*properties/i.test(raw) ||
+        chId === 191 ||
+        chId === 139 ||
+        (Number(q.id) >= 10227 && Number(q.id) <= 10421) ||
+        ((!raw || /properties\s*of\s*matter/i.test(raw)) && (
+          /thermal/i.test(q.topic || '') ||
+          /thermometry/i.test(q.topic || '') ||
+          /calorimetry/i.test(q.topic || '')
+        ))
+      ) return 'Thermal Properties of Matter';
 
       if (
         /properties\s*of\s*matter/i.test(raw) ||

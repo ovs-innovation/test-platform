@@ -2324,6 +2324,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (questionId && Number(questionId) >= 11162 && Number(questionId) <= 11339) {
       return 'Moving Charges and Magnetism';
     }
+    if (questionId && Number(questionId) >= 10227 && Number(questionId) <= 10421) {
+      return 'Thermal Properties of Matter';
+    }
   }
 
   // 0. Explicit normalization for legacy or composite chapter names
@@ -2389,6 +2392,18 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     }
     if (/electromagnetic induction/i.test(rawChapter) || /electromagnetic induction/i.test(rawTopic)) {
       return 'Electromagnetic Induction';
+    }
+    if (
+      /thermal\s*properties/i.test(rawChapter) ||
+      ((!rawChapter || /^\s*properties\s*of\s*matter\s*$/i.test(rawChapter) || /properties\s*of\s*matter/i.test(rawChapter)) && (
+        /thermal\s*properties/i.test(rawTopic) ||
+        /thermometry/i.test(rawTopic) ||
+        /calorimetry/i.test(rawTopic) ||
+        /thermal\s*expansion/i.test(rawTopic) ||
+        /newton'?s\s*law\s*of\s*cooling/i.test(rawTopic)
+      ))
+    ) {
+      return 'Thermal Properties of Matter';
     }
     if (/properties\s*of\s*matter/i.test(rawChapter) || /properties\s*of\s*matter/i.test(rawTopic)) {
       return 'Properties of Matter';
