@@ -38,7 +38,14 @@ export const listAllAssessments = asyncHandler(async (_req, res) => {
 
 export const listAvailableAssessments = asyncHandler(async (req, res) => {
   try {
-    const userRes = await query('SELECT batch_id, institution_id, exam_type FROM users WHERE id = $1', [req.user.id]);
+    const userRes = await query(
+      `SELECT u.batch_id, u.institution_id,
+              COALESCE(NULLIF(sp.target_exam, ''), NULLIF(u.exam_type, ''), 'GENERAL') AS exam_type
+       FROM users u
+       LEFT JOIN student_profiles sp ON sp.user_id = u.id
+       WHERE u.id = $1`,
+      [req.user.id]
+    );
     const student = userRes.rows[0] || {};
     const batchId = student.batch_id || null;
     const instId = student.institution_id || null;
@@ -79,6 +86,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
              COALESCE(a.available_until, t.available_until) AS available_until,
              ci.id AS invite_id, ci.status::text AS invite_status, ci.token AS invite_token,
              'invite' AS access_type,
+             'invite' AS assigned_to_type,
              NULL::int AS series_id,
              COALESCE(q.cnt, qt.cnt, 0)::int AS question_count,
              COALESCE(q.total_marks, qt.total_marks, t.max_marks, 300)::int AS total_marks,
@@ -109,7 +117,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
       LEFT JOIN test_attempts tat ON tat.test_id = ci.assessment_id AND tat.student_id = $2
       LEFT JOIN scores s ON s.attempt_id = at.id
       LEFT JOIN scores ts ON ts.attempt_id = tat.id
-      WHERE LOWER(ci.candidate_email) = LOWER($1) AND ci.status <> 'expired'
+      WHERE LOWER(TRIM(ci.candidate_email)) = LOWER(TRIM($1)) AND ci.status <> 'expired'
 
       UNION ALL
 
@@ -119,6 +127,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
              a.available_from, a.available_until,
              NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
              'enrollment' AS access_type,
+             'enrollment' AS assigned_to_type,
              tsa.test_series_id AS series_id,
              COALESCE(q.cnt, 0)::int AS question_count,
              COALESCE(q.total_marks, 0)::int AS total_marks,
@@ -139,7 +148,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
       WHERE se.user_id = $2 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
         AND NOT EXISTS (
           SELECT 1 FROM candidate_invites ci2
-          WHERE LOWER(ci2.candidate_email) = LOWER($1) AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
+          WHERE LOWER(TRIM(ci2.candidate_email)) = LOWER(TRIM($1)) AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
         )
 
       UNION ALL
@@ -151,6 +160,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
              t.available_from, t.available_until,
              NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
              'assignment' AS access_type,
+             COALESCE(tas.assigned_to_type, 'assignment') AS assigned_to_type,
              NULL::int AS series_id,
              COALESCE(q.cnt, 0)::int AS question_count,
              COALESCE(t.max_marks, q.total_marks, 300)::int AS total_marks,
@@ -229,6 +239,15 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
         (row.description || '').toLowerCase().includes('battleground');
       if (isBooster) {
         return false;
+      }
+
+      // Direct candidate invitations and individual student assignments must NEVER be filtered by exam stream.
+      // An administrator or teacher specifically assigned or invited this candidate to this test.
+      if (row.access_type === 'invite' || row.invite_id != null) {
+        return true;
+      }
+      if (row.access_type === 'assignment' && !row.assigned_to_type?.includes('all')) {
+        return true;
       }
 
       if (isNeetCandidate && !isJeeCandidate) {
@@ -514,7 +533,7 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
   if (!assessmentRow) throw ApiError.notFound('Assessment not found');
 
   const invite = await query(
-    `SELECT id FROM candidate_invites WHERE LOWER(candidate_email) = LOWER($1) AND assessment_id = $2 AND status <> 'expired'`,
+    `SELECT id FROM candidate_invites WHERE LOWER(TRIM(candidate_email)) = LOWER(TRIM($1)) AND assessment_id = $2 AND status <> 'expired'`,
     [req.user.email, id]
   );
   const enr = await query(

@@ -125,7 +125,7 @@ export const getCandidates = asyncHandler(async (_req, res) => {
            COALESCE(NULLIF(sp.target_exam, ''), NULLIF(b.target_exam, ''), 'NEET') AS target_exam,
            sp.city, sp.state,
            COALESCE(u.raw_password, sp.raw_password, '') AS raw_password,
-           (SELECT COUNT(*)::int FROM candidate_invites ci WHERE ci.candidate_email = u.email AND ci.status <> 'expired') AS invites,
+           (SELECT COUNT(*)::int FROM candidate_invites ci WHERE LOWER(TRIM(ci.candidate_email)) = LOWER(TRIM(u.email)) AND ci.status <> 'expired') AS invites,
            (SELECT COUNT(*)::int FROM attempts a WHERE a.candidate_id = u.id) AS attempts,
            (SELECT COUNT(*)::int FROM attempts a WHERE a.candidate_id = u.id AND a.status <> 'in_progress') AS completed,
            COALESCE((

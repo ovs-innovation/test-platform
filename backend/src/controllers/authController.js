@@ -1166,7 +1166,7 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
     ) q ON q.assessment_id::text = a.id::text
     LEFT JOIN attempts at ON at.assessment_id::text = a.id::text AND at.candidate_id = $2
     LEFT JOIN scores s ON s.attempt_id = at.id
-    WHERE ci.candidate_email = $1 AND ci.status <> 'expired'
+    WHERE LOWER(TRIM(ci.candidate_email)) = LOWER(TRIM($1)) AND ci.status <> 'expired'
 
     UNION ALL
 

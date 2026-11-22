@@ -419,7 +419,7 @@ const ensureAssessmentAccess = async (user, assessmentId) => {
 
   const inviteRes = await query(
     `SELECT * FROM candidate_invites
-     WHERE candidate_email = $1 AND assessment_id = $2 AND status <> 'expired'`,
+     WHERE LOWER(TRIM(candidate_email)) = LOWER(TRIM($1)) AND assessment_id = $2 AND status <> 'expired'`,
     [user.email, assessmentId]
   );
   if (inviteRes.rowCount > 0) {

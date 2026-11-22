@@ -90,9 +90,10 @@ export const createInvite = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('Assessment must have at least one question before inviting candidates');
   }
 
+  const cleanEmail = (candidate_email || '').trim().toLowerCase();
   const existing = await query(
-    'SELECT id, status, token FROM candidate_invites WHERE assessment_id = $1 AND LOWER(candidate_email) = $2',
-    [assessment_id, candidate_email.toLowerCase()]
+    'SELECT id, status, token FROM candidate_invites WHERE assessment_id = $1 AND LOWER(TRIM(candidate_email)) = $2',
+    [assessment_id, cleanEmail]
   );
 
   const assessment = aRes.rows[0];
@@ -125,7 +126,7 @@ export const createInvite = asyncHandler(async (req, res) => {
         throw ApiError.conflict('This candidate has already completed this assessment. Enable "Allow Retake" to reset their attempt and allow them to take it again.');
       }
 
-      await resetCandidateAttemptForAssessment(assessment_id, candidate_email, row.id);
+      await resetCandidateAttemptForAssessment(assessment_id, cleanEmail, row.id);
 
       const updated = await query(
         `UPDATE candidate_invites
@@ -169,7 +170,7 @@ export const createInvite = asyncHandler(async (req, res) => {
   }
 
   // Also check if candidate has an existing completed attempt even without prior candidate_invites
-  const userRes = await query('SELECT id FROM users WHERE LOWER(email) = $1', [candidate_email.toLowerCase()]);
+  const userRes = await query('SELECT id FROM users WHERE LOWER(TRIM(email)) = $1', [cleanEmail]);
   const candidateUserId = userRes.rows[0]?.id;
   if (candidateUserId) {
     const prevAttempt = await query(
@@ -183,9 +184,9 @@ export const createInvite = asyncHandler(async (req, res) => {
       if (!allow_retake) {
         throw ApiError.conflict('This candidate has already completed this assessment. Enable "Allow Retake" to reset their attempt and allow them to take it again.');
       }
-      await resetCandidateAttemptForAssessment(assessment_id, candidate_email);
+      await resetCandidateAttemptForAssessment(assessment_id, cleanEmail);
     } else if (allow_retake && prevAttempt.rowCount > 0) {
-      await resetCandidateAttemptForAssessment(assessment_id, candidate_email);
+      await resetCandidateAttemptForAssessment(assessment_id, cleanEmail);
     }
   }
 
@@ -193,7 +194,7 @@ export const createInvite = asyncHandler(async (req, res) => {
     `INSERT INTO candidate_invites (assessment_id, candidate_name, candidate_email, created_by)
      VALUES ($1, $2, $3, $4)
      RETURNING *`,
-    [assessment_id, candidate_name, candidate_email.toLowerCase(), req.user?.id || null]
+    [assessment_id, (candidate_name || '').trim(), cleanEmail, req.user?.id || null]
   );
   const invite = result.rows[0];
 
