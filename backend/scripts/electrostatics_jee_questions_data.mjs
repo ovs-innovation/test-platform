@@ -1,0 +1,7704 @@
+// 300 JEE Main Electrostatics PYQ Questions
+export const ELECTROSTATICS_JEE_QUESTIONS = [
+  {
+    "q_num": 1,
+    "page": 1,
+    "question_text": "If a charge q is placed at the centre of the line joining two equal charges Q such that the system is in equilibrium then the value of q is:",
+    "options": [
+      "Q/2",
+      "-Q/2",
+      "Q/4",
+      "-Q/4"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417471/edvedum_physics/electrostatics/p1_span1_y953_h91.png",
+    "solution": "Apply the condition for equilibrium of each charge\n2. On moving a charge of 20 coulombs by 2 cm, 2 J of work is done, then the potential difference between\nthe points is\n(A) av B® sv\n(© 2v (0) 05v\nmarks, 1 for wong answer] 2002\nApply the condition for equilibrium of each charge",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 2,
+    "page": 1,
+    "question_text": "On moving a charge of 20 coulombs by 2 cm, 2 J of work is done, then the potential difference between the points is",
+    "options": [
+      "av B® sv (© 2v (0) 05v",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417471/edvedum_physics/electrostatics/p1_span1_y953_h91.png",
+    "solution": "W=qV=Va-Vy=2/20=01V\nHere W is the work done in moving charge q from paint A to B\n3 Acharged particle q is placed at the centre O of cube of length L (AB CD EF G H). Another same\ncharge q is placed at a distance L from 0. Then the electric flux through ABCD is\n€ 3\nn AN\nT | = a\nH ]\nY — =\nA\n—t—\n(CP (8) zero\n(©) g/2me,L (0) ¢/3me,L\nW=qV=Va-Vy=2/20=01V",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 3,
+    "page": 1,
+    "question_text": "W is the work done in moving charge q from paint A to B 3 Acharged particle q is placed at the centre O of cube of length L (AB CD EF G H). Another same charge q is placed at a distance L from 0. Then the electric flux through ABCD is € 3 n AN T | = a H ] Y — = A —t— (CP (8) zero (©) g/2me,L (0) ¢/3me,L",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417471/edvedum_physics/electrostatics/p1_span1_y953_h91.png",
+    "solution": "The flux for both the charges exactly cancels the effect of each other",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 4,
+    "page": 2,
+    "question_text": "Three charges —qi, +q2 and —gs are placed as shown in the figure. The 2-component of the force on § - —qu is proportional to § \\X »— RU MLE oi A % 4 cost ©) % + % sing © % 4 % cosh ©) % _ %5ng [ER T—",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417475/edvedum_physics/electrostatics/p2_span1_y399_h117.png",
+    "solution_image_url": null,
+    "solution": "AN\nThe force body diagram Fy = gh + 48 Fy = glo - 4% NS [3\ne\nF\ni\nFx = Fusing + Fs = 2; [$ain0 + 4] = Fx ox ($ain0 + 5)\n5. A thin spherical conducting shell of radius R has a charge q. Another charge Q is placed at the centre of\nthe shell. The electrostatic potential at a point P a distance 4 from the centre of the shell is\n(A) 20 (B) 20 24\nTak TR ~ Tel\n©) 2g Pl (0) )2\nTreokt T Teeok rs\n14 mars, <tr wing newer] 2003\nAN",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 5,
+    "page": 2,
+    "question_text": "force body diagram Fy = gh + 48 Fy = glo - 4% NS [3 e F i Fx = Fusing + Fs = 2; [$ain0 + 4] = Fx ox ($ain0 + 5) 5. A thin spherical conducting shell of radius R has a charge q. Another charge Q is placed at the centre of the shell. The electrostatic potential at a point P a distance 4 from the centre of the shell is",
+    "options": [
+      "20",
+      "20 24 Tak TR ~ Tel ©) 2g Pl (0) )2 Treokt T Teeok rs 14 mars, <tr wing newer] 2003",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417475/edvedum_physics/electrostatics/p2_span1_y399_h117.png",
+    "solution_image_url": null,
+    "solution": "Potential due to spherical shell, v; = 77. Potential difference due to charge at the centre\na= iV=Va+Va= 225 + 52g\n©. if the electric flux entering and leaving an enclosed surface respectively is ¢; and ¢,, the electric\ncharge inside the surface will be\nA (4, gi)eo ©) (51+ 6) fen\n© (62-41) feo © 61+ e920\nRw ———)\nPotential due to spherical shell, v; = 77. Potential difference due to charge at the centre\na= iV=Va+Va= 225 + 52g",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 6,
+    "page": 2,
+    "question_text": "if the electric flux entering and leaving an enclosed surface respectively is ¢; and ¢,, the electric charge inside the surface will be A (4, gi)eo ©) (51+ 6) fen © (62-41) feo © 61+ e920 Rw ———)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417475/edvedum_physics/electrostatics/p2_span1_y399_h117.png",
+    "solution_image_url": null,
+    "solution": "According to Gauss's Law\n[Ear ara a=a@-o)\n[ since ¢ = / E. as]",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 7,
+    "page": 3,
+    "question_text": "Two spherical conductor BB and C' having equal radii and carrying equal charges in them repel each other with a force F' when kept apart at some distance. A third spherical conductor having same radius as that of B but uncharged brought in contact with 13, then brought in contact with C and finally removed away from both. The new force of repulsion, between B and C is gg ® 34 ©) g/g (0) 35/5.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Pepa\n8. A charged oil drop is suspended in a uniform field of 3 x 10¢ V /m so that it neither falls nor rises. The\ncharge on the drop will be (take the mass of the charge = 9.9 x 10\" kg and g = 10 m/s?)\n(A) 33 10%C (8) 33 x 10-1¢C\n(© 16x 10C ©) 48 x 105C\n14 marks, 1 for s wrong snswer) 2008\nPepa",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 8,
+    "page": 3,
+    "question_text": "A charged oil drop is suspended in a uniform field of 3 x 10¢ V /m so that it neither falls nor rises. The charge on the drop will be (take the mass of the charge = 9.9 x 10\" kg and g = 10 m/s?)",
+    "options": [
+      "33 10%C (8) 33 x 10-1¢C (© 16x 10C ©) 48 x 105C",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Since ball is hanging in equilibrium, force by gravity is balanced by electric force.\ngE = mg\n_mxg\n=q=\"%\n99x10 x10\nEE\n~q=33x10\"%C\n©. Four charges equal to —() are placed at the four corners of a square and a charge g is at ts centre. If\nthe system is in equilibrium the value of g is\nW_2a+2v3) © 204 2v3)\n© _9(1 42/3) © g1+2v3)\n14 marks, ~3 fo a wring anbwed 2004\nSince ball is hanging in equilibrium, force by gravity is balanced by electric force.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 9,
+    "page": 3,
+    "question_text": "= mg _mxg =q=\"% 99x10 x10 EE ~q=33x10\"%C ©. Four charges equal to —() are placed at the four corners of a square and a charge g is at ts centre. If the system is in equilibrium the value of g is W_2a+2v3) © 204 2v3) © _9(1 42/3) © g1+2v3)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "g=+2(1+2v3)\n10. An a-particle of energy 5MeV is scattered through 180° by a fixed uranium nucleus. The distance of\nthe closest approach is of the order of\n(OEY 8) 10-10 oy\n©) 19-12 oy (©) 19-15 omy\n{8 marks, ~1 for wang answer) 2004\ng=+2(1+2v3)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 10,
+    "page": 3,
+    "question_text": "An a-particle of energy 5MeV is scattered through 180° by a fixed uranium nucleus. The distance of the closest approach is of the order of (OEY 8) 10-10 oy ©) 19-12 oy (©) 19-15 omy",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "At closest approach, all the kinetic energy of the a-particle will converted into the potential energy of the system,\nKE. =PE.\nMoV = 2B\nTre,\n:\n5x10 x 0 =9 x 100222\n3\noo 9X10 x 92x 2x 16x 10°\nBn 5x 10°\nAr=53%x10\"m=53x10 \"cm",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 11,
+    "page": 4,
+    "question_text": "charged particle g is shot towards another charged particle Q which is fixed, with a speed v it approaches Q upto a closest distance r and then returns. If q were given a speed 2v, the closest distances of approach would be [ ® 5, © 2 © 4 18 mark, <tc wrong answer 2000",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417479/edvedum_physics/electrostatics/p4_span1_y926_h100.png",
+    "solution": "By principle of conservation of energy\nFinally, {m(20)? = £8\nEquation (i) + (ii),\nar\nar\nar=1\nT\n12. 1 point charges +8 and —2q are located at = 0 and = = L respectively. The location of a point\non the z axis at which the net electric field due to these two point charges is zero is\n[Pe ® 14\n© gy © 4p,\n{8 mks, 1 or wang answer 2005",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 12,
+    "page": 4,
+    "question_text": "principle of conservation of energy Finally, {m(20)? = £8 Equation (i) + (ii), ar ar ar=1 T 12. 1 point charges +8 and —2q are located at = 0 and = = L respectively. The location of a point on the z axis at which the net electric field due to these two point charges is zero is [Pe ® 14 © gy © 4p, {8 mks, 1 or wang answer 2005",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417479/edvedum_physics/electrostatics/p4_span1_y926_h100.png",
+    "solution": "“pp + =0\n=x=2L\n13. A charged ball B hangs from a silk thread which makes an angle 8 with a large charged conducting\nsheet P, as show in the figure. The surface charge density o of the sheet is proportional to\n+\n+\nol+\n+ A Ss\n+\n+\n+ 8\nA) cosh ®) cot\n© ging ©) tang\n(8 marks, ior a nog mswer] 2085\n“pp + =0\n=x=2L",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 13,
+    "page": 4,
+    "question_text": "A charged ball B hangs from a silk thread which makes an angle 8 with a large charged conducting sheet P, as show in the figure. The surface charge density o of the sheet is proportional to + + ol+ + A Ss + + + 8",
+    "options": [
+      "cosh ®) cot © ging ©) tang",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417479/edvedum_physics/electrostatics/p4_span1_y926_h100.png",
+    "solution": "0\ntand = 2\npec wi\n2,\nMg",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 14,
+    "page": 5,
+    "question_text": "Two thin wires rings each having a radius R are placed at a distance d apart with their axes coinciding. The charges on the two rings are +g and —q. The potential difference between the centres of the two rings is",
+    "options": [
+      "2 (8) QR/ane, d & [b- ] (€) zero 0) 1 | % [ 7)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417485/edvedum_physics/electrostatics/p5_span1_y840_h108.png",
+    "solution_image_url": null,
+    "solution": "n=i- ite\nn= ty\n15. Two spherical conductors A and B of radii 1 mm and 2 mm are separated by a distance of 5 cm and\nare uniformly charged. If the spheres are connected by a conducting wire then in equilibrium condition,\nthe ratio of the magnitude of the electric fields at the surface of spheres A and B is\n[ARE ® 4:1\n©. © 3.\n14 marks, for 8 wiong answer - 2006\nn=i- ite\nn= ty",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 15,
+    "page": 5,
+    "question_text": "Two spherical conductors A and B of radii 1 mm and 2 mm are separated by a distance of 5 cm and are uniformly charged. If the spheres are connected by a conducting wire then in equilibrium condition, the ratio of the magnitude of the electric fields at the surface of spheres A and B is [ARE ® 4:1 ©. © 3.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417485/edvedum_physics/electrostatics/p5_span1_y840_h108.png",
+    "solution_image_url": null,
+    "solution": "B=2=i\n16. Two insulating plates are both uniformly charged in such a way that the potential difference between\nthem is Vy — V; = 20 V. (i.e. plate 2 is at a higher potential). The plates are separated by d = 0.1 m\nand can be treated as infinitely large. An electron is released from rest on the inner surface of plate 1.\nWhat is its speed when it hits plate 2? (e = 1.6 x 107°C, m, = 9.11 x 10~*' kg)\nY\n01m\nxX\n1 2\nA) 33 10% m/s 18) 2.65 x 10° m/s\n(©) 7.02 x 10% m/s (0) } 87 x 10° m/s\nTET —————\nB=2=i",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 16,
+    "page": 5,
+    "question_text": "Two insulating plates are both uniformly charged in such a way that the potential difference between them is Vy — V; = 20 V. (i.e. plate 2 is at a higher potential). The plates are separated by d = 0.1 m and can be treated as infinitely large. An electron is released from rest on the inner surface of plate 1. What is its speed when it hits plate 2? (e = 1.6 x 107°C, m, = 9.11 x 10~*' kg) Y 01m xX 1 2",
+    "options": [
+      "33 10% m/s 18) 2.65 x 10° m/s (©) 7.02 x 10% m/s (0) } 87 x 10° m/s TET —————",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417485/edvedum_physics/electrostatics/p5_span1_y840_h108.png",
+    "solution_image_url": null,
+    "solution": "bmv? = ev.\nve NE =265x 10° m/s\n17. A electric dipole is placed at an angle of 30° to a non-uniform electric field. The dipole will experience\n(A) a torque only (B) a translational force only in the direction of the\nfield\n(C) a translational force only in a direction normal (D) a torque as well as a translational force\n1o the direction of the field\n4 masks, <1 or a wrong answer 2006\nbmv? = ev.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 17,
+    "page": 5,
+    "question_text": "NE =265x 10° m/s 17. A electric dipole is placed at an angle of 30° to a non-uniform electric field. The dipole will experience",
+    "options": [
+      "a torque only",
+      "a translational force only in the direction of the field",
+      "a translational force only in a direction normal",
+      "a torque as well as a translational force 1o the direction of the field 4 masks, <1 or a wrong answer 2006"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417485/edvedum_physics/electrostatics/p5_span1_y840_h108.png",
+    "solution_image_url": null,
+    "solution": "A torque as well as a translational force",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 18,
+    "page": 6,
+    "question_text": "if gg and g,, are the accelerations due to gravity on the surfaces of the earth and the moon respectively and if Millikan's oil drop experiment could be performed on the two surfaces, one will find the ratio Ee i een tobe",
+    "options": [
+      "® (©) g/g, © og, lg",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "No Solution Available\n19. Charges are placed on the vertices of a square as shown. Let E be the electric field and V/ the potential\natthe centre. If the charges on A and B are interchanged with those on D and C respectively, then\n| Ll\n- -\n(A) § remains unchanged, V changes (8) Both fi and V change\n(€) § and V remains unchanged (0) changes, V remains unchanged\n[Tr Te—",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 19,
+    "page": 6,
+    "question_text": "Solution Available 19. Charges are placed on the vertices of a square as shown. Let E be the electric field and V/ the potential atthe centre. If the charges on A and B are interchanged with those on D and C respectively, then | Ll - -",
+    "options": [
+      "§ remains unchanged, V changes (8) Both fi and V change (€) § and V remains unchanged (0) changes, V remains unchanged [Tr Te—",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "As 716 a vector quantity\n20. The potential at a point 2 (measured in jum ) due to some charges situated on the x-axis is given by\nV(x) =20/ (x* — 4) Volts. The electric field E at x = 4 pm is given by\n(A) 5/3 Volt/ um and in the —ve z direction 8) 5/3 Volt ym and in the ve direction.\n(©) 10/9 Volt /um and in the —ve x direction (©) 10/9 Volt /um and in the +ve z direction.\nmarks, 1 or Waco swe 2007",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 20,
+    "page": 6,
+    "question_text": "716 a vector quantity 20. The potential at a point 2 (measured in jum ) due to some charges situated on the x-axis is given by V(x) =20/ (x* — 4) Volts. The electric field E at x = 4 pm is given by",
+    "options": [
+      "5/3 Volt/ um and in the —ve z direction 8) 5/3 Volt ym and in the ve direction. (©) 10/9 Volt /um and in the —ve x direction (©) 10/9 Volt /um and in the +ve z direction.",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Vasc\nE=-f=rAoax-0)=M=2\n21. an electric charge 103 uC is placed at the origin (0, 0) of X — ¥ co-ordinate system. Two points A\nand B are situated at (1/2, y/2) and (2, 0) respectively. The potential difference between the points A\nand B will be\n(A) go 8) zero\n(©) 3 volt ©) 45 volt\n{8 marks, 1 or 8 wang answer 2007\nVasc\nE=-f=rAoax-0)=M=2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 21,
+    "page": 6,
+    "question_text": "an electric charge 103 uC is placed at the origin (0, 0) of X — ¥ co-ordinate system. Two points A and B are situated at (1/2, y/2) and (2, 0) respectively. The potential difference between the points A and B will be",
+    "options": [
+      "go 8) zero (©) 3 volt ©) 45 volt",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Both points are at same distance from the charge.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 22,
+    "page": 7,
+    "question_text": "thin spherical shell of radius R has charge @Q spread uniformly over its surface. Which of the following graphs most closely represents the electric field (r) produced by the shell in the range 0 < r < no, Where r is the distance from the centre of the shell? sol. (1) [0 ifr<R En= | 9 rar Aner nw Em B) Em o R a o R r © Em © Em 0 rR of rR Pr —",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417492/edvedum_physics/electrostatics/p7_span2_y455_h60.png",
+    "solution_image_url": null,
+    "solution": "sol. (1)\n[° ifr<R\nn= ?\nE01 a 4, q\n| 4me,\n23. p charge Q is placed at each of the opposite corners of a square. A charge q is placed at each of the\nother two corners. If the net electrical force on Q is zero, then the Q/q equals\nW553 ®\n© o) _ 1\nkd\n{€ maths, or 8 wicng answer] 2008",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 23,
+    "page": 7,
+    "question_text": "(1) [° ifr<R n= ? E01 a 4, q | 4me, 23. p charge Q is placed at each of the opposite corners of a square. A charge q is placed at each of the other two corners. If the net electrical force on Q is zero, then the Q/q equals W553 ® © o) _ 1 kd {€ maths, or 8 wicng answer] 2008",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "= VF\nThvee forces Fu, Fea and fi acting on Q are shown Resultant of Fi + Fis _ = 1 Qq Resultant on Q\nTime\n1 9xQ\nFam\n42% Ines (2d)\n“ya _3xQ\nbecomes zero only when ' q ' charges are of negative nature. a 25 a\n+ Vixe=224\nen UO\nGE Ey foi 22\nFa\nFay i\na 1a\nEa Fa\n. £\na= a",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 24,
+    "page": 8,
+    "question_text": "Let P(r) = Jur be the charge density distribution for a solid sphere of radius R and total charge Q. for a point ' p * inside the sphere at distance r, from the centre of the sphere, the magnitude of electric field is",
+    "options": [
+      "o ®) _¢ Tar! © or og:",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417496/edvedum_physics/electrostatics/p8_span1_y281_h108.png",
+    "solution_image_url": null,
+    "solution": "nn 2, 2, 2\na _ i rdaridr _ Qn\nEtnrl = a sBagim\n25. Two points P and Q are maintained at the potentials of 10 V and —4 V respectively. The work done in\nmoving 100 electrons from P to Q is\nA) _19 x 10-173 (8) 9.60 x 10-17\n© _224x 10-3 (0) 294 x 10-10\n4 masks, 1 for a wrong snsvier] 2000",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 25,
+    "page": 8,
+    "question_text": "2, 2, 2 a _ i rdaridr _ Qn Etnrl = a sBagim 25. Two points P and Q are maintained at the potentials of 10 V and —4 V respectively. The work done in moving 100 electrons from P to Q is",
+    "options": [
+      "_19 x 10-173 (8) 9.60 x 10-17 © _224x 10-3 (0) 294 x 10-10 4 masks, 1 for a wrong snsvier] 2000",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417496/edvedum_physics/electrostatics/p8_span1_y281_h108.png",
+    "solution_image_url": null,
+    "solution": "W = QdV = Q(V, ~ Vp) = ~100 x (16 x 10°**) x (~4 - 10)\n= 4100 x 1.6 x 107\" x 14 = 42.2410\" '*J\n26. This question contains Statement-1and Statement-2. Of the four choices given after the statements,\nchoose the one that best describes the two statements.\nStatement - 1: For a charged particle moving from point P to point Q, the net work done by an\nelectrostatic field on the particle is independent of the path connecting point P to point Q.\nStatement-2: The net work done by a conservative force on an object moving along a closed loop is\nzero\n(A) Statement-1is true, Statement-2 is false (B) Statement-1is true, Statement-2 is true;\nStatement-2 is the correct explanation of\nStatement-1.\n(C) statement-1is true, Statement-2 is true; (D) Statement-1is false, Statement-2 is true\nStatement-2 is not the correct explanation of\nStatement-1.\n1 marks, 1 fot wrong answer) - 2008",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 26,
+    "page": 8,
+    "question_text": "= QdV = Q(V, ~ Vp) = ~100 x (16 x 10°**) x (~4 - 10) = 4100 x 1.6 x 107\" x 14 = 42.2410\" '*J 26. This question contains Statement-1and Statement-2. Of the four choices given after the statements, choose the one that best describes the two statements. Statement - 1: For a charged particle moving from point P to point Q, the net work done by an electrostatic field on the particle is independent of the path connecting point P to point Q. Statement-2: The net work done by a conservative force on an object moving along a closed loop is zero",
+    "options": [
+      "Statement-1is true, Statement-2 is false",
+      "Statement-1is true, Statement-2 is true; Statement-2 is the correct explanation of Statement-1.",
+      "statement-1is true, Statement-2 is true;",
+      "Statement-1is false, Statement-2 is true Statement-2 is not the correct explanation of Statement-1."
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417496/edvedum_physics/electrostatics/p8_span1_y281_h108.png",
+    "solution_image_url": null,
+    "solution": "Work done by conservative force does not depend on the path. Electrostatic force is a conservative force.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 27,
+    "page": 9,
+    "question_text": "Two identical charged spheres are suspended by strings of equal lengths. The strings make an angle of 30° with each other. When suspended in a liquid of density 0.8 g cm*, the angle remains the same. If density of the material of the sphere is 16 cm, the dielectric constant of the liquid is",
+    "options": [
+      "4 (8) 3 ©) 2 ©) 1",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "From F.8.0 of sphere, using Lam's theorem —- — tan 0 when suspended in liquid, a § remains same,\nmg\nCE Se] J CO Be\n+ =n ving 0nd 0 2 = rs where, F'= pg Fn\nrersgeee,\n1/6\nK=ghy=2¢ H\nmg\n28. Let there be a spherically symmetric charge distribution with charge density varying as\np(r) = po (3 — %) upto r = R, and p(r) = 0 for r > R, where r is the distance from the origin. The\nelectric field at a distance r(r < R) from the origin is given by\nrons ‘ 8) or c\n(AV deme (2 5) BeE-5\nCeE-n PrEg-9\n[8 marks, =1 ot 8 weong answer] 2010",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 28,
+    "page": 9,
+    "question_text": "F.8.0 of sphere, using Lam's theorem —- — tan 0 when suspended in liquid, a § remains same, mg CE Se] J CO Be + =n ving 0nd 0 2 = rs where, F'= pg Fn rersgeee, 1/6 K=ghy=2¢ H mg 28. Let there be a spherically symmetric charge distribution with charge density varying as p(r) = po (3 — %) upto r = R, and p(r) = 0 for r > R, where r is the distance from the origin. The electric field at a distance r(r < R) from the origin is given by rons ‘ 8) or c (AV deme (2 5) BeE-5 CeE-n PrEg-9",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Apply shell theorem the total charge upto distance r can be calculated as followed dg = drr* - dr.p\n5 r\nmrt} = 3\n£ 8 ay 2\n= dnp [ gridr — ar\n= te JB tg\nJaan [ (3)\ndal he\nSHAT RT\nkg\n=\nJ OE OY WE\nSer \"™|I\\3) \"®\n=r [Br\nwe i E 3]",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 29,
+    "page": 10,
+    "question_text": "4 thin semi-circular ring of radius r has a positive charge g distributed uniformly over it. The net field £ a J atthe centre O is 4 —0 H",
+    "options": [
+      "3 ® 3 wid ~ wad ©) 3 (0) EH — 5k] bed]",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Linear charge density A = (£) E = [ dEsin0(-) = [ 5 in0(-j) E = § [ & dfsin6(-j)\n¥\n= 835 sin0(=)) = sa (-))\n5 x\n30. Two identical charged spheres suspended from a common point by two massless strings of length | are\ninitially a distance d(d << 1) apart because of their mutual repulsion. The charge begins to leak from\nboth the spheres at a constant rate. As a result the charges approach each other with a velocity v.\nThen as a function of distance x between them,\nA) yp? B) yo £112\n© pz (JT\n4 marks, -1 for a wrong answer] 2011\nLinear charge density A = (£) E = [ dEsin0(-) = [ 5 in0(-j) E = § [ & dfsin6(-j)\n¥\n= 835 sin0(=)) = sa (-))",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 30,
+    "page": 10,
+    "question_text": "x 30. Two identical charged spheres suspended from a common point by two massless strings of length | are initially a distance d(d << 1) apart because of their mutual repulsion. The charge begins to leak from both the spheres at a constant rate. As a result the charges approach each other with a velocity v. Then as a function of distance x between them,",
+    "options": [
+      "yp?",
+      "yo £112 © pz (JT",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p10_span1_y96_h66.png",
+    "solution_image_url": null,
+    "solution": "At any instant of separation between charges is x.\n. i LE\nequilibrium condition = K— = wg;\nSQ =c\n+2099 _ gyal\n>0F =o\na BS,\n> Far ax\n31. The electrostatic potential inside a charged spherical ball is given by ¢ = ap? + b where r is the\ndistance from the centre; a, b are constants. Then the charge density inside ball is\n(A) _gaeyr 8) _24rac,\n©) gag, © _24rac,r\n(8 marks, 1 or wrong snswer] 01",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 31,
+    "page": 10,
+    "question_text": "any instant of separation between charges is x. . i LE equilibrium condition = K— = wg; SQ =c +2099 _ gyal >0F =o a BS, > Far ax 31. The electrostatic potential inside a charged spherical ball is given by ¢ = ap? + b where r is the distance from the centre; a, b are constants. Then the charge density inside ball is",
+    "options": [
+      "_gaeyr 8) _24rac, ©) gag, © _24rac,r",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Potential inside (¢) = ar® + b\nbv\nAE= x= ~2ar\nElectric field inside uniformly charged solid volume varies with ' r '. So charge density is constant\nue = (~2ar)dnr’ = —8rar®\nmrt\nPE od\nE)\nso = Gag",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 32,
+    "page": 11,
+    "question_text": "yn a uniformly charged sphere of total charge @ and radius R, the electric field E is plotted as a function of distance from the centre. The graph which would correspond to the above will be \\ I R —F R —r © g | © | R_—=F R —r",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417459/edvedum_physics/electrostatics/p11_span1_y76_h123.png",
+    "solution_image_url": null,
+    "solution": "E\n= 5 »\nEase = (8) 7 onesie (758) 7 A\n= r\n33. This question has statement 1 and statement 2 . Of the four choices given after the statements, choose\nthe one that best describes the two statements.\nAn insulating solid sphere of radius R has a uniformly positive charge density p. As a result of this.\nuniform charge distribution there is a finite value of electric potential at the centre of the sphere, at the\nsurface of the sphere and also at a point out side the sphere. The electric potential at infinity is zero.\nStatement 1: When a charge g is taken from the centre to the surface of the sphere, its potential energy\nchanges by 3\nStatement 2: The electric field at a distance r(r < R) from the centre of the sphere is £-\n(A) statement 1 is true, Statement 2 is true, 8) statement 1 is true, Statement 21s false\nStatement 2 is not the correct explanation for\nstatement 1.\n(©) statement 1 is false, Statement 2 is true (0) Statement 1 is true, Statement 2 is the correct\nexplanation for statement 1\n4 marks, 1 fo a wiong answer] 2012 {Ofine)\nE\n= 5 »",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 33,
+    "page": 11,
+    "question_text": "= (8) 7 onesie (758) 7 A = r 33. This question has statement 1 and statement 2 . Of the four choices given after the statements, choose the one that best describes the two statements. An insulating solid sphere of radius R has a uniformly positive charge density p. As a result of this. uniform charge distribution there is a finite value of electric potential at the centre of the sphere, at the surface of the sphere and also at a point out side the sphere. The electric potential at infinity is zero. Statement 1: When a charge g is taken from the centre to the surface of the sphere, its potential energy changes by 3 Statement 2: The electric field at a distance r(r < R) from the centre of the sphere is £-",
+    "options": [
+      "statement 1 is true, Statement 2 is true, 8) statement 1 is true, Statement 21s false Statement 2 is not the correct explanation for statement 1. (©) statement 1 is false, Statement 2 is true (0) Statement 1 is true, Statement 2 is the correct explanation for statement 1",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417459/edvedum_physics/electrostatics/p11_span1_y76_h123.png",
+    "solution_image_url": null,
+    "solution": "FE da=21 (px §=e)\nE=g&\nStatement 2 is correct\nAPE = (Var ~ Va Ja = ~ gk oR?\nStatement 1 is incorrect\n34. The electric potential V/() in a region around the origin is given by V(z) = 4x? volts. The electric\ncharge enclosed in a cube of 1 m side with its centre at the origin is (in coulomb)\nWg, 8) _4e,\n©o © ge,\n(4 marks, ~1 or wrong aoswer] 2012 107 May)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 34,
+    "page": 11,
+    "question_text": "da=21 (px §=e) E=g& Statement 2 is correct APE = (Var ~ Va Ja = ~ gk oR? Statement 1 is incorrect 34. The electric potential V/() in a region around the origin is given by V(z) = 4x? volts. The electric charge enclosed in a cube of 1 m side with its centre at the origin is (in coulomb) Wg, 8) _4e, ©o © ge,",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Charges reside only on the outer surface of a conductor with cavity.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 35,
+    "page": 12,
+    "question_text": "A charge of total amount Q is distributed over two concentric hollow spheres of radii r and R(R > r) such that the surface charge densities on the two spheres are equal. The electric potential at the common centre is. W rng © 1 (ning Tren (BT) nen ARTA) © | (mi © i (roe wales) et",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417462/edvedum_physics/electrostatics/p12_span1_y631_h169.png",
+    "solution_image_url": null,
+    "solution": "Let g; and g, be charge on two spheres of radius “rand * R ' respectively As, i + x = Qand oy = oy\n[Surface charge density are equal]\nSE\nCre Re\nSo, = fi ond gy =\nNow, potential, V = z= [% + §]\nte oer\nRET Ee ae\n_Q(R4r) 1\nTRA Tre\n36. The flat base of a hemisphere of radius a with no charge inside it lies in a horizontal plane. A uniform\nelectric field £ is applied at an angle ¥ with the vertical direction. The electric flux through the curved\n459 2\nsurface of the hemisphere is\nWw pa2p ®) 2g\n©) wx 0) (riam0tm\nEx 2 faint\n(4 mak, ~1ot 8 wrong answer] 2012 (19 May)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 36,
+    "page": 12,
+    "question_text": "g; and g, be charge on two spheres of radius “rand * R ' respectively As, i + x = Qand oy = oy [Surface charge density are equal] SE Cre Re So, = fi ond gy = Now, potential, V = z= [% + §] te oer RET Ee ae _Q(R4r) 1 TRA Tre 36. The flat base of a hemisphere of radius a with no charge inside it lies in a horizontal plane. A uniform electric field £ is applied at an angle ¥ with the vertical direction. The electric flux through the curved 459 2 surface of the hemisphere is Ww pa2p ®) 2g ©) wx 0) (riam0tm Ex 2 faint",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417462/edvedum_physics/electrostatics/p12_span1_y631_h169.png",
+    "solution_image_url": null,
+    "solution": "‘We know that,\no=fBas = Bf dscomss\nIn case of hemisphere\nPeurved = Betvcular\nTherefore, Gourved = Ewa? + J; = Ls",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 37,
+    "page": 13,
+    "question_text": "Three positive charges of equal value g are placed at vertices of an equilateral triangle. The resulting lines of force should be sketched as in",
+    "options": [
+      "[:] v \\Y _ (©) | | ©) ’",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417465/edvedum_physics/electrostatics/p13_span3_y518_h209.png",
+    "solution": "Electric lines of force due to a positive charge is spherically symmetric. All the charges are positive and equal in\nmagnitude. So repulsion takes place. Due to which no lines of force are present insida the equilateral triangle and\nthe resulting lines of force obtained as shown: S€\n38. A charge Qis uniformly distributed over a long rod AB of length L as shown in the figure. The electric\npotential at the point O lying at a distance L from the end Ais :\n0 A ZZZZ77777777777777 B\nw qo ® Qu?\n4meoLin2 4meoL\n© q © 39\nBrel armel\nmarks, 1 ora wisng answer 2013107 Ap\nElectric lines of force due to a positive charge is spherically symmetric. All the charges are positive and equal in\nmagnitude. So repulsion takes place. Due to which no lines of force are present insida the equilateral triangle and",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 38,
+    "page": 13,
+    "question_text": "resulting lines of force obtained as shown: S€ 38. A charge Qis uniformly distributed over a long rod AB of length L as shown in the figure. The electric potential at the point O lying at a distance L from the end Ais : 0 A ZZZZ77777777777777 B w qo ® Qu? 4meoLin2 4meoL © q © 39 Brel armel",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417465/edvedum_physics/electrostatics/p13_span1_y96_h132.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417465/edvedum_physics/electrostatics/p13_span3_y518_h209.png",
+    "solution": "| L i,\n—\n_—\n| a),\nv= [kia mL ©) Se.\nThre x %",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 39,
+    "page": 14,
+    "question_text": "Two charges, each equal to q, are kept at x = —a and x = a on the x-axis. A particle of mass m and",
+    "options": [
+      "along the y- axis, the net force acting on the particle is proportional to : a1 [DR ¥. 3 (C) © y (Do) v",
+      "(B)",
+      "© y (Do) v",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p14_span4_y1080_h164.png",
+    "solution": "v\n-q2\nF, BC) F\nal ho x\n— | —————>\nq 4 a gq\nFsinf Fsinb\n=> Fue = 2F cosh) Fra =\n(Vira) \\V +a\n2Fcosd\na\nFa = a(5)v 7 (*) y= F x (—y) Netforce F is opposite the direction of displacement y. Hence,\nwa a\nnegative sign is used.\n40. Two balls of same mass and carrying equal charge are hung from a fixed support of length [. At\nelectrostatic equilibrium, assuming that angles made by each thread is small, the separation, =\nbetween the balls is proportional to :\nw ®\n©) prs (D) jis\n18 macks, 1 or 8 wrong anaes 2013 (08 AB)\nv\n-q2\nF, BC) F",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 40,
+    "page": 14,
+    "question_text": "ho x — | —————> q 4 a gq Fsinf Fsinb => Fue = 2F cosh) Fra = (Vira) \\V +a 2Fcosd a Fa = a(5)v 7 (*) y= F x (—y) Netforce F is opposite the direction of displacement y. Hence, wa a negative sign is used. 40. Two balls of same mass and carrying equal charge are hung from a fixed support of length [. At electrostatic equilibrium, assuming that angles made by each thread is small, the separation, = between the balls is proportional to : w ® ©) prs (D) jis 18 macks, 1 or 8 wrong anaes 2013 (08 AB)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p14_span4_y1080_h164.png",
+    "solution": "¢\nVj 0 Teos 0 In equilibrium, F, = Tsinf mg = T'cosf\nie SE... .\nx q\nmg\ntnd = £ = of aso tand sin = 4 Hence, § = gti = 0 = 2 a = (20)\nTherefore x ox £1/*",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 41,
+    "page": 15,
+    "question_text": "Two point dipoles of dipole moment 75 and j are at a distance from each other and i ||ji2- The force between the dipoles is :",
+    "options": [
+      "1g ® 1 y © tn eo",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p15_span2_y793_h134.png",
+    "solution": "9 +q\nForce of interaction F = gh - 2B P:\n<q\n— r —\n42. 7yo small equal point charges of magnitude g are suspended from a common point on the ceiling by\ninsulating mass less strings of equal lengths. They come to equilibrium with each string making angle #\nfrom the vertical. If the mass of each charge is mm, then the electrostatic potential at the centre of line\nJoining them will be\n1\nak)\n=]\n(A) 2 /fmg tan d 8) lng tan\n(©) 4 /Emgtan® 0) 4\\/kmg/ tan6\n14 mrs, 1 for a rong answer 2013 (22 Ap",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 42,
+    "page": 15,
+    "question_text": "+q Force of interaction F = gh - 2B P: <q — r — 42. 7yo small equal point charges of magnitude g are suspended from a common point on the ceiling by insulating mass less strings of equal lengths. They come to equilibrium with each string making angle # from the vertical. If the mass of each charge is mm, then the electrostatic potential at the centre of line Joining them will be 1 ak) =]",
+    "options": [
+      "2 /fmg tan d 8) lng tan (©) 4 /Emgtan® 0) 4\\/kmg/ tan6 14 mrs, 1 for a rong answer 2013 (22 Ap",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p15_span2_y793_h134.png",
+    "solution": "Q\nmg = Tcosf\nTeosd\ng B= ——\n4 Ja In equilibrium, F, = Tsind mg dmegz® x mg gectric\nd o bh W a\n«—x F, “= \\ Treg tantmyg\nmg\nkg ka _\npotential at the centre of the line V = Ata 4y/kmg] tans\nx\n43. A point charge of magnitude +1,C is fixed at (0, 0, 0). An isolated uncharged spherical conductor, is\nfixed with its center at (4,0, 0). The potential and the induced electric field at the centre of the sphere\nis:\n(A) 1 § x 10° V and —5.625 x 10° V/m 8) Vand V/m\n(©) 9.95 x 10° V and —5.625 x 10° V/m 0) 525 x 10° Vand 0 V/m\n14 marks, 1 for a wrong answer 2013 (22 Apr\nQ",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 43,
+    "page": 15,
+    "question_text": "= Tcosf Teosd g B= —— 4 Ja In equilibrium, F, = Tsind mg dmegz® x mg gectric d o bh W a «—x F, “= \\ Treg tantmyg mg kg ka _ potential at the centre of the line V = Ata 4y/kmg] tans x 43. A point charge of magnitude +1,C is fixed at (0, 0, 0). An isolated uncharged spherical conductor, is fixed with its center at (4,0, 0). The potential and the induced electric field at the centre of the sphere is:",
+    "options": [
+      "1 § x 10° V and —5.625 x 10° V/m 8) Vand V/m (©) 9.95 x 10° V and —5.625 x 10° V/m 0) 525 x 10° Vand 0 V/m",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p15_span1_y236_h137.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p15_span2_y793_h134.png",
+    "solution": "q=1uC=1x10°C\nr=4em=4x10\"m\nPotential V = 4\n_9x10°x10°¢\nCoax?\n=225 x10\" V.\nInduced electric field E = — 4\n9x10°x1x10°°\n= eRi0T S62 x10°V/m",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 44,
+    "page": 16,
+    "question_text": "aliquid drop having 6 excess electrons is kept stationary under a uniform electric field of 25.5 kVm™. The density of liquid is 1,26 x 10° kg m~\". The radius of the drop is (neglect buoyancy).",
+    "options": [
+      "435107 m 8) 78%10\"m (© 0,078 x 107m © 345107 m",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "F=qE =mg(q=6¢=6x16x10\")\nDensity(d) = -e- =\nort 2\nPutting the value of d and m (= £) and\nsolving we getr = 7.8 x 10 \"m\n45. Consider a finite insulated, uncharged conductor placed near a finite positively charged conductor. The\nuncharged body must have a potential :\n(A) less than the charged conductor and more (B) more than the charged conductor and less than\nthan at infinity. at infinity.\n(C) more than the charged conductor and more (D) less than the charged conductor and less than\nthan at infinity. at infinity.\nmarks, 1 or. wieng answer 2013 123 Ap\nF=qE =mg(q=6¢=6x16x10\")\nDensity(d) = -e- =",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 45,
+    "page": 16,
+    "question_text": "2 Putting the value of d and m (= £) and solving we getr = 7.8 x 10 \"m 45. Consider a finite insulated, uncharged conductor placed near a finite positively charged conductor. The uncharged body must have a potential :",
+    "options": [
+      "less than the charged conductor and more",
+      "more than the charged conductor and less than than at infinity. at infinity.",
+      "more than the charged conductor and more",
+      "less than the charged conductor and less than than at infinity. at infinity."
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "‘The potential of uncharged body is less than that of the charged conductor and more than at infinity.\n46. The surface charge density of a thin charged disc of radius R is a. The value of the electric field at the\ncentre of the disc is 32. With respect to the field at the centre, the electric field along the axis at a\ndistance R from the centre of the disc:\n(A) reduces by 70.7% (B) reduces by 29.3%\n(©) reduces by 9.7% ©) requces by 14.6%\n(4 mass, 1 or wiong answer 2013 (25 Apr)\n‘The potential of uncharged body is less than that of the charged conductor and more than at infinity.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 46,
+    "page": 16,
+    "question_text": "The surface charge density of a thin charged disc of radius R is a. The value of the electric field at the centre of the disc is 32. With respect to the field at the centre, the electric field along the axis at a distance R from the centre of the disc:",
+    "options": [
+      "reduces by 70.7%",
+      "reduces by 29.3% (©) reduces by 9.7% ©) requces by 14.6%",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Electric field intensity at the centre of the disc.\nCie\nB= (given)\nElectric field along the axis at any distance z from the centre of the disc\n- x\nv=% (1-5)\nFrom question, x = R (radius of disc)\na R\nSEs — (1h ——\n= (7m)\n_o (yR-R\n“2 \\ VR\n4\n“hE\n=. % reduction in the value of electric field\n= (E- £E) «100 _ 1000 =\n= = = %=T07%",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 47,
+    "page": 17,
+    "question_text": "This question has Statement-1and Statement-2. Of the four choices given after the Statements, choose the one that best describes the two Statements. Statement 1: No work is required to be done to move a test charge between any two points on an equipotential surface. Statement 2 : Electric lines of force at the equipotential surfaces are mutually perpendicular to each other.",
+    "options": [
+      "statement 1is true, Statement 2 is true,",
+      "Statement 1is true, Statement 2 is true, Statement 2 is the correct explanation of Statement 2 is not the correct explanation of Statement 1. Statement 1.",
+      "Statement 1is true, Statement 2 is false.",
+      "Statement 1is false, Statement 2 is true."
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p17_span1_y1243_h122.png",
+    "solution": "The work done is moving a charge along an equipotential surface is always zero.\nThe direction of electric field is perpendicular to the equipotential surface or lines.\n48. Assume that an electric field E — 3027 exists in space. Then the potential difference Vx — Vo,\nwhere VO is the potential at the origin and VA the potential at x = 2 ms :\nW 1207¢- ® 120701\n(© gogo © gyro\n14 maeks, <1 for wrang answer] 2004 (06 Ap)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 48,
+    "page": 17,
+    "question_text": "work done is moving a charge along an equipotential surface is always zero. The direction of electric field is perpendicular to the equipotential surface or lines. 48. Assume that an electric field E — 3027 exists in space. Then the potential difference Vx — Vo, where VO is the potential at the origin and VA the potential at x = 2 ms : W 1207¢- ® 120701 (© gogo © gyro 14 maeks, <1 for wrang answer] 2004 (06 Ap)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p17_span1_y1243_h122.png",
+    "solution": "dV = Ed\nIntegrating both sides,\nJirav = -30[3ade\n2\nVi-Vo= [ZF] = -80JC*\n3h\n49. The magnitude of the average electric field normally present in the atmosphere just above the surface\nof the Earth is about 150N /C, directed inward towards the center of the Earth. This gives the total net\nsurface charge carried by the Earth to be : [Given : £¢ = 8.85 x 10-12C?/N-m® Rg = 6.37 x 10°m]\nW _ggorc © | 6r0kC\n(©); gs0kC ©) _g70k¢\n18 marks, for wrong aiswer 201 (09 Apr",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 49,
+    "page": 17,
+    "question_text": "= Ed Integrating both sides, Jirav = -30[3ade 2 Vi-Vo= [ZF] = -80JC* 3h 49. The magnitude of the average electric field normally present in the atmosphere just above the surface of the Earth is about 150N /C, directed inward towards the center of the Earth. This gives the total net surface charge carried by the Earth to be : [Given : £¢ = 8.85 x 10-12C?/N-m® Rg = 6.37 x 10°m] W _ggorc © | 6r0kC (©); gs0kC ©) _g70k¢",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p17_span1_y1243_h122.png",
+    "solution": "E = 150N/C We know that ¢ = E . & = E x dar? = 150 x 4x x ()(R.)\" Now, ¢ = Se\nje Q, = $€, = 150 x 4x()(R.)!) x 8.85 x 10C\n= 150 x 4n{} {6.37 x 10°}') x 8.85 x 10 = 6007 x 6.37 x 6.37 x 8.85C — G80KC As Electric field is inward,\nQ will be negative",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 50,
+    "page": 18,
+    "question_text": "A cone of base radius R and height h is located in a uniform electric field parallel to its base. The electric flux entering the cone is: (0) {ERR (B) ERR (© 2EnR ©) 4gnR",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p18_span2_y995_h82.png",
+    "solution": "Electric flux, ¢ = E(ds) cos 0 = E(hR) cos0’ = ERR\n51. A spherically symmetric charge distribution is characterised by a charge density having the following\nvariations:\npr) =p (1- fF) torr <R\npr) =0forr > R\nWhere r is the distance from the centre of the charge distribution p, is a constant. The electric field at\nan internal point (r < R) is:\n(ay 2a ®) (rr i\n&G- i) a (s-)\n(©) Ee ol (0) Pa\n& (5 = &) Be (5 ~5)\n(8 vias, ior a wing ans 20% 12 Ape\nElectric flux, ¢ = E(ds) cos 0 = E(hR) cos0’ = ERR",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 51,
+    "page": 18,
+    "question_text": "A spherically symmetric charge distribution is characterised by a charge density having the following variations: pr) =p (1- fF) torr <R pr) =0forr > R Where r is the distance from the centre of the charge distribution p, is a constant. The electric field at an internal point (r < R) is: (ay 2a ®) (rr i &G- i) a (s-) (©) Ee ol (0) Pa & (5 = &) Be (5 ~5) (8 vias, ior a wing ans 20% 12 Ape",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p18_span2_y995_h82.png",
+    "solution": "d\nLet us consider a spherical shell of radius T and thickness dx. (=)\nShell,\nCharge on this shell dg = p.Anz’dz = py (1 - 2) +4wz*dx .\". Total charge in the spherical region from centre to\n= = TA\na= [an=mn | (r= 7)\na ar\n=tap [5 = =\nrir <R)is SHE i “\\Electric field atr, E = 7L-. %\nwl]\n1 r\n=4xpr® [ - =\nal FEES\n“4m 2 |3 4R\npro\nTe [3 aR\n52. the electric field in a region of space is given by,  — Eyi + 2E,] where Ey = 100NC~\". The flux\nof this field through a circular surface of radius 0.02m parallel to the Y-Z plane is nearly\n(A) g.02Nm2C-1 (8) 0.005 Nm2C 1\n(© g1258m2C ©) 314m?!\n14 marks, 1 or a wrong answer 20% 16 Ape)\nd",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 52,
+    "page": 18,
+    "question_text": "us consider a spherical shell of radius T and thickness dx. (=) Shell, Charge on this shell dg = p.Anz’dz = py (1 - 2) +4wz*dx .\". Total charge in the spherical region from centre to = = TA a= [an=mn | (r= 7) a ar =tap [5 = = rir <R)is SHE i “\\Electric field atr, E = 7L-. % wl] 1 r =4xpr® [ - = al FEES “4m 2 |3 4R pro Te [3 aR 52. the electric field in a region of space is given by,  — Eyi + 2E,] where Ey = 100NC~\". The flux of this field through a circular surface of radius 0.02m parallel to the Y-Z plane is nearly",
+    "options": [
+      "g.02Nm2C-1 (8) 0.005 Nm2C 1 (© g1258m2C ©) 314m?!",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p18_span2_y995_h82.png",
+    "solution": "4=E. A= (B+ 2B) - (mr?)\n= Egmr? = 0.125Nm?C +",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 53,
+    "page": 19,
+    "question_text": "Along cylindrical shell carries positive surface charge o in the upper half and negative surface charge —orin the lower half. The electric field lines around the cylinder will look like figure given in: (figures are schematic and not drawn to scale)",
+    "options": [
+      "(8) all a Ea SSE (k) (© 0)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417470/edvedum_physics/electrostatics/p19_span1_y142_h159.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417471/edvedum_physics/electrostatics/p19_span3_y686_h127.png",
+    "solution": "Using the properties of a dipole and laws of electric field line where two lines should not intersect, the graph would\ni} GC D)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 54,
+    "page": 20,
+    "question_text": "A uniformly charged solid sphere of radius R has potential Vg (measured with respect to oc) on its surface. For this sphere the equipotential surfaces with potential Wh, 2, LLC and Y have radius Ri. Ry, Ry and Ry respectively. Then Note : This question had two option correct at the time of examination. Proper corrections are made in the question to avoid it. op Rr, 8) RB, —0and R; > (Ry — Ry) ©) Ry #0and (Ry — Ry) > (Ru — Ry) ©) R, — 0and Ry < (Ri — Rs)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417472/edvedum_physics/electrostatics/p20_span1_y346_h271.png",
+    "solution_image_url": null,
+    "solution": "19\nPotential for uniformly charged solid sphere v = —— ==\nTrex\n— 19 1/QT8_ 1a 3vo Sve\noutsideier>Rv = TR Tees yi TRE ls - IR inside i.e. r < R Clearly icy, ae aie\n2\npotentials [> vo] nn are outside potentials [-/< vg] To get Ry: ES * =3 E = |\n19 3 o_ rQfs 1ri]s 3 1®\nhere, vo= po ———2=——3 2 _ Sol] ZZ\" ~0TogetRy:\nher Yo = aR Ix dre R | GmR [2 2R 3-3 Ip TMM\n51 Q[38_1R}j5 1 Q_ 1 Q[$ 1R}Is 3 1R}1R} 1 RB\nbride es H IR] TeaR \"Ter |l Mii IRIE A\nGuy 1 QAM Q ING 5 ge Bd, 08 ER\nRi = ral 1m R refs RR 0-30 Re = 50\n\"tg a. AR _ BR % =\nix Tar - Tra B= RR -Ri=4R- ===> RR, =0andR, < (Ry ~ Rg)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 55,
+    "page": 21,
+    "question_text": "A thin disc of radius b = 2a has a concentric hole of radius a in it (see figure). It carries uniform",
+    "options": [
+      "from its centre is given as Ch then the value of C'is I | | a ao ® a dae; ae © o © a 5aen 2ae0",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417472/edvedum_physics/electrostatics/p21_span1_y196_h209.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417472/edvedum_physics/electrostatics/p21_span2_y642_h218.png",
+    "solution": "*.* At the axial point of a uniformly charged disc electric field is given by, E = = (1 ~ cosh)\n: \\\n[x By superposition principle, when inner disc is.\nh\nLa\nremoved , then, electric field due to remaining disc is, i\na a a h h\nB= (1 cout) — (1 cond) = 57 [cond — cost] = So £ |\n=e LR CO JS e_ oh _h]_o[h_h]_ oh\nED | I = aE Ee\nalt= 45\n-\nC=",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 56,
+    "page": 22,
+    "question_text": "Shown in the figure are two point charges +(Q and —Q inside the cavity of a spherical shell. The charges are kept near the surface of the cavity on opposite sides of the centre of the shell. If oy is the surface charge on the inner surface and (; net charge on it and 2 the surface charge on the outer surface and Qa net charge on it then Wy —0,Q,=0,0,=0,Q,=0 ® 6 £0,Q,=0,0, #0,Q, = 0 ©, £0,Q, 40,0, #0,Q, #0 © 6, #0,Q,=0,0,=0,Q,=0",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "By the property of electrostatic shielding In the conductors = in the conductor. So, electric flux, through a\ndotted Gaussian surface as shown\n|\n|\n-\n-\" a\n. ~\n’ “o\n” >,\n\" .\n’ %\n’ LY\n| K \\\n1 1\n1 1\nH 8\nH 1\n' I\n' []\n| Ly 4\n5 ’\n~ ¢\nN ’\n~ .\n~ .\n~ PA\nSu -”\na m-\nThe net enclosed charge through the Gaussian surface= 0,=> The net charge Q; on the inner surface= 0, but the\nequal and opposite induced charge on the surface will be distributed non uniformly on the inner surface So, oy = 0\nQi = Don the inner surface So, net charge Qs — 0 on the outer surface as conductor is neutral but - outer\nsurface is free from any electric field so no charge density exists on the outer surface. So, oy = 0 -",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 57,
+    "page": 24,
+    "question_text": "A wire of length L = 20cm is bent into a semi-circular arc and the two equal halves of the arc are uniformly charged with charges -+(Q and —Q as shown in the figure. The magnitude of the charge on each half is |Q| = 10%, where ey is the permittivity of free the space. The net electric field at the » rte +5 NC ry i centre O is + =. + = if = * = 0 0 WA (25 x 10) NC 8) (50 x 10%) INC? © (25 x 10) jne! ©) (50 x 10°) jNC!",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417473/edvedum_physics/electrostatics/p24_span1_y132_h142.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417473/edvedum_physics/electrostatics/p24_span2_y500_h232.png",
+    "solution": "I il\nx ++ =\naE </\nWy =\n+ =\nig = L_ 2 1\nys = EC RE\n3 A = L=mRsR=7= m= tm dena\npy =\nC[NI5°f £ 1\nBE EE\nV2 E =E\n+++\n235 44\ncharge arc, electric field at centre is given by F Es sin R\nE\n25 90\nEy =Ey= \"sinh = pe undefined Component along } gets cancelled and E,, = v/2E, = Ee\n_4x1(10%)  4x10% 10° 100\nET a ( 1 y =BXI0 5 wx 10NC\ni",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 58,
+    "page": 25,
+    "question_text": "An electric field B = (25 + 30j) NC\" exists in a region of space. If the potential at the origin is taken to be zero then the potential at z = 2m, y = 2m is:",
+    "options": [
+      "_1105¢- 8) 1400! ©) _y3050-1 © i950 [I p———— TY",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "AV = BAF\nV=0=- (251 + 305). (24 + 25)\n=~ (50 +60)\nV = ~10volt= ~110JC",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 59,
+    "page": 26,
+    "question_text": "The region between two concentric spheres of radii ‘a’ and 'b', respectively (see figure), has volume charge density p — A, where Ais a constant and ris the distance from the centre. At the centre of r the spheres is a point charge Q. The value of A such that the electric field in the region between the oo = €",
+    "options": [
+      "2Q ® 20 (a —b%) Ta? © Q (©) Q 2na? 2 (B — a?)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417474/edvedum_physics/electrostatics/p26_span1_y120_h367.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417475/edvedum_physics/electrostatics/p26_span2_y751_h298.png",
+    "solution": "E=KQ;\n3\n+ grated\n@ I er\nEF EO A 75\nre)\nQ a \\]dE Q  8mda® Q\ns-x[2 + wa {r 3) F023 m=",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 60,
+    "page": 27,
+    "question_text": "The potential (in volts) of a charge distribution is given by V (2) = 30 — 52% for [2] < 1m V (2) = 35-102] for [2] > Im. V (z) does not depend on x and y. if this potential is generated by a constant charge per unit volume py (in units of e; ) which is spread over a certain region, then choose the correct statement.",
+    "options": [
+      "5, — 20¢, in the entire region 18) py, = 10e for [2] < 1m and py = 0 else where (©) Jy — 20¢) for |2| < lm and py = 0 else (0), — 40eq in the entire region where",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Electric field due to given potentials is\nE= & — 10z|for | = |< 1m. Here E is proportional to 2, so charge distribution is continuous for [2] < Lm\n=\nEy= a = 10 for [2] = Lm. Here, E, is constant.\nSo, using the Poisson's equation V2V = — £ wegetp = 0.\no\n+. The source is an infinity large non-conducting thick plate.\nHence, consider a cylindrical Gaussian surface:\nApplying Gauss's law for | z |< Im\nTah mba\nE)\n= (105) (24) = 2242)\n@\n= pu = 10eg for [2] < 1m.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 61,
+    "page": 28,
+    "question_text": "Within a spherical charge distribution of charge density p (r) , N equipotential surfaces of potential Vo, Vo +AV, Vy + 2AV,... V+ NAV (AV > 0) , are drawn and have increasing radii r0,71,71,.. TN, respectively. If the difference in the radii of the surfaces is constant for all values of VoandAV then :",
+    "options": [
+      "od (8) 1 p(r) = constant HE fc © 1 0) o pr) ox = pr) ocr r",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417475/edvedum_physics/electrostatics/p28_span1_y339_h330.png",
+    "solution_image_url": null,
+    "solution": "| | K iP ¥ 2A\n|\nVo 0 TRV 0 t2Av\n| E= a 2 Avand Ar are constant Ea constant B= X8 = cm gc gm [iptartdr = pox *\no 7 v\nl\n62. pn electric dipole has fixed dipole moment 5, which makes angle § with respect to z—axis. When\nsubjected to an electric field £, = Ei, it experiences a torque Ty = 7k. When subjected to another\nelectric field Ez» = y/3E1j it experiences a torque Ty — —T'; . The angle f is:\n(A) gg0 ® 300\n(©) 450 ©) goo\na marks, -1 fo a wiong answer] 2017 (02 Agr)\n| | K iP ¥ 2A\n|",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 62,
+    "page": 28,
+    "question_text": "0 TRV 0 t2Av | E= a 2 Avand Ar are constant Ea constant B= X8 = cm gc gm [iptartdr = pox * o 7 v l 62. pn electric dipole has fixed dipole moment 5, which makes angle § with respect to z—axis. When subjected to an electric field £, = Ei, it experiences a torque Ty = 7k. When subjected to another electric field Ez» = y/3E1j it experiences a torque Ty — —T'; . The angle f is:",
+    "options": [
+      "gg0 ® 300 (©) 450 ©) goo",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417475/edvedum_physics/electrostatics/p28_span1_y339_h330.png",
+    "solution_image_url": null,
+    "solution": "P= Pcosbi + Psinfj\nF= (Peosoi + Ping} x (&7)\n[ ;\n~~ PEsinfk\nTy = (Peosti + Psingj) x (VAE])\n= BPE cos ik\nTy=-T,\ncosind = V3cosd\nctand = V3\n0= 60°",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 63,
+    "page": 29,
+    "question_text": "The energy stored in the electric field produced by a metal sphere is 4.5.J. If the sphere contains 4uC’ charge, its radius will be: [rake \"L- 9x 10 Nme-?) Ing,",
+    "options": [
+      "39mm 8) 16mm (©) 28mm ©) 20mm",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Energy of sphere Q\ngy = bral\n16x 10°12\nO=—=c\n1\nFILLED er\n0\n116x102 1\na\n2\nR= 16 x 10 .\n9 Amen\n“0x10 x10 -\n=16 x 107% = 16mm\n64. There is a uniform electrostatic field in a region. The potential at various points on a small sphere\ncentred at P, in the region, is found to vary between the limits 589.0 to 589.8V\". What is the potential\nata point on the sphere whose radius vector makes an angle of 60° with the direction of the field?\nWA 589.47 8) 589.51\n(© 589.27 ©) 589.6\n4 mks, 1 era wrong answer) 201708 Ap\nEnergy of sphere Q",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 64,
+    "page": 29,
+    "question_text": "= bral 16x 10°12 O=—=c 1 FILLED er 0 116x102 1 a 2 R= 16 x 10 . 9 Amen “0x10 x10 - =16 x 107% = 16mm 64. There is a uniform electrostatic field in a region. The potential at various points on a small sphere centred at P, in the region, is found to vary between the limits 589.0 to 589.8V\". What is the potential ata point on the sphere whose radius vector makes an angle of 60° with the direction of the field? WA 589.47 8) 589.51 (© 589.27 ©) 589.6 4 mks, 1 era wrong answer) 201708 Ap",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "— MT\nE\n> AV = Ed AlongdiameterAV = 580.8 ~ 580.0V = 0.8V\nP d B\n-\n(&)\n0.8 = EdNow d, AV = Bf cos = 0.4 x cont’ = 02\n60°\nA\n589.8 - V =0.2V = 580.6V",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 65,
+    "page": 30,
+    "question_text": "Four closed surfaces and corresponding charge distributions are shown below. 3 5; \\ 2 | ® 3g 5; IS 1 Let the respective electric fluxes through the surfaces be &,, ¢y, ¢3 and ¢,. Then: Wg >> 65> 6 1B) gy < = 03> 64 © 41> 43:92 < 04 ©) gy = gr = gy = 4",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417475/edvedum_physics/electrostatics/p30_span1_y39_h210.png",
+    "solution_image_url": null,
+    "solution": "By Gauss law,\n4 Efe\n- ©\n3 Gendosed is S3me in all cases.\n= 5 bo samen alt four cases",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 66,
+    "page": 31,
+    "question_text": "Three concentric metal shells A, B and C of respective radii a, band c(a < b < c) have surface charge densities +0, —o and +a respectively. The potential of shell B is:",
+    "options": [
+      "5 rp2—c2",
+      "45 ra? —p? gftad, fled of € c € a Self ] . = ] — |—— +c —|——+a ol b ol b",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "G\n0\nNet potential at B is due to the superposition of potential due to all shells, V5 = Vag) + Var + Vaum\n’ P 2g\n_ Kiros | Kirt? (0) | Kic(2) paqurad potential of b 22 _ 70 0€ _@ (a=\nb b c ab eb oc a b",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 67,
+    "page": 32,
+    "question_text": "5 charge Q is placed at a distance z above the centre of a square surface of side length a. The electric flux through the square surface due to the charge would be? P al2 Ee —— a w Q ® Q Bey 2%, © Q 0) Q Beg €@",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417476/edvedum_physics/electrostatics/p32_span2_y679_h195.png",
+    "solution": "[1%\nfan\n‘Charged particle can be considered at centre of a cube of side a,\nA —\na\nand given surface represents its one face. So, flux é = 2\n8. 4 body of mass M and charge q is connected to a spring of spring constant k. It is oscillating along x-\ndirection about its equilibrium position, taken to be at z = 0, with an amplitude A. An electric field E is\napplied along the x-direction. Which of the following statements is correct?\n(A) The total energy of the system is {B) The new equilibrium position is at a distance:\n1 oy, 1K? XE fromz = 0\n242\nmw? + ——\nLalas\n(C) The new equilibrium position is at a distance:  (D) The total energy of the system is\nE\n4 fromx = 0 mutA? — J LE\n(4 mike, 1 for wrong answer 2018 (15 Apr, SH 1\n[1%\nfan\n‘Charged particle can be considered at centre of a cube of side a,",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 68,
+    "page": 32,
+    "question_text": "— a and given surface represents its one face. So, flux é = 2 8. 4 body of mass M and charge q is connected to a spring of spring constant k. It is oscillating along x- direction about its equilibrium position, taken to be at z = 0, with an amplitude A. An electric field E is applied along the x-direction. Which of the following statements is correct?",
+    "options": [
+      "The total energy of the system is {",
+      "The new equilibrium position is at a distance: 1 oy, 1K? XE fromz = 0 242 mw? + —— Lalas",
+      "The new equilibrium position is at a distance:",
+      "The total energy of the system is E 4 fromx = 0 mutA? — J LE"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417476/edvedum_physics/electrostatics/p32_span2_y679_h195.png",
+    "solution": "Equilibrium position will shift to point where resultant force — (\nE\nIg =qE = xq = T\nTotal energy = 4 mw? A” + dk,\nTotal energy — dmw?A® + 18",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 69,
+    "page": 33,
+    "question_text": "4 charge Q is placed at a distance a/2 above the centre of the square surface of edge a as shown in the figure. The electric flux through the square surface is: [1] == a a ® o 3eq Geo. © qo 0) 2 a",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "‘When cube is of side a and point charge Q is at the center of the cube then the total electric flux due to this charge\nwill pass evenly through the six faces of the cube. So, the electric flux through one face will be equal to 1/6 of the\ntotal electric flux due to this charge.\nFlux through 6 faces = &\n.. Flux through 1 face, = 3\n70. [12]\nA solid ball of radius R has a charge density p given by p = py (1 — £) for 0 <r < R. The electric\nfield outside the ball is:\n(A) p52 8) spr\n7 E—3\n©) sug’ ©) pg\nSar? aL\n4 ks, or 3 wrong answer] 2018 15 Ag, SR 3)\n‘When cube is of side a and point charge Q is at the center of the cube then the total electric flux due to this charge",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 70,
+    "page": 33,
+    "question_text": "pass evenly through the six faces of the cube. So, the electric flux through one face will be equal to 1/6 of the total electric flux due to this charge. Flux through 6 faces = & .. Flux through 1 face, = 3 70. [12] A solid ball of radius R has a charge density p given by p = py (1 — £) for 0 <r < R. The electric field outside the ball is:",
+    "options": [
+      "p52 8) spr 7 E—3 ©) sug’ ©) pg Sar? aL 4 ks, or 3 wrong answer] 2018 15 Ag, SR 3)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Charge density, p = py (1 ~ §)\ndg = pdo\n= [aa = pdv\n=p (1 F)dmrtdr (do = dma)\n®\nr\n“am | (r- &)ridr\n= ax [rr - Zar\ni [2] [ATH\n=e ly] ~JuR|,\nry [FS BY\n~|3 ar\n= [55] = oon [5]\nCe\nR\nEdxr® = (=)\n=r -\n7. Electric field outside the ball, El = 52",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 71,
+    "page": 34,
+    "question_text": "Two identical conducting spheres A and B carry an equal charges. They are separated by a distance much larger than their diameters, and the force between them is F. A third identical conducting sphere, €, is uncharged. Sphere Cs first touched to A, then to B, and then removed. As a result, the force between A and B would be equal to: a 3p ® F T 2 © ar © p 8 daa, 1 & whan aes 6 A",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417476/edvedum_physics/electrostatics/p34_span1_y345_h172.png",
+    "solution_image_url": null,
+    "solution": "F-= i when A and C\" ar touched charge on bath wil be J. Then when J and C are touched,\nE\n40 50, kaa Fri 3g 3\nwed Mp tum Poy Sh _Sp\nr [ 8 r 8\n72. Three charges +Q, g, +Q are placed respectively, at distance, 0, d/2 and d from the origin, on the z -\naxis. If the net force experienced by +@Q, placed at = 0, is zero, then value of is:\n[YS © +Q/a\n© _g4 © _g/\nF-= i when A and C\" ar touched charge on bath wil be J. Then when J and C are touched,\nE",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 72,
+    "page": 34,
+    "question_text": "50, kaa Fri 3g 3 wed Mp tum Poy Sh _Sp r [ 8 r 8 72. Three charges +Q, g, +Q are placed respectively, at distance, 0, d/2 and d from the origin, on the z - axis. If the net force experienced by +@Q, placed at = 0, is zero, then value of is: [YS © +Q/a © _g4 © _g/",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "092 a2\nFor net force on charge placed at origin is given as\n«a q «Q\n= BR 22s\nd @ where K is a constant. Solving the above equation, we get, g — 2 Hence, the charge\n()\nq= 2 such that net force on the charge + placed at origin is zero.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 73,
+    "page": 35,
+    "question_text": "For a uniformly charged ring of radius R, the electric field on ts axis has the largest magnitude at a distance h from its centre. Then value of h is: A p ®) gr v2 V5 © pya © p",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417476/edvedum_physics/electrostatics/p35_span3_y668_h80.png",
+    "solution": "|e\nh Ppt le\nElectric field ata distance h from centre on axis ~~ 4mea 3 Toget\n<< (R24 h2)2\nVs 1\nmonn, 98 0) QUE +K)T QR 4) 12h nm +x\nRr ny\n7a. Pe\nCharge is distributed within a sphere of radius R with 3 volume charge density |) _ A=\n5 3\nwhere A and a are constants. If Q is the total charge of this charge distribution, the radius R is:\na) (B)\nlo = alo 2\nChil PC l=\n2maA 2maA\n© Q © , Q\nIe 1- — pg? ; BR.\n“ os — 2 os at)\n4 marks, for 8 wrong answer] 2019 08 Jan, Shit 2)\n|e",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 74,
+    "page": 35,
+    "question_text": "Ppt le Electric field ata distance h from centre on axis ~~ 4mea 3 Toget << (R24 h2)2 Vs 1 monn, 98 0) QUE +K)T QR 4) 12h nm +x Rr ny 7a. Pe Charge is distributed within a sphere of radius R with 3 volume charge density |) _ A= 5 3 where A and a are constants. If Q is the total charge of this charge distribution, the radius R is:",
+    "options": [
+      "(A)",
+      "lo = alo 2 Chil PC l= 2maA 2maA © Q © , Q Ie 1- — pg? ; BR. “ os — 2 os at)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417476/edvedum_physics/electrostatics/p35_span1_y352_h63.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417476/edvedum_physics/electrostatics/p35_span3_y668_h80.png",
+    "solution": "ki\npny Le = Charge enclosed between r and r + dr is\nA »\ndg = p(r) dmridr To get total charge Q Q = [dg = [i Be wietrriin= - AmAZ [eel]\nmA etre R= nm (2 GA Ja_a [1\nQ=-aragle R= uli &s-1= Ce) |\nrad",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 75,
+    "page": 36,
+    "question_text": "Two point charges gi (v/104C) and g» (~25uC) are placed on the z-axis at z = lm and z = 4m respectively. The electric field (inV/ /m) at a point y = 3m on y-axis is, 1 PE Take— = 9 x 10'Nm*C* Ine w (sti +813) x10 ® (1 2 815) * 10° 1G (esi + 215) x 10° on (o3i . 215) x10 4 mats, ot ween answer] 209 (08 an, Sh 2)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "y\n0.3)\nElectric field due 10 y/10uC' 7\n1\n—25uC\nx\no (1,0) (4.0)\n$ o 1 VI0x10% oo\nBe = 07 Ts rte (1+ 33) simian, sictric fed cue to 254C\na _ 1 Bx1008, = ~i 8 4, 3.\nB= = -3j) Net electric field, = 9 x 10° x 10 Jaen ib)\n- BS) ir aon N\n=9x10° (& 3) = (si 215) x10",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 76,
+    "page": 37,
+    "question_text": "A charge Q is distributed over three concentric spherical shells of radii a, b, ¢ (a < b < ¢) such that their surface charge densities are equal to one another. The total potential at a point at distance r from their common centre, where r < a, would be:",
+    "options": [
+      "Q ® Qa?+b +e) meg (a+b +c) Ime (a® + B+) © Q ab+tbe+ca 0 Qa+b+c) 127, abe Ire, (@ +B +)",
+      "(B)",
+      "Ime (a® + B+) © Q ab+tbe+ca 0 Qa+b+c) 127, abe Ire, (@ +B +)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Surface charge densities of all sphere is given as ES = Ed = El = constant, where qu, ga and gs is charge on\nsphere of radius a, band ¢ respectively.\nQtata=Q\n__a(@Q\n\"ETTre\na\nBEERS\na= teens st port where» <aisgivenasy = Ee + Ku + KO, where is constant\n1 atbic\nv9 (Fs)\n77. Two electric dipoles, A, B with respective dipole moments dy — —4qai and dy — —2qaj are placed\non the z-axis with a separation R, as shown in the figure\nAap Piha\n———@—————@—— X Thedistance from A at which both\nof them produce the same potential is:\nwr ® ar\nv2-1 V2-1\n© sr © gr\nVZ+1 V2+1\n{8 macks, 1 for 8 wang answer 2018 (10 Jan, Shi 1\nSurface charge densities of all sphere is given as ES = Ed = El = constant, where qu, ga and gs is charge on\nsphere of radius a, band ¢ respectively.\nQtata=Q\n__a(@Q\n\"ETTre\na\nBEERS\na= teens st port where» <aisgivenasy = Ee + Ku + KO, where is constant",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 77,
+    "page": 37,
+    "question_text": "atbic v9 (Fs) 77. Two electric dipoles, A, B with respective dipole moments dy — —4qai and dy — —2qaj are placed on the z-axis with a separation R, as shown in the figure Aap Piha ———@—————@—— X Thedistance from A at which both of them produce the same potential is: wr ® ar v2-1 V2-1 © sr © gr VZ+1 V2+1",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "FEC SORRY - DIEU.\nX R-x Vi4Va=0\nDEE. —\nKdga  K2ga ’ VIR\n—_— =0z% = 2s — = | —\n2 amp ede R a= 5",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 78,
+    "page": 38,
+    "question_text": "Four equal point charges Q each are placed in the zy plane at (0,2) , (4,2) , (4, —2) and (0, —2) . The work required to put a fifth charge Q at the origin of the coordinate system will be: ag ® Arey 2V2rey © [] H (x + %) 1 (x + =) Ire, 5, Are, V3",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "‘Work done in bringing the fifth charge at origin is equal to change in the potential energy of the system of charges.\nWen = AU= Uy — Uy # U, = 0 (assumed)\n—uy-0= [EL KG  KG' KQ!\nWest = Uy o- FRR Se\nHence, the work done in bringing the fifth charge at the origin is\nSg ! ]\nwee 2 [115]",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 79,
+    "page": 39,
+    "question_text": "Charges —q and +4, located at A and B, respectively, constitute an electric dipole. Distance AB = 2a, O is the mid point of the dipole and OP is perpendicular to AB. A charge Q is placed at P where OP = y and y >> 2a. The charge () experiences an electrostatic force F. If Q is now moved sw , _(¥ y along the equatorial ine to P such that OF\" = (3 ) the force on Q will be close to( 3 << 2a of 1 . . H . . ' ' . ' ' QP’ . . H ' Ke JNCESEECEEEEEEE RrCEETEETEEEY 3 o -q tq H ' . ' i",
+    "options": [
+      "97p. ® F 3 © 35. ©) gp.",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Electric field intensity at the distance y along the perpendicular bisector is\nKP\n|B = 5\nSo, force at distance y on Q,\nKP\nFoo) -0(%)..)\nKP\nP=Qa=\n‘or\n3\nDividing (1) by (2), we get,\nYt - (3)°\nFeO\nLF =27F",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 80,
+    "page": 40,
+    "question_text": "Three charges Q, +y and -+q are placed at the vertices of a right-angle isosceles triangle as shown below. The net electrostatic energy of the configuration is zero, if the value of Q is >",
+    "options": [
+      "[0 i Ha Vir ©) a ©) _. Ti 2",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p40_span1_y263_h127.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p40_span2_y567_h119.png",
+    "solution": "Q\n4 a av?\nNet electrostatic energy for the system U = K [g +94 &] —0\n9 q\n4g==Q [v + Zl\na V2\nDPE.\nVZ4l\n81. The given graph shows variation (with distancer from centre) of:\ni\ni\nTy r\n(A) Electric field of a uniformly charged sphere (B) Potential of a uniformly charged spherical shell\n(C) Potential of a uniformly charged sphere (D) Electric field of a uniformly charged spherical\nshell\n(4 marks, =Vlor 8 wiong snswer) 2019 1 Jan, Set 1)\nQ",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 81,
+    "page": 40,
+    "question_text": "a av? Net electrostatic energy for the system U = K [g +94 &] —0 9 q 4g==Q [v + Zl a V2 DPE. VZ4l 81. The given graph shows variation (with distancer from centre) of: i i Ty r",
+    "options": [
+      "Electric field of a uniformly charged sphere",
+      "Potential of a uniformly charged spherical shell",
+      "Potential of a uniformly charged sphere",
+      "Electric field of a uniformly charged spherical shell"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p40_span1_y263_h127.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p40_span2_y567_h119.png",
+    "solution": "Electric potential is constant inside a charged spherical shell.\n82. An electric field of 1000 V/m is applied to an electric dipole at angle of 45°. The value of electric\ndipole moment is 10-2*C - m. What is the potential energy of the electric dipole?\nA 20x 103 ® _7x107)\n© 10x10) © 9102]\n(4 mars, 1 for wong answer 2019 (1 Jan, Shin 2)\nElectric potential is constant inside a charged spherical shell.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 82,
+    "page": 40,
+    "question_text": "An electric field of 1000 V/m is applied to an electric dipole at angle of 45°. The value of electric dipole moment is 10-2*C - m. What is the potential energy of the electric dipole? A 20x 103 ® _7x107) © 10x10) © 9102]",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p40_span2_y567_h119.png",
+    "solution": "Potential energy of a dipole is given by 17 — — BE\n= ~PEcasé\n[Where = angle between dipole and perpendicular to the field = — (10°) (10°) cas 45°\n= 0707 x10 MT = Tx 102]",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 83,
+    "page": 41,
+    "question_text": "There is a uniform spherically symmetric surface charge density at a distance Rj from the origin. The charge distribution is initially at rest and starts expanding because of mutual repulsion. The figure that represents best the speed V/ (R (t)) of the distribution as a function of its instantaneous radius R (f) is:",
+    "options": [
+      "(8) V(R(®) V(R(Y) R, RE R RO © (0) V(R(®) V(R(t)) R, R(H) R, RY) 5",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p41_span1_y189_h146.png",
+    "solution_image_url": null,
+    "solution": "UK =U + Ky\nK KQ 1\nA +0= Ee + gmat\nCe TR\nseg (2-1)\nKQ (1 1\nES (5 § 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 84,
+    "page": 42,
+    "question_text": "Determine the electric dipole moment of the system of three charges, placed on the vertices of an —2q equilateral triangle, as shown in the figure: ~~ J | | 1 +q WC | 1 x Wadi ® yaa V2 ©) 215 (0) it] (qt) i",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p42_span1_y81_h95.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p42_span3_y467_h142.png",
+    "solution": "9-9\ntis RB J\n|) =q | =q 2 Angle between them 60°, Resultant dipole moment\ntq 1 +4\nP= (gl)? + (g1)* + 2ql)\" cos60” = V3al As 2] = 24] direction of resultant is along negative y axis thus\noption is —/3q1}\n85. The bob of a simple pendulum has mass 2g and a charge of 5.0uC. Itis at rest in a uniform horizontal\nelectric field of intensity 2000 /m At equilibrium, the angle that the pendulum makes with the vertical\nis:\n(takeg = 10m/s?)\n(A) ant (0.2) 8) tan! (2.0)\n©) tan (0.5) ©) 445-1 (5.0)\n(mak, 1 or 8 wicng saswer 2010 108 Agr, Sit)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 85,
+    "page": 42,
+    "question_text": "9 tis RB J |) =q | =q 2 Angle between them 60°, Resultant dipole moment tq 1 +4 P= (gl)? + (g1)* + 2ql)\" cos60” = V3al As 2] = 24] direction of resultant is along negative y axis thus option is —/3q1} 85. The bob of a simple pendulum has mass 2g and a charge of 5.0uC. Itis at rest in a uniform horizontal electric field of intensity 2000 /m At equilibrium, the angle that the pendulum makes with the vertical is: (takeg = 10m/s?)",
+    "options": [
+      "ant (0.2) 8) tan! (2.0) ©) tan (0.5) ©) 445-1 (5.0) (mak, 1 or 8 wicng saswer 2010 108 Agr, Sit)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p42_span3_y467_h142.png",
+    "solution": "0\n_QE_5x10°x2000 1\nOF wol= = wixn 2\n0\nmg\n= 0= tan 1 (05)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 86,
+    "page": 43,
+    "question_text": "A solid conducting sphere, having a charge Q, is surrounded by an uncharged conducting hollow spherical shell. Let the potential difference between the surface of the solid sphere and that of the outer surface of the hollow shell be V/. If the shell is now given a charge of ~4@), the new potential difference between the same two surfaces is: A yy ® 5p © y © 4p",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p43_span1_y282_h230.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417477/edvedum_physics/electrostatics/p43_span2_y576_h257.png",
+    "solution": "Solid\nHollow\nFirst condition: Q (uncharged) gop, conducting spheres are shown,\ni)\n-Q\n+0\nVin = Vow = 2) 8 (3) SV= xo (x B 3) Second condition:\nBE) mn non\nTA\nVa-va= (£2159) E (2.1m) SEK ko(E-1) —v\nnoon CREE) non non",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 87,
+    "page": 44,
+    "question_text": "A positive point charge is released from rest at a distance ry from a positive line charge with uniform charge density. The speed (v) of the point charge, as a function of instantaneous distance r from line charge, is proportional to (A r ) (6) 7x vo (— oc Jn (2 n mila] (c) r (0) +r veh 2) = To voce To",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "1\nmet = gAV\n1 2 A Ld\nTmo? = gx == (In (=\n2 9 re ( (£)\n2 (mw ( 9)\nmre \\\" \\ 70\nHSA (mm (£)\niat fille\nvox y/ln (£)\nVow",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 88,
+    "page": 45,
+    "question_text": "The electric field in a region is given by E = (Az + B) i, where Eisin NC\" and z is in metres. The values of constants are A — 20S unit and B — 10S] unit. If the potential at = = 1is V; and that at z= —5is Vy, then V; — Vis",
+    "options": [
+      "3201 8) 5201 (© 101 ©) _ygy 8 rks, fora wiong answer] 2010 08 Age, Sv 21",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417478/edvedum_physics/electrostatics/p45_span3_y880_h215.png",
+    "solution": "Vi-Vi=- [Ede\n=~ [; (az +b) dx\na\n= [= + iu]\n2 o\n[fa ax\nSe [G +b) = (52 = »)]\n20\n< 3 \" 10-200]\n= 180V\n89. an electric dipole is formed by two equal and opposite charges g with separation d . The charges have\nsame mass m. It is kept in a uniform electric field E. If itis slightly rotated from its equilibrium\norientation, then its angular frequency w is:\nw, [E w 5\nVom \\ md\n© rE ©\nV 2ma V md\n4 ike, 1 for a wrong answet] 2019 08 Apr, Shin 21\nVi-Vi=- [Ede\n=~ [; (az +b) dx\na\n= [= + iu]",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 89,
+    "page": 45,
+    "question_text": "o [fa ax Se [G +b) = (52 = »)] 20 < 3 \" 10-200] = 180V 89. an electric dipole is formed by two equal and opposite charges g with separation d . The charges have same mass m. It is kept in a uniform electric field E. If itis slightly rotated from its equilibrium orientation, then its angular frequency w is: w, [E w 5 Vom \\ md © rE © V 2ma V md",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417478/edvedum_physics/electrostatics/p45_span3_y880_h215.png",
+    "solution": "—E a F=qE\na2 -\n(] = pE sin For small angle, 7 = pE)\na2\nF=qE OM\nE\na=Z = EE (a =u) Angular trequancy — [EE = hE = JE\nTET ¥or me +m%) = V na",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 90,
+    "page": 46,
+    "question_text": "A system of three charges are placed as shown in the figure: | 1 i If D >> d, the potential energy of the system is best +9 -q Q —d—! given by: Wid ad © 1 fa eed Ira | dD? Ira | dD? C] D) Oa [fa gE Ire | d 207 Ire | dD?",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417478/edvedum_physics/electrostatics/p46_span1_y36_h85.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417478/edvedum_physics/electrostatics/p46_span7_y1074_h182.png",
+    "solution": "po kd@  ka)@ | k@)(@)\nTUE)\n2 2\nMT Ks KQg\nd d d\n(o-5) (#43)\nd d\n- -D-c4D-¢\ney\nay\n_ ki’ kQqd\nBT I\nPeg\nSince, D>>d\npoche kod 1 [¢ ¢Qd\n“Ta D' ine | dD\n9%. Four point charges —g, +g, -+¢ and —q are placed on y-axis at y = —2d,y = —d, and y = +2d,\nrespectively. The magnitude of the electric field E at a point on the x-axis at z = D, with D > d, will\nbehave as:\n(A) 1 (8) 1\nEx — Box\n“pi *D\n© 1 [2] 1\nExgs Ex;\n16 aks; for wig ans] 2018 109 Ag, 5 2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 91,
+    "page": 46,
+    "question_text": "kd@  ka)@ | k@)(@) TUE) 2 2 MT Ks KQg d d d (o-5) (#43) d d - -D-c4D-¢ ey ay _ ki’ kQqd BT I Peg Since, D>>d poche kod 1 [¢ ¢Qd “Ta D' ine | dD 9%. Four point charges —g, +g, -+¢ and —q are placed on y-axis at y = —2d,y = —d, and y = +2d, respectively. The magnitude of the electric field E at a point on the x-axis at z = D, with D > d, will behave as:",
+    "options": [
+      "1 (8) 1 Ex — Box “pi *D © 1 [2] 1 Exgs Ex; 16 aks; for wig ans] 2018 109 Ag, 5 2",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417478/edvedum_physics/electrostatics/p46_span7_y1074_h182.png",
+    "solution": "The electric field at P is superposition of the fields due to all four charges. The electric field due to the two +q\n-q\na\n-— Ki Ke\ncharges is = Eig = progeosty x 2B. = pr Loscony x 2The\nnp\n-q\nfield due to +4 is towards right and the field due to —q is towards left. Also 8, = 0 and 6, = 0.\n5 WN __Kg Kq Kq3d* _ 3Kqd 1\nRe i Re rw Jb rw lv YE ey wb",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 92,
+    "page": 47,
+    "question_text": "5 uniformly charged ring of radius 3a and total charge g is placed in z-y plane centred at origin. A point charge q is moving towards the ring along the z— axis and has speed v at 2 = 4a . The minimum value of v such that it crosses the origin is: [1] NE Log ® Fes PREPRINT m\\ 15 drega ‘m \\ 15 drega © Nes 1g \\\" © JE 2g\" m \\ 5 drega m\\ 15 dmea 4 irks, 1 for 8 wing answer] 2019 10 Ap, SK)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "a1\ni 4a\n| From the conservation of energy,\n1 Ia 1 1g fea a 5 1”\n—T ___ iemr-—L fg 2 REY 2\ndra fsa) say 2 eB) TY Hm “Tm Vm \\ Brea",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 93,
+    "page": 48,
+    "question_text": "A simple pendulum of length L is placed between the plates of a parallel plate capacitor having electric field E , as shown in figure. Its bob has mass m and charge ¢ . The time period of the pendulum is + = BE = + L = + = + m = given by: T q = + =] Es = + = v SI LS E Ww —r— ® 2 rs 2r 7 EY fos (2E +E \\ ad m © (0) I om | 2 | er SAE | q \\G w) We",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417478/edvedum_physics/electrostatics/p48_span1_y113_h213.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417479/edvedum_physics/electrostatics/p48_span3_y511_h72.png",
+    "solution": "E Two forces will be acting on the mass m, gravity force and\nforce by the electric field. Thus, the effective force — /(yE)? + (mg)? From force equation,\n—\nET [T= | ——\nSir = ne > (%) Time period of the pendulum is (T) = =o I= } =\n® Wem",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 94,
+    "page": 49,
+    "question_text": "|n free space, a particle A of charge 1uC is held fixed at point P . Another particle B of the same charge and mass 4g is kept at a distance of 1mm from P. If B is released, then its velocity at a distance of 9mm from P is: 1 [Take — = 9 x 10°Nm*C~?] aren A 1 gms 8) 1.5 x 10°ms! (©) 2,0 x 10*ms1 (0) 3.0 x 10*ms",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417479/edvedum_physics/electrostatics/p49_span1_y1000_h232.png",
+    "solution": "From conservation in mechanical energy:\nAP.E.= AK.E.\nle ppifet 1 Jo1 TE)\n8\n910° x 10 #55] =2x10\" x V?\nVi=4x10°\nV=2x10\"ms*\n95. 4 point dipole i = —py is kept at the origin. The potential and electric field due to this dipole on the\ny — azis at a distance d are, respectively: (Taken V = 0 at infinity)\nWw 5-5 8 lf\nAmeo d’ dmed \" anesd\n(©) 7 0) —5\nBF GE\ndmeyd®’ dmeyd® dmepd®\nmarks, 1 for & wrang answer) - 2018 (12 Ap, Shin",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 95,
+    "page": 49,
+    "question_text": "conservation in mechanical energy: AP.E.= AK.E. le ppifet 1 Jo1 TE) 8 910° x 10 #55] =2x10\" x V? Vi=4x10° V=2x10\"ms* 95. 4 point dipole i = —py is kept at the origin. The potential and electric field due to this dipole on the y — azis at a distance d are, respectively: (Taken V = 0 at infinity) Ww 5-5 8 lf Ameo d’ dmed \" anesd (©) 7 0) —5 BF GE dmeyd®’ dmeyd® dmepd®",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417479/edvedum_physics/electrostatics/p49_span1_y1000_h232.png",
+    "solution": "gg P\nEs TAmer | Ame d\nV=0\n96. Shown in the figure is a shell made of a conductor. It has inner radius a and outer radius b, and carries\n/ 0\ncharge Q . Atits centre a dipole fi is placed as shown then: / )\n(A) Surface charge density on the inner surface of (B) Electric field outside the shell is the same as\nthe shell is zero everywhere. that of a point charge at the centre of the shell.\n(C) surface charge density on the inner surface is (D) Surface charge density on the outer surface\nQ depends on [5] .\nuniform and equal to ( 2 ).\nina?\n4 marks, 1 for a wiong anwer] 2016 12 Agr SH 1)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 96,
+    "page": 49,
+    "question_text": "P Es TAmer | Ame d V=0 96. Shown in the figure is a shell made of a conductor. It has inner radius a and outer radius b, and carries / 0 charge Q . Atits centre a dipole fi is placed as shown then: / )",
+    "options": [
+      "Surface charge density on the inner surface of",
+      "Electric field outside the shell is the same as the shell is zero everywhere. that of a point charge at the centre of the shell.",
+      "surface charge density on the inner surface is",
+      "Surface charge density on the outer surface Q depends on [5] . uniform and equal to ( 2 ). ina?"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417479/edvedum_physics/electrostatics/p49_span1_y1000_h232.png",
+    "solution": "Net charge on dipole is zero, so it will not affect the charge distribution and electric field on the outside but the\ncharge distribution inside the shell will disturbed.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 97,
+    "page": 50,
+    "question_text": "Let a total charge 2Q be distributed in a sphere of radius R, with the charge density given by p(r) = kr, where r is the distance from the centre. Two charges A and B , of —Q each, are placed on diametrically opposite points, at equal distance, a, from the centre. If A and B do not experience any force, then:",
+    "options": [
+      "3R (8) R a=1 a= 24 ©) —1 0) -1 a=24R a=84 R",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417480/edvedum_physics/electrostatics/p50_span1_y880_h72.png",
+    "solution": "+c\n(4 = a o La\n- - 7 ALO) 3 ZZ sin60°| (3\n60M P Somer te [mr]\n' 30°\n+c\nA AT\n[2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 98,
+    "page": 51,
+    "question_text": "Three charged particles A, B and C with charges —4g, 2q and —2q are present on the circumference of a circle of radius d. The charged particles A, C and centre O of the circle formed an equilateral triangle as shown in the figure. The electric field at the point O) is v 2q -4q N Pat) x Cc -2q wz, ® 35, Teo? Teed? © 5 oO 373, Amend? dred?",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417480/edvedum_physics/electrostatics/p51_span1_y163_h256.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417480/edvedum_physics/electrostatics/p51_span2_y633_h75.png",
+    "solution": "Hq\ns0 & Ae v3\nWr te E.- Fx ren = 2 +\nMg =\nr3\n100. Gene\nIn finding the electric field using Gauss law the formula || = 4] 5 applicable. nthe formula cis\n[\npermittivity of free space, A is the area of Gaussian surface and g,.,. is charge enclosed by the\nGaussian surface. This equation can be used in which of the following situation?\n(A) Only when the Gaussian surface is an {B) Only when the Gaussian surface is an\nequNpTtaRATIRGgCR equipotential surface and 2] is constant on\nthe surface.\n1) got whan El — constant on the surface. (D) For any choice of Gaussian surface.\n4 mocks, 1 fora wig aniwer| 2020 {08 Jan, SHY)\nHq\ns0 & Ae v3",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 99,
+    "page": 51,
+    "question_text": "te E.- Fx ren = 2 + Mg = r3 100. Gene In finding the electric field using Gauss law the formula || = 4] 5 applicable. nthe formula cis [ permittivity of free space, A is the area of Gaussian surface and g,.,. is charge enclosed by the Gaussian surface. This equation can be used in which of the following situation?",
+    "options": [
+      "Only when the Gaussian surface is an {",
+      "Only when the Gaussian surface is an equNpTtaRATIRGgCR equipotential surface and 2] is constant on the surface. 1) got whan El — constant on the surface. (D) For any choice of Gaussian surface.",
+      "(C)",
+      "For any choice of Gaussian surface."
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417480/edvedum_physics/electrostatics/p51_span2_y633_h75.png",
+    "solution": "According to Gauss law of electrostatics, the electric flux through an enclosed surface is given by ¢x = ar\nFrom the formula of electric flux, ¢ = E - ds\nAlso, the relation between electric field and electric potential is given by V = E - dr’\nSo, the formula 12] = vi is only applicable when the Gaussian surface is an equipotential surface and £] is\nconstant on the surface.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 100,
+    "page": 52,
+    "question_text": "10%. Consider two charged metallic spheres S and S; of radii Ry and Ry, respectively. The electric fields E, BR E, (on S, ) and E, (on S, ) on their surfaces are such that a - 2 Then the ratio V, (on S;)/V 5 2 Ra (on S21 ) of the electrostatic potentials on each sphere is: [0 RB (8) mn) R R © ( Ry © (gy BR Ry",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417480/edvedum_physics/electrostatics/p52_span2_y641_h90.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417481/edvedum_physics/electrostatics/p52_span3_y838_h108.png",
+    "solution": "aan BR\nBER\n2\nThen ratio of potential would be, Vt — Ey _ Ru Ri _ (Ry\nVe ER, Re Ry a\n102. A particle of mass m and charge q is released from rest in a uniform electric field. If there is no other\nforce on the particle, the dependence of its speed v on the distance travelled by itis correctly given\nby (graphs are schematic and not drawn to scale)\n(a) ®\nv ’ \\4 3\nRY xX\n© (0)\nLC or\n& i\n4 marks, for a wrong answer 2020 108 Jan, Shit 2]",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 101,
+    "page": 52,
+    "question_text": "BR BER 2 Then ratio of potential would be, Vt — Ey _ Ru Ri _ (Ry Ve ER, Re Ry a 102. A particle of mass m and charge q is released from rest in a uniform electric field. If there is no other force on the particle, the dependence of its speed v on the distance travelled by itis correctly given by (graphs are schematic and not drawn to scale)",
+    "options": [
+      "® v ’ \\4 3 RY xX © (0) LC or & i",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417480/edvedum_physics/electrostatics/p52_span2_y641_h90.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417481/edvedum_physics/electrostatics/p52_span3_y838_h108.png",
+    "solution": "The particle is at rest initially.\nSo, the initial velocity u = Oms '.\nThe force on the charged particle in the uniform electric field,\nF=¢E\n= ma = gE\naE\n=a=L\nm\nApplying the velocity-displacement equation under constant acceleration,\nv? =u? 4 2az\nsve),\nm\nNL\n™",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 102,
+    "page": 53,
+    "question_text": "Consider a sphere of radius R which carries a uniform charge density p . If a sphere of radius is [24 gis carved out of it, as shown, the ratio 5 of magnitude of electric field 7, and [; , respectively, at E)| points A and B due to the remaining portion is: iB",
+    "options": [
+      "21 (8) 18 34 34 (© 17 (0) 18 54 54",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417481/edvedum_physics/electrostatics/p53_span1_y272_h294.png",
+    "solution_image_url": null,
+    "solution": "or\nB=\n3\n—pR\nEy=—b\n45203)\nAle\nIEA = £2\nElectric filed at point B = Ep = Ey + Bax\nhy Ji)\nE14 = Electric Filed Due to solid sphere of radius R at point 3 = £-\n0\n[E34 = Electric Filed Due to solid sphere of radius 3 (which having charge density —p ) at point B.\n_ _KQ x4 oR\nTORT Bag\nBN _pR_pR _1TpR\nEg =Bu+Bu=g go =g\nEa _ 9\nEl 17",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 103,
+    "page": 54,
+    "question_text": "& uk 5, An electric dipole of moment =(- -3j+ 2k) %107*'C m at the origin (0, 0,0) . The electric field due to this dipole at ¥ = +i + 3j + 5k(note that 7 e § = 0) is parallel to:",
+    "options": [
+      "® (= = (+i-3-2k) (+33 2k) © (2, on of {1 ITIL py (+i+37-2k) (i-35+2%)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417481/edvedum_physics/electrostatics/p54_span2_y899_h140.png",
+    "solution": "=\nEa\n-\nEves\n- o\nEy Ei\n=< +\n-q 7 q\nAs 7. ji = 0, this means that is perpendicular to j. For an electric dipole, electric field at equatorial position is\nantiparallel to j5. = E = — Aj, where, X is an arbitrary positive constant. = E = ~A\n(i -33 +28) x 10®Cm to B= (i+ 3) - 26) * 10 20Cm ~ 2For A = og =» B=\n(i +3) - 2k) Cm?\n105. an electric field £ = zi — (y* + 1) jV/C passes through the box shown in figure. The flux of the\nelectric field through surfaces ABCD and BOG F are marked as gy and ¢y respectively. The\ndifference between (¢; — gu) is in Nm*/C) ____\nz\nJ CLE JPR)\nAI\nwea\nF\nx\ny ©.2,0 ®.2,0\n{4 mark, aa negative marking) 2020 (09 Jan, SNR 2)\n=\nEa\n-\nEves",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 104,
+    "page": 54,
+    "question_text": "o Ey Ei =< + -q 7 q As 7. ji = 0, this means that is perpendicular to j. For an electric dipole, electric field at equatorial position is antiparallel to j5. = E = — Aj, where, X is an arbitrary positive constant. = E = ~A (i -33 +28) x 10®Cm to B= (i+ 3) - 26) * 10 20Cm ~ 2For A = og =» B= (i +3) - 2k) Cm? 105. an electric field £ = zi — (y* + 1) jV/C passes through the box shown in figure. The flux of the electric field through surfaces ABCD and BOG F are marked as gy and ¢y respectively. The difference between (¢; — gu) is in Nm*/C) ____ z J CLE JPR) AI wea F x y ©.2,0 ®.2,0",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417481/edvedum_physics/electrostatics/p54_span1_y335_h186.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417481/edvedum_physics/electrostatics/p54_span2_y899_h140.png",
+    "solution": "Flux via ABCD\n$= [EdA=0\nFlux via BCEF\n$= [EdA\n$y =EA=(tzi- (2 +1)]) 40\n= 16zwhere,z = 3\nNom? Nom?\n$= B=5—h by = —48=—",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 105,
+    "page": 55,
+    "question_text": "A charge Q is distributed over two concentric conducting thin spherical shells radii 7 and R (R > r). If the surface charge densities on the two shells are equal, the electric potential at the common centre is: NY Ww 1 (R47) ® 1 (2R+r) Tram? Tra @)° © 1 (R+2r)Q © (Bir) o Ine 2 (RE +17) Ire, (RE +19)",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 48,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417481/edvedum_physics/electrostatics/p55_span3_y460_h122.png",
+    "solution": "a\no Q=ox (r+ RY)\nQ=ctrrtQr=otm®. | _ Q _v=-K% K&\n% EA TEE To) * R\n_ Kynr®  KdxR' _ KQin(r +R) KQ(r + R)\n== TTR WEIR) ER)\n107. ) i 2 k\nTho slated conducting spheres S) and Si of radius 2 and 2 R have 12uC and ~3.C charges,\nrespectively, and are at a large distance from each other, They are now connected by a conducting\nwire. Along time after this is done the charges on S; and Sy are respectively:\nA) 4 5uCofboth ©) | 45uCand — 4.5.C\n© 3uCandouC ©) GuCand3uc\n(mk for a wrong answer] 2020 (03 Sep, Sh)\na",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 106,
+    "page": 55,
+    "question_text": "Q=ox (r+ RY) Q=ctrrtQr=otm®. | _ Q _v=-K% K& % EA TEE To) * R _ Kynr®  KdxR' _ KQin(r +R) KQ(r + R) == TTR WEIR) ER) 107. ) i 2 k Tho slated conducting spheres S) and Si of radius 2 and 2 R have 12uC and ~3.C charges, respectively, and are at a large distance from each other, They are now connected by a conducting wire. Along time after this is done the charges on S; and Sy are respectively:",
+    "options": [
+      "4 5uCofboth ©) | 45uCand — 4.5.C © 3uCandouC ©) GuCand3uc (mk for a wrong answer] 2020 (03 Sep, Sh)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417481/edvedum_physics/electrostatics/p55_span1_y80_h151.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417481/edvedum_physics/electrostatics/p55_span3_y460_h122.png",
+    "solution": "Total charge = 12 — 3 = 9uC\nf final charges are g; and gy\nERC\n2 Rol\na= 6uC\n92 = 3uC",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 107,
+    "page": 56,
+    "question_text": "concentric metallic hollow spheres of radii R and 4R hold charges Q, and Q respectively. Given that surface charge densities of the concentric spheres are equal, the potential difference V(R)-V(4R) is: Ww Q, ® 3Q, Ime, R ime R © 30, © 30, 16renR are R",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417483/edvedum_physics/electrostatics/p56_span1_y317_h185.png",
+    "solution_image_url": null,
+    "solution": "Oz\n9 &\na, A\n(bx\nAs given the surface charge density for both the spheres is same, hence\nV(R)\nV(4R)\nmn S a PG XB\na a Sa .@2 = 16Q1 From above diagram, the electric potential for both\n_KQ, KQ _K 16Q,\\ _ 5KQ\nthe spheres is Viner = ~~ = = (Qu + =) = SE inthe same way for outer sphere,\n_KQ,  KQ K _1TKQ, 3\nViower = Zt + JRE = JE (16Q1 + @,) = =k: Now the potential difference is,\nN 5KQ, 1TKQ,  3Q:\nAV = Viner = Vontr = == = IR = Toreelt\"\n109. Hydrogen ion and singly ionized helium atom are accelerated, from rest, through the same potential\ndifference. The ratio of final speeds of hydrogen and helium ions is close to:\nWyo ®) 19:7\nDav 05.7\nmarks, <1 for + wiong anaei] 2020 103 S46 Shin)\nOz",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 108,
+    "page": 56,
+    "question_text": "& a, A (bx As given the surface charge density for both the spheres is same, hence V(R) V(4R) mn S a PG XB a a Sa .@2 = 16Q1 From above diagram, the electric potential for both _KQ, KQ _K 16Q,\\ _ 5KQ the spheres is Viner = ~~ = = (Qu + =) = SE inthe same way for outer sphere, _KQ,  KQ K _1TKQ, 3 Viower = Zt + JRE = JE (16Q1 + @,) = =k: Now the potential difference is, N 5KQ, 1TKQ,  3Q: AV = Viner = Vontr = == = IR = Toreelt\" 109. Hydrogen ion and singly ionized helium atom are accelerated, from rest, through the same potential difference. The ratio of final speeds of hydrogen and helium ions is close to: Wyo ®) 19:7 Dav 05.7",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417483/edvedum_physics/electrostatics/p56_span1_y317_h185.png",
+    "solution_image_url": null,
+    "solution": "i= gmt\npar\nHence v x ——\nVie, &S,,\nYan V 72\nM0. 146 charged thin infinite plane sheets of uniform charge density , and o_, where Jo. | > [o-_|,\nintersect at the right angle. Which of the following best represents the electric field lines for the\nsystem:\n[0 o (®) o_\nde h Es *\n(© oc. © a\n2 a + © +\nmarks, ot wong snswer] 2020 (04 Se Sh 1\nAnswer;\nc_\nE,\nE\nva\n0 5)\nAl E i B\n_ o,\n0\nD; E C The electric field\n0 E. [)\nE E\nE E,\nE| 3 JE. |\n0 >45°\nintensity due to each uniformly charged infinite plane is uniform. The electric field intensity at points A, B, C and",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 109,
+    "page": 58,
+    "question_text": "shown in figure. Hence, the electric lines of forces are as given in below figure. o_ m. wd d Atwo point charges 4g and —q are fixed on the z -axis at z = —= and z = 7, respectively. If the third point charge q is taken from the origin to z = d along the semicircle as shown in the figure, the energy of the charge will: 4 a",
+    "options": [
+      "(8) 2 Increase by 3 re ul dmeod dred (©) [0] 2 decrease by Ea decreas ty oT Ineod Incod 4 mark, 1 for a wiong answer 2020104 Sep, nit",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417483/edvedum_physics/electrostatics/p58_span1_y87_h173.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417485/edvedum_physics/electrostatics/p58_span4_y786_h83.png",
+    "solution": "Potential at origin O, the potential due to twa charges Is given by\nE) P\n44 -Q\nI. Si ON. TX\n1 a d\\ * deed Potential at P at a distance, = = d is given by.\ndra (3) dara (3\nVim. _CelgV\n- 3d d\\  6wesd Change in potential energy due the charge motion of charge g is given\nara (GF) ame\n= 0 Ale - = a 8a \\_ 4\nBAU = AV = (Vy ~ Vi) = AU = (Vp Vo) aU =a (5 - £205) =",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 110,
+    "page": 59,
+    "question_text": "M2. 4 particle of charge g and mass m is subjected to an electric field £2 = Ey (1-az) in the z— direction, where a and Ej are constants. Initially the particle was at rest at z = 0. Other than the initial position the kinetic energy of the particle becomes zero when the distance of the particle from the origin is : w, ® Vz a (c) he (o) NE a a mk, 1 for 8 wiong anes] 2020 04 Sep, 51 2",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417485/edvedum_physics/electrostatics/p59_span1_y851_h165.png",
+    "solution": "We = AKK, ~ Ky =0\n[oqEdz =0\nafyEo(1- Qa*)dz =0\nGEofi (1 as?) ds =0\na\nx T =0\n2\nas’\n1- Ta 0\n2\nar\na\na=\na\n£3\nz= Vv 2\nM3. 4 solid sphere of radius R carries 2 charge ( + g distributed uniformly over its volume. A very small\npoint like piece of it of mass m gets detached from the bottom of the sphere and falls down vertically\nunder gravity. This piece carries charge g. If it acquires a speed » when it has fallen through a vertical\nheight y (see figure), then (assume the remaining portion to be spherical) 2\nq\n\"ili\nM\n(a) (B)\nv=y Li 0 v=y EE EE.\nTre Rym IreR(R + ym\n© QaR (© ©\n| QaR ogy 1@\nv= [4 Tym +d] =| maRR rpm\n4 mk, 1 fc wing answer 2020 05 Se, SH",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 111,
+    "page": 59,
+    "question_text": "= AKK, ~ Ky =0 [oqEdz =0 afyEo(1- Qa*)dz =0 GEofi (1 as?) ds =0 a x T =0 2 as’ 1- Ta 0 2 ar a a= a £3 z= Vv 2 M3. 4 solid sphere of radius R carries 2 charge ( + g distributed uniformly over its volume. A very small point like piece of it of mass m gets detached from the bottom of the sphere and falls down vertically under gravity. This piece carries charge g. If it acquires a speed » when it has fallen through a vertical height y (see figure), then (assume the remaining portion to be spherical) 2 q \"ili M",
+    "options": [
+      "(A)",
+      "v=y Li 0 v=y EE EE. Tre Rym IreR(R + ym © QaR (© © | QaR ogy 1@ v= [4 Tym +d] =| maRR rpm 4 mk, 1 fc wing answer 2020 05 Se, SH",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417485/edvedum_physics/electrostatics/p59_span1_y851_h165.png",
+    "solution": "By using total energy conservation\nAKE + (APE)ecto + (APE) gasitation = 0\nLove (43 — 42) 4 (-mgy) =\nFv (ra 2) + (-mgy) =0\n1 1 MQ y\nLavi kQq( 5 ——);V2=2gys 220 _V __\nddBoti ay (7 =): Wh RR)\n2 _ <Q\nr= =r wm * {",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 112,
+    "page": 60,
+    "question_text": "Ten charges are placed on the circumference of a circle of radius R with constant angular separation between successive charges. Alternate chargesl, 3,5, 7,9 have charge (+g) each, while 2, 4, 6,8, 10 have charge (g) each. The potential V and the electric field E at the centre of the circle are respectively : (Takel/ = 0 at infinity) [0] 10g (®) 10g Ve Gar 0 V=0F= pal © Vy —0E= D) ©@v-_pE=0 (0), _ 10g a dren R dre R?",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417486/edvedum_physics/electrostatics/p60_span1_y368_h320.png",
+    "solution_image_url": null,
+    "solution": "10\n9 = I\nq E q\n5\n8 qT“\nq E = 5 (RH) (Sa)\nE sum (0) (SE\nq\n7x 3\nE E\nq -q\nPoet = 0,(Quee = 0] E,,, = 0, by symmetry\n15. Charges Q; and Q, are at points A and B of a right-angled triangle O AB. The resultant electric field\nat point O is perpendicular to the hypotenuse, then Q; /Q is proportional to:\n(A) 23 (B) z2\n= F\n© = © 4\nFA =\nAnswer ©\nEyes 0,\n.\nL\n,\n| Kx\nA Ey KQis} mn KQfii@ =:\nUs kL le ti =—ta =m med — = 3 = —\nsing triangle properties tan = + tand = = EOE fat <- yk",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 113,
+    "page": 62,
+    "question_text": "M6. Consider the force F' on a charge *q\" due to a uniformly charged spherical shell of radius R carrying charge Q distributed uniformly over it. Which one of the following statements is true for F, if 'q' is placed at distance r from the centre of the shell?",
+    "options": [
+      "1 Qq B 1 ¢Q F=—>=forr<R —=>F>0forr <R ire, R? ORE dme, R? err © 1 Qq (0) 1 Qq =m lg Se Fegeator>R Fm grt orale",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "+1Qy\n+ 3\n-\n+\n; qQ E=0r<R=\" > Rinse F = Dand outside\nE\n+ +\n+ +\n+ a\n+F +\n_ 2\nnF re\nM7. Two identical electric point dipoles have dipole have dipole moments ; = pi and fy = —pi and are\nheld on the z-axis at distance ‘a’ from each other. When released, they move along the z-axis with the\ndirection of their dipole moments remaining unchanged. If the mass of each dipole is ‘m’, their speed\nwhen they are infinitely far apart is :\nWp 1 ® p J is\na \\ 7eyma 2\\ Zrema\n© p = op —5—\na V megma a V 2regma\n18 marks, 1 fos wrong snswe 2020 (08 Sep, smi 2\n+1Qy\n+ 3\n-\n+\n; qQ E=0r<R=\" > Rinse F = Dand outside\nE\n+ +\n+ +\n+ a\n+F +\n_ 2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 114,
+    "page": 62,
+    "question_text": "re M7. Two identical electric point dipoles have dipole have dipole moments ; = pi and fy = —pi and are held on the z-axis at distance ‘a’ from each other. When released, they move along the z-axis with the direction of their dipole moments remaining unchanged. If the mass of each dipole is ‘m’, their speed when they are infinitely far apart is : Wp 1 ® p J is a \\ 7eyma 2\\ Zrema © p = op —5— a V megma a V 2regma",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Py Py K+ w= ky ug\nSa men PE\n2 CE Te PO £1 —\n0— py cos (180°) = 3me® + Sma? + Ome? = THE = 9 = [SHR py = py = pr =a\nasd\na\n=",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 115,
+    "page": 63,
+    "question_text": "M8. 5 cube of side a has point charges +@Q located at each of its vertices except at the origin where the charge is —Q. The electric field at the centre of cube is: w Q ® —F— (@+§+2 ———(2+§+2 3y/3mega? @E+i+2) 3+/3mega? 7 fim © 29 (Do) 20Q — (E+ G+ —t (FT ++ £ 3y/3rega? E+g+a 3/3rega? Ered 8 mack, =1 fo 8 wrong answer] 2021 (28 Fab, Sh 1)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "We can replace ~(Q charge at origin by +Q and ~2Q.\nNow due to +Q charge at every corner of cube. Electric field at center of cube is zero $0 now net electric field at\ncenter is only due to —2() charge at origin.\nPO Gc) {cd uk)\n=r a AT\nimeo(3V3)\nFo2QG gE\n3y3ra‘er",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 116,
+    "page": 64,
+    "question_text": "M9. 7yo electrons each are fixed at a distance 2d. A third charge proton placed at the midpoint is displaced slightly by a distance z (z < d) perpendicular to the line joining the two fixed charges. Proton will execute simple harmonic motion having angular frequency: (m = mass of charged particle) [0] 1 (8B) 1 meomd®\\ 2 2reqmd® 2 2¢ 7 [©] 1 [2] 1 _\\2 27 \\2 2megmd® wegmd® 14 mark, 1x wrong answer] 2021 (24 Fa, Sin 2",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "TB\nFrom the given condition, we have =~\" d io dy Foag =~ [2Fj cos0]\na\n“q q 9\n1 I's z a z &\nFrgg=~2+ — + ———— + = op ee , =a\na] Ta VER) VEre  Ia@ian ccs di Foay = ~ 52 5%\n—\na= =F Comparing with equation of SHM (a =~) ur = || =\nTrey md £ \\ Tred\n120. point charge of +12,C is at a distance 6cm vertically above the centre of a square of side 12cm\nas shown in figure. The magnitude of the electric flux through the square willbe _____\nIN\n6em\n*10°Nm?C'.\n2\n2)\nIAS\n3\n{4 mark, 5 neghtve mardng) 2071 (24 eb, Shin 3)\nTB",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 117,
+    "page": 64,
+    "question_text": "the given condition, we have =~\" d io dy Foag =~ [2Fj cos0] a “q q 9 1 I's z a z & Frgg=~2+ — + ———— + = op ee , =a a] Ta VER) VEre  Ia@ian ccs di Foay = ~ 52 5% — a= =F Comparing with equation of SHM (a =~) ur = || = Trey md £ \\ Tred 120. point charge of +12,C is at a distance 6cm vertically above the centre of a square of side 12cm as shown in figure. The magnitude of the electric flux through the square willbe _____ IN 6em *10°Nm?C'. 2 2) IAS 3 {4 mark, 5 neghtve mardng) 2071 (24 eb, Shin 3)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417487/edvedum_physics/electrostatics/p64_span2_y380_h62.png",
+    "solution_image_url": null,
+    "solution": "From symmetry ¢ = 2 (2)\n6 \\e\n_ 12x10\nT 6x88 x10\n= 225.98 x 10'Nm®C\"'~ 226 x 10°Nm*C*\n121. 519 identical drops of mercury are charged to a potential of 2V each. The drops are joined to form a\nsingle drop. The potential of this drop is Vin Volt.\n4 marks, na negate marking] 2021 (25 Feb, SHAY)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 118,
+    "page": 64,
+    "question_text": "symmetry ¢ = 2 (2) 6 \\e _ 12x10 T 6x88 x10 = 225.98 x 10'Nm®C\"'~ 226 x 10°Nm*C* 121. 519 identical drops of mercury are charged to a potential of 2V each. The drops are joined to form a single drop. The potential of this drop is Vin Volt.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Q=512%\nVolume, = Volume;\nLo Lp\n512 x 3 = rR\n2 =R\nR=8r\ngu\nB\n_kQ _ks12g\nWe R 8\nV = 128V.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 119,
+    "page": 65,
+    "question_text": "The electric field in a region is given by E = (2B + LE) NC. The ratio of flux of reported field through the rectangular surface of area (0.2 m? (parallel to y-z plane) tothat of the surface of area 0.3 m? (parallel to x-z plane) isa : b — a : 2, where a =? [Here 1, j and k are unit vectors along x. y and z-axes respectively] 18 aks, no negative mashing] 2021 (25 eb, Sh 1)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "3Ey,  4E- pd\n=|(=\"1+—7) NC\nE ( 5 tg\nA, = 0.2m’ [parallel to y-z plane] = 0.2i m*\nA; = 0.3m’ [parallel to x-z plane] = 0.3] m*\n3E,. AE. 3x02\nee EE\n3Ey:  4E;- A 4x03\nPy=—i+—7j) (035) =—F,\nv= (30+ 125) 03) 5 Lo\n® 12 2 b\n$ 06 1 a\na:b=1:2\na=1\n123. 1 identical conducting spheres with negligible volume have 2.1nC and —0.1nC charges,\nrespectively. They are brought into contact and then separated by a distance of 0.5m. The\nelectrostatic force acting between the spheres is __x10\"*N.\n[Given : 47ep = Pa Suni)\n14 marks, no negati making) 2071 (25 Feb, SNR 2)\n3Ey,  4E- pd\n=|(=\"1+—7) NC",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 120,
+    "page": 65,
+    "question_text": "( 5 tg A, = 0.2m’ [parallel to y-z plane] = 0.2i m* A; = 0.3m’ [parallel to x-z plane] = 0.3] m* 3E,. AE. 3x02 ee EE 3Ey:  4E;- A 4x03 Py=—i+—7j) (035) =—F, v= (30+ 125) 03) 5 Lo ® 12 2 b $ 06 1 a a:b=1:2 a=1 123. 1 identical conducting spheres with negligible volume have 2.1nC and —0.1nC charges, respectively. They are brought into contact and then separated by a distance of 0.5m. The electrostatic force acting between the spheres is __x10\"*N. [Given : 47ep = Pa Suni)",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 226,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "g= 34-00), mL =1nC\nNyxaghini \"\ner",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 121,
+    "page": 66,
+    "question_text": "1,0 small spheres each of mass 10mg are suspended from a point by threads 0.5m long. They are equally charged and repel each other to a distance of 0.20m. The charge on each of the sphere is = x 1074C. The value of a will be __[Given g = 10ms~2] 18 aks, i negitive mucking) - 2021 (25 Feb, Sn 2",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 128,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417488/edvedum_physics/electrostatics/p66_span1_y197_h96.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417488/edvedum_physics/electrostatics/p66_span2_y528_h118.png",
+    "solution": "0:0 0s\ni 0\n05 i > cos =mg=10x10\" x 10=10\" Taino = MCX _ ©\nro pt\n01 01\n0.1 F 2/10 a\ntanf == =——g= 10°095 «10% = = x 10% =20\nVom met vm Che\n125. A charge gis placed at one comer of a cube as shown in figure. The flux of electrostatic field £\nZ\nthrough the shaded area is:\nY\nXx\nwg ® 4\nSey 2\n© gq © gq\n48¢) dey\n18 mark 1 tr 8 wrong ssw] 2021 (25 Feb, Shin 2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 122,
+    "page": 66,
+    "question_text": "0 0s i 0 05 i > cos =mg=10x10\" x 10=10\" Taino = MCX _ © ro pt 01 01 0.1 F 2/10 a tanf == =——g= 10°095 «10% = = x 10% =20 Vom met vm Che 125. A charge gis placed at one comer of a cube as shown in figure. The flux of electrostatic field £ Z through the shaded area is: Y Xx wg ® 4 Sey 2 © gq © gq 48¢) dey 18 mark 1 tr 8 wrong ssw] 2021 (25 Feb, Shin 2",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 1,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417488/edvedum_physics/electrostatics/p66_span1_y197_h96.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417488/edvedum_physics/electrostatics/p66_span2_y528_h118.png",
+    "solution": "Z,\nH E\nG q\nflux through cube = = flux through surfaces\ny\nY C\nABEH, ADGH, ABCD will be zero 6 (EFGH) = 6 (DCFG) = ¢ (EBCF) = 5 (&) = i\n0 3",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 123,
+    "page": 67,
+    "question_text": "Ap electron with kinetic energy K', enters between parallel plates of a capacitor at an angle a with the plates. It leaves the plates at angle / with kinetic energy Ka. Then the ratio of kinetic energies Ki: K» willbe : A ging 8) cos cosa sin (©) cos 8 0) cos? cos a cos’a 14 mak, ~1for yang ewer] 2071 (25 Fé, Sn 2",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 36,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "vy\n| E BY 5\ni B velocity along the piate will not change.  v, cos = vy cos §\n[3\nvi\nKi v} cos\nwd coda\n127. Eind the electric field at point P (as shown in figure) on the perpendicular bisector of a uniformly\ncharged thin wire of length L carrying a charge Q. The distance of the point P from the centre of the\nV3 a J\n3\ntodos VER FES || Perms\nErg | 0 P\nQ\n[CV] (B) Q\n3megL? 2v/3meyL?\n© © gq\nine? Axe L*\n4 marks, -1for ¢ wrong answer] 2021 28 Fes Shit)\nvy\n| E BY 5",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 124,
+    "page": 67,
+    "question_text": "velocity along the piate will not change.  v, cos = vy cos § [3 vi Ki v} cos wd coda 127. Eind the electric field at point P (as shown in figure) on the perpendicular bisector of a uniformly charged thin wire of length L carrying a charge Q. The distance of the point P from the centre of the V3 a J 3 todos VER FES || Perms Erg | 0 P Q [CV] (B) Q 3megL? 2v/3meyL? © © gq ine? Axe L*",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 20,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417488/edvedum_physics/electrostatics/p67_span1_y311_h104.png",
+    "solution_image_url": null,
+    "solution": "E= 2 (sin, + sin 6)\nSie, 1 ;\nB= goxgx 7 x (25in8)\n2\nLj2 1\ntanf = —m = —\nVIL V3\n2\nsind = H\n1. 99 1\nET\nQ\nE=—\"—\n21/3re L?",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 125,
+    "page": 68,
+    "question_text": "| an electrical circuit, a battery is connected to pass 20C of charge through it in a certain given time. The potential difference between two plates of the battery is maintained at 15\". The workdone by the batteryis J",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417489/edvedum_physics/electrostatics/p68_span1_y691_h138.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417489/edvedum_physics/electrostatics/p68_span2_y841_h147.png",
+    "solution": "Work done by battery = Q (AV)\n= 20 x 15 = 300J\n= 300\n129. Given below are two statements\nStatement 1 : An electric dipole is placed at the centre of a hollow sphere. The flux of electric field\nthrough the sphere is zero, but the electric field is not zero anywhere in the sphere.\nStatement II : If R is the radius of a solid metallic sphere and () be the total charge on it. The electric\nfield at any point on the spherical surface of radius r (< R) is zero but the electric flux passing\nthrough this closed spherical surface of radius r is not\nIn the light of the above statements, choose the correct answer from the options given below:\n(A) Both Statement 1 and Statement I7 are true (8) Statement 1 is false but Statement I1 is true\n(©) statement I is true but Statement 17 is false (2) Both Statement I and Statement I7 are false\n14 marks, 1 fox wg answer 2021 (26 Feb, SA 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 126,
+    "page": 68,
+    "question_text": "done by battery = Q (AV) = 20 x 15 = 300J = 300 129. Given below are two statements Statement 1 : An electric dipole is placed at the centre of a hollow sphere. The flux of electric field through the sphere is zero, but the electric field is not zero anywhere in the sphere. Statement II : If R is the radius of a solid metallic sphere and () be the total charge on it. The electric field at any point on the spherical surface of radius r (< R) is zero but the electric flux passing through this closed spherical surface of radius r is not In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      "Both Statement 1 and Statement I7 are true (8) Statement 1 is false but Statement I1 is true (©) statement I is true but Statement 17 is false (2) Both Statement I and Statement I7 are false",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417489/edvedum_physics/electrostatics/p68_span1_y691_h138.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417489/edvedum_physics/electrostatics/p68_span2_y841_h147.png",
+    "solution": "Gaussian\nSurface\n§E di= = = 0 = ¢ Flux of E through sphere is zero. But\n2\nSolid\nmetallic\nfE-di=0= {Baz 0} tor smal section da only Statement-2 sphere,\nGaussian\nSurface\nchange encloses within gaussian surface is equal to zero. ¢ = § E+ di = 0\n130. 27 similar drops of mercury are maintained at 10V each. All these spherical drops combine into a\nsingle big drop. The potential energy of the bigger drop is times that of a smaller drop.\nmarks no negative marking] 2021 (28 Feb, Shin 21\nGaussian\nSurface",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 127,
+    "page": 68,
+    "question_text": "di= = = 0 = ¢ Flux of E through sphere is zero. But 2 Solid metallic fE-di=0= {Baz 0} tor smal section da only Statement-2 sphere, Gaussian Surface change encloses within gaussian surface is equal to zero. ¢ = § E+ di = 0 130. 27 similar drops of mercury are maintained at 10V each. All these spherical drops combine into a single big drop. The potential energy of the bigger drop is times that of a smaller drop.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417489/edvedum_physics/electrostatics/p68_span1_y691_h138.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417489/edvedum_physics/electrostatics/p68_span2_y841_h147.png",
+    "solution": "4 a) _4\n(27) ( 3 ) = Hl\nR=3r\nPotential energy of smaller drop 17, — ser\n=\nPotential anergy of bigger drop : {7 — ire\n2\ngma HT\n5 R\n_seneng\nsg\nune (sk\na] 5r\nU =243U,",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 128,
+    "page": 69,
+    "question_text": "13% Ein out the surface charge density at the intersection of point z = 3m plane and z-axis, in the region of uniform line charge of 8nC'm lying along the z-axis in free space. A 0.424nCm? (8) 47.88nCm 2 (©) 0.07nCm ©) 4 0nCm*",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 300,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "ABR i)\nr “@\n= 0 = 0.424 x 10°C?\n132. a 204 8a =\nThe electric field in region is given by J = 2 Eyi + = Boj with Ey = 4.0 x 10°NC™\". The flux of\nthis field through a rectangular surface, area 0.4m? parallel to the Y — Z plane is Nm?C1.\n(4 marks, na negative marking] - 2021 (7 Mr, Shin 21",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 129,
+    "page": 69,
+    "question_text": "i) r “@ = 0 = 0.424 x 10°C? 132. a 204 8a = The electric field in region is given by J = 2 Eyi + = Boj with Ey = 4.0 x 10°NC™\". The flux of this field through a rectangular surface, area 0.4m? parallel to the Y — Z plane is Nm?C1.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "$=Eid= H % 4% 10° x 0.4 = G4ONmIC-\n133. An infinite number of point charges, each carrying 1uC charge, are placed along the y-axis at\ny= 1m, 2m, 4m 8m....\nThe total force on a 1C’ point charge, placed at the origin, is x 10°)V. The value of z, to the nearest\ninteger, is __.\n1\n[Take — = 9 x 10°Nm*C?]\nAmey\n{4 marks, 0 negative meking] 202118 Ms, S23\n$=Eid= H % 4% 10° x 0.4 = G4ONmIC-",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 130,
+    "page": 69,
+    "question_text": "An infinite number of point charges, each carrying 1uC charge, are placed along the y-axis at y= 1m, 2m, 4m 8m.... The total force on a 1C’ point charge, placed at the origin, is x 10°)V. The value of z, to the nearest integer, is __. 1 [Take — = 9 x 10°Nm*C?] Amey",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 243,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "1c) 1pCtpC 1puC 1 pC — Rend vi\n3 F = k(1€) (160) [1+ FrEte +e]\n13.2 4 8\n=9x10° [+] =12x10°N\n17\n134. 4 certain charge Q is divided into two parts g and (Q — gq). How should the charges Q and g be\ndivided so that q and (Q — q) placed at a certain distance apart experience maximum electrostatic\nrepulsion?\nWw, gq ®g_»\n=f =2\n=;\n© Q-4q © 3,\n& marks, 1 or 8 wrong answer 2071 120 Jul, S611)\n1c) 1pCtpC 1puC 1 pC — Rend vi",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 131,
+    "page": 69,
+    "question_text": "F = k(1€) (160) [1+ FrEte +e] 13.2 4 8 =9x10° [+] =12x10°N 17 134. 4 certain charge Q is divided into two parts g and (Q — gq). How should the charges Q and g be divided so that q and (Q — q) placed at a certain distance apart experience maximum electrostatic repulsion? Ww, gq ®g_» =f =2 =; © Q-4q © 3,",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "kq(@Q —q) _ k a2\n® L @9 P= =p Q-d) 3 =0\n———>\nwhen rca maximum 5 = £le 2] =0=Q-2=0=Q=2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 132,
+    "page": 70,
+    "question_text": "An electric dipole is placed on x—axis in proximity to a line charge of linear charge density 3.0 x 10°C\". Line charge is placed on z—axis and positive and negative charge of dipole is at a distance of 10mm and 12mm from the origin respectively. If total force of 4 is exerted on the dipole, find out the amount of positive or negative charge of the dipole. A g15.10C 8) g8uC (©) o.485mc ©) g 4400 18 mks, 1 for wrong answer 2021 (22 4, SHAT)",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 640,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p70_span3_y805_h91.png",
+    "solution": "©\n+\n+ Fy E,\n= Ee -\nr je ——9 9) r= tommz=2, [7 = 22\niE B\n+ or x\npit\nx\noo\n=~ 2k) P 2MAg-z  2x9x10°x3x10\" x gx 2mm\n= g \\Fuat| = PE atid A Acs AL, aS = d44uC\n[Fl er auf rn i= 0mm. 12mm aid lz\n138. The total charge enclosed in an incremental volume of 2 x 10~\"m?® located at the origin is nC, if\nelectric flux density of its field is found asD) = e~* sin yi — e *cosyj + 2:kCm 2\n14 marks, no negative making) 2071 (22 Jt St 1)\n©\n+\n+ Fy E,\n= Ee -",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 133,
+    "page": 70,
+    "question_text": "——9 9) r= tommz=2, [7 = 22 iE B + or x pit x oo =~ 2k) P 2MAg-z  2x9x10°x3x10\" x gx 2mm = g \\Fuat| = PE atid A Acs AL, aS = d44uC [Fl er auf rn i= 0mm. 12mm aid lz 138. The total charge enclosed in an incremental volume of 2 x 10~\"m?® located at the origin is nC, if electric flux density of its field is found asD) = e~* sin yi — e *cosyj + 2:kCm 2",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 12,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p70_span3_y805_h91.png",
+    "solution": "Electric flux density,\n7, PRL ST (RC J\n(9) YT a a (7a)\nLre b _ e twingi — e eos(j + 22k)\n«© E)\nAlso, by Gauss's law,\n2 o(2:0 2,00 5. (2:,25,25).0\nwo (3+ 557+ cb SA bs r=\nA. CI 2\n= p= go (e sing) + Fria cosy) + 5-(22)\np=—e Tsing +e Tsing +2\nAtoriginp = —e Vsin0 + ¢ Osin0 + 2\np=2Cm*\nCharge = px volume = 2x 2x 10°* = 4x 107% =\n4nC",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 134,
+    "page": 71,
+    "question_text": "A particle of mass 1mg and charge g is lying at the mid-point of two stationary particles kept ata distance 2m when each is carrying same charge g. If the free charged particle is displaced from its equilibrium position through distance z (z << 1m). The particle executes SHM. Its angular frequency of oscillation will be ____ x 10°rads™\" (if ¢* = 10C?) (4 aks, ro negative raking] 2021 (25 ik Sin 1",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p71_span3_y928_h114.png",
+    "solution": "q q9\nS/S ke* kg\nxX Net force on free charged particle, F = —— — ——\n——— @iaf (@-=\na a\n_ ’ Adz dkg*d (zy _ (4k [akg®\nF=_k¢ [#5] a=-— (6) a=_ (&2 x So, angular frequency , — Vos\n——\nTe [AXOX10° X10, _ 6 10tradsec 1\nVier\n138. Tyo ideal electric dipoles A and B, having their dipole moment p, and p, respectively are placed on a\nplane with their centres at 0) as shown in the figure. At point C' on the axis of dipole A, the resultant\nelectric field is making an angle of 37° with the axis. The ratio of the dipole moment of A and B, BL is\n: (take sin37° = 9)\n: 5) A- 0 + Cc\n-\n\"3 (8) 3\nBl 2\n© 2 (0 4\n3 3\n{4 marks, 1 fo won answer] 2021 {25 Jt, Sn 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 135,
+    "page": 71,
+    "question_text": "q9 S/S ke* kg xX Net force on free charged particle, F = —— — —— ——— @iaf (@-= a a _ ’ Adz dkg*d (zy _ (4k [akg® F=_k¢ [#5] a=-— (6) a=_ (&2 x So, angular frequency , — Vos —— Te [AXOX10° X10, _ 6 10tradsec 1 Vier 138. Tyo ideal electric dipoles A and B, having their dipole moment p, and p, respectively are placed on a plane with their centres at 0) as shown in the figure. At point C' on the axis of dipole A, the resultant electric field is making an angle of 37° with the axis. The ratio of the dipole moment of A and B, BL is : (take sin37° = 9) : 5) A- 0 + Cc - \"3 (8) 3 Bl 2 © 2 (0 4 3 3",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p71_span1_y229_h76.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p71_span3_y928_h114.png",
+    "solution": "Sg\nkPyr EF\n37° Lo]\n3 Sag Ra SHE\n> rd 2kP)/r aT =5=glp =3p, “1F, \"2\n1\nPy\nP_2\nP\"3",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 136,
+    "page": 72,
+    "question_text": "15 identical tennis balls each having mass m and charge q are suspended from a fixed point by threads of length L. What is the equilibrium separation when each thread makes a small angle 8 with the vertical? (a) 1 ®) 1 J- yi xe (et) (et) 2megmg 2meymg (© 1 [) 1 272 is 2 ~ eo (TE 3 eo (—2 \\3 2meom®y 2mem’g?",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 4,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p72_span4_y1136_h179.png",
+    "solution": "|\nlo AT\n1 \\¢ Kd ;\n1/9} 5 iA Tool = mg Tsing = Land = SL\n| x 5 wig\na@ 1 @e\n—x — mg\nzz Kg 2\nstmbndndn gy Sal ( TL 2\nZmeomg.\n140. \\hat will be the magnitude of the electric field at point O as shown in the figure? Each side of the\nA-g) [a]\nVi 9)\n! /\nfigure is { and perpendicular to the other? LL) 0 G29)\n1 [\n/ [\nQI |@ (9)\nE F H\na 1 gq ® 1 gq\nTall Ten ?V2Y\n© __q 0 1 2\nTreo) rent TALE)\n18 mak, tox 8 rong answer} +2021 (27 Jus, Sn 2)\n|",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 137,
+    "page": 72,
+    "question_text": "AT 1 \\¢ Kd ; 1/9} 5 iA Tool = mg Tsing = Land = SL | x 5 wig a@ 1 @e —x — mg zz Kg 2 stmbndndn gy Sal ( TL 2 Zmeomg. 140. \\hat will be the magnitude of the electric field at point O as shown in the figure? Each side of the A-g) [a] Vi 9) ! / figure is { and perpendicular to the other? LL) 0 G29) 1 [ / [ QI |@ (9) E F H a 1 gq ® 1 gq Tall Ten ?V2Y © __q 0 1 2 Treo) rent TALE) 18 mak, tox 8 rong answer} +2021 (27 Jus, Sn 2)",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 6000,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p72_span3_y370_h104.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p72_span4_y1136_h179.png",
+    "solution": "kg = 8 iN\nE=F-mE-n ome KM Mop\nAq) c_1! Db\nwe 9\n1 I aE\n() G29)\nLa 4 I)\nEx !\nQ) 1 \\@ 4)\nE F H",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 138,
+    "page": 73,
+    "question_text": "A simple pendulum of mass * m !, length ' { * and charge ' +g suspended in the electric field produced by two conducting parallel plates as shown. The value of deflection of pendulum in ol fed l (K) =F . A equilibrium position will be +}, hd air ef et —d ——",
+    "options": [
+      "- (8) ys aa  _Ci(Va-Va [a _C(Va-Vu Gi | *Cirea-9 mg Cire (d-0 © fa, Cilitvy © a, City) \"mg “Cea = mg “CON E-1",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p73_span1_y118_h152.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p73_span4_y569_h165.png",
+    "solution": "J\nine!\n\\ -7,\n= edian oo\now q Sa Gd\n5 (K) Let E be electric field in air Tain) = gE Tcos = mg\n7 i\n— dt —\n—_—\nERE: Thi.\nk\n_9E a Coe [eC\n“mg, N -¥, 9F [ia] Marv\nC, G;\ngts I folteN ] VisVal fwd | GVit Vil vows tan i=\nAly, C+ Ca] Aly, d-t (Cr+ Ca) (dt) mg\nri [8  CalViA Vy)\nom x eo)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 139,
+    "page": 74,
+    "question_text": "5 solid metal sphere of radius R having charge q is enclosed inside the concentric spherical shell of inner radius a and outer radius b as shown in the figure. The approximate variation electric field £, as a function of distance r, from centre O, is given by: Q S 4 N nw (8) | / R a b r— R a b r— ©) [0] N E| E R a b r—e R a bh r—",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p74_span1_y95_h133.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p74_span4_y790_h78.png",
+    "solution": "In the above question, the variation of the electric field with r, is, For0 <r < RE = 0,\nglo <r<b E=0\nforR<r<a E=-g, kQ .sothe correct graphs,\n'r>b E= =\n|\nE\nR a b r—s\n143. The two thin coaxial rings, each of radius a and having charges +) and — respectively are\nseparated by a distance of 5. The potential difference between the centres of the two rings is :\nWw Qn 1 ® @ I 1\none la Vit ta. ire la Vita\n© ¢ 1 © gn 1\n0 I SL AT\n4mey la Vs? +a? 27) |a : Vs? +a?\n4 marks, = for wrong snawer 2071 (26 Aug, SNR 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 140,
+    "page": 74,
+    "question_text": "the above question, the variation of the electric field with r, is, For0 <r < RE = 0, glo <r<b E=0 forR<r<a E=-g, kQ .sothe correct graphs, 'r>b E= = | E R a b r—s 143. The two thin coaxial rings, each of radius a and having charges +) and — respectively are separated by a distance of 5. The potential difference between the centres of the two rings is : Ww Qn 1 ® @ I 1 one la Vit ta. ire la Vita © ¢ 1 © gn 1 0 I SL AT 4mey la Vs? +a? 27) |a : Vs? +a?",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p74_span1_y95_h133.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417490/edvedum_physics/electrostatics/p74_span4_y790_h78.png",
+    "solution": "_KQ __KQ\nY= a 7 Vel ta?\nKQ  -KQ\nVit rp So\n= Val fal ¥ a\nQ [1 1\nVia¥y= =e [cme\nETS wey E =",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 141,
+    "page": 75,
+    "question_text": "4 uniformly charged disc of radius R having surface charge density is placed in the zy plane with its center at the origin. Find the electric field intensity along the z-axis at a distance Z from origin:",
+    "options": [
+      "(8) E-28 1 +z E=2 (1+ — o \\ (22 +R)\" 26 (22+ RY) © 0) 1 1 7 z o ( ) TN |. SR E=— + B= 2a (x =z zm) W\\ ZTE) 7 4 ks, 1 for» wrong answer] 2031 (27 Aug, Si Answen.¢ . H : H H H Z; pl oxPma(dn)xz_ a Zz S=lige 3 2a (arm) (+292 145. Figure shows a rod AB, which is bent in a 120° circular arc of radius R. A charge(—Q) is uniformly distributed over rod AB. What is the electric filed E at the centre of curvature O ? Yi A \\o [@] 7) x AY B A) 3/3 (8) a 3v3Q 3V8Q ; Srle RE Bre? © _3v30. © 330 . Brie, Re Torte RE",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417491/edvedum_physics/electrostatics/p75_span5_y770_h214.png",
+    "solution": "2A 0-\n§= TZ singi\n2k Q 2 i\n== sin 60°1\nx (s%)\n3\n_ HQ VE;\nTAR 2\n33k,\nTw Re",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 142,
+    "page": 76,
+    "question_text": "Two particles A and B having charges 20uC and —5uC respectively are held fixed with a separation of Sem At what position a third charged particle should be placed so that it does not experience a net 20 uC -5 uC electric force ? eo A 5cm B",
+    "options": [
+      "at 5cm from —5C on the right side 8) At Sem from 20,40 on the left side of system (cy At 1.25cm from —5uC between two charges (D) At midpoint between two charges",
+      "(B)",
+      "(C)",
+      "At midpoint between two charges"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417491/edvedum_physics/electrostatics/p76_span1_y1021_h97.png",
+    "solution": "+20 fC ¢———— -5 uC\n< > Charge should be placed near —5uC at x distance\nSem\n+20 uC -5uC Q\nro —0 K20Q K(GQ , 24s? = 2\nFray = x = (hale = 25a 102\nSem X\n32? 102 -25=0=2=5\n147. Choose the incorrect statement:\n(a) The electric lines of force entering into a Gaussian surface provide negative flux.\n(b) A charge g is placed at the centre of a cube. The flux through al the faces will be the same.\n{c) In a uniform electric field net flux through a closed Gaussian surface containing no net charge, is\nzero.\n(d) When an electric field is parallel to a Gaussian surface, it provides a finite non-zero flux.\nChoose the most appropriate answer from the options given below:\n(A) (b) and (d) Only (B) (c) and (d) Only\n(C) (a) and (c) Only (D) (d) Only.\n4 marks, -1for 8 wrong answer] 2021 (31 Avg, Shin 2)\n+20 fC ¢———— -5 uC\n< > Charge should be placed near —5uC at x distance\nSem\n+20 uC -5uC Q",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 143,
+    "page": 76,
+    "question_text": "—0 K20Q K(GQ , 24s? = 2 Fray = x = (hale = 25a 102 Sem X 32? 102 -25=0=2=5 147. Choose the incorrect statement:",
+    "options": [
+      "The electric lines of force entering into a Gaussian surface provide negative flux.",
+      "A charge g is placed at the centre of a cube. The flux through al the faces will be the same. {",
+      "In a uniform electric field net flux through a closed Gaussian surface containing no net charge, is zero.",
+      "When an electric field is parallel to a Gaussian surface, it provides a finite non-zero flux. Choose the most appropriate answer from the options given below: (A) (b) and (d) Only (B) (c) and (d) Only (C) (a) and (c) Only (D) (d) Only."
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417491/edvedum_physics/electrostatics/p76_span1_y1021_h97.png",
+    "solution": "‘We know that electric flux is a scalar quantity and this is the scalar product of the magnitude of electric field and\nA\nsurface area. oe / Recall, the formula given by Gauss\nCl E\ntheorem, ¢ = E . A = EAcosd, here § = 90°, it means, ¢ = 0.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 144,
+    "page": 77,
+    "question_text": "5 cube is placed inside an electric field, E = 15052] The side of the cube is 0.5m and is placed in the field as shown in the given figure. The charge inside the cube is: v Jr 0.5m z Wg3x10e ®) 38x 10C © 38 x10 C ©) g3x 107 %C",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417491/edvedum_physics/electrostatics/p77_span1_y114_h143.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417491/edvedum_physics/electrostatics/p77_span3_y965_h265.png",
+    "solution": "3\nBody Tn : 2\nBy gauss law f E - ds = o ©1500. 5) x (0.5) = qn\n=v anadd\n0.5m\n5\n210\nPI fl ak ER\n16\n149. \" \" 5 -1\nA vertical electric field of magnitude 4.9 x 10° NC! just prevents a water droplet of a mass 0.1g\nfrom falling. The value of charge on the droplet will be : (Given g = 9.8ms™?%)\nW 6x10 ®) 30x10\n© 33.10% © 5x 10%\n8 marks, <1 for 8 ion answer) 2022 128.4, S13\nANsweR 8\nmg\nTo balance gravitational force, electric force on the liquid drop should act in upward direction. For translational\n3\njibrium along vertical direction, gE = =F LQIXI0 XBS_g0 100g\nequi a vertical direction, gE = mg =» q = if = S10 508 9g",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 145,
+    "page": 78,
+    "question_text": "1g identical charged particles each having a mass 10g and charge 2.0 x 10-7C are placed ona horizontal table with a separation of L between them such that they stay in limited equilibrium. If the coefficient of friction between each particle and the table is 0.25, find the value of L. [Use g=10ms?] A 19m ©) 10cm (© gem ©) 50m",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417492/edvedum_physics/electrostatics/p78_span1_y980_h178.png",
+    "solution": "Normal reaction applied by table on object wil be, N = mg.\nBoth charges are same, hence a repulsive force will act between them.\nValue of force acting will be, ae\nNow the maximum value of friction force which table can provide is,\n= pN = pmg\nFor equilibrium, Ae = pmg-\nLo BE Egat\nx V mg V 028mg °~ Vmg\n9x 10°\n=2 2% 107) = 0.12m = 12em\n\\ ono 2X10)\n15%: 4 long cylindrical volume contains a uniformly distributed charge of density p. The radius of cylindrical\nvolume is R. A charge particle (g) revolves around the cylinder in a circular path. The kinetic energy of\nthe particle is :\n[Cp (8) pgR?\nde, 2,\n© fe) © 4p\ndep. ap\nHe marks, = or a wrong shewer] {202 (24 Jun, SH 2)\nNormal reaction applied by table on object wil be, N = mg.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 146,
+    "page": 78,
+    "question_text": "charges are same, hence a repulsive force will act between them. Value of force acting will be, ae Now the maximum value of friction force which table can provide is, = pN = pmg For equilibrium, Ae = pmg- Lo BE Egat x V mg V 028mg °~ Vmg 9x 10° =2 2% 107) = 0.12m = 12em \\ ono 2X10) 15%: 4 long cylindrical volume contains a uniformly distributed charge of density p. The radius of cylindrical volume is R. A charge particle (g) revolves around the cylinder in a circular path. The kinetic energy of the particle is : [Cp (8) pgR? de, 2, © fe) © 4p dep. ap",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417492/edvedum_physics/electrostatics/p78_span1_y980_h178.png",
+    "solution": "R\nW\nLO era Ta\nElectric field dua to a long cylinder s, Ef = —>— = ~P_ it charge q is rotating in a circle of radius r\nZreor  Zmeor\nme* mv? pA 1 _ gpnR*  gpR?\nSt rel Ee",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 147,
+    "page": 79,
+    "question_text": "|; the figure, a very large plane sheet of positive charge is shown. P; and P; are two points at distance I and 2! from the charge distribution. If o is the surface charge density, then the magnitude of electric fields E; and £3 at Py and P; respectively are 2/ E, 7, i E, 1 Py",
+    "options": [
+      "Pa - ® 2 v Ey=Z E=Z BLAS Tet Be C) a D) a Oppel Op op-Z Z, PS 16 is, or whan swat) 2022 25 Jun, SH",
+      "(B)",
+      "a",
+      "a Oppel Op op-Z Z, PS 16 is, or whan swat) 2022 25 Jun, SH"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417492/edvedum_physics/electrostatics/p79_span1_y126_h191.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417492/edvedum_physics/electrostatics/p79_span2_y864_h300.png",
+    "solution": "The electric field dua 10 a large Uniformly charged non-conducting sheet is given by, B = = tis Independent of\nthe distance from the sheet, Therefore,\no\nEi=Ei=-\n153. 97 identical drops are charged at 22V’ each. They combine to form a bigger drop. The potential of the\nbigger drop will be ___V'.\n[8 marks, 110 wrong answer] 2022 125 un, Shin 2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 148,
+    "page": 79,
+    "question_text": "electric field dua 10 a large Uniformly charged non-conducting sheet is given by, B = = tis Independent of the distance from the sheet, Therefore, o Ei=Ei=- 153. 97 identical drops are charged at 22V’ each. They combine to form a bigger drop. The potential of the bigger drop will be ___V'.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417492/edvedum_physics/electrostatics/p79_span2_y864_h300.png",
+    "solution": "27 Drops > '\n4 1\nTotal volume of the drop will remain unchanged, So, 27 x 3 = 3 = R = 3r Potential of the small\ndrops, 22 = X42 For bigger drop, potential wil be V = LE =9 (%) —9%22= 108V\n= 3",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 149,
+    "page": 80,
+    "question_text": "Electrostatics JEE PYQ Question #149",
+    "options": [
+      "and other is labelled as Reason (R). Assertion (A): Non-polar materials do not have any permanent dipole moment. Reason (R): When a non-polar material is placed in an electric field, the centre of the positive charge distribution of it's individual atom or molecule coincides with the centre of the negative charge distribution. In the light of above statements, choose the most appropriate answer from the options given below. (A) Both (A) and (R) are correct and (R) isthe",
+      "Both (A) and (R) are correct and (R) is not the correct explanation of (A). correct explanation of (A).",
+      "(A) is correct but (R) is not correct.",
+      "(A) is not correct but (R) is correct."
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Non-polar materials do not have any permanent dipole moment. This statement is true.\nWhen a non-polar material is placed in an electric field, centre of positive charge is pushed in the direction of the\nelectric fieid and centre of the negative charge is pushed in the direction opposite to the electric field. Hence, they\ndon't coincide. Therefore, reason is false.\n155. Sixty four conducting drops each of radius 0.02m and each carrying a charge of 5C are combined\nto form a bigger drop. The ratio of surface density of bigger drop to the smaller drop will be\nWy. y Bg:\n©;1.8 Dg;\n14 marks, 1 for a wing answer] 2022 (26 Jun, in 21\nNon-polar materials do not have any permanent dipole moment. This statement is true.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 150,
+    "page": 80,
+    "question_text": "a non-polar material is placed in an electric field, centre of positive charge is pushed in the direction of the electric fieid and centre of the negative charge is pushed in the direction opposite to the electric field. Hence, they don't coincide. Therefore, reason is false. 155. Sixty four conducting drops each of radius 0.02m and each carrying a charge of 5C are combined to form a bigger drop. The ratio of surface density of bigger drop to the smaller drop will be Wy. y Bg: ©;1.8 Dg;",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "1\nTotal volume will be constant. Therefore, (5) MY sR R=\n3 3\np Arr? 6dxopr? a 4\nFinal surface charge density ;/ — 20\" _ D2 XT 7 _ 2\n2 Tee = 6 Tog 1",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 151,
+    "page": 81,
+    "question_text": "Three identical charged balls each of charge 2C are suspended from a common point P by silk threads of 2m each (as shown in figure). They form an equilateral triangle of side 1m. The ratio of net force on a charged ball to the force between any two charged balls will be P 2 ni 2m 2m Bs) Lem B& =B, 1 1m 2 W3:1 ® 3.2 ©;:1 0.4 {4 mks, ~1 foc wrong svewer] 2022 27 um, SHR D)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417493/edvedum_physics/electrostatics/p81_span1_y136_h211.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417494/edvedum_physics/electrostatics/p81_span2_y528_h168.png",
+    "solution": "q\n/ !\nWe have force between any two charge’, — F, — J\nAmey?\nI)\nq [i q\nFy\nResultant electrostatics force Fp = \\/F7 + F3 + 2F, Fy cos 60° = Is + Fy (= x 3) = V3F? so,\nthe ratio of net force on a charged ball to the force between any charged balls is =» ee =v3",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 152,
+    "page": 82,
+    "question_text": "a charge g is placed at the centre of a closed hemispherical non-conducting surface, the total flux passing through the flat surface would be i. wg ® a “@ 36, © a © 4 deg 2meq",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417494/edvedum_physics/electrostatics/p82_span3_y600_h109.png",
+    "solution": "Assume a complete sphere, then flux due to a charge placed at the center of sphere is\n=\n“\nFlux through hemisphere surface is equal to flux passing through flat surface ¢ = 3 po =\n© 2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 153,
+    "page": 83,
+    "question_text": "rus charges 1a and z are placed at the corners A, and C of a square of side a as shown in figure. The magnitude of electric field ( E) at the corner B of the square, is D (4 a 4 2 9g 2 A€—a ——> B woo 1 . 1) ® dren? \\V2 2) od ig 4mega’ V2 © © a (1 _8 (& 3) Imega? V2 4mega? \\ 2 2 PS —",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 198,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417494/edvedum_physics/electrostatics/p83_span1_y102_h205.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417495/edvedum_physics/electrostatics/p83_span4_y669_h118.png",
+    "solution": "ir 4\nI .\nhem\n: Nee,\nEy =A — BGP Ba Bp = =\nAs we can see from diagram, Ec: and E.; are perpendicular. Therefore, net electric field will be:\nBue = Ep +/E3 + E%\nkq kg \\* (kg)?\nEui= 35+ (5 * a=)\nkg ke\nEnt = 2%? i av?\n— ka\nEpa = 55 (14 V2)\nBO\nBoa = 4mega® (5 ¥ 3)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 154,
+    "page": 84,
+    "question_text": "Statement-1 : A point charge is brought in an electric field. The value of electric field at a point near to the charge may increase if the charge is positive. Statement-1l : An electric dipole is placed in a uniform electric field. The net electric force on the dipole will not be zero.",
+    "options": [
+      "Both statement-| and statement-1l are true.",
+      "Both statement-I and statement-Ii are false.",
+      "Statement-1 is true but statement-ll is false. ~~",
+      "Statement-I is false but statement-Il is true."
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417495/edvedum_physics/electrostatics/p84_span1_y819_h60.png",
+    "solution_image_url": null,
+    "solution": "If a positive point charge is brought in an electric field. The value of electric field at a point near to the charge may\nincrease or decreases. Hence, statement | is true.\nAn electric dipole experiences zero net force in a uniform electric field. Hence, statement Ii is false.\n160. Two point charges A and B of magnitude +8 x 107°C’ and —8 x 10~°C respectively are placed at a\ndistance d apart. The electric field at the middle point () between the charges is 6.4 x 10‘NC 1. The\ndistance 'd’ between the point charges A and Bis\n(A) 9p, ®) 3m\n© 1m ©) 4m\n4 marks, -1 for 3 wren answer] 2022 (28 un, Shin 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 155,
+    "page": 84,
+    "question_text": "positive point charge is brought in an electric field. The value of electric field at a point near to the charge may increase or decreases. Hence, statement | is true. An electric dipole experiences zero net force in a uniform electric field. Hence, statement Ii is false. 160. Two point charges A and B of magnitude +8 x 107°C’ and —8 x 10~°C respectively are placed at a distance d apart. The electric field at the middle point () between the charges is 6.4 x 10‘NC 1. The distance 'd’ between the point charges A and Bis",
+    "options": [
+      "9p, ®) 3m © 1m ©) 4m",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417495/edvedum_physics/electrostatics/p84_span1_y819_h60.png",
+    "solution_image_url": null,
+    "solution": "—6 <6\n8x10\" C 8x10\" C\nTY\nDirection of electric field at mid-point due to both charge will be in same direction, which is towards right.\nkg kg o\nSL = 8% 10\nTherefore, Eat mid-point ( d d at\n3 2\n161. A positive charge particle of 100mg is thrown in opposite direction to a uniform electric field of\nstrength 1 x 10° NC. If the charge on the particle is 40p.C and the initial velocity is 200ms', how\nmuch distance it will travel before coming to the rest momentarily\n(A) § 5m ®\n9. ©) 1,\n8 marks, <1 for & wrong answer) 2022 (29 dun, SH 1)\n—6 <6\n8x10\" C 8x10\" C\nTY\nDirection of electric field at mid-point due to both charge will be in same direction, which is towards right.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 156,
+    "page": 84,
+    "question_text": "kg o SL = 8% 10 Therefore, Eat mid-point ( d d at 3 2 161. A positive charge particle of 100mg is thrown in opposite direction to a uniform electric field of strength 1 x 10° NC. If the charge on the particle is 40p.C and the initial velocity is 200ms', how much distance it will travel before coming to the rest momentarily",
+    "options": [
+      "§ 5m ® 9. ©) 1,",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417495/edvedum_physics/electrostatics/p84_span1_y819_h60.png",
+    "solution_image_url": null,
+    "solution": "Force experienced by a particle with charge q in an electric field F = gE.\nox 108\nNow, the acceleration produced is given as a + — 95 40x10 * 10\nmom 1x10\n= 4 x 10*ms? (As the particle is projected against the electric field, hence it is decelerated)\nUsing, v# = u* — 2as\nWe have, 0% = u? - Jas\n©? eo)\n== = 0.5m\nBE Ta Tre",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 157,
+    "page": 85,
+    "question_text": "1yo point charges Q each are placed at a distance d apart. A third point charge g is placed at a distance z from mid-point on the perpendicular bisector. The value of at which charge q will experience the maximum Coulomb's force is: \"4 ® d 2 © d od V2 2V2 {a ork, fot wong answer) 2022 29 su, SHR 2)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417495/edvedum_physics/electrostatics/p85_span2_y692_h73.png",
+    "solution": "Fret\n0\n§% 5 438 kqQ\nCCN IN\n7 % N\nX % dk x Ry The distance between g and Q is\nFe \\\no——— 0\nd\n— be\nd d\n2 2\n[ (2) Z Theto bet d Q will be 599 From the giver\nree 3) = #2 + &-Thetorce between g and Q wit be J “12. From he given igure we can\nsee that only vertical components of the forces will add, and the horizontal components will get cancelled out.\n2% %gQ x 5\nEL ore\nTherefore, = For force to be maximum, $24 _ ¢\nJo &\\2 dz\nEl\n3 1\n(249) -=x3(2+ 5) x2\nSql HPSS ATEL) SNE REY ge dd\n3 1 1 22\nans\n(¢ #)i\n163. if the electric potential at any point (x,y, 2) m in space is given by V = 3x volt. The electric field at\nthe point (1,0, 3) m will be :\n(A) 314m, directed along positive z-axis. (B) 31m\", directed along negative z-axis.\n(©) Gin, directed along negative z-axis. (0) Gym, directed along positive z-axis.\nmarks, or 8 woo answer] 2023 (20 Jun, SH 2)\nFret\n0\n§% 5 438 kqQ",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 158,
+    "page": 85,
+    "question_text": "IN 7 % N X % dk x Ry The distance between g and Q is Fe \\ o——— 0 d — be d d 2 2 [ (2) Z Theto bet d Q will be 599 From the giver ree 3) = #2 + &-Thetorce between g and Q wit be J “12. From he given igure we can see that only vertical components of the forces will add, and the horizontal components will get cancelled out. 2% %gQ x 5 EL ore Therefore, = For force to be maximum, $24 _ ¢ Jo &\\2 dz El 3 1 (249) -=x3(2+ 5) x2 Sql HPSS ATEL) SNE REY ge dd 3 1 1 22 ans (¢ #)i 163. if the electric potential at any point (x,y, 2) m in space is given by V = 3x volt. The electric field at the point (1,0, 3) m will be :",
+    "options": [
+      "314m, directed along positive z-axis.",
+      "31m\", directed along negative z-axis. (©) Gin, directed along negative z-axis. (0) Gym, directed along positive z-axis.",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417495/edvedum_physics/electrostatics/p85_span2_y692_h73.png",
+    "solution": "Electric potential V = 3x*\nElectric potential and electric field are related as  — =z =n\nAtthe point (1,0,3) m,\n> E=-6x1=-6Vm™\nThus, electric field is 6V'm ! along negative z- axis.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 159,
+    "page": 86,
+    "question_text": "The volume charge density of a sphere of radius 6m is 2uCem*. The number of lines of force per unit surface area coming out from the surface of the sphereis ___ x10'°NC'. [Given : Permittivity of vacuum ey = 8.85 x 10 2C*N \"=m?",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417496/edvedum_physics/electrostatics/p86_span2_y643_h176.png",
+    "solution_image_url": null,
+    "solution": "Given here, p = 2uCem * and R = 6m.\nNumber of lines of force per unit area = electric field at surface — 4\n| ryrR\n#5 rey RE\nSEB aa yo\nB= = Tram mo = M8 x 10UNC\n=45 x 10“NC!\n165. Three point charges of magnitude 54C’, 0.164C and 0.3uC are located at the vertices A, B,C of a\nright angled triangle whose sides are AB = 3cm, BC = 3v/2cm and CA = 3cm and point A is the\nright angle corner. Charge at point A experiences ___ IV of electrostatic force due to the other two\ncharges.\n4 marks, ~1for rang sswer) 2022 126 Juf Shi 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 160,
+    "page": 86,
+    "question_text": "Given here, p = 2uCem * and R = 6m. Number of lines of force per unit area = electric field at surface — 4 | ryrR #5 rey RE SEB aa yo B= = Tram mo = M8 x 10UNC =45 x 10“NC! 165. Three point charges of magnitude 54C’, 0.164C and 0.3uC are located at the vertices A, B,C of a right angled triangle whose sides are AB = 3cm, BC = 3v/2cm and CA = 3cm and point A is the right angle corner. Charge at point A experiences ___ IV of electrostatic force due to the other two charges.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "03uC ¢\n3em 372 cm\nUsing Coulomb's law the electrostatic force on A due to C'\nF 0.16 nC\n2 Jom B\nF\nKquge _ kx5x08x10\" 910° x5x03x10°1 nr\nFoo =——F = ———7——= ———————— = 15 x 10 = 15N Similarly, the force\n47 rac) 0x10 9107\nKqigs 9x 10° x5 x 0.16 x 10\non Adueto B Fp = —orig = ——— \"2\" _ §IV We can see that the forces are\n(ran) 9x10\nperpendicular to each other. Therefore, the net force experienced by charge at Als, F = \\/F 40” + Fag”\n=1/15% + 8 = 280 = 17N",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 161,
+    "page": 87,
+    "question_text": "To uniformly charged spherical conductors A and B of radii 5mm and 10mm are separated by a distance of 2cm. If the spheres are connected by a conducting wire, then in equilibrium condition, the ratio of the magnitudes of the electric fields at the surface of the sphere A and B will be W;.3 Bg:1 ©7: ©) .q",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "‘When two conductors are connected by a conducting wire, their potentials become equal. Therefore, V4 = Vg\n‘The potential of a spherical conductor is given by, 7 = FS\n= ¥a_kQu\nRy Ry\n=QxR\nNow the electric field near the surface of the conductor will be, E = 2\nLo7)\naoa Re\nEx My Ra\n[A\nEx _10_2\n24 2.13\nEn 5 1\n167. Two identical positive charges @ each are fixed at a distance of 2a apart from each other. Another\npoint charge g, with mass m is placed at midpoint between two fixed charges. For a small\ndisplacement along the line joining the fixed charges, the charge gq executes SHM. The time period of\noscillation of charge g; will be\nw / 4r'eyma® © [Cal\nem ]\n20 imma\nc 0)\n(Oe eam ©). [Bema\n@Q wQ\n(4 mike, 1 for song arse] 2022 127 ul, SHAK)\n‘When two conductors are connected by a conducting wire, their potentials become equal. Therefore, V4 = Vg\n‘The potential of a spherical conductor is given by, 7 = FS\n= ¥a_kQu",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 162,
+    "page": 87,
+    "question_text": "Ry =QxR Now the electric field near the surface of the conductor will be, E = 2 Lo7) aoa Re Ex My Ra [A Ex _10_2 24 2.13 En 5 1 167. Two identical positive charges @ each are fixed at a distance of 2a apart from each other. Another point charge g, with mass m is placed at midpoint between two fixed charges. For a small displacement along the line joining the fixed charges, the charge gq executes SHM. The time period of oscillation of charge g; will be w / 4r'eyma® © [Cal em ] 20 imma c 0) (Oe eam ©). [Bema @Q wQ (4 mike, 1 for song arse] 2022 127 ul, SHAK)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "F. of\nPpp\n| (qm) 5\nLet the charged particle be displaced slightly towards\n«— d —\nright by distance = (= « d). (Qui, 0) + Fi = = — FL vans right (QatB,q) + Fy = —— — 2\nAmeo (d +z) Are) (d- 2)\"\ntowards left F,, = F 4 Fy, will bring it towards O_F ,.; = Si Ln - —L i\nps Axe |(d +2)” (d-a)\n_Qq| zd |. 2 (Qa 3\noe Ee isince z « d,z* is negligible. F',,,, = rod) i Clearly, the direction of the\nforce Is opposite to the displacement & Fo x, hence it is an SHM. Acceleration of charged particle is given as,\n_F_ Qa ILS\na= =a (1) And we know that for SHM, a = ~wx ...... (2) Comparing (1) and (2), we get\npw (reper\nw= Lance, the time period, 7 — 2% — 3, | TV mreretore, [40a\nV room w=\" a ir",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 163,
+    "page": 88,
+    "question_text": "5 (ong cylindrical volume contains a uniformly distributed charge of density pC'm ~*. The electric field 2 inside the cylindrical volume at a distance z = im from its axis Is ___ Vm\". Ix | {4 mars, 1 fo wong seswer] 2022 (27 ul, SN 1)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417496/edvedum_physics/electrostatics/p88_span2_y577_h242.png",
+    "solution": "Given here, Volume charge density = pC. Consider a Gaussian cylindrical surface of height h and radius z.\n—] =\nLet g charge is enclosed by the cylinder of radius z. | E From Gauss's law,\n|\n>\nJ EdScos0 = c Here, q =volume charge density x volume of imaginary cylinder. =»  (2xzh) = EX T50\n3 0)\nSE=fE pe Ly 20 yy electric fd 8 TV\n26) 2 p\n169. A charge of 4u( is to be divided into two. The distance between the two divided charges is constant.\nThe magnitude of the divided charges so that the force between them is maximum, will be:\nA) 1,0 and 3uC (8) 5, and 2uC\n(©) g and auc 0) | 5, and 2.5uC\n{a maks, fo 8 wrong newer] 2022 27 Jul, Sn 24",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 164,
+    "page": 88,
+    "question_text": "Given here, Volume charge density = pC. Consider a Gaussian cylindrical surface of height h and radius z. —] = Let g charge is enclosed by the cylinder of radius z. | E From Gauss's law, | > J EdScos0 = c Here, q =volume charge density x volume of imaginary cylinder. =»  (2xzh) = EX T50 3 0) SE=fE pe Ly 20 yy electric fd 8 TV 26) 2 p 169. A charge of 4u( is to be divided into two. The distance between the two divided charges is constant. The magnitude of the divided charges so that the force between them is maximum, will be: A) 1,0 and 3uC (8) 5, and 2uC (©) g and auc 0) | 5, and 2.5uC {a maks, fo 8 wrong newer] 2022 27 Jul, Sn 24",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 45,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417496/edvedum_physics/electrostatics/p88_span1_y146_h242.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417496/edvedum_physics/electrostatics/p88_span2_y577_h242.png",
+    "solution": "If after division, of the charge is g the\na - afte division, one of the charge is ¢\nother charge will be (4 ~ g). Th force between them can ba written 35, F' — Bait at For tha force between\ntrem tobe maim, =0= Rua =0=g=2uC",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 165,
+    "page": 89,
+    "question_text": "Two electric dipoles of dipole moments 1.2 x 10~*cm and 2.4 x 10~%cm are placed in two difference uniform electric fields of strengths 5 x 10°NC~! and 15 x 10° NC! respectively. The ratio of maximum torque experienced by the electric dipoles wil be 1. The value of zis ___. z",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 17,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417496/edvedum_physics/electrostatics/p89_span2_y916_h100.png",
+    "solution": "Maximum torque experienced by an electric dipole is 7; = PE sin 90°-\n90, 7p = PE\nw .\nheros TL PiEr _ 12x10 x5x10' 1\nmi PaEy 2.4x107x15x10° \"6\nHence, the value of z = 6.\nmn 8m\nA uniform electric field E = (=) Vm is created between two parallel plates of length 1m as\nshown in figure, (where m — mass of electron and e = charge of electron). An electron enters the\nfield symmetrically between the plates with a speed of 2m\". The angle of the deviation (8) of the\npath of the electron as it comes out of the field willbe ___.\n1m\n—\n+++\n0\nRN J —\nA) (ant (4) © tan (2)\n© 1 [SH\nop (3) tan\"! (3)\n3\n{4 ik, 1 fo wong answer] 023 (28 Ak SHRZ)\nMaximum torque experienced by an electric dipole is 7; = PE sin 90°-\n90, 7p = PE",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 166,
+    "page": 89,
+    "question_text": "heros TL PiEr _ 12x10 x5x10' 1 mi PaEy 2.4x107x15x10° \"6 Hence, the value of z = 6. mn 8m A uniform electric field E = (=) Vm is created between two parallel plates of length 1m as shown in figure, (where m — mass of electron and e = charge of electron). An electron enters the field symmetrically between the plates with a speed of 2m\". The angle of the deviation (8) of the path of the electron as it comes out of the field willbe ___. 1m — +++ 0 RN J —",
+    "options": [
+      "(ant (4) © tan (2) © 1 [SH op (3) tan\"! (3) 3 {4 ik, 1 fo wong answer] 023 (28 Ak SHRZ)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417496/edvedum_physics/electrostatics/p89_span2_y916_h100.png",
+    "solution": "v,\n1m ¥\nOAL TILT\nFEF REY\nA Vy Time taken by the electron to cross\nZms TNE TT\nwilbe, t = L = 1, Acceleration of the electron along y axis g, = £ — E¢ _ 8m © oa) ofthe\nve 2 mm em ¥\nelection when thas crossed the capachor wil be, u, = a,t = § x § = dms! Therelore,\ntng=2 = aos)\nvio 3",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 167,
+    "page": 90,
+    "question_text": "A spherically symmetric charge distribution is considered with charge density varying as 3 r So= < p(r)={P ¢ 2) fom £8 Where, 7 (r < R) is the distance from the Zero forr>R centre O (as shown in figure). The electric field at point P will be : (4) 4 5 A pr (3 r ®) pr (3 r i \\1 R 3 \\4 R Cer (yx) Per (yr) dey R Sey R 4 racks, <1 for 3 wiong Snswer] 2022 {28 Jul Shi ANSWER; © ZT, i 0 A H roo} According to Gauss's law, the electric flux through a closed surface area is equal VR \\ ¥ v3 PNO 10 the charge inside the surface divided by ¢. =» § Edi = Qu , J [6 2 3) xr SB — 0 i pdm (3 AN pr = pant = 22 (30 -im) 2 E= (1-3) 173. Given below are two statements. Statement | - Electric potential is constant within and at the surface of each conductor. Statement Il: Electric field just outside a charged conductor is perpendicular to the surface of the conductor at every point. In the light of the above statements, choose the most appropriate answer from the options give below. (A) Both statement | and statement ll are correct  (B) Both statement | and statement Il are incorrect (C) statement 1 is correct but statement Il is (D) statement I is incorrect but and statement I is. incorrect correct",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 4,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417497/edvedum_physics/electrostatics/p90_span1_y164_h90.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417497/edvedum_physics/electrostatics/p90_span3_y451_h182.png",
+    "solution": "Statement - I: True as body of conductor acts as equipotential surface.\nStatement Ii: True, as conductor is equipotential. Tangential component of electric field should be zero. Therefore,\nelectric field should be perpendicular to surface.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 168,
+    "page": 91,
+    "question_text": "two identical metallic spheres A and B when placed at certain distance in air repel each other with a force of F'. Another identical uncharged sphere CIs first placed in contact with A and then in contact with B and finally placed at midpoint between spheres Aand B. The force experienced by sphere C' will be : (A) 3F (8) 3F 2 1 © p © 5p",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 1,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417497/edvedum_physics/electrostatics/p91_span1_y546_h62.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417497/edvedum_physics/electrostatics/p91_span2_y659_h75.png",
+    "solution": "p rid\nLet charge on A and B be g4 = gg = q. I a 1) F= Kg\" qn\n2\nforce acting between them is jr — a When (is placed in contact with A, charge on A and C* will be = H\nqd\nNow C is placed in contact with B, charge on B and C will be _ 2 = 3q Now, force experienced by sphere\nSasa\n3¢\nF 4 F\n1 2 3\n1 @ pO BY\n2 r r 4\n2 2\n§ { 3 _ gl ) >\npgp = OC So AE 2 yg sr\n6x2 axT & ve\n4 4 4\n175. if two charges g;and g, are separated with distance d and placed in a medium of dielectric constant k\n~ What will be the equivalent distance between charges in air for the same electrostatic force?\nA gyi © vd\n(© 1.5avk ©) 24k\n£4 marks; <1 on wang soswer) 2023 (24 Jan, St 1)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 169,
+    "page": 91,
+    "question_text": "rid Let charge on A and B be g4 = gg = q. I a 1) F= Kg\" qn 2 force acting between them is jr — a When (is placed in contact with A, charge on A and C* will be = H qd Now C is placed in contact with B, charge on B and C will be _ 2 = 3q Now, force experienced by sphere Sasa 3¢ F 4 F 1 2 3 1 @ pO BY 2 r r 4 2 2 § { 3 _ gl ) > pgp = OC So AE 2 yg sr 6x2 axT & ve 4 4 4 175. if two charges g;and g, are separated with distance d and placed in a medium of dielectric constant k ~ What will be the equivalent distance between charges in air for the same electrostatic force? A gyi © vd (© 1.5avk ©) 24k",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417497/edvedum_physics/electrostatics/p91_span1_y546_h62.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417497/edvedum_physics/electrostatics/p91_span2_y659_h75.png",
+    "solution": "The force between the two charges when they are placed in dielectric is\nlam\nLien\nThe force between the two charges when they are placed at separation d' is\n1 qa\nar\nSince, the force between the two charges is same in both case\nFi=F\nalae _ 1 ge\ndmek dF dwe, d7\n= d =davk",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 170,
+    "page": 92,
+    "question_text": "5 stream of a positively charged particles having a = 2 x 10\" Chg\" and velocity #iy = 3 x 107ims! is deflected by an electric field 1.8jkVm '. The electric field exists in a region of 10cm along z direction. Due to the electric field, the deflection of the charge particles in the direction is ___ mm.",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 6,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417500/edvedum_physics/electrostatics/p92_span3_y1154_h307.png",
+    "solution": "Vom 3x107m/s |: = 1.8 X 10° N/M sccurton tv patito ino\nF—¢=10cm—\nelectric field, 0 = = = 95 _ (5, 10\") (1.8 x 10°) = 3.6 x 10m Time to cross plates —\n= wonton do 0 x10) (12) 002m = 2m\n177. The electric potential at the centre of two concentric half rings of radii R, and Ry, having same linear\ncharge density A is\nLl\n++ A T+\nth Gh\n+ +\n+ +H A+ +\n+ + +\n+ %d +\n+ +\nih R, + +\n+ + § is\n+ + R +\n4 cf 1 + +\n++ + 1+\n0\n(A) 2) ® A\n= 26,\n© A © A\n1% €",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 171,
+    "page": 92,
+    "question_text": "3x107m/s |: = 1.8 X 10° N/M sccurton tv patito ino F—¢=10cm— electric field, 0 = = = 95 _ (5, 10\") (1.8 x 10°) = 3.6 x 10m Time to cross plates — = wonton do 0 x10) (12) 002m = 2m 177. The electric potential at the centre of two concentric half rings of radii R, and Ry, having same linear charge density A is Ll ++ A T+ th Gh + + + +H A+ + + + + + %d + + + ih R, + + + + § is + + R + 4 cf 1 + + ++ + 1+ 0",
+    "options": [
+      "2) ® A = 26, © A © A 1% €",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417500/edvedum_physics/electrostatics/p92_span3_y1154_h307.png",
+    "solution": "+ A+t ++, +\nHE +\n++ Fo\n+ $b At + ge +\n+ + +\n+ + +\n+ +\n+ R, +\n+/ 4 + .\n+ + \\ by\n+ +, =\ni! + Ry + +\n+ + LE\no\n; 1 MER) 1 A(R) A\nVo=Vi+VasVo= ox Spot oom x SSE = 2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 172,
+    "page": 93,
+    "question_text": "A uniform electric field of 10NC~! is created between two parallel charged plates (as shown in figure). An electron enters the field symmetrically between the plates with a kinetic energy 0.5¢V. The length of each plate is 10cm. The angle (4) of deviation of the path of electron as it comes out of the field is ___(in degree). -7 _- - = «——10cm—————>",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417501/edvedum_physics/electrostatics/p93_span1_y163_h79.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417501/edvedum_physics/electrostatics/p93_span2_y496_h163.png",
+    "solution": "Le\n- =\n_- Ve = uy\na Given here, kinetic\n«——10cm—————>\nenergy Le = Lu? > u, = [= Acceleration of electron due to electric field is a = <E, where, ¢ is charge on\nSane Vm m\nelectron. Using equation of motion, s = u,t + Jott along x direction, we get\na 10!\nL=ut+0( a, =0)= 10x10? = ut = t = ——....(1) Using equation of motion, v, = uy + ayt\nus\ne 1\nalong y direction, we get o, = 0 4 E¢ = EE _ (2) From equation (1) and (2), we have v, = <= (=)\nmm wm \\ Tu,\nvy, _eE (107 ex10x10\"\ntn tgng =m a Sa 1 The angle of deviation of the path of electron as it\nm\ncomes out of the field is 6 = 45",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 173,
+    "page": 94,
+    "question_text": "A point charge of 10uC is placed at the origin. At what location on the X-axis should a point charge of 40uC be placed so that the net electric field is zero at z = 2cm on the X-axis ? Wz — cm © 2 — dem — [TR—",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417501/edvedum_physics/electrostatics/p94_span1_y833_h98.png",
+    "solution_image_url": null,
+    "solution": "0 2cm X 0 Let the charge 40uC\n2cm (Xo—2)cm\nbe placed at a distance X, from the origin as show in the figure. For the electric field at z = 210 be 0,\nkx10 kx 1 2\nEp=0= —m— = == Emo\np FT roa 3 Fog = Xo 2 = 4 Therelore, he charge is cated\nXy=442=6em\n180. A point charge gy = 4qp is placed at origin. Another point charge gs = —go is placed at = = 12cm.\nCharge of proton is gy. The proton is placed on z-axis so that the electrostatic force on the proton in\nzero. In this situation, the position of the proton from the origin is em.\n4 marks, = fo 8 wiong ara] 2023 120 Ji, Sh",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 174,
+    "page": 94,
+    "question_text": "2cm X 0 Let the charge 40uC 2cm (Xo—2)cm be placed at a distance X, from the origin as show in the figure. For the electric field at z = 210 be 0, kx10 kx 1 2 Ep=0= —m— = == Emo p FT roa 3 Fog = Xo 2 = 4 Therelore, he charge is cated Xy=442=6em 180. A point charge gy = 4qp is placed at origin. Another point charge gs = —go is placed at = = 12cm. Charge of proton is gy. The proton is placed on z-axis so that the electrostatic force on the proton in zero. In this situation, the position of the proton from the origin is em.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417501/edvedum_physics/electrostatics/p94_span1_y833_h98.png",
+    "solution_image_url": null,
+    "solution": "q, q,\n—— mn = = ————— Gr = = ———.\nOrigin 12 cm (x=12)cm 3\n—— By\nLet at point P net electric field is zero. As direction of electric field due to bath charges at point P is opposite,\n1 1\ncquatng magico va ge 2-58 = reg 2x 12) =x 2 = Hm Distance of proton\nfrom origin = 24cm.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 175,
+    "page": 95,
+    "question_text": "| 3 cuboid of dimension 2L x 2L x L , a charge q is placed at the centre of the surface § having area of 4L* . The flux through the opposite surface to § is given by Ww _q_ ® q 12€, 3c © aq © gq 26, 6c",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417501/edvedum_physics/electrostatics/p95_span1_y384_h404.png",
+    "solution_image_url": null,
+    "solution": "‘Assume a similar cuboid on top of the given cuboid to make symmetry about charge. Thus, it becomes a cube of\nlength 2L.\n2L.\n<>\nN—— ANY\n’ | ™ | a oe\nN — )\nFlux passing through whole cube is ¢ = os (Gauss's Law). Since, total faces are 6, so flux passing through shaded\nface = oa\n182. £or a charged spherical ball, electrostatic potential inside the ball varies with ras V = 2ar? + b.\nHere, a and bare constant and r is the distance from the center. The volume charge density inside the\nballis —Aae. The value of Ais\n€ = permittivity of medium.\n‘Assume a similar cuboid on top of the given cuboid to make symmetry about charge. Thus, it becomes a cube of\nlength 2L.\n2L.\n<>\nN—— ANY\n’ | ™ | a oe",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 176,
+    "page": 95,
+    "question_text": "— ) Flux passing through whole cube is ¢ = os (Gauss's Law). Since, total faces are 6, so flux passing through shaded face = oa 182. £or a charged spherical ball, electrostatic potential inside the ball varies with ras V = 2ar? + b. Here, a and bare constant and r is the distance from the center. The volume charge density inside the ballis —Aae. The value of Ais € = permittivity of medium.",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 2,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417501/edvedum_physics/electrostatics/p95_span1_y384_h404.png",
+    "solution_image_url": null,
+    "solution": "As we know, E = x = ~dar\nNow, electric field inside the charged spheres is given by E = eS\nComparing both, we get p = —12ae\nTherefore, \\ = 12.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 177,
+    "page": 96,
+    "question_text": "A point charge 2 x 10°2C is moved from P to S in a uniform electric field of 30NC! directed along positive z-axis. If coordinates of P and S are (1,2, 0)mand(0, 0, 0)m respectively, the work done by electric field will be",
+    "options": [
+      "200m. ®) 600m. ©) _600m.s ©) _1200m.J",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417501/edvedum_physics/electrostatics/p96_span1_y355_h70.png",
+    "solution_image_url": null,
+    "solution": "_—_——\n°\n_—m\n[J ~ As electric\nS(0, 0, 0) P(1,2,0)\n° , 0,\nE=30:\nfield is uniform, so force acting on the charged particie will be uniform. Therefore, Wg = F'.5 = gk - §\n(2x10?) [oi (ot +054 0k) (+2) +ok)]] 60 x 10°27 = —600mJ",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 178,
+    "page": 97,
+    "question_text": "14,5 isolated metallic solid spheres of radii R and 2R are charged such that both have same charge density 0 . The spheres are then connected by a thin conducting wire. If the new charge density of the bigger sphere is o'. The ratio —_ is : - (A) 9 (8) 4 1 3 © 5 0) 5 3 6",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 45,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417502/edvedum_physics/electrostatics/p97_span1_y341_h259.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417503/edvedum_physics/electrostatics/p97_span2_y661_h200.png",
+    "solution": "Charge and charge density on both isolated metallic solid spheres are show below.\nQz\nQ:\n© Let the charges and the\n2\nQ, = o(4nR?)\npL Q: = o(4n(2RY)\n= 16nR%c\ncharge densities on both the spheres after connected by thin conducting wire be Q|, Qj. cand’ as shown below.\n0’\n’ 2\nQ's\n[7] (7) Once connected, charge on both the\nspheres will redistribute such that potentials at the surface of both spheres Is the same. . K@1 _ kQy\nDhak\n490 [00 10 an Log ing charge condensation 0 + @) = Qu il Bh 04S awe\nAmeR Ame (2R) Jd { bi A\n3 2. _Q 2 2xR'a J\nFO=Ankol ry = sx ern 223\nre\npr\n: pal\n0 ee _\nAs - \" or | |\n185. - by; | |\n: 3 pe di\nD | hissed\n| . f i noha\nyy ,\nor]\n\\J",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 179,
+    "page": 99,
+    "question_text": "as shown in figure, a cuboid lies in a region with electric field E = 22% — dyj + 6kNC~1. The magnitude of charge within the cuboid is ne, C. The value of nis ____ (if dimension of cuboid is Z 0,0,3) 1x2 x 3m) 0,0,0) (0,2,0 x",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417503/edvedum_physics/electrostatics/p99_span1_y170_h163.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417503/edvedum_physics/electrostatics/p99_span2_y472_h306.png",
+    "solution": "Zz\n0,0,3)\nGiven: = 24% ~ dy] + 6k For top and bottom\n0,0,0) (0,2,0\nx\nfaces, as value of x = Oly = 0, electric field becomes constant and therefore net flux through these two faces\nwill be zerolg, = 0). Now, E, = 24%, E, = —4y and E. = 6. Change in net flux through face at x=1and at x=0\nparallel to y-2 plane can written as, 6, = (2 x 12) x (2 x 3) 0 = 12. Similarly, net flux through face at y=2 and\ny=0 parallel to x-z plane can be written as, ¢, = — (4 x 2) x (1x 3) — 0 = ~24 gy = 12 — 24 = 12 Using\nGause's law, Fue = bs = Jgl = 12¢",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 180,
+    "page": 100,
+    "question_text": "which of the following correctly represents the variation of electric potential (V') of a charged spherical conductor of radius (R) with radial distance (r) from the centre? (A) 177 (8) Vv, 1 1 1 1 1 1 1 1 0 R r— 0 R — © y, oy, I 1 1 1 1 1 1 1 1 0 R r— [ 2 —",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 24,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417455/edvedum_physics/electrostatics/p100_span3_y715_h155.png",
+    "solution": "V,\n|\nI\ni\nH As electric field inside the charged conducting sphere is\n1\ni\ni\n1\n1\n0 R I —\nzero, therefore potential will be constant for the inside part. For outside part, electric potential decreases as\n| ¥ = ¥ and the conducting sphere behaves like a point charge concentrated at the centre,\nB",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 181,
+    "page": 101,
+    "question_text": "gypression for an electric field is given by E — 400022iV/m\". The electric flux through the cube of side 20cm when placed in electric field (as shown in the figure) is ___ Vem. (0.0.0). _ : / $ / Q”",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417456/edvedum_physics/electrostatics/p101_span1_y299_h444.png",
+    "solution_image_url": null,
+    "solution": "Electric flux is expressed as ¢ = E - A = EA cos#, here, A is area of the surface and @ is the angle between the\n‘electric field lines and the normal to A. The flux will be only from DEFG surface as on the surface OABC field is\nzero and for rest of the surface, area vector is perpendicular to field.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 182,
+    "page": 102,
+    "question_text": "6 = EA = 4000 x (0.2)* x (0.2)* = 4000 x 16 x 10 ‘Vim = 640Vem 189. Considering a group of positive charges, which of the following statements is correct? (A) Net potential of the system cannot be zero at a (B) Net potential of the system at a point can be point but net electric field can be zero at that zero but net electric field can't be zero at that point point (C) Both the net potential and the net field can be (D) Both the net potential and the net electric field zero at a point cannot be zero at a point",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 12,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417456/edvedum_physics/electrostatics/p102_span1_y89_h470.png",
+    "solution_image_url": null,
+    "solution": "As we know, net potential will be algebraic sum of potential due to each charge, so we can write\nQu\nVia =% (= )\nn\nAs given in the question, € and r, are positive, so\nVi Voa > 0\nBut electric field is a vector quantity, so it can be zero for a given arrangement of charges. For example, electric\nfield at the centre of the two equal charges at certain distance will be zero as electric field due to both charges will\nbe in opposite direction and hence will cancel each other.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 183,
+    "page": 103,
+    "question_text": "1445 equal positive point charges are separated by a distance 2a. The distance of a point from the centre of the line joining two charges on the equatorial line (perpendicular bisector) at which force a experienced by a test charge g, becomes maximum is =. The value of zis 5",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417456/edvedum_physics/electrostatics/p103_span2_y752_h74.png",
+    "solution": "qo\nGR\n’\nToh RO\n.,\nVd 8) 0 eS 2 2\n2 2. . RS\nr Va“ +y\na + y ’ %.\n’,\n-\ns Y *\n’ hN\nPd E]\n’ %\n+ %\ni A\nLet us assume at distance y, force is maximum. Now, force at a distance y is given by, F,. = 2F cos So,\n2Kag,y 3 2\nFagg = 22990 3 »\nT For Fy to be maximum, Sot gor (1 +a?)2 — yz x 2y(y? + a?)2\n4s ane dy Kqp———————e———— — 0\nri +atja (@ +a)’\na\nSimpitying, we get = 75. Hence, the value of = 2.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 184,
+    "page": 104,
+    "question_text": "19%. | et o be the uniform surface charge density of two infinite thin plane sheets shown in figure. Then the electric fields in three different region Ey, Ey; and En Surface charge ZN | density o 1] L] [1 1 1 ¢ d 3 ¥ LJ LJ] 1 1 Wg 2 By m0, B= Za © By —0,6u= Zi, Bm =0 €o €o €o ©) a 5 5 es \" OB — Za By =0.By = 22h Og =a Bas o Be Ty = = BE) =",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417456/edvedum_physics/electrostatics/p104_span1_y820_h66.png",
+    "solution_image_url": null,
+    "solution": "Surface charge\n| Z density o\n1 1)\n1] 1\n1) < d > 1\n1 1)\nLJ 1]\nElectric field due to charged sheet for charge density 4 is Ff — = and for —ois B= = Assuming RHS to\nbon By = 57 (=) + 57 (+A) = ~ 2 Getwards) Buy = 52- (-4) + 57 (1) = 0\n| Bua 360 (0) + 50 (0) = (4) tightwaras)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 185,
+    "page": 106,
+    "question_text": "5 cubical volume is bounded by the surfaces z = 0,z = a,y = 0,y = a,z = 0, z = a. The electric field in the region is given by E = Eqzi. Where Ey = 4 x 10'NC 'm™*. If a = 2cm, the charge contained in the cubical volume is Q x 10°C. The value of Qis ___. (Take eg = 9 x 107 C2N-\"'m~?)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "h J\nF B\nG pd wy\np A\n4\nX\nH a\nD\nGiven here, electric field, E — Eri Here, the flux passes mainly through surface areas, ABC Dand EFGH. As\nthe surfaces AEFBandCG HD are parallel to the electric field, so flux for these surfaces are zero. Again in\nEFGH, a = 0, thus, electric field is zero. Hence, the flux only passes through the surface are ABCD. The net\n1X 1S er = Gapep = Eya- a? Using Gauss's law, = = Ega® = g,,, = Beya®\n= 4x10\" x 9x 1072 x 8 x 10°\" = 288 x 10\" 1*C Hence, the value of Q = 288.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 186,
+    "page": 107,
+    "question_text": "For a uniformly charged thin spherical shell, the electric potential (V') radially away from the centre (O) of shell can be graphically represented as (= w ® (EL r TR 7 ©, © SN [= [3 TR 7",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 12,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417456/edvedum_physics/electrostatics/p107_span1_y112_h93.png",
+    "solution_image_url": null,
+    "solution": "‘The potential is constant inside the sphere as the electric field is zero inside the sphere. So, the value is given by\n= 2 for < R The potential atthe surface s V = —3— Tne potential utside the sphere starts\nIre mek\ndecreasing and is given by the formula V = 9 forr > R\nTran",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 187,
+    "page": 108,
+    "question_text": "5 dipole comprises of two charged particies of identical magnitude g and opposite in nature. The mass m of the positive charged particle is half of the mass of the negative charged particle. The two charges are separated by a distance | . If the dipole is placed in a uniform electric field E; in such a way that dipole axis makes a very small angle with the electric field, £. The angular frequency of the oscillations of the dipole when released is given by: w aE w JuE 2ml ml (cy EE (0) VEE ml 3ml",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The data givens\n1 =distance between the charges\nq =charge\n7m =mass of the positive charge\n2m=mass of negative charge\nThe moment of inertia of the system is\n_(mx2m) 2m\n= (23) © =\nThe angular frequency can be written as\ni\n_ [PE\nw= V = li)\nSubstituting the value of moment of inertia in the equation (i) we get\n[FRE RpE\nv= ome = Vom\n3\nThe value of the dipole moment is\np=gq\nHence, the angular frequency becomes.\nfw\n| HE\n=A gt\nThis question was given bonus by NTA as none of the options matched in the original paper.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 188,
+    "page": 109,
+    "question_text": "Graphical variation of electric field due to a uniformly charged insulating solid sphere of radius R,with distance r from the centre O is represented by: (A) pig ®) E E i r H r r=R r=R © (©) E | E H i H I r=R r=R",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 640,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p109_span1_y421_h159.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p109_span2_y697_h144.png",
+    "solution": "The electric field inside a solid insulated sphere is given by\nBins = G5 for r < R where pls volume charge density.\nHence, the electric field varies linearly with the distance as\nEjsite x7\"\nNow, the electric field for r > Ris given by\n==\nEve = reqs\n1\nEtude x =3\n‘Thus, the graph starts decreasing as a power law graph as shown in the figure for the region r > R.\nHence, this graph is the right option.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 189,
+    "page": 110,
+    "question_text": "an electric dipole of dipole moment is 6.0 x 10~°Crm placed in a uniform electric field of 1.5 x 10°NC\"\" in such a way that dipole moment is along electric field. The work done in rotating dipole by 180°in this field will be____m.J.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p110_span1_y1081_h166.png",
+    "solution": "The work done for rotating a dipole is given by the change in the potential energy. The potential energy is given by\nU=-§-E\nW=AU=U;-U,\nSo, the work done is.\nW = —pE cos 180° — (~pEcos0°) = 2pE = 2 x 6 x 10% x 1.5 x 10° = 18mJ\n197. Electric potential at a point P due to a point charge of 5 x 10~*C’ is 50. The distance of P from the.\npoint charge is:\n1\n(Assume, —— = 9 x 10\" Nm*C?)\nAmey\n(A) gem (8) 3em\n© .9cm 0) gem\nmarke, fot a wang answer] 2023 (08 Apr, Shit 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 190,
+    "page": 110,
+    "question_text": "work done for rotating a dipole is given by the change in the potential energy. The potential energy is given by U=-§-E W=AU=U;-U, So, the work done is. W = —pE cos 180° — (~pEcos0°) = 2pE = 2 x 6 x 10% x 1.5 x 10° = 18mJ 197. Electric potential at a point P due to a point charge of 5 x 10~*C’ is 50. The distance of P from the. point charge is: 1 (Assume, —— = 9 x 10\" Nm*C?) Amey (A) gem (8) 3em © .9cm 0) gem",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 2,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p110_span1_y1081_h166.png",
+    "solution": "The electric potential for a point charge is given by\n—\nhs\nThe data given is\nV=50VQ =5x 10°C\nSo, the distance of the point is.\nSA\nHa\nA 0, 5x10\n=r=9x10\" x Zr\n=r = 0.0m = 90cm\n198. Three concentric spherical metallic shells X, ¥' and Z of radius a,b and ¢ respectively [a < b < ¢] have surface charge densities 7 a :\nshells X and Z are at same potential. If the radil of X&Y are 2cm and 3cm, respectively. The radius of shell Z is ___cm.\nmarks, 1 for rang answer] 2023 (0 Ape Shi",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 191,
+    "page": 110,
+    "question_text": "electric potential for a point charge is given by — hs The data given is V=50VQ =5x 10°C So, the distance of the point is. SA Ha A 0, 5x10 =r=9x10\" x Zr =r = 0.0m = 90cm 198. Three concentric spherical metallic shells X, ¥' and Z of radius a,b and ¢ respectively [a < b < ¢] have surface charge densities 7 a : shells X and Z are at same potential. If the radil of X&Y are 2cm and 3cm, respectively. The radius of shell Z is ___cm.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p110_span1_y1081_h166.png",
+    "solution": "z\nIe The charges on the spheres are gy = odwa’qy = ~cdnb'gz = odnc’ Risgiventhat Vy = VV, So,\nVv,=V,\n- x=2em\ny=3em\n9x ar 4z_ _ ax ay az cdma’ odrb®  odxd  odm(a’ - 8 4) Soh, a\nrag i Syd le er rl oe Se Re Ee EE PE “Pid =c=a",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 192,
+    "page": 111,
+    "question_text": "As shown in the figure, a configuration of two equal point charges (gq = +2uC) is placed on an inclined plane. Mass of each point charge is 20g. Assume that there is no friction between charge and plane. For the system of two point charges to be in equilibrium (at rest) the height h = z x 10 *m. 1 The value ofz is ( Take—— = 9 x 10°Nm*C 2, g = 10ms~? Amey qo a™y",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 288,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p111_span2_y280_h86.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p111_span3_y469_h117.png",
+    "solution": "| NN 2h For the condition of equilibrium, the Coulomb force is equal to mg sin 0. Hence,\nh ag\n30°,\n2 : u\nHE (main) = 52 — (30x10 1x10 x jo OF 0 10x 2 b=\nVim m=03m=300x 10m =( 2) =( 2) m = 0.3m = 300 x 102m\n100) ™ =m BR § TT) “\\)m =e\n200. Given below are two statements: one is labelled as Assertion A and the other is labelled as Reason R.\nAssertion A : If an electric dipole of dipole moment 30 x 10\"*C'm is enclosed by a closed surface,\nthe net flux coming out of the surface will be zero.\nReason R: Electric dipole consists of two equal and opposite charges.\nIn the light of above, statements, choose the correct answer from the options given below.\n(A) Both A and R are true and R is the correct (B) Als false but Ris true\nexplanation of A\n(C) Ais true but Ris false (D) Both A and R are true and Ris NOT the correct\nexplanation of A\n4 marks, ~1for » rang snswer} 2023 (12 Apr, Shit 1\n| NN 2h For the condition of equilibrium, the Coulomb force is equal to mg sin 0. Hence,",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 193,
+    "page": 111,
+    "question_text": "ag 30°, 2 : u HE (main) = 52 — (30x10 1x10 x jo OF 0 10x 2 b= Vim m=03m=300x 10m =( 2) =( 2) m = 0.3m = 300 x 102m 100) ™ =m BR § TT) “\\)m =e 200. Given below are two statements: one is labelled as Assertion A and the other is labelled as Reason R. Assertion A : If an electric dipole of dipole moment 30 x 10\"*C'm is enclosed by a closed surface, the net flux coming out of the surface will be zero. Reason R: Electric dipole consists of two equal and opposite charges. In the light of above, statements, choose the correct answer from the options given below.",
+    "options": [
+      "Both A and R are true and R is the correct",
+      "Als false but Ris true explanation of A",
+      "Ais true but Ris false",
+      "Both A and R are true and Ris NOT the correct explanation of A"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p111_span3_y469_h117.png",
+    "solution": "An electric dipole contains two equal and opposite charges.\nThus, the net charge, as viewed from outside a surface enclosing the dipole, is zero.\nThe net flux enclosed by any closed surface is, then, given by\n4 = me\nEl\n= 0",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 194,
+    "page": 112,
+    "question_text": "44 identical drops each charged upto potential of 10mV’ are combined to form a bigger drop. The potential of the bigger drop will be ___ mV.",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 4,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The formula to calculate the potential (V/) of each tiny drop is given by\n— 2\nveil.)\nWhen all the drops forms the bigger drop the radius of the new drop (r’) can be calculated as follows:\nVolumeofbigdrop = 64 x volumeofeachtinydrop\n4. n_ 45\n= Jot = 64 x 3m\n= rear\nSo, the potential of the new big drop (V\") can be written as\nv = 2\n= be\n= 16d. (2)\nDivide equation (2) by equation (1) and simplify to obtain the potential of the new drop.\n, 1662\nLE = —\n13 4\nr\n= V'=16V..(3)\nSubstitute the value of the known parameter into equation (3) to calculate the required value of the potential for\nthe new drop.\nV' = 16 x 10mV\n= 160mV",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 195,
+    "page": 113,
+    "question_text": "4 yin infinite sheet charge and an infinite line charge of respective charge densities + and +A are 3 4 placed parallel at 5m distance from each other. Points P and Q are at =m and —m perpendicular x T distances from line charge towards sheet charge, respectively. E, and E, are the magnitudes of PO Ep 4 resultant electric field intensities at point P and ( respectively. If z= = — for 2/o| = [], then the ? a value of a is",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p113_span2_y1036_h73.png",
+    "solution": "Let's consider the following diagram:\nThe formula to calculate the electric field due to an infinitely long charged sheet is given by E, = = (1) The\n2\nformula to calculate the electric field due to an infinitely long line charge is given by E; = 2 (2) Using\nrear\na 1 2\nfs l= Ta\nequations (1) and (2), the electric field at P can be calculated as follows: | lo A Similarly,\nET\n?\n= —...(3]\nBe 3)\na 1 2x\nTg em |e a\nbd 26 Ame 1 |\nthe electric field at Q is given by | [oA Divide equation (3) by equation (4) to obtain the\n= =O\n-\nBoE\nEp  Z\nrequired ratio. Teg Hence, a = 6.\n4\n=",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 196,
+    "page": 114,
+    "question_text": "Ty charges of each magnitude 0.01C and separated by a distance of 0.4mm constitute an electric dipole. If the dipole is placed in an uniform electric field £ of 10dyne - C'~* making 30 angle with E, the magnitude of torque acting on dipole is: (A) 40 x 10 \"Nm 8) 10x10 Nm (©) 1.5 x 10 Nm (0) 2.0 x 10 Nm",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 18,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p114_span3_y1025_h99.png",
+    "solution": "The formula to calculate the dipole moment is given by\nIp =gld7] (1)\nSubstitute the values of the known parameters into equation (1) to calculate the dipole moment.\nAs im\nIp] = 001C x 04mm x Tm\n= 40x10°C m\nThe formula to calculate the torque on the dipole in the electric field is given by\n[7] = Fx E|...(2)\nSubstitute the values of the known parameters into equation (2) to calculate the required torque.\n[7°] = 40x10°C mx 10dyne-C ' x a x sin 30°\n= 2x10Nm\n204. 3\nThree point charges g, —2q and 2q are placed on z axis sta distance z = 0,z = ZR aNd z = R\nrespectively from origin as shown. If ¢ = 2 x 10°C and R = 2cm, the magnitude of net force\nexperienced by the charge —2q is N.\nLe  — EE\n§ i\nx=0 3 i i\nH\n— = H\naR i\nH\nH\n—_—\n14 marks, -1 or wrang answer 2023 (3 Age; Shit 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 197,
+    "page": 114,
+    "question_text": "formula to calculate the dipole moment is given by Ip =gld7] (1) Substitute the values of the known parameters into equation (1) to calculate the dipole moment. As im Ip] = 001C x 04mm x Tm = 40x10°C m The formula to calculate the torque on the dipole in the electric field is given by [7] = Fx E|...(2) Substitute the values of the known parameters into equation (2) to calculate the required torque. [7°] = 40x10°C mx 10dyne-C ' x a x sin 30° = 2x10Nm 204. 3 Three point charges g, —2q and 2q are placed on z axis sta distance z = 0,z = ZR aNd z = R respectively from origin as shown. If ¢ = 2 x 10°C and R = 2cm, the magnitude of net force experienced by the charge —2q is N. Le  — EE § i x=0 3 i i H — = H aR i H H —_—",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p114_span2_y776_h72.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p114_span3_y1025_h99.png",
+    "solution": "The net force on the given charge will be the resultant of the forces due to the other two charges.\nHence, the net force (F\\,) can be calculated as follows:\nPORT LAR IO\n\"7 me (R\\' dme (3R\\?\nOIE)\n1 2\n= 9x 10° x \" [+3]\n5\n_ 9x 100 x 18x (2x10 'C) oH\n(0.02m) 9\n= 5440N",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 198,
+    "page": 115,
+    "question_text": "10,” charge is divided into two parts and placed at lem distance so that the repulsive force between them is maximum. The charges of the two parts are: A 7,0, 3u0 ®) 8,0, 20 © 50,500 © 9.0, 100",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 5,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Let the charges be zu, (g ~ x) uC, Where g = 10uC'\nThe force between them is.\nF= Ketn-4) 2\n=\nFor the force to be maximum,\ndF _ dF K@-2)  q_\n==\" How =0a=s=00\n208. The electric field due to a short electric dipole at a large distance (r) from center of dipole on the\nequatorial plane varies with distance as :\nWw, ® 1\n=\n© 1 D1\nIa 7\n14 mas, 4 ox 3 wrong answer - 2023 05 Agr, ni 1",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 199,
+    "page": 115,
+    "question_text": "the charges be zu, (g ~ x) uC, Where g = 10uC' The force between them is. F= Ketn-4) 2 = For the force to be maximum, dF _ dF K@-2)  q_ ==\" How =0a=s=00 208. The electric field due to a short electric dipole at a large distance (r) from center of dipole on the equatorial plane varies with distance as : Ww, ® 1 = © 1 D1 Ia 7 14 mas, 4 ox 3 wrong answer - 2023 05 Agr, ni 1",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 300,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "An electric dipole is a system of two charges of equal and opposite magnitude placed at a short distance.\nThe dipole moment is, p = 2ql.\nThe electric field due to the dipole is,\n2kp\n=F\nClearly, the electric field varies as =.\nE",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 200,
+    "page": 116,
+    "question_text": "A thin metallic wire having cross sectional area of 10~4m? is used to make a ring of radius 30cm. A positive charge of 2C is uniformly distributed over the ring, while another positive charge of 30pC is kept at the centre of the ring. The tension in the ring is ___; provided that the ring does not get deformed (neglect the influence of gravity). 1 (Given, —— = 9 x 10° Si units) rey",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p116_span1_y342_h257.png",
+    "solution_image_url": null,
+    "solution": "E,\nP N K T\n£40 The fi harge density of the ring is giver\nDad 'e linear charge density ing is given by\nv\nQo\nA= 2 (1) With reference to the above diagram, for the equilibrium condition of the ring, it can be written\n7\ndi 1 5 1 9Q do df\nSls Pm ME 5)=3\ntha 27m =) re [A (Rd6)] = Tra) x2 [As for very small angles sin 0 2 1\n(910%) (2r x30 x10\") 9x10 x30 _ or\n- (0.30) x 2x “Tex?\n208. An electric charge 10°C is placed at origin (0,0) m of X — ¥ co-ordinate system. Two points P\nand Q are situated at (v/3, v/3)m and (v6, 0)m respectively. The potential difference between the\npoints P and Q will be\nA my ® Gy\n© gy ©) 3\n14 marks, 1 ck wrong answer] 2024 (27 Js, SH)\nE,",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 201,
+    "page": 116,
+    "question_text": "K T £40 The fi harge density of the ring is giver Dad 'e linear charge density ing is given by v Qo A= 2 (1) With reference to the above diagram, for the equilibrium condition of the ring, it can be written 7 di 1 5 1 9Q do df Sls Pm ME 5)=3 tha 27m =) re [A (Rd6)] = Tra) x2 [As for very small angles sin 0 2 1 (910%) (2r x30 x10\") 9x10 x30 _ or - (0.30) x 2x “Tex? 208. An electric charge 10°C is placed at origin (0,0) m of X — ¥ co-ordinate system. Two points P and Q are situated at (v/3, v/3)m and (v6, 0)m respectively. The potential difference between the points P and Q will be A my ® Gy © gy ©) 3",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 160,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417458/edvedum_physics/electrostatics/p116_span1_y342_h257.png",
+    "solution_image_url": null,
+    "solution": "The formula to calculate the potential difference between P and is given by\n1 1\nAV = kq (2 = Ed) (1)\nNow,\nn= J\n= Vem\nAnd,\nr= (VER tom\n= Vem\nAs ry = ra = v/6m and the vaiue of the charge remains constant, the potential difference between the points is\nzero.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 202,
+    "page": 117,
+    "question_text": "Given below are two statements : one is labelled as Assertion (A) and the other is labelled as. Reason(R) Assertion (A) : Work done by electric field on moving a positive charge on an equipotential surface is always zero. Reason (R) : Electric lines of forces are always perpendicular to equipotential surfaces. In the light of the above statements, choose the most appropriate answer from the options given below : (A) Both (A) and (R) are correct but (R) is not the  (B) (A) is correct but (R) is not correct correct explanation of (A) (C) (A) is not correct but (R) is correct (D) Both (A) and (R) are correct and (R) is the correct explanation of (A)",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 6,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The equipotential surfaces are surfaces where the electric potential is the same at every paint. In other words,\nthere is no potential difference along an equipotential surface. Since work done (VW) is given by the equation\nW = AV, and there is no potential difference on an equipotential surface, the work done is always zero,\nAs there is no force along the surface of the equipotential surface, the electric field must be perpendicular to the\nsurface.\nHence, while both statements are correct, the reason (R) is providing the correct explanation for why the work\ndone on a positive charge on an equipotential surface is always zero.\n210. the electric potential at the surface of an atomic nucleus (Z = 50) of radius 9 x 10cm is\na x 10°V. What is the value of a?\n(Charge of proton 1.6 x 10°C)\n{4 marks, 1 for 8 wrong answer] 2024 (27 Jan, Sin 21",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 203,
+    "page": 117,
+    "question_text": "equipotential surfaces are surfaces where the electric potential is the same at every paint. In other words, there is no potential difference along an equipotential surface. Since work done (VW) is given by the equation W = AV, and there is no potential difference on an equipotential surface, the work done is always zero, As there is no force along the surface of the equipotential surface, the electric field must be perpendicular to the surface. Hence, while both statements are correct, the reason (R) is providing the correct explanation for why the work done on a positive charge on an equipotential surface is always zero. 210. the electric potential at the surface of an atomic nucleus (Z = 50) of radius 9 x 10cm is a x 10°V. What is the value of a? (Charge of proton 1.6 x 10°C)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The electric potential at the surface of an atomic nucleus can be written as.\n_kQ_k-(Ze)\nV=g=—r=.0)\nFrom equation (1), it follows that\n9X 10° x 50 x 16 x 10\n= Tx %x10F\ni 9510 7 x10 kg\n= 8x 10°V\nHence, a = 8.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 204,
+    "page": 118,
+    "question_text": "2M. Two charges of —4uC and +4uC are placed at the points A(1,0,4)m and B(2, —1,5)m located in an electric field E = 0.20iV cm. The magnitude of the torque acting on the dipole is 8,/a x 10\" Nm, wherea =.",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 5440,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "(1,0,4) 2,-1,5)\nB Given the\nE - 020i ~\nelectric field is _ {7 The formula for calculating the torque is 7* = j x E... (1) where,\n= i=\nP= a 3\n= ac [(284 (-1)7 +58) — (13+ + 45) Thus, rom equation (1 i foows tat\n— ai -3+ k) Cm\nF = (45 — 45 + 4k) x 10° x (20) Nm = (8k + 87) * 10 \"Nm = [7] = VB + 8° x 10 \"Nm = 82 x 10 *Nm\nHence, a = 2.\n212. An electron is moving under the influence of the electric field of a uniformly charged infinite plane\nsheet § having surface charge density +. The electron at ¢ = 0 is at a distance of Lyn from S and\n= . ; meg) C\nhas a speed of lms. The maximum value of o, if the electron strikes S att = Ls is o [22] =\ne lm\nThe valueof ais\n4 marks 1 for wrong saswer 2024 (29 Jan, Sh 1)\n(1,0,4) 2,-1,5)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 205,
+    "page": 118,
+    "question_text": "Given the E - 020i ~ electric field is _ {7 The formula for calculating the torque is 7* = j x E... (1) where, = i= P= a 3 = ac [(284 (-1)7 +58) — (13+ + 45) Thus, rom equation (1 i foows tat — ai -3+ k) Cm F = (45 — 45 + 4k) x 10° x (20) Nm = (8k + 87) * 10 \"Nm = [7] = VB + 8° x 10 \"Nm = 82 x 10 *Nm Hence, a = 2. 212. An electron is moving under the influence of the electric field of a uniformly charged infinite plane sheet § having surface charge density +. The electron at ¢ = 0 is at a distance of Lyn from S and = . ; meg) C has a speed of lms. The maximum value of o, if the electron strikes S att = Ls is o [22] = e lm The valueof ais",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The value of the electric field due to the uniformly charged plane sheet is given by\n-\nE=gen())\nThus, the force on the electron is given by\nF= ~eE\nae\n= “a @\nSo, the acceleration of the electron is given by\n_ oe\n= = am\nGiven, u = lms ', t= 1sand § = ~1m\nUsing the equation of motion, it can be written that\nURL xf se ga\n“1=1x1 3% gem XV) =o =8\"=Cm\nLa=8\n213. Match List | with List II\nList I List IT\nA. a dd Gauss’\nBdl = p,i, +p,e, —=\n$ Hole Hoo dt law for\nelectricity\nI Gauss'\n$ Fadi\ndt law for\nmagnetism\nC. =— Q Faraday\n$EdA=—=\n€ law\n$BdA =0 IV. | Ampere —\nMaxwell\nlaw\nChose the correct answer from the options given below\nWy wB-1,¢c-1,D-1I ® 4 _mp-nnc-1,0-1v\n© A_rv,B-m,c-1,0-11 © 4 B-mC-HIL,D-IV\nanawen c\nAmpere ~ Maxwell law — § B dil = igi, + eo 222 Faraday law — § Edi = — Gauss’ law for electricity\n+ $d = 2 Gauss wor magnet —, f 5 dd =0",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 206,
+    "page": 120,
+    "question_text": "1y charges of 5Q and —2Q are situated at the points (3a, 0) and (5a, 0) respectively. The electric flux through a sphere of radius 4a having centre at origin is: (SP) ®) 50 “ € © 79 (0) 30 € Kl",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417459/edvedum_physics/electrostatics/p120_span1_y278_h407.png",
+    "solution_image_url": null,
+    "solution": "(-5a,0) 0,0) (320)\nAs can be seen from the figure above, only the 5Q charge Is inside the spherical region. The forma to calculate\nthe flux through the surface is given by ¢ = fee, (1) From equation (1), the flux through the given surface can\n3\n5Q\nbe calculated as follows: ¢ = i\n0\n215. An electric field is given by (67 + 5] + 3k) NCL. The electric flux through a surface area 30im?\nlying in YZ-plane(in Si unit) is:\n(A) gg 8) 150\n(© 189 (0) 6p\n{4 mack, = for 8 wrong answer 2028 29 Jar. Shit 2)\n(-5a,0) 0,0) (320)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 207,
+    "page": 120,
+    "question_text": "can be seen from the figure above, only the 5Q charge Is inside the spherical region. The forma to calculate the flux through the surface is given by ¢ = fee, (1) From equation (1), the flux through the given surface can 3 5Q be calculated as follows: ¢ = i 0 215. An electric field is given by (67 + 5] + 3k) NCL. The electric flux through a surface area 30im? lying in YZ-plane(in Si unit) is: (A) gg 8) 150 (© 189 (0) 6p {4 mack, = for 8 wrong answer 2028 29 Jar. Shit 2)",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 3,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417459/edvedum_physics/electrostatics/p120_span1_y278_h407.png",
+    "solution_image_url": null,
+    "solution": "Given:\nE = (61 + 5) + 3k)NC*\nA = 30im*\n6=E-A\n= 6 = (6 + 57 + 3%) + (307) = 180SI unit\n216. The electrostatic potential due to an electric dipole at a distance r varies as :\nw, ® 1\np=)\n© 1 (© 1\nrs r",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 208,
+    "page": 120,
+    "question_text": "Given: E = (61 + 5) + 3k)NC* A = 30im* 6=E-A = 6 = (6 + 57 + 3%) + (307) = 180SI unit 216. The electrostatic potential due to an electric dipole at a distance r varies as : w, ® 1 p=) © 1 (© 1 rs r",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417459/edvedum_physics/electrostatics/p120_span1_y278_h407.png",
+    "solution_image_url": null,
+    "solution": "The potential at a distance T due to a short dipole is Va, (r) = Pe where dipole moment.\nme\nThus, Var) is proportional to 5.\nE",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 209,
+    "page": 121,
+    "question_text": "Two identical charged spheres are suspended by strings of equal lengths. The string make an angle of 37° with each other. When suspended in a liquid of density 0.7gcm , the angle remains same. If density of material of the sphere is 1.4gcm *, the dielectric constant of the liquid is (tansr = 9 4",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417459/edvedum_physics/electrostatics/p121_span1_y250_h224.png",
+    "solution_image_url": null,
+    "solution": "h\nH\nH\nH\nT H\nH\nH\nH [3] | For first\nH\nH H\nFe< F\n[S : Cc\n’ F. F.\ncase: Teosl = mg and Tsind) = F. Therefore, tanfl = —— tan) = ——....(i) For second case:\nmg pBVY\nEF.\ntanh = ——k (if) From EQ. (1& (i), we get poV'g = (pn ~ pr) kVg => 14 = 0.Tk = k =2\npnVg —piVg\n218. Two charges g and 3 are separated by a distance r' in air. At a distance x from charge g, the\nresultant electric field is zero. The value of z is :\n(14 v3) ® _ r\nra 3(1+ v3)\nWAY © 14 v3)\n(1+v3)\nmarks, 1 fo wrong answer 2024 (31 Jan, SHYY)\nh\nH\nH\nH",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 210,
+    "page": 121,
+    "question_text": "H H H H [3] | For first H H H Fe< F [S : Cc ’ F. F. case: Teosl = mg and Tsind) = F. Therefore, tanfl = —— tan) = ——....(i) For second case: mg pBVY EF. tanh = ——k (if) From EQ. (1& (i), we get poV'g = (pn ~ pr) kVg => 14 = 0.Tk = k =2 pnVg —piVg 218. Two charges g and 3 are separated by a distance r' in air. At a distance x from charge g, the resultant electric field is zero. The value of z is : (14 v3) ® _ r ra 3(1+ v3) WAY © 14 v3) (1+v3)",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 8,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "t— XP _t—T-X—>\n—————eo—————o oven: (Bue), = 0\nq p 3q\nkg _ kx r\n=H a) m3 r-z= Vie = ie\n219. Force between two point charges g; and g, placed in vacuum at r cm apart is F'. Force between them\nwhen placed in a medium having dielectric K = 5 at : cm apart will be:\nWg ® 5p\n2%\n© F ©) 955\n5\n14 marks, = fox wrong answer) 2024 (31 Jn, Shi 2)\nt— XP _t—T-X—>\n—————eo—————o oven: (Bue), = 0",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 211,
+    "page": 121,
+    "question_text": "3q kg _ kx r =H a) m3 r-z= Vie = ie 219. Force between two point charges g; and g, placed in vacuum at r cm apart is F'. Force between them when placed in a medium having dielectric K = 5 at : cm apart will be: Wg ® 5p 2% © F ©) 955 5",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 2,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Using Coulomb's law, we can write:\n1 an\nnai F = 0\n1a 1 25gi92\nPa IH. S08 gp\nIn medium WK) Ea) (oF",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 212,
+    "page": 122,
+    "question_text": "re distance between charges +g and -q is 21 and between +2q and -2q Is 4. The electrostatic potential at point P at a distance r from centre O is —a [2] % 10°V, where the value of a is . = ’ 1 9 20-2 (Use — = 9 x 10°Nm?C~) 5 Ine d 2q -“ [3 Kl -2q",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 8,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417460/edvedum_physics/electrostatics/p122_span2_y492_h136.png",
+    "solution": "(Considering two dipoles with charges 2q&q, we can write the equivalent setup as shown below:\n,\nP,=2qf\nP . S— Therefore, net dipole moment is Pye = 6gl in the\n-—\na P, -8a0\nEEE IE) ta\nPp\nr\nleftward direction.\nPAK 60°\nP.. =6af\n5. o\nPotential required, V = Er = Lx 10) coy (1207) J) (&) x20» retro =",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 213,
+    "page": 123,
+    "question_text": "Two identical charged spheres are suspended by strings of equal lengths. The strings make an angle 8 with each other. When suspended in water the angle remains the same. If density of the material of the sphere is 1.5 /cc, the dielectric constant of water will be (Take density of water = 1g/cc)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417460/edvedum_physics/electrostatics/p123_span1_y245_h81.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417460/edvedum_physics/electrostatics/p123_span3_y467_h175.png",
+    "solution": "Va \\\nPASS LIRA\n4 I \\\n’ kK F\n7 I \\\nAY\n0/2\nair tan = = water: tan 2 = = ——L— equate botn equations, we get\n2 mg Adrerimg 2 mg Avaerimg.\n1 7d = 3\nwg=aag|l- zl >a =",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 214,
+    "page": 124,
+    "question_text": "gyppose a uniformly charged wall provides a uniform electric field of 2 x 10*NC~! normally. A charged particle of mass 2g being suspended through a silk thread of length 20cm and remain stayed 1 ata distance of 10cm rom the wall. Then the charge on the particle wil be —=C where = z — [useg=10ms?]",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p124_span1_y365_h202.png",
+    "solution_image_url": null,
+    "solution": "es 4 ”\n+ ——> FE (Uniform)\n+\n” m3\n+0 20cm As we can see from geometry, sin = 50 = >\n+\n—\n+ 'qE\nd=10cm H\n+ i\nmg\n=» 8 = 30° Vertical component of tension will balance the weight and the horizontal component will balance the\nX gE x2 x 10° 1\nelectric force. Therefore, tan = 2— ow AXA A  x10E\nach fotos, Tiers; taut = Cc fn 30% Tp rg 0\n1 3\nSg=5x10 “C= 5HC Hence, z = 3.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 215,
+    "page": 125,
+    "question_text": "(7, and C are two hollow concentric cubes enclosing charges 2Q and 3Q) respectively as shown in figure. The ratio of electric flux passing through C'; and C'; is: \"4 + P ’ wy. 5 ©) 5.9 3:3 © 3:",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p125_span1_y97_h342.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p125_span2_y1195_h153.png",
+    "solution": "Gauss's law states that the net flux of an electric field in a closed surface is directly proportional to the enclosed\nelectric charge. Therefore,\nBia 2\nSince the smaller cube ls inside the bigger cubs, so total charge contained by the bigger cube will ba\n2Q +3Q = 5Q.\n5Q\nPhigger cube = o\nTherefore, required ratio will be,\nSamat _ 2\n[——\n224. pp infinite plane sheet of charge having uniform surface charge density +o, C/m? is placed on\n— y plane. Another infinitely long line charge having uniform linear charge density -+ A.C /m is\nplaced at z — 4 m plane and parallel to y-axis. If the magnitude values |o,| = 2 |X| then at point\n(0,0, 2), the ratio of magnitudes of electric field values due to sheet charge to that of line charge is\nmyn: Ll Thevalueof nis.\nGauss's law states that the net flux of an electric field in a closed surface is directly proportional to the enclosed\nelectric charge. Therefore,",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 216,
+    "page": 125,
+    "question_text": "2 Since the smaller cube ls inside the bigger cubs, so total charge contained by the bigger cube will ba 2Q +3Q = 5Q. 5Q Phigger cube = o Therefore, required ratio will be, Samat _ 2 [—— 224. pp infinite plane sheet of charge having uniform surface charge density +o, C/m? is placed on — y plane. Another infinitely long line charge having uniform linear charge density -+ A.C /m is placed at z — 4 m plane and parallel to y-axis. If the magnitude values |o,| = 2 |X| then at point (0,0, 2), the ratio of magnitudes of electric field values due to sheet charge to that of line charge is myn: Ll Thevalueof nis.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p125_span2_y1195_h153.png",
+    "solution": "|\n1 YY\nEs oo  2mer\n1% RTM A\nMN wxar\n=L- 2\nX  wx2x2 dr\n0.0.2) aT\nz=4 ~n=16\n2\n|\n|",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 217,
+    "page": 126,
+    "question_text": "4 charge g is placed at the center of one of the surface of a cube. The flux linked with the cube is: [0] & (8) x (€) zero (0) a",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 2,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p126_span1_y197_h99.png",
+    "solution_image_url": null,
+    "solution": "2%=3\na\nFrom q\n$=5c\n(3 €\n226. The vehicles carrying inflammable fluids usually have metallic chains touching the ground :\n(A) To protect tyres from catching dirt from (B) To alert other vehicles\nground\n(C) Itis a custom (D) To conduct excess charge due to air friction to\nground and prevent sparking\n(4 marks, <1 for 8 weang answer] 2024 (05 Ap, Si 2\n2%=3\na",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 218,
+    "page": 126,
+    "question_text": "q $=5c (3 € 226. The vehicles carrying inflammable fluids usually have metallic chains touching the ground :",
+    "options": [
+      "To protect tyres from catching dirt from",
+      "To alert other vehicles ground",
+      "Itis a custom",
+      "To conduct excess charge due to air friction to ground and prevent sparking"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p126_span1_y197_h99.png",
+    "solution_image_url": null,
+    "solution": "‘Static charge is developed due to air friction. This can result in combustion. So, metallic chains is used to\ndischarge excess charge.\n227. The electric field at point p due to an electric dipole is E. The electric field at point R on equitorial line\nLo eR\nER\nwitbe E. The vatueotz: ~~ ¥i 2\nHE\nJ eu\n-9 O #qup\n—r—\n(4 marks Tor a wrong answer] 202605 Apr, Sh 2)\n‘Static charge is developed due to air friction. This can result in combustion. So, metallic chains is used to\ndischarge excess charge.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 219,
+    "page": 126,
+    "question_text": "The electric field at point p due to an electric dipole is E. The electric field at point R on equitorial line Lo eR ER witbe E. The vatueotz: ~~ ¥i 2 HE J eu -9 O #qup —r—",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p126_span1_y197_h99.png",
+    "solution_image_url": null,
+    "solution": "2KP\nEp=—=E\npoo KP _E\n\"=r 16\n2-16",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 220,
+    "page": 127,
+    "question_text": "Three infinitely long charged thin sheets are placed as shown in figure. The magnitude of electric field atthe point P is 22. The value of z is ____ (all quantities are measured in SI units). -a ¥ i -20 i | | ! r | . | | Te BE 4 =X ,70 o& zs 7 7 4 s J a 27 X=-a X=a X=3a",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 27,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p127_span1_y115_h310.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p127_span2_y578_h113.png",
+    "solution": "oY, 20 a\nif Lop\n7 ores fg Bo oe\nJOS OR TA TO (Zrm+m)ed\nxX LEON 2\nAd ei\nZ'X=-a X=3 X=3\n229. ques: is the uniform surface charge density of a thin spherical shell of radius R. The electric field at\nany point on the surface of the spherical shel is :\n(CP ® 5c,\n© 4/4, © oe,\n{4 marks, 1 for wor answer] 2024 (06 Apr, Sh\noY, 20 a",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 221,
+    "page": 127,
+    "question_text": "Lop 7 ores fg Bo oe JOS OR TA TO (Zrm+m)ed xX LEON 2 Ad ei Z'X=-a X=3 X=3 229. ques: is the uniform surface charge density of a thin spherical shell of radius R. The electric field at any point on the surface of the spherical shel is : (CP ® 5c, © 4/4, © oe,",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 3,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417461/edvedum_physics/electrostatics/p127_span2_y578_h113.png",
+    "solution": "Gaussin Surface\nat\nN\\ E\ndA gy Gauss law [E. dX =\nEdA = 22\nE=2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 222,
+    "page": 128,
+    "question_text": "Two identical conducting spheres P and S with charge Q on each, repel each other with a force 16 N . A third identical uncharged conducting sphere R is successively brought in contact with the two spheres. The new force of repulsion between P and § is : WN ®) gN © oN ©,",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 3,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Initial force F' = 16N x Q - Q = Q*\n1. Contact R with P: Both share charge. so Qp = Q/2.\n2 Contact Rwith S: Total charge (Q/2 + Q) divides equally. so Qs = 22 — 3Q/4.\nNew force F' ox Qp - Qs:\n2:3Q/4 3\nF=16x (2394) _ 15, 3 _gn\nQ 8\n231. Two charged conducting spheres of radii a and b are connected to each other by a conducting wire.\nThe ratio of charges of the two spheres respectively is:\nWwe, ®\n© 5 ©) 4\n(marks, 1 for a wrang answer] 2024 (08 AGE, Shin\nInitial force F' = 16N x Q - Q = Q*",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 223,
+    "page": 128,
+    "question_text": "Contact R with P: Both share charge. so Qp = Q/2. 2 Contact Rwith S: Total charge (Q/2 + Q) divides equally. so Qs = 22 — 3Q/4. New force F' ox Qp - Qs: 2:3Q/4 3 F=16x (2394) _ 15, 3 _gn Q 8 231. Two charged conducting spheres of radii a and b are connected to each other by a conducting wire. The ratio of charges of the two spheres respectively is: Wwe, ® © 5 ©) 4",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 4,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Potential at surface will be same\nKg En\na b\nS .\n@ b\n232. 41 electric fleld, B = 218515k passes through the surface of 4 m? area having unit vector\nA (Eek). The electric flu for that surface is ___ Vim.\n1a marks, <1 for & wrong answer] 2024 108 Ags, Sh)\nPotential at surface will be same",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 224,
+    "page": 128,
+    "question_text": "En a b S . @ b 232. 41 electric fleld, B = 218515k passes through the surface of 4 m? area having unit vector A (Eek). The electric flu for that surface is ___ Vim.",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 16,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "$=E-&\n(Frees) (a4jek\nVe Ve\n“ixaioin=1ovm",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 225,
+    "page": 129,
+    "question_text": "tthe net electric field at point P along Y axis is zero, then the ratio of 2] is 55, where z = ___. Py. acm, te TE Fem",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417462/edvedum_physics/electrostatics/p129_span2_y932_h120.png",
+    "solution": "BD cont = KB con)\nEge Hee\n20 V20 25 25\nJ20/B| J25 I NE 8\nfom Ww BVH EE\n\\ 8x25\n1g, A Qo  =v-iE\n93cm Jom hb\nx=5\n234. pt the centre of a half ring of radius R = 10 cm and linear charge density 4nCm?, the potential is\nZV. The value of zis\n14 marks, 1 for a wiong answer 2024 (09 Ap, Sti 1",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 226,
+    "page": 129,
+    "question_text": "cont = KB con) Ege Hee 20 V20 25 25 J20/B| J25 I NE 8 fom Ww BVH EE \\ 8x25 1g, A Qo  =v-iE 93cm Jom hb x=5 234. pt the centre of a half ring of radius R = 10 cm and linear charge density 4nCm?, the potential is ZV. The value of zis",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417462/edvedum_physics/electrostatics/p129_span2_y932_h120.png",
+    "solution": "Potential at centre of half ring\n_ kg\n==3\nKAmR\nv=\"2=\nV=Kin=V=9x10°x4x10\"r\nV = 36m\n235. An electric field E = (221) NC exists in space. A cube of side 2 m is placed in the space as per\nfigure given below. The electric flux through the cubeis ____ Nm?/C.\nI’\n| ’ 2\n|\nI\n'\n2m\n[5 ¥\n/\n7s 3\n” — 2m —\n(4 marks, 1 for wang answer] 2024 (09 Agr, Shin 2\nPotential at centre of half ring\n_ kg\n==3\nKAmR\nv=\"2=\nV=Kin=V=9x10°x4x10\"r",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 227,
+    "page": 129,
+    "question_text": "= 36m 235. An electric field E = (221) NC exists in space. A cube of side 2 m is placed in the space as per figure given below. The electric flux through the cubeis ____ Nm?/C. I’ | ’ 2 | I ' 2m [5 ¥ / 7s 3 ” — 2m —",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 16,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417462/edvedum_physics/electrostatics/p129_span1_y278_h177.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417462/edvedum_physics/electrostatics/p129_span2_y932_h120.png",
+    "solution": "2\niE=4i = ] . fu =-4x4=—16Nm’/c\nH E=8i E-oi 3\ni ou = 8x 4=32Nm’fc\ni P=E A fs = dsb = ~164 32 = 16Nm/c\nH\nLate acing\n0.0) x=2 x=4",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 228,
+    "page": 130,
+    "question_text": "five charges +g, +5¢, —2q, +3q and -4 q are situated as shown in the figure. The electric flux due to this configuration through the surface S is : G39 id ay (A) 4 (®) 54 © 3 © 5",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 2,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417462/edvedum_physics/electrostatics/p130_span1_y62_h73.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417463/edvedum_physics/electrostatics/p130_span2_y805_h96.png",
+    "solution": "As per gauss theorem,\np= = ull, 4\n237. An electron is made to enter symmetrically between two parallel and equally but oppositely charged\nmetal plates, each of 10 cm length. The electron emerges out of the electric field region with a\nhorizontal component of velocity 10° m/s. If the magnitude of the electric field between the plates is\n9.1 V/cm, then the vertical component of velocity of electron is (mass of electron = 9.1 x 10%! kg\nand charge of electron — 1.6 x 10 *C)\n(A) 0 (8) 1 » 10° m/s\n(© 16 x 10° m/s ©) 16 10° m/s\n4 marks, <1 for & wrong anawer] 2025 (22 dan, Sh 1)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 229,
+    "page": 130,
+    "question_text": "per gauss theorem, p= = ull, 4 237. An electron is made to enter symmetrically between two parallel and equally but oppositely charged metal plates, each of 10 cm length. The electron emerges out of the electric field region with a horizontal component of velocity 10° m/s. If the magnitude of the electric field between the plates is 9.1 V/cm, then the vertical component of velocity of electron is (mass of electron = 9.1 x 10%! kg and charge of electron — 1.6 x 10 *C)",
+    "options": [
+      "0 (8) 1 » 10° m/s (© 16 x 10° m/s ©) 16 10° m/s",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417463/edvedum_physics/electrostatics/p130_span2_y805_h96.png",
+    "solution": "vy\nNE RIpEe,\nStems =10\nke vi % Vy = ug apt\ngt =» Vy =0+ x10\"\na ' m\n@mmnngzziiTlo ooo 16x10\nV, = Vy = grow X91 x 107x107\nPE — = Vy, =16x 10°\n10cm\n238. 5 line charge of length —&- is kept at the center of an edge BC of a cube ABC DEFGH havi\nrg: + ge ing\nedge length * a * as shown in the figure. If the density of line charge is A C per unit length, then the\ntotal electric flux through all the faces of the cube will be . (Take, eg as the free space\nF E\nAY\npermittivity) |]\nva\nB Cc\n(A) 2s (B) 2a\na [=\n(© 2a (EN\nToes Bo\n14 muri, <1 ar s wrong snswerl -2025(22 Sen, Sn 1)\nvy",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 230,
+    "page": 130,
+    "question_text": "RIpEe, Stems =10 ke vi % Vy = ug apt gt =» Vy =0+ x10\" a ' m @mmnngzziiTlo ooo 16x10 V, = Vy = grow X91 x 107x107 PE — = Vy, =16x 10° 10cm 238. 5 line charge of length —&- is kept at the center of an edge BC of a cube ABC DEFGH havi rg: + ge ing edge length * a * as shown in the figure. If the density of line charge is A C per unit length, then the total electric flux through all the faces of the cube will be . (Take, eg as the free space F E AY permittivity) |] va B Cc",
+    "options": [
+      "2s",
+      "2a a [= (© 2a (EN Toes Bo 14 muri, <1 ar s wrong snswerl -2025(22 Sen, Sn 1)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417462/edvedum_physics/electrostatics/p130_span1_y62_h73.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417463/edvedum_physics/electrostatics/p130_span2_y805_h96.png",
+    "solution": "Charge of the line charge = 2\nPortion of wire inside cube = H\n: = Life) Ta)\n0 Sm SNR) =\n=n 0X\n$2 \"ta",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 231,
+    "page": 131,
+    "question_text": "For a short dipole placed at origin O, the dipole moment P is along z-axis, as shown in the figure. If the electric potential and electric field at A are V, and Ej, respectively, then the correct combination of the electric potential and electric field, respectively, at point 3 on the y-axis is given by ii a} lk a ee —l",
+    "options": [
+      "1 and EB 8) zero and & (©) zero and £ © Yoand Ba 4 aks, <1 fo 8 wig answer] 2025 (22 dan, Sin 2)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Fee Li]\nAtpoint A (axial) [Eq = %2,V; = % At point B (equatorial) 2) 16\nV=0\n240. 4 positive ion A and a negative ion B has charges 6.67 x 10-°C and 9.6 x 10-'°C, and masses\n19.2 x 107 kg and 9 x 10°?\" kg respectively. At an instant, the ions are separated by a certain\ndistance r. At that instant the ratio of the magnitudes of electrostatic force to gravitational force is\nP x 10%, where the value of 10P is\n(Take 7 = 9 x 10°Nm*C! and universal gravitational constant as 6.67 x 10\"*Nm? kg?)\nAssume that charge may not be an integral multiple of electrons.\n14 marks, 1 for wrong answer] - 2025 (23 Jon, Sh",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 232,
+    "page": 131,
+    "question_text": "Li] Atpoint A (axial) [Eq = %2,V; = % At point B (equatorial) 2) 16 V=0 240. 4 positive ion A and a negative ion B has charges 6.67 x 10-°C and 9.6 x 10-'°C, and masses 19.2 x 107 kg and 9 x 10°?\" kg respectively. At an instant, the ions are separated by a certain distance r. At that instant the ratio of the magnitudes of electrostatic force to gravitational force is P x 10%, where the value of 10P is (Take 7 = 9 x 10°Nm*C! and universal gravitational constant as 6.67 x 10\"*Nm? kg?) Assume that charge may not be an integral multiple of electrons.",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 12,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "_ kag\nFEE\nGum:\nFy= rs\nF _ ka;\nF, Gmm,;\n_ 9%10° x 667X100 x 96x 101\nTEETAI0 Tx 02X10 FX OX 10 F\n0\n“Ixe",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 233,
+    "page": 132,
+    "question_text": "point particle of charge @ is located at P along the axis of an electric dipole 1 at a distance r as shown in the figure. The point P is also on the equatorial plane of a second electric dipole 2 ata distance r . The dipoles are made of opposite charge q separated by a distance 2a. For the charge particle at P not to experience any net force, which of the following correctly describes the situation? : | Dipole 1 | rn |. : —2a—} +q iq {Dipole | —2a—* Wey ® oy © gs ©,",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 5,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "o  e—Ei=Es taking kg=1\n7\nA]\n=\n2a\n1 1 _ 2a\n(r—a)?  (r+a)? (2+)?\ndar 2a\n=a? (a®+r2p2\n(r — a?)? = 2r(a? + 12)¥2\nPee: | 9x 3/2\na a\nl=) =2[14=\n( pr) 2\n2 3/2 a\n(1-2) =2(1+2%)\" (==2)\nr\na-=y _,\n1+a2)p2\nForz x 0.33(e. ¢ =} —> I = 3),the equation is approximately satisfied.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 234,
+    "page": 133,
+    "question_text": "116 charges Tpuc and —4puc are placed at (~7 cm, 0, 0) and (7 cm, 0, 0) respectively. Given, € = 8.85 x 1072C? N! m2, the electrostatic potential energy of the charge configuration is : A) 184 (8) 204 ©) 54 124",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 36,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "iS 1 ae\ndmg\nr=y@m-a)+p-n)’+(2-2)P =Mm=14x10\"m\nSe (9 x 10°) x (7% 107°) x (—4 x 107%)\no 14 x 102\nu=-18J\n243. Two point charges —4pc and duc, constituting an electric dipole, are placed at (—9, 0, 0)cm and\n(9,0,0)cm in a uniform electric field of strength 104NC ~*. The work done on the dipole in rotating it\nfrom the equilibrium through 180° is :\n(A) 18.4 mJ (8) 14.4 my\n(©) 12.4mJ (D) 16.4 mJ\n4 marks, -1 fora wiong answer] - 2025 (23 Jan, Sh 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 235,
+    "page": 133,
+    "question_text": "1 ae dmg r=y@m-a)+p-n)’+(2-2)P =Mm=14x10\"m Se (9 x 10°) x (7% 107°) x (—4 x 107%) o 14 x 102 u=-18J 243. Two point charges —4pc and duc, constituting an electric dipole, are placed at (—9, 0, 0)cm and (9,0,0)cm in a uniform electric field of strength 104NC ~*. The work done on the dipole in rotating it from the equilibrium through 180° is : (A) 18.4 mJ (8) 14.4 my (©) 12.4mJ (D) 16.4 mJ",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 16,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "U= PEeosd\nWe = AU = Ug ~ U, = ~PEcos 180° + PEcos 0°\nWet = 2PE\n=2x (4x 107\") (18) x 10*\n=M4x10*\n= 144m]",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 236,
+    "page": 134,
+    "question_text": "5 square loop of sides a = 1 m is held normally in front of a point charge q = 1C. The flux of the electric field through the shaded region is & x Lda where the value of p is 4 a= a \\ | 3 \\ 3 9",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 4,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417464/edvedum_physics/electrostatics/p134_span3_y1039_h147.png",
+    "solution": "=\na2 7 a/2 :\n== —@  Toufuxtvough square= A (}) Lets\ndivide square is 8 equal parts. Flux is same for each part. Flux through shaded portion is £ (Total flux)\n=8x2i=%t required Ans.is 48\n245. A small uncharged conducting sphere is placed in contact with an identical sphere but having\n4 x 10-*C charge and then removed to a distance such that the force of repulsion between them is\n9 x 107% N. The distance between them is (Take 1 as 9 x 10%nSI units)\n(A) 3¢cm (8) 2cm\n©) acm ©) 1cm\n{4 marks, <1 or a wiang answer) 2025 (24 do, S12\n=\na2 7 a/2 :\n== —@  Toufuxtvough square= A (}) Lets\ndivide square is 8 equal parts. Flux is same for each part. Flux through shaded portion is £ (Total flux)\n=8x2i=%t required Ans.is 48",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 237,
+    "page": 134,
+    "question_text": "A small uncharged conducting sphere is placed in contact with an identical sphere but having 4 x 10-*C charge and then removed to a distance such that the force of repulsion between them is 9 x 107% N. The distance between them is (Take 1 as 9 x 10%nSI units)",
+    "options": [
+      "3¢cm (8) 2cm ©) acm ©) 1cm",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417463/edvedum_physics/electrostatics/p134_span1_y139_h126.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417464/edvedum_physics/electrostatics/p134_span3_y1039_h147.png",
+    "solution": "Q=4x10\" 2 02\n0x10 2 IX 1X (410%) xax10\nois Tx\n2 _ 9x1 x16x1078\nQ2 2 TT TT axoxwd 0”\nr=2x10\"m=2cm",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 238,
+    "page": 135,
+    "question_text": "= % AG A Gta *q, *q, 0 [] F . E F . E + HQ, in the first configuration (1) as C (2 < 1 +q, B H+q, Configuration(1) Configuration(2) shown in the figure, four identical charges (qu) are kept at the corners A, B, C and D of square of side length ‘a’. In the second configuration (2), the same charges are shifted to mid points G, E, Hand F, of the square, If K = 7, the difference between the potential energies of configuration (2) and (1) is given by : “ 4 (4— 2v3) © Kd(3 va) © sigyag) © kira) {4 ark, 1 for a wrong answer] 2025 (24 dos, Shik 2)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417464/edvedum_physics/electrostatics/p135_span1_y48_h172.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417464/edvedum_physics/electrostatics/p135_span3_y717_h70.png",
+    "solution": "(Ka , Kg\nw= (2 - LEE\nNe (222. 2) 0s\na a\n50,\nKg 1\nAu=up —u =20—= [vas1-2-]\nnu 2 [1=vE-1]_ 2d 3-3)\n~ dmega V2 Tdmga (2\n2Kq 3-v2| Kg\nAu==2 Ed = —(3v2-2)\n247. particle of mass *m * and charge ' q ' is fastened to one end * A * of a massless string having\nequilibrium length £, whose other end is fixed at point * O *. The whole system is placed on a\nfrictionless horizontal plane and is initially at rest. If uniform electric field is switched on along the\ndirection as shown in figure, then the speed of the particle when it crosses the x -axis is\nA\ny WV\nr—\nNeo\nx 0\n[Ne ® a\nVE v=\n©) rE [) rm)\nVis VE\n14 macs; <1 or wrong answer +2025 128 Ja, Shit)\nAnswer\n-\nAA Waa = Ak\nN We=k ~k\nE—> Pp i 3 $a\n’ ARE\n17’ 1 [aE\n£60 HI RY\nm\no Ca\n7",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 239,
+    "page": 137,
+    "question_text": "Three infinitely long wires with inear charge density A are placed along the x-a x 5, y-axis and z— axis respectively. Which of the following denotes an equipotential surface?",
+    "options": [
+      "22 — constant (8) zy + y+ 22 = constant (© (©) +y)(y + 2)(z +z) = constant (2? + ¥)(4 + 2°)(2? + 2%) = constant i",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Potential due to an infinite wire is V = 2kA I(r), where r is the perpendicular distance from\nthe wire.\nTaking the point in space P(z, y, z):\n© Distance from wire along x-axis: Tz = v/2% + 22\n© Distance from wire along y-axis: ry, = v/z% + 22\n© Distance from wire along z-axis: 7. = /a + y°\nPotential at P due to the three perpendicular wires:\n°  V.=2kAln(r.)\n°  V,=2kAn(r,)\n°  V.=2kAln(r.)\nTotal potential at P:\nV =Ve+V, + Vo = 2kAIn(roryr:)\nV =2kAn(yy? +22 - V2 +222 +7)\nV =kAIn((y* + 2°)(2* + 2%)(a* +3)\nFor an equipotential surface, V — constant:\n(2 +P) (4° + 2%)(2* + 2%) = constant",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 240,
+    "page": 138,
+    "question_text": "an electric dipole of dipole moment 6 x 10%Crm is placed in uniform electric field of magnitude 10° V /m. Initially, the dipole moment is parallel to electric field. The work that needs to be done on the dipole to make its dipole moment opposite to the field, will be ___ J.",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 5,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Work done in rotating a dipole is AU:\nW = (—PE cos) — (—PE cos#;)\nW = PE(cos 0; — costly)\nFor; = 0° and fy — 180\":\nW = PE(cos(\" — cos 180°)\nW =PE(1-(-1))=2PE\nGiven P= 6 x 10°Cmand E = 10° V/m:\nW=2x(6x10\"°) x (10°) = 12J\n250. ist List\n(A) Electric field inside (r < R) of a uniformly charged amo\nspherical shell\n(B) Electric field at distance > 0 from an infinite plane (OF\nsheet\n(C) Electric field outside (r > R) of a uniformly charged aw) A=\nspherical shell ks\n(D) Electric field between 2 oppositely charged infinite [0] 2\nparallel sheets\n(A) (A)-(m), (8)-(1), (C)-(1V), (D)-(1) (B) (A)-(1v), (B)-(n), (C)-(1), (D)-(1)\n(C) (A)-(, (8)-(1), (C)-(1v), (D)-(1m) (0) (A)-(v), (B)-(0), (C)-(u), (D)-(1)\n14 marks, -1 for a wrong answer] 2025 (20 Jan, SH 1)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 241,
+    "page": 138,
+    "question_text": "done in rotating a dipole is AU: W = (—PE cos) — (—PE cos#;) W = PE(cos 0; — costly) For; = 0° and fy — 180\": W = PE(cos(\" — cos 180°) W =PE(1-(-1))=2PE Given P= 6 x 10°Cmand E = 10° V/m: W=2x(6x10\"°) x (10°) = 12J 250. ist List",
+    "options": [
+      "Electric field inside (r < R) of a uniformly charged amo spherical shell",
+      "Electric field at distance > 0 from an infinite plane (OF sheet",
+      "Electric field outside (r > R) of a uniformly charged aw) A= spherical shell ks",
+      "Electric field between 2 oppositely charged infinite [0] 2 parallel sheets (A) (A)-(m), (8)-(1), (C)-(1V), (D)-(1) (B) (A)-(1v), (B)-(n), (C)-(1), (D)-(1) (C) (A)-(, (8)-(1), (C)-(1v), (D)-(1m) (0) (A)-(v), (B)-(0), (C)-(u), (D)-(1)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Inside uniformly charged spherical shell, El = 0 *, A —+ III For uniformly charged infinite piate E = 32\n2B + T1 Outside of spherical shell E = 7. = ©. C — IV Between two plates E = £ .D 1",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 242,
+    "page": 139,
+    "question_text": "pn electric dipole of mass m, charge , and length { is placed in a uniform electric field F — Ej When the dipole is rotated slightly from its equilibrium position and released, the time period of its oscillations will be:",
+    "options": [
+      "(8) = #y/ak ny E © (0) VE m5",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417465/edvedum_physics/electrostatics/p139_span1_y730_h60.png",
+    "solution_image_url": null,
+    "solution": "r= (PE)O\n2\n: mi?\n— iesly) i\nP T= PEsin0fOissmaly, _, | om? _, | me\nee = PE VIgn\nr\n| ml\nT= ny NE\n252. Match List - | with List - II.\nList - 1 List - 11\nElectric field inside (distance r > 0 from center)\n(A) of a uniformly charged spherical shell with 1) ofe\nsurface charge density 0, and radius R.\nElectric field at distance r>0 from a uniformly\n(B) charged infinite plane sheet with surface (11) 0/20\ncharge density o. Choose the correct\nElectric field outside (distance r>0 from center)\n(C) of a uniformly charged spherical shell with (11) 0\nsurface charge density 0, and radius R.\nElectric field between 2 oppositely charged |\n(D) infinite plane parallel sheets with uniform (Iv) 2&\nsurface charge density .\nanswer from the options given below :\n(A) (A)-(n), (B)-(H), (€)-(V), (©)-(1) (8) (A)-(1v), (8)-(u), (C)-(im), (D)-(1)\n(C) (A)-(n, (B)-(1, (C)-(1V), (D)-(1) (D) (A)-(v), (8)-(1), (C)-(u), ()-()\n(€ marks, for a wrong answer) 2025 (29 Jan, SLY)\nr= (PE)O\n2\n: mi?\n— iesly) i",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 243,
+    "page": 139,
+    "question_text": "T= PEsin0fOissmaly, _, | om? _, | me ee = PE VIgn r | ml T= ny NE 252. Match List - | with List - II. List - 1 List - 11 Electric field inside (distance r > 0 from center)",
+    "options": [
+      "of a uniformly charged spherical shell with 1) ofe surface charge density 0, and radius R. Electric field at distance r>0 from a uniformly",
+      "charged infinite plane sheet with surface (11) 0/20 charge density o. Choose the correct Electric field outside (distance r>0 from center)",
+      "of a uniformly charged spherical shell with (11) 0 surface charge density 0, and radius R. Electric field between 2 oppositely charged |",
+      "infinite plane parallel sheets with uniform (Iv) 2& surface charge density . answer from the options given below : (A) (A)-(n), (B)-(H), (€)-(V), (©)-(1) (8) (A)-(1v), (8)-(u), (C)-(im), (D)-(1) (C) (A)-(n, (B)-(1, (C)-(1V), (D)-(1) (D) (A)-(v), (8)-(1), (C)-(u), ()-()"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417465/edvedum_physics/electrostatics/p139_span1_y730_h60.png",
+    "solution_image_url": null,
+    "solution": "Inside uniformly charged spherical shell, E = 0\nLAST\nFor uniformly charged infinite plate\nE=4£&\nSBI\nOutside of spherical shell\nE=gl- =o\nLCa1vV\nBetween two plates E — =\nADI",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 244,
+    "page": 140,
+    "question_text": "An electric dipole is placed at a distance of 2 cm from an infinite plane sheet having positive charge + + density ,,. Choose the correct option from the following. + 74 a 4% % (A) potential energy and torque both are (B) Torque on dipole is zero and net force is maximum. directed away from the sheet. (€) Torque on dipole is zero and net force acts (D) Potential energy of dipole is minimum and towards the sheet. torque is zero.",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 48,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Electric field due to sheet E = =\nand torque on dipole 7 = P x E\nhere 7 = 0\nand U7 = — P E — should be minimum\n254. A point charge causes an electric flux of —2 x 10*Nm?C! to pass through a spherical Gaussian\nsurface of 8.0 cm radius, centred on the charge. The value of the point charge is :\n(Given e, = 8.85 x 10° 2C2 Nm?)\nW157 x 10-%¢ ®) 17.7 x 10-%C\n© _157x 10% © _17.7 x 10%\n(£ ks, 118 wighg answer 202520 Jan, SWZ\nElectric field due to sheet E = =",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 245,
+    "page": 140,
+    "question_text": "torque on dipole 7 = P x E here 7 = 0 and U7 = — P E — should be minimum 254. A point charge causes an electric flux of —2 x 10*Nm?C! to pass through a spherical Gaussian surface of 8.0 cm radius, centred on the charge. The value of the point charge is : (Given e, = 8.85 x 10° 2C2 Nm?) W157 x 10-%¢ ®) 17.7 x 10-%C © _157x 10% © _17.7 x 10%",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Flux (¢) = 2c\n“0\nOc = ed\n=-177x 10°C",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 246,
+    "page": 141,
+    "question_text": "A small bob of mass 100 mg and charge +10uC is connected to an insulating string of length 1m. itis brought near to an infinitely long nonconducting sheet of charge density * o * as shown in figure. If string subtends an angle of 45° with the sheet at equilibrium the charge density of sheet will be : (Given, =) = 8.85 x 10 2-E and acceleration due to gravity, g = 10 m/s?) 1 Al FENnE=1 =1M1 145° + +c 3 & +10uC + + i 1",
+    "options": [
+      ",885nC /m* (8) 17.70C/m? (©) g85nC/m? ©) } 77nC/m? 8 mks, 1 ox a wong answer 2025 102 Ap, Si",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417465/edvedum_physics/electrostatics/p141_span1_y188_h193.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p141_span2_y670_h217.png",
+    "solution": "1\ni\ni\ni gi 1 qE = mg\nH 1 -\ni o Ale\ni 45°14 q [=] i.\n| =\ni E =qF po 2X885x 107 x 100 x 10° x 10\n1] \\; 10 x 10°¢\ni a =17.7 x 10 °C/m*\nH 7 = 1.77aC/m*\nmg",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 247,
+    "page": 142,
+    "question_text": "Consider two infinitely large plane parallel conducting plates as shown below. The plates are uniformly charged with a surface charge density +o and —2q. The force experienced by a point charge +q placed at the mid point between two plates will be ® q +o 20",
+    "options": [
+      "og (8) ig i = (©) 30 © z",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p142_span1_y105_h165.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p142_span2_y511_h195.png",
+    "solution": "G —26\nd2 $ d/2 Final charge distrution wl ba\nq X\nPlate 1 Plate 2\n—c | 30 -3c| -c\n2:1 2 2712 Na\n|",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 248,
+    "page": 143,
+    "question_text": "5 point charge +q is placed at the origin. A second point charge +9 q is placed at (d, 0, 0) in Cartesian coordinate system. The point in between them where the electric field vanishes is :",
+    "options": [
+      "(44/3,0,0) ©) (d/4,0,0) © (34/4,0,0) © (4/3,0,0)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "X\n>\n&— 9\n(0,0, 0) «, 0,0)\nLet Ep =0\nkg k9q\na? (d-z)?\nd-z d\n> — ===\n4\n.\".Co-ordinate of Pis (4, 0,0)\n258. Consider a circular loop that is uniformly charged and has a radius ay/2. Find the position along the\npositive z -axis of the cartesian coordinate system where the electric field is maximum if the ring was\nassumed to be placed in xy-plane at the origin :\n[I ® 4\nvi §\n© a (do\n14 tks, 11ot wrong snswer) 2025 (02 Age, Sh 2)\nX\n>\n&— 9\n(0,0, 0) «, 0,0)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 249,
+    "page": 143,
+    "question_text": "Ep =0 kg k9q a? (d-z)? d-z d > — === 4 .\".Co-ordinate of Pis (4, 0,0) 258. Consider a circular loop that is uniformly charged and has a radius ay/2. Find the position along the positive z -axis of the cartesian coordinate system where the electric field is maximum if the ring was assumed to be placed in xy-plane at the origin : [I ® 4 vi § © a (do 14 tks, 11ot wrong snswer) 2025 (02 Age, Sh 2)",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 12,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "KQr\nE= ———\n(x2 +R)?\ndE\n5 =0\nae B_VR_\nRENE A",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 250,
+    "page": 144,
+    "question_text": "Two large plane parallel conducting plates are kept 10 cm apart as shown in figure. The potential difference between them is V. The potential difference between the points A and B (shown in the ASS) £ 1 ~G ol NZ figure) is : Lag Ry 1 B) 2 wy ®:y © zy )1v",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p144_span1_y80_h237.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p144_span2_y507_h246.png",
+    "solution": "Using AV = E(Ad)\nV = E(10)\n3cm Sh\n= i Wo oe\n4cm\n260. Given below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason\n(R).\nAssertion (A) : Net dipole moment of a polar linear isotropic dielectric substance is not zero even in\nthe absence of an external electric field.\nReason (R) : In absence of an external electric field, the different permanent dipoles of a polar\ndielectric substance are oriented in random directions.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow :\n(A) (a) is correct but (R) is not correct (8) goth (4) and (R) are correct but (R) is not\nthe correct explanation of (A)\n(C) Both (A) and (R) are correct and (R) is the (D) (a) is not correct but (R) is correct\ncorrect explanation of (A)\n14 mack, for a wing awe 2025402 Apr, Sif 2\nUsing AV = E(Ad)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 251,
+    "page": 144,
+    "question_text": "= E(10) 3cm Sh = i Wo oe 4cm",
+    "options": [
+      "and the other is labelled as Reason (R). Assertion (A) : Net dipole moment of a polar linear isotropic dielectric substance is not zero even in the absence of an external electric field. Reason (R) : In absence of an external electric field, the different permanent dipoles of a polar dielectric substance are oriented in random directions. In the light of the above statements, choose the most appropriate answer from the options given below : (A) (a) is correct but (R) is not correct (8) goth (4) and (R) are correct but (R) is not the correct explanation of (A) (C) Both (A) and (R) are correct and (R) is the (D) (a) is not correct but (R) is correct correct explanation of (A)",
+      "(B)",
+      "Both (A) and (R) are correct and (R) is the",
+      "(a) is not correct but (R) is correct correct explanation of (A)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p144_span2_y507_h246.png",
+    "solution": "A Since polar dielectrics are randomly oriental B,,, = 0.\nR: HE is absent, polar dielectric remain polar \\& are randomly oriented.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 252,
+    "page": 145,
+    "question_text": "The electrostatic potential on the surface of uniformly charged spherical shel of radius R = 10 cm is 120 V. The potential at the centre of shell, at a distance r = 5 cm from centre, and at a distance t = 15 cm from the centre of the shell respectively, are :",
+    "options": [
+      "120 v,120 v.50 V ® 40v,40v,50V © gv,0v,50Vv © gy 120v,40V",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p145_span2_y1188_h120.png",
+    "solution": "Potential inside shell is equal to potential on surface\nVis = Vitae = 2 = 120V\natr=15em\nV=19_ uw _gy\n262. z 3 £ .\nTwo Infinite identical charged sheets and a charged spherical body of charge density p* are\narranged as shown in figure. Then the correct relation between the electrical fields at A, B, C and D\n“a vo\nbe asp\npoints is : < +B 4 -\nZam [+ ~~ Th\n[oY] = (8)\nEa=EnBe= Ep Bi> Bai Bo=Ep\n© = = + (0)\nBo# BniBa> Es [BA] =[Ea| Ec > Bo\n4 aks, 1 for 8 wisi answer] 202504 Ag, SHH)\nPotential inside shell is equal to potential on surface",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 253,
+    "page": 145,
+    "question_text": "= Vitae = 2 = 120V atr=15em V=19_ uw _gy 262. z 3 £ . Two Infinite identical charged sheets and a charged spherical body of charge density p* are arranged as shown in figure. Then the correct relation between the electrical fields at A, B, C and D “a vo be asp points is : < +B 4 - Zam [+ ~~ Th [oY] = (8) Ea=EnBe= Ep Bi> Bai Bo=Ep © = = + (0) Bo# BniBa> Es [BA] =[Ea| Ec > Bo 4 aks, 1 for 8 wisi answer] 202504 Ag, SHH)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p145_span1_y513_h74.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p145_span2_y1188_h120.png",
+    "solution": "Ec # Ep\nEy > Ep\n263. Tyo small spherical balls of mass 10 g each with charges —2yC and 2uC, are attached to two ends\nof very light rigid rod of length 20 cm. The arrangement is now placed near an infinite nonconducting\ncharge sheet with uniform charge density of 100C/m? such that length of rod makes an angle of\n30° with electric field generated by charge sheet. Net torque acting on the rod is:\n(Take £ : 8.85 x 1072C?/Nm?)\n(A) 12 Nm (8) 112 Nm\n(©) 2.24 Nm (©) 11.2 Nm\n4 sk, 1 for a wig answer] 2025 {04 Apt, Sf)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 254,
+    "page": 145,
+    "question_text": "Ep Ey > Ep 263. Tyo small spherical balls of mass 10 g each with charges —2yC and 2uC, are attached to two ends of very light rigid rod of length 20 cm. The arrangement is now placed near an infinite nonconducting charge sheet with uniform charge density of 100C/m? such that length of rod makes an angle of 30° with electric field generated by charge sheet. Net torque acting on the rod is: (Take £ : 8.85 x 1072C?/Nm?)",
+    "options": [
+      "12 Nm (8) 112 Nm (©) 2.24 Nm (©) 11.2 Nm 4 sk, 1 for a wig answer] 2025 {04 Apt, Sf)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p145_span1_y513_h74.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p145_span2_y1188_h120.png",
+    "solution": "ol P\n© p= i» a2 100 x 10°¢ 1\nead 30° E=gn. le Sos) (2)] [5 *E8E x 10%) \\3\nr=PEsing _ 10 _\n“585 = 1.12Nm",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 255,
+    "page": 146,
+    "question_text": "A metallic ring is uniformly charged as shown in figure. AC and BD are two mutually perpendicular diameters. Electric field due to arc AB to O ' is\" E * is magnitude. What would be the magnitude of electric field at * O * due to arc ABC ? + A + - - + + + + + + 3 - + - +. +",
+    "options": [
+      "2€ ®) 5g © g/g (0) Zero",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p146_span1_y157_h298.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p146_span2_y725_h285.png",
+    "solution": "A + A +\n2 Co\n=f +\nE + +\nV +\n+\n+\nTE KE",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 256,
+    "page": 147,
+    "question_text": "Two charges q; and qa are separated by a distance of 30 cm. A third charge gs initially at ' C * as shown in the figure, is moved along the circular path of radius 40 cm from C to D. If the difference in potential energy due to movement of g from C to D is given by $-X, the value of Kis : BE, 5 4 °~ ~ ~ N N \\ 40cm X \\ \\ \\ \\ \\ 1 9 @ gq, ® gq, © g, © gq,",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417466/edvedum_physics/electrostatics/p147_span1_y119_h67.png",
+    "solution_image_url": null,
+    "solution": "Potential at C\nVe=ja+\nPotential at D\nVo=34 +5\nAU = (Vo - Vo) (a) = (3 - 3%) (as)\nAU = 8kqyq; = F&\n266. Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason\n(R).\nAssertion (A) : The outer body of an air craft is made of metal which protects persons sitting inside\nfrom lightning-strikes.\nReason (R) : The electric field inside the cavity enclosed by a conductor is zero.\nIn the light of the above statements, chose the most appropriate answer from the options given below\n(A) goth (A) and (R) are correct and (R) isthe 8) (A) is correct but (R) is not correct\ncorrect explanation of (A)\n(©) Both (A) and (R) are correct but (R) isnot (P) (4) is not correct but (R) is correct\ncorrect explanation of (A)\nks, 1 fot 8 wisi answer] 2025 07 Aor, Shit 2\nPotential at C\nVe=ja+\nPotential at D\nVo=34 +5",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 257,
+    "page": 147,
+    "question_text": "Electrostatics JEE PYQ Question #257",
+    "options": [
+      "= (3 - 3%) (as) AU = 8kqyq; = F& 266. Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R). Assertion (A) : The outer body of an air craft is made of metal which protects persons sitting inside from lightning-strikes. Reason (R) : The electric field inside the cavity enclosed by a conductor is zero. In the light of the above statements, chose the most appropriate answer from the options given below (A) goth (A) and (R) are correct and (R) isthe 8) (A) is correct but (R) is not correct correct explanation of (A) (©) Both (A) and (R) are correct but (R) isnot (P) (4) is not correct but (R) is correct correct explanation of (A) ks, 1 fot 8 wisi answer] 2025 07 Aor, Shit 2",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Electric field of outside charge is zero inside conductor",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 258,
+    "page": 148,
+    "question_text": "5 dipole with two electric charges of 2uC magnitude each, with separation distance 0.54 m, is placed between the plates of a capacitor such that its axis is parallel to an electric field established between the plates when a potential difference of 5 V is applied. Separation between the plates is 0.5 mm. If the dipole is rotated by 30° from the axis, it tends to realign in the direction due to a torque. The value of torque is :",
+    "options": [
+      "5 10'Nm (8) 5 x 10-*Nm (©) 2.5 x 10-2Nm ©) 55 « 10-*Nm",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "v 5\nE===———=10'V,\nqd Ex10¢ 7 here P = qa = 2% 10 x § x 10-7 = 1 x 10-2C—m\n= PEsing\nTE1x10 x10 xf =5x 10° Nm\n268. The electric field in a region is given by B — (2i + 4j + 6k) x 10% N/C: The flux of the field through\na rectangular surface parallel to = — = plane is 6.0Nm>C~!. The area of the surfaceis ___ cm?\n4 mks, 1 ora wionq answer 2025 {07 Api, SH 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 259,
+    "page": 148,
+    "question_text": "5 E===———=10'V, qd Ex10¢ 7 here P = qa = 2% 10 x § x 10-7 = 1 x 10-2C—m = PEsing TE1x10 x10 xf =5x 10° Nm 268. The electric field in a region is given by B — (2i + 4j + 6k) x 10% N/C: The flux of the field through a rectangular surface parallel to = — = plane is 6.0Nm>C~!. The area of the surfaceis ___ cm? 4 mks, 1 ora wionq answer 2025 {07 Api, SH 2)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "B=E-K = (2+ 45+ 6k) x 10°. A]\n6=4x10\"A\nA=15x10 0m?\n= 15cm®\n289. 10 metal spheres of radius R and 3 R have same surface charge density cr. If they are brought in\ncontact and then separated, the surface charge density on smaller and bigger sphere becomes or;\nand a, respectively. The ratio 2 is.\n(A) 1 (®) 9\n3\n© 1 ©) 3\n3\nmars, 1 for a woo ner) 3025 08 Api, SPR 2\nB=E-K = (2+ 45+ 6k) x 10°. A]\n6=4x10\"A\nA=15x10 0m?\n= 15cm®",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 260,
+    "page": 148,
+    "question_text": "10 metal spheres of radius R and 3 R have same surface charge density cr. If they are brought in contact and then separated, the surface charge density on smaller and bigger sphere becomes or; and a, respectively. The ratio 2 is.",
+    "options": [
+      "1 (®) 9 3 © 1 ©) 3 3 mars, 1 for a woo ner) 3025 08 Api, SPR 2",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "=n\non\nFor conducting sphere, V = % After contact, Vi = Va oz 11\nLY\n@",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 261,
+    "page": 149,
+    "question_text": "An electron is released from rest near an infinite non-conducting sheet of uniform charge density ' —o'. The rate of change of de-Broglie wave length associated with the electron varies inversely as n'™ power of time. The numerical value of nis 18 masks, ~1 feo wiong answer 2025 108 Agr Sh 2)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "dp  —hd\\\ndt MN dt\nh dX\nma=F=— Nat\na PAA (muPPdA  mu’d)\n~ mhdt mh dt h dt\ndX ah\n—=—-—...(1\ndt mu? ®\neB eo\na=—=——, v=at\nm 2meq\neo \\p\nd\\ 2me, ech 2heg\n7 ya BF Naat?\ndt m(at) ome, ( ia ) 2 oet’\nA x L = n=2\ndt BN",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 262,
+    "page": 150,
+    "question_text": "giectric charge is transferred to an irregular metallic disk as shown in figure. If 7, 02, 75 and oy are charge densities at given points then, choose the correct answer from the options given below: [e3] ” p O3",
+    "options": [
+      "A, Band C Only",
+      "A and C Only (€) p and E Only (D) Band C Only",
+      "(C)",
+      "Band C Only"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p150_span1_y111_h253.png",
+    "solution_image_url": null,
+    "solution": "x 1\nRoC\n(ROC), < (ROC); < (ROC); = (ROC),\nacaca=a\n272. Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R\nAssertion A : Work done in moving a test charge between two points inside a uniformly charged\nspherical shell is zero, no matter which path is chosen.\nReason R : Electrostatic potential inside a uniformly charged spherical shell is constant and is same\nas that on the surface of the shell. In the light of the above statements, choose the correct answer\nfrom the options given below\n(A) A is true but R is false (B) Both A and R are true and Ris the correct\nexplanation of A\n(©) A is false but Rs true () Both A and R are true but R is NOT the\ncorrect explanation of A\n8 marks, 1 foe a wrong srw] 2025 (08 Apr Shi 2)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 263,
+    "page": 150,
+    "question_text": "1 RoC (ROC), < (ROC); < (ROC); = (ROC), acaca=a 272. Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R Assertion A : Work done in moving a test charge between two points inside a uniformly charged spherical shell is zero, no matter which path is chosen. Reason R : Electrostatic potential inside a uniformly charged spherical shell is constant and is same as that on the surface of the shell. In the light of the above statements, choose the correct answer from the options given below",
+    "options": [
+      "A is true but R is false",
+      "Both A and R are true and Ris the correct explanation of A (©) A is false but Rs true () Both A and R are true but R is NOT the correct explanation of A",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p150_span1_y111_h253.png",
+    "solution_image_url": null,
+    "solution": "For a uniformly charged spherical shell:\n~ The electric field inside the shell is zero everywhere (from Gauss's law)\n* When the electric field is zero, no work is done in moving a charge\n~ Since work - force x displacement, and force - GE (where E - 0), work - 0\n~ The potential inside is constant and equal to the value at the surface\nAssertion A is correct: Since the electric field is zero everywhere inside the shel, no work is done moving a charge\nbetween any two points, regardiess of path.\nReason Rs correct: The patential inside a uniformly charged spherical shell is indeed constant and equal to the\nvalue at the surface.\nDoes R explain A ? Yes, because:\n~ Constant potential means zero electric field (since E = — FW)\n- Zero electric field means no force on a test charge\n~ No force means no work done in moving the charge\nTherefore, opxion (2) is correct: Both A and R are true and R is the correct explanation of A.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 264,
+    "page": 151,
+    "question_text": "aq infinitely long wire has uniform linear charge density A = 2nC/m. The net flux through a Gaussian cube of side length y/3 cm, if the wire passes through any two comers of the cube, that are maximally displaced from each other, would be xNm®C ~!, where x is : [Neglect any edge effects and use 7 = 9 x 10° Sl units]",
+    "options": [
+      "720 8) 44x (© 6.487 (0) 2.167",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p151_span1_y336_h134.png",
+    "solution_image_url": null,
+    "solution": "~N - or\ngmt AVE\nNE)\n=2%10\" x V3x V3 x 10°? x 36x x 10'Nm’C !\n= 2.16xNm’C\"*\n274. point charge of 10~*C is placed at origin. The work done in moving a point charge 2:C from point\nA(4,4,2)mto B(2,2,1)mis___ J. (& = 9x 10° in St units )\n(A) 45 x 10-6 8) 15 10%\n©o (0) 30 x 10-6\n[4 marks, for a wiong answer) 20268 (21 Jon, Sh 1)\n~N - or",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 265,
+    "page": 151,
+    "question_text": "AVE NE) =2%10\" x V3x V3 x 10°? x 36x x 10'Nm’C ! = 2.16xNm’C\"* 274. point charge of 10~*C is placed at origin. The work done in moving a point charge 2:C from point A(4,4,2)mto B(2,2,1)mis___ J. (& = 9x 10° in St units )",
+    "options": [
+      "45 x 10-6 8) 15 10% ©o (0) 30 x 10-6",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p151_span1_y336_h134.png",
+    "solution_image_url": null,
+    "solution": "Distance from origin to Ary = v/4% + 424 22 = 6m\nDistance from origin 0 8: rp = v27 4 22 + 12 = 3m\nWork done: W = qu(Vis ~ Vi) = @2 x = (2 i)\n=2x10%x9x 10° x 104% (3 - 4)\n=18x10°x}=30x10\"°y",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 266,
+    "page": 152,
+    "question_text": "Consider two identical metallic spheres of radius R each having charge Q and mass m. Their centers have an initial separation of 4. Both the spheres are given an initial speed of u towards each other. The minimum value of u, so that they can just touch each other is : (Take k = ¢%- and assume kQ? > Gm? where G is the Gravitational constant)",
+    "options": [
+      "® Gm? Ki Gm? Va (1-2) Vis (1-85) ©) D) Gm? kt Gm? Vase (1-5) Vig (1+ 5)",
+      "(B)",
+      "(C)",
+      "Gm? kt Gm? Vase (1-5) Vig (1+ 5)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Using energy conservation, the system's kinetic energy must overcome the increase in electrostatic potential\nenergy as the spheres approach.\nInitial state: separation 4R, speed u each.\nFinal state: touching (separation 2R), speed zero.\nChange in potential energy: Al — *% - kg = fr\nInitia kinetic energy: KE, = mu.\nEnergy equation: mu? = ky (x - 0):\nThesore.u = [12 (1 257).\n276. A simple pendulum has a bob with mass m and charge g. The pendulum string has negligible mass.\nWhen a uniform and horizontal electric field £ is applied, the tension in the string changes. The final\ntension in the string, when pendulum attains an equilibrium position is . (g: acceleration due to\ngravity)\nW mig + FE 8) mg 4 gE\n© mg —g& [LJ re re 4\n4 rks, 108 wromg answer] 2026 (22 Jan, SHAN\nUsing energy conservation, the system's kinetic energy must overcome the increase in electrostatic potential\nenergy as the spheres approach.\nInitial state: separation 4R, speed u each.\nFinal state: touching (separation 2R), speed zero.\nChange in potential energy: Al — *% - kg = fr\nInitia kinetic energy: KE, = mu.\nEnergy equation: mu? = ky (x - 0):\nThesore.u = [12 (1 257).",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 267,
+    "page": 152,
+    "question_text": "A simple pendulum has a bob with mass m and charge g. The pendulum string has negligible mass. When a uniform and horizontal electric field £ is applied, the tension in the string changes. The final tension in the string, when pendulum attains an equilibrium position is . (g: acceleration due to gravity) W mig + FE 8) mg 4 gE © mg —g& [LJ re re 4",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The charged bob experiences two forces at equilibrium:\nGravitational force: F, = mg (downward)\nElectric force: Fig = gE (horizontal, in direction of field)\nThese forces are perpendicular to each other. The string tension must balance their resultant.\nAt equilibrium, the string makes angle @ with vertical such that:\nVertical: T cos 8 = mg\nHorizontal: T sin § = gE\nThe net force from gravity and electric field is \\/{mg)? 1 (¢E)E\nTherefore, the tension in the string is: T' = /m%g? + *E*",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 268,
+    "page": 153,
+    "question_text": "Six point charges are kept 60° apart from each other on the circumference of a circle of radius R as shown in figure. The net electric field at the center of the circle is. (eg is permittivity of free (7) -Q +Q seg AN Ny x(i) (a) : = (8) a 5, ww(VEi-]) 5 (i+ V3) (© wr nan ©) - (+) (i-3)) ~wdm (VE - J)",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 15,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p153_span1_y136_h190.png",
+    "solution_image_url": null,
+    "solution": "Six point charges equally spaced 60° apart on a circle of radius R, with alternating arrangement creating a dipole-\nlike configuration. Each charge creates an electric field at the center of magnitude Ey = 1-27 pointing radially\n{outward for +0, inward for -Q). By vector addition of field contributions from all six charges with proper angle\nconsideration: The charges at specific positions create a net field with components that depend on their\narrangement. For the given symmetric configuration, the net electric field is: £ = 5 (vi — 3) This\ncorresponds to magnitude 2 at angle of 30° from the positive x-axis.\n278. Electric field in a region is given by E — Axi + Byj, where A = 10 V/m?and B = 5 V /m2 If the\nelectric potential at a point (10, 20) is 500 V, then the electric potential at origins ___ V.\n(A) o (8) 2000\n(c) s00 (0) 1000\n4 marks, 1 10a wrong answer] - 2028 (22 Jun, SRV",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 269,
+    "page": 153,
+    "question_text": "point charges equally spaced 60° apart on a circle of radius R, with alternating arrangement creating a dipole- like configuration. Each charge creates an electric field at the center of magnitude Ey = 1-27 pointing radially {outward for +0, inward for -Q). By vector addition of field contributions from all six charges with proper angle consideration: The charges at specific positions create a net field with components that depend on their arrangement. For the given symmetric configuration, the net electric field is: £ = 5 (vi — 3) This corresponds to magnitude 2 at angle of 30° from the positive x-axis. 278. Electric field in a region is given by E — Axi + Byj, where A = 10 V/m?and B = 5 V /m2 If the electric potential at a point (10, 20) is 500 V, then the electric potential at origins ___ V.",
+    "options": [
+      "o (8) 2000 (c) s00 (0) 1000",
+      "(B)",
+      "s00 (0) 1000",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p153_span1_y136_h190.png",
+    "solution_image_url": null,
+    "solution": "‘The electric field is related to potential by E = ~ VV.\nGiven: E = Azi + Byj with A = 10 V/m* and B = 5 Vim?\nThis means:\n= Azand x =-By\nIntegrating:\nViz) =-%£-% 10= 5 -¥4C\nUsing the boundary condition at (10, 20) where V = 500 v:\n500 = -5(100) - X42 4 ¢\n500 = ~500 ~ 1000 + C\n© =2000v\nAtthe origin (0,0):\nV{0.0) = ~5(0) ~ 5% + 2000 = 2000 V",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 270,
+    "page": 154,
+    "question_text": "Three small identical bubbles of water having same charge on each coalesce to form a bigger bubble. Then the ratio of the potentials on one initial bubble and that on the resultant bigger bubble is (A) 32 ®) 92 ©, qn ©), gus",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 2,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417469/edvedum_physics/electrostatics/p154_span1_y654_h371.png",
+    "solution_image_url": null,
+    "solution": "For three identical conducting bubbles with charge q and radius r,\nInitial potential on each: V; =\nWhen three bubbles coalesce,\nTotal charge Q = 3q and new radius from volume: §xR* = 3 x mr?\nSoR=3\"r\nFinal potential: Vy = 338) — 3 — v.33\nRatio: V; : Vp = 1: 3%\n280. Five positive charges each having charge g are placed at the vertices of a pentagon as shown in the\nfigure. The electric potential (V) and the electric field (E) at the center O of the pentagon due to\nthese five positive charges are:\nWy = i and £ = pi B= tnd E=0\n©y _gamdB—0 ©) y= fe and B= gies\n14 marks, 1 tor wrong answer] 2020 (22 Jon, Shin 21",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 271,
+    "page": 154,
+    "question_text": "three identical conducting bubbles with charge q and radius r, Initial potential on each: V; = When three bubbles coalesce, Total charge Q = 3q and new radius from volume: §xR* = 3 x mr? SoR=3\"r Final potential: Vy = 338) — 3 — v.33 Ratio: V; : Vp = 1: 3% 280. Five positive charges each having charge g are placed at the vertices of a pentagon as shown in the figure. The electric potential (V) and the electric field (E) at the center O of the pentagon due to these five positive charges are: Wy = i and £ = pi B= tnd E=0 ©y _gamdB—0 ©) y= fe and B= gies",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417469/edvedum_physics/electrostatics/p154_span1_y654_h371.png",
+    "solution_image_url": null,
+    "solution": "The electric potential at center O is the scalar sum of contributions from all § charges.\nEach charge is equidistant from center, so V = Sedot = 72\nThe electric field is a vector sum of field vectors from all § charges.\nDue to 5-fold rotational symmetry of a regular pentagon, the § field vectors point radially outward from center,\nequally spaced at 72° angles.\nThe vector sum of § equally spaced unk vectors is zero, so £ = 0.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 272,
+    "page": 155,
+    "question_text": "Tyo point charges 2g and q are placed at vertex A and centre of face C DEF of the cube as shown in figure. The electric flux passing through the cube is :",
+    "options": [
+      "3¢. (®) 3g bz b= ©) 2 (D) 34",
+      "(B)",
+      "(C)",
+      "34"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417469/edvedum_physics/electrostatics/p155_span2_y165_h503.png",
+    "solution_image_url": null,
+    "solution": "Using Gauss's law\nCaper\nCharge 2q is at vertex A of the cube. A vertex is shared by B cubes, so the flux contribution from 2g through this\ncubeis 3 = £\nCharge g is at the centre of face CDEF. A face center is shared by 2 cubes, so the flux contribution from g through\nthis cube is a\nTotal flux.\np= tbion _ 2",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 273,
+    "page": 156,
+    "question_text": "Tyo charges TiC and —2uC are placed at (9,0, 0)em and (9, 0, 0)cm respectively in an external field E = A, where A = 9 x 10° N/C.m”. Considering the potential at infinity is 0, the electrostatic energy of the configurationis J.",
+    "options": [
+      "493 ®) -907 ©) 243 0) 14",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The total electrostatic energy I of a system of two charges g; and ga in an external field is given by\nU = qiVi{ri) + V(r) + 2%.\nGiven external electric field Ef = 47, the potential V(r) is found by V(r) = — [1 E-dr = ~ [J 4dr = 4.\nParameters given:\n@ = TuC = Tx 10 \"Cat r, = em = 0.09m.\n@ = ~2uC = ~2 x 10°C at ry = Yom = 0.09m.\nDistance between charges ry; = 9 — (~9) = 18cm = 0.18m.\nA=9x10°N/C-m*.\nCalculating individual terms:\nVir) = gd = (7x10) 50 = 71070 x 10\" = 70J.\n@V(r) = pd = (~2x 10-9) = 210° x 107 = ~20J.\nInteraction energy da — RMT Qe(- aie) _ un! — 7).\nTotal energy U = 70 — 20 — 0.7 = 49.37.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 274,
+    "page": 157,
+    "question_text": "135 shorts dipoles (A, B), A having charges +2uC and length 1m and B having charges +4uC and length 1 cm are placed with their centres 80 cm apart as shown in the figure. The electric field at a point P, equidistant from the centres of both dipoles is ____ N/C. B ei",
+    "options": [
+      "2/3 x 10 8) 9y3 x 10 (©) 45v2 x 10¢ © £3 x 10° & aks, 1 for a wise answer] - 2026 (20 dan, SNR2)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p157_span1_y197_h62.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417469/edvedum_physics/electrostatics/p157_span3_y598_h107.png",
+    "solution": "y P\nPS i Lg\nE, £=-KB. 5. 2A\n40 cm 40 cm\nE,\nPi=2x10¢x107=2x10V Py =4x10% x10 = 4x10\"\nFo 2XOXIC XIAN, 9x IP xX WN DxIPAXIE,\nR= ——d Ba gla li= 3)\n= 9 x 10°\nJ=BX10 oo)\nEner) TRAC\n284. The electrostatic potential in a charged spherical region of radius r varies as V = ar® + b, where a\nand b are constants. The total charge in the sphere of unit radius is a x Ta &,. The value of a is\n(permittivity of vacuum is eo)\n(A) _g ®) -12\n(©) -g (©) -5\n4 make, <1 fo wiong answer] 2028 (24 dan, Shi",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 275,
+    "page": 157,
+    "question_text": "P PS i Lg E, £=-KB. 5. 2A 40 cm 40 cm E, Pi=2x10¢x107=2x10V Py =4x10% x10 = 4x10\" Fo 2XOXIC XIAN, 9x IP xX WN DxIPAXIE, R= ——d Ba gla li= 3) = 9 x 10° J=BX10 oo) Ener) TRAC 284. The electrostatic potential in a charged spherical region of radius r varies as V = ar® + b, where a and b are constants. The total charge in the sphere of unit radius is a x Ta &,. The value of a is (permittivity of vacuum is eo)",
+    "options": [
+      "_g ®) -12 (©) -g (©) -5 4 make, <1 fo wiong answer] 2028 (24 dan, Shi",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417468/edvedum_physics/electrostatics/p157_span1_y197_h62.png",
+    "solution_image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417469/edvedum_physics/electrostatics/p157_span3_y598_h107.png",
+    "solution": "From V = ar? 4. b, the electric field is E = —dV /dr = ~3ar*\nBy Gauss's law:\nEfr) Arr = Q(r)/eq, 50 ~3ar? x xr? = Q(r)/eq\nThis gives Q(r) = ~12mar‘e.\nAtr = 1:Q(1) = ~127ae,.\nSince Q(1) = a x mae, we have a = 12",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 276,
+    "page": 158,
+    "question_text": "There are three co-centric conducting spherical shells A, B and C of radii a, b and ¢ respectively",
+    "options": [
+      "and they are charged with charge gy, ¢, and gs respectively. The potentials of the spheres A, Band C respectively, are : I (ety (aR (a (EH (a) © go (+8 +2) ak (52 +2), (BR) (mete) (e+ 2) (242+ 0) (4 rks, 1 fot wiang answer] 2026 (24 Ja, Shit 1)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "‘The potential at any point due to a charged spherical shel of radius R and charge Qs V = 71-4 for points\ninside of on the surface {r < R), and V = 7A-4 for points outside (r > R).\nLet k = The potentials of the three shells A, B, C' with radii a < b < ¢ and charges qu, gu, : are calculated\nby superposition.\nFor shell A (r = a):\nShell Ais on its own surface, while ts inside shells B and C'.\nVa=kY thE +k2 =o (T4342)\nFor shell B (r = b):\nShell B is outside shell A, on its own surface, and inside shell C.\nVos kik hE = (23242)\nFor shell C (r =o):\nShell C Is outside shells A and B, and on its own surface.\nVo = kf RR ok = Lo (ee)\nComparing these expressions with the given options, option (3) matches correctly.\n286. Three charges +2q, +3q and —dq are situated at (0, —3a), (2a, 0) and (—2a, 0) respectively in the\nzy plane. The resultant dipole moment about origin is\nA) 20a(7i - 35) ©) 20035 ~ 7)\n(©) 200(3i — 75) ©) 200(3; — 73)\n4 marks, ~1 or  wioaq answer} 2026 (24 Jan, SH\n‘The potential at any point due to a charged spherical shel of radius R and charge Qs V = 71-4 for points\ninside of on the surface {r < R), and V = 7A-4 for points outside (r > R).",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 277,
+    "page": 158,
+    "question_text": "k = The potentials of the three shells A, B, C' with radii a < b < ¢ and charges qu, gu, : are calculated by superposition.",
+    "options": [
+      "Shell Ais on its own surface, while ts inside shells B and C'. Va=kY thE +k2 =o (T4342) For shell B (r =",
+      "Shell B is outside shell A, on its own surface, and inside shell C. Vos kik hE = (23242) For shell C (r =o): Shell C Is outside shells A and B, and on its own surface. Vo = kf RR ok = Lo (ee) Comparing these expressions with the given options, option (3) matches correctly. 286. Three charges +2q, +3q and —dq are situated at (0, —3a), (2a, 0) and (—2a, 0) respectively in the zy plane. The resultant dipole moment about origin is A) 20a(7i - 35) ©) 20035 ~ 7) (©) 200(3i — 75) ©) 200(3; — 73)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The dipole moment is given by:\nP= qf + fy + ify\n= (2)(~3a)j + (34)(20)3 + (~4g)(~2a)i\n$= ~6qaj + 6qai + 8qai\nP= 14gai — 6qa)\n7 = 2qa(7i - 3j)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 278,
+    "page": 159,
+    "question_text": "a point charge g = 1uC is located at a distance 2 cm from one end of a thin insulating wire of length 10 cm having a charge Q = 24C, distributed uniformly along its length, as shown in figure. Force between g and wire is N. (Use: gt = 9 x 10° N.m?/C?)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795417469/edvedum_physics/electrostatics/p159_span2_y206_h78.png",
+    "solution_image_url": null,
+    "solution": "Consider a small element of length dz on the wire at a distance x from the point charge g.\nThe linear charge density of the wire is A = ¢ = al = 240 x 10°% C/m.\nThe charge on the small element is dQ = Adz.\nThe electrostatic force between the point charge g and the element dQ is dF = “240 = dais\nThe total force F is obtained by integrating dF from z = ato = = a + L, where a = 2cm and L = 10cm.\nPe fl Bark [00\nF = ka) (vl ~ on) = ka? (33:38)\nFein =\nSubstituting the given values: k = 9 x 10° Nm¥/c%,q = 1 x 10°C, Q = 24 x 10°C, a = 0.02 m, and\na+ L=012m.\nF = alepippal\ni =\nF=3-00N.\n288. Two point charges of 1nC and 2 nC are placed at the two corners of equilateral triangle of side 3 cm.\nThe work done in bringing a charge of 3 nC from infinity to the third corner of the triangleis uJ.\n= 9x 10° Nm?/C?\n(A) 27 8) 54\n© 27 (© 33\n4 marks, <1 for 3 wrong answer] 2026 {28 Jon, SHR 1",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 279,
+    "page": 159,
+    "question_text": "Consider a small element of length dz on the wire at a distance x from the point charge g. The linear charge density of the wire is A = ¢ = al = 240 x 10°% C/m. The charge on the small element is dQ = Adz. The electrostatic force between the point charge g and the element dQ is dF = “240 = dais The total force F is obtained by integrating dF from z = ato = = a + L, where a = 2cm and L = 10cm. Pe fl Bark [00 F = ka) (vl ~ on) = ka? (33:38) Fein = Substituting the given values: k = 9 x 10° Nm¥/c%,q = 1 x 10°C, Q = 24 x 10°C, a = 0.02 m, and a+ L=012m. F = alepippal i = F=3-00N. 288. Two point charges of 1nC and 2 nC are placed at the two corners of equilateral triangle of side 3 cm. The work done in bringing a charge of 3 nC from infinity to the third corner of the triangleis uJ. = 9x 10° Nm?/C?",
+    "options": [
+      "27 8) 54 © 27 (© 33",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Two point charges of 1 nC and 2 nC are placed at two corners of an equilateral triangle with side 3 cm. The work\ndone in bringing a 3 nC charge from infinity to the third corner equals the charge times the potential at that point.\nBoth source charges are at distance 0.03 m from the third corner.\nThe potential due to the 1nC charge is V; = dedi = 300V\nand due to the 2 nC charges V; = 2210 _ Gog,\nTotal potential: Via = 300 + 600 = 900 V\nWork done: W = 3 x 10% x 900 = 2.7 x 10-4 J =27 J",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 280,
+    "page": 160,
+    "question_text": "Identify the correct statements : A. Electrostatic fieid lines form closed loops. B. The electric field lines point radially outward when charge is greater than zero. C. The Gauss - Law is valid only for inverse - square force. D. The workdone in moving a charged particle in a static electric field around a closed path is zero. E. The motion of a particle under Coulomb's force must take place in a plane. Choose the correct answer from the options given below :",
+    "options": [
+      "4, B,D, E Only (8) A, C, E Only (C) A, 8, ¢,D Only (0) B,C, D, E Only 14 marke, ~1 or 8 wiong snswer] 2026 28 Jon, Si 2)",
+      "(B)",
+      "A, 8, ¢,D Only (0) B,C, D, E Only 14 marke, ~1 or 8 wiong snswer] 2026 28 Jon, Si 2)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Statement A: Electrostatic field lines ariginate from positive charges and terminate on negative charges. They do\nnot form closed loops because the electrostatic field is conservative. Thus, A is incorrect.\nStatement B: For a positive point charge (g > 0), the electric field lines are directed radially outwards. Thus, B is.\ncorrect.\nStatement C: Gauss's Law Is a consequence of the inverse-square nature of Coulomb's law (F oc 1/r?). if the\nforce law were different, Gauss's Law would not hold in its standard form. Thus, C is correct.\nStatement D: The electrostatic field is conservative, meaning the work done in moving a charge along any closed\npath is zero (f E - di = 0). Thus, D is correct.\nStatement E: Coulomb's force is a central force. The motion of a particle under a central force always takes place\nin a plane because the torque about the center is zero, keeping angular momentum constant in direction. Thus, E\nis correct.\nSince B, C, D, and E are correct, the correct option is (4).\n290. 15 charged conducting spheres S, and S; of radii § cm and 18 cm are connected to each other by\na wire. After equilibrium is established, the ratio of electric fields on 5, and S, spheres are Ej, and\nEs,\nEg, respectively. The value of tis\nEs,\n(a) 3 ® 2\n2 3\n© 4 © 9\n9 1\n{4 racks, tor rang answer 2023 (02 Ape, SHY\nStatement A: Electrostatic field lines ariginate from positive charges and terminate on negative charges. They do",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 281,
+    "page": 160,
+    "question_text": "form closed loops because the electrostatic field is conservative. Thus, A is incorrect. Statement B: For a positive point charge (g > 0), the electric field lines are directed radially outwards. Thus, B is. correct. Statement C: Gauss's Law Is a consequence of the inverse-square nature of Coulomb's law (F oc 1/r?). if the force law were different, Gauss's Law would not hold in its standard form. Thus, C is correct. Statement D: The electrostatic field is conservative, meaning the work done in moving a charge along any closed path is zero (f E - di = 0). Thus, D is correct. Statement E: Coulomb's force is a central force. The motion of a particle under a central force always takes place in a plane because the torque about the center is zero, keeping angular momentum constant in direction. Thus, E is correct. Since B, C, D, and E are correct, the correct option is (4). 290. 15 charged conducting spheres S, and S; of radii § cm and 18 cm are connected to each other by a wire. After equilibrium is established, the ratio of electric fields on 5, and S, spheres are Ej, and Es, Eg, respectively. The value of tis Es,",
+    "options": [
+      "3 ® 2 2 3 © 4 © 9 9 1 {4 racks, tor rang answer 2023 (02 Ape, SHY",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "When two conducting spheres are connected by a wire, charge flows until their potentials become equal.\nVi=V\nQr_ ky\nRR\nThe electric field on the surface of a conducting sphere is given by 7 — a. which can be written as  — x\nSince Vi = Vi, we have:\nEs Ry = Es, Ry\nEs, R\nGiven R; = Bcmand Ry = 18 cm:\nLTRS)\nEs, 8 14",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 282,
+    "page": 160,
+    "question_text": "two conducting spheres are connected by a wire, charge flows until their potentials become equal. Vi=V Qr_ ky RR The electric field on the surface of a conducting sphere is given by 7 — a. which can be written as  — x Since Vi = Vi, we have: Es Ry = Es, Ry Es, R Given R; = Bcmand Ry = 18 cm: LTRS) Es, 8 14",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The total electrostatic energy U of a system of two charges q1 and q2 in an external field is given by:\\nU = q1*V(r1) + q2*V(r2) + (q1*q2) / (4*pi*epsilon0*r12)\\nGiven E = A/r^2, V(r) = A/r.\\nHere q1 = 7 uC at r1 = 0.09 m, q2 = -2 uC at r2 = 0.09 m, r12 = 0.18 m, A = 9 x 10^5 N/C*m^2.\\nq1*V(r1) = 70 J\\nq2*V(r2) = -20 J\\nInteraction energy = -0.7 J\\nTotal energy U = 70 - 20 - 0.7 = 49.3 J.\\nOfficial Answer: (A)",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 283,
+    "page": 161,
+    "question_text": "10 short electric dipoles A and B having dipole moment p; and p; respectively are placed with their axis mutually perpendicular as shown in the figure. The resultant electric field at a point z is making an angle of 60° with the line joining points O and z. The ratio of the dipole moments py /py is + w 5 ® 55 2 © 1 © 3 V3",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Let the distance of point z from the origin © be r.\nPoint lies on the axial line of dipole A. The electric field at due to dipole A is directed along the horizontal axis\nand its magnitude is given by:\n_ lm\nBasar\nPoint z lies on the equatorial line of dipole B. The electric field at x due to dipole B is directed perpendicular to the\nhorizontal axis and its magnitude is given by:\nLim\nee Tre rd\nThe resultant electric field makes an angle of 60° with the line Ox (the horizontal axis). Therefore, the tangent of\nthis angle is the ratio of the perpendicular component of the electric field to the parallel component:\nBs\ntan60\" = 52\n‘Substituting the expressions for E,, and Ey:\naD\n5 Azar’\nvi=ger\nrey 7\nP2\n5=F\n8 2p\nEW\na",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 284,
+    "page": 161,
+    "question_text": "the distance of point z from the origin © be r. Point lies on the axial line of dipole A. The electric field at due to dipole A is directed along the horizontal axis and its magnitude is given by: _ lm Basar Point z lies on the equatorial line of dipole B. The electric field at x due to dipole B is directed perpendicular to the horizontal axis and its magnitude is given by: Lim ee Tre rd The resultant electric field makes an angle of 60° with the line Ox (the horizontal axis). Therefore, the tangent of this angle is the ratio of the perpendicular component of the electric field to the parallel component: Bs tan60\" = 52 ‘Substituting the expressions for E,, and Ey: aD 5 Azar’ vi=ger rey 7 P2 5=F 8 2p EW a",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Official Answer: B",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 285,
+    "page": 162,
+    "question_text": "12 Two metal plates ( A, BB) are kept horizontally with separation of (3) cm, with plate A on the top. ™ An atomizer jet sprays oil (density 1.5 g/cm?) droplets of radius 1 mm horizontally. All oil droplets carry a charge 5 nC. The potentials 1/4 and Vj are required on plates A and B respectively in order to ensure the droplets do not descend. The values of V and Vj are ¥ (Neglect the air resistance to the droplets and take g = 10 m/s?)",
+    "options": [
+      "100 v and 580 V (8) 580 V and 100 V (©) 60v ana 400 ©) 0 and —200V",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "For the oil droplets to not descend, the upward electric force must balance the downward gravitational force.\nqE = mg\nThe mass of the oll droplet s given by:\nie,\nSubstituting the given values r = 10% m and p = 1500 kg/m’:\n4 Et) “\nm= Zx(1073)) x 1500 = 2x x 10° kg\nThe electric field E required is:\n_mg _2mx10°x10 ~\nB= Ty 000 Vin\nThe potential difference AV between the plates is:\n12\nAV = E xd = 4000x x (= x10) = 480v\n™\nSince the charge on the droplet is positive, the electric field must be directed upwards to provide an upward force.\nElectric field lines point from higher potential to lower potential, so the bottom plate B must be at a higher potential\nthan the top plate A.\nVa ~ Va = 480V\nChecking the given options, Vy = 100 V and Vz = 580 V satisfies this condition.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 286,
+    "page": 162,
+    "question_text": "the oil droplets to not descend, the upward electric force must balance the downward gravitational force. qE = mg The mass of the oll droplet s given by: ie, Substituting the given values r = 10% m and p = 1500 kg/m’: 4 Et) “ m= Zx(1073)) x 1500 = 2x x 10° kg The electric field E required is: _mg _2mx10°x10 ~ B= Ty 000 Vin The potential difference AV between the plates is: 12 AV = E xd = 4000x x (= x10) = 480v ™ Since the charge on the droplet is positive, the electric field must be directed upwards to provide an upward force. Electric field lines point from higher potential to lower potential, so the bottom plate B must be at a higher potential than the top plate A. Va ~ Va = 480V Checking the given options, Vy = 100 V and Vz = 580 V satisfies this condition.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Official Answer: A",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 287,
+    "page": 163,
+    "question_text": "Tyg point charges 8 uC and —2 uC are located at z = 2 cm and @ = 4 cm, respectively on the z- axis. The ratio of electric flux due to these charges through two spheres of radii 3 cm and 5 cm with their centers at the originis (4. Bl 3.4 ©4:3 ©y.5",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 90,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": ". . enclosed\nAccording to Gauss's law, the electric flux through a closed surface is given by ® = md\n3\nFor the first sphere of radius ry = 3 cm centered at the origin, only the charge at = 2 cm is enclosed.\nGeackant 1 = BUC\nB= 8uC\n2)\nFor the second sphere of radius r; = 5 cm centered at the origin, both charges at z = 2 cm and z = 4 cm are.\nenclosed.\nGeackaseiz = BC — 2C = 6uC\na 86\nE)\nThe ratio of the electric flux is:\nA aiod\n® 6 3",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 288,
+    "page": 163,
+    "question_text": "enclosed According to Gauss's law, the electric flux through a closed surface is given by ® = md 3 For the first sphere of radius ry = 3 cm centered at the origin, only the charge at = 2 cm is enclosed. Geackant 1 = BUC B= 8uC 2) For the second sphere of radius r; = 5 cm centered at the origin, both charges at z = 2 cm and z = 4 cm are. enclosed. Geackaseiz = BC — 2C = 6uC a 86 E) The ratio of the electric flux is: A aiod ® 6 3",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Official Answer: C",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 289,
+    "page": 164,
+    "question_text": "Given below are two statements: one is labelled as Assertion A and the other is labelled as Reason R Assertion A: In electrostatics, a conductor does not store any net charge inside. Reason R: Inside the capacitor (with no dielectric medium), the free charge carriers, if placed between the plates of capacitor, experience force and drift. Choose the correct answer from the options given below",
+    "options": [
+      "Both A and Rare true and Ris the correct",
+      "Both A and R are true but R is NOT the correct explanation of A explanation of A",
+      "Als true but Ris false.",
+      "Ais false but Ris true [4 mks, ~1 for wrong answer] 2026 104 Age, 50.2)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "In electrostatics, the electric field Inside a conductor is zero. According to Gauss's law, § E + dif = = Since\nE = () everywhere inside the conductor, the net charge enclosed g;,, must be zero. Thus, a conductor does not\nstore any net charge inside its bulk, and any excess charge resides only on its surface. Assertion A is true.\nInside a capacitor with no dielectric medium, a uniform electric field exists between the plates. If free charge\ncarriers are placed in this region, they will experience an electrostatic force F — gE and will drift towards the.\nrespective oppositely charged plates. Reason R is true.\nAlthough both statements are factually correct, the behavior of charge carriers in the electric field of a capacitor\ndoes not explain why the net charge inside a conductor is zero in electrostatics. Therefore, both A and R are true\nbut R is NOT the correct explanation of A.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 290,
+    "page": 164,
+    "question_text": "electrostatics, the electric field Inside a conductor is zero. According to Gauss's law, § E + dif = = Since E = () everywhere inside the conductor, the net charge enclosed g;,, must be zero. Thus, a conductor does not store any net charge inside its bulk, and any excess charge resides only on its surface. Assertion A is true. Inside a capacitor with no dielectric medium, a uniform electric field exists between the plates. If free charge carriers are placed in this region, they will experience an electrostatic force F — gE and will drift towards the. respective oppositely charged plates. Reason R is true. Although both statements are factually correct, the behavior of charge carriers in the electric field of a capacitor does not explain why the net charge inside a conductor is zero in electrostatics. Therefore, both A and R are true but R is NOT the correct explanation of A.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Official Answer: D",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 291,
+    "page": 165,
+    "question_text": "Arigid dipole undergoes a simple harmonic motion about its centre in the presence of an electric field By = Eyz. If another electric field  — 2Ey(j + £) is introduced to the system, what will be the percentage change in the frequency of the oscillation (approximate)?",
+    "options": [
+      "730, (8) 635% (©) gage; ©) 53%",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "hah 1 [pE\nIrequency of oscillation of a rigid dipole in an electric field is given by f — = fra here piste colie\n=\nmoment, E is the magnitude of the electric field, and J is the moment of inertia.\nThis implies § oc E.\nThe initial electric field is EB; = Ey, so its magnitude is Ey = Ep.\nThe initial frequency is fy x Eq.\nWhen the second electric field E, = 2I5(j + £) Is introduced, the net electric field becomes.\nEu = E\\ + By = By 2B + 2E,3-\n‘The magnitude of the net electric field is E,.., = \\/Ej + (2E,)* + (2B)? = /E] + 4E] + dE] = 3.\nThe new frequency is fy x v/3E.\nThe percentage change in the frequency is given by aL «100%,\ni\nz=)\nSubstituting the values, we get ( *— — 1) x 100% = (v3 - 1) x 100%.\ning ge! ( VE x § )\nUsing /3 ~ 1.732, the percentage change is (1.732 — 1) x 100% = 73.2%.\n‘The approximate percentage change is 73%.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 292,
+    "page": 165,
+    "question_text": "1 [pE Irequency of oscillation of a rigid dipole in an electric field is given by f — = fra here piste colie = moment, E is the magnitude of the electric field, and J is the moment of inertia. This implies § oc E. The initial electric field is EB; = Ey, so its magnitude is Ey = Ep. The initial frequency is fy x Eq. When the second electric field E, = 2I5(j + £) Is introduced, the net electric field becomes. Eu = E\\ + By = By 2B + 2E,3- ‘The magnitude of the net electric field is E,.., = \\/Ej + (2E,)* + (2B)? = /E] + 4E] + dE] = 3. The new frequency is fy x v/3E. The percentage change in the frequency is given by aL «100%, i z=) Substituting the values, we get ( *— — 1) x 100% = (v3 - 1) x 100%. ing ge! ( VE x § ) Using /3 ~ 1.732, the percentage change is (1.732 — 1) x 100% = 73.2%. ‘The approximate percentage change is 73%.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Official Answer: A",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 293,
+    "page": 166,
+    "question_text": "4 particle of charge g and mass m is projected from origin with an initial velocity = ( fo. JS 24). There exists a uniform magnetic field 3 — B,2 and a space varying electric v2 V2 field E = Ege within the region 0 < z < L. After travelling a distance such that z-coordinate has changed from z = 0 to z = L, the change in the kinetic energy is",
+    "options": [
+      "(8) Boy a vogBy [2—e | A 2) ©) gE, (© Bi Loy fey (Bot mBe) (1 _ nary A A (4 marke, = for wrong answer] 2026 (05 Ap, SH 2)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "According to the work-energy theorem, the change in kinetic energy of a particle is equal to the total work done\nby all the forces acting on it.\nThe forces acting on the particle are the electric force and the magnetic force. The magnetic force is given by\nFy = qi x B). Since the magnetic force is always perpendicular to the velocity vector of the particle, the work\ndone by the magnetic field is zero.\nThe change in kinetic energy is equal to the work done by the electric field alone. The electric force is.\nFp = gE = ye Ma.\n‘The work done by the electric field as the particle moves from = Oto = L is given by\nWg = J Fp dF = [gE dz\nEvaluating the integral, we get.\nind *\n—\n= Bap\nWe= Tee)\nwy = B21\nThus, the change in kinetic energy is 2 — eM]\nAccording to the work-energy theorem, the change in kinetic energy of a particle is equal to the total work done",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 294,
+    "page": 166,
+    "question_text": "all the forces acting on it. The forces acting on the particle are the electric force and the magnetic force. The magnetic force is given by Fy = qi x B). Since the magnetic force is always perpendicular to the velocity vector of the particle, the work done by the magnetic field is zero. The change in kinetic energy is equal to the work done by the electric field alone. The electric force is. Fp = gE = ye Ma. ‘The work done by the electric field as the particle moves from = Oto = L is given by Wg = J Fp dF = [gE dz Evaluating the integral, we get. ind * — = Bap We= Tee) wy = B21 Thus, the change in kinetic energy is 2 — eM]",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Official Answer: B",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 295,
+    "page": 167,
+    "question_text": "p thin half ring of radius 35 cm is uniformly charged with a total charge of Q coulomb. If the magnitude of the electric field at centre of the half ring is 100 V/m, then the value of Qis nC. { €o = 8.85 x 107\"? C¥/Nm? and 7 = 3.14) W214 8) 5.44 ©) 3.95 © 7 {4 mars, 1 fo a wrong answer] 2026 (08 Age, SHI)",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "‘The electric field at the center of a uniformly charged half ring Is given by;\nFt\n3\nwhere ) = 2. isthe linear charge density.\n*R\n‘Substituting A, we get:\np29 __0 __Q\nTAR dnarR aR?\nRearranging for Q:\nQ=2aRE\nGiven values:\nE = 100 Vim\nR=35cm=0.35m\n€ = 8.85 x 107 C¥Nm*\nEat]\n‘Substituting the values:\nQ =2 x (3.14) x 8.85 x 10 x (0.35)* x 100\nQ=2 x 0.8596 x 8.85 x 10° x 0.1225 x 100\nQ~2378x10 Mc\nQ~214x10°C=214nC\n‘The electric field at the center of a uniformly charged half ring Is given by;\nFt\n3\nwhere ) = 2. isthe linear charge density.\n*R\n‘Substituting A, we get:\np29 __0 __Q",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 296,
+    "page": 167,
+    "question_text": "dnarR aR? Rearranging for Q: Q=2aRE Given values: E = 100 Vim R=35cm=0.35m € = 8.85 x 107 C¥Nm* Eat] ‘Substituting the values: Q =2 x (3.14) x 8.85 x 10 x (0.35)* x 100 Q=2 x 0.8596 x 8.85 x 10° x 0.1225 x 100 Q~2378x10 Mc Q~214x10°C=214nC",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Official Answer: A",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 297,
+    "page": 168,
+    "question_text": "A three coulomb charge moves from the point (0, —2, 5) to the point (5, 1, 2) in an electric field expressed as Fi = 2zi + 3y*j + 4k NIC. The work done in moving the chargeis J.",
+    "options": [
+      "(A)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The force experienced by the charge in the electric field is given by F = gE.\nGiven g = 3Cand E = 2zi + 3y*] + 4k NIC, the force is:\nF = 3(22i + 3% + 4k) = 6 + 0% + 12kN\nThe work done by the electric fieid in moving the charge is:\nW = [Fd = [2 Fdr + [J Fy + [7 Fads\nSubstituting the limits from the initial point (0, 2, 5) to the final point (5, 1, 2):\nW = [6zde + [1 9% dy + [*12dz\nEvaluating each integral separately:\nJi 6rdz = [322]; = 3(5° - 0%) = 759\nJ 95tdy = [3°]\", = 31% — (~2)\") = 3(1 - (~8)) = 3(9) = 279\nJ 1202 = (12: = 12(2 - (5) = 12(7) = 84\nTotal work done W = 75 + 27 + 84 = 186 J.",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 298,
+    "page": 168,
+    "question_text": "force experienced by the charge in the electric field is given by F = gE. Given g = 3Cand E = 2zi + 3y*] + 4k NIC, the force is: F = 3(22i + 3% + 4k) = 6 + 0% + 12kN The work done by the electric fieid in moving the charge is: W = [Fd = [2 Fdr + [J Fy + [7 Fads Substituting the limits from the initial point (0, 2, 5) to the final point (5, 1, 2): W = [6zde + [1 9% dy + [*12dz Evaluating each integral separately: Ji 6rdz = [322]; = 3(5° - 0%) = 759 J 95tdy = [3°]\", = 31% — (~2)\") = 3(1 - (~8)) = 3(9) = 279 J 1202 = (12: = 12(2 - (5) = 12(7) = 84 Total work done W = 75 + 27 + 84 = 186 J.",
+    "options": [],
+    "correct_option": null,
+    "correct_index": 0,
+    "correct_indices": [],
+    "numeric_answer": 186,
+    "question_type": "numerical",
+    "difficulty": "hard",
+    "marks": 4,
+    "negative_marks": 0,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Official Answer: 186",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 299,
+    "page": 169,
+    "question_text": "pe electric potential as a function of z, y is given by V = 5(z* — 3%) V. The electric field at a point (2,3)mis_____ Vm.",
+    "options": [
+      "(03 + 309) © (20i - 305) (©) (20i + 45) ©) (_4i 165)",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "easy",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "The electric field E is given by the negative gradient of the electric potential V:\n2 wv. av.\na)\nGiven V = 5(x? — y?), we find the partial derivatives:\nav\nGo =x\nav\n= = 10,\nou y\nSubstituting these into the expression for E\nE = ~(10zi - 10yj) = —10zi + 109)\nAtthe point (2,3), substitute z = 2 and y = 3:\nBE = ~10(2)i + 10(3) = —20i + 30 Vim",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  },
+  {
+    "q_num": 300,
+    "page": 169,
+    "question_text": "electric field E is given by the negative gradient of the electric potential V: 2 wv. av.",
+    "options": [
+      "Given V = 5(x? — y?), we find the partial derivatives: av Go =x av = = 10, ou y Substituting these into the expression for E E = ~(10zi - 10yj) = —10zi + 109) Atthe point (2,3), substitute z = 2 and y = 3: BE = ~10(2)i + 10(3) = —20i + 30 Vim",
+      "(B)",
+      "(C)",
+      "(D)"
+    ],
+    "correct_option": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "numeric_answer": null,
+    "question_type": "single_choice",
+    "difficulty": "medium",
+    "marks": 4,
+    "negative_marks": 1,
+    "image_url": null,
+    "solution_image_url": null,
+    "solution": "Official Answer: B",
+    "exam_type": "JEE",
+    "subject": "Physics",
+    "chapter": "Electrostatics"
+  }
+];
