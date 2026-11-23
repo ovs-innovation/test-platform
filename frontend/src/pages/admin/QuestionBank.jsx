@@ -170,7 +170,7 @@ export default function AdminQuestionBank() {
     try {
       const saved = localStorage.getItem('edvedum_qb_exam_type');
       if (saved && ['NEET', 'JEE'].includes(saved.toUpperCase())) return saved.toUpperCase();
-    } catch (_) {}
+    } catch (_) { }
     return 'NEET';
   });
   const [category, setCategory] = useState(() => {
@@ -188,7 +188,7 @@ export default function AdminQuestionBank() {
       if (saved && ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'All'].includes(saved)) {
         return saved;
       }
-    } catch (_) {}
+    } catch (_) { }
     return 'Physics';
   });
   const [questions, setQuestions] = useState(() => {
@@ -202,7 +202,7 @@ export default function AdminQuestionBank() {
       };
       const cached = questionBankService.getCached(initialCat, extra);
       if (cached && Array.isArray(cached) && cached.length > 0) return cached;
-    } catch (_) {}
+    } catch (_) { }
     return [];
   });
   const [loading, setLoading] = useState(() => {
@@ -216,7 +216,7 @@ export default function AdminQuestionBank() {
       };
       const cached = questionBankService.getCached(initialCat, extra);
       if (cached && Array.isArray(cached) && cached.length > 0) return false;
-    } catch (_) {}
+    } catch (_) { }
     return true;
   });
   const [saving, setSaving] = useState(false);
@@ -427,6 +427,7 @@ export default function AdminQuestionBank() {
     }
 
     if (activeSubj === 'physics') {
+      if (/basic\s*math/i.test(trimmed)) return 'Basic Maths';
       if (/unit(s)?\s*(and|&)?\s*dimension(s)?/i.test(trimmed)) return 'Units and dimensions';
       if (/unit(s)?\s*(and|&)?\s*measurement(s)?/i.test(trimmed)) return 'Units and Measurement';
       if (/^\s*electrostatics?\s*$/i.test(trimmed)) return 'Electrostatics';
@@ -785,6 +786,12 @@ export default function AdminQuestionBank() {
     if (activeSubj === 'physics') {
       const raw = (q.chapter_name || q.chapter || '').trim();
       const chId = Number(q.chapter_id);
+
+      if (
+        /basic\s*math/i.test(raw) ||
+        chId === 269 ||
+        chId === 220
+      ) return 'Basic Maths';
 
       if (
         /unit(s)?\s*(and|&)?\s*dimension(s)?/i.test(raw) ||
@@ -1736,10 +1743,10 @@ export default function AdminQuestionBank() {
     const match = opt?.id
       ? opt
       : subjectsList.find(
-          (s) =>
-            (s.id && String(s.id) === String(val)) ||
-            (s.name && s.name.toLowerCase() === String(val).toLowerCase())
-        );
+        (s) =>
+          (s.id && String(s.id) === String(val)) ||
+          (s.name && s.name.toLowerCase() === String(val).toLowerCase())
+      );
 
     const targetSubjId = match?.id || '';
     setPdfSubjectId(targetSubjId);
@@ -1884,7 +1891,7 @@ export default function AdminQuestionBank() {
     setExamType(newType);
     try {
       localStorage.setItem('edvedum_qb_exam_type', newType);
-    } catch (_) {}
+    } catch (_) { }
 
     let nextCategory = category;
     if (newType === 'NEET' && nextCategory === 'Mathematics') {
@@ -2119,8 +2126,8 @@ export default function AdminQuestionBank() {
     const qSubject = (q.subject && String(q.subject).toUpperCase() !== 'PYQ')
       ? q.subject
       : (isPyq
-          ? (pyqSubject && pyqSubject !== 'All' ? pyqSubject : (q.category && String(q.category).toUpperCase() !== 'PYQ' ? q.category : ''))
-          : (q.category || ''));
+        ? (pyqSubject && pyqSubject !== 'All' ? pyqSubject : (q.category && String(q.category).toUpperCase() !== 'PYQ' ? q.category : ''))
+        : (q.category || ''));
 
     const rawHtmlImgMatch = typeof q.question_text === 'string' ? q.question_text.match(/<img[^>]+src=["']([^"']+)["'][^>]*\/?>/i) : null;
     const rawMdImgMatch = typeof q.question_text === 'string' ? q.question_text.match(/!\[.*?\]\(((?:https?:\/\/|\/)[^)]+)\)/i) : null;
@@ -2254,8 +2261,8 @@ export default function AdminQuestionBank() {
       const targetSubject = (form.subject && String(form.subject).toUpperCase() !== 'PYQ')
         ? form.subject
         : (editing?.subject && String(editing.subject).toUpperCase() !== 'PYQ'
-            ? editing.subject
-            : (category !== 'PYQ' && category !== 'All' ? category : (pyqSubject !== 'All' ? pyqSubject : '')));
+          ? editing.subject
+          : (category !== 'PYQ' && category !== 'All' ? category : (pyqSubject !== 'All' ? pyqSubject : '')));
 
       let cleanQText = form.question_text?.trim() || '';
       if (form.image_url) {
@@ -2618,17 +2625,15 @@ export default function AdminQuestionBank() {
             <button
               type="button"
               onClick={() => handleExamTypeSwitch('NEET')}
-              className={`px-4 py-2 rounded-lg text-xs font-black transition-all duration-200 flex items-center gap-2 cursor-pointer ${
-                examType === 'NEET'
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 ring-1 ring-blue-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-900'
-              }`}
+              className={`px-4 py-2 rounded-lg text-xs font-black transition-all duration-200 flex items-center gap-2 cursor-pointer ${examType === 'NEET'
+                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 ring-1 ring-blue-400/40'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-900'
+                }`}
             >
               <span className="text-sm">🩺</span>
               <span>NEET Section</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${
-                examType === 'NEET' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-              }`}>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${examType === 'NEET' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                }`}>
                 Medical
               </span>
             </button>
@@ -2636,17 +2641,15 @@ export default function AdminQuestionBank() {
             <button
               type="button"
               onClick={() => handleExamTypeSwitch('JEE')}
-              className={`px-4 py-2 rounded-lg text-xs font-black transition-all duration-200 flex items-center gap-2 cursor-pointer ${
-                examType === 'JEE'
-                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-500/25 ring-1 ring-indigo-400/40'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-900'
-              }`}
+              className={`px-4 py-2 rounded-lg text-xs font-black transition-all duration-200 flex items-center gap-2 cursor-pointer ${examType === 'JEE'
+                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-500/25 ring-1 ring-indigo-400/40'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-900'
+                }`}
             >
               <span className="text-sm">⚙️</span>
               <span>JEE Section</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${
-                examType === 'JEE' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-              }`}>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${examType === 'JEE' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                }`}>
                 Engineering
               </span>
             </button>
@@ -2820,14 +2823,13 @@ export default function AdminQuestionBank() {
                   setPyqSubject(s);
                   try {
                     localStorage.setItem('edvedum_pyq_subject', s);
-                  } catch (_) {}
+                  } catch (_) { }
                   setSelectedChapter('all');
                 }}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition cursor-pointer ${
-                  pyqSubject === s
-                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xs'
-                    : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/80'
-                }`}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition cursor-pointer ${pyqSubject === s
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xs'
+                  : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/80'
+                  }`}
               >
                 {s === 'All' ? 'All Subjects' : s}
               </button>
@@ -4160,33 +4162,29 @@ export default function AdminQuestionBank() {
                   type="button"
                   onClick={() => handlePdfExamTypeChange('NEET')}
                   disabled={pdfUploading}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                    pdfExamType === 'NEET'
-                      ? 'bg-blue-600 text-white border-blue-500 shadow-sm shadow-blue-500/30 ring-1 ring-blue-400/40'
-                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
-                  }`}
+                  className={`px-3 py-2.5 rounded-xl border text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${pdfExamType === 'NEET'
+                    ? 'bg-blue-600 text-white border-blue-500 shadow-sm shadow-blue-500/30 ring-1 ring-blue-400/40'
+                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                    }`}
                 >
                   <span className="text-sm">🩺</span>
                   <span>NEET</span>
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                    pdfExamType === 'NEET' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
-                  }`}>Medical</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${pdfExamType === 'NEET' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                    }`}>Medical</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => handlePdfExamTypeChange('JEE')}
                   disabled={pdfUploading}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                    pdfExamType === 'JEE'
-                      ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm shadow-emerald-500/30 ring-1 ring-emerald-400/40'
-                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
-                  }`}
+                  className={`px-3 py-2.5 rounded-xl border text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${pdfExamType === 'JEE'
+                    ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm shadow-emerald-500/30 ring-1 ring-emerald-400/40'
+                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                    }`}
                 >
                   <span className="text-sm">⚙️</span>
                   <span>JEE</span>
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                    pdfExamType === 'JEE' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
-                  }`}>Engineering</span>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${pdfExamType === 'JEE' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                    }`}>Engineering</span>
                 </button>
               </div>
             </div>
