@@ -111,7 +111,7 @@ export async function getAssessmentRankingData(assessmentId, candidateId = null)
     const qCount = qStatsRes.rows[0]?.q_count || 0;
     const qTotalMarks = qStatsRes.rows[0]?.total_marks || 0;
     const isNeet = isNeetTest(assessmentMeta);
-    const isFullNeet = isNeet && (qCount >= 180 || Number(assessmentMeta.max_marks) === 720 || qTotalMarks === 720);
+    const isFullNeet = isNeet && qCount >= 180 && (Number(assessmentMeta.max_marks) === 720 || qTotalMarks === 720);
 
     // Fetch all eligible first valid attempts for this assessment
     const eligibleQuery = `
@@ -277,7 +277,7 @@ export async function syncAssessmentRankings(assessmentId) {
     const qCount = qStatsRes.rows[0]?.q_count || 0;
     const qTotalMarks = qStatsRes.rows[0]?.total_marks || 0;
     const isNeet = isNeetTest(assessmentMeta);
-    const isFullNeet = isNeet && (qCount >= 180 || Number(assessmentMeta.max_marks) === 720 || qTotalMarks === 720);
+    const isFullNeet = isNeet && qCount >= 180 && (Number(assessmentMeta.max_marks) === 720 || qTotalMarks === 720);
 
     if (isFullNeet) {
       const scoreRows = await query(

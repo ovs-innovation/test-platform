@@ -276,7 +276,7 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       });
     }
 
-    const isFullNeetSubmit = isNeet && (totalMarks === 720 || questionsRes.rows.length >= 180);
+    const isFullNeetSubmit = isNeet && questionsRes.rows.length >= 180 && totalMarks === 720;
     let initRank = null;
     let initPercentile = null;
     let initRankRange = null;
@@ -1130,6 +1130,11 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   // Compute live ranking data: participant count, ranking availability, rank, percentile, ranking status
   const rankingData = await getAssessmentRankingData(attempt.assessment_id, attempt.candidate_id);
 
+  const isFullNeet = isNeetAssessment && questionsRes.rows.length >= 180 && (
+    Number(formattedReport?.test?.totalMarks) === 720 ||
+    Boolean(formattedReport?.neetBreakdown?.isFullNeet)
+  );
+
   // Auto-correct any previously stored score that missed negative marking deduction or had hardcoded 720
   if (rawScore) {
     let correctedMarks = null;
@@ -1142,7 +1147,7 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       const calculatedMarks = Math.max(0, (Number(rawScore.correct_count) * (isJee ? 4 : 4)) - (Number(rawScore.wrong_count) * negPenalty));
       if (Number(rawScore.marks_obtained) > calculatedMarks) {
         correctedMarks = calculatedMarks;
-        const total = Number(rawScore.total_marks) || formattedReport?.overall?.totalMarks || 720;
+        const total = Number(rawScore.total_marks) || formattedReport?.overall?.totalMarks || (questionsRes.rows.length * 4) || 720;
         correctedPercentage = Number(((calculatedMarks / total) * 100).toFixed(2));
       }
     }
@@ -1154,10 +1159,22 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       const finalMarks = correctedMarks !== null ? correctedMarks : Number(rawScore.marks_obtained);
       const finalTotal = resolvedTotalMarks > 0 ? resolvedTotalMarks : Number(rawScore.total_marks);
       const finalPct = finalTotal > 0 ? Number(((finalMarks / finalTotal) * 100).toFixed(2)) : 0;
-      await query(
-        'UPDATE scores SET marks_obtained = $1, total_marks = $2, percentage = $3 WHERE id = $4',
-        [finalMarks, finalTotal, finalPct, rawScore.id]
-      );
+      const clearNeetRank = !isFullNeet && (rawScore.predicted_rank_range != null || (rawScore.rank != null && Number(rawScore.rank) > 10000));
+      if (clearNeetRank) {
+        await query(
+          'UPDATE scores SET marks_obtained = $1, total_marks = $2, percentage = $3, rank = NULL, percentile = NULL, rank_range = NULL, predicted_rank_range = NULL WHERE id = $4',
+          [finalMarks, finalTotal, finalPct, rawScore.id]
+        );
+        rawScore.rank = null;
+        rawScore.percentile = null;
+        rawScore.rank_range = null;
+        rawScore.predicted_rank_range = null;
+      } else {
+        await query(
+          'UPDATE scores SET marks_obtained = $1, total_marks = $2, percentage = $3 WHERE id = $4',
+          [finalMarks, finalTotal, finalPct, rawScore.id]
+        );
+      }
       rawScore.marks_obtained = finalMarks;
       rawScore.total_marks = finalTotal;
       rawScore.percentage = finalPct;
@@ -1168,12 +1185,6 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       }
     }
   }
-
-  const isFullNeet = isNeetAssessment && (
-    Number(formattedReport?.test?.totalMarks) === 720 ||
-    questionsRes.rows.length >= 180 ||
-    Boolean(formattedReport?.neetBreakdown?.isFullNeet)
-  );
 
   if (isFullNeet && rankingData) {
     const effectiveMarks = rawScore?.marks_obtained ?? formattedReport?.overall?.marks ?? 0;

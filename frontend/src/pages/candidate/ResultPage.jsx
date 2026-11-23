@@ -1204,26 +1204,33 @@ export default function ResultPage() {
                         NEET UG Pattern
                       </span>
                       <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
-                        Section-wise Evaluation (720 Marks Max)
+                        {isFullNeetExam ? 'Section-wise Evaluation (720 Marks Max)' : `Section-wise Evaluation (${displayTotalMarks} Marks Max)`}
                       </h3>
                     </div>
                     <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
-                      Section A: 35 Compulsory (+4, -1) · Section B: Strictly first 10 attempted evaluated (+4, -1)
+                      {isFullNeetExam
+                        ? 'Section A: 35 Compulsory (+4, -1) · Section B: Strictly first 10 attempted evaluated (+4, -1)'
+                        : 'Authentic NEET Pattern evaluation (+4 for correct, -1 for wrong, 0 for unattempted)'}
                     </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Total Evaluated Qs:</span>
-                    <p className="text-sm font-black text-blue-700 dark:text-blue-300">Max 180 / 200</p>
+                    <p className="text-sm font-black text-blue-700 dark:text-blue-300">
+                      {isFullNeetExam ? 'Max 180 / 200' : `${solutions?.length || Math.round(displayTotalMarks / 4) || 0} Total Qs`}
+                    </p>
                   </div>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                   {['Physics', 'Chemistry', 'Botany', 'Zoology'].map((subj) => {
                     const subjData = neetSectionAnalytics?.[subj] || {};
-                    const secA = subjData?.sectionA || { maxMarks: 140, totalQuestions: 35, attempted: 0, correct: 0, incorrect: 0, marks: 0 };
-                    const secB = subjData?.sectionB || { maxMarks: 40, totalQuestions: 15, maxAttemptAllowed: 10, totalAttempted: 0, evaluatedAttempted: 0, correct: 0, incorrect: 0, marks: 0 };
+                    const fallbackSubjMax = isFullNeetExam ? 180 : Math.round(displayTotalMarks / 4);
+                    const secA = subjData?.sectionA || { maxMarks: subjData?.totalMarks || fallbackSubjMax, totalQuestions: subjData?.totalQuestions || Math.round(fallbackSubjMax / 4), attempted: 0, correct: 0, incorrect: 0, marks: 0 };
+                    const secB = subjData?.sectionB || { maxMarks: 0, totalQuestions: 0, maxAttemptAllowed: 0, totalAttempted: 0, evaluatedAttempted: 0, correct: 0, incorrect: 0, marks: 0 };
                     const totalSubjMarks = Number(subjData?.marksObtained ?? ((Number(secA?.marks) || 0) + (Number(secB?.marks) || 0)));
-                    const subjPct = Math.round((totalSubjMarks / 180) * 100) || 0;
+                    const subjMax = Number(subjData?.totalMarks) || ((Number(secA?.maxMarks) || 0) + (Number(secB?.maxMarks) || 0)) || fallbackSubjMax;
+                    const subjPct = subjMax > 0 ? Math.round((totalSubjMarks / subjMax) * 100) : 0;
+                    const hasSecB = Boolean(secB && (secB.totalQuestions > 0 || secB.totalAttempted > 0));
 
                     return (
                       <div
@@ -1234,7 +1241,7 @@ export default function ResultPage() {
                           <div>
                             <p className="text-sm font-black text-slate-900 dark:text-white">{subj}</p>
                             <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">
-                              {totalSubjMarks} <span className="text-[10px] text-slate-400">/ 180 Marks</span>
+                              {totalSubjMarks} <span className="text-[10px] text-slate-400">/ {subjMax} Marks</span>
                             </p>
                           </div>
                           <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded-lg border ${
@@ -1251,31 +1258,33 @@ export default function ResultPage() {
                         {/* Section A metrics */}
                         <div className="rounded-xl bg-blue-50/50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40 p-2.5 text-xs space-y-1">
                           <div className="flex items-center justify-between font-bold text-blue-950 dark:text-blue-200">
-                            <span>Section A (35 Qs)</span>
-                            <span className="text-blue-700 dark:text-blue-400">{(secA?.marks ?? 0)} / 140</span>
+                            <span>{hasSecB ? `Section A (${secA?.totalQuestions || 35} Qs)` : `All Questions (${secA?.totalQuestions || (subjMax / 4)} Qs)`}</span>
+                            <span className="text-blue-700 dark:text-blue-400">{(secA?.marks ?? 0)} / {secA?.maxMarks || (hasSecB ? 140 : subjMax)}</span>
                           </div>
                           <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
-                            <span>Attempted: <strong>{secA?.attempted ?? 0}</strong> / 35</span>
+                            <span>Attempted: <strong>{secA?.attempted ?? 0}</strong> / {secA?.totalQuestions || (hasSecB ? 35 : (subjMax / 4))}</span>
                             <span>✓ {secA?.correct ?? 0} · ✗ {secA?.incorrect ?? 0}</span>
                           </div>
                         </div>
 
-                        {/* Section B metrics */}
-                        <div className="rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 p-2.5 text-xs space-y-1">
-                          <div className="flex items-center justify-between font-bold text-amber-950 dark:text-amber-200">
-                            <span>Section B (Any 10)</span>
-                            <span className="text-amber-700 dark:text-amber-400">{(secB?.marks ?? 0)} / 40</span>
+                        {/* Section B metrics if applicable */}
+                        {hasSecB && (
+                          <div className="rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 p-2.5 text-xs space-y-1">
+                            <div className="flex items-center justify-between font-bold text-amber-950 dark:text-amber-200">
+                              <span>Section B ({secB?.maxAttemptAllowed ? `Any ${secB.maxAttemptAllowed}` : 'Optional'})</span>
+                              <span className="text-amber-700 dark:text-amber-400">{(secB?.marks ?? 0)} / {secB?.maxMarks || 40}</span>
+                            </div>
+                            <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
+                              <span>Evaluated: <strong>{secB?.evaluatedAttempted ?? ((secB?.correct ?? 0) + (secB?.incorrect ?? 0))}</strong> / {secB?.maxAttemptAllowed || 10}</span>
+                              <span>✓ {secB?.correct ?? 0} · ✗ {secB?.incorrect ?? 0}</span>
+                            </div>
+                            {(secB?.totalAttempted ?? 0) > (secB?.maxAttemptAllowed || 10) && (
+                              <p className="text-[10px] text-rose-600 font-semibold pt-0.5">
+                                * {(secB?.totalAttempted ?? 0) - (secB?.maxAttemptAllowed || 10)} excess question(s) ignored as per rules
+                              </p>
+                            )}
                           </div>
-                          <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
-                            <span>Evaluated: <strong>{secB?.evaluatedAttempted ?? ((secB?.correct ?? 0) + (secB?.incorrect ?? 0))}</strong> / 10</span>
-                            <span>✓ {secB?.correct ?? 0} · ✗ {secB?.incorrect ?? 0}</span>
-                          </div>
-                          {(secB?.totalAttempted ?? 0) > 10 && (
-                            <p className="text-[10px] text-rose-600 font-semibold pt-0.5">
-                              * {(secB?.totalAttempted ?? 0) - 10} excess question(s) ignored as per rules
-                            </p>
-                          )}
-                        </div>
+                        )}
                       </div>
                     );
                   })}

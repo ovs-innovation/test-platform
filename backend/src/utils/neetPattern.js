@@ -124,7 +124,24 @@ export function resolveQuestionNeetMeta(q = {}, index = 0, totalQuestions = 180)
     finalSubject = fallbackSubject;
   }
 
-  const finalSection = explicitSection || (finalSubject === 'Botany' ? 'C' : (finalSubject === 'Zoology' ? 'D' : (finalSubject === 'Chemistry' ? 'B' : fallbackSection)));
+  // Determine whether this is an optional Section B question
+  let isSectionB = Boolean(q.is_section_b);
+  if (!isSectionB && actualTotal >= 190 && actualTotal <= 205) {
+    // Standard 200-question NTA NEET paper: questions 36-50 of each subject are Section B
+    if ((pos >= 36 && pos <= 50) || (pos >= 86 && pos <= 100) || (pos >= 136 && pos <= 150) || (pos >= 186 && pos <= 200)) {
+      isSectionB = true;
+    }
+  } else if (!isSectionB && explicitSection === 'B' && actualTotal >= 180 && !sectionRaw.includes('CHEM')) {
+    isSectionB = true;
+  }
+
+  fallbackSection = 'A';
+  if (isSectionB) {
+    fallbackSection = 'B';
+  } else if (actualTotal === 180) {
+    fallbackSection = finalSubject === 'Botany' ? 'C' : (finalSubject === 'Zoology' ? 'D' : (finalSubject === 'Chemistry' ? 'B' : 'A'));
+  }
+  const finalSection = explicitSection || fallbackSection;
 
   return {
     subject: finalSubject,
@@ -132,7 +149,7 @@ export function resolveQuestionNeetMeta(q = {}, index = 0, totalQuestions = 180)
     sectionTag: `Section-${finalSection}`,
     subjectQuestionNumber: subjectQNum,
     overallQuestionNumber: pos,
-    isSectionB: finalSection === 'B',
+    isSectionB,
   };
 }
 
@@ -602,8 +619,8 @@ export function evaluateNeetAttempt({
     for (const s of Object.keys(subjectStats)) {
       const st = subjectStats[s];
       st.sectionA = {
-        maxMarks: st.totalMarks || 180,
-        totalQuestions: st.totalQuestions || 45,
+        maxMarks: st.totalMarks !== undefined ? st.totalMarks : 0,
+        totalQuestions: st.totalQuestions !== undefined ? st.totalQuestions : 0,
         attempted: st.attempted,
         correct: st.correct,
         incorrect: st.incorrect,
@@ -632,7 +649,7 @@ export function evaluateNeetAttempt({
     }
 
     const explicitMaxMarks = Number(assessment?.max_marks || assessment?.total_marks || 0);
-    let maxMarks = 720;
+    let maxMarks;
     if (questions.length < 180) {
       maxMarks = (explicitMaxMarks > 0 && explicitMaxMarks !== 720)
         ? explicitMaxMarks
@@ -677,7 +694,7 @@ export function evaluateNeetAttempt({
   questions.forEach((q, idx) => {
     const meta = resolveQuestionNeetMeta(q, idx, questions.length);
     const subj = meta.subject;
-    const sec = meta.section;
+    const sec = meta.isSectionB ? 'B' : 'A';
 
     const item = {
       ...q,
@@ -832,14 +849,19 @@ export function evaluateNeetAttempt({
     secBUnattempted = Math.max(0, 10 - evaluatedSecBCount);
     totalUnattempted += secBUnattempted;
 
+    const secAMaxMarks = secA.reduce((sum, item) => sum + (Number(item.marks) || 4), 0);
+    const secBMaxAllowed = Math.min(10, secB.length);
+    const secBMaxMarks = secBMaxAllowed * 4;
+    const subjTotalMarks = secAMaxMarks + secBMaxMarks;
+
     subjectResults[subj] = {
       subject: subj,
-      totalMarks: 180,
+      totalMarks: subjTotalMarks,
       marksObtained: Math.max(0, Number((secAMarks + secBMarks).toFixed(2))),
       totalEvaluated: secA.length + evaluatedSecBCount, // Max 45
       sectionA: {
-        maxMarks: 140,
-        totalQuestions: secA.length || 35,
+        maxMarks: secAMaxMarks,
+        totalQuestions: secA.length,
         attempted: secACorrect + secAWrong,
         correct: secACorrect,
         incorrect: secAWrong,
@@ -847,9 +869,9 @@ export function evaluateNeetAttempt({
         marks: Number(secAMarks.toFixed(2)),
       },
       sectionB: {
-        maxMarks: 40,
-        totalQuestions: secB.length || 15,
-        maxAttemptAllowed: 10,
+        maxMarks: secBMaxMarks,
+        totalQuestions: secB.length,
+        maxAttemptAllowed: secBMaxAllowed,
         totalAttempted: secBAttemptedCount,
         evaluatedAttempted: evaluatedSecBCount,
         correct: secBCorrect,
@@ -879,16 +901,18 @@ export function evaluateNeetAttempt({
   const explicitMaxMarks = Number(assessment?.max_marks || assessment?.total_marks || 0);
   let totalPossibleMarks = 0;
   for (const subj of Object.keys(subjectResults)) {
-    const sr = subjectResults[subj];
-    totalPossibleMarks += ((sr.sectionA?.maxMarks || 0) + (sr.sectionB?.maxMarks || 0));
+    totalPossibleMarks += (subjectResults[subj].totalMarks || 0);
   }
-  let maxMarks = 720;
+  for (const item of otherQuestions) {
+    totalPossibleMarks += (Number(item.marks) || 4);
+  }
+  let maxMarks;
   if (questions.length < 180) {
     maxMarks = (explicitMaxMarks > 0 && explicitMaxMarks !== 720)
       ? explicitMaxMarks
       : (totalPossibleMarks || questions.reduce((sum, q) => sum + (Number(q.marks) || 4), 0) || (questions.length * 4) || 12);
   } else {
-    maxMarks = explicitMaxMarks > 0 ? explicitMaxMarks : 720;
+    maxMarks = explicitMaxMarks > 0 ? explicitMaxMarks : (totalPossibleMarks || 720);
   }
 
   const finalMarksObtained = Math.max(0, Number(totalMarksObtained.toFixed(2)));

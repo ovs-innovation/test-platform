@@ -158,7 +158,9 @@ export async function getOrSetCachedExamPaper(assessmentId) {
       solution_pdf_url: assessmentObj.solution_pdf_url || null,
       answer_key_url: assessmentObj.answer_key_url || null,
       is_neet: isNeet,
-      total_marks: isNeet ? 720 : (assessmentObj.total_marks || assessmentObj.max_marks || null),
+      total_marks: (sanitizedQuestions.length > 0 && sanitizedQuestions.length < 180)
+        ? (Number(assessmentObj.max_marks || assessmentObj.total_marks) || sanitizedQuestions.reduce((s, q) => s + (Number(q.marks) || 4), 0))
+        : (isNeet ? 720 : (assessmentObj.total_marks || assessmentObj.max_marks || null)),
       is_published: Boolean(assessmentObj.is_published),
     },
     sections: finalSections,
