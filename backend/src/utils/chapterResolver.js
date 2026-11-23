@@ -2387,10 +2387,13 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   }
 
   if (normCategory === 'physics' || !normCategory) {
+    if (/^\s*capacit/i.test(rawChapter) || /^\s*capacit/i.test(rawTopic)) {
+      return 'Capacitance';
+    }
     if (/^\s*electrostatics?\s*$/i.test(rawChapter) || /^\s*electrostatics?\s*$/i.test(rawTopic)) {
       return 'Electrostatics';
     }
-    if (/electrostatic/i.test(rawChapter) || /capacitan/i.test(rawChapter) || /electrostatic/i.test(rawTopic) || /capacitan/i.test(rawTopic)) {
+    if (/electrostatic/i.test(rawChapter) || /electrostatic/i.test(rawTopic)) {
       return 'Electrostatic Potential and Capacitance';
     }
     if (/moving charges/i.test(rawChapter) || /moving charges/i.test(rawTopic)) {

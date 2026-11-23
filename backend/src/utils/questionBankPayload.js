@@ -95,7 +95,7 @@ import { resolveStandardChapter } from './chapterResolver.js';
 
 export const normalizeQuestionBankPayload = (payload = {}) => {
     const questionType = payload.question_type || 'mcq';
-    const isIntegerType = questionType === 'integer' || questionType === 'numerical';
+    const isIntegerType = questionType === 'integer' || questionType === 'numerical' || questionType === 'numeric';
     const singleValue = payload.correct_index ?? payload.correct_option ?? payload.correctOption ?? null;
 
     const optionsProvided = payload.options !== undefined || payload.option_list !== undefined;

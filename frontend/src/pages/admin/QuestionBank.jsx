@@ -431,8 +431,8 @@ export default function AdminQuestionBank() {
       if (/unit(s)?\s*(and|&)?\s*dimension(s)?/i.test(trimmed)) return 'Units and dimensions';
       if (/unit(s)?\s*(and|&)?\s*measurement(s)?/i.test(trimmed)) return 'Units and Measurement';
       if (/^\s*electrostatics?\s*$/i.test(trimmed)) return 'Electrostatics';
-      if (/electrostatic/i.test(trimmed) || /capacitan/i.test(trimmed)) return 'Electrostatics';
-      if (/^\s*capacitors?\s*$/i.test(trimmed)) return 'Capacitor';
+      if (/^\s*capacit/i.test(trimmed)) return 'Capacitance';
+      if (/electrostatic/i.test(trimmed)) return 'Electrostatics';
       if (/moving charges/i.test(trimmed)) return 'Moving Charges and Magnetism';
       if (/magnetism and matter/i.test(trimmed)) return 'Magnetism and Matter';
       if (/electromagnetic induction/i.test(trimmed)) return 'Electromagnetic Induction';
@@ -906,9 +906,9 @@ export default function AdminQuestionBank() {
       ) return 'Vector';
 
       if (
-        /^\s*capacitors?\s*$/i.test(raw) ||
+        /capacit/i.test(raw) ||
         chId === 311
-      ) return 'Capacitor';
+      ) return 'Capacitance';
 
       if (
         chId === 194 ||
