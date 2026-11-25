@@ -230,8 +230,18 @@ export default function AdminAssessments() {
 
   const formatDateForInput = (dStr) => {
     if (!dStr) return '';
-    const str = String(dStr);
+    const str = String(dStr).trim();
     if (str.includes('T')) return str.split('T')[0];
+    const dmyMatch = str.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+    if (dmyMatch) {
+      const [, d, m, y] = dmyMatch;
+      return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+    }
+    const ymdMatch = str.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+    if (ymdMatch) {
+      const [, y, m, d] = ymdMatch;
+      return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+    }
     return str.slice(0, 10);
   };
 
@@ -264,7 +274,14 @@ export default function AdminAssessments() {
     try {
       const payload = {
         ...testForm,
+        test_date: formatDateForInput(testForm.test_date),
         class_level: testForm.class_level || null,
+        recommended_ebook_id: testForm.recommended_ebook_id && !isNaN(Number(testForm.recommended_ebook_id)) && Number(testForm.recommended_ebook_id) > 0
+          ? Number(testForm.recommended_ebook_id)
+          : null,
+        result_publish_time: testForm.result_publish_time && testForm.result_publish_time.trim() !== ''
+          ? testForm.result_publish_time
+          : null,
         is_live: Boolean(testForm.is_live),
         notify_enrolled: testForm.notify_enrolled !== false,
         max_marks: testForm.max_marks !== '' && testForm.max_marks !== null && !isNaN(Number(testForm.max_marks))

@@ -417,6 +417,61 @@ export const listTests = asyncHandler(async (req, res) => {
   res.json({ tests: enhancedRows });
 });
 
+function sanitizeDate(rawDate) {
+  if (!rawDate) return null;
+  const str = String(rawDate).trim();
+  if (!str) return null;
+
+  // Handle DD-MM-YYYY or DD/MM/YYYY (e.g. 22-11-2026 or 22/11/2026)
+  const dmyMatch = str.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+  if (dmyMatch) {
+    const [, d, m, y] = dmyMatch;
+    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+  }
+
+  // Handle ISO or YYYY-MM-DD
+  if (str.includes('T')) {
+    return str.split('T')[0];
+  }
+
+  const ymdMatch = str.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+  if (ymdMatch) {
+    const [, y, m, d] = ymdMatch;
+    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+  }
+
+  const parsed = new Date(str);
+  if (!isNaN(parsed.getTime())) {
+    return parsed.toISOString().split('T')[0];
+  }
+  return null;
+}
+
+function sanitizeTimestamp(rawTs) {
+  if (!rawTs) return null;
+  const str = String(rawTs).trim();
+  if (!str || str.toLowerCase() === 'none' || str.toLowerCase() === 'null') return null;
+  const parsed = new Date(str);
+  if (!isNaN(parsed.getTime())) {
+    return parsed.toISOString();
+  }
+  return null;
+}
+
+function sanitizeTime(rawTime, defaultVal = null) {
+  if (!rawTime) return defaultVal;
+  const str = String(rawTime).trim();
+  if (!str) return defaultVal;
+  if (str.length === 5) return `${str}:00`;
+  return str.slice(0, 8);
+}
+
+function sanitizeInt(val) {
+  if (val === undefined || val === null || val === '') return null;
+  const num = Number(val);
+  return !isNaN(num) && Number.isFinite(num) && num > 0 ? Math.floor(num) : null;
+}
+
 /**
  * 2. POST /api/admin/tests
  * Create a new test
@@ -446,6 +501,15 @@ export const createTest = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('Missing required test fields (test_name, test_type, test_date, start_time, end_time, duration_minutes)');
   }
 
+  const cleanDate = sanitizeDate(test_date) || String(test_date).split('T')[0];
+  const cleanStartTime = sanitizeTime(start_time, '09:00:00');
+  const cleanEndTime = sanitizeTime(end_time, '12:00:00');
+  const cleanDuration = sanitizeInt(duration_minutes) || 180;
+  const cleanEbookId = sanitizeInt(recommended_ebook_id);
+  const cleanResultPublishTime = sanitizeTimestamp(result_publish_time);
+  const cleanAvailableFrom = sanitizeTimestamp(available_from);
+  const cleanAvailableUntil = sanitizeTimestamp(available_until);
+
   // In JEE/NEET CBT exams, max marks are optional and automatically determined by questions or default standard patterns (720 for NEET, 300 for JEE)
   const resolvedMaxMarks = (max_marks !== undefined && max_marks !== null && max_marks !== '' && !isNaN(Number(max_marks)) && Number(max_marks) > 0)
     ? Number(max_marks)
@@ -465,19 +529,19 @@ export const createTest = asyncHandler(async (req, res) => {
         test_name,
         test_type,
         class_level || null,
-        test_date,
-        start_time,
-        end_time,
-        duration_minutes,
+        cleanDate,
+        cleanStartTime,
+        cleanEndTime,
+        cleanDuration,
         syllabus || null,
         resolvedMaxMarks,
         Boolean(is_published),
         is_published ? 'published' : 'draft',
-        result_publish_time || null,
+        cleanResultPublishTime,
         solution_pdf_url || null,
-        recommended_ebook_id ? parseInt(recommended_ebook_id, 10) : null,
-        available_from || null,
-        available_until || null,
+        cleanEbookId,
+        cleanAvailableFrom,
+        cleanAvailableUntil,
         resolvedIsLive
       ]
     );
@@ -639,9 +703,15 @@ export const updateTest = asyncHandler(async (req, res) => {
   const check = await query('SELECT id, recommended_ebook_id, test_name, title FROM tests WHERE id = $1 AND COALESCE(is_deleted, FALSE) = FALSE', [id]);
   if (check.rowCount === 0) throw ApiError.notFound('Test not found');
 
-  const cleanDate = test_date ? String(test_date).split('T')[0] : null;
-  const cleanDuration = duration_minutes !== undefined && duration_minutes !== null ? parseInt(duration_minutes, 10) : null;
-  const cleanMarks = max_marks !== undefined && max_marks !== null && max_marks !== '' && !isNaN(Number(max_marks)) ? parseInt(max_marks, 10) : null;
+  const cleanDate = sanitizeDate(test_date);
+  const cleanStartTime = start_time ? sanitizeTime(start_time) : null;
+  const cleanEndTime = end_time ? sanitizeTime(end_time) : null;
+  const cleanDuration = sanitizeInt(duration_minutes);
+  const cleanMarks = sanitizeInt(max_marks);
+  const cleanEbookId = sanitizeInt(recommended_ebook_id);
+  const cleanResultPublishTime = sanitizeTimestamp(result_publish_time);
+  const cleanAvailableFrom = sanitizeTimestamp(available_from);
+  const cleanAvailableUntil = sanitizeTimestamp(available_until);
 
   const result = await query(
     `UPDATE tests SET
@@ -673,21 +743,21 @@ export const updateTest = asyncHandler(async (req, res) => {
       test_name || null,
       test_type || null,
       cleanDate,
-      start_time || null,
-      end_time || null,
+      cleanStartTime,
+      cleanEndTime,
       cleanDuration,
       syllabus !== undefined ? syllabus : null,
       cleanMarks,
       is_published !== undefined ? Boolean(is_published) : null,
-      result_publish_time || null,
+      cleanResultPublishTime,
       solution_pdf_url !== undefined ? solution_pdf_url : null,
       question_paper_url !== undefined ? question_paper_url : null,
       answer_key_url !== undefined ? answer_key_url : null,
-      recommended_ebook_id ? parseInt(recommended_ebook_id, 10) : null,
-      available_from || null,
-      available_until || null,
+      cleanEbookId,
+      cleanAvailableFrom,
+      cleanAvailableUntil,
       req.body.is_live !== undefined ? Boolean(req.body.is_live) : null,
-      class_level !== undefined ? class_level : null
+      class_level !== undefined && class_level !== '' ? class_level : null
     ]
   );
 
@@ -709,7 +779,7 @@ export const updateTest = asyncHandler(async (req, res) => {
          class_level = COALESCE($7, class_level),
          updated_at = NOW()
      WHERE id = $1`,
-    [id, test_name || null, cleanDuration, test_type || null, is_published !== undefined ? Boolean(is_published) : null, updateViolations, class_level !== undefined ? class_level : null]
+    [id, test_name || null, cleanDuration, test_type || null, is_published !== undefined ? Boolean(is_published) : null, updateViolations, class_level !== undefined && class_level !== '' ? class_level : null]
   ).catch(() => {});
 
   syncFreeTestSeries(result.rows[0]).catch(() => { });
