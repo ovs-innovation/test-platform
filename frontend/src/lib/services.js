@@ -307,7 +307,7 @@ const getQbCacheKey = (category, extraParams = {}) => {
         sorted[k] = String(v).toLowerCase();
       }
     });
-  return `qb_v5_by_cat_${normCat}_${JSON.stringify(sorted)}`;
+  return `qb_v6_by_cat_${normCat}_${JSON.stringify(sorted)}`;
 };
 
 export const questionBankService = {
