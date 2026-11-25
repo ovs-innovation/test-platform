@@ -2435,6 +2435,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/dual\s*nature/i.test(rawChapter) || /dual\s*nature/i.test(rawTopic)) {
       return 'Dual Nature of Matter';
     }
+    if (/^\s*atomic\b/i.test(rawChapter) || /^\s*atoms?\b/i.test(rawChapter) || /^\s*atomic\b/i.test(rawTopic) || /^\s*atoms?\b/i.test(rawTopic)) {
+      return 'Atomic';
+    }
     if (/semiconductor/i.test(rawChapter) || /semiconductor/i.test(rawTopic)) {
       return 'Semiconductor';
     }

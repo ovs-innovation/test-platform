@@ -8,8 +8,14 @@ import { ALL_MOTION1D_PYQ_QUESTIONS } from './motion1d_pyq_questions_data.mjs';
 import { ALL_LOM_PYQ_QUESTIONS } from './lom_pyq_questions_data.mjs';
 import { ALL_COM_PYQ_QUESTIONS } from './com_pyq_questions_data.mjs';
 import { ALL_FLUIDS_PYQ_QUESTIONS } from './fluids_pyq_questions_data.mjs';
+import { ALL_ATOMIC_QUESTIONS } from './atomic_jee_questions_data.mjs';
 
 const CHAPTERS_DATA = [
+  {
+    name: 'Atomic',
+    aliases: ['atomic', 'atomic physics', 'atoms', 'atom'],
+    questions: ALL_ATOMIC_QUESTIONS,
+  },
   {
     name: 'Motion in two dimension',
     aliases: ['motion in two dimension', 'motion in 2d', 'motion in a plane'],
