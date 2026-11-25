@@ -37,20 +37,37 @@ import {
   GraduationCap,
   Layers,
   Stethoscope,
-  Compass
+  Compass,
+  Swords
 } from 'lucide-react';
 import { isTestLive } from '../../lib/testStatus.js';
 
 const TEST_TYPES = ['AIETS', 'EDVEDUM Battleground', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
-const EXAM_SECTIONS = ['All', 'NEET', 'JEE'];
+const EXAM_SECTIONS = ['All', 'NEET', 'JEE', 'Battleground'];
 const CLASS_LEVELS = ['Class 11', 'Class 12', 'Repeater'];
+
+export const isBattlegroundTest = (t) => {
+  if (!t) return false;
+  const type = String(t.test_type || '').toLowerCase();
+  const name = String(t.test_name || t.title || '').toLowerCase();
+  const exam = String(t.exam_type || '').toLowerCase();
+  return (
+    type.includes('battleground') ||
+    type.includes('booster') ||
+    name.includes('battleground') ||
+    name.includes('booster test') ||
+    exam.includes('battleground')
+  );
+};
 
 export const resolveTestExam = (t) => {
   if (!t) return 'NEET';
+  if (isBattlegroundTest(t)) return 'Battleground';
   if (t.exam_type) {
     const et = String(t.exam_type).toUpperCase();
     if (et.includes('JEE')) return 'JEE';
     if (et.includes('NEET')) return 'NEET';
+    if (et.includes('BATTLEGROUND')) return 'Battleground';
   }
   const text = `${t.test_name || ''} ${t.title || ''} ${t.test_type || ''} ${t.subject || ''} ${t.syllabus || ''}`.toLowerCase();
   if (/\b(jee|math|mathematics|iit|advanced|mains)\b/i.test(text)) return 'JEE';
@@ -80,6 +97,10 @@ export const resolveTestClass = (t) => {
 };
 
 export const resolveTestCategory = (t) => {
+  if (isBattlegroundTest(t)) {
+    const cl = resolveTestClass(t) || 'Class 12';
+    return `Battleground ${cl}`;
+  }
   const exam = resolveTestExam(t);
   const cl = resolveTestClass(t) || 'Class 12';
   return `${exam} ${cl}`;
@@ -214,48 +235,69 @@ export default function AdminAssessments() {
     let all = 0;
     const neet = { total: 0, class11: 0, class12: 0, repeater: 0 };
     const jee = { total: 0, class11: 0, class12: 0, repeater: 0 };
+    const battleground = { total: 0, class11: 0, class12: 0, repeater: 0 };
 
     tests.forEach((t) => {
       if (isPersonalStudentTest(t)) return;
       all++;
-      const exam = resolveTestExam(t);
       const cl = resolveTestClass(t) || 'Class 12';
+      const isBg = isBattlegroundTest(t);
 
-      if (exam === 'JEE') {
-        jee.total++;
-        if (cl === 'Class 11') jee.class11++;
-        else if (cl === 'Class 12') jee.class12++;
-        else if (cl === 'Repeater') jee.repeater++;
-        else jee.class12++;
+      if (isBg) {
+        battleground.total++;
+        if (cl === 'Class 11') battleground.class11++;
+        else if (cl === 'Class 12') battleground.class12++;
+        else if (cl === 'Repeater') battleground.repeater++;
+        else battleground.class12++;
       } else {
-        neet.total++;
-        if (cl === 'Class 11') neet.class11++;
-        else if (cl === 'Class 12') neet.class12++;
-        else if (cl === 'Repeater') neet.repeater++;
-        else neet.class12++;
+        const exam = resolveTestExam(t);
+        if (exam === 'JEE') {
+          jee.total++;
+          if (cl === 'Class 11') jee.class11++;
+          else if (cl === 'Class 12') jee.class12++;
+          else if (cl === 'Repeater') jee.repeater++;
+          else jee.class12++;
+        } else {
+          neet.total++;
+          if (cl === 'Class 11') neet.class11++;
+          else if (cl === 'Class 12') neet.class12++;
+          else if (cl === 'Repeater') neet.repeater++;
+          else neet.class12++;
+        }
       }
     });
 
-    return { all, neet, jee };
+    return { all, neet, jee, battleground };
   }, [tests]);
 
   const openCreateModal = () => {
     setEditingTest(null);
-    const initialExam = selectedSection === 'JEE' || selectedCategory.startsWith('JEE') ? 'JEE' : 'NEET';
+    let initialExam = selectedSection === 'JEE' || selectedCategory.startsWith('JEE') ? 'JEE' : 'NEET';
+    let initialType = 'AIETS';
+    let initialDuration = 180;
+    let initialMarks = initialExam === 'JEE' ? 300 : 720;
+
+    if (selectedSection === 'Battleground' || selectedCategory.startsWith('Battleground') || selectedCategory === 'BG_ALL') {
+      initialExam = 'Battleground';
+      initialType = 'EDVEDUM Battleground';
+      initialDuration = 60;
+      initialMarks = 60;
+    }
+
     let initialClass = 'Class 12';
     if (selectedCategory.includes('11')) initialClass = 'Class 11';
     else if (selectedCategory.toLowerCase().includes('repeater')) initialClass = 'Repeater';
 
     setTestForm({
       test_name: '',
-      test_type: 'AIETS',
+      test_type: initialType,
       exam_type: initialExam,
       class_level: initialClass,
       test_date: new Date().toISOString().split('T')[0],
       start_time: '09:00:00',
       end_time: '12:00:00',
-      duration_minutes: 180,
-      max_marks: initialExam === 'JEE' ? 300 : 720,
+      duration_minutes: initialDuration,
+      max_marks: initialMarks,
       max_violations: 3,
       assigned_to_type: 'all',
       assigned_to_id: '',
@@ -288,12 +330,12 @@ export default function AdminAssessments() {
 
   const openEditModal = (t) => {
     setEditingTest(t);
-    const resolvedExam = resolveTestExam(t);
+    const resolvedExam = isBattlegroundTest(t) ? 'Battleground' : resolveTestExam(t);
     const resolvedCl = resolveTestClass(t) || 'Class 12';
     setTestForm({
       test_name: t.test_name || t.title || '',
-      test_type: t.test_type || 'AIETS',
-      exam_type: t.exam_type || resolvedExam,
+      test_type: t.test_type || (isBattlegroundTest(t) ? 'EDVEDUM Battleground' : 'AIETS'),
+      exam_type: isBattlegroundTest(t) ? 'Battleground' : (t.exam_type || resolvedExam),
       class_level: t.class_level || resolvedCl,
       test_date: formatDateForInput(t.test_date),
       start_time: t.start_time ? String(t.start_time).slice(0, 8) : '09:00:00',
@@ -778,19 +820,24 @@ export default function AdminAssessments() {
       const cl = resolveTestClass(t) || 'Class 12';
       const cat = `${exam} ${cl}`;
 
-      // Section filtering (NEET vs JEE vs All)
-      if (selectedSection === 'NEET' && exam !== 'NEET') return false;
-      if (selectedSection === 'JEE' && exam !== 'JEE') return false;
+      // Section filtering (NEET vs JEE vs Battleground vs All)
+      if (selectedSection === 'NEET' && (exam !== 'NEET' || isBattlegroundTest(t))) return false;
+      if (selectedSection === 'JEE' && (exam !== 'JEE' || isBattlegroundTest(t))) return false;
+      if (selectedSection === 'Battleground' && !isBattlegroundTest(t)) return false;
 
       // Category filtering
-      if (selectedCategory === 'NEET_ALL' && exam !== 'NEET') return false;
-      if (selectedCategory === 'JEE_ALL' && exam !== 'JEE') return false;
-      if (selectedCategory === 'NEET Class 11' && cat !== 'NEET Class 11') return false;
-      if (selectedCategory === 'NEET Class 12' && cat !== 'NEET Class 12') return false;
-      if (selectedCategory === 'NEET Repeater' && cat !== 'NEET Repeater') return false;
-      if (selectedCategory === 'JEE Class 11' && cat !== 'JEE Class 11') return false;
-      if (selectedCategory === 'JEE Class 12' && cat !== 'JEE Class 12') return false;
-      if (selectedCategory === 'JEE Repeater' && cat !== 'JEE Repeater') return false;
+      if (selectedCategory === 'NEET_ALL' && (exam !== 'NEET' || isBattlegroundTest(t))) return false;
+      if (selectedCategory === 'JEE_ALL' && (exam !== 'JEE' || isBattlegroundTest(t))) return false;
+      if (selectedCategory === 'BG_ALL' && !isBattlegroundTest(t)) return false;
+      if (selectedCategory === 'NEET Class 11' && (cat !== 'NEET Class 11' || isBattlegroundTest(t))) return false;
+      if (selectedCategory === 'NEET Class 12' && (cat !== 'NEET Class 12' || isBattlegroundTest(t))) return false;
+      if (selectedCategory === 'NEET Repeater' && (cat !== 'NEET Repeater' || isBattlegroundTest(t))) return false;
+      if (selectedCategory === 'JEE Class 11' && (cat !== 'JEE Class 11' || isBattlegroundTest(t))) return false;
+      if (selectedCategory === 'JEE Class 12' && (cat !== 'JEE Class 12' || isBattlegroundTest(t))) return false;
+      if (selectedCategory === 'JEE Repeater' && (cat !== 'JEE Repeater' || isBattlegroundTest(t))) return false;
+      if (selectedCategory === 'Battleground Class 11' && (!isBattlegroundTest(t) || cl !== 'Class 11')) return false;
+      if (selectedCategory === 'Battleground Class 12' && (!isBattlegroundTest(t) || cl !== 'Class 12')) return false;
+      if (selectedCategory === 'Battleground Repeater' && (!isBattlegroundTest(t) || cl !== 'Repeater')) return false;
 
       const matchesSearch = (t.test_name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
                             (t.syllabus && t.syllabus.toLowerCase().includes(searchQuery.toLowerCase())) ||
@@ -945,6 +992,25 @@ export default function AdminAssessments() {
                         {categoryCounts.jee.total}
                       </span>
                     </button>
+
+                    {/* 3. BATTLEGROUND SECTION */}
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedSection('Battleground'); setSelectedCategory('BG_ALL'); }}
+                      className={`px-3.5 py-1.5 rounded-lg text-xs font-black transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                        selectedSection === 'Battleground'
+                          ? 'bg-amber-600 text-white shadow-sm shadow-amber-600/30 ring-2 ring-amber-500/20'
+                          : 'text-slate-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-amber-950/40'
+                      }`}
+                    >
+                      <Swords className="h-3.5 w-3.5 text-amber-300" />
+                      <span>Battleground Section</span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                        selectedSection === 'Battleground' ? 'bg-amber-700 text-amber-100' : 'bg-amber-100 dark:bg-amber-900/80 text-amber-800 dark:text-amber-200'
+                      }`}>
+                        {categoryCounts.battleground.total}
+                      </span>
+                    </button>
                   </div>
 
                   {/* Section Descriptor Tag */}
@@ -957,8 +1023,11 @@ export default function AdminAssessments() {
                       {selectedSection === 'JEE' && (
                         <span className="text-indigo-600 dark:text-indigo-400 font-black">JEE Engineering (Class 11, Class 12, Repeater)</span>
                       )}
+                      {selectedSection === 'Battleground' && (
+                        <span className="text-amber-600 dark:text-amber-400 font-black">EDVEDUM Battleground (Class 11, Class 12, Repeater)</span>
+                      )}
                       {selectedSection === 'All' && (
-                        <span>All Entrance Exams (NEET & JEE)</span>
+                        <span>All Entrance Exams (NEET, JEE & Battleground)</span>
                       )}
                     </span>
                   </div>
@@ -1125,6 +1194,87 @@ export default function AdminAssessments() {
                       </button>
                     </>
                   )}
+
+                  {/* Section Divider if viewing All */}
+                  {selectedSection === 'All' && (
+                    <span className="h-4 w-px bg-slate-300 dark:bg-slate-700 mx-1 shrink-0" />
+                  )}
+
+                  {/* Battleground Categories */}
+                  {(selectedSection === 'Battleground' || selectedSection === 'All') && (
+                    <>
+                      {selectedSection === 'Battleground' && (
+                        <button
+                          type="button"
+                          onClick={() => setSelectedCategory('BG_ALL')}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                            selectedCategory === 'BG_ALL'
+                              ? 'bg-amber-600 text-white shadow-xs'
+                              : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-amber-50 dark:hover:bg-amber-950/40'
+                          }`}
+                        >
+                          <Swords className="h-3.5 w-3.5" />
+                          <span>All Battleground</span>
+                          <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                            selectedCategory === 'BG_ALL' ? 'bg-amber-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                          }`}>
+                            {categoryCounts.battleground.total}
+                          </span>
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSection('Battleground'); setSelectedCategory('Battleground Class 11'); }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          selectedCategory === 'Battleground Class 11'
+                            ? 'bg-amber-600 text-white shadow-xs ring-1 ring-amber-500'
+                            : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-amber-50 dark:hover:bg-amber-950/40'
+                        }`}
+                      >
+                        <span>1. Battleground Class 11</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                          selectedCategory === 'Battleground Class 11' ? 'bg-amber-700 text-white' : 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400'
+                        }`}>
+                          {categoryCounts.battleground.class11}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSection('Battleground'); setSelectedCategory('Battleground Class 12'); }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          selectedCategory === 'Battleground Class 12'
+                            ? 'bg-amber-600 text-white shadow-xs ring-1 ring-amber-500'
+                            : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-amber-50 dark:hover:bg-amber-950/40'
+                        }`}
+                      >
+                        <span>2. Battleground Class 12</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                          selectedCategory === 'Battleground Class 12' ? 'bg-amber-700 text-white' : 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400'
+                        }`}>
+                          {categoryCounts.battleground.class12}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSection('Battleground'); setSelectedCategory('Battleground Repeater'); }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          selectedCategory === 'Battleground Repeater'
+                            ? 'bg-amber-600 text-white shadow-xs ring-1 ring-amber-500'
+                            : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-amber-50 dark:hover:bg-amber-950/40'
+                        }`}
+                      >
+                        <span>3. Battleground Repeater</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                          selectedCategory === 'Battleground Repeater' ? 'bg-amber-700 text-white' : 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400'
+                        }`}>
+                          {categoryCounts.battleground.repeater}
+                        </span>
+                      </button>
+                    </>
+                  )}
                 </div>
 
                 {/* Search & Select Dropdowns */}
@@ -1150,6 +1300,7 @@ export default function AdminAssessments() {
                           setSelectedCategory(val);
                           if (val.startsWith('NEET')) setSelectedSection('NEET');
                           else if (val.startsWith('JEE')) setSelectedSection('JEE');
+                          else if (val.startsWith('Battleground') || val === 'BG_ALL') setSelectedSection('Battleground');
                           else if (val === 'All') setSelectedSection('All');
                         }}
                         className="rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none w-full sm:w-auto"
@@ -1166,6 +1317,12 @@ export default function AdminAssessments() {
                           <option value="JEE Class 11">1. JEE Class 11 ({categoryCounts.jee.class11})</option>
                           <option value="JEE Class 12">2. JEE Class 12 ({categoryCounts.jee.class12})</option>
                           <option value="JEE Repeater">3. JEE Repeater ({categoryCounts.jee.repeater})</option>
+                        </optgroup>
+                        <optgroup label="── Battleground Section ──">
+                          <option value="BG_ALL">All Battleground Tests ({categoryCounts.battleground.total})</option>
+                          <option value="Battleground Class 11">1. Battleground Class 11 ({categoryCounts.battleground.class11})</option>
+                          <option value="Battleground Class 12">2. Battleground Class 12 ({categoryCounts.battleground.class12})</option>
+                          <option value="Battleground Repeater">3. Battleground Repeater ({categoryCounts.battleground.repeater})</option>
                         </optgroup>
                       </select>
                     </div>
@@ -1234,15 +1391,22 @@ export default function AdminAssessments() {
                                     {(t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') ? 'EDVEDUM Battleground' : t.test_type}
                                   </span>
                                   {/* Section & Category Badge */}
-                                  <span
-                                    className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
-                                      resolveTestExam(t) === 'JEE'
-                                        ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
-                                        : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
-                                    }`}
-                                  >
-                                    {resolveTestExam(t)} • {resolveTestClass(t)}
-                                  </span>
+                                  {isBattlegroundTest(t) ? (
+                                    <span className="bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-md text-[10px] font-black inline-flex items-center gap-1">
+                                      <Swords className="h-3 w-3 text-amber-500" />
+                                      Battleground • {resolveTestClass(t)}
+                                    </span>
+                                  ) : (
+                                    <span
+                                      className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
+                                        resolveTestExam(t) === 'JEE'
+                                          ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+                                          : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                                      }`}
+                                    >
+                                      {resolveTestExam(t)} • {resolveTestClass(t)}
+                                    </span>
+                                  )}
                                   <Link
                                     to={`/admin/simulator/${t.id}`}
                                     target="_blank"
@@ -1408,15 +1572,22 @@ export default function AdminAssessments() {
                               {(t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') ? 'EDVEDUM Battleground' : t.test_type}
                             </span>
                             {/* Section & Category Badge */}
-                            <span
-                              className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
-                                resolveTestExam(t) === 'JEE'
-                                  ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
-                                  : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
-                              }`}
-                            >
-                              {resolveTestExam(t)} • {resolveTestClass(t)}
-                            </span>
+                            {isBattlegroundTest(t) ? (
+                              <span className="bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-md text-[10px] font-black inline-flex items-center gap-1">
+                                <Swords className="h-3 w-3 text-amber-500" />
+                                Battleground • {resolveTestClass(t)}
+                              </span>
+                            ) : (
+                              <span
+                                className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
+                                  resolveTestExam(t) === 'JEE'
+                                    ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+                                    : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                                }`}
+                              >
+                                {resolveTestExam(t)} • {resolveTestClass(t)}
+                              </span>
+                            )}
                             {t.solution_pdf_url && (
                               <span className="text-[10px] font-extrabold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-200">
                                 Solution Uploaded
@@ -1730,8 +1901,18 @@ export default function AdminAssessments() {
                     onChange={(e) => {
                       const newExam = e.target.value;
                       const updates = { exam_type: newExam };
-                      if (!testForm.max_marks || testForm.max_marks === 720 || testForm.max_marks === 300) {
-                        updates.max_marks = newExam === 'JEE' ? 300 : 720;
+                      if (newExam === 'Battleground') {
+                        updates.test_type = 'EDVEDUM Battleground';
+                        updates.duration_minutes = 60;
+                        updates.max_marks = 60;
+                      } else if (newExam === 'JEE') {
+                        if (testForm.test_type === 'EDVEDUM Battleground') updates.test_type = 'AIETS';
+                        updates.max_marks = 300;
+                        updates.duration_minutes = 180;
+                      } else {
+                        if (testForm.test_type === 'EDVEDUM Battleground') updates.test_type = 'AIETS';
+                        updates.max_marks = 720;
+                        updates.duration_minutes = 180;
                       }
                       setTestForm({ ...testForm, ...updates });
                     }}
@@ -1739,6 +1920,7 @@ export default function AdminAssessments() {
                   >
                     <option value="NEET">NEET Section</option>
                     <option value="JEE">JEE Section</option>
+                    <option value="Battleground">Battleground Section</option>
                   </select>
                 </div>
 
@@ -1749,9 +1931,9 @@ export default function AdminAssessments() {
                     onChange={(e) => setTestForm({ ...testForm, class_level: e.target.value })}
                     className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold text-slate-900 dark:text-white"
                   >
-                    <option value="Class 11">{testForm.exam_type === 'JEE' ? '1. JEE Class 11' : '1. NEET Class 11'}</option>
-                    <option value="Class 12">{testForm.exam_type === 'JEE' ? '2. JEE Class 12' : '2. NEET Class 12'}</option>
-                    <option value="Repeater">{testForm.exam_type === 'JEE' ? '3. JEE Repeater' : '3. NEET Repeater'}</option>
+                    <option value="Class 11">{testForm.exam_type === 'Battleground' ? '1. Battleground Class 11' : (testForm.exam_type === 'JEE' ? '1. JEE Class 11' : '1. NEET Class 11')}</option>
+                    <option value="Class 12">{testForm.exam_type === 'Battleground' ? '2. Battleground Class 12' : (testForm.exam_type === 'JEE' ? '2. JEE Class 12' : '2. NEET Class 12')}</option>
+                    <option value="Repeater">{testForm.exam_type === 'Battleground' ? '3. Battleground Repeater' : (testForm.exam_type === 'JEE' ? '3. JEE Repeater' : '3. NEET Repeater')}</option>
                   </select>
                 </div>
 

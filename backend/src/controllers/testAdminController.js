@@ -270,7 +270,8 @@ export const listTests = asyncHandler(async (req, res) => {
   let resolvedClassLevel = class_level;
 
   if (category && category !== 'All') {
-    if (category.toUpperCase().includes('NEET')) resolvedExamType = 'NEET';
+    if (category.toUpperCase().includes('BATTLEGROUND') || category === 'BG_ALL') resolvedExamType = 'Battleground';
+    else if (category.toUpperCase().includes('NEET')) resolvedExamType = 'NEET';
     else if (category.toUpperCase().includes('JEE')) resolvedExamType = 'JEE';
 
     if (category.includes('11')) resolvedClassLevel = 'Class 11';
@@ -304,14 +305,24 @@ export const listTests = asyncHandler(async (req, res) => {
   }
 
   if (resolvedExamType && resolvedExamType !== 'All') {
-    if (resolvedExamType === 'JEE') {
+    if (resolvedExamType.toUpperCase() === 'BATTLEGROUND') {
       whereClauses.push(`(
-        UPPER(COALESCE(t.exam_type, '')) = 'JEE'
+        t.test_type ILIKE '%battleground%' 
+        OR t.test_type ILIKE '%booster%' 
+        OR t.test_name ILIKE '%battleground%' 
+        OR t.test_name ILIKE '%booster%'
+        OR UPPER(COALESCE(t.exam_type, '')) = 'BATTLEGROUND'
+      )`);
+    } else if (resolvedExamType === 'JEE') {
+      whereClauses.push(`(
+        (UPPER(COALESCE(t.exam_type, '')) = 'JEE'
         OR t.test_name ILIKE '%jee%'
         OR t.title ILIKE '%jee%'
         OR t.test_name ILIKE '%math%'
         OR t.title ILIKE '%math%'
-        OR t.subject ILIKE '%math%'
+        OR t.subject ILIKE '%math%')
+        AND t.test_type NOT ILIKE '%battleground%'
+        AND t.test_type NOT ILIKE '%booster%'
       )`);
     } else if (resolvedExamType === 'NEET') {
       whereClauses.push(`(
@@ -319,6 +330,8 @@ export const listTests = asyncHandler(async (req, res) => {
         AND t.test_name NOT ILIKE '%jee%'
         AND t.title NOT ILIKE '%jee%'
         AND (t.subject IS NULL OR t.subject NOT ILIKE '%math%')
+        AND t.test_type NOT ILIKE '%battleground%'
+        AND t.test_type NOT ILIKE '%booster%'
       )`);
     }
   }
@@ -535,8 +548,8 @@ export const createTest = asyncHandler(async (req, res) => {
   }
 
   const cleanExamType = exam_type
-    ? (String(exam_type).toUpperCase().includes('JEE') ? 'JEE' : 'NEET')
-    : (String(test_type || '').toUpperCase().includes('JEE') || String(test_name || '').toUpperCase().includes('JEE') ? 'JEE' : 'NEET');
+    ? (String(exam_type).toUpperCase().includes('BATTLEGROUND') ? 'Battleground' : (String(exam_type).toUpperCase().includes('JEE') ? 'JEE' : 'NEET'))
+    : (String(test_type || '').toUpperCase().includes('BATTLEGROUND') || String(test_type || '').toUpperCase().includes('BOOSTER') ? 'Battleground' : (String(test_type || '').toUpperCase().includes('JEE') || String(test_name || '').toUpperCase().includes('JEE') ? 'JEE' : 'NEET'));
   const cleanDate = sanitizeDate(test_date) || String(test_date).split('T')[0];
   const cleanStartTime = sanitizeTime(start_time, '09:00:00');
   const cleanEndTime = sanitizeTime(end_time, '12:00:00');
@@ -546,10 +559,10 @@ export const createTest = asyncHandler(async (req, res) => {
   const cleanAvailableFrom = sanitizeTimestamp(available_from);
   const cleanAvailableUntil = sanitizeTimestamp(available_until);
 
-  // In JEE/NEET CBT exams, max marks are optional and automatically determined by questions or default standard patterns (720 for NEET, 300 for JEE)
+  // In JEE/NEET/Battleground CBT exams, max marks are optional and automatically determined by questions or default standard patterns (720 for NEET, 300 for JEE, 60 for Battleground)
   const resolvedMaxMarks = (max_marks !== undefined && max_marks !== null && max_marks !== '' && !isNaN(Number(max_marks)) && Number(max_marks) > 0)
     ? Number(max_marks)
-    : (cleanExamType === 'NEET' ? 720 : 300);
+    : (cleanExamType === 'Battleground' ? 60 : (cleanExamType === 'JEE' ? 300 : 720));
 
   const test = await withTransaction(async (client) => {
     const resolvedIsLive = req.body.is_live !== undefined ? Boolean(req.body.is_live) : false;
@@ -770,7 +783,7 @@ export const updateTest = asyncHandler(async (req, res) => {
   if (check.rowCount === 0) throw ApiError.notFound('Test not found');
 
   const cleanExamType = exam_type !== undefined && exam_type !== null && exam_type !== ''
-    ? (String(exam_type).toUpperCase().includes('JEE') ? 'JEE' : 'NEET')
+    ? (String(exam_type).toUpperCase().includes('BATTLEGROUND') ? 'Battleground' : (String(exam_type).toUpperCase().includes('JEE') ? 'JEE' : 'NEET'))
     : null;
   const cleanDate = sanitizeDate(test_date);
   const cleanStartTime = start_time ? sanitizeTime(start_time) : null;
