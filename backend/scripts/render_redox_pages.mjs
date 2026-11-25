@@ -1,23 +1,28 @@
 import fs from 'fs';
 import path from 'path';
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { fileURLToPath } from 'url';
+import * as pdfjsLib from '../node_modules/pdfjs-dist/legacy/build/pdf.mjs';
 import { createCanvas } from '@napi-rs/canvas';
 
-const pdfPath = 'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1794388964729_94ea8611.pdf';
-const outputDir = path.join(process.cwd(), 'backend/scripts/redox_pages');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-if (!fs.existsSync(outputDir)) {
-  fs.mkdirSync(outputDir, { recursive: true });
+const PDF_PATH = 'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1795159833805_b7ef7cce.pdf';
+const OUTPUT_DIR = path.resolve(__dirname, 'redox_pages');
+
+if (!fs.existsSync(OUTPUT_DIR)) {
+  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
 async function renderPages() {
-  const data = new Uint8Array(fs.readFileSync(pdfPath));
+  console.log('Loading PDF from:', PDF_PATH);
+  const data = new Uint8Array(fs.readFileSync(PDF_PATH));
   const doc = await pdfjsLib.getDocument({ data }).promise;
-  console.log(`Total Pages: ${doc.numPages}`);
+  console.log(`Total pages: ${doc.numPages}`);
 
-  for (let pageNum = 1; pageNum <= doc.numPages; pageNum++) {
-    const page = await doc.getPage(pageNum);
-    const viewport = page.getViewport({ scale: 2.0 }); // High DPI
+  for (let i = 1; i <= doc.numPages; i++) {
+    const page = await doc.getPage(i);
+    const viewport = page.getViewport({ scale: 2.0 });
     const canvas = createCanvas(viewport.width, viewport.height);
     const ctx = canvas.getContext('2d');
 
@@ -26,11 +31,17 @@ async function renderPages() {
       viewport: viewport
     }).promise;
 
-    const outPath = path.join(outputDir, `page_${pageNum}.png`);
+    const pad = String(i).padStart(3, '0');
+    const outPath = path.join(OUTPUT_DIR, `page_${pad}.png`);
     fs.writeFileSync(outPath, canvas.toBuffer('image/png'));
-    console.log(`Rendered page ${pageNum} -> ${outPath} (${viewport.width}x${viewport.height})`);
+    if (i % 5 === 0 || i === doc.numPages) {
+      console.log(`Rendered page ${i}/${doc.numPages}`);
+    }
   }
+  console.log('Finished rendering all pages to:', OUTPUT_DIR);
 }
 
-renderPages().catch(console.error);
-
+renderPages().catch(err => {
+  console.error('Render error:', err);
+  process.exit(1);
+});

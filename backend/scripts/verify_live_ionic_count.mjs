@@ -1,54 +1,64 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 const LIVE_API = 'https://edvedum.com/api';
 
-async function main() {
+async function verifyLive() {
+  console.log('=== VERIFYING LIVE PRODUCTION QUESTIONS ===');
   const loginRes = await fetch(`${LIVE_API}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: 'admin@edvedum.com', password: 'Admin@12345' })
+    body: JSON.stringify({ email: 'admin@edvedum.com', password: 'Admin@12345' }),
   });
-  const loginData = await loginRes.json();
-  const token = loginData.token || loginData.accessToken || loginData.data?.token;
+  const { token } = await loginRes.json();
 
-  const res = await fetch(`${LIVE_API}/question-bank?category=PYQ&limit=3000`, {
+  const qbRes = await fetch(`${LIVE_API}/question-bank?category=Chemistry&exam_type=JEE&chapter_id=13&refresh=true&limit=300`, {
     headers: { Authorization: `Bearer ${token}` }
   });
-  const data = await res.json();
-  const questions = data.questions || data.data || [];
+  const data = await qbRes.json();
+  const questions = data.questions || [];
 
-  const chemQs = questions.filter(q => Number(q.subject_id) === 6 || (q.subject || '').toLowerCase() === 'chemistry');
-  console.log(`Total live Chemistry PYQs: ${chemQs.length}`);
+  console.log(`Live Question Bank returned: ${questions.length} questions`);
 
-  const ionicQs = chemQs.filter(q =>
-    Number(q.chapter_id) === 13 ||
-    /ionic\s*equilibrium/i.test(q.chapter || '') ||
-    /ionic\s*equilibrium/i.test(q.chapter_name || '')
-  );
+  if (questions.length !== 159) {
+    console.error(`Mismatch: expected 159, got ${questions.length}`);
+    process.exit(1);
+  }
 
-  console.log(`Live Chemistry Ionic Equilibrium questions count: ${ionicQs.length} / 89`);
-  ionicQs.slice(0, 3).forEach(q => {
-    console.log(`  ID ${q.id}: "${q.question_text.slice(0, 60)}..." (Chapter ID: ${q.chapter_id})`);
-  });
+  let dummyCount = 0;
+  let mcqCount = 0;
+  let numCount = 0;
+  let withDiagrams = 0;
 
-  const chemeqQs = chemQs.filter(q =>
-    Number(q.chapter_id) === 11 ||
-    Number(q.chapter_id) === 139 ||
-    /chemical\s*equilibrium/i.test(q.chapter || '') ||
-    /chemical\s*equilibrium/i.test(q.chapter_name || '')
-  );
-  console.log(`Live Chemistry Chemical Equilibrium questions count: ${chemeqQs.length} / 45`);
+  for (const q of questions) {
+    if (q.question_type === 'numerical' || q.numeric_answer !== null) {
+      numCount++;
+    } else {
+      mcqCount++;
+      const opts = Array.isArray(q.options) ? q.options : JSON.parse(q.options || '[]');
+      for (const opt of opts) {
+        const text = typeof opt === 'string' ? opt : opt.text;
+        if (!text || text.includes('Dummy') || text.startsWith('Option (')) {
+          dummyCount++;
+          console.error(`Dummy option in Q#${q.id}: ${text}`);
+        }
+      }
+    }
+    if (q.image_url || q.solution_image_url) {
+      withDiagrams++;
+    }
+  }
 
-  const redoxQs = chemQs.filter(q => Number(q.chapter_id) === 185 || Number(q.chapter_id) === 40 || /redox/i.test(q.chapter || ''));
-  console.log(`Live Chemistry Redox Reactions questions count: ${redoxQs.length} / 36`);
+  console.log(`Summary on Live:`);
+  console.log(`- Total Questions: ${questions.length}`);
+  console.log(`- MCQ Questions: ${mcqCount}`);
+  console.log(`- Numerical Questions: ${numCount}`);
+  console.log(`- Questions with Diagrams: ${withDiagrams}`);
+  console.log(`- Dummy Options Found: ${dummyCount}`);
 
-  const atomQs = chemQs.filter(q => Number(q.chapter_id) === 96 || Number(q.chapter_id) === 16 || /structure of atom/i.test(q.chapter || ''));
-  console.log(`Live Chemistry Structure of Atom questions count: ${atomQs.length} / 90`);
-
-  const moleQs = chemQs.filter(q => Number(q.chapter_id) === 95 || /some basic concepts/i.test(q.chapter || ''));
-  console.log(`Live Chemistry Some Basic Concepts questions count: ${moleQs.length} / 84`);
+  if (dummyCount === 0 && questions.length === 159) {
+    console.log('✅ LIVE PRODUCTION VERIFICATION PASSED 100% PERFECTLY!');
+  } else {
+    console.error('❌ LIVE PRODUCTION VERIFICATION FAILED');
+    process.exit(1);
+  }
 }
 
-main().catch(console.error);
-
+verifyLive().catch(console.error);

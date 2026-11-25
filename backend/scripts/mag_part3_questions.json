@@ -1,0 +1,1513 @@
+[
+  {
+    "question_number": 141,
+    "question_type": "mcq",
+    "question_text": "A coil having $N$ turns and area $A$ is suspended in a uniform magnetic field $B$. When a current $I$ is passed through the coil, the deflection produced is $\\theta$. The restoring couple per unit twist of the suspension wire is $C$. Then $\\theta$ is given by :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\theta = \\frac{N A B I}{C}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\theta = \\frac{C}{N A B I}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\theta = \\frac{N A B}{C I}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\theta = \\frac{N I}{C A B}$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 142,
+    "question_type": "numerical",
+    "question_text": "A circular coil of radius $10\\text{ cm}$ having 100 turns carries a current of $3.2\\text{ A}$. The magnetic field at the centre of the coil is $x \\times 10^{-3}\\text{ T}$. The value of $x$ is :",
+    "options": [],
+    "correct_answer": "2",
+    "solution_text": "Official Answer: 2.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 2,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 143,
+    "question_type": "mcq",
+    "question_text": "Two long parallel conductors $S_1$ and $S_2$ are separated by a distance $10\\text{ cm}$ and carry currents $I_1$ and $I_2$ in opposite directions. The magnetic field at point P midway between the two conductors is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\frac{\\mu_0}{2\\pi d}(I_1 - I_2)$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\frac{\\mu_0}{\\pi d}(I_1 - I_2)$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\frac{\\mu_0}{\\pi d}(I_1 + I_2)$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "Zero"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536836/edvedum_physics/magnetic_effects_of_current/mag_q143_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 144,
+    "question_type": "mcq",
+    "question_text": "A proton and an $\\alpha$-particle are projected with the same velocity into a uniform transverse magnetic field. The ratio of their time periods $T_p / T_\\alpha$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "1/4"
+      },
+      {
+        "option_id": "B",
+        "option_text": "1/2"
+      },
+      {
+        "option_id": "C",
+        "option_text": "1"
+      },
+      {
+        "option_id": "D",
+        "option_text": "2"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 145,
+    "question_type": "numerical",
+    "question_text": "A long solenoid has 1000 turns per metre. It carries a current of $8\\text{ A}$. The magnetic energy density inside the solenoid in $\\text{J/m}^3$ is :",
+    "options": [],
+    "correct_answer": "10",
+    "solution_text": "Official Answer: 10.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 10,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 146,
+    "question_type": "mcq",
+    "question_text": "Two parallel, long wires are kept $0.20\\text{ m}$ apart in vacuum, each carrying current of $x\\text{ A}$ in the same direction. If the force per unit length between them is $2 \\times 10^{-4}\\text{ N/m}$, the value of $x$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$10\\text{ A}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$20\\text{ A}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$14.14\\text{ A}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$5\\text{ A}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 147,
+    "question_type": "mcq",
+    "question_text": "A charge particle moves along a circular path in a uniform magnetic field in a cyclotron. The kinetic energy of the charge particle increases to 4 times its initial value. What will be the ratio of new radius to the initial radius?",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$1 : 2$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$1 : 4$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2 : 1$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$4 : 1$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 148,
+    "question_type": "mcq",
+    "question_text": "A beam of electrons moving at a speed of $10^6\\text{ m/s}$ along the $x$-axis enters a uniform magnetic field of $0.5\\text{ T}$ along the $y$-axis. The radius of the circular path described by the electron is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$1.14 \\times 10^{-5}\\text{ m}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$2.28 \\times 10^{-5}\\text{ m}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$1.14 \\times 10^{-6}\\text{ m}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$5.7 \\times 10^{-6}\\text{ m}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 149,
+    "question_type": "mcq",
+    "question_text": "A moving coil galvanometer has 50 turns and each turn has an area $2.0 \\times 10^{-4}\\text{ m}^2$. The magnetic field produced by the magnet is $0.02\\text{ T}$. The deflection in the coil is $0.2\\text{ rad}$ when a current of $1\\text{ mA}$ is passed through it. The torsional constant of the suspension wire is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$1.0 \\times 10^{-4}\\text{ N}\\cdot\\text{m/rad}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$2.0 \\times 10^{-5}\\text{ N}\\cdot\\text{m/rad}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$1.0 \\times 10^{-5}\\text{ N}\\cdot\\text{m/rad}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$5.0 \\times 10^{-5}\\text{ N}\\cdot\\text{m/rad}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 150,
+    "question_type": "mcq",
+    "question_text": "An electron and a proton enter a region of uniform magnetic field with equal kinetic energies in a direction perpendicular to the field. If $r_e$ and $r_p$ are the radii of their paths, then :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$r_e = r_p$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$r_e < r_p$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$r_e > r_p$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$r_e = 0$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 151,
+    "question_type": "mcq",
+    "question_text": "A proton and an electron have the same de Broglie wavelength. If they enter perpendicularly into a uniform magnetic field, then :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "radius of proton path is larger"
+      },
+      {
+        "option_id": "B",
+        "option_text": "radius of electron path is the same as that of proton"
+      },
+      {
+        "option_id": "C",
+        "option_text": "radius of electron path is larger"
+      },
+      {
+        "option_id": "D",
+        "option_text": "path of both will be straight lines"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 152,
+    "question_type": "mcq",
+    "question_text": "A rectangular loop of sides $a$ and $b$ carries a current $I$. The magnetic dipole moment of the loop is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$I a b$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$I (a + b)$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2 I a b$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$I \\sqrt{a^2 + b^2}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 153,
+    "question_type": "mcq",
+    "question_text": "A toroid has a non-ferromagnetic core of inner radius $25\\text{ cm}$ and outer radius $26\\text{ cm}$, around which 3500 turns of a wire are wound. If the current in the wire is $11\\text{ A}$, the magnetic field inside the core of the toroid is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$3.0 \\times 10^{-2}\\text{ T}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$3.0 \\times 10^{-3}\\text{ T}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$6.0 \\times 10^{-2}\\text{ T}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$1.5 \\times 10^{-2}\\text{ T}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 154,
+    "question_type": "mcq",
+    "question_text": "A current of $10\\text{ A}$ flows around a closed path in a circuit which is in the horizontal plane. The path consists of eight arcs of alternating radii $r_1 = 0.08\\text{ m}$ and $r_2 = 0.12\\text{ m}$. Each arc subtends an angle of $45^\\circ$ at the centre. The magnetic field at the centre is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$6.54 \\times 10^{-5}\\text{ T}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$6.54 \\times 10^{-6}\\text{ T}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$3.27 \\times 10^{-5}\\text{ T}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$1.31 \\times 10^{-5}\\text{ T}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 155,
+    "question_type": "mcq",
+    "question_text": "A velocity selector consists of electric field $\\vec{E} = E\\hat{k}$ and magnetic field $\\vec{B} = B\\hat{j}$ with $B = 12\\text{ mT}$. The value of $E$ required to select a proton of energy $728\\text{ eV}$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$4.5 \\times 10^3\\text{ V/m}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$9.0 \\times 10^3\\text{ V/m}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2.25 \\times 10^3\\text{ V/m}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$1.8 \\times 10^4\\text{ V/m}$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 156,
+    "question_type": "mcq",
+    "question_text": "Two concentric circular loops of radii $r_1 = 30\\text{ cm}$ and $r_2 = 50\\text{ cm}$ are placed in $X-Y$ plane as shown. The ratio of currents in loops 1 and 2 is $I_1 / I_2$ such that net magnetic field at their common centre is zero. If $I_1$ is flowing clockwise, then $I_2$ must flow :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "clockwise with $I_2 = 3/5 I_1$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "anticlockwise with $I_2 = 5/3 I_1$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "clockwise with $I_2 = 5/3 I_1$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "anticlockwise with $I_2 = 3/5 I_1$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536835/edvedum_physics/magnetic_effects_of_current/mag_q156_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 157,
+    "question_type": "mcq",
+    "question_text": "A particle of mass $m$ and charge $q$ is moving in a circle of radius $r$ with speed $v$ in a magnetic field $B$. The work done by the magnetic force on the particle in one half revolution is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$q v B (2r)$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "Zero"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$q v B (\\pi r)$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$m v^2 / r$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 158,
+    "question_type": "mcq",
+    "question_text": "As shown in the figure, a metallic rod of linear density $0.45\\text{ kg/m}$ is lying horizontally on smooth inclined planes which make an angle of $45^\\circ$ with the horizontal. The rod is perpendicular to the inclined plane and carries a current $I$. A magnetic field of $0.15\\text{ T}$ acts vertically upwards. To keep the rod in equilibrium, the current $I$ should be :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$29.4\\text{ A}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$14.7\\text{ A}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$58.8\\text{ A}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$9.8\\text{ A}$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536835/edvedum_physics/magnetic_effects_of_current/mag_q158_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 159,
+    "question_type": "mcq",
+    "question_text": "A proton moving with a constant velocity passes through a region of space without any change in its velocity. If $\\vec{E}$ and $\\vec{B}$ represent the electric and magnetic fields, respectively, this region of space may have :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$E = 0, B \\ne 0$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$E \\ne 0, B = 0$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$E \\ne 0, B \\ne 0$ with $\\vec{E}$ and $\\vec{B}$ perpendicular to velocity"
+      },
+      {
+        "option_id": "D",
+        "option_text": "Both (A) and (C) are possible"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 160,
+    "question_type": "mcq",
+    "question_text": "A circular coil of radius $R$ is carrying a current $I$. At what distance from the centre of the coil on its axis will the magnetic field be $1/8^{\\text{th}}$ of its value at the centre?",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$R/\\sqrt{3}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$2R$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\sqrt{3}R$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$3R$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 161,
+    "question_type": "mcq",
+    "question_text": "A triangular shaped wire carrying $10\\text{ A}$ current is placed in a uniform magnetic field $0.5\\text{ T}$ as shown. The magnetic force on the segment AB of length $10\\text{ cm}$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$0.25\\text{ N}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$0.5\\text{ N}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$0.5\\text{ N}$ perpendicular to AB"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$0.25\\sqrt{3}\\text{ N}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536835/edvedum_physics/magnetic_effects_of_current/mag_q161_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 162,
+    "question_type": "numerical",
+    "question_text": "A closely wounded circular coil of radius $5\\text{ cm}$ produces a magnetic field of $37.68 \\times 10^{-4}\\text{ T}$ at its center. The current through the coil is $x\\text{ A}$. [Given, number of turns in the coil is 100 and $\\pi = 3.14$]. The value of $x$ is :",
+    "options": [],
+    "correct_answer": "2",
+    "solution_text": "Official Answer: 2.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 2,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 163,
+    "question_type": "numerical",
+    "question_text": "A wire of length $314\\text{ cm}$ carrying current of $14\\text{ A}$ is bent to form a circle. The magnetic field at the centre of the circle in $\\times 10^{-5}\\text{ T}$ is :",
+    "options": [],
+    "correct_answer": "11",
+    "solution_text": "Official Answer: 11.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 11,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 164,
+    "question_type": "mcq",
+    "question_text": "A galvanometer has a resistance of $50\\,\\Omega$ and a current of $2\\text{ mA}$ gives full scale deflection. It is converted into a voltmeter of range $0 - 10\\text{ V}$. The resistance connected in series with the galvanometer coil is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$4950\\,\\Omega$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$5000\\,\\Omega$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$5050\\,\\Omega$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$4900\\,\\Omega$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 165,
+    "question_type": "mcq",
+    "question_text": "A magnetic field $\\vec{B} = B_0\\hat{j}$ exists in the region $a < x < 2a$ and $\\vec{B} = -B_0\\hat{j}$ in the region $2a < x < 3a$, where $B_0$ is a positive constant. A positive point charge $q$ moving with velocity $\\vec{v} = v_0\\hat{i}$ enters the field at $x = a$. The trajectory of the charge is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "Circular in $x-y$ plane"
+      },
+      {
+        "option_id": "B",
+        "option_text": "Helical with axis along $y$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "Undulating curve in $x-z$ plane"
+      },
+      {
+        "option_id": "D",
+        "option_text": "Straight line along $x$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 166,
+    "question_type": "numerical",
+    "question_text": "Two long straight wires P and Q carrying equal current $10\\text{ A}$ each were kept parallel to each other at $5\\text{ cm}$ distance. Magnitude of magnetic force experienced by $10\\text{ cm}$ length of wire P is $F_1$. If distance between wires is halved and currents on them are doubled, force $F_2$ on $10\\text{ cm}$ length of wire P will be $x F_1$. The value of $x$ is :",
+    "options": [],
+    "correct_answer": "4",
+    "solution_text": "Official Answer: 4.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 4,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 167,
+    "question_type": "mcq",
+    "question_text": "A circular loop of radius $r$ carrying current $I$ is placed in a uniform magnetic field $B$ parallel to its plane. The torque experienced by the loop is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "Zero"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\pi r^2 I B$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2\\pi r^2 I B$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$I B / (\\pi r^2)$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 168,
+    "question_type": "numerical",
+    "question_text": "A single turn current loop in the shape of a right angle triangle with sides $5\\text{ cm}, 12\\text{ cm}, 13\\text{ cm}$ is carrying a current of $2\\text{ A}$. The loop is in a uniform magnetic field of magnitude $0.75\\text{ T}$ whose direction is parallel to the current in the $13\\text{ cm}$ side of the loop. The magnitude of the magnetic force on the $5\\text{ cm}$ side in $\\times 10^{-2}\\text{ N}$ is :",
+    "options": [],
+    "correct_answer": "8",
+    "solution_text": "Official Answer: 8.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 8,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 169,
+    "question_type": "mcq",
+    "question_text": "A solenoid of 1200 turns is wound uniformly in a single layer on a glass tube $2\\text{ m}$ long and $0.2\\text{ m}$ in diameter. The magnetic field at the centre of the solenoid when a current of $2\\text{ A}$ flows through it is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$1.51 \\times 10^{-3}\\text{ T}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$1.51 \\times 10^{-4}\\text{ T}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$3.02 \\times 10^{-3}\\text{ T}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$2.4 \\times 10^{-3}\\text{ T}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 170,
+    "question_type": "mcq",
+    "question_text": "A charged particle of mass $m$ and charge $q$ travels in a circular path of radius $R$ in a magnetic field $B$. The kinetic energy of the particle is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\frac{q^2 B^2 R^2}{m}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\frac{q B R}{2m}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\frac{q^2 B^2 R^2}{2m}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\frac{q B^2 R^2}{2m}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 171,
+    "question_type": "numerical",
+    "question_text": "A long straight wire carrying a current of $2\\text{ A}$ produces a magnetic field of $4\\,\\mu\\text{T}$ at a perpendicular distance $d$. The value of $d$ in cm is :",
+    "options": [],
+    "correct_answer": "68",
+    "solution_text": "Official Answer: 68.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 68,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 172,
+    "question_type": "mcq",
+    "question_text": "A circular coil of radius $10\\text{ cm}$ having 500 turns and resistance $2\\,\\Omega$ is placed in a horizontal magnetic field of $0.2\\text{ T}$ with its plane perpendicular to the field. The torque acting on the coil is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$3.14\\text{ N}\\cdot\\text{m}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "Zero"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$1.57\\text{ N}\\cdot\\text{m}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$6.28\\text{ N}\\cdot\\text{m}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 173,
+    "question_type": "mcq",
+    "question_text": "The magnitude of magnetic induction at mid-point O due to current arrangement as shown in figure is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\frac{\\mu_0 I}{2\\pi a}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\frac{\\mu_0 I}{\\pi a}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\frac{2\\mu_0 I}{\\pi a}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "Zero"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536837/edvedum_physics/magnetic_effects_of_current/mag_q173_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 174,
+    "question_type": "mcq",
+    "question_text": "A single current carrying loop of wire carrying current $I$ flowing in anticlockwise direction is shown in figure. The magnetic field at the centre O is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\frac{\\mu_0 I}{4 R}$ into page"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\frac{\\mu_0 I}{4 R}$ out of page"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\frac{\\mu_0 I}{2 R}$ into page"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\frac{\\mu_0 I}{2 R}$ out of page"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536837/edvedum_physics/magnetic_effects_of_current/mag_q174_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 175,
+    "question_type": "mcq",
+    "question_text": "A moving coil galvanometer has resistance $G$. A shunt $S$ is connected across it. The fraction of total current that passes through the galvanometer is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\frac{G}{S + G}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\frac{S}{S - G}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\frac{S}{S + G}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\frac{S + G}{S}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 176,
+    "question_type": "mcq",
+    "question_text": "An electron enters a region between two parallel plates where electric field $E$ is pointing vertically downwards. A magnetic field $B$ is applied perpendicular to $E$ and to the velocity of electron so that the electron passes undeflected. The velocity of the electron is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$E B$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$B / E$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$E / B$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\sqrt{E/B}$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 177,
+    "question_type": "mcq",
+    "question_text": "A galvanometer of resistance $50\\,\\Omega$ gives a full scale deflection for a current of $0.05\\text{ A}$. In order to convert it into an ammeter of range $0 - 5\\text{ A}$, the shunt resistance required is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$0.5\\,\\Omega$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$0.05\\,\\Omega$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$0.505\\,\\Omega$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$1.0\\,\\Omega$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 178,
+    "question_type": "mcq",
+    "question_text": "As shown in the figure, a current of $2\\text{ A}$ flowing in an equilateral triangle of side $4\\sqrt{3}\\text{ cm}$. The magnetic field at the centroid of the triangle is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$2.5 \\times 10^{-5}\\text{ T}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$1.5 \\times 10^{-5}\\text{ T}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$5.0 \\times 10^{-5}\\text{ T}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$3.0 \\times 10^{-5}\\text{ T}$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536837/edvedum_physics/magnetic_effects_of_current/mag_q178_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 179,
+    "question_type": "mcq",
+    "question_text": "A current carrying rectangular loop PQRS is made of uniform wire. The length $PR = QS = 5\\text{ cm}$ and $PQ = RS = 10\\text{ cm}$. If a current of $2\\text{ A}$ enters at P and leaves at R, the magnetic field at the centre of the loop is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\frac{\\mu_0}{\\pi} \\times 10^{-2}\\text{ T}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "Zero"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\frac{2\\mu_0}{\\pi} \\times 10^{-2}\\text{ T}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\frac{4\\mu_0}{\\pi} \\times 10^{-2}\\text{ T}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 180,
+    "question_type": "mcq",
+    "question_text": "A proton and an $\\alpha$-particle are accelerated through the same potential difference $V$. The ratio of their de Broglie wavelengths $\\lambda_p / \\lambda_\\alpha$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$2$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\sqrt{2}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2\\sqrt{2}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$4$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 181,
+    "question_type": "mcq",
+    "question_text": "Two circular coils of radii $5\\text{ cm}$ and $10\\text{ cm}$ have 100 turns each. They are placed coaxially with their centres separated by a distance $10\\text{ cm}$. If the same current $I = 2\\text{ A}$ is passed in both in the same direction, the magnetic field at the midpoint on the axis between the coils is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$1.26 \\times 10^{-3}\\text{ T}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$2.52 \\times 10^{-3}\\text{ T}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$0.85 \\times 10^{-3}\\text{ T}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$1.70 \\times 10^{-3}\\text{ T}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 182,
+    "question_type": "mcq",
+    "question_text": "Find the magnetic field at the point P in figure. The curved portion is a semicircle of radius $R$ and the straight wires are very long :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\frac{\\mu_0 I}{4\\pi R} (\\pi + 1)$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\frac{\\mu_0 I}{4\\pi R} (\\pi + 2)$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\frac{\\mu_0 I}{4\\pi R} (\\pi - 1)$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\frac{\\mu_0 I}{2\\pi R} (\\pi + 1)$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536837/edvedum_physics/magnetic_effects_of_current/mag_q182_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 183,
+    "question_type": "numerical",
+    "question_text": "A charged particle having mass $10^{-6}\\text{ kg}$ and charge $10^{-6}\\text{ C}$ is moving with velocity $(2\\hat{i} + 3\\hat{j})\\text{ m/s}$ in a region of magnetic field $(2\\hat{i} + 4\\hat{j})\\text{ T}$. The magnitude of magnetic force on the particle in $\\mu\\text{N}$ is :",
+    "options": [],
+    "correct_answer": "144",
+    "solution_text": "Official Answer: 144.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 144,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 184,
+    "question_type": "mcq",
+    "question_text": "A current of $1\\text{ A}$ flows in a long wire bent into the shape of a hairpin with semicircular end of radius $1\\text{ cm}$. The magnetic field at the centre of the semicircular arc is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$3.14 \\times 10^{-5}\\text{ T}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$1.57 \\times 10^{-5}\\text{ T}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$6.28 \\times 10^{-5}\\text{ T}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$5.14 \\times 10^{-5}\\text{ T}$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536837/edvedum_physics/magnetic_effects_of_current/mag_q184_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 185,
+    "question_type": "mcq",
+    "question_text": "A coil is placed in a magnetic field such that the plane of the coil is perpendicular to the direction of magnetic field. The torque acting on the coil is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "Maximum"
+      },
+      {
+        "option_id": "B",
+        "option_text": "Zero"
+      },
+      {
+        "option_id": "C",
+        "option_text": "Half of maximum"
+      },
+      {
+        "option_id": "D",
+        "option_text": "Cannot be determined"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 186,
+    "question_type": "numerical",
+    "question_text": "Two identical circular wires of radius $20\\text{ cm}$ and carrying current $2\\text{ A}$ are placed coaxially at a distance of $20\\text{ cm}$. The magnetic field at the midpoint between the two coils in $\\times 10^{-6}\\text{ T}$ is (Take $\\pi = 3.14$) :",
+    "options": [],
+    "correct_answer": "628",
+    "solution_text": "Official Answer: 628.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536839/edvedum_physics/magnetic_effects_of_current/mag_q186_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 628,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 187,
+    "question_type": "mcq",
+    "question_text": "An ammeter of resistance $0.8\\,\\Omega$ can measure current up to $1.0\\text{ A}$. The value of shunt resistance required to enable the ammeter to measure current up to $5.0\\text{ A}$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$0.1\\,\\Omega$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$0.2\\,\\Omega$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$0.4\\,\\Omega$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$0.8\\,\\Omega$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 188,
+    "question_type": "numerical",
+    "question_text": "A straight wire of length $2\\text{ m}$ carrying a current of $20\\text{ A}$ is placed in a uniform magnetic field of $1.0\\text{ T}$. If the wire makes an angle of $30^\\circ$ with the direction of the magnetic field, the magnetic force on the wire in N is :",
+    "options": [],
+    "correct_answer": "40",
+    "solution_text": "Official Answer: 40.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 40,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 189,
+    "question_type": "numerical",
+    "question_text": "A particle of mass $m$ and charge $q$ is moving with speed $v$ in a circle of radius $r$ in a uniform magnetic field $B$. If the velocity of the particle is doubled and the magnetic field is halved, the radius of the circular path becomes $x r$. The value of $x$ is :",
+    "options": [],
+    "correct_answer": "2",
+    "solution_text": "Official Answer: 2.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 2,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 190,
+    "question_type": "mcq",
+    "question_text": "A long solenoid has 800 turns per metre length of solenoid. A current of $1.6\\text{ A}$ flows through it. The magnetic induction at the end of the solenoid on its axis is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$1.6 \\times 10^{-3}\\text{ T}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$8.0 \\times 10^{-4}\\text{ T}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$3.2 \\times 10^{-3}\\text{ T}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$4.0 \\times 10^{-4}\\text{ T}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 191,
+    "question_type": "numerical",
+    "question_text": "The ratio of magnetic field at the centre of a current carrying coil of radius $r$ to the magnetic field on the axis at a distance $r\\sqrt{3}$ from the centre of the coil is :",
+    "options": [],
+    "correct_answer": "8",
+    "solution_text": "Official Answer: 8.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 8,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 192,
+    "question_type": "mcq",
+    "question_text": "A charged particle is projected in a plane perpendicular to a uniform magnetic field. The area bounded by the circular path described by the particle is directly proportional to its :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "Kinetic energy"
+      },
+      {
+        "option_id": "B",
+        "option_text": "Speed"
+      },
+      {
+        "option_id": "C",
+        "option_text": "Momentum"
+      },
+      {
+        "option_id": "D",
+        "option_text": "Potential energy"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 193,
+    "question_type": "numerical",
+    "question_text": "A straight wire carrying a current of $14\\text{ A}$ is bent into a semicircular arc of radius $2.2\\text{ cm}$ as shown in the figure. The magnetic field at the centre of the arc in $\\times 10^{-4}\\text{ T}$ is :",
+    "options": [],
+    "correct_answer": "2",
+    "solution_text": "Official Answer: 2.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536839/edvedum_physics/magnetic_effects_of_current/mag_q193_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 2,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 194,
+    "question_type": "mcq",
+    "question_text": "A current carrying loop is placed in a uniform magnetic field in four different orientations, I, II, III and IV. Arrange them in the decreasing order of potential energy :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "I > II > III > IV"
+      },
+      {
+        "option_id": "B",
+        "option_text": "IV > III > II > I"
+      },
+      {
+        "option_id": "C",
+        "option_text": "I > IV > II > III"
+      },
+      {
+        "option_id": "D",
+        "option_text": "III > II > IV > I"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 195,
+    "question_type": "mcq",
+    "question_text": "A beam of electrons enters perpendicularly into a uniform magnetic field. The time period of revolution of the electron :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "increases with increasing velocity"
+      },
+      {
+        "option_id": "B",
+        "option_text": "decreases with increasing velocity"
+      },
+      {
+        "option_id": "C",
+        "option_text": "is independent of velocity"
+      },
+      {
+        "option_id": "D",
+        "option_text": "depends on the mass of the particle only"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 196,
+    "question_type": "numerical",
+    "question_text": "A straight wire AB of mass $40\\text{ g}$ and length $50\\text{ cm}$ is suspended by a pair of flexible leads in a uniform magnetic field of $0.4\\text{ T}$ directed horizontally into the page. The current in the wire (in A) required to balance the tension in the leads is ($g = 10\\text{ m/s}^2$) :",
+    "options": [],
+    "correct_answer": "2",
+    "solution_text": "Official Answer: 2.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536838/edvedum_physics/magnetic_effects_of_current/mag_q196_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 2,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 197,
+    "question_type": "numerical",
+    "question_text": "An electron in a hydrogen atom revolves around its nucleus with a speed of $6.76 \\times 10^6\\text{ m/s}$ in an orbit of radius $0.53\\text{ Å}$. The magnetic dipole moment of the electron in $\\times 10^{-25}\\text{ A}\\cdot\\text{m}^2$ is :",
+    "options": [],
+    "correct_answer": "40",
+    "solution_text": "Official Answer: 40.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 40,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 198,
+    "question_type": "numerical",
+    "question_text": "Two long, straight wires carry equal currents in opposite directions as shown in the figure. The separation between the wires is $20\\text{ cm}$. The magnetic field at a point midway between the wires when each wire carries $8\\text{ A}$ in $\\times 10^{-7}\\text{ T}$ is :",
+    "options": [],
+    "correct_answer": "160",
+    "solution_text": "Official Answer: 160.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536838/edvedum_physics/magnetic_effects_of_current/mag_q198_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 160,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 199,
+    "question_type": "mcq",
+    "question_text": "A particle of mass $m$ and charge $q$ enters a region with uniform magnetic field $B$ directed into the plane. If the particle enters with speed $v$ making an angle $\\theta$ with the normal to the boundary, it emerges after a time :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\frac{m}{qB}(\\pi - 2\\theta)$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\frac{2m}{qB}\\theta$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\frac{2m}{qB}(\\pi - \\theta)$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\frac{m}{qB}\\pi$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0
+  },
+  {
+    "question_number": 200,
+    "question_type": "numerical",
+    "question_text": "The magnetic field at the centre of a wire loop formed by two semicircular wires of radii $R_1 = 2\\pi\\text{ cm}$ and $R_2 = 4\\pi\\text{ cm}$ carrying current $I = 2\\text{ A}$ in $\\times 10^{-5}\\text{ T}$ is :",
+    "options": [],
+    "correct_answer": "3",
+    "solution_text": "Official Answer: 3.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795536838/edvedum_physics/magnetic_effects_of_current/mag_q200_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 3,
+    "numerical_tolerance": 0
+  }
+]

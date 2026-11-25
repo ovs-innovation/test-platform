@@ -1,0 +1,1459 @@
+{
+  "1": {
+    "page": 1,
+    "answer": "A",
+    "lines": []
+  },
+  "2": {
+    "page": 1,
+    "startLine": "2. Which of the following is used in optical fibres 7",
+    "lines": [
+      "2. Which of the following is used in optical fibres 7",
+      "(A) total internal reflection (B) scattering",
+      "{C) diffraction (D) refraction",
+      "14 marks, ~1 for & wrong answer]: 2003"
+    ],
+    "answer": "A"
+  },
+  "3": {
+    "page": 1,
+    "startLine": "3. An astronomical telescope has a large aperture to",
+    "lines": [
+      "3. An astronomical telescope has a large aperture to",
+      "(A) reduce spherical aberration (B) have high resolution",
+      "IC) Increase span of observation (D) have low dispersion",
+      "[i marks, —1 for & wrong answer] © B00"
+    ],
+    "answer": "B"
+  },
+  "4": {
+    "page": 2,
+    "startLine": "4. To get threa images of a single object, one should have two plane mirrors at an angle of",
+    "lines": [
+      "4. To get threa images of a single object, one should have two plane mirrors at an angle of",
+      "(A) IF 1B) ge",
+      "(© yap 0) 3p-",
+      "Ld mnrka, =1 toro wing anger] © 2003"
+    ],
+    "answer": "B"
+  },
+  "5": {
+    "page": 2,
+    "startLine": "5. The image formed by an objective of a compound microscopes is",
+    "lines": [
+      "5. The image formed by an objective of a compound microscopes is",
+      "(A) virtual and diminished (B) real and diminished",
+      "{C) real and enlarged 1D) virtual and enlarged",
+      "[4 marks, =1 for & wrong answer] 2003"
+    ],
+    "answer": "C"
+  },
+  "6": {
+    "page": 2,
+    "startLine": "6. a plane convex lens of refractive index 1.5 and radius of curvature 30 cm is silvered at the curved",
+    "lines": [
+      "6. a plane convex lens of refractive index 1.5 and radius of curvature 30 cm is silvered at the curved",
+      "surface. Now this lens has been used to form the image of an object. At what distance from this lens an",
+      "object be placed in order to have a real image of the size of the object?",
+      "A) 20 em ®) 30 cm",
+      "©) gg em 0) 5 em",
+      "4 marks, =1 for & wang answer] - 2004"
+    ],
+    "answer": "A"
+  },
+  "7": {
+    "page": 3,
+    "answer": "B",
+    "lines": []
+  },
+  "8": {
+    "page": 3,
+    "answer": "B",
+    "lines": []
+  },
+  "9": {
+    "page": 3,
+    "answer": "D",
+    "lines": []
+  },
+  "10": {
+    "page": 4,
+    "startLine": "10. The refractive index of glass is 1.520 for red light and 1.525 for blue light, Let Dy and DD); be an of",
+    "lines": [
+      "10. The refractive index of glass is 1.520 for red light and 1.525 for blue light, Let Dy and DD); be an of",
+      "minimum deviation for red and blue light respectively in a prism of this glass. Then",
+      "(A) Dy = Ds (8) Dy < Ds",
+      "© Dy =D. (0) Dy can be less than or greater than depending",
+      "upon the angle of prism",
+      "2 mark; =1 far @wrorg anwar] - 2006"
+    ],
+    "answer": "B"
+  },
+  "11": {
+    "page": 4,
+    "answer": "B",
+    "lines": []
+  },
+  "12": {
+    "page": 5,
+    "startLine": "12. A student measures the focal length of convex lens by putting an abject pin at a distance 'u' from the",
+    "lines": [
+      "12. A student measures the focal length of convex lens by putting an abject pin at a distance 'u' from the",
+      "lens and measuring the distance ' « * of the image pin. The graph between“ « ' and ' « ' plotted by the",
+      "student should lock like",
+      "a (B)",
+      "J ¥ (em)",
+      "© {em} BAN",
+      "[] u (em)",
+      "fc) v (em) © ¥ (em)",
+      "| u fem) | u fem}",
+      "14 masks, ~1far & wrong anwar] © 2008"
+    ],
+    "answer": "C"
+  },
+  "13": {
+    "page": 7,
+    "answer": "A",
+    "lines": []
+  },
+  "14": {
+    "page": 7,
+    "answer": "A",
+    "lines": []
+  },
+  "15": {
+    "page": 8,
+    "answer": "D",
+    "lines": []
+  },
+  "16": {
+    "page": 8,
+    "answer": "B",
+    "lines": []
+  },
+  "17": {
+    "page": 9,
+    "answer": "A",
+    "lines": []
+  },
+  "18": {
+    "page": 9,
+    "answer": "A",
+    "lines": []
+  },
+  "19": {
+    "page": 10,
+    "answer": "D",
+    "lines": []
+  },
+  "20": {
+    "page": 11,
+    "answer": "C",
+    "lines": []
+  },
+  "21": {
+    "page": 12,
+    "answer": "C",
+    "lines": []
+  },
+  "22": {
+    "page": 13,
+    "answer": "D",
+    "lines": []
+  },
+  "23": {
+    "page": 13,
+    "answer": "A",
+    "lines": []
+  },
+  "24": {
+    "page": 14,
+    "answer": "A",
+    "lines": []
+  },
+  "25": {
+    "page": 15,
+    "answer": "A",
+    "lines": []
+  },
+  "26": {
+    "page": 17,
+    "answer": "B",
+    "lines": []
+  },
+  "27": {
+    "page": 17,
+    "answer": "A",
+    "lines": []
+  },
+  "28": {
+    "page": 18,
+    "answer": "D",
+    "lines": []
+  },
+  "29": {
+    "page": 19,
+    "answer": "D",
+    "lines": []
+  },
+  "30": {
+    "page": 20,
+    "answer": "D",
+    "lines": []
+  },
+  "31": {
+    "page": 21,
+    "answer": "C",
+    "lines": []
+  },
+  "32": {
+    "page": 21,
+    "answer": "C",
+    "lines": []
+  },
+  "33": {
+    "page": 23,
+    "answer": "B",
+    "lines": []
+  },
+  "34": {
+    "page": 24,
+    "answer": "B",
+    "lines": []
+  },
+  "35": {
+    "page": 25,
+    "answer": "C",
+    "lines": []
+  },
+  "36": {
+    "page": 26,
+    "answer": "A",
+    "lines": []
+  },
+  "37": {
+    "page": 28,
+    "answer": "A",
+    "lines": []
+  },
+  "38": {
+    "page": 29,
+    "answer": "D",
+    "lines": []
+  },
+  "39": {
+    "page": 30,
+    "answer": "B",
+    "lines": []
+  },
+  "40": {
+    "page": 31,
+    "answer": "B",
+    "lines": []
+  },
+  "41": {
+    "page": 33,
+    "answer": "D",
+    "lines": []
+  },
+  "42": {
+    "page": 34,
+    "answer": "A",
+    "lines": []
+  },
+  "43": {
+    "page": 36,
+    "answer": "A",
+    "lines": []
+  },
+  "44": {
+    "page": 37,
+    "answer": "A",
+    "lines": []
+  },
+  "45": {
+    "page": 38,
+    "answer": "C",
+    "lines": []
+  },
+  "46": {
+    "page": 39,
+    "answer": "B",
+    "lines": []
+  },
+  "47": {
+    "page": 41,
+    "answer": "B",
+    "lines": []
+  },
+  "48": {
+    "page": 42,
+    "answer": "A",
+    "lines": []
+  },
+  "49": {
+    "page": 43,
+    "answer": "D",
+    "lines": []
+  },
+  "50": {
+    "page": 44,
+    "answer": "&",
+    "lines": []
+  },
+  "51": {
+    "page": 45,
+    "answer": "A",
+    "lines": []
+  },
+  "52": {
+    "page": 46,
+    "answer": "C",
+    "lines": []
+  },
+  "53": {
+    "page": 47,
+    "answer": "B",
+    "lines": []
+  },
+  "54": {
+    "page": 47,
+    "answer": "A",
+    "lines": []
+  },
+  "55": {
+    "page": 48,
+    "answer": "B",
+    "lines": []
+  },
+  "56": {
+    "page": 49,
+    "answer": "&",
+    "lines": []
+  },
+  "57": {
+    "page": 50,
+    "answer": "A",
+    "lines": []
+  },
+  "58": {
+    "page": 51,
+    "answer": "D",
+    "lines": []
+  },
+  "59": {
+    "page": 53,
+    "answer": "D",
+    "lines": []
+  },
+  "60": {
+    "page": 54,
+    "answer": "A",
+    "lines": []
+  },
+  "61": {
+    "page": 55,
+    "answer": "C",
+    "lines": []
+  },
+  "62": {
+    "page": 56,
+    "answer": "A",
+    "lines": []
+  },
+  "63": {
+    "page": 57,
+    "answer": "C",
+    "lines": []
+  },
+  "64": {
+    "page": 58,
+    "answer": "C",
+    "lines": []
+  },
+  "65": {
+    "page": 59,
+    "answer": "A",
+    "lines": []
+  },
+  "66": {
+    "page": 59,
+    "answer": "A",
+    "lines": []
+  },
+  "67": {
+    "page": 60,
+    "answer": "B",
+    "lines": []
+  },
+  "68": {
+    "page": 61,
+    "answer": "C",
+    "lines": []
+  },
+  "69": {
+    "page": 62,
+    "answer": "D",
+    "lines": []
+  },
+  "70": {
+    "page": 63,
+    "answer": "A",
+    "lines": []
+  },
+  "71": {
+    "page": 63,
+    "answer": "C",
+    "lines": []
+  },
+  "72": {
+    "page": 64,
+    "answer": "D",
+    "lines": []
+  },
+  "73": {
+    "page": 65,
+    "answer": "A",
+    "lines": []
+  },
+  "74": {
+    "page": 66,
+    "answer": "B",
+    "lines": []
+  },
+  "75": {
+    "page": 68,
+    "answer": "D",
+    "lines": []
+  },
+  "76": {
+    "page": 71,
+    "answer": "B",
+    "lines": []
+  },
+  "77": {
+    "page": 72,
+    "answer": "B",
+    "lines": []
+  },
+  "78": {
+    "page": 73,
+    "answer": "&",
+    "lines": []
+  },
+  "79": {
+    "page": 74,
+    "answer": "A",
+    "lines": []
+  },
+  "80": {
+    "page": 75,
+    "answer": "B",
+    "lines": []
+  },
+  "81": {
+    "page": 75,
+    "answer": "B",
+    "lines": []
+  },
+  "82": {
+    "page": 76,
+    "answer": "60",
+    "lines": []
+  },
+  "83": {
+    "page": 76,
+    "answer": "D",
+    "lines": []
+  },
+  "84": {
+    "page": 77,
+    "answer": "C",
+    "lines": []
+  },
+  "85": {
+    "page": 79,
+    "answer": "C",
+    "lines": []
+  },
+  "86": {
+    "page": 80,
+    "answer": "D",
+    "lines": []
+  },
+  "87": {
+    "page": 81,
+    "answer": "80",
+    "lines": []
+  },
+  "88": {
+    "page": 82,
+    "answer": "158",
+    "lines": []
+  },
+  "89": {
+    "page": 83,
+    "answer": "1",
+    "lines": []
+  },
+  "90": {
+    "page": 83,
+    "answer": "625",
+    "lines": []
+  },
+  "91": {
+    "page": 84,
+    "answer": "476",
+    "lines": []
+  },
+  "92": {
+    "page": 85,
+    "answer": "A",
+    "lines": []
+  },
+  "93": {
+    "page": 86,
+    "answer": "50",
+    "lines": []
+  },
+  "94": {
+    "page": 86,
+    "answer": "§",
+    "lines": []
+  },
+  "95": {
+    "page": 87,
+    "answer": "DO",
+    "lines": []
+  },
+  "96": {
+    "page": 88,
+    "answer": "D",
+    "lines": []
+  },
+  "97": {
+    "page": 89,
+    "answer": "B",
+    "lines": []
+  },
+  "98": {
+    "page": 90,
+    "answer": "15",
+    "lines": []
+  },
+  "99": {
+    "page": 91,
+    "answer": "B",
+    "lines": []
+  },
+  "100": {
+    "page": 91,
+    "answer": "150",
+    "lines": []
+  },
+  "101": {
+    "page": 92,
+    "answer": "C",
+    "lines": []
+  },
+  "102": {
+    "page": 93,
+    "answer": "C",
+    "lines": []
+  },
+  "103": {
+    "page": 94,
+    "answer": "A",
+    "lines": []
+  },
+  "104": {
+    "page": 94,
+    "answer": "B",
+    "lines": []
+  },
+  "105": {
+    "page": 95,
+    "answer": "12",
+    "lines": []
+  },
+  "106": {
+    "page": 96,
+    "answer": "D",
+    "lines": []
+  },
+  "107": {
+    "page": 96,
+    "answer": "30",
+    "lines": []
+  },
+  "108": {
+    "page": 97,
+    "answer": "B",
+    "lines": []
+  },
+  "109": {
+    "page": 98,
+    "answer": "B",
+    "lines": []
+  },
+  "110": {
+    "page": 99,
+    "answer": "D",
+    "lines": []
+  },
+  "111": {
+    "page": 100,
+    "answer": "25",
+    "lines": []
+  },
+  "112": {
+    "page": 101,
+    "answer": "D",
+    "lines": []
+  },
+  "113": {
+    "page": 102,
+    "answer": "60",
+    "lines": []
+  },
+  "114": {
+    "page": 102,
+    "answer": "C",
+    "lines": []
+  },
+  "115": {
+    "page": 103,
+    "answer": "A",
+    "lines": []
+  },
+  "116": {
+    "page": 104,
+    "answer": "A",
+    "lines": []
+  },
+  "117": {
+    "page": 105,
+    "answer": "500",
+    "lines": []
+  },
+  "118": {
+    "page": 106,
+    "answer": "I",
+    "lines": []
+  },
+  "119": {
+    "page": 107,
+    "answer": "A",
+    "lines": []
+  },
+  "120": {
+    "page": 108,
+    "answer": "50",
+    "lines": []
+  },
+  "121": {
+    "page": 109,
+    "answer": "B",
+    "lines": []
+  },
+  "122": {
+    "page": 110,
+    "answer": "A",
+    "lines": []
+  },
+  "123": {
+    "page": 111,
+    "answer": "D",
+    "lines": []
+  },
+  "124": {
+    "page": 112,
+    "answer": "C",
+    "lines": []
+  },
+  "125": {
+    "page": 113,
+    "answer": "B",
+    "lines": []
+  },
+  "126": {
+    "page": 114,
+    "answer": "5",
+    "lines": []
+  },
+  "127": {
+    "page": 115,
+    "answer": "A",
+    "lines": []
+  },
+  "128": {
+    "page": 116,
+    "answer": "10",
+    "lines": []
+  },
+  "129": {
+    "page": 118,
+    "answer": "D",
+    "lines": []
+  },
+  "130": {
+    "page": 118,
+    "answer": "C",
+    "lines": []
+  },
+  "131": {
+    "page": 119,
+    "answer": "210",
+    "lines": []
+  },
+  "132": {
+    "page": 120,
+    "answer": "9",
+    "lines": []
+  },
+  "133": {
+    "page": 121,
+    "answer": "D",
+    "lines": []
+  },
+  "134": {
+    "page": 122,
+    "answer": "A",
+    "lines": []
+  },
+  "135": {
+    "page": 123,
+    "answer": "A",
+    "lines": []
+  },
+  "136": {
+    "page": 123,
+    "answer": "C",
+    "lines": []
+  },
+  "137": {
+    "page": 124,
+    "answer": "225",
+    "lines": []
+  },
+  "138": {
+    "page": 125,
+    "answer": "C",
+    "lines": []
+  },
+  "139": {
+    "page": 126,
+    "answer": "A",
+    "lines": []
+  },
+  "140": {
+    "page": 127,
+    "answer": "B",
+    "lines": []
+  },
+  "141": {
+    "page": 128,
+    "answer": "10",
+    "lines": []
+  },
+  "142": {
+    "page": 129,
+    "answer": "A",
+    "lines": []
+  },
+  "143": {
+    "page": 130,
+    "answer": "27",
+    "lines": []
+  },
+  "144": {
+    "page": 131,
+    "answer": "B",
+    "lines": []
+  },
+  "145": {
+    "page": 132,
+    "answer": "A",
+    "lines": []
+  },
+  "146": {
+    "page": 133,
+    "answer": "A",
+    "lines": []
+  },
+  "147": {
+    "page": 133,
+    "answer": "A",
+    "lines": []
+  },
+  "148": {
+    "page": 134,
+    "answer": "400",
+    "lines": []
+  },
+  "149": {
+    "page": 134,
+    "answer": "15",
+    "lines": []
+  },
+  "150": {
+    "page": 135,
+    "answer": "D",
+    "lines": []
+  },
+  "151": {
+    "page": 136,
+    "answer": "15",
+    "lines": []
+  },
+  "152": {
+    "page": 137,
+    "answer": "€",
+    "lines": []
+  },
+  "153": {
+    "page": 138,
+    "answer": "120",
+    "lines": []
+  },
+  "154": {
+    "page": 139,
+    "answer": "54",
+    "lines": []
+  },
+  "155": {
+    "page": 140,
+    "answer": "§",
+    "lines": []
+  },
+  "156": {
+    "page": 141,
+    "answer": "52",
+    "lines": []
+  },
+  "157": {
+    "page": 142,
+    "answer": "A",
+    "lines": []
+  },
+  "158": {
+    "page": 143,
+    "answer": "30",
+    "lines": []
+  },
+  "159": {
+    "page": 144,
+    "answer": "B",
+    "lines": []
+  },
+  "160": {
+    "page": 144,
+    "answer": "32",
+    "lines": []
+  },
+  "161": {
+    "page": 145,
+    "answer": "D",
+    "lines": []
+  },
+  "162": {
+    "page": 145,
+    "answer": "D",
+    "lines": []
+  },
+  "163": {
+    "page": 146,
+    "answer": "5",
+    "lines": []
+  },
+  "164": {
+    "page": 146,
+    "answer": "A",
+    "lines": []
+  },
+  "165": {
+    "page": 147,
+    "answer": "32",
+    "lines": []
+  },
+  "166": {
+    "page": 148,
+    "answer": "C",
+    "lines": []
+  },
+  "167": {
+    "page": 149,
+    "answer": "50",
+    "lines": []
+  },
+  "168": {
+    "page": 150,
+    "answer": "D",
+    "lines": []
+  },
+  "169": {
+    "page": 151,
+    "answer": "B",
+    "lines": []
+  },
+  "170": {
+    "page": 152,
+    "answer": "10",
+    "lines": []
+  },
+  "171": {
+    "page": 153,
+    "answer": "C",
+    "lines": []
+  },
+  "172": {
+    "page": 153,
+    "answer": "30",
+    "lines": []
+  },
+  "173": {
+    "page": 155,
+    "answer": "34",
+    "lines": []
+  },
+  "174": {
+    "page": 156,
+    "answer": "C",
+    "lines": []
+  },
+  "175": {
+    "page": 157,
+    "answer": "A",
+    "lines": []
+  },
+  "176": {
+    "page": 158,
+    "answer": "A",
+    "lines": []
+  },
+  "177": {
+    "page": 159,
+    "answer": "88",
+    "lines": []
+  },
+  "178": {
+    "page": 160,
+    "answer": "A",
+    "lines": []
+  },
+  "179": {
+    "page": 160,
+    "answer": "100",
+    "lines": []
+  },
+  "180": {
+    "page": 161,
+    "answer": "3",
+    "lines": []
+  },
+  "181": {
+    "page": 162,
+    "answer": "B",
+    "lines": []
+  },
+  "182": {
+    "page": 163,
+    "answer": "5",
+    "lines": []
+  },
+  "183": {
+    "page": 164,
+    "answer": "30",
+    "lines": []
+  },
+  "184": {
+    "page": 165,
+    "answer": "31",
+    "lines": []
+  },
+  "185": {
+    "page": 166,
+    "answer": "D",
+    "lines": []
+  },
+  "186": {
+    "page": 166,
+    "answer": "A",
+    "lines": []
+  },
+  "187": {
+    "page": 167,
+    "answer": "C",
+    "lines": []
+  },
+  "188": {
+    "page": 168,
+    "answer": "B",
+    "lines": []
+  },
+  "189": {
+    "page": 169,
+    "answer": "C",
+    "lines": []
+  },
+  "190": {
+    "page": 170,
+    "answer": "10",
+    "lines": []
+  },
+  "191": {
+    "page": 174,
+    "answer": "200",
+    "lines": []
+  },
+  "192": {
+    "page": 175,
+    "answer": "15",
+    "lines": []
+  },
+  "193": {
+    "page": 175,
+    "answer": "A",
+    "lines": []
+  },
+  "194": {
+    "page": 177,
+    "answer": "C",
+    "lines": []
+  },
+  "195": {
+    "page": 178,
+    "answer": "60",
+    "lines": []
+  },
+  "196": {
+    "page": 179,
+    "answer": "C",
+    "lines": []
+  },
+  "197": {
+    "page": 179,
+    "answer": "C",
+    "lines": []
+  },
+  "198": {
+    "page": 180,
+    "answer": "B",
+    "lines": []
+  },
+  "199": {
+    "page": 180,
+    "answer": "D",
+    "lines": []
+  },
+  "200": {
+    "page": 181,
+    "answer": "C",
+    "lines": []
+  },
+  "201": {
+    "page": 181,
+    "answer": "C",
+    "lines": []
+  },
+  "202": {
+    "page": 182,
+    "answer": "B",
+    "lines": []
+  },
+  "203": {
+    "page": 183,
+    "answer": "D",
+    "lines": []
+  },
+  "204": {
+    "page": 186,
+    "answer": "A",
+    "lines": []
+  },
+  "205": {
+    "page": 187,
+    "answer": "C",
+    "lines": []
+  },
+  "206": {
+    "page": 187,
+    "answer": "B",
+    "lines": []
+  },
+  "207": {
+    "page": 188,
+    "answer": "&",
+    "lines": []
+  },
+  "208": {
+    "page": 190,
+    "answer": "A",
+    "lines": []
+  },
+  "209": {
+    "page": 190,
+    "answer": "B",
+    "lines": []
+  },
+  "210": {
+    "page": 191,
+    "answer": "A",
+    "lines": []
+  },
+  "211": {
+    "page": 191,
+    "answer": "B",
+    "lines": []
+  },
+  "212": {
+    "page": 192,
+    "answer": "B",
+    "lines": []
+  },
+  "213": {
+    "page": 193,
+    "answer": "D",
+    "lines": []
+  },
+  "214": {
+    "page": 194,
+    "answer": "A",
+    "lines": []
+  },
+  "215": {
+    "page": 195,
+    "answer": "D",
+    "lines": []
+  },
+  "216": {
+    "page": 195,
+    "answer": "A",
+    "lines": []
+  },
+  "217": {
+    "page": 196,
+    "answer": "D",
+    "lines": []
+  },
+  "218": {
+    "page": 196,
+    "answer": "C",
+    "lines": []
+  },
+  "219": {
+    "page": 197,
+    "answer": "&",
+    "lines": []
+  },
+  "220": {
+    "page": 199,
+    "answer": "C",
+    "lines": []
+  },
+  "221": {
+    "page": 200,
+    "answer": "D",
+    "lines": []
+  },
+  "222": {
+    "page": 201,
+    "answer": "B",
+    "lines": []
+  },
+  "223": {
+    "page": 202,
+    "answer": "B",
+    "lines": []
+  },
+  "224": {
+    "page": 203,
+    "answer": "B",
+    "lines": []
+  },
+  "225": {
+    "page": 204,
+    "answer": "B",
+    "lines": []
+  },
+  "226": {
+    "page": 206,
+    "answer": "B",
+    "lines": []
+  },
+  "227": {
+    "page": 206,
+    "answer": "A5",
+    "lines": []
+  },
+  "228": {
+    "page": 207,
+    "answer": "C",
+    "lines": []
+  },
+  "229": {
+    "page": 207,
+    "answer": "A",
+    "lines": []
+  },
+  "230": {
+    "page": 208,
+    "answer": "A",
+    "lines": []
+  },
+  "231": {
+    "page": 208,
+    "answer": "45",
+    "lines": []
+  },
+  "232": {
+    "page": 209,
+    "answer": "A",
+    "lines": []
+  },
+  "233": {
+    "page": 210,
+    "answer": "B",
+    "lines": []
+  },
+  "234": {
+    "page": 211,
+    "answer": "BO",
+    "lines": []
+  },
+  "235": {
+    "page": 212,
+    "answer": "B",
+    "lines": []
+  },
+  "236": {
+    "page": 213,
+    "answer": "C",
+    "lines": []
+  },
+  "237": {
+    "page": 214,
+    "answer": "C",
+    "lines": []
+  },
+  "238": {
+    "page": 215,
+    "answer": "C",
+    "lines": []
+  },
+  "239": {
+    "page": 215,
+    "answer": "D",
+    "lines": []
+  },
+  "240": {
+    "page": 216,
+    "answer": "D",
+    "lines": []
+  },
+  "241": {
+    "page": 216,
+    "answer": "280",
+    "lines": []
+  },
+  "242": {
+    "page": 216,
+    "answer": "100",
+    "lines": []
+  },
+  "243": {
+    "page": 218,
+    "answer": "100",
+    "lines": []
+  },
+  "244": {
+    "page": 219,
+    "answer": "B",
+    "lines": []
+  },
+  "245": {
+    "page": 219,
+    "answer": "C",
+    "lines": []
+  },
+  "246": {
+    "page": 220,
+    "answer": "D",
+    "lines": []
+  },
+  "247": {
+    "page": 221,
+    "answer": "D",
+    "lines": []
+  },
+  "248": {
+    "page": 222,
+    "answer": "C",
+    "lines": []
+  },
+  "249": {
+    "page": 222,
+    "answer": "16",
+    "lines": []
+  },
+  "250": {
+    "page": 223,
+    "answer": "D",
+    "lines": []
+  },
+  "251": {
+    "page": 224,
+    "answer": "DO",
+    "lines": []
+  },
+  "252": {
+    "page": 224,
+    "answer": "B",
+    "lines": []
+  },
+  "253": {
+    "page": 225,
+    "answer": "B",
+    "lines": []
+  },
+  "254": {
+    "page": 225,
+    "answer": "D",
+    "lines": []
+  },
+  "255": {
+    "page": 226,
+    "answer": "3",
+    "lines": []
+  },
+  "256": {
+    "page": 227,
+    "answer": "€",
+    "lines": []
+  },
+  "257": {
+    "page": 228,
+    "answer": "&",
+    "lines": []
+  },
+  "258": {
+    "page": 229,
+    "answer": "€",
+    "lines": []
+  },
+  "259": {
+    "page": 230,
+    "answer": "A",
+    "lines": []
+  },
+  "260": {
+    "page": 231,
+    "answer": "B",
+    "lines": []
+  },
+  "261": {
+    "page": 231,
+    "answer": "D",
+    "lines": []
+  },
+  "262": {
+    "page": 232,
+    "answer": "D",
+    "lines": []
+  },
+  "263": {
+    "page": 233,
+    "answer": "44/35",
+    "lines": []
+  },
+  "264": {
+    "page": 235,
+    "answer": "B",
+    "lines": []
+  },
+  "265": {
+    "page": 236,
+    "answer": "FJ",
+    "lines": []
+  },
+  "266": {
+    "page": 236,
+    "answer": "C",
+    "lines": []
+  },
+  "267": {
+    "page": 236,
+    "answer": "125",
+    "lines": []
+  },
+  "268": {
+    "page": 237,
+    "answer": "B",
+    "lines": []
+  },
+  "269": {
+    "page": 239,
+    "answer": "A",
+    "lines": []
+  },
+  "270": {
+    "page": 240,
+    "answer": "B",
+    "lines": []
+  },
+  "271": {
+    "page": 241,
+    "answer": "REAL,",
+    "lines": []
+  },
+  "272": {
+    "page": 242,
+    "answer": "A",
+    "lines": []
+  },
+  "273": {
+    "page": 242,
+    "answer": "BEHAVES",
+    "lines": []
+  },
+  "274": {
+    "page": 243,
+    "answer": "A",
+    "lines": []
+  },
+  "275": {
+    "page": 244,
+    "answer": "166",
+    "lines": []
+  },
+  "276": {
+    "page": 245,
+    "answer": "10",
+    "lines": []
+  },
+  "277": {
+    "page": 245,
+    "answer": "11",
+    "lines": []
+  },
+  "278": {
+    "page": 246,
+    "answer": "C",
+    "lines": []
+  },
+  "279": {
+    "page": 247,
+    "answer": "A",
+    "lines": []
+  },
+  "280": {
+    "page": 248,
+    "answer": "14",
+    "lines": []
+  },
+  "281": {
+    "page": 249,
+    "answer": "A",
+    "lines": []
+  }
+}

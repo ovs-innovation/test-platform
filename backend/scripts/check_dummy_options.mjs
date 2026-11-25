@@ -1,27 +1,41 @@
-import { query } from '../src/config/db.js';
+import fetch from 'node-fetch';
 
-async function main() {
-  const r = await query(`
-    SELECT id, chapter, question_text, options
-    FROM question_bank
-    WHERE UPPER(COALESCE(exam_type, 'NEET')) = 'JEE' AND LOWER(category) = 'physics';
-  `);
-  console.log(`Checking ${r.rows.length} questions in local DB...`);
-  let dummyCount = 0;
-  for (const row of r.rows) {
-    const opts = typeof row.options === 'string' ? JSON.parse(row.options) : row.options;
-    if (Array.isArray(opts)) {
-      for (const opt of opts) {
-        const txt = typeof opt === 'object' && opt !== null ? opt.text : String(opt);
-        if (/^Option\s*\([A-D]\)$/i.test(txt?.trim())) {
-          dummyCount++;
-          console.warn(`[DUMMY OPTION FOUND] ID: ${row.id}, Ch: ${row.chapter}, Text: ${txt}`);
-        }
-      }
-    }
+async function checkAll() {
+  const loginRes = await fetch('https://edvedum.com/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: 'admin@edvedum.com', password: 'Admin@12345' }),
+  });
+  const { token } = await loginRes.json();
+
+  // Fetch all questions matching Electrostatics across all exams
+  const res = await fetch('https://edvedum.com/api/question-bank?refresh=true&limit=10000', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const data = await res.json();
+  const allQuestions = data.questions || [];
+  console.log('Total questions in question-bank returned:', allQuestions.length);
+
+  const electroQuestions = allQuestions.filter(q => q.chapter === 'Electrostatics' || /electrostatics/i.test(q.chapter || ''));
+  console.log('Total Electrostatics questions:', electroQuestions.length);
+
+  const byExam = {};
+  for (const q of electroQuestions) {
+    const key = `${q.exam_type} | id_range: [min ${Math.min(...electroQuestions.filter(x => x.exam_type === q.exam_type).map(x => x.id))}, max ${Math.max(...electroQuestions.filter(x => x.exam_type === q.exam_type).map(x => x.id))}]`;
+    byExam[key] = (byExam[key] || 0) + 1;
   }
-  console.log(`Dummy options found in local DB: ${dummyCount}`);
-  process.exit(0);
+  console.log('Electro questions summary:', byExam);
+
+  // Check if any question has "(A)" as an option text
+  const dummyOptionQ = allQuestions.filter(q => 
+    q.chapter === 'Electrostatics' && 
+    Array.isArray(q.options) && 
+    q.options.some(o => (typeof o === 'string' ? o.trim() === '(A)' : o.text && o.text.trim() === '(A)'))
+  );
+  console.log('Electro questions with dummy options (A):', dummyOptionQ.length);
+  if (dummyOptionQ.length > 0) {
+    console.log('Sample dummy option Q:', dummyOptionQ.slice(0, 3).map(q => ({ id: q.id, exam: q.exam_type, text: q.question_text.slice(0, 50) })));
+  }
 }
 
-main().catch(console.error);
+checkAll().catch(console.error);

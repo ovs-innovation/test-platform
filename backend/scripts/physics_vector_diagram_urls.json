@@ -1,0 +1,27 @@
+{
+  "question": {
+    "17": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413962/edvedum_physics/vector/q17_forces_axes.png",
+    "29": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413963/edvedum_physics/vector/q29_triangle_vectors.png",
+    "30": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413964/edvedum_physics/vector/q30_match_triangles.png",
+    "40": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413965/edvedum_physics/vector/q40_forces_60deg.png",
+    "42": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413966/edvedum_physics/vector/q42_forces_match_directions.png",
+    "43": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413967/edvedum_physics/vector/q43_vector_addition_options.png",
+    "50": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413968/edvedum_physics/vector/q50_forces_120deg.png",
+    "51": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413969/edvedum_physics/vector/q51_three_forces.png",
+    "53": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413970/edvedum_physics/vector/q53_path_abcd.png",
+    "54": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413970/edvedum_physics/vector/q54_six_vectors.png",
+    "60": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413971/edvedum_physics/vector/q60_vectors_circle.png",
+    "64": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413972/edvedum_physics/vector/q64_triangle_30_60.png",
+    "72": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413973/edvedum_physics/vector/q72_quadrilateral_pqrs.png",
+    "78": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413973/edvedum_physics/vector/q78_triangle_midpoint_r.png",
+    "103": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413974/edvedum_physics/vector/q103_lamis_theorem.png",
+    "104": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413974/edvedum_physics/vector/q104_equilibrium_forces.png",
+    "109": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413975/edvedum_physics/vector/q109_orthogonal_vectors.png"
+  },
+  "solution": {
+    "24": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413976/edvedum_physics/vector/q24_solution_vectors.png",
+    "25": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413976/edvedum_physics/vector/q25_solution_vector.png",
+    "26": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413977/edvedum_physics/vector/q26_solution_vector.png",
+    "27": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795413978/edvedum_physics/vector/q27_solution_vector.png"
+  }
+}

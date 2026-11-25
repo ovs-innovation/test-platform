@@ -1,0 +1,72 @@
+[
+  {
+    "p": 1,
+    "lIdx": 11,
+    "line": "ansvE=C",
+    "rawAns": "C",
+    "cleanAns": "C"
+  },
+  {
+    "p": 20,
+    "lIdx": 22,
+    "line": "answer 3",
+    "rawAns": "3",
+    "cleanAns": "3"
+  },
+  {
+    "p": 24,
+    "lIdx": 27,
+    "line": "answer. 6",
+    "rawAns": "6",
+    "cleanAns": "6"
+  },
+  {
+    "p": 25,
+    "lIdx": 20,
+    "line": "ans ara 2s Shan QE Bon 50. Vg = 8100 Vip = AV 5 T= Fo = fh 32 07",
+    "rawAns": "a",
+    "cleanAns": "A"
+  },
+  {
+    "p": 88,
+    "lIdx": 10,
+    "line": "answer a",
+    "rawAns": "a",
+    "cleanAns": "A"
+  },
+  {
+    "p": 98,
+    "lIdx": 36,
+    "line": "ans: 3040",
+    "rawAns": "3040",
+    "cleanAns": "3040"
+  },
+  {
+    "p": 121,
+    "lIdx": 52,
+    "line": "ANSWER 4",
+    "rawAns": "4",
+    "cleanAns": "4"
+  },
+  {
+    "p": 152,
+    "lIdx": 24,
+    "line": "ANSWER A",
+    "rawAns": "A",
+    "cleanAns": "A"
+  },
+  {
+    "p": 194,
+    "lIdx": 5,
+    "line": "answer 3",
+    "rawAns": "3",
+    "cleanAns": "3"
+  },
+  {
+    "p": 196,
+    "lIdx": 5,
+    "line": "Answer D",
+    "rawAns": "D",
+    "cleanAns": "D"
+  }
+]

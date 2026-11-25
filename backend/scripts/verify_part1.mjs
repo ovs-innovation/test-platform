@@ -1,22 +1,23 @@
+import { GRAVITATION_PART1 } from './clean_gravitation_part1.mjs';
 import fs from 'fs';
-import { BINOMIAL_THEOREM_PART1 } from './data/binomial_theorem_part1.mjs';
 
-const key = JSON.parse(fs.readFileSync('backend/scripts/official_answer_key_binomial_theorem.json', 'utf8'));
-const letters = ['A', 'B', 'C', 'D'];
+const keys = JSON.parse(fs.readFileSync('backend/scripts/gravitation_official_keys.json', 'utf8'));
 
-let errors = 0;
-for (const q of BINOMIAL_THEOREM_PART1) {
-  const expected = key[q.q_num];
-  const actual = letters[q.correct_index];
-  if (expected !== actual) {
-    console.error(`Mismatch at Q${q.q_num}: expected ${expected}, got ${actual}`);
-    errors++;
+console.log('Part 1 total questions:', GRAVITATION_PART1.length);
+let dummyCount = 0;
+let keyMismatch = 0;
+
+for (const q of GRAVITATION_PART1) {
+  const offKey = keys[q.qNum];
+  const offIdx = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 }[offKey];
+  if (q.correct_option !== offIdx) {
+    console.error(`Mismatch for Q${q.qNum}: got ${q.correct_option}, expected ${offIdx} (${offKey})`);
+    keyMismatch++;
+  }
+  for (const opt of q.options) {
+    if (typeof opt === 'string' && opt.startsWith('Option (')) dummyCount++;
   }
 }
 
-if (errors === 0) {
-  console.log(`Part 1 Verified: All ${BINOMIAL_THEOREM_PART1.length}/65 questions match official key 100%!`);
-} else {
-  console.error(`Part 1 had ${errors} errors!`);
-}
-
+console.log(`Dummy options count: ${dummyCount}`);
+console.log(`Key mismatches count: ${keyMismatch}`);

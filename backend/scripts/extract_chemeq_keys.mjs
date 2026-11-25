@@ -1,0 +1,29 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const cache = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'chemeq_ocr_cache.json'), 'utf8'));
+
+// Keys from Page 57 visual inspection
+const page57Keys = {
+  1: "C", 2: "D", 3: "A", 4: "B", 5: "B", 6: "C", 7: "D", 8: "A", 9: "B", 10: "D",
+  11: "A", 12: "A", 13: "D", 14: "A", 15: "A", 16: "C", 17: "A", 18: "D", 19: "D", 20: "B",
+  21: "C", 22: "D", 23: "C", 24: "B", 25: "D", 26: "A", 27: "B", 28: "D", 29: "C", 30: "D",
+  31: "C", 32: "C", 33: "A", 34: "A", 35: "A", 36: "C", 37: "B", 38: "B", 39: "A", 40: "C",
+  41: "A", 42: "D", 43: "C", 44: "A", 45: "A", 46: "D", 47: "D", 48: "B", 49: "B", 50: "A",
+  51: "B", 52: "D", 53: "D", 54: "C", 55: "16", 56: "C", 57: "A", 58: "D", 59: "5", 60: "1",
+  61: "1380", 62: "855", 63: "73", 64: "20", 65: "354", 66: "2", 67: "172", 68: "2", 69: "25", 70: "1400",
+  71: "16", 72: "50", 73: "42", 74: "182", 75: "4", 76: "6", 77: "A", 78: "747", 79: "1107", 80: "710",
+  81: "2735", 82: "125", 83: "A", 84: "2", 85: "2", 86: "2", 87: "4", 88: "3", 89: "1", 90: "12",
+  91: "D", 92: "B", 93: "49", 94: "3", 95: "44", 96: "1", 97: "2", 98: "417", 99: "A", 100: "B",
+  101: "D", 102: "C", 103: "B", 104: "A", 105: "D", 106: "B", 107: "A", 108: "B", 109: "962", 110: "B",
+  111: "C", 112: "B", 113: "74", 114: "B", 115: "B", 116: "B", 117: "5", 118: "A", 119: "33", 120: "125",
+  121: "D", 122: "15", 123: "C", 124: "C", 125: "D", 126: "2474", 127: "230", 128: "B", 129: "A", 130: "8",
+  131: "4", 132: "C"
+};
+
+fs.writeFileSync(path.resolve(__dirname, 'chemeq_official_keys.json'), JSON.stringify(page57Keys, null, 2));
+console.log(`Saved 132 official keys to chemeq_official_keys.json`);

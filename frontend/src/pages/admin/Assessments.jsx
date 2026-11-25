@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { adminService, testSeriesService } from '../../lib/services.js';
@@ -33,11 +33,35 @@ import {
   Award,
   Eye,
   Radio,
-  Mail
+  Mail,
+  GraduationCap
 } from 'lucide-react';
 import { isTestLive } from '../../lib/testStatus.js';
 
 const TEST_TYPES = ['AIETS', 'EDVEDUM Battleground', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
+const CLASS_LEVELS = ['All', 'Class 11', 'Class 12', 'Repeater'];
+
+export const resolveTestClass = (t) => {
+  if (!t) return null;
+  if (t.class_level) {
+    const cl = String(t.class_level).toLowerCase();
+    if (cl.includes('repeater') || cl.includes('dropper') || cl.includes('pass')) return 'Repeater';
+    if (cl.includes('11')) return 'Class 11';
+    if (cl.includes('12')) return 'Class 12';
+    return t.class_level;
+  }
+  if (t.linked_test_series_title) {
+    const s = String(t.linked_test_series_title).toLowerCase();
+    if (s.includes('repeater') || s.includes('dropper')) return 'Repeater';
+    if (s.includes('11')) return 'Class 11';
+    if (s.includes('12')) return 'Class 12';
+  }
+  const text = `${t.test_name || ''} ${t.syllabus || ''}`.toLowerCase();
+  if (/\b(repeater|repeaters|dropper|droppers|12th\s*pass|passed\s*12)\b/i.test(text)) return 'Repeater';
+  if (/\b(class\s*11|11th)\b/i.test(text)) return 'Class 11';
+  if (/\b(class\s*12|12th)\b/i.test(text)) return 'Class 12';
+  return null;
+};
 
 export const isPersonalStudentTest = (t) => {
   if (!t) return false;
@@ -70,6 +94,7 @@ export default function AdminAssessments() {
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('All');
+  const [selectedClass, setSelectedClass] = useState('All');
 
   // Modals
   const [testModalOpen, setTestModalOpen] = useState(false);
@@ -121,6 +146,7 @@ export default function AdminAssessments() {
   const [testForm, setTestForm] = useState({
     test_name: '',
     test_type: 'AIETS',
+    class_level: 'Class 12',
     test_date: '2026-10-04',
     start_time: '09:00:00',
     end_time: '12:00:00',
@@ -161,11 +187,29 @@ export default function AdminAssessments() {
     loadData();
   }, []);
 
+  const classCounts = useMemo(() => {
+    let all = 0;
+    let class11 = 0;
+    let class12 = 0;
+    let repeater = 0;
+    tests.forEach((t) => {
+      if (isPersonalStudentTest(t)) return;
+      all++;
+      const cl = resolveTestClass(t);
+      if (cl === 'Class 11') class11++;
+      else if (cl === 'Class 12') class12++;
+      else if (cl === 'Repeater') repeater++;
+      else class12++;
+    });
+    return { all, class11, class12, repeater };
+  }, [tests]);
+
   const openCreateModal = () => {
     setEditingTest(null);
     setTestForm({
       test_name: '',
       test_type: 'AIETS',
+      class_level: selectedClass !== 'All' ? selectedClass : 'Class 12',
       test_date: new Date().toISOString().split('T')[0],
       start_time: '09:00:00',
       end_time: '12:00:00',
@@ -196,6 +240,7 @@ export default function AdminAssessments() {
     setTestForm({
       test_name: t.test_name || t.title || '',
       test_type: t.test_type || 'AIETS',
+      class_level: t.class_level || resolveTestClass(t) || 'Class 12',
       test_date: formatDateForInput(t.test_date),
       start_time: t.start_time ? String(t.start_time).slice(0, 8) : '09:00:00',
       end_time: t.end_time ? String(t.end_time).slice(0, 8) : '12:00:00',
@@ -219,6 +264,7 @@ export default function AdminAssessments() {
     try {
       const payload = {
         ...testForm,
+        class_level: testForm.class_level || null,
         is_live: Boolean(testForm.is_live),
         notify_enrolled: testForm.notify_enrolled !== false,
         max_marks: testForm.max_marks !== '' && testForm.max_marks !== null && !isNaN(Number(testForm.max_marks))
@@ -667,7 +713,14 @@ export default function AdminAssessments() {
     const matchesSearch = (t.test_name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
                           (t.syllabus && t.syllabus.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesType = selectedType === 'All' || (selectedType === 'EDVEDUM Battleground' ? (t.test_type === 'EDVEDUM Battleground' || t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') : t.test_type === selectedType);
-    return matchesSearch && matchesType;
+    
+    let matchesClass = true;
+    if (selectedClass !== 'All') {
+      const cl = resolveTestClass(t) || 'Class 12';
+      matchesClass = cl === selectedClass;
+    }
+
+    return matchesSearch && matchesType && matchesClass;
   });
 
   return (
@@ -751,30 +804,86 @@ export default function AdminAssessments() {
           {/* TAB 1: TESTS LIST */}
           {activeTab === 'tests' && (
             <div className="space-y-4">
-              {/* Search & Type Filters */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white dark:bg-[#111827] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
-                <div className="relative w-full sm:w-80">
-                  <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
-                  <input
-                    type="text"
-                    placeholder="Search test name or syllabus..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-slate-900 pl-9 pr-3 py-2 text-xs font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+              {/* Class Quick-Filter Pills & Search/Type Filters */}
+              <div className="space-y-3">
+                {/* Class Filter Pills */}
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mr-1 flex items-center gap-1 shrink-0">
+                    <GraduationCap className="h-3.5 w-3.5" /> Class Filter:
+                  </span>
+                  {[
+                    { id: 'All', label: 'All Classes', count: classCounts.all },
+                    { id: 'Class 11', label: 'Class 11', count: classCounts.class11 },
+                    { id: 'Class 12', label: 'Class 12', count: classCounts.class12 },
+                    { id: 'Repeater', label: 'Repeater', count: classCounts.repeater },
+                  ].map((tab) => {
+                    const active = selectedClass === tab.id;
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setSelectedClass(tab.id)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          active
+                            ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/25'
+                            : 'bg-white dark:bg-[#111827] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/80'
+                        }`}
+                      >
+                        <span>{tab.label}</span>
+                        <span
+                          className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                            active
+                              ? 'bg-blue-700 text-blue-100'
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                          }`}
+                        >
+                          {tab.count}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
 
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <select
-                    value={selectedType}
-                    onChange={(e) => setSelectedType(e.target.value)}
-                    className="rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none w-full sm:w-auto"
-                  >
-                    <option value="All">All Test Types</option>
-                    {TEST_TYPES.map((t) => (
-                      <option key={t} value={t}>{t}</option>
-                    ))}
-                  </select>
+                {/* Search & Select Dropdowns */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white dark:bg-[#111827] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                  <div className="relative w-full sm:w-80">
+                    <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+                    <input
+                      type="text"
+                      placeholder="Search test name or syllabus..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-slate-900 pl-9 pr-3 py-2 text-xs font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-3 w-full sm:w-auto flex-wrap sm:flex-nowrap">
+                    {/* Class Dropdown */}
+                    <div className="flex items-center gap-1.5 w-full sm:w-auto">
+                      <select
+                        value={selectedClass}
+                        onChange={(e) => setSelectedClass(e.target.value)}
+                        className="rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none w-full sm:w-auto"
+                      >
+                        <option value="All">All Classes ({classCounts.all})</option>
+                        <option value="Class 11">Class 11 ({classCounts.class11})</option>
+                        <option value="Class 12">Class 12 ({classCounts.class12})</option>
+                        <option value="Repeater">Repeater ({classCounts.repeater})</option>
+                      </select>
+                    </div>
+
+                    {/* Test Type Dropdown */}
+                    <select
+                      value={selectedType}
+                      onChange={(e) => setSelectedType(e.target.value)}
+                      className="rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none w-full sm:w-auto"
+                    >
+                      <option value="All">All Test Types</option>
+                      {TEST_TYPES.map((t) => (
+                        <option key={t} value={t}>{t}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -822,10 +931,23 @@ export default function AdminAssessments() {
                                     </span>
                                   )}
                                 </div>
-                                <div className="flex items-center gap-2 mt-1">
+                                <div className="flex items-center gap-2 mt-1 flex-wrap">
                                   <span className="bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-bold border border-blue-200 dark:border-blue-800">
                                     {(t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') ? 'EDVEDUM Battleground' : t.test_type}
                                   </span>
+                                  {resolveTestClass(t) && (
+                                    <span
+                                      className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
+                                        resolveTestClass(t) === 'Class 11'
+                                          ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+                                          : resolveTestClass(t) === 'Class 12'
+                                          ? 'bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-300 border-sky-200 dark:border-sky-800'
+                                          : 'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300 border-amber-200 dark:border-amber-800'
+                                      }`}
+                                    >
+                                      {resolveTestClass(t)}
+                                    </span>
+                                  )}
                                   <Link
                                     to={`/admin/simulator/${t.id}`}
                                     target="_blank"
@@ -990,6 +1112,19 @@ export default function AdminAssessments() {
                             <span className="bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-extrabold border border-blue-200 dark:border-blue-800">
                               {(t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') ? 'EDVEDUM Battleground' : t.test_type}
                             </span>
+                            {resolveTestClass(t) && (
+                              <span
+                                className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
+                                  resolveTestClass(t) === 'Class 11'
+                                    ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+                                    : resolveTestClass(t) === 'Class 12'
+                                    ? 'bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-300 border-sky-200 dark:border-sky-800'
+                                    : 'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300 border-amber-200 dark:border-amber-800'
+                                }`}
+                              >
+                                {resolveTestClass(t)}
+                              </span>
+                            )}
                             {t.solution_pdf_url && (
                               <span className="text-[10px] font-extrabold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-200">
                                 Solution Uploaded
@@ -1295,7 +1430,20 @@ export default function AdminAssessments() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Target Class / Level *</label>
+                  <select
+                    value={testForm.class_level || 'Class 12'}
+                    onChange={(e) => setTestForm({ ...testForm, class_level: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="Class 11">Class 11</option>
+                    <option value="Class 12">Class 12</option>
+                    <option value="Repeater">Repeater</option>
+                  </select>
+                </div>
+
                 <div>
                   <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Test Category *</label>
                   <select

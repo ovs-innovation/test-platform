@@ -1,0 +1,722 @@
+[
+  {
+    "question_number": 51,
+    "question": "The angular frequency of alternating current in a L-C-R circuit is $100\\text{ rad s}^{-1}$. The components connected are shown in the figure. Find the value of inductance of the coil and capacity of condenser.",
+    "options": [
+      "$1.33\\text{ H and } 150\\,\\mu\\text{F}$",
+      "$0.8\\text{ H and } 150\\,\\mu\\text{F}$",
+      "$1.33\\text{ H and } 250\\,\\mu\\text{F}$",
+      "$0.8\\text{ H and } 250\\,\\mu\\text{F}$"
+    ],
+    "correct_answer": "D",
+    "explanation": "¢ 15 1\nCurrent through 6012 resistance = — = — A\n60 4\nthus capacitor current — ia\nwVe=I1Xc\n1 1\nW=3 re\n1 1\n+0 = 555 = Togo — WF\nNow,\ncurrent through 4012 resistance = = = Loy\n40 2\n. ASE MO\nthus current through inductor — — — — = — 4\n2 4 4\n1\nVe=I1X.= ax wl\n20= . x 100 x L\n“4\n= L=08H",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531218/edvedum_physics/alternating_current/ac_q51_diagram.png"
+  },
+  {
+    "question_number": 52,
+    "question": "Match List I with List II.\n\nList I:\n(a) Rectifier\n(b) Stabilizer\n(c) Transformer\n(d) Filter\n\nList II:\n(i) Used either for stepping up or stepping down the A.C. voltage\n(ii) Used to convert A.C. voltage into D.C. voltage\n(iii) Used to remove any ripple in the rectified output voltage\n(iv) Used for constant output voltage even when the input voltage or load current change\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(a)-(ii), (b)-(iv), (c)-(i), (d)-(iii)",
+      "(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)",
+      "(a)-(i), (b)-(iii), (c)-(ii), (d)-(iv)",
+      "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)"
+    ],
+    "correct_answer": "A",
+    "explanation": "(a) Rectifier — A.C.AC to D.C.DC (b) Stabilizer — used for constant output voltage even when input voltage or\ncurrent change. (c) Transformer — Step- up or step - down A.C. voltage. (d) Filter — used to remove any ripple in\nthe rectified output voltage.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 53,
+    "question": "An L.C.R. circuit contains resistance of $110\\,\\Omega$ and a supply of $220\\text{ V}$ at $300\\text{ rad s}^{-1}$ angular frequency. If only capacitance is removed from the circuit, current lags behind the voltage by $45^\\circ$. If on the other hand, only the inductor is removed the current leads by $45^\\circ$ with the applied voltage. The R.M.S. current flowing in the circuit will be :",
+    "options": [
+      "$2.5\\text{ A}$",
+      "$2\\text{ A}$",
+      "$1\\text{ A}$",
+      "$1.5\\text{ A}$"
+    ],
+    "correct_answer": "B",
+    "explanation": "1 wl\ntan ds” = —m = = Xr = X¢\n=» resonance\ni= v\n\"R\n220\n=T5 24",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 54,
+    "question": "An alternating current is given by the equation $i = i_1 \\sin\\omega t + i_2 \\cos\\omega t$. The rms current will be :",
+    "options": [
+      "$\\frac{1}{\\sqrt{2}}(i_1 + i_2)$",
+      "$\\frac{1}{\\sqrt{2}}(i_1 + i_2)^2$",
+      "$\\frac{1}{2}(i_1^2 + i_2^2)^{1/2}$",
+      "$\\frac{1}{\\sqrt{2}}(i_1^2 + i_2^2)^{1/2}$"
+    ],
+    "correct_answer": "D",
+    "explanation": "i= iy sinwt + ip sin (wt + 90)\ni= /i} +i} sin (wt + ¢)\nid _ Vig +3\nme = ET",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 55,
+    "question": "In a series LCR resonant circuit, the quality factor is measured as 100. If the inductance is increased by two fold and resistance is decreased by two fold, then the quality factor after this change will be ______.",
+    "options": [],
+    "correct_answer": "282.84",
+    "explanation": "Xz _wL_ 1 L_ VE\nRR JICR RVC\nQ = at —2v2Q=2v2(100)\n(3)ve\n2\n= 282.84",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 282.84,
+    "diagram_url": null
+  },
+  {
+    "question_number": 56,
+    "question": "Find the peak current and resonant frequency of the following circuit (as shown in figure).",
+    "options": [
+      "$5\\text{ A}$ and $50\\text{ Hz}$",
+      "$2\\text{ A}$ and $100\\text{ Hz}$",
+      "$2\\text{ A}$ and $50\\text{ Hz}$",
+      "$0.2\\text{ A}$ and $50\\text{ Hz}$"
+    ],
+    "correct_answer": "D",
+    "explanation": "100 pF\n100 mA\n7-30 sin1007\n120 Q\nas given\nXi =wL = 100 x 100 x 10% = 102\n1 1\nXo = 56 = moxioxios 00\nZ = (Xi - Xo) + R?\nZ = /(10 — 100)? + 120?\nZ = /(—90)? + 120° = v/8100 + 14400 = 1/22500 = 1500\npeak = 5 = J = LA=02A\nFor resonance, wL = pr = w? = fr Sw = Tie\nThe frequency f is given by:\n=m = pe\n\" 27VIC 27v100x 10° x 100 x 10°\nI. 1 __ 1 100Vi0\n27/10 2x10 ° 27/10 © 2m\nUsing the approximation Vio =m\n100m\nf= Sms 50 Hz",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531218/edvedum_physics/alternating_current/ac_q56_diagram.png"
+  },
+  {
+    "question_number": 57,
+    "question": "A sinusoidal voltage of peak value $250\\text{ V}$ is applied to a series LCR circuit, in which $R = 8\\,\\Omega$, $L = 24\\text{ mH}$ and $C = 60\\,\\mu\\text{F}$. The value of power dissipated at resonant condition is $x\\text{ kW}$. The value of $x$ to the nearest integer is ______.",
+    "options": [],
+    "correct_answer": "4",
+    "explanation": "2\nAt resonance power, p _ Viems)”\nR\n2\n2 2\nP= a = 3906.25\n~~ 4kW",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 4,
+    "diagram_url": null
+  },
+  {
+    "question_number": 58,
+    "question": "An RC circuit as shown in the figure is driven by an AC source generating a square wave. The output wave pattern monitored by CRO across the capacitor would look close to :",
+    "options": [
+      "Square wave pattern",
+      "Inverted square wave",
+      "Exponential charging and discharging waveform",
+      "Sinusoidal wave pattern"
+    ],
+    "correct_answer": "C",
+    "explanation": "JTL For t; — ty Charging graph t; — ¢3 Discharging graph\n4 5) [5",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531217/edvedum_physics/alternating_current/ac_q58_diagram.png"
+  },
+  {
+    "question_number": 59,
+    "question": "For the given circuit, comment on the type of transformer used :",
+    "options": [
+      "Auxiliary transformer",
+      "Auto transformer",
+      "Step-up transformer",
+      "Step-down transformer"
+    ],
+    "correct_answer": "C",
+    "explanation": "P 60\nVs= Se Te 545.45 Vp = 220 Vg > Vp = Step up transformer",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531217/edvedum_physics/alternating_current/ac_q59_diagram.png"
+  },
+  {
+    "question_number": 60,
+    "question": "An AC current is given by $I = I_1\\sin\\omega t + I_2\\cos\\omega t$. A hot wire ammeter will give a reading :",
+    "options": [
+      "$\\sqrt{\\frac{I_1^2 - I_2^2}{2}}$",
+      "$\\sqrt{\\frac{I_1^2 + I_2^2}{2}}$",
+      "$\\frac{I_1 + I_2}{\\sqrt{2}}$",
+      "$\\frac{I_1 + I_2}{2\\sqrt{2}}$"
+    ],
+    "correct_answer": "B",
+    "explanation": "I = I,sinwt + Icoswt\nSoly= VE + 1€]\nDie Lf HET\n& 7 2",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 61,
+    "question": "What happens to the inductive reactance and the current in a purely inductive circuit if the frequency is halved ?",
+    "options": [
+      "Both, inductive reactance and current will be halved.",
+      "Inductive reactance will be halved and current will be doubled.",
+      "Inductive reactance will be doubled and current will be halved.",
+      "Both, inductive reactance and current will be doubled."
+    ],
+    "correct_answer": "B",
+    "explanation": "Xr =wL\n§—2\n\"wl",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 62,
+    "question": "Match List-I with List-II.\n\nList-I:\n(a) Phase difference between current and voltage in a purely resistive AC circuit\n(b) Phase difference between current and voltage in a pure inductive AC circuit\n(c) Phase difference between current and voltage in a pure capacitive AC circuit\n(d) Phase difference between current and voltage in an LCR series circuit\n\nList-II:\n(i) $\\frac{\\pi}{2}$, current leads voltage\n(ii) zero\n(iii) $\\frac{\\pi}{2}$, current lags voltage\n(iv) $\\tan^{-1}\\left(\\frac{X_C - X_L}{R}\\right)$\n\nChoose the most appropriate answer from the options given below :",
+    "options": [
+      "(a) - (ii), (b) - (i), (c) - (iv), (d) - (iii)",
+      "(a) - (ii), (b) - (iv), (c) - (iii), (d) - (i)",
+      "(a) - (ii), (b) - (iii), (c) - (iv), (d) - (i)",
+      "(a) - (ii), (b) - (iii), (c) - (i), (d) - (iv)"
+    ],
+    "correct_answer": "D",
+    "explanation": "i L\n/ (d)\n@ ————1'=V (b) ©\nI\nVe\n1\nVi-Ve Xi-Xc\nt Sh. el do eres\nang = R",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 63,
+    "question": "An AC source rated $220\\text{ V}, 50\\text{ Hz}$ is connected to a resistor. The time taken by the current to change from its maximum to the rms value is :",
+    "options": [
+      "$2.5\\text{ ms}$",
+      "$1.5\\text{ ms}$",
+      "$5.5\\text{ ms}$",
+      "$0.25\\text{ ms}$"
+    ],
+    "correct_answer": "A",
+    "explanation": "i = ig cos(wt)\ni=igatt=0\ni fo atwt 2,\nf= —mtwl=—\nV2 4\nart SONNE 1\nTw 4a(2nf)  8f\n1\nt=— =2.5ms\n400",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 64,
+    "question": "In a series LCR resonance circuit, if we change the resistance only, from a lower to higher value :",
+    "options": [
+      "The bandwidth of resonance circuit will increase.",
+      "The resonance frequency will increase.",
+      "The quality factor will increase.",
+      "The quality factor and the resonance frequency will remain constant."
+    ],
+    "correct_answer": "A",
+    "explanation": "The bandwidth of resonance circuit will increase.\nAs we know that Bandwidth = R/L.\nBandwidth o R.\nSo, bandwidth will increase.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 65,
+    "question": "In a series LCR circuit, the inductive reactance ($X_L$) is $10\\,\\Omega$ and the capacitive reactance ($X_C$) is $4\\,\\Omega$. The resistance ($R$) in the circuit is $6\\,\\Omega$. The power factor of the circuit is :",
+    "options": [
+      "$\\frac{1}{2}$",
+      "$\\frac{1}{2\\sqrt{2}}$",
+      "$\\frac{1}{\\sqrt{2}}$",
+      "$\\frac{\\sqrt{3}}{2}$"
+    ],
+    "correct_answer": "C",
+    "explanation": "L C R-6Q\nX=10Q X,=40\nWe know that power factor is\ncosp=2 ...(1)\n(oL-1/m¢)\nZz\n¢\nR\n= Z=1/62+ (10-42 = Z =6v2|cos¢ = LE 1%\n6v2 v2",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 66,
+    "question": "In a series LCR circuit, the inductive reactance ($X_L$) is $10\\,\\Omega$ and the capacitive reactance ($X_C$) is $4\\,\\Omega$. The resistance ($R$) in the circuit is $6\\,\\Omega$. The power factor of the circuit is :",
+    "options": [
+      "$\\frac{1}{2}$",
+      "$\\frac{1}{2\\sqrt{2}}$",
+      "$\\frac{1}{\\sqrt{2}}$",
+      "$\\frac{\\sqrt{3}}{2}$"
+    ],
+    "correct_answer": "C",
+    "explanation": "L C R=6Q\nX=10Q yxy =40\n3 %\nWe know that power factor is\ncos ¢, cos dp = z cae()\n(oL-1/mc)\nZ\n¢\nR\n= Z=6+(10-42=Z=06V2|cos¢p= 9 a\n6v2 v2",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 67,
+    "question": "AC voltage $V(t) = 20 \\sin\\omega t$ of frequency $50\\text{ Hz}$ is applied to a parallel plate capacitor. The separation between the plates is $2\\text{ mm}$ and the area is $1\\text{ m}^2$. The amplitude of the oscillating displacement current for the applied AC voltage is [Take $\\epsilon_0 = 8.85 \\times 10^{-12}\\text{ F m}^{-1}$] :",
+    "options": [
+      "$91.14\\,\\mu\\text{A}$",
+      "$83.37\\,\\mu\\text{A}$",
+      "$27.79\\,\\mu\\text{A}$",
+      "$55.58\\,\\mu\\text{A}$"
+    ],
+    "correct_answer": "C",
+    "explanation": "C V = 20sinm¢ From the given information, C' = Sod, LE\ndd. R107\nroel 2x10 2x10 oo 2x10 18 ioc\n“CT UCT Zxsmxe  Zxdme CT 2% “xn\nSop = ja = nz x107%4 = 27.47pA. The value of amplitude of displacement current will be same as\nC\nvalue of amplitude of conventional current. Hence option 3.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 68,
+    "question": "In an LCR series circuit, an inductor $30\\text{ mH}$ and a resistor $1\\,\\Omega$ are connected to an AC source of angular frequency $300\\text{ rad s}^{-1}$. The value of capacitance for which the current leads the voltage by $45^\\circ$ is $\\frac{1}{x} \\times 10^{-3}\\text{ F}$. Then the value of $x$ is ______.",
+    "options": [],
+    "correct_answer": "3",
+    "explanation": "Tc — TL\ntang = R\n_Te—Tg\ntand5 = Tr\nzc—zL=R\n1\nri wL=R\npL —300 x 0.03=1\nwC aT\n1\n— =10\nwC\nOSE LE\n10w 10 x 300\n1 3\nC= ra 10\nX=3",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 3,
+    "diagram_url": null
+  },
+  {
+    "question_number": 69,
+    "question": "A series LCR circuit of $R = 5\\,\\Omega$, $L = 20\\text{ mH}$ and $C = 0.5\\,\\mu\\text{F}$ is connected across an AC supply of $250\\text{ V}$, having variable frequency. The power dissipated at resonance condition is $x \\times 10^3\\text{ W}$. The value of $x$ is ______.",
+    "options": [],
+    "correct_answer": "125",
+    "explanation": "X 1 = X¢ (due to resonance)\nZ=Rs0i,,, = = = ¥\nZ BR\nV2 250 x 250\nHe 125 x 10°W",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 125,
+    "diagram_url": null
+  },
+  {
+    "question_number": 70,
+    "question": "For a series LCR circuit with $R = 100\\,\\Omega$, $L = 0.5\\text{ mH}$ and $C = 0.1\\,\\mu\\text{F}$ connected across $220\\text{ V} - 50\\text{ Hz}$ AC supply, the phase angle between current and supplied voltage and the nature of the circuit is :",
+    "options": [
+      "$0^\\circ$, resistive circuit",
+      "$\\sim 90^\\circ$, predominantly inductive circuit",
+      "$0^\\circ$, resonance circuit",
+      "$\\sim 90^\\circ$, predominantly capacitive circuit"
+    ],
+    "correct_answer": "D",
+    "explanation": "R = 100Q\nXi =wL =50r x 107°\n1 a0\nXe = 76 = 100\nXe> X,\nand | Xe — Xz| > R",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 71,
+    "question": "In a circuit consisting of a capacitance and a generator with alternating emf, $E_g = E_0 \\sin\\omega t$, $V_C$ and $I_C$ are the voltage and current. Correct phasor diagram for such circuit is :",
+    "options": [
+      "Phasor diagram showing $V_C$ leading $I_C$ by $\\pi/2$",
+      "Phasor diagram showing $V_C$ and $I_C$ in phase",
+      "Phasor diagram showing $I_C$ leading $V_C$ by $\\pi/2$",
+      "Phasor diagram showing $I_C$ lagging $V_C$ by $\\pi$"
+    ],
+    "correct_answer": "C",
+    "explanation": "In capacitor, current lead voltage by 5",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531217/edvedum_physics/alternating_current/ac_q71_diagram.png"
+  },
+  {
+    "question_number": 72,
+    "question": "Match List-I with List-II.\n\nList-I:\n(a) $\\omega L > \\frac{1}{\\omega C}$\n(b) $\\omega L = \\frac{1}{\\omega C}$\n(c) $\\omega L < \\frac{1}{\\omega C}$\n(d) Resonant frequency\n\nList-II:\n(i) Current is in phase with emf\n(ii) Current lags behind the applied emf\n(iii) Maximum current occurs\n(iv) Current leads the emf\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(a) - (ii), (b) - (i), (c) - (iv), (d) - (iii)",
+      "(a) - (ii), (b) - (i), (c) - (iii), (d) - (iv)",
+      "(a) - (iii), (b) - (i), (c) - (iv), (d) - (ii)",
+      "(a) - (iv), (b) - (iii), (c) - (ii), (d) - (i)"
+    ],
+    "correct_answer": "A",
+    "explanation": "(a) For zz, > x, voltage leads the current (ii) (b) For z;, = z¢, voltage & current are in same phase (i) (c) For\nx < zc, current leads the voltage (iv) (d) For resonant frequency zy, = zc, current is maximum (iii)",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 73,
+    "question": "A $10\\,\\Omega$ resistance is connected across $220\\text{ V} - 50\\text{ Hz}$ AC supply. The time taken by the current to change from its maximum value to the rms value is :",
+    "options": [
+      "$2.5\\text{ ms}$",
+      "$1.5\\text{ ms}$",
+      "$3.0\\text{ ms}$",
+      "$4.5\\text{ ms}$"
+    ],
+    "correct_answer": "A",
+    "explanation": "10Q\ncouch = i — ig sinwt When i — ig ip = io Sin wt; = why = 3+ (1) When\nV'=220 V/ 50 Hz\ni fo fo ig sinwty = wt; z (2) Time taken by current from maximum value to rms value,\n= =i i u 3\nZz 2 2=7 y\nHee ge LL\n=f =) =o=m=m Tx 277 = 5350 = 109° = 25ms",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 74,
+    "question": "Two circuits are shown in figure (a) and (b). At a frequency of ______ $\\text{rad s}^{-1}$ the average power dissipated in one cycle will be the same in both the circuits.",
+    "options": [],
+    "correct_answer": "500",
+    "explanation": "For figure (a)\nVins\nPag = ~R*\ni Yom\nEa Ba\nR? = z?\n2\n25 = (Viae —z) + #)\n25 = (2, — 21)\" +25\n1\nTe =2L => 5G 3 wL\nod 10°\nPr J SU\nLC ~~ 0.1 x40\nw = 500",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 500,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531219/edvedum_physics/alternating_current/ac_q74_diagram.png"
+  },
+  {
+    "question_number": 75,
+    "question": "A $0.07\\text{ H}$ inductor and a $12\\,\\Omega$ resistor are connected in series to a $220\\text{ V}, 50\\text{ Hz}$ AC source. The approximate current in the circuit and the phase angle between current and source voltage are respectively : [Take $\\pi$ as $22/7$]",
+    "options": [
+      "$8.8\\text{ A and } \\tan^{-1}\\left(\\frac{11}{6}\\right)$",
+      "$88\\text{ A and } \\tan^{-1}\\left(\\frac{11}{6}\\right)$",
+      "$0.88\\text{ A and } \\tan^{-1}\\left(\\frac{11}{6}\\right)$",
+      "$8.8\\text{ A and } \\tan^{-1}\\left(\\frac{6}{11}\\right)$"
+    ],
+    "correct_answer": "A",
+    "explanation": "Xp\n— NY Sail\n+= (3)\nXp =wL\nXp=2x z x 50 x 0.07 = 22Q\n—tan [22 r=\né = tan (= R=120\njis -1 11\ns=w (5)\nZ =X? + R*=25.059\n|4 220\nI= 7 = 25.080 8.774",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 76,
+    "question": "A $100\\,\\Omega$ resistance, a $0.1\\,\\mu\\text{F}$ capacitor and an inductor are connected in series across a $250\\text{ V}$ supply at variable frequency. Calculate the value of inductance of inductor at which resonance will occur. Given that the resonant frequency is $60\\text{ Hz}$.",
+    "options": [
+      "$0.70\\text{ mH}$",
+      "$70.3\\text{ mH}$",
+      "$7.03 \\times 10^{-5}\\text{ H}$",
+      "$70.3\\text{ H}$"
+    ],
+    "correct_answer": "D",
+    "explanation": "C=01puF =10\"F\nResonant frequency = 60 Hz\nCo —\n° VIC\nFINE IETS\nVIC fic\nby putting values L ~ 70.3Hz.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 77,
+    "question": "A series LCR circuit driven by $300\\text{ V}$ at a frequency of $50\\text{ Hz}$ contains a resistance $R = 3\\text{ k}\\Omega$, an inductor of inductive reactance $X_L = 250\\pi\\,\\Omega$ and an unknown capacitor. The value of capacitance to maximise the average power should be : (take $\\pi^2 = 10$)",
+    "options": [
+      "$400\\,\\mu\\text{F}$",
+      "$4\\,\\mu\\text{F}$",
+      "$40\\,\\mu\\text{F}$",
+      "$25\\,\\mu\\text{F}$"
+    ],
+    "correct_answer": "B",
+    "explanation": "Angular frequency, w = 2m f = 27 x 50 = 1007rads *\nAt resonance,\nXp =pm ule RB ee pup\nwC wC 1007 x 2507",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 78,
+    "question": "In the given circuit the AC source has $\\omega = 100\\text{ rad s}^{-1}$. Considering the inductor and capacitor to be ideal, what will be the current $I$ flowing through the circuit?",
+    "options": [
+      "$5.9\\text{ A}$",
+      "$6\\text{ A}$",
+      "$0.94\\text{ A}$",
+      "$3.16\\text{ A}$"
+    ],
+    "correct_answer": "D",
+    "explanation": "2 2\n1 1\nZe=\\[(==) + R2=/(=———=) +100% = V/100 + 100% = 100v2Q\n=, 2) ai V arast) +100\n200 200 4\n= : JT 7 2 150% = f= ee LE ap\nZ;, = /(WL)? + R? = 1/(100 x 0.5)? + 50% = 50y/2Q ir, 7 SEE 2v/2.\n200 200 100 1 50 1\nic=5—=——==vV2Acos¢1 = ——= = —=, 1 = 45° cos hp = —= = —=, fp = 45°\n= Zc 1002 $= Tova ~ va? 6) Eo Rie\nIc\nA450\n45 I= VIZ + ILI =v8+2I= /10 = 3.16 A This question is bonus as\n45°\nI\nthe correct answer was not available for students to mark as option in original paper by NTA.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531219/edvedum_physics/alternating_current/ac_q78_diagram.png"
+  },
+  {
+    "question_number": 79,
+    "question": "The alternating current is given by, $i = \\left\\{\\sqrt{42} \\sin\\left(\\frac{2\\pi t}{T}\\right) + 10\\right\\}\\text{ A}$. The R.M.S. value of this current is ______ A.",
+    "options": [],
+    "correct_answer": "11",
+    "explanation": "The given function of current is, i = {viz (F) Sy 10} A\n2rt 2mt\nIt means, 12 = 42sin® 7) +100 + 201/42 sin &)\n42\n2) = 2S y\n= (i%) eT 00\nRMS value of the current is, i, = / (i?) = v121 = 114",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 11,
+    "diagram_url": null
+  },
+  {
+    "question_number": 80,
+    "question": "An AC circuit has an inductor and a resistor of resistance $R$ in series, such that $X_L = 3R$. Now, a capacitor is added in series such that $X_C = 2R$. The ratio of the new power factor with the old power factor of the circuit is $\\sqrt{5} : x$. The value of $x$ is ______.",
+    "options": [],
+    "correct_answer": "1",
+    "explanation": "g R\nFirst Recall the formula of power factor, cos ¢ = Vi\nSoda R R R 1\ninitial = 5 = mm——— = eee = ——\n2 2 B\nZz Jx+r VIRER VIO\nnT R R R 1\nAR\n7 Jx-xoi rr VEER V2\no ota VE\n€OS Pinitial z",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 1,
+    "diagram_url": null
+  },
+  {
+    "question_number": 81,
+    "question": "In an AC circuit, an inductor, a capacitor and a resistor are connected in series with $X_L = R = X_C$. Impedance of this circuit is :",
+    "options": [
+      "Zero",
+      "$R$",
+      "$R\\sqrt{2}$",
+      "$2R$"
+    ],
+    "correct_answer": "B",
+    "explanation": "Recall the formula of impedance is in terms of resistance, 7 — \\ /( Xi — Xo) + R2, here, the condition of\nresonance, X; = X¢, it means,\nZ=\\/(X:-X1)) +R =R",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 82,
+    "question": "At very high frequencies, the effective impedance of the given circuit will be ______ $\\Omega$.",
+    "options": [],
+    "correct_answer": "2",
+    "explanation": "Forw — co = — 0 = capacitance acts as short circuit & wL — oo Inductance acts as open circuit\nw\n10 2Q\nI 2x2\nZ=1+—\"==2Q\n-\n220V",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 2,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531219/edvedum_physics/alternating_current/ac_q82_diagram.png"
+  },
+  {
+    "question_number": 83,
+    "question": "As shown in the figure an inductor of inductance $200\\text{ mH}$ is connected to an AC source of emf $220\\text{ V}$ and frequency $50\\text{ Hz}$. The instantaneous voltage of the source is $0\\text{ V}$ when the peak value of current is $\\frac{\\sqrt{a}}{\\pi}\\text{ A}$. The value of $a$ is ______.",
+    "options": [],
+    "correct_answer": "242",
+    "explanation": "The reactance of the given inductor is, X = wL = 2x fL = 27 x 50 x 0.2 = 207). The maximum current in\nthe given circuit will be, i, = VV rs = V2 x 220 _ v2 A Therefore, a = 242a\nXi 20m ™",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 242,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531219/edvedum_physics/alternating_current/ac_q83_diagram.png"
+  },
+  {
+    "question_number": 84,
+    "question": "A resistance of $40\\,\\Omega$ is connected to a source of alternating current rated $220\\text{ V}, 50\\text{ Hz}$. Find the time taken by the current to change from its maximum value to the rms value :",
+    "options": [
+      "$2.5\\text{ ms}$",
+      "$1.25\\text{ ms}$",
+      "$2.5\\text{ s}$",
+      "$0.25\\text{ s}$"
+    ],
+    "correct_answer": "A",
+    "explanation": "The current in AC is of the form of i = i; sin wt. The maximum current is i; and rms current is & The change in\nthe phase when current change from maximum to rms value is Zrad Therefore, the time taken for the same will\nbe,\nAd T\nbe = rm",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 85,
+    "question": "Given below are two statements :\nStatement-I: The reactance of an ac circuit is zero. It is possible that the circuit contains a capacitor and an inductor.\nStatement-II: In ac circuit, the average power delivered by the source never becomes zero.\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      "Both Statement I and Statement II are true.",
+      "Both Statement I and Statement II are false.",
+      "Statement I is true but Statement II is false.",
+      "Statement I is false but Statement II is true."
+    ],
+    "correct_answer": "C",
+    "explanation": "The reactance of a circuit containing a capacitor and an inductor is given by X = X; — X¢ = wL — = An AC\nwi\ncircuit has zero reactance at resonance, i.e., when, X; = X¢. So, first statement is true.\nThe power consumption in an AC circuit is zero when circuit contains only inductance or capacitance since\naverage power consumed in a cycle is zero for inductance or capacitance. So, second statement is false.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 86,
+    "question": "If wattless current flows in the AC circuit, then the circuit is :",
+    "options": [
+      "Purely Resistive circuit",
+      "Purely Inductive circuit",
+      "LCR series circuit",
+      "RC series circuit only"
+    ],
+    "correct_answer": "B",
+    "explanation": "The current in an AC circuit containing only either a capacitor or an inductor is said to be wattless as the average\npower is zero. As wattless current has phase difference of ¢ = 90° with voltage, therefore power factor cos ¢ will\nbe zero.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 87,
+    "question": "Match List-I with List-II.\n\nList-I:\n(A) AC generator\n(B) Galvanometer\n(C) Transformer\n(D) Metal detector\n\nList-II:\n(I) Detects the presence of current in the circuit\n(II) Converts mechanical energy into electrical energy\n(III) Works on the principle of resonance in AC circuit\n(IV) Changes an alternating voltage for smaller or greater value\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(A) - (II), (B) - (I), (C) - (IV), (D) - (III)",
+      "(A) - (II), (B) - (I), (C) - (III), (D) - (IV)",
+      "(A) - (III), (B) - (IV), (C) - (II), (D) - (I)",
+      "(A) - (III), (B) - (I), (C) - (II), (D) - (IV)"
+    ],
+    "correct_answer": "A",
+    "explanation": "AC generator-- Converts mechanical energy into electrical energy. A — II.\nGalvanometer-- Detects the presence of current in the circuit B — I.\nTransformer-- Changes an alternating voltage for smaller or greater value C' — IV.\nMetal detector-- Works on the principle of resonance in AC circuit D — I11.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 88,
+    "question": "A sinusoidal voltage $V(t) = 210\\sin 3000t\\text{ volt}$ is applied to a series LCR circuit in which $L = 10\\text{ mH}$, $C = 25\\,\\mu\\text{F}$ and $R = 100\\,\\Omega$. The phase difference ($\\Phi$) between the applied voltage and resultant current will be :",
+    "options": [
+      "$\\tan^{-1}(0.17)$",
+      "$\\tan^{-1}(0.46)$",
+      "$\\tan^{-1}(0.30)$",
+      "$\\tan^{-1}(13.33)$"
+    ],
+    "correct_answer": "A",
+    "explanation": "1 1 40\nC: iti 1: sXp=—\"=c-—\"—\"———=—0\nSpacilive Facica ls Xo — oie orn eres =e\nInductive reactance is X 1 = wL = 3000 x 10 x 10 = 300\nNow, total reactance is X = Xr — X¢\n40 50\n=30——=—0\n3 3\n50\nX_ 3 1\nRugs S006\ntang = 1 17\nang = ¢ =0.\nHence, the phase difference between the applied voltage and resultant current is tan! (0.17).",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 89,
+    "question": "An inductor of inductance $2\\,\\mu\\text{H}$ is connected in series with a resistance, a variable capacitor and an AC source of frequency $7\\text{ kHz}$. The value of capacitance for which maximum current flows in the circuit is ______ $\\mu\\text{F}$. [Take $\\pi = 22/7$]",
+    "options": [],
+    "correct_answer": "22",
+    "explanation": "Angular frequency, w = 2 f = 1007rads\nHere, inductive reactance X; = wL = (1007) (100 x 10\"*) = 1070\n1 1 100\niti gmc = aig\nAnd capacitive reactance ¢ 0 (100m) x (100 Z 07) = Q\nNow, impedance of the series circuitis 7 — \\ R? + (XL = X¢)? = R=100Q\nTherefore,\n\\4\nTrus = ee\n220\n=a 224",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 22,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531219/edvedum_physics/alternating_current/ac_q89_diagram.png"
+  },
+  {
+    "question_number": 90,
+    "question": "In an LC circuit, the inductance is $20\\text{ mH}$ and capacitance is $50\\,\\mu\\text{F}$. The maximum charge on the capacitor is $1\\text{ mC}$. The maximum current in the circuit is ______ mA.",
+    "options": [],
+    "correct_answer": "0",
+    "explanation": "Let current in the inductance is iy, through the capacitor is ic and through resistance is iy at any instance as\n: 00000 .\nIt, R 550\nshown in the figure.\nAC source\nAccording to the Kirchoff's junction law, ig = ir, + ic. Atresonance X = X hence iy, = ic. Also, current\nthrough the capacitor and inductor have phase difference of wradnrad. Therefore, they will form destructive\ninterference and hence the current through the resistance will be 0.",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 0,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531220/edvedum_physics/alternating_current/ac_q90_diagram.png"
+  },
+  {
+    "question_number": 91,
+    "question": "The current flowing through an ac circuit is given by $I = 5\\sin(120\\pi t)\\text{ A}$. How long will the current take to reach the peak value starting from zero?",
+    "options": [
+      "$\\frac{1}{60}\\text{ s}$",
+      "$\\frac{1}{600}\\text{ s}$",
+      "$\\frac{1}{120}\\text{ s}$",
+      "$\\frac{1}{240}\\text{ s}$"
+    ],
+    "correct_answer": "D",
+    "explanation": "1\n5A |\ni T\nH If initial value of current is zero, then it will take — time to reach\nH 4\nH\nH\nH\n0 T 4\n4\n2m\nthe peak value, where T' = time period. As we know, w = 120m Therefore, be T @.\nTAN\noT T a 1\n“3 2x120m 200°",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 92,
+    "question": "A series LCR circuit with $R = 18\\,\\Omega$ is connected to an AC source of $220\\text{ V}, 50\\text{ Hz}$. At resonance, the power dissipated in the circuit is ______ W.",
+    "options": [],
+    "correct_answer": "100",
+    "explanation": "The frequency given is (.5 kilo cycle per second = f = 500Hz =» w = 2m f = 10007rads *.\nTotal capacitance of the wire is C' = 0.01 x 10% x 100F.\nImpedance is minimum at resonance. Therefore, for minimum impedance\nXi =Xc\n1 1 1\nDee OY P= =10\"'H = 100mH\nEa WC 10007 x 72 x 0.01 x 10 ° x 100 fm",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 100,
+    "diagram_url": null
+  },
+  {
+    "question_number": 93,
+    "question": "A coil of self inductance $L$ and resistance $R$ is connected to an AC source. The power factor of the circuit is $0.6$. If an identical coil is connected in series with the first coil, the new power factor will be $\\frac{x}{25}$. The value of $x$ is ______.",
+    "options": [],
+    "correct_answer": "15",
+    "explanation": "From the circuit:\n120 Q\n100 mH 100 pF\nV =204/25in(100 t)\nVo 20v2\nAngular frequency w = 100rad s *and V,,,, = —= = == —20V.\ngl quency w v= V2\nXp, =wL = 100 x 100 x 10 S100 Xe= =~ _1000\nwC 100 x 100 x 10-6\n|X. — Xe| = [10 — 100| = 90Q\nImpedance: Z = \\/(X; — X¢)® + R? = \\/(90)2 + (120) = 1502\n. Vims _ 20 R\nCurrent: = = = —_ A; power factor =.\nba aT Llis,\nHeat balance: (Vim, irms cos ¢) At = ms AT\n2\nSA Ji 2 2 x 16 x 22500 15s\nVous B 400 x 120",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 15,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531220/edvedum_physics/alternating_current/ac_q93_diagram.png"
+  },
+  {
+    "question_number": 94,
+    "question": "In the given AC circuit, the instantaneous voltage is $V = 220\\sqrt{2}\\sin(100\\pi t)\\text{ V}$. If the circuit components are ideal, the power dissipated in the circuit is ______ W.",
+    "options": [],
+    "correct_answer": "0",
+    "explanation": "Since the voltage across the inductor and capacitor is same, the circuit is in resonance. Therefore, the current in\nthe circuit will be, § — 4 = = — 44 Al. The voltage across the inductor is double that across the resistor.\nTherefore, Vi, = 2V zp = 440V. We know that\n440 1 100 1\n=X =% i i TE Sp ~ 0K.\nVi=iXr=ix2rfL=L Wx 1000 Tread = mH Therefore, K' 100 0.01 = 0",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 0,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531220/edvedum_physics/alternating_current/ac_q94_diagram.png"
+  },
+  {
+    "question_number": 95,
+    "question": "For a series LCR circuit, $I$ vs $\\omega$ curve is shown. Consider the following statements:\n(a) To the left of $\\omega_r$, the circuit is mainly capacitive.\n(b) To the left of $\\omega_r$, the circuit is mainly inductive.\n(c) At $\\omega_r$, impedance of the circuit is equal to the resistance of the circuit.\n(d) At $\\omega_r$, impedance of the circuit is 0.\n\nChoose the most appropriate answer from the options given below :",
+    "options": [
+      "(a) and (d) only",
+      "(b) and (d) only",
+      "(a) and (c) only",
+      "(b) and (c) only"
+    ],
+    "correct_answer": "C",
+    "explanation": "The impedance of an AC circuitis given by, Z — /R2 4 (Xe - Xo\nFor current to be maximum Z should be minimum. The value of Z will be minimum when Xo — Xf = 0.\nTherefore, the value of Z = R. Hence, statement C is correct and statement D is wrong.\nTo the left of w, i.e. when w < w,, X¢ > X. Therefore, the circuit is mainly capacitive. Hence, statement A is\ncorrect and statement B is wrong.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531220/edvedum_physics/alternating_current/ac_q95_diagram.png"
+  },
+  {
+    "question_number": 96,
+    "question": "An inductor of $0.5\\text{ mH}$, a capacitor of $200\\,\\mu\\text{F}$ and a resistor of $2\\,\\Omega$ are connected in series with a $220\\text{ V}$ ac source. If the current is in phase with the emf, the frequency of ac source will be ______ $\\times 10^2\\text{ Hz}$.",
+    "options": [],
+    "correct_answer": "5",
+    "explanation": "Given here: L = 0.5 x 10 *H\nC=200x10°F\nR=2Q.\nIf current is in phase with emf, so this is the condition of resonance.\nx ak\nffm ————\n27vLC 2 x3.14/LC\n1\nf=——— _ —503.55Hz = 5.03 x 10°Hz\n6.281/0.5 x 10° x 200 x 10°",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 5,
+    "diagram_url": null
+  },
+  {
+    "question_number": 97,
+    "question": "The RMS value of conduction current in a parallel plate capacitor is $6.9\\text{ A}$. The capacity of this capacitor, if it is connected to $230\\text{ V}$ AC supply with an angular frequency of $600\\text{ rad s}^{-1}$, will be :",
+    "options": [
+      "$5\\,\\mu\\text{F}$",
+      "$50\\,\\mu\\text{F}$",
+      "$100\\,\\mu\\text{F}$",
+      "$500\\,\\mu\\text{F}$"
+    ],
+    "correct_answer": "B",
+    "explanation": "Lomas = 6.904; Voy = 230V;w = 600rads\nVv,\nCurrent in capacitor I,,,, = ——~, where, X ¢ is capacitive reactance given by X c= Lo\nXc wC\nNow, current, I, = (V,,,,) x (wC)\n: : 1 6.9 x10 °°\nSo, capacitance is (' = —— = ———— _ 50pF\nVena 230x600 7",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 98,
+    "question": "To increase the resonant frequency in series LCR circuit :",
+    "options": [
+      "source frequency should be increased",
+      "Another resistance should be added in series with the first resistance",
+      "Another capacitor should be added in series with the first capacitor",
+      "The source frequency should be decreased"
+    ],
+    "correct_answer": "C",
+    "explanation": "The resonant frequency of an LCR circuit is given by f 2. It does not depend on the source frequency as\ni =—\nBT STL prVEG\nwell as the resistance of the circuit.\nTherefore, to increase the resonating frequency product of L and C should decrease.\nBy joining another capacitor in series, the equivalent capacitor will decrease.\nHence, option C is correct option.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 99,
+    "question": "When you walk through a metal detector carrying a metal object in your pocket, it raises an alarm. This phenomenon works on :",
+    "options": [
+      "Electromagnetic induction",
+      "Resonance in ac circuits",
+      "Mutual induction in ac circuits",
+      "Interference of electromagnetic waves"
+    ],
+    "correct_answer": "B",
+    "explanation": "Metal detector works on the principle of transmitting an electromagnetic signal and analyses a return signal from\nthe target. So it works on the principle of resonance in AC circuit.\nWhen the LC circuit detects any resonating frequency from any metal which is near to it, electric field will be\ncreated which will lead to induces current in the coil and changes in the signal flow through the coil.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 100,
+    "question": "The effective current $I$ in the given circuit at very high frequencies will be ______ A.",
+    "options": [],
+    "correct_answer": "44",
+    "explanation": "At very high frequencies, inductor acts as an open circuit and capacitor as short circuit. So, capacitive reactance,\nXe = = 22 () Also, inductive reactance, X; = wL = oo Thus, equivalent circuit can be redrawn as\nwi\n80 40 8Q\nHere, both 4() resistances are in parallel and together they are in series\n220 V\nwith1€2 and 29 resistances. Equivalent impedance is Z = 1 + = + 2 = 50) Effective current is\n220V\nI=——=444\n50",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 44,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531209/edvedum_physics/alternating_current/ac_q100_diagram.png"
+  }
+]

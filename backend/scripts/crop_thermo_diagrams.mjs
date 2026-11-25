@@ -1,64 +1,71 @@
-import { createCanvas, loadImage } from '@napi-rs/canvas';
+import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const outDir = 'backend/scripts/thermo_diagrams';
-const publicDir = 'frontend/public/uploads/heat_thermodynamics';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
+const PAGES_DIR = path.resolve(__dirname, 'thermo_jee_pages');
+const OUT_DIR = path.resolve(__dirname, 'thermo_diagrams');
 
-const diagrams = [
-  { id: 'thermo_q5_diagram', page: 3, box: { minX: 68, maxX: 653, minY: 261, maxY: 639 } },
-  { id: 'thermo_q8_diagram', page: 4, box: { minX: 67, maxX: 767, minY: 303, maxY: 558 } },
-  { id: 'thermo_q15_diagram', page: 6, box: { minX: 68, maxX: 653, minY: 236, maxY: 639 } },
-  { id: 'thermo_q16_diagram', page: 6, box: { minX: 68, maxX: 653, minY: 828, maxY: 1244 } },
-  { id: 'thermo_q17_diagram', page: 7, box: { minX: 68, maxX: 653, minY: 236, maxY: 605 } },
-  { id: 'thermo_q23_diagram', page: 8, box: { minX: 68, maxX: 653, minY: 577, maxY: 959 } },
-  { id: 'thermo_q28_diagram', page: 10, box: { minX: 68, maxX: 669, minY: 261, maxY: 622 } },
-  { id: 'thermo_q44_diagram', page: 13, box: { minX: 92, maxX: 653, minY: 292, maxY: 650 } },
-  { id: 'thermo_q46_diagram', page: 13, box: { minX: 68, maxX: 653, minY: 1144, maxY: 1430 } },
-  { id: 'thermo_q48_diagram', page: 14, box: { minX: 90, maxX: 653, minY: 435, maxY: 793 } },
-  { id: 'thermo_q65_diagram', page: 17, box: { minX: 88, maxX: 669, minY: 986, maxY: 1345 } },
-  { id: 'thermo_q66_diagram', page: 18, box: { minX: 94, maxX: 653, minY: 259, maxY: 639 } },
-  { id: 'thermo_q68_diagram', page: 19, box: { minX: 108, maxX: 653, minY: 292, maxY: 655 } },
-  { id: 'thermo_q71_diagram', page: 20, box: { minX: 108, maxX: 653, minY: 337, maxY: 723 } },
-  { id: 'thermo_q76_diagram', page: 21, box: { minX: 68, maxX: 653, minY: 471, maxY: 874 } },
-  { id: 'thermo_q77_diagram', page: 21, box: { minX: 68, maxX: 653, minY: 1111, maxY: 1480 } },
-  { id: 'thermo_q81_diagram', page: 23, box: { minX: 108, maxX: 653, minY: 292, maxY: 639 } },
-  { id: 'thermo_q82_opt_a', page: 24, box: { minX: 130, maxX: 415, minY: 298, maxY: 521 } },
-  { id: 'thermo_q82_opt_b', page: 24, box: { minX: 130, maxX: 415, minY: 539, maxY: 756 } },
-  { id: 'thermo_q82_opt_c', page: 24, box: { minX: 130, maxX: 385, minY: 774, maxY: 992 } },
-  { id: 'thermo_q82_opt_d', page: 24, box: { minX: 130, maxX: 415, minY: 1010, maxY: 1220 } },
-  { id: 'thermo_q83_diagram', page: 25, box: { minX: 96, maxX: 653, minY: 320, maxY: 650 } },
-  { id: 'thermo_q129_diagram', page: 32, box: { minX: 68, maxX: 653, minY: 1027, maxY: 1367 } },
-  { id: 'thermo_q133_diagram', page: 33, box: { minX: 68, maxX: 653, minY: 1094, maxY: 1446 } }
+if (!fs.existsSync(OUT_DIR)) {
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+}
+
+// Bounding box definitions relative to page width and height (w=1224, h=1584)
+const DIAGRAMS = [
+  { id: 'q58_q_diagram', page: 20, l: 0.20, t: 0.04, w: 0.60, h: 0.32 },
+  { id: 'q60_q_diagram', page: 21, l: 0.55, t: 0.25, w: 0.20, h: 0.10 },
+  { id: 'q64_q_diagram', page: 23, l: 0.20, t: 0.06, w: 0.60, h: 0.32 },
+  { id: 'q71_q_diagram', page: 27, l: 0.20, t: 0.03, w: 0.58, h: 0.25 },
+  { id: 'q72_q_diagram', page: 28, l: 0.20, t: 0.02, w: 0.55, h: 0.30 },
+  { id: 'q86_q_diagram', page: 33, l: 0.20, t: 0.59, w: 0.50, h: 0.26 },
+  { id: 'q88_sol_diagram', page: 34, l: 0.20, t: 0.33, w: 0.62, h: 0.28 },
+  { id: 'q113_sol_diagram', page: 41, l: 0.20, t: 0.46, w: 0.62, h: 0.21 },
+  { id: 'q116_q_diagram', page: 42, l: 0.20, t: 0.31, w: 0.35, h: 0.17 },
+  { id: 'q141_q_diagram', page: 50, l: 0.20, t: 0.33, w: 0.65, h: 0.40 },
+  { id: 'q152_q_diagram', page: 55, l: 0.20, t: 0.04, w: 0.62, h: 0.40 },
+  { id: 'q164_q_diagram', page: 59, l: 0.20, t: 0.66, w: 0.60, h: 0.14 },
+  { id: 'q170_q_diagram', page: 62, l: 0.20, t: 0.08, w: 0.55, h: 0.32 },
+  { id: 'q183_q_diagram', page: 66, l: 0.20, t: 0.53, w: 0.25, h: 0.20 },
+  { id: 'q193_sol_diagram', page: 69, l: 0.20, t: 0.70, w: 0.40, h: 0.18 },
+  { id: 'q199_sol_diagram', page: 71, l: 0.20, t: 0.62, w: 0.40, h: 0.16 },
+  { id: 'q200_sol_diagram', page: 72, l: 0.20, t: 0.15, w: 0.60, h: 0.13 },
+  { id: 'q201_q_diagram', page: 72, l: 0.20, t: 0.32, w: 0.60, h: 0.14 },
+  { id: 'q205_q_diagram', page: 73, l: 0.20, t: 0.50, w: 0.55, h: 0.18 },
+  { id: 'q206_sol_diagram', page: 75, l: 0.20, t: 0.02, w: 0.60, h: 0.96 },
+  { id: 'q207_q_diagram', page: 76, l: 0.20, t: 0.05, w: 0.60, h: 0.17 },
+  { id: 'q208_q_diagram', page: 76, l: 0.20, t: 0.55, w: 0.60, h: 0.20 },
+  { id: 'q209_sol_diagram', page: 77, l: 0.20, t: 0.14, w: 0.45, h: 0.18 },
+  { id: 'q210_q_diagram', page: 77, l: 0.20, t: 0.34, w: 0.40, h: 0.24 },
+  { id: 'q216_sol_diagram', page: 80, l: 0.20, t: 0.18, w: 0.45, h: 0.20 },
+  { id: 'q218_sol_diagram', page: 80, l: 0.20, t: 0.74, w: 0.45, h: 0.17 },
+  { id: 'q220_q_diagram', page: 82, l: 0.20, t: 0.04, w: 0.45, h: 0.07 },
+  { id: 'q221_sol_diagram', page: 83, l: 0.20, t: 0.20, w: 0.45, h: 0.18 },
+  { id: 'q223_q_diagram', page: 84, l: 0.20, t: 0.03, w: 0.60, h: 0.39 },
+  { id: 'q230_q_diagram', page: 88, l: 0.20, t: 0.13, w: 0.55, h: 0.20 }
 ];
 
 async function cropAll() {
-  console.log(`Cropping ${diagrams.length} diagrams...`);
-  const pad = 12;
+  console.log(`Cropping ${DIAGRAMS.length} diagrams...`);
+  for (const item of DIAGRAMS) {
+    const pStr = String(item.page).padStart(3, '0');
+    const pageFile = path.join(PAGES_DIR, `page_${pStr}.png`);
+    const meta = await sharp(pageFile).metadata();
 
-  for (const d of diagrams) {
-    const pageImg = await loadImage(`backend/scripts/thermo_pages/page_${d.page}.png`);
-    const x = Math.max(0, d.box.minX - pad);
-    const y = Math.max(0, d.box.minY - pad);
-    const w = Math.min(pageImg.width - x, d.box.maxX - d.box.minX + 2 * pad);
-    const h = Math.min(pageImg.height - y, d.box.maxY - d.box.minY + 2 * pad);
+    const left = Math.round(meta.width * item.l);
+    const top = Math.round(meta.height * item.t);
+    const width = Math.round(meta.width * item.w);
+    const height = Math.round(meta.height * item.h);
 
-    const canvas = createCanvas(w, h);
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(pageImg, x, y, w, h, 0, 0, w, h);
-
-    const buf = canvas.toBuffer('image/png');
-    const outPath = path.join(outDir, `${d.id}.png`);
-    const pubPath = path.join(publicDir, `${d.id}.png`);
-
-    fs.writeFileSync(outPath, buf);
-    fs.writeFileSync(pubPath, buf);
-    console.log(`Cropped and saved: ${d.id} (${w}x${h})`);
+    const outPath = path.join(OUT_DIR, `${item.id}.png`);
+    await sharp(pageFile)
+      .extract({ left, top, width, height })
+      .toFile(outPath);
+    console.log(`Cropped ${item.id} from page ${item.page}`);
   }
-  console.log(`All ${diagrams.length} diagrams cropped and saved locally!`);
+  console.log('All diagrams cropped successfully!');
 }
 
 cropAll().catch(console.error);

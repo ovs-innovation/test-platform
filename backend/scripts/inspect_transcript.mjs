@@ -1,16 +1,26 @@
 import fs from 'fs';
+import readline from 'readline';
 
-const lines = fs.readFileSync('C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.system_generated/logs/transcript.jsonl', 'utf8').trim().split('\n');
-console.log('Total lines:', lines.length);
+const rl = readline.createInterface({ 
+  input: fs.createReadStream('C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.system_generated/logs/transcript.jsonl') 
+});
 
-for (let i = lines.length - 1; i >= 0; i--) {
-  const row = JSON.parse(lines[i]);
-  if (row.type === 'USER_INPUT') {
-    console.log('Found USER_INPUT at index', i);
-    console.log('Step index:', row.step_index);
-    console.log('Content:', row.content);
-    console.log('Media:', row.media);
-    break;
-  }
-}
+const userInputs = [];
+rl.on('line', (line) => {
+  try {
+    const obj = JSON.parse(line);
+    if (obj.type === 'USER_INPUT') {
+      userInputs.push({ 
+        step_index: obj.step_index, 
+        created_at: obj.created_at,
+        content: obj.content ? obj.content.slice(0, 300) : '',
+        media: obj.media ? obj.media.length : 0
+      });
+    }
+  } catch(e) {}
+});
 
+rl.on('close', () => {
+  console.log('Last 5 USER_INPUT steps:');
+  console.log(JSON.stringify(userInputs.slice(-5), null, 2));
+});

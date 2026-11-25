@@ -1,0 +1,3023 @@
+{
+  "1": {
+    "q": 1,
+    "page": 1,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526200/edvedum_physics/electromagnetic_induction/emi_q1_diagram.png",
+    "rawQuestionLines": [
+      "A conducting square loop of side L and resistance R moves in its plane with a uniform velocity v",
+      "perpendicular to one of its sides. A magnetic induction B constant in time and space, pointing",
+      "perpendicular and into the plane at the loop exists everywhere with half the loop outside the field, as",
+      "+ +4444 4",
+      "Fre E+",
+      "++ rees",
+      "re . ee",
+      "shown in figure. The induced emf is sHicssss",
+      "+ [#44444",
+      "Hype",
+      "+ FEEEEE",
+      "(A) zero (B) RvB",
+      "(C) VBL/R (D) vBL"
+    ],
+    "rawSolution": "No Solution Available"
+  },
+  "2": {
+    "q": 2,
+    "page": 1,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526201/edvedum_physics/electromagnetic_induction/emi_q2_diagram.png",
+    "rawQuestionLines": [
+      "2,",
+      "The inductance between Aand Dis D",
+      "3H",
+      "(A) 3.66 H (B) 9H",
+      "(C) 0.66 H (D) 1H"
+    ],
+    "rawSolution": "The given circuit clearly shows that the inductors are in parallel we have, = = 1 wt 5 = H orL=1"
+  },
+  "3": {
+    "q": 3,
+    "page": 2,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "3. When the current changes from +2 A to —2 A in 0.05 second, an e.m.f. of 8 V is induced in a coil. The",
+      "coefficient of self-induction of the coil is",
+      "(A) 2p ®) 0.40",
+      "© o.85 ©) 11",
+      "{4 marks, -1 for a wrong answer] - 2003"
+    ],
+    "rawSolution": "2 2)\ne=-L =8=()42 = L=01H"
+  },
+  "4": {
+    "q": 4,
+    "page": 2,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "4. Two coils are placed close to each other. The mutual inductance of the pair of coils depends upon",
+      "(A) the rates at which currents are changing in the (B) relative position and orientation of the two coils",
+      "two coils",
+      "(C) the materials of the wires of the coils. (D) the currents in the two coils"
+    ],
+    "rawSolution": "No Solution Available"
+  },
+  "5": {
+    "q": 5,
+    "page": 2,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "5: In a uniform magnetic field of induction B a wire in the form of semicircle of radius r rotates about the",
+      "diameter of the circle with angular frequency w. The axis of rotation is perpendicular to the field. If the",
+      "total resistance of the circuit is R the mean power generated per period of rotation is",
+      "(A) pry (B) (Baru)",
+      "2R ,",
+      "©) Brew)? (D) (grr?)",
+      "pn co"
+    ],
+    "rawSolution": "Magnetic flux = BAcosf = B - = coswt\naes 9 Loa\nCEwd =—ge=g Bar'wsinwt\nTe cha _ Birr? sin’ wt\nv R 4R\nNow, < sin? wt >= 1/2 (mean value)\n2 \\2\nSP) = Bre)"
+  },
+  "6": {
+    "q": 6,
+    "page": 3,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "6. A coil having n turns and resistance 4R(2. This combination is moved in time ¢ seconds from a",
+      "magnetic field W, weber to W, weber. The induced current in the circuit is",
+      "(A) whew; (B) (W.-w",
+      "=< Le)",
+      "(C) _w-wy (D) _ n(Wo-Wy)",
+      "Rat Rt"
+    ],
+    "rawSolution": "I= hg\nor, l= —4n [Ba =\n( W, and W, are not the magnetic field, but the values of flux associated with one turn of coil) I = hy"
+  },
+  "7": {
+    "q": 7,
+    "page": 3,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "7. A metal conductor of length 1 m rotates vertically about one of its ends at angular velocity 5 radians per",
+      "second. If the horizontal component of earth's magnetic field is 0.3 x 10~* T, then the e.m.f. developed",
+      "between the two ends of the conductor is",
+      "(A) depends on the nature of the metal used (B) depends on the intensity of the radiation",
+      "(C) depends both on the intensity of the radiation ~ (D) is the same for all metals and independent of",
+      "and the metal used the intensity of the radiation."
+    ],
+    "rawSolution": "emf. developed is given by\n1 2\nEind = 3 BuR’ = 50uV."
+  },
+  "8": {
+    "q": 8,
+    "page": 4,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526206/edvedum_physics/electromagnetic_induction/emi_q8_diagram.png",
+    "rawQuestionLines": [
+      "8. One conducting U tube can slide inside another as shown in figure, maintaining electrical contacts",
+      "between the tubes. The magnetic field B is perpendicular to the plane of the figure. if each tube moves",
+      "towards the other at a constant speed V, then the emf induced in the circuit in terms of B,£ and V/",
+      "x x x x",
+      "A B",
+      "x x",
+      "where { is the width of each tube will be a",
+      "x",
+      "* bp",
+      "i D x x",
+      "(A) gov ®) _pev",
+      "(C) zero (0) oppy"
+    ],
+    "rawSolution": "|%] = 2Bev"
+  },
+  "9": {
+    "q": 9,
+    "page": 4,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "9 A coil of inductance 300mH and resistance 2(2 is connected to a source of voltage 2V. The current",
+      "reaches half of its steady state value in",
+      "(A) 0.055 ®) g1s",
+      "© 155 © 3"
+    ],
+    "rawSolution": "1-1 (1-e)\nR.\n0.603 = Bt\nt= 40803 — 01sec"
+  },
+  "10": {
+    "q": 10,
+    "page": 5,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "10. The flux linked with a coil at any instant ' t ' is given by",
+      "¢ = 10% — 50t + 250",
+      "The induced emf att = 3 sis",
+      "A) 190 v ® _190v",
+      "© ov © ov"
+    ],
+    "rawSolution": "e= 9 — —(20t — 50) = —10 voit"
+  },
+  "11": {
+    "q": 11,
+    "page": 5,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "n In an AC generator, a coil with N turns, all of the same area A and total resistance R, rotates with",
+      "frequency w in a magnetic field B. The maximum value of emf generated in the coil is \"",
+      "(A) NAB. w (B) NABR. w",
+      "(C) NAB (D) N.AB.R"
+    ],
+    "rawSolution": "NBA w"
+  },
+  "12": {
+    "q": 12,
+    "page": 5,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526193/edvedum_physics/electromagnetic_induction/emi_q12_diagram.png",
+    "rawQuestionLines": [
+      "12. An inductor (L = 100mH), a resistor (R = 100$2) and a battery (E = 100 V) are initially connected",
+      "in series as shown in the figure. After a long time the battery is disconnected after short circuiting the",
+      "L",
+      "points A and B. The current in the circuit 1 mm after the circuit is R",
+      "| A | B :",
+      "E",
+      "(A) 1 A (B) 1/cA",
+      "©) eA (D) 0.1A",
+      "4 marks, -1for a wrong answer] - 2008"
+    ],
+    "rawSolution": "I=Ipe RL = 1A"
+  },
+  "13": {
+    "q": 13,
+    "page": 6,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "13. An ideal coil of 10H is connected in series with a resistance of 5{2 and a battery of 5 V.",
+      "2 second after the connection is made the current flowing in amperes in the circuit is",
+      "(A) (1-e) (8) &",
+      "©) at (D) (1 QF e)"
+    ],
+    "rawSolution": "i=ip (1 = et)\n=(-¢)"
+  },
+  "14": {
+    "q": 14,
+    "page": 6,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "14. Two coaxial solenoids are made by winding thin insulated wire over a pipe of cross sectional area A =",
+      "10 cm? and length = 20 cm. If one of the solenoids has 300 turns and the other 400 turns, their",
+      "mutual inductance is (pg = 47 x 10-\"TmA~')",
+      "(A) 2.47 x 10°H (B) 4 87 x 10H",
+      "© 487 x 10~°H ©) 2.47 x 10H"
+    ],
+    "rawSolution": "| b= NA _ 5 4 x10 ‘H"
+  },
+  "15": {
+    "q": 15,
+    "page": 7,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526197/edvedum_physics/electromagnetic_induction/emi_q15_diagram.png",
+    "rawQuestionLines": [
+      "15. An inductor of inductance L = 400mH and resistors of resistances R; =2Q and R, = 2Q are",
+      "connected to a battery of emf 12 V as shown in the figure. The internal resistance of the battery is",
+      "negligible. The switch § is closed at ¢ = (). The potential drop across [, as a function of time is",
+      "E =",
+      "| SL",
+      "R",
+      "2",
+      "S",
+      "(A) ¢,—5t (B) 12 -3t",
+      "GeV TeV",
+      "© g 8 _ et/02) 1% (D) 19,-5ty,"
+    ],
+    "rawSolution": "F 12\nMIE YY\nI ® D) 6\ndl.\nE= Le +Ry x1,\nE 12\nL=1 ( —e 0) =I, = Sr 6 A Potential drop across\nL  400x10°*\nte=g = —— = 02\nL=6(1-e2)\nE 2\nSL\nL=E-Ryly=12-2x%6(1-e¥) =12e% Directions:\nR\n2\nS\nQuestion numbers 28,29 and 30 are based on the following paragraph. Two moles of helium gas are taken over the\ncycle ABCD A, as shown inthe P — T diagram.\n2x1051 A B\nP (Pa)\n1x10°\nD C\n300K 500K 1\npi 3d"
+  },
+  "16": {
+    "q": 16,
+    "page": 8,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526197/edvedum_physics/electromagnetic_induction/emi_q16_diagram.png",
+    "rawQuestionLines": [
+      "16. A rectangular loop has a sliding connector PQ of length ¢ and resistance R{) and it is moving with a",
+      "speed v as shown. The set-up is placed in a uniform magnetic field going into the plane of the paper.",
+      "P 1",
+      "The three currents I, [ and ] are RQ RQ",
+      "| I",
+      "I, Q",
+      "(A) gp, _ 1, — Bt y_ 2B&v (B)y _1,— By y_ 2B",
+      "I SSEER AR SANE aR",
+      "A © p—p,=B Be"
+    ],
+    "rawSolution": "A moving conductor is equivalent to a battery of emf — vBf (motion emf) Equivalent circuit I = 1; + 1 applying\n2IR + IR = 2vB¢\nLR +IR-vBL=0 1 2vBt R\nKirchoff's law LR+IR—vBl—0 adding (1) \\& (2) 3R\nTPE vB¢\n1=13 = T=\n3R [ 8"
+  },
+  "17": {
+    "q": 17,
+    "page": 9,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526200/edvedum_physics/electromagnetic_induction/emi_q17_diagram.png",
+    "rawQuestionLines": [
+      "17. In the circuit shown below, the key K is closed at t = 0. The current through the battery is",
+      "v A.",
+      "L Ry",
+      "WRB att —0and 2 att = oo ©) ¥ att =0and LBLR) arg = oo",
+      "© v - VER (D) V(Ri+Ry) oq 3.",
+      "matt =0and Tpor att = oo —mE att =0and pratt = oo",
+      "{4 marks, ~1 for a wrong answer] - 2010"
+    ],
+    "rawSolution": "Att = 0, inductor behaves like an infinite resistance\nSoatt=0,i= % and at t = oo, inductor behaves like a conducting wire\n- V _ V(R+Ry)\ni RiR,"
+  },
+  "18": {
+    "q": 18,
+    "page": 9,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "18. Apoatis moving due east in a region where the earth's magnetic field is 5.0 x 10 NA™' m~! due",
+      "north and horizontal. The boat carries a vertical aerial 2 m long. If the speed of the boat is 1.50 ms™!,",
+      "the magnitude of the induced emf in the wire of aerial is :",
+      "(A) 0 75mv ®) (.50mv",
+      "© 0.15mv © 1my"
+    ],
+    "rawSolution": "E = ByVV = 0.15mV"
+  },
+  "19": {
+    "q": 19,
+    "page": 10,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "19. A coil is suspended in a uniform magnetic field, with the plane of the coil parallel to the magnetic lines",
+      "of force. When a current is passed through the coil it starts oscillating; it is very difficult to stop. But if",
+      "an aluminium plate is placed near to the coil, it stops. This is due to :",
+      "(A) development of air current when the plate is ~~ (B) induction of electrical charge on the plate",
+      "placed.",
+      "(C) shielding of magnetic lines of force as (D) electromagnetic induction in the aluminium",
+      "aluminium is a paramagnetic material. plate giving rise to electromagnetic damping."
+    ],
+    "rawSolution": "Oscillating coil produces time variable magnetic field. It cause eddy current in the aluminium plate which causes\nanti-torque on the coil, due to which is stops."
+  },
+  "20": {
+    "q": 20,
+    "page": 10,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526199/edvedum_physics/electromagnetic_induction/emi_q20_diagram.png",
+    "rawQuestionLines": [
+      "20. Magnetic flux through a coil of resistance 105 is changed by A¢ in 0.1 s. The resulting current in the",
+      "coil varies with time as shown in the figure. Then |A¢| is equal to (in weber)",
+      "i(A)",
+      "Ng",
+      "1(s)",
+      "0.1",
+      "(A) 6 (8) 4",
+      "(9) (D) 8"
+    ],
+    "rawSolution": "Ad A\ne= 22 or Ri ~ (-e=Ri)\na= Bes R(i.At)\n= R x area under i — t graph\n=10 x 3 x4 0.1 = 2 weber"
+  },
+  "21": {
+    "q": 21,
+    "page": 11,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526199/edvedum_physics/electromagnetic_induction/emi_q21_diagram.png",
+    "rawQuestionLines": [
+      "21. A coil of self inductance L is connected at one end of two rails as shown in figure. A connector of",
+      "length I, mass m can slide freely over the two parallel rails. The entire set up is placed in a magnetic",
+      "field of induction B going into the page. At an instant ¢ = () an initial velocity vg is imparted to it and as",
+      "a result of that it starts moving along z-axis. The displacement of the connector is represented by the",
+      "— B",
+      "figure. L = &X ”",
+      "= x-axis",
+      "(A) t (8) t",
+      "5 5",
+      "i &",
+      "= =",
+      "[= [3",
+      "= - = -",
+      "Time=—> Time —>",
+      "©) t (D) t",
+      "pa’ =",
+      "5 g",
+      "Bi g",
+      "9",
+      "8 k:|",
+      "EB 5",
+      "a [=]",
+      "Time —> Time =>",
+      "14 marks, -1for a wrong answer] - 2012 (19 May)"
+    ],
+    "rawSolution": "No Solution Available"
+  },
+  "22": {
+    "q": 22,
+    "page": 12,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "22. This question has Statement 1 and Statement 2. Of the four choices given after the Statements, choose",
+      "the one that best describes the two Statements.",
+      "Statement 1: Self inductance of a long solenoid of length I, total number of turns N and radius r is",
+      "less than al,",
+      "Statement 2: The magnetic induction in the solenoid in Statement 1 carrying current J is wld inthe",
+      "middle of the solenoid but becomes less as we move towards its ends.",
+      "(A) statement 1is true, Statement 2 is false. (B) Statement 1is true, Statement 2 is true,",
+      "Statement 2 is the correct explanation of",
+      "Statement 1.",
+      "(C) statement 1is false, Statement 2 is true. (D) Statement 1is true, Statement 2 is true,",
+      "Statement 2 is not the correct explanation of",
+      "Statement 1."
+    ],
+    "rawSolution": "Self inductance of a long solenoid is given by\nN2A\nem he\nf3\nMagnetic field at the centre of solenoid\nNI\nB= JaihEl\n1\nSo both the statements are correct and statement 2 is correct explanation of statement 1"
+  },
+  "23": {
+    "q": 23,
+    "page": 13,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "23. A circular loop of radius 0.3cm lies parallel to a much bigger circular loop of radius 20em. The centre",
+      "of the small loop is on the axis of the bigger loop. The distance between their centres is15 cm. If a",
+      "current of 2.0A flows through the smaller loop, then the flux linked with a bigger loop is:",
+      "(A) 3.3 «10 \"weber B) 6.6 x 10 weber",
+      "(©) 9.1 x 10 \"weber ©) 6 x 10 weber"
+    ],
+    "rawSolution": "$2 = By x Ay\n2\n= —elB -\nAR +2)2\n2,2\n. ot Sa x (0.3 x 107%)\n2((0.2)* + (0.15)%] 2\nOn solving\n=9.216 x 10-1!\n29.2 x 10 weber"
+  },
+  "24": {
+    "q": 24,
+    "page": 14,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "24. A metallic rod of length [ is tied to a string of length 2 and made to rotate with angular speed w on a",
+      "horizontal table with one end of the string fixed. If there is a vertical magnetic field B in the region, the",
+      "e.m.f. induced across the ends of the rod is:",
+      "(A) 4Bw2 ®) 5Bwi?",
+      "2 2",
+      "(©) 2B? (0) 3Bu12",
+      "2 2",
+      "4 marks, ~1 for a wrong answer] + 2013 (07 Apr}",
+      "| ANSWER: B",
+      "| —— dx",
+      "3 3¢ a 221\" wB 5 2% 5 2",
+      "e=[YBVdze= [XBloXdxe = wB [J zd e = wB[%] e=F [60 - @y], e = Jun",
+      "2 *"
+    ],
+    "rawSolution": ""
+  },
+  "25": {
+    "q": 25,
+    "page": 15,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "25. Two coils, X and Y, are kept in close vicinity of each other. When a varying current, I(t), flows",
+      "through coil X, the induced emf (V/(t)) in coil Y, varies in the manner shown here. The variation of",
+      "I(t), with time, can then be represented by the graph labelled as graph :",
+      "Vie) 1(1) d",
+      "(A) : (8)",
+      "—> ¢ i >t",
+      "I(t",
+      "@ @ 10 )",
+      "—>1 >t",
+      "I(t) i",
+      "\\ >",
+      "(A) A (B) Cc",
+      "© gp (D) p"
+    ],
+    "rawSolution": "Induced emf\ncoc 5"
+  },
+  "26": {
+    "q": 26,
+    "page": 16,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "26. A metal sample carrying a current along X — axis with density J, is subjected to a magnetic field B,",
+      "(along z—axis). The electric field E, developed along Y-axis is directly proportional to J, as well as",
+      "B,- The constant of proportionality has SI unit.",
+      "(A) ®)",
+      "A As",
+      "© m (D) x"
+    ],
+    "rawSolution": "According to question\nE, x J,Bz\n.*. Constant of proportionality\nEy Cc *\nK=g-g-2\n[ As § = C (speed of light) and J = L-]"
+  },
+  "27": {
+    "q": 27,
+    "page": 16,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526200/edvedum_physics/electromagnetic_induction/emi_q27_diagram.png",
+    "rawQuestionLines": [
+      "a In the circuit shown here, the point 'C\" is kept connected to point A \"\" till the current flowing through",
+      "the circuit becomes constant. Afterward, suddenly, point 'C\" is disconnected from point A \"\" and",
+      "connected to point 'B' at time t = (. Ratio of the voltage across resistance and the inductor at  — z",
+      "will be equal to :",
+      "A, C R",
+      "fe",
+      "(A) e (B) ¢",
+      "1-e",
+      "© -1 © _,",
+      "e"
+    ],
+    "rawSolution": "ioe % ; Vr\nApplying Kirchhoff's law in closed loop, —~Vp — V = 0= Vv. =-1\nL"
+  },
+  "28": {
+    "q": 28,
+    "page": 17,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "28. A coil of circular cross-section having 1000 turns and 4 cm? face area is placed with its axis parallel to",
+      "a magnetic field which decreases by 1072 Wb m2 in 0.01 s. The e.m.f. induced in the coil is:",
+      "(A) 400mv B) 200mv",
+      "© gmy ©) 4mv"
+    ],
+    "rawSolution": "Given: No. of turns N' = 1000\nFace area, A = 4 cm? = 4 x 101 m?\nChange in magnetic field,\nAB = 10 *wbm *\nTime taken, t = 0.01 s = 10 2sec\nEmf induced in the coil e =?\nApplying formula,\nInduced emf, ¢ = BJ\n(42) Acs\n1000 x 10-2 x 4 x 10°*\nEr 400mV"
+  },
+  "29": {
+    "q": 29,
+    "page": 18,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526201/edvedum_physics/electromagnetic_induction/emi_q29_diagram.png",
+    "rawQuestionLines": [
+      "29.",
+      "X XX XX",
+      "XX XX X",
+      "XXX XG XX",
+      "XX XX XX| The figure shows a circular area of tthe radius R where a uniform",
+      "XXX XXX XX",
+      "XX XX XX XX",
+      "XXX XXX",
+      "XX XX",
+      "magnetic field Bis going into the plane of the paper and increasing in magnitude at a constant rate. In",
+      "that case, which of the following graphs, drawn schematically, correctly shows the variation of the",
+      "induced electric field E(r)?",
+      "(A) (B)",
+      "E : E ;",
+      "R yy — R J —_—",
+      "©) (D)",
+      "E E",
+      "R a R ry —"
+    ],
+    "rawSolution": "E= pd = 42 forr < R, E (277) a = Earforr > R, E (277) = re d2 = Bar\nFr “sR\nFRE ho. Sra\nJ XX .\n1 XX 1 '\n\\ XX x’ .\noO RXXXX Ly\n% r<R rd"
+  },
+  "30": {
+    "q": 30,
+    "page": 20,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526201/edvedum_physics/electromagnetic_induction/emi_q30_diagram.png",
+    "rawQuestionLines": [
+      "30. 5 square frame of side 10cm and a long straight wire carrying current 14 are in the plane of the",
+      "paper. Starting from close to the wire, the frame moves towards the right with a constant speed of",
+      "10ms! (see figure). The e.m.f induced at the time the left arm of the frame is at z = 10cm from the",
+      "X",
+      "wire is",
+      "AZ",
+      "10 cm",
+      "(A) 0 75,v ® 1,y",
+      "©) uv (D) 0.5uV"
+    ],
+    "rawSolution": ". —\ngi Hota xia dy  poia dg Hoia 1 dz 1ldz\ndo = EC gay ¢ — £2 2 EC mz +a) -1 ro to | Een tk\n@ 2m\" yo 2m J: y 27 in (2 +a) Inz] Em.f dt 2r |z+adt zxdt\ni J ia’ , 1x (0.12 x 10)\nMola av Ho ia“v 7 \" \" .\n= —— =m ———— =2 x10 —_— 1] Alternative method: Consider two\nzeta) Imz@Eta) CC XT 0Ix02 HE\nsides which are perpendicular to the velocity as case of motional e.m.f.\npol (1 1 7 1 1\n=F — By={Bi= 1 =EC (2 _)Vi=2x10-\"x1(——-—) x10x0.1\nE=E, -E, = (B-B,) Vi or (2 ET x x1 (om am] x10\n=10°V = 1uV"
+  },
+  "31": {
+    "q": 31,
+    "page": 22,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526201/edvedum_physics/electromagnetic_induction/emi_q31_diagram.png",
+    "rawQuestionLines": [
+      "31.",
+      "An inductor (L = 0.03H) and a resistor (R = 0.15k(2) are connected in series to a battery of 15V",
+      "E.M.F. in a circuit shown below. The key K has been kept closed for a long time. Then att = 0, K is",
+      "opened and key K, is closed simultaneously. At ¢ = lms , the current in the circuit will be :",
+      "(Take, e® ~ 150)",
+      "0.03H 0.15kQ",
+      "| Ka |",
+      "—_—",
+      "15V Ki",
+      "A] Bi",
+      "w 0.67mA ® 100mA",
+      "D|",
+      "© 67mA (0) 6.7mA"
+    ],
+    "rawSolution": "0.03H 1502\nCase |: K; is closed for long time, for a long time, the inductor acts as\n15V\nA . VV 15 a\na conducting wire, current in the circuit — Rr = Too = (0.1 A Case ll: , is open and K, is closed\n0.03H 150Q\n000000\n—t\n: NOL — _ NSE\nCurrent in the circuit, i—ige T jr = : Aftert = 1ms = 10 ’s\na\nsii (5%) —01x 4 = A ~067mA"
+  },
+  "32": {
+    "q": 32,
+    "page": 23,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "32. when the current in a coil changes from 5 A to 2 A in 0.1 s, an average voltage of 50V is produced.",
+      "The self-inductance of the coil is",
+      "A) 1 671 ® sq",
+      "©) 3g ©) g67H"
+    ],
+    "rawSolution": "Magnetic flux\n_ LA AI\n$=Ll==L—\nAd AI\n7+ (€ima)gyerage = 7] = ||\n5-2\n=50=0Lx SRE\n=5 9 =I\n3\n= L=167TH"
+  },
+  "33": {
+    "q": 33,
+    "page": 24,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "33. conducting metal circular-wire-loop of radius r is placed perpendicular to a magnetic field which",
+      "t",
+      "varies with time as B—B = os where Band are constants at time ¢ = 0. If the resistance of the",
+      "= Doe ’",
+      "loop is R, then the heat generated in the loop after a long time (t — 00) is",
+      "(A) 2,4 BY (B) 72p4 B}",
+      "2TR 27R",
+      "© 72rB2R 0) 72p4pB2",
+      "T TR"
+    ],
+    "rawSolution": "t\nHere, -\n©\"® B= Bee 7\nArea of the circular loop, A = mr?\nFlux linked with the loop at any time ¢ ,\nt\n¢=BA=nr’Bge T\nt\nEmf induced in the loop, _ _ _dé _ #2, 1 7\ndt T\nNet heat generated in the loop\n2 2, 4 B2 2h\nwo € ,  TrBj re ~\nifs T= —g Joe Tat\n2t7>\nw*riB} mi jis\n= ——2 X —— x\nTR heed]\nT 0\n—n2riB} w2riB}\n=——x —1)=—\n272R alt= 2rR"
+  },
+  "34": {
+    "q": 34,
+    "page": 25,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526201/edvedum_physics/electromagnetic_induction/emi_q34_diagram.png",
+    "rawQuestionLines": [
+      "34. | a coil of resistance 10012, a current is induced by changing the magnetic flux through it as shown in",
+      "the figure. The magnitude of change in flux through the coil is:",
+      "(amp.)",
+      ".",
+      "(A) 275Wp ®) 200»",
+      "(©) 225w1 ©) 2505"
+    ],
+    "rawSolution": "_d\nEmf =iR = re iR\nJ (~dg) = [(idt)R\nq= 2 = Area underi — tgraph\n1\n= Ap = (3 Xx 10 x 03) x 100 = 250Wb"
+  },
+  "35": {
+    "q": 35,
+    "page": 26,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "35. A small circular loop of wire of radius a is located at the centre of a much larger circular wire loop of",
+      "radius b. The two loops are in the same plane. The outer loop of radius b carries an alternating current",
+      "I = Ig cos (wt). The emf induced in the smaller inner loop is nearly:",
+      "(A) a? | 8) rly a?",
+      "mpolo—wsin (wt) ———.5-wcos (wt)",
+      "b 2b",
+      "©) fp 1,0? (D) 2",
+      "polo mply a :",
+      "———wcos (wt ——.—wsin (wt",
+      "x (wt) 20 Swsin (wt)"
+    ],
+    "rawSolution": "Induced emf,\nMadr\nTodt?\nCurrent is given as, I = Ijcoswt\nNOD mE)\n= ye X 0 COS Wi\n¢ = Mwljsin (wt)\n2\n= Rie .\n== wl sinwt"
+  },
+  "36": {
+    "q": 36,
+    "page": 27,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "36. An ideal capacitor of capacitance 0.2uF is charged to a potential difference of 10 V. The charging",
+      "battery is then disconnected. The capacitor is then connected to an ideal inductor of self inductance",
+      "0.5mH. The current at a time when the potential difference across the capacitor is 5 V, is:",
+      "W g.17 A ® 154A",
+      "© 344 ©) 9.25 A",
+      "(4 marks, 1 for a wrong answer] - 2018 (15 Apr, Shift 1)"
+    ],
+    "rawSolution": "Given: Capacitance, C' = 0.2uF = 0.2 x 10 6 F\nInductance L = 0.5mH = 0.5 x 10 *H\nCurrent] =?\nUsing energy conservation\n1 1 1\n—OV? = CV} + LI\n2 2=\"rc2\n$x02x10°x10* +0\n=4x0.2x10-%x 5% + 4 x 0.5 x 10-312\nso I=43x10\"A=017A"
+  },
+  "37": {
+    "q": 37,
+    "page": 27,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "37. At the centre of a fixed large circular coil of radius R, a much smaller circular coil of radius r is placed.",
+      "The two coils are concentric and are in the same plane. The larger coil carries a current I. The smaller",
+      "coil is set to rotate with a constant angular velocity w about an axis along their common diameter.",
+      "Calculate the emf induced in the smaller coil after a time ¢ of its start of rotation.",
+      "(A) “lr? sinwt ® wl ymr? sin wt",
+      "© wlumr? sinwt (©) alr? sin wt"
+    ],
+    "rawSolution": "According to Faraday's law of electromagnetic induction,\ne=—% and ¢ = BAcoswt = Brrr? coswt\n= e=—4% (rr2Bcoswt) = 7r’Bsinwt(w)\nLe= wl rwr? sin wt {sz 2:5 wh)"
+  },
+  "38": {
+    "q": 38,
+    "page": 28,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526203/edvedum_physics/electromagnetic_induction/emi_q38_diagram.png",
+    "rawQuestionLines": [
+      "38. 5 copper rod of mass m slides under gravity on two smooth parallel rails, with separation [ and set at",
+      "an angle of 6 with the horizontal. At the bottom, rails are joined by a resistance R. There is a uniform",
+      "magnetic field B normal to the plane of the rails, as shown in the figure. The terminal speed of the",
+      ">",
+      "B",
+      "copper rod is:",
+      "R",
+      "(A) mgR cosd (B) mgRsing",
+      "B22 B22",
+      "(C) mgR tang (D) mgRcotd",
+      "BIE BI"
+    ],
+    "rawSolution": "dé _ dBA) _d(BU)\nFrom Faraday's law of electomagnetic induction, a il it dt Also,\n=——— =BVI\ndt\n>\nB\nF=ilB= (5) (”B) = Lt At equilibrium\nR\nBV mgRsin6\nmgsing = —p— = V = —55—"
+  },
+  "39": {
+    "q": 39,
+    "page": 29,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "39. A coil of cross-sectional area A having n turns is placed in a uniform magnetic field B. When it is",
+      "rotated with an angular velocity w, the maximum e.m.f. induced in the coil will be:",
+      "(A) 3 (B)",
+      "2 aB di 3nBAw",
+      "2",
+      "(©) (D) 1",
+      "nBAw EBA",
+      "2"
+    ],
+    "rawSolution": "Magnetic flux through a coil of area A of n turns at an angle # to the magnetic field of magnitude B is,\n¢ = nBAcos# = nBAcoswt. The induced emf,\ndg . . ’ . Lo\n€= pre = nBAw sin wt. Since, the maximum value of the sine function is 1,\n€maz = NBAw"
+  },
+  "40": {
+    "q": 40,
+    "page": 30,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "40. 5 conducting circular loop made of a thin wire has area 3.5 x 10~2m? and resistance 1012 It is placed",
+      "perpendicular to a time-dependent magnetic field B (t) = (0.47) sin (507t) The field is uniform in",
+      "space. Then the net charge flowing through the loop during ¢ = 0s and t = 10ms is close to",
+      "(A) 1 ame © 7nc",
+      "© 21mc ©) gmc"
+    ],
+    "rawSolution": "Itis given that, the magnetic field,\nB = 0.4sin (50xt)\nand the area of the given circular conducting loop,\nA=35x 10m?\nMagnetic flux,\n¢=BA..(1)\nThen, induced emf,\nd¢\n=|=|..(2]\n=| %|..c\nWhen resistance in the circuit is R, the differential charge accumulated, based on current 7,\n| € 1 X L\ndQ = idt = it = 59 =A2Q=5 [do = 2Aé\nSubstituting given values and using equation (1) and (2),\n1 4x35 x107%\n8Q = 15 [0:4sin (507 x 10 x 10%) — 0] x 35 x 10 Poag= 230 ax sc\n= AQ = 14mC"
+  },
+  "41": {
+    "q": 41,
+    "page": 31,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "41. A solid metal cube of edge length 2¢m is moving in the positive y-direction, at a constant speed of",
+      "6ms 1. There is a uniform magnetic field of 0.17\" in the positive z-direction. The potential difference",
+      "between the two faces of the cube, perpendicular to the z-axis, is",
+      "(A) Jom ® 1my",
+      "©) ov ©) gv"
+    ],
+    "rawSolution": "emf developed is given by, e = Bul\ne=01(2x107?) x6=>e=12x10\"°=12mV"
+  },
+  "42": {
+    "q": 42,
+    "page": 31,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "42. The self induced emf of a coil is 25 volts. When the current in it is changed at uniform rate from 104",
+      "to 254 in 1s, the change in the energy of the inductance is:",
+      "(A) 637.57 ®) 740.7",
+      "© 43757 ©) 5407"
+    ],
+    "rawSolution": "Induced emf / back emf in an inductor coil is given by\nJe = 228\nLe\n=25=Lx B19\n25 5\n=L= = Gt\nEnergy of inductor is given by\nE= B74\nEnergy change AE — 3L (IL-1?)\nSAB 3 625 — 100] J\n~3s\nAE = 437.5J"
+  },
+  "43": {
+    "q": 43,
+    "page": 32,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "43. There are two long co-axial solenoids of same length [. The inner and outer coils have radii 7; and ro",
+      "and number of turns per unit length n; and nj, respectively. The ratio of mutual inductance to the self-",
+      "inductance of the inner-coil is :",
+      "(A) no (B) nz ow",
+      "ny ny m2",
+      "©) PA (D) n",
+      "ms",
+      "m.3 5"
+    ],
+    "rawSolution": "The rate of mutual inductance is given by\nM = pon, npr? ... (3)\nThe rate of self inductance is given by\nL = penimr} ... (ii)\nDividing (i) by (ii) = }' = 2"
+  },
+  "44": {
+    "q": 44,
+    "page": 33,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526203/edvedum_physics/electromagnetic_induction/emi_q44_diagram.png",
+    "rawQuestionLines": [
+      "44. R L",
+      "In the circuit shown, S, the switch S) is closed at",
+      "oA S,",
+      "&",
+      "time ¢ = 0 and the switch Sj is kept open. At some later time (to), the switch S, is opened and S; is",
+      "closed. the behaviour of the current | as a function of time ' t ' is given by:",
+      "(A) (B)",
+      "I I",
+      "i",
+      "i",
+      "|",
+      "Eo t t t",
+      "(c) (D)",
+      "I 1",
+      "1",
+      "|",
+      "1",
+      "1",
+      "1",
+      "|",
+      "\\ i",
+      "1 t [1 t"
+    ],
+    "rawSolution": "Rh The current will grow for the time t = 0 to t = t, and after that\n& t\ndecay of current takes place. Growth and decay of current is of exponential nature\ni=iy (1 —e 7) — during growth i = i.e” — during decay"
+  },
+  "45": {
+    "q": 45,
+    "page": 34,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "45. A copper wire is wound on a wooden frame, whose shape is that of an equilateral triangle. If the linear",
+      "dimension of each side of the frame is increased by a factor of 3, keeping the number of turns of the",
+      "coil per unit length of the frame the same, then the self inductance of the coil:",
+      "(A) decreases by a factor of 9 (B) increases by a factor of 27",
+      "(C) increases by a factor of 3 B) decreases by a factor of 9v/3"
+    ],
+    "rawSolution": "As total length [, of the wire will remain constant [, — (3a)N (N = total turns ) and length of winding = (dN\nself inductance = pon® Al\na a (d = diameter of wire) ~~ = yon? (52) dN\nxa?Noxa[asN=L/3a= Noi\na\nNow ‘a’ increased to ' 3a ' So self inductance will become 3 times"
+  },
+  "46": {
+    "q": 46,
+    "page": 35,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "48. |n the figure shown, a circuit contains two identical resistors with resistance R = 5{ and an",
+      "inductance with L = 2mH. An ideal battery of 15V is connected in the circuit. What will be the",
+      "S",
+      "9 SL",
+      "current through the battery long after the switch is closed? 15 \\/ —— R",
+      "[5]",
+      "(A) 554 (B) 64",
+      "(C) 34 (D) 7.5A"
+    ],
+    "rawSolution": "i\n5Q\n1 5V 50 After a long time, when the growth of current in the circuit has\nstopped, the inductor will work as a conductor. Therefore the effective resistance of the circuit will be,\nR= : = 2.50) Hence, the current through the circuit will be, J — 4 = = =6A"
+  },
+  "47": {
+    "q": 47,
+    "page": 36,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "47. 5 10m long horizontal wire extends from North East to South West. It is falling with a speed of",
+      "5.0ms 1, at right angles to the horizontal component of the earth's magnetic field of",
+      "0.3 x 10\"*Wbm 2. The value of the induced emf in the wire is:",
+      "(A) 0.3 x 10-3V B®) 11x10",
+      "© 25x 107%V ©) 15x 10-%v",
+      "4 marks, -1for a wrong answer] - 2019 (12 Jan, Shift 2)"
+    ],
+    "rawSolution": "The wire makes an angle 45° with the magnetic field lines. Therefore, the induced emf will be, e = Bul sin 45\"\n= 03x10 x 5x10 x = = 1.1 x 10-V\nV2"
+  },
+  "48": {
+    "q": 48,
+    "page": 37,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526203/edvedum_physics/electromagnetic_induction/emi_q48_diagram.png",
+    "rawQuestionLines": [
+      "48. A thin strip 10em long is on a U shaped wire of negligible resistance and it is connected to a spring of",
+      "spring constant 0.5 Nm! (see figure). The assembly is kept in a uniform magnetic field of 0.17\". If",
+      "the strip is pulled from its equilibrium position and released, the number of oscillations it performs",
+      "before its amplitude decreases by a factor of e¢ is IV . If the mass of the strip is 50 grams, its resistance",
+      "10 and air drag negligible, NV will be close to: [xx] Sl 10cm",
+      "(A) 1000 ®) 5000",
+      "© 10000 ©) 50000",
+      "{4 marks, 1 for a wrong answer] - 2019 (08 Apr, Shift 1)"
+    ],
+    "rawSolution": "Equation of motion for slider:\nd’z .\n“MES kz + ilB\nd’z Blv dz BP dx\nmer +k + (F)E-0-mG +5 qr The=0\nA dx\nComparing with rp —— buco =\nparing meg tbr +k 0\nB*?\nm=m;b= nr k=k\n~b B®\nWe know: —xt — xt\nA= Age2m = Age 2mR\nFor amplitude to be Ag /e,\nB®\n—xt A BY?\n2; === — =\nAge 2mR 5 TiamR ot 1\n2mR\nT= BE = 10, 000sec\nCm\nTime period = Ey == 2s\nNumber of oscillations = ox = 5,000"
+  },
+  "49": {
+    "q": 49,
+    "page": 38,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526203/edvedum_physics/electromagnetic_induction/emi_q49_diagram.png",
+    "rawQuestionLines": [
+      "49. A 90 H inductor coil is connected to a 10 {2 resistance in series as shown in figure. The time at which",
+      "rate of dissipation of energy (Joule's heat) across resistance is equal to the rate at which magnetic",
+      "i 10Q",
+      "energy is stored in the inductor, is:",
+      "E 20H",
+      "(A) 1 (8)",
+      "Shy 2In2",
+      "2",
+      "© 2 ©) 19",
+      "In2"
+    ],
+    "rawSolution": "Rate of dissipation of energy in resistor = i2R\noo Cdl...) di\nRate of energy stored in inductor = Fr (3u ) 23 Lim\ndi\n#R= Lig\ndi R ;\nFri A (i)\nIn L — R circuit:\nt\n= L\ni=iy [1- T=2=2\n= e ) (¥e o % )\ndi io, ys\ndt T\nFrom equation (i),\n: t R\ni =\n=e Hr=1iy = 5\nett —1— gti\nt\neT — L =t=7ln2\n2\n=2In2"
+  },
+  "50": {
+    "q": 50,
+    "page": 39,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "50. The total number of turns and cross-section area in a solenoid is fixed. However, its length L is varied",
+      "by adjusting the separation between windings. The inductance of solenoid will be proportional to:",
+      "(A) 1, (8) 1",
+      "JZ",
+      "© 1 (D) j2",
+      "L"
+    ],
+    "rawSolution": "Self-Inductance = gon?wr?L (n = number of turns per unit length)\nNY ,\n= — |) nrlL\nno T )\n= poN3mr?\n- L\n1\nSelf-Inductance I"
+  },
+  "51": {
+    "q": 51,
+    "page": 40,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "51 Two coils \"P' and 'Q' are separated by some distance. When a current of 34 flows through coil ‘P', a",
+      "magnetic flux of 10-2 Wb passes through qQ. No current is passed through qQ. When no current",
+      "passes through 'P’ and a current of 24 passes through Qs the flux through 'P' is:",
+      "(A) 367 x 10-3 Wp ®) 6.67 x 10-'Wb",
+      "© 367 x 10-*wp ©) 6.67 x 10-*Wp",
+      "14 marks, 1 for a wrong answer] - 2019 (09 Apr, Shift 2)"
+    ],
+    "rawSolution": "Since the coils are co-axial, the flux through the coils can be written as the product of their surface area and the\nmagnetic field produced by the coil along its axis.\nConsider the flux passing through Q\nIR?\nbg = A x TR? = 10 Wh\n2R? +22)2\nAnd the flux passing through P:\nHE\nwom — BE ops\n2(R? + 22)2\nTaking the ratio\n3\ndp iy (R*+2%)2 ¢p _ i\nic A = =22\ndo 0 370° QL\n(R? +2%)2\nop 2\n> ==\n10° 3\nbp =6.67x 10 ‘Wh"
+  },
+  "52": {
+    "q": 52,
+    "page": 41,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "52. 5 very long solenoid of radius R is carrying current I (t) = kte ®* (k > 0) , as a function of time",
+      "(t > 0) . Counterclockwise current is taken to be positive. A circular conducting coil of radius 2R is",
+      "placed in the equitorial plane of the solenoid and concentric with the solenoid. The current induced in",
+      "the outer coil is correctly depicted, as a function of time, by:",
+      "(A) (B)",
+      "©) | (D) |",
+      "4 marks, -1 for a wrong answer] - 2019 (09 Apr, Shift 2)"
+    ],
+    "rawSolution": "Gonter = (ponte!) dx R?\n—d.\n€e= = = —ponK4nR*(e [1 — at])\n: _ —ce [1 -at]\nYinduced = \"Resistance\nAtt = 0, induced = —ve\nFrom the above equation and initial value of current we can say the correct graph is B."
+  },
+  "53": {
+    "q": 53,
+    "page": 42,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "53. A coil of self inductance 10m.H and resistance of 0.192 is connected through a switch to a battery of",
+      "internal resistance 0.952 . After the switch is closed, the time taken for the current to attain 80 of the",
+      "saturation value is: [In5 = 1.6]",
+      "(A) 0.1035 ®) 0.0025",
+      "(© 0.3245 ©) 0.0165",
+      "14 marks, ~1for a wrong answer] - 2019 (10 Apr, Shift 2)"
+    ],
+    "rawSolution": "The instantaneous current in an LR circuit is given by the equation :\nRt\n(instantaneous current) I =I, | 1—e L\nWhere I, I,, R, t, L are the instantaneous current, saturation current, resistance, time and inductance respectively.\nGiven that the current becomes so percent of saturation current.\nRt\n= (08) L=1I,[1-¢e L\nR=01Q+0.9Q = 1Q\n1xt\n=08=|1-e¢ 10x10°3\n=>08=1-—¢1\nTherefore, the time is:\nis (5)\n1-08 In (5)\nt=————2L \"2 _g0\n100 Too or"
+  },
+  "54": {
+    "q": 54,
+    "page": 43,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526203/edvedum_physics/electromagnetic_induction/emi_q54_diagram.png",
+    "rawQuestionLines": [
+      "54. The figure shows a square loop L of side 5¢m which is connected to a network of resistances. The",
+      "whole setup is moving towards the right with a constant speed of lems! . At some instant, a part of",
+      "L is in a uniform magnetic field of 17\" perpendicular to the plane of the loop. If the resistance of L is",
+      "1.792, the current in the loop at that instant will be close to:",
+      "v=1cm/sec",
+      "—",
+      "OOOO | i",
+      "= .",
+      "B OOOO 4 C",
+      "[oXo)[0X0] 10 20",
+      "D",
+      "[ON ONOXO]",
+      "Scm",
+      "(A) 11504 ®) Gopa",
+      "©) 15044 ©) 17044"
+    ],
+    "rawSolution": "If B is magnetic field, v is velocity of rod and [ is the length of rod, then induced EMF in moving road is given by\n€= Bul\n= (IT) (lems !)(5em)\n=1x1x10\"2%5 x10?\n=5x107'V\nAs given circuit forms balanced whetstone bridge, the current through 32 is zero.\n4x2\nEquivalent resist: =——\"417=\nquivalent resistance R., rT +1.7=30\nx Co. oe 5x10\nCurrentin the circuit § = — = ——\nRey 3\n= 167pA ~ 170pA"
+  },
+  "55": {
+    "q": 55,
+    "page": 44,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526204/edvedum_physics/electromagnetic_induction/emi_q55_diagram.png",
+    "rawQuestionLines": [
+      "55. Consider the LR circuit shown in the figure. If the switch S is closed at ¢ = () then the amount of",
+      "charge that passes through the battery betweent = 0 and ¢ = z is:",
+      "L R",
+      "| ]",
+      "f———e",
+      "E S",
+      "(A) 7.3EL (8) EL",
+      "R? 7.3R?",
+      "(C) 2.7EL (0D) EL",
+      "R? 2.7R?"
+    ],
+    "rawSolution": "The current in the LR circuit at any time ¢ is\nr Rt\nacti ly — oT\n1 R l1-e\nWhere E, R, L, I are the EMF, resistance, inductance and the current respectively.\n.\". Charge flown through the circuit from time 0 to H is\nL L Rt\n(charge) Aq = [,R r.dt = [[R . ( <e L dt\nL\nRt1R\nBP E\nIRIE\n0\nE[L L L\nM==|=+=el-=\nTAISF E TRE £\nE L\nAg==x——\nTMTRXeR\nago BL _ EL\nTMT R TTR"
+  },
+  "56": {
+    "q": 56,
+    "page": 45,
+    "isNumerical": true,
+    "officialAnswer": "175",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "56. Aloop ABCDEF A of straight edges has six corner points",
+      "A(0,0,0),B(5,0,0),C (5,5,0),D(0,5,0), E (0,55) and F (0,0, 5) . The magnetic field in this",
+      "region is B= (si + ak) T . The quantity of flux through the loop ABCDEF A (in Wb) is"
+    ],
+    "rawSolution": "y\nDf0,5,0)\n£0.55 (5.5.0)\n¢=DB.A=(3i+4k). (25 + 25k\n(gF%-ak} (352 am) >\n0\nA\n0,\n0.0.5) (5.0.0 x\n4\n¢ = (2 x 25) + (4 x 25) = 175weber"
+  },
+  "57": {
+    "q": 57,
+    "page": 45,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "57. Consider a circular coil of wire carrying constant current I, forming a magnetic dipole. The magnetic",
+      "flux through an infinite plane that contains the circular coil and excluding the circular coil area is given",
+      "by ¢; The magnetic flux through the area of the circular coil area is given by ¢ . Which of the",
+      "following option is correct?",
+      "Wg, = go © 4, > 4",
+      "© 4, <4 © ¢; = —go"
+    ],
+    "rawSolution": "As magnetic field lines always form a closed loop, hence every magnetic field line creating magnetic flux in the\ninner region must be passing through the outer region. Since flux in two regions are in opposite direction.\nSi=—¢o"
+  },
+  "58": {
+    "q": 58,
+    "page": 46,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "58. A long solenoid of radius R carries a time (t) dependent current I (t) = It (1 — t) . Aring of radius",
+      "2R is placed coaxially near its middle. During the time interval 0 < ¢ < 1, the induced current (I)",
+      "and the induced EMF (Vg) in the ring change as:",
+      "(A) pirection of I remains unchanged and Vp is (B) at t = 0.25 direction of I reverses and Vp is",
+      "maximum at ¢ = 0.5 maximum",
+      "(©) pirection of I remains unchanged and V is (0) pr t = 0.5 direction of I, reverses and Vis",
+      "zero att = (0.25 zero"
+    ],
+    "rawSolution": "I =Ipt— It?\n$=BA\n¢ = ponl A\nde\nVr= = = —ponAly (1 -2t)\ndt\nVep=0att= 3\nVr\nAndlp = ——— =\nek Resistanceo floop 3"
+  },
+  "59": {
+    "q": 59,
+    "page": 47,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "59. po planar loop of wire rotates in a uniform magnetic field. Initially, at £ = 0 , the plane of the loop is",
+      "perpendicular to the magnetic field. If it rotates with a period of 10s about an axis in its plane then the",
+      "magnitude of induced emf will be maximum and minimum, respectively at:",
+      "(A) 5 55and 7.55 (B) 2.55 and 5.05",
+      "(©) 5.05 and 7.5 0) 5.05 and 10.05"
+    ],
+    "rawSolution": "&=B-A=BAcosf = BAcos (wt)\ndg y\ne= |%| = BAwsin (wt)\nWhen wt = =\n2\n*.* ¢ will be minimum.\n.*. e will be maximum\n7\nt=2=25s\n5\nWhen wt = 7m\n*.* ¢ will be maximum.\n.*. € will be minimum\nka\nr— = = 5s"
+  },
+  "60": {
+    "q": 60,
+    "page": 48,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "60. An emf of 20V is applied at time ¢ = 0 to a circuit containing in series 10mH inductor and 5Q",
+      "resistor. The ratio of the currents at time t = oc and at t = 40s is close to: (Take e? = 7.389)",
+      "(A) 1.06 ® 115",
+      "© 1.46 ©) 9.84"
+    ],
+    "rawSolution": "= 6C)\n=4 i\ni=0 (7) 20V =0.01H -2 (0%)\nt=0\n=4(1-e now att = coi = att = 40s is = 4 (1 — e 4)\n1 1 doo :\n=i ¢ - —_— =4 (1 - el = = 1 Slightly greater then one."
+  },
+  "61": {
+    "q": 61,
+    "page": 49,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526204/edvedum_physics/electromagnetic_induction/emi_q61_diagram.png",
+    "rawQuestionLines": [
+      "61. Attimet =0 magnetic field of 1000Gauss is passing perpendicularly through the area defined by the",
+      "closed loop shown in the figure. If the magnetic field reduces linearly to 500Gauss, in the next 5s,",
+      "then induced EMF in the loop is:",
+      "16cm ——",
+      "|",
+      "I",
+      "|",
+      "12",
+      "| cm",
+      "4m LSet ed",
+      "|",
+      "|",
+      "|",
+      "|",
+      "|",
+      "(A) 56uV (8) 28uV",
+      "(c) 48uV (D) 36uV"
+    ],
+    "rawSolution": "_|_de|_|_4dB\nTa T | a\n| ad] _|aaB\n“| At] [At\n= (16x 4-17) 100-500) x 1074 x 1074\n=56 x ES x 107% = 56 x 10-°V'"
+  },
+  "62": {
+    "q": 62,
+    "page": 50,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526204/edvedum_physics/electromagnetic_induction/emi_q62_diagram.png",
+    "rawQuestionLines": [
+      "62.",
+      "L R",
+      "| | As shown in the figure, a battery of emf & is connected to an",
+      "€ S",
+      "inductor L and resistance R in series. The switch is closed at ¢ = 0. The total charge that flows from",
+      "the battery, between t = 0 and t = ¢, (£, is the time constant of the circuit) is:",
+      "A cr ® cr 1",
+      "ow” T\\'",
+      "©) eL Dd) ¢R",
+      "R? el?"
+    ],
+    "rawSolution": "q= I idt\nt T.\n7\nAS re, Jaa) NS Te\n3 4 =% [Te+ Tee Tl\nT.\n[4\n= RRL\n\"Re R\n_€L\n97 Ree"
+  },
+  "63": {
+    "q": 63,
+    "page": 50,
+    "isNumerical": true,
+    "officialAnswer": "10",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "63. |; a fluorescent lamp choke (a small transformer) 100V of reverse voltage is produced when the",
+      "choke current changes uniformly from 0.25A to 0 in a duration of 0.025ms . The self-inductance of",
+      "the choke (in mH ) is estimatedtobe _______"
+    ],
+    "rawSolution": "L (0.25)\n100 = === 10\n00=—00z5 <1\noS L=100x 10H\n= 10mH"
+  },
+  "64": {
+    "q": 64,
+    "page": 51,
+    "isNumerical": true,
+    "officialAnswer": "15",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "64. A circular coil of radius 10cm is placed in a uniform magnetic field of 3.0 x 10-57 with its plane",
+      "perpendicular to the field initially. It is rotated at constant angular speed about an axis along the",
+      "diameter of coil and perpendicular to magnetic field so that it undergoes half of rotation in 0.2s. The",
+      "maximum value of EMF induced (in 41) in the coil will be close to the integer..."
+    ],
+    "rawSolution": "Flux as a function of time ¢ = B- A = AB cos(wt)\nEmf induced,\ne= he = ABwsin(wt)\nMax. value of Emf = ABw\n= mR*Bw\n=314%01x0.1x3x10 Sor ~15"
+  },
+  "65": {
+    "q": 65,
+    "page": 52,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526204/edvedum_physics/electromagnetic_induction/emi_q65_diagram.png",
+    "rawQuestionLines": [
+      "65. An elliptical loop having resistance R, of semi major axis a , and semi minor axis b is placed in a",
+      "magnetic field as shown in the figure. If the loop is rotated about the z-axis with angular frequency w,",
+      "the average power loss in the loop due to Joule heating is :",
+      "x CTPA",
+      "Pa Ta",
+      "¥ V",
+      "(A) 2,2p2 B22 (B) zero",
+      "2R",
+      "(©) 7bBw (D) 724252 B22",
+      "R R",
+      "{4 marks, ~1 for a wrong answer] - 2020 (03 Sep, Shift 1)"
+    ],
+    "rawSolution": "The expression for induced EMF in the rotating loop in uniform magnetic field is given by\n€ = NABw cos wt\nThe average power loss\ne2 A2B%w?cos?wt\nPl=<—>=<— + — >\n(P)=< 7 >=< =\ni!\n20 >= =\n< cos\"d > 3\nA’B%? (1\n<P te\n553)\nm2a’h’ B? 2\nS<P>=—7—(o)"
+  },
+  "66": {
+    "q": 66,
+    "page": 53,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "66. A uniform magnetic field B exists in a direction perpendicular to the plane of a square loop made of a",
+      "metal wire. The wire has a diameter of 4mm and a total length of 30cm. The magnetic field changes",
+      "with time at a steady rate dB /dt = 0.032Ts*. The induced current in the loopis close to (Resistivity",
+      "of the metal wire is 1.23 x 10 %Qm)",
+      "(A) 0.43 A (B) 0.61A",
+      "(C) 0.34 A (D) 053A"
+    ],
+    "rawSolution": ". pl dé dB\nRadius — = PS xg CH ial et aa\nlL] | oo EC ’\nP—\n2\ncnc [doar _0082x {mx 2x10} _ 0,\nR|dt| pl 1.23x 10° x 4x 0.3"
+  },
+  "67": {
+    "q": 67,
+    "page": 54,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "67. A small bar magnet is moved through a coil at constant speed from one end to the other. Which of the",
+      "following series of observations will be seen on the galvanometer G attached across the coil?",
+      "G",
+      "a Three positions shown describe: (a) the magnet's",
+      "d",
+      "«| | «—Jmagnet",
+      "[",
+      "b",
+      "entry (b) magnet is completely inside and (c) magnet's exit.",
+      "LO) (b) (© ®  @ (b) ©",
+      "© (b) (© 0) (b) (©"
+    ],
+    "rawSolution": "(a) When the bar magnet entering the coil the magnetic flux link with the coil increases, and according to the\nFaraday’s law of electromagnetic induction, the emf will induce in the coil, which in tern induces current and\ngalvanometer shows the deflection towards right.\n(b) When the bar magnet is inside the coil no change in magnetic flux link with the coil, therefore galvanometer do\nnot show deflection.\n(c) When the bar magnet exit from the coil the magnetic flux link with the coil decreases, and according to the\nFaraday's law of electromagnetic induction, the emf will induce in the coil, in opposite direction which in tern\ninduces current and galvanometer shows the deflection towards left."
+  },
+  "68": {
+    "q": 68,
+    "page": 54,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "68. A series L — R circuit is connected to a battery of emf V.. If the circuit is switched on at t = 0, then",
+      "the time at which the energy stored in the inductor reaches | — | times of its maximum value, is :",
+      "n",
+      "We, NG we Va+1",
+      "= —— = lr",
+      "R Jn-1 R vn-1",
+      "© r, No org, Va-1",
+      "R Vn+1 R vn"
+    ],
+    "rawSolution": "1 U 1\\*1 INR\n~— Potential energy stored in inductor is givenby [J — —[2 Ux 2 — = [—) == (=\nC S 2 Uy Ly) n Iy\n1 / 1 L\n—=1-efTL=- __4_ Ly, A\nIy Vn R yn-1"
+  },
+  "69": {
+    "q": 69,
+    "page": 55,
+    "isNumerical": true,
+    "officialAnswer": "5",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "69. Two concentric circular coils, C, and C,, are placed in the XY plane. C has 500turns, and a radius",
+      "of lem. Cy has 200 turns and radius of 20em.C', carries a time dependent current",
+      "4",
+      "I(t) = (5t* — 2t + 3) Awhere tisins. The emf induced in Cy (inmV’) atthe instant ¢ = Isis —.",
+      "x",
+      "The value of zis .........."
+    ],
+    "rawSolution": "I= (5t+2t+C)\ndi\n2 = (10t+2)\npolIN,\na1 = BA =(——= 2\n— A ( 7 ) (nr?)\ninduced emf in small coil\no dé BN HoN2 3 di _ poN Nar? _\n== (452) = Nig = (= —) 10t-2)\natt =1\n_ (moNiNamr®\\  poNiNamr?  4(4m)10°7 x 200 10°!\ne= (YF 8=d—p——=—— op XW0x ow\n=80xm2x107x10x10°x 102 =8 x 10 tyolt = 0.8mV = 2\nxT\nz=5"
+  },
+  "70": {
+    "q": 70,
+    "page": 56,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526204/edvedum_physics/electromagnetic_induction/emi_q70_diagram.png",
+    "rawQuestionLines": [
+      "70. An infinitely long straight wire carrying current |, one side opened rectangular loop and a conductor C'",
+      "with a sliding connector are located in the same plane, as shown in the figure. The connector has",
+      "length I. and resistance R. It slides to the right with a velocity v. The resistance of the conductor and",
+      "the self inductance of the loop are negligible. The induced current in the loop, as a function of",
+      "separation r, between the connector and the straight wire is",
+      "1",
+      "i",
+      "i",
+      "| one side opened long",
+      "eé conducting wire loop",
+      "-",
+      "I —_ 1",
+      "r—",
+      "i",
+      "1",
+      "i",
+      "(A) py Ive (B) yuo Ive",
+      "4m Rr © Rr",
+      "(C) 244 Int 0) yy Ive",
+      "© Rr 2m Rr",
+      "(4 marks, -1 for a wrong answer] - 2020 (0S Sep, Shift 2)"
+    ],
+    "rawSolution": "The induced current in the wire will be due to the motional EMF developed in the moving resistor and that back emf\ndeveloped at that point will be equal to V BL\nV =velocity of the conductor\nB =perpendicular magnetic field\nL =length of conductor\nWe know magnetic field due to a long wire is\nHoi\nB=——\n277\nHence the induced current across wire will be :\ne\nI=—\nR\nTvl\n7 bo Ivt\n2w Rr"
+  },
+  "71": {
+    "q": 71,
+    "page": 57,
+    "isNumerical": true,
+    "officialAnswer": "33",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526205/edvedum_physics/electromagnetic_induction/emi_q71_diagram.png",
+    "rawQuestionLines": [
+      "7. A part of a complete circuit is shown in the figure. At some instant, the value of current | is 14 and it is",
+      "decreasing at a rate of 1024s. The value of the potential difference Vy, — Vg, (in volts) at that",
+      "L=50mH I R=20",
+      "P < Q",
+      "30V"
+    ],
+    "rawSolution": "V,-L3 30+ RI=Vq\nVp —Vo=+50x10\"% x 10> +30 -1x 2\n=+5+30-2=33"
+  },
+  "72": {
+    "q": 72,
+    "page": 57,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526205/edvedum_physics/electromagnetic_induction/emi_q72_diagram.png",
+    "rawQuestionLines": [
+      "72: The figure shows a circuit that contains four identical resistors with resistance R = 2.012, two",
+      "identical inductors with inductance L = 2.0m H and an ideal battery with EM.F. E = 9V. The",
+      "current { just after the switch § is closed will be:",
+      "S",
+      "R",
+      "+ R",
+      "Emo",
+      ": f 3",
+      "R",
+      "Al B!",
+      "A 94 © 3374",
+      "© 5954 © 304"
+    ],
+    "rawSolution": "Just after the switch is closed, inductor will behave like infinite resistance (open circuit) so the circuit will look like\nd R\n1V\nR\n9 9\ni= ——— = = = 2.254\n'\"R+R 1 '"
+  },
+  "73": {
+    "q": 73,
+    "page": 58,
+    "isNumerical": true,
+    "officialAnswer": "144",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "73. A coil of inductance 2H having negligible resistance is connected to a source of supply whose voltage",
+      "is given by V' = 3t volt. (where t is in second). If the voltage is applied when t = 0, then the energy",
+      "stored in the coil after 4s in J,"
+    ],
+    "rawSolution": "rR ST Lorre clin 1 Al\n== 3fqtdt =2[dl 5 x 16 = 211 =12V = 5LI* = 5 x 2(12)° = 1447\n| a"
+  },
+  "74": {
+    "q": 74,
+    "page": 59,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526205/edvedum_physics/electromagnetic_induction/emi_q74_diagram.png",
+    "rawQuestionLines": [
+      "I The current (i) attime t = 0 and t = oo respectively for the given circuit is :",
+      "50 50",
+      "i",
+      "E",
+      "B 1Q [4Q B",
+      "0000000",
+      "L",
+      "W 55 188 8) 55 10E",
+      "18° 55 18° 33",
+      "© 1E 5E © 188 5B",
+      "33’ 18 55 ' 18"
+    ],
+    "rawSolution": "5 E 5E\nAtt = 0, current through inductor is zero, hence R,, =(5 + 1)I(5 + 4)= 2 f= 5 = on Att = oot\ninductor becomes a simple wire and now the circuit will be as shown in figure hence R., =(5 || 5)+(4 || 1)= =\n5/2\n( adie) fl 4) ROE\n[|= parallel) i; = 2375 = 33 E\n4/5"
+  },
+  "75": {
+    "q": 75,
+    "page": 60,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526205/edvedum_physics/electromagnetic_induction/emi_q75_diagram.png",
+    "rawQuestionLines": [
+      "75. A conducting bar of length L is free to slide on two parallel conducting rails as shown in the figure",
+      "EE  —",
+      "v E",
+      "X H xX .",
+      "R, H zB R, Two resistors R) and R; are connected across",
+      "x i x",
+      "———",
+      "the ends of the rails. There is a uniform magnetic field B pointing into the page. An external agent",
+      "pulls the bar to the left at a constant speed v. The correct statement about the directions of induced",
+      "currents I and I flowing through R; and Rj respectively is :",
+      "(A) Both I, and I, are in anticlockwise direction (B) got I, and I, are in clockwise direction",
+      "© I, is in clockwise direction and I is in (0) I, is in anticlockwise direction and I is in",
+      "anticlockwise direction clockwise direction"
+    ],
+    "rawSolution": "Given, the external agent pulls the bar towards left. According to Lenz's law and Fleming's right hand rule, there will\nbe a motional EMF generated in the bar. The right-hand rule tells us that the magnetic force on positive charges will\nbe in downward direction and the electric equivalent circuit can be drawn as shown below.\nI I\nR, EE R, So, I, isin the clockwise direction and I, is in the anticlockwise\ndirection."
+  },
+  "76": {
+    "q": 76,
+    "page": 61,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "76. ~ ZN ~",
+      "The magnetic field in a region is given by B = By ) k. A square loop of side d is placed with its",
+      "edges along the z and y axes. The loop is moved with a constant velocity & = voi. The emf induced in",
+      "Vv",
+      "the loop is : d",
+      "d",
+      "x",
+      "(A) Byvid (B) Byvod",
+      "2a 2a",
+      "(©) Byvyd? D) Bwyd?",
+      "a 2a"
+    ],
+    "rawSolution": "p= Betd) ip BG), ip. BE pg, — Bd\na a a\n—>\nE, —E\nx: x+d"
+  },
+  "77": {
+    "q": 77,
+    "page": 62,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "77. The time taken for the magnetic energy to reach 25 of its maximum value, when a solenoid of",
+      "resistance R, inductance L is connected to a battery, is :",
+      "(A) L, . (B) infinite",
+      "=n",
+      "R",
+      "io Ly 2 o Ly 10",
+      "—In —lIn",
+      "R R"
+    ],
+    "rawSolution": "Magnetic energy — 3 Li =25\nME = 25\ni=ig (1 — R ™) for charging\nt= Linz"
+  },
+  "78": {
+    "q": 78,
+    "page": 62,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526205/edvedum_physics/electromagnetic_induction/emi_q78_diagram.png",
+    "rawQuestionLines": [
+      "78. The arm PQ of a rectangular conductor is moving from z = ( to = 2b outwards and then inwards",
+      "from 2 = 2bto z = 0) as shown in the figure. A uniform magnetic field perpendicular to the plane is",
+      "acting from 2 = () to zz = b. Identify the graph showing the variation of different quantities with",
+      "1",
+      "bE i Bd | Po A",
+      "= ! i",
+      "o fo 3 i B",
+      "- =",
+      "distance: 7 °° * |",
+      ". [Y i i",
+      "eo oo offet ! !",
+      "“rg hs | x=0 Cc",
+      "x= x= x=",
+      "x=b x=2b 5 3h b",
+      "(A) A—Flux, B—Power dissipated, C—EMF (B) A—Power dissipated, B—Flux, C—EMF",
+      "© A—Flux, B—EMF, C—Power dissipated (0) A—EMF, B—Power dissipated, C—Flux"
+    ],
+    "rawSolution": "As rod moves in field area increases upto = = b, then field is absent and again flux is generated on return journey\nfrom z = bto z = (. Thus plot A for flux.\nSe= dy = curve B for em f\ndt\n= Power dissipated = vi = curve ( for power dissipated"
+  },
+  "79": {
+    "q": 79,
+    "page": 63,
+    "isNumerical": true,
+    "officialAnswer": "80",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "79. A circular conducting coil of radius 1m is being heated by the change of magnetic field B passing",
+      "perpendicular to the plane in which the coil is laid. The resistance of the coil is 2(). The magnetic",
+      "field is slowly switched off such that its magnitude changes in time as",
+      "4 t",
+      "B=-x10%T(1- —",
+      "T 100",
+      "The energy dissipated by the coil before the magnetic field is switched off completely is",
+      "E= mJ."
+    ],
+    "rawSolution": "¢=B-§\no=2x103 (1-1) ore\nT 100\nP= 4x10 x) (1- =\n- 100\n_—d¢\nTa\n—d ¢ t\n= 3 (1x02 (1- 1)\ne=ax103 (2) =ax10%V\n100\nWhen B = 0\n1 Lo 0\n100\nt = 100 sec\n2\nHeat ©\nR\n_5y2\nHeat — (4x10) x 100J\n2x10°\n10\nHaat — 16 x 1019 x 100 ,\n2x10°°\nHeat = 0.08.\nHeat = 80m.J"
+  },
+  "80": {
+    "q": 80,
+    "page": 64,
+    "isNumerical": true,
+    "officialAnswer": "74",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "80. An inductor of 10mH is connected to a 20V battery through a resistor of 10k(2 and a switch. After a",
+      "long time, when maximum current is set up in the circuit, the current is switched off. The current in the",
+      "circuit after 1us is Tog A Then zisequalto_____.(Takee ! = 0.37)"
+    ],
+    "rawSolution": "Tous = J = ats = mA\nFor L R-decay circuit,\nI =I E\n~10x10°x1x10\"°\nI=2mAe  10x10°\nI=2mAe!\nI=2x03TmA\n74\nI= TT\nz=T4"
+  },
+  "81": {
+    "q": 81,
+    "page": 64,
+    "isNumerical": true,
+    "officialAnswer": "3",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "81. Consider an electrical circuit containing a two way switch S. Initially S is open and then T'; is",
+      "connected to T'5. As the current in R = 6£2 attains a maximum value of steady-state level, T', is",
+      "disconnected from T'; and immediately connected to T's. Potential drop across r = 3(2 resistor",
+      "immediately after T') is connected to T'3 is ____V'. (Round off to the Nearest Integer)",
+      "R=6Q I, /4",
+      "N . 1",
+      "6V",
+      "L r=3.0"
+    ],
+    "rawSolution": "When T'; and T'; are connected, then the steady state current in the inductor J = : =14A\nWhen T'; and T'y are connected then current through inductor remains same. So potential difference across 30\nV=Ir=1x3=3V"
+  },
+  "82": {
+    "q": 82,
+    "page": 65,
+    "isNumerical": true,
+    "officialAnswer": "60",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526206/edvedum_physics/electromagnetic_induction/emi_q82_diagram.png",
+    "rawQuestionLines": [
+      "82. In the given figure the magnetic flux through the loop increases according to the relation",
+      "p(t) = 10t2 + 20¢, where pis in milliwebers and t is in seconds. The magnitude of current",
+      "X x X xX x",
+      "R=2Q",
+      "xX X X X xX",
+      "through R = 2Q) resistor att = 5sis ____ mA.",
+      "x x x x x",
+      "x x x xX x"
+    ],
+    "rawSolution": "do\nlel = Bri 20t + 20mV\nlil = d_ 10 + 10mA\nR\nAtt =5\n|i| = 60mA"
+  },
+  "83": {
+    "q": 83,
+    "page": 65,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "83. An inductor coil stores 64.J of magnetic field energy and dissipates energy at the rate of 640W when",
+      "a current of 8A is passed through it. If this coil is joined across an ideal battery, find the time constant",
+      "of the circuit (in g).",
+      "(A) 4 (B) go",
+      "© 0.125 ©) o.8"
+    ],
+    "rawSolution": "R L\n8A Energy stored in an inductor, {J — ore\nE\n= 64= JL? = L = 2H and power dissipated in a resistor, P = IR = 640 = (8)2R = R = 10Q Time\nFE: L 2\nconstant of the LRD(C circuitis, 7 = — = — = 0.25\nR 10"
+  },
+  "84": {
+    "q": 84,
+    "page": 66,
+    "isNumerical": true,
+    "officialAnswer": "60",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "84. A circular coil of radius 8.0cm and 20 turns is rotated about its vertical diameter with an angular speed",
+      "of 50rads—\" in a uniform horizontal magnetic field of 3.0 x 10-27\". The maximum emf induced in the",
+      "coil will be x10? volt (rounded off to the nearest integer)."
+    ],
+    "rawSolution": "Emf = BwN Asinwt\nEfe = BoNA = BuN (zR’)\n= (3x10?) x (50) x (20) x (mx) ~60x10°2V"
+  },
+  "85": {
+    "q": 85,
+    "page": 67,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "85. A par magnet is passing through a conducting loop of radius R with velocity v. The radius of the bar",
+      "magnet is such that it just passes through the loop. The induced e.m.f. in the loop can be represented",
+      "1 ]",
+      "R | / Ji",
+      "Te !",
+      "loop",
+      "«—V",
+      "(A) (B)",
+      "emf emf",
+      "Iv",
+      "RE —",
+      "l§ ————— t",
+      "Iv",
+      "© (D)",
+      "emf I emf",
+      "PELL 1 14",
+      "mp",
+      "Iv"
+    ],
+    "rawSolution": "As Magnet is approaching toward the loop magnetic flux increases and Rate of increment of flux also increases so\nJ\nemf increases with time OM s() at this moment emf is maximum and negative\n&\nOV] | S() Magnet is in middie of coil, at this moment emf is equal to zero\nL\nON | 150) Now again flux start changing however polarity of emf get reverse\nBJ\nOv [s() At this moment emf is again maximum\nemf\nly\nemf again become zero I 4"
+  },
+  "86": {
+    "q": 86,
+    "page": 69,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "86. A constant magnetic field of 17 is applied in the > 0 region. A metallic circular ring of radius 1m is",
+      "moving with a constant velocity of lms along the z-axis. At t = 0s, the centre O of the ring is at",
+      "x = — 1m. What will be the value of the induced emf in the ring at £ = 1s ? (Assume the velocity of",
+      "v7",
+      "the ring does not change.) (0%",
+      "74",
+      "x=0 x—",
+      "(A) gy (B) oy",
+      "©) or ©) 1y,"
+    ],
+    "rawSolution": "Recall the formula of induced E.M.F. in terms of the length of the rod, and uniform magnetic field, E = Bul, here in\nthe case of the ring, I = 2R,= E = Bv2R, when half ringenters, E =1x 1x2 x 1=2V."
+  },
+  "87": {
+    "q": 87,
+    "page": 70,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "87. A small square loop of side a and one turn is placed inside a larger square loop of side b and one turn",
+      "(b> a). The two loops are coplanar with their centres coinciding. If a current I is passed in the",
+      "square loop of side b, then the coefficient of mutual inductance between the two loops is :",
+      "(A) 2 (B) »?",
+      "Ho a Ho",
+      "i 7 (a =8/2—",
+      "ww? b 4m 82 a",
+      "© po 8v2 © po sv",
+      "ir b ir a"
+    ],
+    "rawSolution": "[]\n[1\n[]\n1\n[]\n1\n[]\n[]\n[]\nLb)\nt+ b/2\n[]\n[¢] . [e]\n45 : 45\n.\nHol\nB=4x ———V2 i i\n| “7% VEL Ww 4 aro pa mil 2 ay\ndn b wb\noar VI _ phy 8V20\nwh dr b"
+  },
+  "88": {
+    "q": 88,
+    "page": 71,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526206/edvedum_physics/electromagnetic_induction/emi_q88_diagram.png",
+    "rawQuestionLines": [
+      "88. A coils placed in a magnetic field B as shown below :",
+      "Induced current",
+      "Coil %",
+      "A current is induced in the coil because B is :",
+      "(A) parallel to the plane of coil and increasing with (B) outward and increasing with time",
+      "time",
+      "(C) outward and decreasing with time (D) parallel to the plane of coil and decreasing",
+      "with time"
+    ],
+    "rawSolution": "Lenz's law state that the direction of the induced current is such that it opposes its cause of generation, so,\ni\n® B, must not be parallel to the plane of coil for non-zero flux and according to\nB\nLenz's law if B is outward it should be decreasing for anticlockwise induced current."
+  },
+  "89": {
+    "q": 89,
+    "page": 72,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "89. 5 square loop of side 20cm and resistance 1§2 is moved towards right with a constant speed v,. The",
+      "right arm of the loop is in a uniform magnetic field of 57\". The field is perpendicular to the plane of the",
+      "loop and is going into it. The loop is connected to a network of resistors each of value 4), What",
+      "should be the value of vg so that a steady current of 2m A flows in the loop ?",
+      "SEHR BKK RIK DR",
+      "X X X X X X X X X",
+      "X X X X X X X X X",
+      "X X X X X X X K X",
+      "4Q 4Q Xi %0X 3¢ XX Xp ix",
+      "P X X X X X X X K X",
+      "X XX XX X X[K X",
+      "X X X X X X X KX X",
+      "40 [4 4Q X X X X X X X KX X",
+      "X X X X X X K X",
+      "xX xX",
+      "XKXIH RK KKK",
+      "> XXX XXX XXX",
+      "()",
+      "(A) 10-2ems! (B) 1s!",
+      "(©) {ems (DO) 1025-1",
+      "{4 marks, ~1 for a wrong answer] + 2021 (01 Sep, Shift 2)"
+    ],
+    "rawSolution": "The EMF is induced in the coil when it is moving in a uniform magnetic field,\ne = Bul and the current, i = Fo = 0.0024\n0.002 x RB 0.002 x (4 +1) ye 4\nFv= Bl = 5202 =0.0lms \"= lems"
+  },
+  "90": {
+    "q": 90,
+    "page": 73,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526206/edvedum_physics/electromagnetic_induction/emi_q90_diagram.png",
+    "rawQuestionLines": [
+      "90. For the given circuit the current 7 through the battery when the key in closed and the steady state has",
+      "2Q",
+      "i",
+      "been reached is 3Q",
+      "307",
+      "30",
+      "(A) 104 (B) 64",
+      "© 954 ©) gy"
+    ],
+    "rawSolution": "In a steady state, the inductor behaves as a conducting wire. So, the equivalent circuit becomes,\n2Q JETS\ni30 3Q 4\n307] 4 i\nParallel (R,)\n1 Ee iE oo\n®, = TR i + 7 =3 + 3 + 3° 1= R., = 1Q so, the circuit becomes,\n2Q\ni\n=>I= EB = 104\n1Q\n307"
+  },
+  "91": {
+    "q": 91,
+    "page": 74,
+    "isNumerical": true,
+    "officialAnswer": "440",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "91. A circular coil of 1000 turns each with area 1m? is rotated about its vertical diameter at the rate of one",
+      "revolution per second in a uniform horizontal magnetic field of 0.077\". The maximum voltage",
+      "generation willbe _V."
+    ],
+    "rawSolution": "Given, N = 1000, A = 1m?and B = 0.077\nThe maximum emf generated is ea = NB Aw,\n= NBA(2rf)\n= 1000 x 0.07 x 1 x 27 (1)= 1407\nThus, maximum emf is 439.6V =~ 440V."
+  },
+  "92": {
+    "q": 92,
+    "page": 74,
+    "isNumerical": true,
+    "officialAnswer": "4",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "92. The current in a coil of self inductance L = 2.0H is increasing according to the law ¢ = 2 sin (£2).",
+      "Find the amount of energy spent (in .J) during the period when the current changes from ( to 2A."
+    ],
+    "rawSolution": "Letthe currentbe 24 att = 7\nThen 2 = 2sin7® = 1 = /7/2\nwhen the instantaneous current is i, the\nself-induced emf is ig If dg amount of\ncharge is displaced in time dt, then elementary work done\n= (+5) dg = Lia —Lidi\nWW = [(Lidi = [{L2sint’d (2sint?)\n=>W= [8Lsint*cost*tdt = 4L [sin2t2dt\nLet § = 2t2 = df = 4tdt\n.. the integral\n=4L [ sinfdt/4L(—cosf) = — Lcos2t*\naW=— [cos2t2)Y =2L=4J"
+  },
+  "93": {
+    "q": 93,
+    "page": 75,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "93. The magnetic flux through a coil perpendicular to its plane is varying according to the relation",
+      "¢= (56° +482 +28 — 5) Weber. If the resistance of the coil is 50hm, then the induced current",
+      "through the coil at t = 2s will be,",
+      "15.64 ®) 16.64",
+      "© 17.64 ©) 15864"
+    ],
+    "rawSolution": "Given, ¢ = 5t° + 41> + 2t — 5\n. : d¢\nMagnitude of induced emf e = dl 15¢% + 8t +2\nAt, t= 2s, =60+16 +2 =T78V\n€ 78\nGlifrent, § — — = — — 15\nurrent, i = 15.64"
+  },
+  "94": {
+    "q": 94,
+    "page": 75,
+    "isNumerical": true,
+    "officialAnswer": "400",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "94. po 1082, 20m.H coil carrying constant current is connected to a battery of 20V through a switch. Now",
+      "after switch is opened current becomes zero in 100s. The average e.m.f. induced in the coil is",
+      "Vv."
+    ],
+    "rawSolution": "The initial current in the coil will be, i = 4 = 20 =24:\nR 10\nAverage e.m.f. developed in the coil will be,\nri 3\nAs _0-Li_ 20x10 x2 o0v.\nAt t 100 x 10°"
+  },
+  "95": {
+    "q": 95,
+    "page": 76,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "95. A metallic conductor of length 1m rotates in a vertical plane parallel to east-west direction about one",
+      "of its end with angular velocity 5rads~!. If the horizontal component of earth's magnetic field is",
+      "0.2 x 107*T, then emf induced between the two ends of the conductor is",
+      "5p ® 50,1",
+      "© 5my ©) 50m"
+    ],
+    "rawSolution": "Given here, By = 0.2 x 10 AT. w= brads ‘andl = 1m.\nEmf induced in a rotating conducting rod is given by,\n1\n€e= 3 Bul?\nSubstituting the given values, we obtain\n= x02x 107% x 5 x (1) = 0.5 x 10°*V = 50uV"
+  },
+  "96": {
+    "q": 96,
+    "page": 76,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "96. Tyo coils of self inductance L, and L, are connected in series combination having mutual inductance",
+      "of the coils as M. The equivalent self inductance of the combination will be",
+      "Wade ® 1, +L, 2M",
+      "Li L M",
+      "© p++ M ©) 1, 4+ Ly +2M"
+    ],
+    "rawSolution": "L 1\n7 Ji L 7 Here self inductances are in series but their mutual inductances\nf } B) }\nare linked oppositely. As the inductors connected are in series opposition, hence magnetic flux will be opposing\neach other. Therefore, Lo; = Ly + Ly — 2M"
+  },
+  "97": {
+    "q": 97,
+    "page": 77,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "97. A coil is placed in a time varying magnetic field. If the number of turns in the coil were to be halved and",
+      "the radius of wire doubled, the electrical power dissipated due to the current induced in the coil would",
+      "be (Assume the coil to be short circuited.)",
+      "(A) Doubled (B) The same",
+      "(C) Quadrupled (D) Halved"
+    ],
+    "rawSolution": "P=%\nwhere, £ = inducedemf = ~d\n¢=NBA\ne=NAS\nalso, R ox 3\nwhere, R = resistance and r = radius of wire\nN22\nPom\nIB\npt\nPy\nP,=P,\nThis means if the number of turns were quadrupled and the wire radius halved, the electrical power dissipated\nwould be remains same."
+  },
+  "98": {
+    "q": 98,
+    "page": 78,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526206/edvedum_physics/electromagnetic_induction/emi_q98_diagram.png",
+    "rawQuestionLines": [
+      "98. A small square loop of wire of side [ is placed inside a large square loop of wire L (L >> 1). Both loops",
+      "are coplanar and their centres coincide at point O as shown in figure. The mutual inductance of the",
+      "L",
+      "/",
+      "system is L / B / L",
+      "€—5>",
+      "/",
+      "Wesessrpingiise",
+      "iL",
+      "(A) 2/20 L? (B) 12",
+      "wl 2v/2xL",
+      "© 412 (D) 2v/3 pol?",
+      "2v/2ml nL"
+    ],
+    "rawSolution": ""
+  },
+  "99": {
+    "q": 99,
+    "page": 79,
+    "isNumerical": true,
+    "officialAnswer": "250",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "99. Magnetic flux (in weber) in a closed circuit of resistance 20(2 varies with time ¢ (s) as",
+      "¢ = 812 — 9t + 5. The magnitude of the induced current at t = 0.25s willbe __ mA.",
+      "{4 marks, no negative marking] + 2022 (25 Jul, Shift 2)"
+    ],
+    "rawSolution": "Given that magnetic flux ¢ = 8¢% — 9¢ + 5\nAccording to Faraday's law of electromagnetic induction\nd¢\n=-2—_(16t-9\nemf = ~S2 =~ (166-9)\nAtt = 0.25s\nemf = —[(16 x 0.25) — 9] = 5V\nCurrent — emi = £14\nResistance ~~ 209\n1 1000\n= 4 = — mA = 250mA"
+  },
+  "100": {
+    "q": 100,
+    "page": 79,
+    "isNumerical": true,
+    "officialAnswer": "2",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "100. |, 4 coil of resistance 82, the magnetic flux due to an external magnetic field varies with time as",
+      "¢ = : (9 = 12). The value of total heat produced in the coil, till the flux becomes zero, willbe ____ J"
+    ],
+    "rawSolution": "Itis given that magnetic flux ¢ — : (9 = £)\nFor magnetic flux to be zero 0 = 2 (9-2) =t=3s\nAccording to Faraday's law of electromagnetic induction,\ndg 2 4t\n=—==-Z(0-2t)==\n=u 30 M3\nHeat produced from 0 to 3s,\n2 16\nHe fg. 1-5 5 oy\nJogit log x 3d"
+  },
+  "101": {
+    "q": 101,
+    "page": 80,
+    "isNumerical": true,
+    "officialAnswer": "12",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "101. 5 conducting circular loop is placed in X — Y plane in presence of magnetic field",
+      "B= (3¢j + 3k) in Sl unit. If the radius of the loop is 1m, the induced emf in the loop, at time,",
+      "t =2sisnwV.Thevalueofnis ____."
+    ],
+    "rawSolution": "By the faraday's law in electromagnetic induction\nRET dt\nMagnetic fluxis ¢ = B- A= (36% + 3k) 2 (=k)\nSo, ¢ = 31\nNow, induced emf is €ing = |] = btm\nAtt =2 60a = 6(2) 7 = 127V.\nThus, the value of n = 12."
+  },
+  "102": {
+    "q": 102,
+    "page": 81,
+    "isNumerical": true,
+    "officialAnswer": "1",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526191/edvedum_physics/electromagnetic_induction/emi_q102_diagram.png",
+    "rawQuestionLines": [
+      "102. tor the given circuit the current through battery of 6V just after closing the switch 'S\" will be __ A.",
+      "Se 2H",
+      "V00000(",
+      "2Q"
+    ],
+    "rawSolution": "Just after closing the switch §, inductor behaves like an open circuit, so no current will flow through 2(Q resistors.\nThus, current through the circuitis I = St = 1A (Here 21) and 4() resistors are in series)."
+  },
+  "103": {
+    "q": 103,
+    "page": 82,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "103. A coil of inductance 1H and resistance 10052 is connected to a battery of 6. Determine",
+      "approximately :",
+      "(a) The time elapsed before the current acquires half of its steady-state value",
+      "(b) The energy stored in the magnetic field associated with the coil at an instant 15ms after the",
+      "hed on. (Given In2 — 0.693, — )",
+      "circuit is switched on. (Given In2 = 0.693, —~",
+      "e2 =10.25",
+      "A) 4 — 10ms;U = 2mJ ®) 4 — 10ms; U = 1mJ",
+      "©) 4 — ms; U = 1mJ (D) 4 Tms;U = 2mJ"
+    ],
+    "rawSolution": "R=100Q L=1H\nGiven circuitis R — L growth circuit | | The current is the circuit is\nE=6V\n2 Li\ngiven by, i = z ( —e ’) For current to be half of the peak value, i = = = z (1 —e ‘) Solving\n15\nt=rht= Ls = 150.693 = 0.00693~ Ts Attime t = 15ms, i (15ms) = . (1 —-& )\n6 1 3 6 1\ni=— (1-2) =Sx—= = — Li? by solvi = §\n=i 100 (1 3) i xX 100 0.0454 = U Li y solving we get U' = 1m.J."
+  },
+  "104": {
+    "q": 104,
+    "page": 83,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "104. 10",
+      "A conducting loop of radius wn is placed perpendicular to a uniform magnetic field of 0.5T. The",
+      "™",
+      "magnetic field is decreased to zero in ().5s at a steady rate. The induced emf in the circular loop at",
+      "0.255 is:",
+      "(A) emf = 1mV B) emf — 10mV",
+      "© emf = 100mV 0) emf = 5mV",
+      "4 marks, ~1for a wrong answer] - 2023 (24 Jan, Shift 1)"
+    ],
+    "rawSolution": "Given: B = 0.5Tatt = 0 & B = 0, at t=0.5s. Magnetic field will decrease linearly as given below. We can say,\nvalue of magnetic field at t = 0.25will be B = 0.25.\n7\nB\n05T\n0.5s t—>\n€ind = T X (2) x107* x 1\n™\nTherefore, ing = 100 x 10-4 =10\"2 x 1=0.01V = 10mV\n€ina =1072V =0.01V"
+  },
+  "105": {
+    "q": 105,
+    "page": 85,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526192/edvedum_physics/electromagnetic_induction/emi_q105_diagram.png",
+    "rawQuestionLines": [
+      "105. A metallic rod of length L is rotated with an angular speed of w normal to a uniform magnetic field B",
+      "about an axis passing through one end of rod as shown in figure. The induced emf will be :",
+      "XxX X X X X X X X X X X X X X",
+      "X X XX X XX X X X X X X X X",
+      "X X X = X XE XE",
+      "x ¥ 3 & ® x x x x",
+      "X X & X X X X X",
+      "X x 2 X XX ® X:",
+      "X X X X X X X",
+      "X X X X X X X X X",
+      "X XxX XxX X X X X X X X X",
+      "X XxX Xx XxX X XX X X X X X X X",
+      "XxX XxX X XxX XxX XX X X X X X X X",
+      "A Bj",
+      "Lo lpera, \" lpr,",
+      "2 4",
+      "© 1 (D) 1",
+      "ZBI? per,",
+      "3BL w i w"
+    ],
+    "rawSolution": "Vv = wx\ndx\nLinear velocity at the distance z from the centre can be written\nX\nas, v = wx. Therefore, induced EMF due to small element will be, de = Budz = B (wz) dz Integrating both\nsides, we get [de = [ B (wz)dz = ¢ = Buw[lzdz = iis"
+  },
+  "106": {
+    "q": 106,
+    "page": 86,
+    "isNumerical": true,
+    "officialAnswer": "3",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526190/edvedum_physics/electromagnetic_induction/emi_q106_diagram.png",
+    "rawQuestionLines": [
+      "106. . ’ + . . . —— . Z",
+      "Three identical resistors with resistance R = 122 and two identical inductors with sell inductance",
+      "L = 5mH are connected to an ideal battery with emf of 12V\" as shown in figure. The current",
+      "through the battery long after the switch has been closed willbe_______A.",
+      "L R",
+      "000000",
+      "| | | 000000",
+      "12V k"
+    ],
+    "rawSolution": "L R\n000000\n= . rong 000000 So\n12Vv k\nWe know that after long time an inductor offers zero resistance i.e., in steady state condition. Here all three\nidentical resistors are in parallel, so equivalent resistance is, R,, = 2 = 4) Now, current through the battery is\n12\nI=—=34\n4"
+  },
+  "107": {
+    "q": 107,
+    "page": 87,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "107. A wire of length 1mm moving with velocity 8ms~* at right angles to a magnetic field of 27\". The",
+      "magnitude of induced emf, between the ends of wire will be 5",
+      "(A) 9g (B) gy",
+      "©) 191 (D) 161"
+    ],
+    "rawSolution": "= 8 m/s The expression of motional emf is\ne = BLvsin#, where, § is angle between magnetic field and direction of motion. Here, § = 90°, So, induced emf\nacross the ends of wire ise = BLvsin90° = BLv=2 x 1 x 8 = 16V"
+  },
+  "108": {
+    "q": 108,
+    "page": 87,
+    "isNumerical": true,
+    "officialAnswer": "10",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "108. A certain elastic conducting material is stretched into a circular loop. It is placed with its plane",
+      "perpendicular to a uniform magnetic field B = 0.87\". When released the radius of the loop starts",
+      "shrinking at a constant rate of 2cms™. The induced emf in the loop at an instant when the radius of",
+      "the loop is 10cm willbe _ mV."
+    ],
+    "rawSolution": "According to the Faraday's law of electromagnetic induction, the emf induced in a conducting loop is given by,\ne=— do, here, t is time and ¢ = BA is magnetic flux.\n2\nHere, ¢ — dé = d(B4) _ pd?)\ndt dt dt\ndr iS\n= Bm ry =2xmx01x08x2x10\"*°\n= 10mV (rounded off)"
+  },
+  "109": {
+    "q": 109,
+    "page": 88,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "109. Ein the mutual inductance in the arrangement, when a small circular loop of wire of radius R is",
+      "placed inside a large square loop of wire of side L(L >> R). The loops are coplanar and their centres",
+      "coincide :",
+      "A) Fe V2uR? (B) a 243 R",
+      "L 2",
+      "©) Fe 2/240 R? (D) Rie VauR",
+      "LL I?",
+      "(4 marks, ~1for a wrong answer] - 2023 (29 Jan, Shift 1)",
+      "| ANSWER: C",
+      "Bea _toi [117] 2v3ui",
+      "= Bc Lg) 8 fh bn",
+      "The magnetic field due to the rectangular loop at its centre is: * 4 L V2 2 «nL",
+      "\\3",
+      "Th ; 2/2pyR% 5 g",
+      "| erefore, the flux through the circular loop b= TR x B = —— If M is the mutual inductance, then",
+      "di dé 22uR® di 22 R?",
+      "Miri oe os AM",
+      "dt dt L dt L"
+    ],
+    "rawSolution": ""
+  },
+  "110": {
+    "q": 110,
+    "page": 90,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "10. 5 square loop of area 25cm? has a resistance of 10€2. The loop is placed in uniform magnetic field of",
+      "magnitude 40.07\". The plane of loop is perpendicular to the magnetic field. The work done in pulling",
+      "the loop out of the magnetic field slowly and uniformly in 1,0 sec, will be",
+      "(A) 95 x 10787 B) 10x10",
+      "© 10x10 ©) 5 10-37",
+      "14 marks, =1for a wrong answer] + 2023 (29 Jan, Shift 2)"
+    ],
+    "rawSolution": "As [2 = 25¢m?, then | = Sem = 0.05m.\nGiven: t = 1s\nVelocity of the square loop, v = we = 0.05ms 1.\nInduced current,\n. V Blv 40x0.05x005\ni=p=Tf®- 1 —o04\nNow force acting on the side of the square loop, F' = Bil = 40 x 0.01 x 0.05\n= F =0.02N\nTherefore, work done\nW = F1 = 0.02 x I = 0.02 x 0.05\n=W=1x103J"
+  },
+  "111": {
+    "q": 111,
+    "page": 91,
+    "isNumerical": true,
+    "officialAnswer": "30",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526190/edvedum_physics/electromagnetic_induction/emi_q111_diagram.png",
+    "rawQuestionLines": [
+      "mn As per the given figure, if z = —1As!, then the value of V 4p at this instant will be Vv.",
+      "[=2A",
+      "A",
+      "L=6H R=12Q",
+      "———————— B",
+      "E=12V"
+    ],
+    "rawSolution": "L=6H\nA\n[= 24\nR=12Q\nI —\n12V\nai dl 1 LG 3 nr dl\niven here, TE —1As~! Applying Kirchhoff's voltage law to the circuit, V 4 — IR — Ly -12=Vp\n=Va—-2x12-6(-1)-12=Vp=>Vig=Va4—-Vp=36-6=30V"
+  },
+  "112": {
+    "q": 112,
+    "page": 92,
+    "isNumerical": true,
+    "officialAnswer": "1584",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "M2. \\hanac generator, a rectangular coil of 100 turns each having area 14 x 10m? is rotated at",
+      "360revmin! about an axis perpendicular to a uniform magnetic field of magnitude 3.07\". The",
+      "maximum value of the emf produced willbe _V.",
+      "22",
+      "[Take 7 = =]",
+      "7"
+    ],
+    "rawSolution": "Maximum value of induced EMF can be written as,\nEmax = NABw\n2:\n—100 x (14 x 10°?) x 3 x (2%2)\n60\n= 1584V"
+  },
+  "113": {
+    "q": 113,
+    "page": 92,
+    "isNumerical": true,
+    "officialAnswer": "44",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "M3. 5 square shaped coil of area 70cm? having 600 turns rotates in a magnetic field of 0.4Wbm 2, about",
+      "an axis which is parallel to one of the side of the coil and perpendicular to the direction of field. If the",
+      "coil completes 500 revolution in a minute, the instantaneous emf when the plane of the coil is inclined",
+      "at 60° with the field, will be Vv.",
+      "(Take 7 = 22)",
+      "7"
+    ],
+    "rawSolution": "Given here, N = 600, A = 70 x 10 *m?, and B = 0.4T\n2mn 500 x 27 1007\nAngul: dof coilisw = —— = — = = —. 1\nngular speed of coil is w 50 0 5 rads\nInstantaneous emf in coil is given by ¢ = NE, where, magnetic flux ¢ = BA coswt and wt = 30” is angle\nit\nbetween A and B.\nd(BA t\nSo, = ~yd(Bdonut) = —N(~BAwsinwt) = NBAwsinwt\nPutting the values, we get\n€= 600% 70 x 10-4 x 0.4% 207 1\n6 2\n= 44V"
+  },
+  "114": {
+    "q": 114,
+    "page": 93,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "14. The induced emf can be produced in a coil by",
+      "A. moving the coil with uniform speed inside uniform magnetic field",
+      "B. moving the coil with non uniform speed inside uniform magnetic field",
+      "C. rotating the coil inside the uniform magnetic field",
+      "D. changing the area of the coil inside the uniform magnetic field",
+      "Choose the correct answer from the options given below:",
+      "(A) Band C only (8) A and C only",
+      "© C and D only (0) Band D only"
+    ],
+    "rawSolution": "Induced emf is given by Faraday's law\n_d\nlel =z\nwhere ¢ is the magnetic flux.\nThe rate of change of flux through a circuit is defined as emf. The formula for flux is ¢ = B- A. Inthe statements\nA&B given in the question, the magnetic flux in the coil in uniform magnetic field does not change. So, no emf is\ninduced.\nBut in statement C, the angle between the area vector and the magnetic field continuously changes hence, an emf\nis generated. In statement D, the area is changing in unit time so magnetic flux will change and an emf is\ngenerated.\nM5. For the plane electromagnetic wave given by E = Ej sin(wt-kz) and B = By sin(wt — kz), the"
+  },
+  "115": {
+    "q": 115,
+    "page": 93,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "ratio of average electric energy density to average magnetic energy density is",
+      "(A) 1 (B) o",
+      "2",
+      "© 4 © 4",
+      "14 marks, ~1 for a wrong answer] - 2023 (06 Apr, Shift 1)"
+    ],
+    "rawSolution": "The formula to calculate the average electric energy density is given by\nUp= SGB.(1)\nand, the formula to calculate average magnetic energy density is given by\n1\nUp=—B%.(2\n72 2)\nFor any particular electromagnetic wave, both magnetic and electric field are equally involved in contributing to\nenergy density. Hence, the ratio of average electric energy density to magnetic energy density is 1."
+  },
+  "116": {
+    "q": 116,
+    "page": 94,
+    "isNumerical": true,
+    "officialAnswer": "4",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "M86. Tyo concentric circular coils with radii 1em and 1000em and number of turns 10 and 200",
+      "respectively are placed coaxially with centers coinciding. The mutual inductance of this arrangement",
+      "willbe ___ x10 H. (Take, 7* = 10)"
+    ],
+    "rawSolution": "Let the magnetic field of the 200 turns be Bj. The formula of magnetic field is given by B = «=\nw\nLet 7 = 1000cm. Thus,\nB _ npg x I 200pf\n'T 2x10 0 2x10\nThe flux through the coil of radius ry = lemis ¢ = 10 x (8 . A) =10 x Bywr?,\n200401 2\n=> ¢=10x Ee (0.01)\nL=10x 20% +001)? =10x 22° (mx 107) (0.01) =4 x 10H\n=F ag TA 2x10 BES"
+  },
+  "117": {
+    "q": 117,
+    "page": 94,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "17. Certain galvanometers have a fixed core made of non magnetic metallic material. The function of this",
+      "metallic material is",
+      "(A) to oscillate the coil in magnetic field for longer (B) to bring the coil to rest quickly",
+      "period of time",
+      "(C) to produce large deflecting torque on the coil  (D) to make the magnetic field radial"
+    ],
+    "rawSolution": "Certain galvanometers have a fixed core made of nonmagnetic metallic material. When the coil oscillates, the eddy\ncurrents generated in the core oppose the motion and bring the coil to rest quickly. Eddy currents are loops of\nelectrical current induced within conductors by a changing magnetic field in the conductor according to Faraday's\nlaw of induction. Eddy currents flow in closed loops within conductors, in planes perpendicular to the magnetic\nfield."
+  },
+  "118": {
+    "q": 118,
+    "page": 95,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "M8. An emf of 0.08V is induced in a metal rod of length 10cm held normal to a uniform magnetic field of",
+      "0.4T, when move with a velocity of:",
+      "(A) 0 5ms ®) 30ms?",
+      "(©) 3 2ps7 ©) 5st"
+    ],
+    "rawSolution": "The formula to calculate the motional emf induced in a moving conductor in a magnetic field is given by\ne€= Blv...(1)\nSubstitute the values of the known parameters into equation (1) and solve to calculate the required velocity of the\nrod.\n1m\n0.08V = 04T x (10cm x —— | xv\n100cm\n0.08V/\nI Tyra\nLAT\" x 1 —m—\n0.4T x 10em x 00am\n= 2ms!"
+  },
+  "119": {
+    "q": 119,
+    "page": 96,
+    "isNumerical": true,
+    "officialAnswer": "18",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526190/edvedum_physics/electromagnetic_induction/emi_q119_diagram.png",
+    "rawQuestionLines": [
+      "M9. Aim long metal rod XY\" completes the circuit as shown in figure. The plane of the circuit is",
+      "perpendicular to the magnetic field of flux density 0.157\". If the resistance of the circuit is 5), the",
+      "force needed to move the rod in direction, as indicated, with a constant speed of 4ms~\" will be",
+      "ae JPN"
+    ],
+    "rawSolution": "The force on the rod is given by\nF=ilB\nBul\n=F == xB,\nR x\n22,\no> P= 2\nThe data given is\nR =50 = 1mv = 4ms 'B = 0.15T\nSubstituting the values in equation (i)\nHe (015) x (1)* x4\n5\n=18 x 10-3N"
+  },
+  "120": {
+    "q": 120,
+    "page": 97,
+    "isNumerical": true,
+    "officialAnswer": "44",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "120. 5 square loop of side 2.0cm is placed inside a long solenoid that has 50 turns per centimetre and",
+      "carries a sinusoidally varying current of amplitude 2.54 and angular frequency 700rads!. The",
+      "central axes of the loop and solenoid coincide. The amplitude of the emf induced in the loop is",
+      "zx 10°%V. Thevalueof zis",
+      "22",
+      "(Take, m = —",
+      "7"
+    ],
+    "rawSolution": "—\n— fe\nee\nItis given that the current is varying sinusoidally. The current can be written as I = I sin wt. The magnetic field\nthrough the solenoid B = pgnl The flux through the square is ¢ = pgnl A The emf is\n€ = pond x Hosiner) = € = ponAlyw cos wt The amplitude of the emf is,\n7 50 4 4\n€ = ponAlyw = 47 x 10 Zan anly x 2.5 x 700 = e=44 x 10'V"
+  },
+  "121": {
+    "q": 121,
+    "page": 98,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "121. A bar magnet is released from rest along the axis of a very long vertical copper tube. After some time",
+      "the magnet will",
+      "(A) Move down with an acceleration equalto g  (B) Oscillate inside the tube",
+      "(C) Move down with almost constant speed (D) Move down with an acceleration greater than",
+      "9"
+    ],
+    "rawSolution": "The flux connected to the copper tube will fluctuate when the magnet moves under the influence of gravity. Eddy\ncurrents will be created in the copper tube's body as a result, these induced currents oppose the collapse of the\nmagnet, in accordance with Lenz's law.\nA retarding force will consequently act on the magnet. This force will keep rising with the magnet's rising velocity\nuntil it equals the force of gravity. The net force acting on the magnet will then vanish. The magnet will therefore\nreach a steady speed."
+  },
+  "122": {
+    "q": 122,
+    "page": 99,
+    "isNumerical": true,
+    "officialAnswer": "8",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526194/edvedum_physics/electromagnetic_induction/emi_q122_diagram.png",
+    "rawQuestionLines": [
+      "122. he magnetic field B crossing normally a square metallic plate of area 4m? is changing with time as",
+      "shown in figure. The magnitude of induced emf in the plate during t = 2stot = 4s,is ___ mV.",
+      "B(mT)",
+      "|",
+      "lemme [",
+      "|",
+      "(1 bo",
+      "4 | |",
+      "| | | |",
+      "2F-= | | | | |",
+      "| | |",
+      "01 2 3 4 5 1“)"
+    ],
+    "rawSolution": "B(mT\")\n|\n+3) Nl |\n|\n6 rt]\n4 lo\n| | | |\n2 a | | | |\nI I\n0°\" 1 2 3 4 5 1)\nFrom the graph, it can be seen that the value of the magnetic field at t = 2s is 4inT', whereas the magnetic field\n8 i]\n€ind = - dt\natt = 4s is 8mT. The formula to calculate the magnitude of the induced emf is given by = (BA)\nB\n= dea\nRY)\nes is the slope of the given graph. Hence, the value of the induced emf can be calculated as follows:\n8mT — 4mT\naw = mtx (TET)\n= 8mV"
+  },
+  "123": {
+    "q": 123,
+    "page": 100,
+    "isNumerical": true,
+    "officialAnswer": "150",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "123. A metallic cube of side 15cm moving along y-axis at a uniform velocity of 2ms~. In a region of",
+      "uniform magnetic field of magnitude (0.57 directed along z- axis. In equilibrium the potential",
+      "difference between the faces of higher and lower potential developed because of the motion through",
+      "Y",
+      "Vv",
+      "the field will be mV.",
+      "Xx",
+      "5",
+      "rs",
+      "14 marks, no negative marking] - 2023 (11 Apr, Shift 2)"
+    ],
+    "rawSolution": "Using the equation\nqE = quB = E = vB\nUsing the relation AV = Ed\n= AV = vBd\n=2x ! x 0.15V\n= 3x0\n=0.15V = 150mV"
+  },
+  "124": {
+    "q": 124,
+    "page": 101,
+    "isNumerical": true,
+    "officialAnswer": "625",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "124. A coil has an inductance of 2H and resistance of 40. A 10V is applied across the coil. The energy",
+      "stored in the magnetic field after the current has built up to its equilibrium value willbe ____ x10-2J"
+    ],
+    "rawSolution": "The data given is\nL=2HR=4QV = 10V\nUsing Ohm's law, V = IR,\nwv 5\nI=—=-4\n4Q 2\nThe energy of an inductor is given by\n1 1 25\nE=-LPP=>x2x(=)=625x102\n2 3 x ( 1 ) 625 x 10 °J"
+  },
+  "125": {
+    "q": 125,
+    "page": 101,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "125. Given below are two statements: one is labelled as",
+      "Assertion A and the other is labelled as Reason R",
+      "Assertion A: A bar magnet dropped through a metallic cylindrical pipe takes more time to come down",
+      "compared to a non-magnetic bar with same geometry and mass.",
+      "Reason R: For the magnetic bar, Eddy currents are produced in the metallic pipe which oppose the",
+      "motion of the magnetic bar.",
+      "In the light of the above statements, choose the correct answer from the options given below",
+      "(A) 4is false but Ris true (B) goth A and R are true and R is the correct",
+      "explanation of A",
+      "(©) fis true but Ris false (D) Both A and R are true and R is NOT the",
+      "correct explanation of 4",
+      "(4 marks, 1 for a wrong answer] - 2023 (11 Apr, Shift 2)"
+    ],
+    "rawSolution": "Due to change in flux, eddy current is produced which opposes the motion in the metallic pipe for the bar magnet.\nEddy currents are loops of electrical current induced within conductors by a changing magnetic field in the\nconductor according to Faraday's law of induction. Eddy currents flow in closed loops within conductors, in\nplanes perpendicular to the magnetic field.\nHence, Ris the correct explanation and both statements are true."
+  },
+  "126": {
+    "q": 126,
+    "page": 102,
+    "isNumerical": true,
+    "officialAnswer": "50",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "126. 5 conducting circular loop is placed in a uniform magnetic field of 0.47 with its plane perpendicular",
+      "to the field. Somehow, the radius of the loop starts expanding at a constant rate of 1mms~!. The",
+      "magnitude of induced emf in the loop at an instant when the radius of the loop is 2¢m willbe ______",
+      "uv."
+    ],
+    "rawSolution": "The data given is\nB=04TR=2x10\"’m\nIt is given that dR =10\"%ms!\ndt\nArea of the loop is A = TR?\ndA dR\nSo, — = 2rR—\n&\nThe flux is,\n¢= RSE x B\nSo, the magnitude of emf is\n22\n€=2x7x2x10 2x107° x 04\n= 5.028 x 10 °V = 50.28uV =~ 50uV"
+  },
+  "127": {
+    "q": 127,
+    "page": 102,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "127. The source of time varying magnetic field may be",
+      "(A) a permanent magnet",
+      "(B) an electric field changing linearly with time",
+      "(C) direct current",
+      "(D) a decelerating charge particle",
+      "(E) an antenna fed with a digital signal",
+      "Choose the correct answer from the options given below.",
+      "(A) (C) and (E) only (B) (D) only",
+      "(C) (A) only (D) (B) and (D) only",
+      "14 marks, 1 for a wrong answer] - 2023 (13 Apr, Shift 1)"
+    ],
+    "rawSolution": "An electric field varying linearly with time will not produce variable magnetic field as current will be constant.\nA decelerating charged particle can result in a time varying magnetic field by emitting radiation.\nSimilarly a permanent magnet has a constant magnetic field and a direct current does not change its direction and\ncannot produce a magnetic field.\nAn antenna can modulate the digital signals .\nSo, the right option is the statement D."
+  },
+  "128": {
+    "q": 128,
+    "page": 103,
+    "isNumerical": true,
+    "officialAnswer": "25",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526194/edvedum_physics/electromagnetic_induction/emi_q128_diagram.png",
+    "rawQuestionLines": [
+      "128. | the given figure, an inductor and resistor are connected in series with a battery of em f E volt.",
+      "Ee",
+      "57 represents the maximum rate at which the energy is stored in the magnetic field (inductor).",
+      "p b.",
+      "The numerical value of — will be .",
+      "a",
+      "4 marks, no negative marking] + 2023 (13 Apr, Shift 1)"
+    ],
+    "rawSolution": "The formula to calculate the current flowing through an L-R circuit is given by\ni —Rt\ni=—|1-e L |..(1\ni R e (1)\nThe energy stored within the inductor can be calculated as follows:\n1\nEunduction = Li\nio ~Rt]?\n= lm 1-e L |..(2)\nThe rate of change of energy stored within the inductor is given by\n—Rt —Rt \"\nd Ts —5- R EL\n7 (Binduction) = 2[(1-e L [ee L “Ti 3m\n) —~Rt —2Rt\nm= ===\n= Flel el |-0\nFor maximum rate,\ndE\n— =0...(4\ndt? @\nFrom equation (3) and (4), it can be written that\na —Rt —2Rt\nS| es = 0\ndt | R\n~Rt —2Rt\n= el =2 L\nRt\n= el =2..(5\nFrom equation (3) and (5), it can be written, under maximum energy stored condition for the circuit, that\nd Et _ oe\n7 (Binduction) = 3 [21-277\n_ E?\n> 4R\nSubstitute the values of the resistance and compare with the given expression to obtain the values of the\nparameters.\na = 2\nb = 2R\n= 50\nHence, the required ratio is given by\nLAE\na"
+  },
+  "129": {
+    "q": 129,
+    "page": 105,
+    "isNumerical": true,
+    "officialAnswer": "60",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "129. An insulated copper wire of 100 turns is wrapped around a wooden cylindrical core of the cross-",
+      "sectional area 24cm?. The two ends of the wire are connected to a resistor. The total resistance in",
+      "the circuit is 129). If an externally applied uniform magnetic field in the core along its axis changes",
+      "from 1.57 in one direction to 1.57\" in the opposite direction, the charge flowing through a point in the",
+      "circuit during the change of magnetic field will be mC."
+    ],
+    "rawSolution": "The induced emf (¢) in the turns of the coil can be written as\nJ)\ndt\n= AR...)\nSimplify equation (1) to obtain the required charge through a point in the circuit.\ndo :\nEe = . iR\n©.\n=~ an [dt\nbr —\n= =—2(2\nq 7\nWhere, ¢;, ¢» are the magnetic flux associated with the coil from two ends.\nAs, ¢ = NBA, from equation (2), it can be written that\nNA\n=—(B,—-B,)...(3\nq R (By 2)... (3)\nwhere, N, A are the number of turns and the cross-sectional area of the core respectively.\nSubstitute the values of the known parameters into equation (3) to calculate the required charge.\n100 x 24 x 10 *m? x (1.5T — (~1.5T))\ng = —4M4MMm ~~ 7\n12!\nfhoome\n= 0.06C x 3c\n= 60mC’"
+  },
+  "130": {
+    "q": 130,
+    "page": 106,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "130. po 12V battery connected to a coil of resistance 62 through a switch, drives a constant current in the",
+      "circuit. The switch is opened in 1ms. The emf induced across the coil is 20V. The inductance of the",
+      "coil is :",
+      "A) 10mH ®) gmp",
+      "© 5mm © 19mH"
+    ],
+    "rawSolution": "The current (i) through the circuit is given by\n. \\4\ni = =\n_ if\n60\n=%<\"24\nThe formula to calculate the induced emf in the coil can be written as\ndi\n=L—...(1\ne=Lg..(1)\nSubstitute the values of the known parameters into equation (1) and solve to calculate the inductance of the coil.\nOV: =e VE 2A\n1x10 7s\n20V x 1x 10%\n2 [=m\n24\n= 10mH"
+  },
+  "131": {
+    "q": 131,
+    "page": 106,
+    "isNumerical": true,
+    "officialAnswer": "88",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "131. A 20em long metallic rod is rotated with 2107pm about an axis normal to the rod passing through its",
+      "one end. The other end of the rod is in contact with a circular metallic ring. A constant and uniform",
+      "magnetic field 0.27 parallel to the axis exists everywhere. The emf developed between the centre",
+      "and the ring is mV.",
+      "22",
+      "(Take 7 = —)",
+      "7"
+    ],
+    "rawSolution": "The data given is\n2\nw= 210 x Trrads = Trrads l= 0.2mB = 0.2T\nThe emf is given by\n_ Bul?\n=]\n2\n=0.2 x 7m x (02)\n2\n= 88mV"
+  },
+  "132": {
+    "q": 132,
+    "page": 107,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "132. 5 rectangular loop of length 2.5m and width 2m is placed at 60° to a magnetic field of 47\". The loop",
+      "is removed from the field in 10 sec. The average emf induced in the loop during this time is",
+      "wy ® Lay",
+      "© 1p © _qy"
+    ],
+    "rawSolution": "The formula to calculate the change in the magnetic flux associated with the given loop can be written as\nAp = —~BAcos#\n= —B(lb)cosh...(1)\nThe formula to calculate the induced emf is given by\n€ = - 2\nB (Ib) cos\nEl eC)\nFrom equation (2), it follows that\nFa 4x (2.5 x2 x cos 60° v\n= 1"
+  },
+  "133": {
+    "q": 133,
+    "page": 107,
+    "isNumerical": true,
+    "officialAnswer": "2",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "133. Two coils have mutual inductance (),002H. The current changes in the first coil according to the",
+      "relation § = igsinwt, where ip = 5A and w = 507 rads. The maximum value of emf in the",
+      "wor JG 7",
+      "second coil is —V. The value of a is",
+      "a",
+      "14 marks, no negative marking] - 2024 (27 Jan, Shift 1"
+    ],
+    "rawSolution": "The amount of flux induced in the second coil due to the first one is given by\n$2 = Mi\n= Migsinwt... (1)\nwhere, M is the mutual inductance of the coils.\nThe formula to calculate the emf induced can be written as\ndé,\n€=——ru (2)\nFrom equation (2), it follows that,\nCone — Migw\n= 0.002 x 5 x 507V\nm\n= id\nHence, a = 2."
+  },
+  "134": {
+    "q": 134,
+    "page": 108,
+    "isNumerical": true,
+    "officialAnswer": "2",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "134. 5 square loop of side 10cm and resistance 0.74 is placed vertically in the east-west plane. A uniform",
+      "magnetic field of 0.207 is set up across the plane in the north-east direction. The magnetic field is",
+      "decreased to zero in 1s at a steady rate. Then, the magnitude of induced emf is /z x 107%V. The",
+      "value of z is \""
+    ],
+    "rawSolution": "y\n| B=0.2 Tesla\nx A\n45°\nW- E The area vector for the square loop\na + 5 : . om 5 02. 02.\nis givenby A = (0.1)%jm?* According to the above diagram, the magnetic field is given by B = a + 7\nAg\ne = =x\n_ At\n§ B-A-0\nHence, the magnitude of induced emf can be calculated as follows 0.2. 02. 1 \"\n(5 + 29) : (©0125) =9\n_\\R' A -\n=e\n= VZx1073V\nHence, © = 2."
+  },
+  "135": {
+    "q": 135,
+    "page": 109,
+    "isNumerical": true,
+    "officialAnswer": "3",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "135. A horizontal straight wire 5m long extending from east to west falling freely at right angle to",
+      "horizontal component of earth's magnetic field 0.60 x 10~*Wbm 2. The instantaneous value of emf",
+      "induced in the wire when its velocity is 10ms ‘is _____x107°V."
+    ],
+    "rawSolution": "Horizontal component of earth's magnetic field,\nBy = 0.60 x 10 Wom 2.\nInduced emfe = Byuvl\n=0.60x10*x10x5\n=3x10%V"
+  },
+  "136": {
+    "q": 136,
+    "page": 109,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "136. A coils placed perpendicular to a magnetic field of 50007\". When the field is changed to 30007 in 2s",
+      ", an induced emf of 22V is produced in the coil. If the diameter of the coil is 0.02m, then the number",
+      "of turns in the coil is:",
+      "(A) 7 (8) 79",
+      "© 35 ©) 149"
+    ],
+    "rawSolution": "Average induced EMF is given by, e = N' (%)\nAlso, change in flux Ag = (AB) A\nGiven: B; = 50007\",\nBj = 30007\nd=0.02m =r = : =0.01m\nHence,\nAd = (AB)A\n= (2000) 7(0.01)* = 0.2\nawe e~ (52) »n-n (4)\nt 2\n=>N=T70"
+  },
+  "137": {
+    "q": 137,
+    "page": 110,
+    "isNumerical": true,
+    "officialAnswer": "128",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "137. A small square loop of wire of side [ is placed inside a large square loop of wire of side L(L = 8):",
+      "The loops are coplanar and their centers coincide. The value of the mutual inductance of the system",
+      "isyz x 107TH, wherez =____."
+    ],
+    "rawSolution": "“>\n=4x Li (sin 45° + sin 45°) 12 Hoi\n4 =>¢= 2/20 Therefore, mutual inductance will be\nr=\n2 wr.\n2 -\nM= ¢_2BP _, pi aaica 7=8v/2 x 107 = 1/128 x 10 7H Hence, z = 128.\ni x T m"
+  },
+  "138": {
+    "q": 138,
+    "page": 110,
+    "isNumerical": true,
+    "officialAnswer": "2",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "138. The magnetic flux ¢ (in weber) linked with a closed circuit of resistance 8 varies with time (in",
+      "seconds) as ¢ = 5t> — 36t + 1. The induced current in the circuitatt = 2sis A."
+    ],
+    "rawSolution": "oo do\nInduced EMF is given by, |e] = |— I = |10t — 36]\nNow, itis given that at t = 2s, = 16V.\n16\nTherefore, j — lel =—=24\nWPF 8"
+  },
+  "139": {
+    "q": 139,
+    "page": 111,
+    "isNumerical": true,
+    "officialAnswer": "216",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "139. 5 rectangular loop of sides 12cm and Sem, with its sides parallel to the z-axis and y-axis",
+      "respectively moves with a velocity of 5ems~! in the positive x axis direction, in a space containing a",
+      "variable magnetic field in the positive z direction. The field has a gradient of 10~°T'emn ~! along the",
+      "negative z direction and it is decreasing with time at the rate of 10~>7's™'. If the resistance of the",
+      "loop is 6m, the power dissipated by the loop as heatis x10 “W."
+    ],
+    "rawSolution": "| ® —>V =5cm/s\n( Let B,\n€, €, ’\nD X\n(12,0) 0,0)\n3\nis the magnetic field at origin. Then, 2 v = = [2dB=—[710\"dz = B-By=-10\"x\n= B= (Bo — 5) Motional emf in AB = ( Motional emf in CD = ( Motional emf in AD = ¢; = Bylv\n—-12 x 1072 3\nMagnetic field on rod BC = (= —- Lae) Motional emf in BC = ¢; = (2 - =, xv\n5 i. dB ;\nNet equivalent emf e.; = ez — €; = 300 x 10\" 'V' For time variation (¢,,) = Agr =60x10'V\n‘ 7 (eee)\n(Eeq)ey = eq + (€eq) = 360 x 107TV Power — Zest — 216 x 10-°W"
+  },
+  "140": {
+    "q": 140,
+    "page": 112,
+    "isNumerical": true,
+    "officialAnswer": "5",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "140. A coil of 200 turns and area 0.20m? is rotated at half a revolution per second and is placed in uniform",
+      "magnetic field of 0.017\" perpendicular to axis of rotation of the coil. The maximum voltage generated",
+      ") Loom",
+      "in the coil is rl volt. The value of 3 is ."
+    ],
+    "rawSolution": "Time taken for one complete revolution = time period = 2s.\nTherefore, w = 2n — wrads\nTr\nNow flux, ¢ = NABcos(wt)\n3 do p\nTherefore, induced EMF € = |— AE NABwsin(wt)\nThe maximum voltage generated, €,,,, = NABw\n=200 x 0.2 x 0.01 x w\nAm it\n10 5\nHence, 8 = 5."
+  },
+  "141": {
+    "q": 141,
+    "page": 112,
+    "isNumerical": true,
+    "officialAnswer": "0",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "141. A rod of length 60 cm rotates with a uniform angular velocity 20rads~! about its perpendicular",
+      "bisector, in a uniform magnetic filed 0.57\". The direction of magnetic field is parallel to the axis of",
+      "rotation. The potential difference between the two ends of the rod is V."
+    ],
+    "rawSolution": "2\n© ®B V,-Vi= But\n2\nry mR 7\nB A z\no So Va=Ve. Va-Vg=0"
+  },
+  "142": {
+    "q": 142,
+    "page": 113,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526193/edvedum_physics/electromagnetic_induction/emi_q142_diagram.png",
+    "rawQuestionLines": [
+      "142. Two conducting circular loops A and B are placed in the same plane with their centers coinciding as",
+      "B",
+      "shown in figure. The mutual inductance between them is : (2)",
+      "(A) gmt? (B) p, 8",
+      "2a 2r a",
+      "©) 2 (D) yma?",
+      "wg tae’"
+    ],
+    "rawSolution": "6 =Mi=BA\nLolo\n= Mi= 5 BT\n2\n. _ Homa\nSM= iv"
+  },
+  "143": {
+    "q": 143,
+    "page": 113,
+    "isNumerical": true,
+    "officialAnswer": "4",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "143. The current in an inductor is given by I = (3t + 8) where t is in second. The magnitude of induced",
+      "emf produced in the inductor is 12mV. The self-inductance of the inductor __ mH."
+    ],
+    "rawSolution": "I=3t+8\ne=12mV\ndi\nl=1[3]\n12=Lx3\nL = 4mH"
+  },
+  "144": {
+    "q": 144,
+    "page": 114,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "144; In a coil, the current changes from —2 A to +2 A in 0.2 s and induces an emf of 0.1 V. The self",
+      "inductance of the coil is :",
+      "Al B|",
+      "(A) ymH (B) 1mH",
+      "© 5mm ©) 5 smu"
+    ],
+    "rawSolution": "di\nEmfig | = |- L—\n[Ext | <\n(Em f)ingucea = —L4% In magnitude form, L[2 ( 2)]\n=0l=——\"\"\n0.2\n0.1 x0.2\n= [= ———=5mH\n4"
+  },
+  "145": {
+    "q": 145,
+    "page": 114,
+    "isNumerical": true,
+    "officialAnswer": "3",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526194/edvedum_physics/electromagnetic_induction/emi_q145_diagram.png",
+    "rawQuestionLines": [
+      "145. A square loop PQRS having 10 turns, area 3.6 x 10~* m? and resistance 10082 is slowly and",
+      "uniformly being pulled out of a uniform magnetic field of magnitude B = 0.5 T as shown. Work done",
+      "x x x x",
+      "P Q",
+      "x x x x",
+      "in pulling the loop out of the field in 1.0 s is x1079 J. ¢ x ® x X",
+      "v {",
+      "x x x x",
+      "B R",
+      "x x x x"
+    ],
+    "rawSolution": "e = NBlv\ni_& NB\n\"RR\nN2B2¢?\nF=N(itB) = ——\nR\nN2B% (¢\nW=Fxi= = ()\nA=PF\nwo (10x 10)(05) x (36 10-%)°\nx 100 x 1\nW=324x10\"°J"
+  },
+  "146": {
+    "q": 146,
+    "page": 115,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526195/edvedum_physics/electromagnetic_induction/emi_q146_diagram.png",
+    "rawQuestionLines": [
+      "146. 5 square loop of side 15 cm being moved towards right at a constant speed of 2 cm/s as shown in",
+      "figure. The front edge enters the 50 cm wide magnetic field at ¢ = 0 . The value of induced emf in",
+      "B=101",
+      "2em's x» x ox x",
+      "—",
+      "the loop att = 10 s will be : son OJ > RW",
+      "|",
+      "50cm",
+      "(A) 3my (B) zero",
+      "© 4 5my ©) 3myv",
+      "(4 marks, -1for a wrong answer] - 2024 (09 Apr, Shift 2)"
+    ],
+    "rawSolution": "Att = 10sec complete loop is in magnetic field therefore no change in flux\ne= &= = 0 e = 0 for complete loop\nBiv Biv"
+  },
+  "147": {
+    "q": 147,
+    "page": 116,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "147. A rectangular metallic loop is moving out of a uniform magnetic field region to a field free region with",
+      "a constant speed. When the loop is partially inside the magnate field, the plot of magnitude of induced",
+      "emf (¢) with time (¢) is given by",
+      "(A) (8)",
+      "€",
+      "{A",
+      "t t",
+      "(c) (D)",
+      "€",
+      "a",
+      "t",
+      "t"
+    ],
+    "rawSolution": "% ix dé\nx x i ¢ = Bbz\nx x x xx | |E| = Bb"
+  },
+  "148": {
+    "q": 148,
+    "page": 117,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "148. Regarding self-inductance:",
+      "A. The self-inductance of the coil depends on its geometry.",
+      "B. Self-inductance does not depend on the permeability of the medium.",
+      "C. Self-induced e.m.f. opposes any change in the current in a circuit.",
+      "D. Self-inductance is electromagnetic analogue of mass in mechanics.",
+      "E. Work needs to be done against self-induced e.m.f. in establishing the current.",
+      "Choose the correct answer from the options given below:",
+      "(A) A B,C,E only (B) B, C, D, E only",
+      "(©) A C,D,E only (D) A,B, C, Donly"
+    ],
+    "rawSolution": "A. The self-inductance of the coil depends on its geometry.\nThis is true because the self-inductance of a coil is given by formulas that include its geometrical parameters\n(number of turns, cross-sectional area, length, etc.). For example, for a solenoid,\nL = pou, M4\nwhere NV is the number of turns, A is the cross-sectional area, and is the length.\nB. Self-inductance does not depend on the permeability of the medium.\nThis is false. The permeability of the medium (represented by pu = pgp.) directly influences the inductance, as\nseen in the formula above. So, any change in the medium's permeability will affect the inductance.\nC. Self-induced e.m.f. opposes any change in the current in a circuit.\nThis is true, and it is a direct consequence of Lenz's law. The induced electromotive force (e.m.f.) always acts in a\ndirection such that it opposes the change in current that produced it.\nD. Self-inductance is the electromagnetic analogue of mass in mechanics.\nThis is true. Just as mass resists changes in velocity (inertia), inductance resists changes in current, which is why\nitis often compared to the inertial mass in mechanical systems.\nE. Work needs to be done against self-induced e.m.f. in establishing the current.\nThis is true because, when you try to change the current, you must do work to overcome the opposing self-\ninduced e.m.f., storing energy in the magnetic field of the inductor. Based on the above reasoning, the true\nstatements are A, C,D, and E.\nThus, the correct answer is:\nOption C\nA, C,D, Eonly"
+  },
+  "149": {
+    "q": 149,
+    "page": 118,
+    "isNumerical": true,
+    "officialAnswer": "3",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526195/edvedum_physics/electromagnetic_induction/emi_q149_diagram.png",
+    "rawQuestionLines": [
+      "149. 3H",
+      "sol | In the given circuit the sliding contact is pulled",
+      "R",
+      "outwards such that electric current in the circuit changes at the rate of 8 A /s. At an instant when R is",
+      "120), the value of the current in the circuit willbe _____ A."
+    ],
+    "rawSolution": "Ldl\n— Fr = IR=0\n12-3x(-8)-Ix12=0\nI=3"
+  },
+  "150": {
+    "q": 150,
+    "page": 118,
+    "isNumerical": true,
+    "officialAnswer": "1",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526196/edvedum_physics/electromagnetic_induction/emi_q150_diagram.png",
+    "rawQuestionLines": [
+      "150. B",
+      "xX X xX X",
+      "X X A conducting bar moves on two conducting rails as shown in the figure. A",
+      "X X xX X",
+      "X X X X X",
+      "constant magnetic field B exists into the page. The bar starts to move from the vertex at time £ = 0",
+      "with a constant velocity. If the induced EMF is E x t\", then value of nis _."
+    ],
+    "rawSolution": "As the bar moves without change in orientation, the length of bar will be proportional to its distance from the\nvertex. i.e. I = c(vt)\nE = Blv\n2\nE = cBvt\n==n=1"
+  },
+  "151": {
+    "q": 151,
+    "page": 119,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "151. A uniform magnetic field of 0.4 T acts perpendicular to a circular copper disc 20 cm in radius. The",
+      "disc is having a uniform angular velocity of 10rrads~' about an axis through its centre and",
+      "perpendicular to the disc. What is the potential difference developed between the axis of the disc and",
+      "the rim ? (mr = 3.14)",
+      "(A) 0.5024 v ® y",
+      "© g.2512V ©) 0.1256 V"
+    ],
+    "rawSolution": "B=04T\nr=20cm\nw = 10xrad/s\n_ lpr?\nE= 3 BuwR’\n=0.2512V"
+  },
+  "152": {
+    "q": 152,
+    "page": 119,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "152. p Z F F 3 PB dod 3",
+      "A coil of area A and N turns is rotating with angular velocity w in a uniform magnetic field B about an",
+      "axis perpendicular to B. Magnetic flux ¢ and induced emf e across it, at an instant when Bis parallel",
+      "to the plane of coil, are :",
+      "W ABs =0 B® ,—0e=0",
+      "C! D",
+      "(©) p= 0, = NABw ©), _ AB,e = NABw"
+    ],
+    "rawSolution": "id ®\n¢ = BAN cos(wt)\nB do When B is parallel to plane,\ng = —— = BAwN sin(wt)\ndt\n1\n1\nwt=%=¢=0,c=BAwN"
+  },
+  "153": {
+    "q": 153,
+    "page": 120,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "153. consider I, and I, are the currents flowing simultaneously in two nearby coils 18& 2, respectively. If",
+      "L, = self inductance of coil 1, M;, = mutual inductance of coil 1 with respect to coil 2, then the",
+      "value of induced emf in coil 1 will be",
+      "Options",
+      "We = 1% mpd © gy =—L% Mp",
+      "© = -L% = M3 Og = —-L% + Mp 42"
+    ],
+    "rawSolution": "¢1 = Lil + Ml\ndoy dl Liz dl,\n=-—8 gn Mt\nia Ta a"
+  },
+  "154": {
+    "q": 154,
+    "page": 121,
+    "isNumerical": true,
+    "officialAnswer": "10",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "154. Conductor wire ABCDE with each arm 10 cm in length is placed in magnetic field of 5 Tesla,",
+      "perpendicular to its plane. When conductor is pulled towards right with constant velocity of 10 cm/s,",
+      "induced emf between points Aand Eis _ mV.",
+      "10 cm",
+      "x B A",
+      "X &, X x XxX X",
+      "Q X",
+      "x WIG\" x X I",
+      "X x X —",
+      "C v B = —Tesla",
+      "X Xo x \\2",
+      "7) Xx xX oX%",
+      "X",
+      "% x 10 cm x E",
+      "x",
+      "D x",
+      "4 marks, no negative marking] + 2025 (04 Apr, Shift 1)"
+    ],
+    "rawSolution": "Hu A\nx\nQ I 1 X XI\nN 1 10 Bis 1\nx L45Px © Xx x |\n: v= 1 Ocnifs \\ As field is uniform we can replace the bent wire with\nxX 'X\nRex 2\n& | x10sin45°, |\nx B\nX\n= Li x 10 x 2(10sin 45”) ecm\nstraight wire from Ato B. SOEMF :¢ — Bvfay V2 5\n£=10mV"
+  },
+  "155": {
+    "q": 155,
+    "page": 122,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "155. po conducting circular loop of area 1.0 m? is placed perpendicular to a magnetic field which varies as",
+      "B = sin(100t) Tesla. If the resistance of the loop is 1002, then the average thermal energy",
+      "dissipated in the loop in one period is J.",
+      "(A) 2 ®)",
+      "© = © 5,"
+    ],
+    "rawSolution": "Flux: ¢ = BA = sin(100t) Wb\nInduced EMF: ¢ = —% — —100 cos(100¢) V\nInduced current: I = £ = — cos(100¢) A\nPower dissipated: P = IR = 100 cos?(100t) W\nAverage power: Py, = § x 100 = 50 W\nTime period: T' = = s\nEnergy in one period: E = Poy x T = 50 x = =xd"
+  },
+  "156": {
+    "q": 156,
+    "page": 123,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526195/edvedum_physics/electromagnetic_induction/emi_q156_diagram.png",
+    "rawQuestionLines": [
+      "156. A 1m long metal rod AB completes the circuit as shown in figure. The area of circuit is perpendicular",
+      "to the magnetic field of 0.10 T. If the resistance of the total circuit is 2(2 then the force needed to",
+      "move the rod towards right with constant speed (v) of 1.5 m/s is N.",
+      "(A) 5.7 x 10-2 ®) 75x 10-2",
+      "© 7510-3 ©) 5710-3"
+    ],
+    "rawSolution": "Given:l=1m, B=0.10T,R=2Q,v=15m/s\nMotional EMF: ¢ = Blv = 0.10 x 1 x 1.5 =0.15V\nCurrent: ] = £ = 435 — 0.075 A\nMagnetic force on rod: F' = BIl = 0.10 x 0.075 x 1 =7.5x 10 *N\nFor constant velocity, applied force equals magnetic force."
+  },
+  "157": {
+    "q": 157,
+    "page": 124,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526195/edvedum_physics/electromagnetic_induction/emi_q157_diagram.png",
+    "rawQuestionLines": [
+      "157. XPQY is a vertical smooth long loop having a total resistance R where PX is parallel to QY and",
+      "separation between them is [. A constant magnetic field B perpendicular to the plane of the loop",
+      "exists in the entire space. A rod CD of length L(L > [) and mass mn is made to slide down from rest",
+      "under the gravity as shown in figure. The terminal speed acquired by the rod is m/s.(g =",
+      "acceleration due to gravity)",
+      "ag / YO 8",
+      "(A) SmaR (8B) men",
+      "C) m gR (D) 2mgRr",
+      "BY Bi",
+      "4 marks, -1for a wrong answer] + 2026 (22 Jan, Shift 1)"
+    ],
+    "rawSolution": "As rod CD slides down with velocity v, it cuts magnetic field lines.\nInduced EMF: ¢ = BLv\nInduced current in the circuit: I = dhe\nMagnetic force on the rod (upward, by Lenz's law):\nFog = BIL = Bf\nAt terminal velocity, acceleration is zero.\nApplying Newton's second law:\nmg — Frag =0\nmg = EL nt\nVterminat = SH"
+  },
+  "158": {
+    "q": 158,
+    "page": 125,
+    "isNumerical": true,
+    "officialAnswer": "20",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "158. Inductance of a coil with 10* turns is 10 mH and it is connected to a dc source of 10 V with internal",
+      "resistance of 102. The energy density in the inductor when the current reaches (4) of its maximum",
+      "value is ar x % J/m®. The value of a is (ug = 47 x 107\" Tm/A).",
+      "4 marks, no negative marking] - 2026 (22 Jan, Shift 1)"
+    ],
+    "rawSolution": "L=10x10*HN =10*\n. a A ey\nI= L =1A (max current) I = i E; = = B= ponl L = pon®*xR* Ey = pt = Arnie clify\n=x"
+  },
+  "159": {
+    "q": 159,
+    "page": 126,
+    "isNumerical": false,
+    "officialAnswer": "C",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "159. Three identical coils Cy, Cy and Cj are closely placed such that they share a common axis. Cs is",
+      "exactly midway. C carries current I in anti-clockwise direction while C'; carries current I in",
+      "clockwise direction. An induced current flows through C3 will be in clockwise direction when",
+      "(A) C; moves away from C, and C3 moves (B) C) and C3 move with equal speeds away from",
+      "towards C5 Cs",
+      "© C moves towards C and C3 moves away (0) C) and C3 move with equal speeds towards",
+      "from Cy C2"
+    ],
+    "rawSolution": "Let the common axis be the z-axis.\nCyisatz = —d, Cyisatz =0,and Cyisatz = +d.\nCurrent in C is anti-clockwise (ACW), producing a magnetic field By in the +z direction at C5.\nCurrent in Cy is clockwise (CW), producing a magnetic field Bj in the —z direction at Cs.\nThe net magnetic field at C's is B,.s = By — Bs. Since C; and Cj are equidistant and carry equal current, initially\nBet = 0.\nTo induce a clockwise current in Cy, Lenz's law states that the induced current must oppose the change in flux. A\nclockwise induced current produces a magnetic field in the —z direction.\nThis happens if there is an increasing flux in the +z direction or a decreasing flux in the —z direction.\nCase 1: Cy moves towards C5. The distance decreases, so Bj (in +z direction) increases. This causes an\nincreasing flux in the +z direction.\nCase 2: Cy moves away from C5. The distance increases, so Bj (in —z direction) decreases. This causes a\ndecreasing flux in the —z direction.\nBoth actions (moving C; towards C and moving C3 away from Cs) result in a net change in flux that induces a\nclockwise current in C', to oppose the change.\nTherefore, option (3) is correct."
+  },
+  "160": {
+    "q": 160,
+    "page": 127,
+    "isNumerical": true,
+    "officialAnswer": "14",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "160. A conducting circular loop is rotated about its diameter at a constant angular speed of 100rad/s in a",
+      "magnetic field of 0.5 T perpendicular to the axis of rotation. When the loop is rotated by 30° from the",
+      "horizontal position, the induced EMF is 15.4 mV. The radius of the loop is mm. (Take 77 = Z)"
+    ],
+    "rawSolution": "E = BwAsinwt\n154 x 103 = 3 x 100 x = x 3\n[15.4 x 28 x 10°\nEL fete ati AaB EE\n22\nR=14mm"
+  },
+  "161": {
+    "q": 161,
+    "page": 128,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526198/edvedum_physics/electromagnetic_induction/emi_q161_diagram.png",
+    "rawQuestionLines": [
+      "161. Figure shows the circuit that contains three resistances (9(2 each) and two inductors (4 mH each).",
+      "The reading of ammeter at the moment switch K is turned ON, is A.",
+      "=",
+      "4 mHZ Q",
+      "mH 9",
+      ">",
+      "-",
+      "-",
+      "a",
+      "9) > 4 mH",
+      ">",
+      "-",
+      "(A) 2 (8) 1",
+      "(C) zero (D) 3",
+      "(4 marks, ~1for a wrong answer] - 2026 (22 Jan, Shift 2)"
+    ],
+    "rawSolution": "At the moment switch K is turned ON, inductors act as open circuits (infinite reactance at transient).\nThe circuit has three 9Q resistors. With the two 4 mH inductors blocking current initially, the resistor network\ndetermines the current path.\nAnalyzing the effective resistance:\nTwo 9Q resistors in parallel give $3 = 4.50.\nThis is in series with the third 9Q and the 9V source.\nTotal resistance: Ryo = 4.5 + 9 = 13.5Q\nCurrent: | = os ge 34, which rounds to 1A at the ammeter position due to circuit topology."
+  },
+  "162": {
+    "q": 162,
+    "page": 129,
+    "isNumerical": true,
+    "officialAnswer": "100",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "162. A simple pendulum made of mass 10 g and a metallic wire of length 10 cm is suspended vertically in a",
+      "uniform magnetic field of 2 T. The magnetic field direction is perpendicular to the plane of oscillations",
+      "of the pendulum. If the pendulum is released from an angle of 60° with vertical, then maximum",
+      "induced EMF between the point of suspension and point of oscillation is mV. (Take",
+      "g=10m/s?"
+    ],
+    "rawSolution": "The maximum induced EMF for a rod of length £ rotating in a magnetic field B is:\nnae = Bol (1)\nUsing energy conservation to find wig.\nmgl(1 — cos 60°) = }(mf2)w?,\nWm = Vi= va = 10rad/s\nFrom equation (1):\nSimos = AKL — 0.1 V =100 mV"
+  },
+  "163": {
+    "q": 163,
+    "page": 129,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "163. A20m long uniform copper wire held horizontally is allowed to fall under the gravity (g = 10 m/s?)",
+      "through a uniform horizontal magnetic field of 0.5 Gauss perpendicular to the length of the wire. The",
+      "induced EMF across the wire when it travells a vertical distance of 200 mis mV.",
+      "A) 20y10 ®) .2y10",
+      "© 200v10 © 2v10"
+    ],
+    "rawSolution": "For a conducting wire falling in a magnetic field, induced EMF is: £ = BLv\nAfter falling through height h = 200 m, velocity: v = /2gh = 1/2 x 10 x 200 = /4000 = 20/10 m/s\nConverting magnetic field: B = 0.5 Gauss = 0.5 x 10 * T\nInduced EMF: £ = (0.5 x 10%) x 20 x 201/10 = 200 x 104/10 = 0.02y/10 V = 20/10 mV"
+  },
+  "164": {
+    "q": 164,
+    "page": 130,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "164. A circular loop of radius 7 cm is placed in uniform magnetic field of 0.2 T directed perpendicular to",
+      "plane of loop. The loop is converted into a square loop in 0.5 s. The EMF induced in the loop is",
+      "mV.",
+      "(A) 13.2 (B) 1.32",
+      "(C) 8.25 (D) 6.6",
+      "(4 marks, -1for a wrong answer] - 2026 (23 Jan, Shift 2)"
+    ],
+    "rawSolution": "Circular loop with radius r = 0.07 m in magnetic field B = 0.2 T.\nInitial flux through circular loop: ®; = B x mr? = 0.2 x (0.07)? = 0.0009807 Wb\nThe loop is converted to a square maintaining the same perimeter: C' = 27r = 0.14r m\nSide of square: a = dix = 0.0357 m\nFinal flux through square loop: ®, = B x a? = 0.2 x (0.0357)? = 0.2 x 0.00122572 Wb\nEvaluating: ®; = 0.2 x 0.0154 = 0.00308 Wb\n$, = 0.2 x 0.001225 x 9.87 = 0.00242 Wb\nChange in flux: A® = 0.00308 — 0.00242 = 0.00066 Wb\nAverage EMF: g = az = L000 =0.00132V = 1.32 mV"
+  },
+  "165": {
+    "q": 165,
+    "page": 131,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "165. Suppose a long solenoid of 100 cm length, radius 2 cm having 500 turns per unit length, carries a",
+      "current I = 10sin(wt)A, where w = 1000rad. /s. A circular conducting loop (B) of radius 1cm",
+      "coaxially slided through the solenoid at a speed v = 1 cm/s. The r.m.s. current through the loop",
+      "when the coil B is inserted 10 cm inside the solenoid is a/V2u A. The value of or is F",
+      "[Resistance of the loop = 10€2 ]",
+      "(A) 197 (B) 80",
+      "(€) 100 (D) 280"
+    ],
+    "rawSolution": "dB di\nEMF induced ¢ = A— = —\ninduced se = A. a Apon @\n£ = Aponigw cos wt\n20 os\ncurrent induced j = = = Alle cos wt\nwr? ponigw\nSoi = ————\ni VaR\n_ x10\" x 47 x 1077 x 500 x 10 x 10°\nV2 x 10\n20m?\n=== x10\"\nV2\n197\n~ gna"
+  },
+  "166": {
+    "q": 166,
+    "page": 132,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "166. \\When a coil is placed in a time dependent magnetic field the power dissipated in it is P. The number",
+      "of turns, area of the coil and radius of the coil wire are IN, A and r respectively. For a second coils",
+      "number of turns, area of the coil and radius of the coil wire are 2N, 24 and 3r respectively. When",
+      "the first coil is replaced with second coil the power dissipated in it is /2 aP. The value of « is",
+      "(A) 36 (B) 198.3",
+      "© 16 ©) 4"
+    ],
+    "rawSolution": "The induced emf in the coil is given by Faraday's law:\ndB\nE=NA—\ndt\nThe resistance of the coil is R = 7e where is the total length of the wire and a is its cross-sectional area.\na\nThe length of the wire is { = N (2m R,), where R, is the radius of the coil. Since the area of the coil is A = 7R?,\nwe have RB, = \\/ 4\n™\nThus, l = 2Nv/7 A.\nThe cross-sectional area of the wire is a = 77.\nTherefore, the resistance is:\n2NvVrA NVA\nR= p—mr—ic——2=\nnr T™\nThe power dissipated in the coil is:\nE?2 (NA)?\nP=— x (A) = NAY?\nBR NVA\n0)\nFor the second coil, the parameters are N' = 2N, A’ = 24, and r' = 3r. The new power dissipated is:\nprop (ZV) (24) (30)?\nNn N A r\nP= P(2)(2v2)(9) = 36y2P\nGiven that P' = V2aP, we can compare the expressions to find:\nV2a=3612=a=36\nAnswer: 36"
+  },
+  "167": {
+    "q": 167,
+    "page": 134,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "167. A circular current loop of radius R is placed inside square loop of side length L (L >> R) such that",
+      "they are co-planar and their centers coincide. The permeability of free space is 1. The mutual",
+      "inductance between circular loop and square loop is 2",
+      "(A) I? (8) 2",
+      "Ho. Ho",
+      "2V2\"— V2 =",
+      "R R",
+      "2 2",
+      "© Jzual © al",
+      "L L"
+    ],
+    "rawSolution": "Using the reciprocity theorem, assume a current J flows through the larger square loop and compute the flux\n. ” a ®\nthrough the smaller circular loop. The mutual inductance is given by M — 7\nMagnetic field at the centre of the square loop:\nFor a square of side L, the perpendicular distance from the centre to any side is d — z and each side subtends\nangles 6; = @, = 45° at the centre.\nThe field due to one finite straight segment is:\npol | 5\n{BE Trg(sinéy + sin fy)\nBu, _ Ml Led) -t ao Y2ml\nmet Taw L\\V2 V2) 20k 27L\nAll four sides contribute equally in the same direction at the centre, so:\nBaw ie V2ped 2/21\nseal = 2rL ~~ wl\nFlux through the circular loop:\nSince L >> R, the field Bi, can be treated as uniform over the area A = wR? of the circular loop.\n2v2 pol 2v2 ug RI\nB= Boy A= 220 pe VER\n«lL L\nMutual inductance:\n2\nuw=2 Wink\n1 L\n2\nHence, the correct option is (4) se"
+  },
+  "168": {
+    "q": 168,
+    "page": 135,
+    "isNumerical": true,
+    "officialAnswer": "6",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526197/edvedum_physics/electromagnetic_induction/emi_q168_diagram.png",
+    "rawQuestionLines": [
+      "168. |n the given circuit below inductance values of Ly, L, and Lj are same. The magnetic energy stored",
+      "in the entire circuit is (U;) and that stored in the L, inductor is (Uj). U,/Uyis ______. (Ignore the",
+      "Ly",
+      "mutual inductance if any)",
+      "Ly"
+    ],
+    "rawSolution": "Let the inductance of each inductor be L, so Ly = Ly = Lg = L.\nLet the total current flowing through the circuit be I. This current flows entirely through L;.\nSince L, and Lj are connected in parallel and have equal inductances, the current I divides equally between\nthem. Therefore, the current through L, is ; and the current through Ly is 3\nThe magnetic energy stored in an inductor is given by [J = 3 Li?\nThe energy stored in the inductor L, is:\nLOT oo I. J\nUi = 3L (3) = FLL\nThe equivalent inductance of the entire circuit is:\nLily LL L 3L\nLy=Li+———=L+——=L+4—=—=—\neG rv re a\nThe total magnetic energy stored in the entire circuit is:\nhem Ease\nUe = 5 Leg 3 (3) =\nThe ratio of the total energy to the energy stored in Ly is:\n3\nhy\nUv Hs\nRe Ee\nN=\n8\nAnswer: 6"
+  },
+  "169": {
+    "q": 169,
+    "page": 136,
+    "isNumerical": true,
+    "officialAnswer": "44",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "169. A circular loop of radius 20 cm and resistance 2 (2 is placed in a time varying magnetic field",
+      "B= (28 + 2t + 3) T. Att = 0, for the plane of the loop being perpendicular to the magnetic field",
+      "a",
+      "and, the induced current in the loop att = 3 sis 50 A. The value of a is ;",
+      "(Take 7 = 22/7)"
+    ],
+    "rawSolution": "The magnetic flux linked with the circular loop is given by & = BA cos 8. Since the plane of the loop is\nperpendicular to the magnetic field, the angle between the area vector and the magnetic field is 6 = 0°.\n& = B.mr?\nGiven r = 20 cm = 0.2 m, the area of the loop is:\nA =7(0.2)% = 0.047 m*\nThe induced emf in the loop is given by Faraday's law of induction:\nde dB\n|E| = x= Ag\nGiven the magnetic field B = 2t2 + 2¢ + 3, we differentiate it with respect to time ¢:\ndB _d,\n—_— = (204+ 2t +3) =4t +2\n7p Canin\nAtt = 3s, the rate of change of the magnetic field is:\ndB\nTAB) +2=14T/s\nNow, substituting the values into the emf equation:\n|E| = 0.047 x 14 = 0.567 V\nThe induced current I in the loop is:\n|E| 0.56\nI=\"—=——=0287A\nER 2 8\nUsing 77 = z we get:\n22\nI=0.28 x 7 =0.04 x22=0.8 A\nWe are given that the induced current is = A. Equating the two values:\na\n— =0.88\n50\na = 0.88 x 50 = 44\nAnswer: 44"
+  },
+  "170": {
+    "q": 170,
+    "page": 138,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "170. A metal rod of length L rotates about one end at origin with a uniform angular velocity w. The",
+      "magnetic field radially falls off as B(r) = Bye\"; \\ being a positive constant. The emf induced",
+      "(neglecting the centripetal force on electrons in the rod) is :",
+      "(A) 1 : ONE (8) 1 t T",
+      "Bw |= —e™M| += Bw |= +e™M| = +—",
+      "¢ [% FORD i BY FURS",
+      "© 4 1 20 (©) 3 3.5L",
+      "Bw | —e 2 (5 += Bw | eM (5 +5",
+      "9 [= PEREADY Laie SURIPY"
+    ],
+    "rawSolution": "The motional emf dE induced in a small element of length dr at a distance 7 from the origin is given by:\ndE = B(r)v(r)dr\nSince the rod is rotating with angular velocity w, the velocity of the element is v(r) = wr.\ndE = Bye V(wr)dr\nThe total emf induced E is the integral of dE fromr = Oto r = L:\nE= I Bywre Vdr\nE = Bw i re Mdr\nUsing integration by parts:\n“ar “ar\nr= [1€ if Es\n[reddr (5) I (= dr\nJ, FO\nSame\nEvaluating the definite integral from to L:\nL 1 1\nLargo’ | Al = = aL] |g sl\nJicre ar | 3e 3¢ o 5]\n1 sill &\nxc i 5\nTherefore, the total induced emf is:\n2 i) L\nB= Buf -e (+3)\n1 1 L\nAnswer: Bow I= —e NM 5 Es I"
+  },
+  "171": {
+    "q": 171,
+    "page": 140,
+    "isNumerical": false,
+    "officialAnswer": "A",
+    "diagramUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795526197/edvedum_physics/electromagnetic_induction/emi_q171_diagram.png",
+    "rawQuestionLines": [
+      "171. An inductor of inductance 10 mH having resistance of 100 {2 is connected to battery of EM.F. 1.0 V",
+      "through a switch as shown in the figure below. After switch is closed, the ratio of instantaneous",
+      "voltages across the inductor when the current passing through itis 2 mA and 4 mA is ”",
+      "4/3 ®) 3/4",
+      "©) 5 /3 (D) 5 /5",
+      "14 marks, -1 for a wrong answer] - 2026 (06 Apr, Shift 1)"
+    ],
+    "rawSolution": "In an LR circuit, the equation for the voltage is given by Kirchhoff's loop law:\ndi\nE=L— +i\nprin iR\nThe instantaneous voltage across the ideal inductor is the induced EMF, which is given by:\ndi g\nVi= Ly =E—-iR\nGiven values are:\nE=10v\nR=100Q\nFor current; = 2mA = 2 x 10\"? A, the voltage across the inductor is:\nVii =1.0—- (2x10 % x 100) = 1.0 - 0.2 = 0.8 V\nFor currenti; = 4 mA = 4 x 103 A, the voltage across the inductor is:\nViz=1.0- (4x10 x 100) = 1.0 — 0.4 = 0.6 V\nThe ratio of the instantaneous voltages is:\nVa 08 _4\nViz 06 3\nAnswer: 4/3"
+  },
+  "172": {
+    "q": 172,
+    "page": 142,
+    "isNumerical": false,
+    "officialAnswer": "D",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "172. po square loop of side 2 cm is placed in a time varying magnetic field with magnitude as",
+      "B = 0.45in(300t) Tesla. The normal to the plane of loop makes an angle of 60° with the field. The",
+      "maximum induced emf produced in the loopis _______ mV.",
+      "(A) 19 8) 1g",
+      "(€) 9; (D) 94"
+    ],
+    "rawSolution": "Given:\nSide of the square loop, a = 2cm = 2 x 102m\nArea of the loop, A = a® = 4 x 10 * m?\nMagnetic field, B = 0.4sin(300¢) T\nAngle between the normal to the plane and the magnetic field, § = 60°\nThe magnetic flux through the loop is given by:\n®=B.A=BAcost\n@® — (0.45in(300¢))(4 x 10 *) cos(60°)\n1\n& = 1.6 x 10 *sin(300t) x 2\n® = 0.8 x 10 *sin(300t) Wb\nBy Faraday's law of induction, the induced emf is:\ndd\ne=——\ndt\nd a\nt= - 708 x 10\" *sin(300t))\ne=—0.8 x 10\" x 300 cos(300t)\ne = —240 x 10 * cos(300t) V\ne = —24 x 10 * cos(300t) V\nThe maximum induced emf is the amplitude of e:\nEmax =24 x 107° V =24 mV\nAnswer: 24"
+  },
+  "173": {
+    "q": 173,
+    "page": 143,
+    "isNumerical": false,
+    "officialAnswer": "B",
+    "diagramUrl": null,
+    "rawQuestionLines": [
+      "173. A30cm long solenoid has 10 turns per cm and area of 5 cm?. The current through the solenoid coil",
+      "varies from 2 Ato 4 Ain 3.14 s. The e.m.f. induced in the coil is & x 1077 V. The value a is 5",
+      "(A) 60 (B) 15",
+      "©) 199 ©) 34",
+      "14 marks, ~1 for a wrong answer] - 2026 (08 Apr, Shift 2)"
+    ],
+    "rawSolution": "Given:\nLength of the solenoid, [ = 30 cm = 0.3 m\nNumber of turns per unit length, n = 10 turns/cm = 1000 turns/m\nArea of cross-section, A = 5 cm? = 5 x 10% m*\nChangeincurrent, AT =4A —2A =2A\nTime interval, At = 3.14 s\nThe self-inductance of the solenoid is given by:\nL = pgn?Al\nSubstituting the given values:\nL =47 x 1077 x (1000)* x 5 x 10~* x 0.3\nL=4r x10\" x10° x 1.5 x 10°*\nL=6rx10°H\nThe magnitude of the induced e.m.f. is:\nAl\n=L—\n= \"at\nSubstituting the values of L, AI, and At:\n2\n= Fis a\ne=6mr x 107° x 31d\nUsing 7 =~ 3.14:\ne=6x10°%x2=12x10°V\nComparing this with e = a x 10° V, we get:\na=12\nAnswer: 12"
+  }
+}

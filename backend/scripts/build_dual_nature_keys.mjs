@@ -1,0 +1,68 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// 37 rows of 6 columns (last row has 1 column for Q217)
+const rawGrid = [
+  ["1.A", "2.C", "3.A", "4.C", "5.D", "6.B"],
+  ["7.C", "8.B", "9.C", "10.C", "11.C", "12.D"],
+  ["13.D", "14.D", "15.B", "16.B", "17.D", "18.C"],
+  ["19.C", "20.B", "21.B", "22.C", "23.B", "24.C"],
+  ["25.D", "26.A", "27.D", "28.B", "29.C", "30.B"],
+  ["31.B", "32.B", "33.D", "34.C", "35.A", "36.B"],
+  ["37.C", "38.D", "39.A", "40.C", "41.A", "42.C"],
+  ["43.B", "44.C", "45.C", "46.A", "47.B", "48.B"],
+  ["49.B", "50.C", "51.D", "52.C", "53.D", "54.B"],
+  ["55.D", "56.B", "57.D", "58.C", "59.C", "60.B"],
+  ["61.B", "62.D", "63.C", "64.1", "65.C", "66.A"],
+  ["67.C", "68.C", "69.C", "70.D", "71.9", "72.D"],
+  ["73.D", "74.D", "75.A", "76.D", "77.50", "78.2"],
+  ["79.C", "80.A", "81.C", "82.A", "83.C", "84.A"],
+  ["85.A", "86.1", "87.D", "88.D", "89.B", "90.A"],
+  ["91.B", "92.D", "93.A", "94.D", "95.C", "96.4"],
+  ["97.C", "98.D", "99.C", "100.C", "101.125", "102.B"],
+  ["103.910", "104.B", "105.C", "106.B", "107.C", "108.C"],
+  ["109.B", "110.A", "111.D", "112.2", "113.A", "114.A"],
+  ["115.B", "116.B", "117.35", "118.A", "119.A", "120.A"],
+  ["121.B", "122.B", "123.D", "124.C", "125.D", "126.B"],
+  ["127.C", "128.D", "129.B", "130.D", "131.C", "132.B"],
+  ["133.B", "134.C", "135.B", "136.D", "137.D", "138.D"],
+  ["139.C", "140.4", "141.B", "142.B", "143.C", "144.D"],
+  ["145.D", "146.B", "147.A", "148.B", "149.C", "150.A"],
+  ["151.C", "152.C", "153.B", "154.A", "155.A", "156.C"],
+  ["157.D", "158.B", "159.D", "160.D", "161.B", "162.D"],
+  ["163.B", "164.D", "165.B", "166.C", "167.C", "168.D"],
+  ["169.C", "170.B", "171.C", "172.D", "173.B", "174.C"],
+  ["175.C", "176.C", "177.D", "178.D", "179.B", "180.A"],
+  ["181.C", "182.D", "183.C", "184.D", "185.D", "186.A"],
+  ["187.A", "188.D", "189.B", "190.5", "191.D", "192.B"],
+  ["193.D", "194.D", "195.C", "196.D", "197.B", "198.C"],
+  ["199.D", "200.B", "201.A", "202.C", "203.10", "204.B"],
+  ["205.B", "206.A", "207.2", "208.A", "209.B", "210.A"],
+  ["211.A", "212.C", "213.C", "214.C", "215.B", "216.4"],
+  ["217.D"]
+];
+
+const keys = {};
+for (const row of rawGrid) {
+  for (const item of row) {
+    const [qStr, val] = item.split('.');
+    keys[parseInt(qStr, 10)] = val;
+  }
+}
+
+console.log(`Parsed ${Object.keys(keys).length} keys from raw grid.`);
+
+// Check Q102: in grid it was 102.8 or 102.B?
+// Let's check linear OCR for Q102
+const linearText = fs.readFileSync(path.resolve(__dirname, 'dual_nature_ocr_linear.txt'), 'utf8');
+const q102Match = linearText.match(/(?:Q\.?\s*)?102\s*[\.\:\)]([\s\S]*?)(?=(?:Q\.?\s*)?103\s*[\.\:\)])/i);
+if (q102Match) {
+  console.log('Q102 chunk:\n', q102Match[1].slice(0, 300));
+}
+
+fs.writeFileSync(path.resolve(__dirname, 'dual_nature_official_keys.json'), JSON.stringify(keys, null, 2));
+console.log('Saved official keys to dual_nature_official_keys.json');

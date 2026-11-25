@@ -5,7 +5,7 @@
  * and reducing page loading time to 0-10ms (Instant Load).
  */
 
-const DB_NAME = 'edvedum_qb_cache_v1';
+const DB_NAME = 'edvedum_qb_cache_v2';
 const STORE_NAME = 'qb_cache';
 const MEMORY_CACHE = new Map();
 

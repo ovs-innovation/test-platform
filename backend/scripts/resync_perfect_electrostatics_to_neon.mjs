@@ -26,7 +26,7 @@ async function main() {
     console.log('Deleting existing bad JEE Electrostatics questions from question_bank...');
     const delRes = await client.query(`
       DELETE FROM question_bank 
-      WHERE chapter ILIKE 'Electrostatics' AND exam_type = 'JEE'
+      WHERE chapter ILIKE 'Electrostatics' AND chapter_id = 198 AND exam_type = 'JEE'
     `);
     console.log(`Deleted ${delRes.rowCount} old rows.`);
 

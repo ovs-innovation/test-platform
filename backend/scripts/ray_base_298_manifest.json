@@ -1,0 +1,1790 @@
+[
+  {
+    "question_number": 1,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 2,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 3,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 4,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 5,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 6,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 7,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540707/edvedum_physics/ray_optics/ray_q7_diagram.png"
+  },
+  {
+    "question_number": 8,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 9,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 10,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 11,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 12,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540701/edvedum_physics/ray_optics/ray_q12_diagram.png"
+  },
+  {
+    "question_number": 13,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 14,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 15,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540700/edvedum_physics/ray_optics/ray_q15_diagram.png"
+  },
+  {
+    "question_number": 16,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 17,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 18,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 19,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 20,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 21,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 22,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 23,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540703/edvedum_physics/ray_optics/ray_q23_diagram.png"
+  },
+  {
+    "question_number": 24,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 25,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 26,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 27,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540705/edvedum_physics/ray_optics/ray_q27_diagram.png"
+  },
+  {
+    "question_number": 28,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 29,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 30,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 31,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 32,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540705/edvedum_physics/ray_optics/ray_q32_diagram.png"
+  },
+  {
+    "question_number": 33,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 34,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 35,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540705/edvedum_physics/ray_optics/ray_q35_diagram.png"
+  },
+  {
+    "question_number": 36,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 37,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540706/edvedum_physics/ray_optics/ray_q37_diagram.png"
+  },
+  {
+    "question_number": 38,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 39,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 40,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 41,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 42,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 43,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 44,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540706/edvedum_physics/ray_optics/ray_q44_diagram.png"
+  },
+  {
+    "question_number": 45,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 46,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 47,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 48,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 49,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 50,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540705/edvedum_physics/ray_optics/ray_q50_diagram.png"
+  },
+  {
+    "question_number": 51,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 52,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 53,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540707/edvedum_physics/ray_optics/ray_q53_diagram.png"
+  },
+  {
+    "question_number": 54,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 55,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540707/edvedum_physics/ray_optics/ray_q55_diagram.png"
+  },
+  {
+    "question_number": 56,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 57,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 58,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540707/edvedum_physics/ray_optics/ray_q58_diagram.png"
+  },
+  {
+    "question_number": 59,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 60,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 61,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 62,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 63,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 64,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 65,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 66,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 67,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 68,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 69,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 70,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540707/edvedum_physics/ray_optics/ray_q70_diagram.png"
+  },
+  {
+    "question_number": 71,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 72,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 73,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 74,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 75,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 76,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 77,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 78,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 79,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 80,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 81,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 82,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 83,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 84,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 85,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 86,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 87,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 88,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 89,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 90,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 91,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 92,
+    "answer": "60",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 93,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 94,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 95,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 96,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 97,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540708/edvedum_physics/ray_optics/ray_q97_diagram.png"
+  },
+  {
+    "question_number": 98,
+    "answer": "20",
+    "isNumeric": true,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540708/edvedum_physics/ray_optics/ray_q98_diagram.png"
+  },
+  {
+    "question_number": 99,
+    "answer": "158",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 100,
+    "answer": "1",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 101,
+    "answer": "6.25",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 102,
+    "answer": "476",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 103,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 104,
+    "answer": "50",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 105,
+    "answer": "5",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 106,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 107,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 108,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 109,
+    "answer": "15",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 110,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 111,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 112,
+    "answer": "150",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 113,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 114,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 115,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 116,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 117,
+    "answer": "12",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 118,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 119,
+    "answer": "30",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 120,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 121,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 122,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 123,
+    "answer": "25",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 124,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 125,
+    "answer": "60",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 126,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 127,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 128,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 129,
+    "answer": "600",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 130,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 131,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 132,
+    "answer": "50",
+    "isNumeric": true,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540700/edvedum_physics/ray_optics/ray_q132_diagram.png"
+  },
+  {
+    "question_number": 133,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 134,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 135,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 136,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 137,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 138,
+    "answer": "5",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 139,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 140,
+    "answer": "10",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 141,
+    "answer": "12",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 142,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 143,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 144,
+    "answer": "210",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 145,
+    "answer": "9",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 146,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 147,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540700/edvedum_physics/ray_optics/ray_q147_diagram.png"
+  },
+  {
+    "question_number": 148,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 149,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 150,
+    "answer": "225",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 151,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 152,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 153,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 154,
+    "answer": "10",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 155,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 156,
+    "answer": "10",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 157,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 158,
+    "answer": "27",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 159,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 160,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 161,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 162,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 163,
+    "answer": "400",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 164,
+    "answer": "15",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 165,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 166,
+    "answer": "15",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 167,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 168,
+    "answer": "120",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 169,
+    "answer": "54",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 170,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540700/edvedum_physics/ray_optics/ray_q170_diagram.png"
+  },
+  {
+    "question_number": 171,
+    "answer": "52",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 172,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 173,
+    "answer": "30",
+    "isNumeric": true,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q173_diagram.png"
+  },
+  {
+    "question_number": 174,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 175,
+    "answer": "32",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 176,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 177,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 178,
+    "answer": "5",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 179,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 180,
+    "answer": "32",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 181,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 182,
+    "answer": "50",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 183,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 184,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 185,
+    "answer": "18",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 186,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 187,
+    "answer": "20",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 188,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 189,
+    "answer": "24",
+    "isNumeric": true,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q189_diagram.png"
+  },
+  {
+    "question_number": 190,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 191,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 192,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 193,
+    "answer": "98",
+    "isNumeric": true,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q193_diagram.png"
+  },
+  {
+    "question_number": 194,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 195,
+    "answer": "100",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 196,
+    "answer": "3",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 197,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 198,
+    "answer": "5",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 199,
+    "answer": "30",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 200,
+    "answer": "31",
+    "isNumeric": true,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q200_diagram.png"
+  },
+  {
+    "question_number": 201,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 202,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 203,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 204,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 205,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 206,
+    "answer": "10",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 207,
+    "answer": "20",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 208,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 209,
+    "answer": "200",
+    "isNumeric": true,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q209_diagram.png"
+  },
+  {
+    "question_number": 210,
+    "answer": "15",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 211,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 212,
+    "answer": "2",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 213,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 214,
+    "answer": "60",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 215,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 216,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 217,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 218,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 219,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 220,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 221,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 222,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 223,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 224,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 225,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540703/edvedum_physics/ray_optics/ray_q225_diagram.png"
+  },
+  {
+    "question_number": 226,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 227,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 228,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 229,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 230,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 231,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 232,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 233,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 234,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 235,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540703/edvedum_physics/ray_optics/ray_q235_diagram.png"
+  },
+  {
+    "question_number": 236,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 237,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 238,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540703/edvedum_physics/ray_optics/ray_q238_diagram.png"
+  },
+  {
+    "question_number": 239,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 240,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 241,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540703/edvedum_physics/ray_optics/ray_q241_diagram.png"
+  },
+  {
+    "question_number": 242,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 243,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 244,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540704/edvedum_physics/ray_optics/ray_q244_diagram.png"
+  },
+  {
+    "question_number": 245,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540704/edvedum_physics/ray_optics/ray_q245_diagram.png"
+  },
+  {
+    "question_number": 246,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 247,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 248,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 249,
+    "answer": "45",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 250,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 251,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 252,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 253,
+    "answer": "45",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 254,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 255,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 256,
+    "answer": "80",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 257,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 258,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 259,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 260,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540704/edvedum_physics/ray_optics/ray_q260_diagram.png"
+  },
+  {
+    "question_number": 261,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 262,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 263,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 264,
+    "answer": "280",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 265,
+    "answer": "100",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 266,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540704/edvedum_physics/ray_optics/ray_q266_diagram.png"
+  },
+  {
+    "question_number": 267,
+    "answer": "100",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 268,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 269,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 270,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 271,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 272,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 273,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 274,
+    "answer": "18",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 275,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540704/edvedum_physics/ray_optics/ray_q275_diagram.png"
+  },
+  {
+    "question_number": 276,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 277,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 278,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 279,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 280,
+    "answer": "3",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 281,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 282,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540705/edvedum_physics/ray_optics/ray_q282_diagram.png"
+  },
+  {
+    "question_number": 283,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 284,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540705/edvedum_physics/ray_optics/ray_q284_diagram.png"
+  },
+  {
+    "question_number": 285,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 286,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 287,
+    "answer": "20",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 288,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540705/edvedum_physics/ray_optics/ray_q288_diagram.png"
+  },
+  {
+    "question_number": 289,
+    "answer": "D",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 290,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 291,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 292,
+    "answer": "B",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 293,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 294,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 295,
+    "answer": "10",
+    "isNumeric": true,
+    "diagram_url": null
+  },
+  {
+    "question_number": 296,
+    "answer": "C",
+    "isNumeric": false,
+    "diagram_url": null
+  },
+  {
+    "question_number": 297,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540705/edvedum_physics/ray_optics/ray_q297_diagram.png"
+  },
+  {
+    "question_number": 298,
+    "answer": "A",
+    "isNumeric": false,
+    "diagram_url": null
+  }
+]

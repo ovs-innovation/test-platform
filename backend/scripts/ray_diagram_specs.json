@@ -1,0 +1,483 @@
+[
+  {
+    "question_number": 7,
+    "page": 3,
+    "file": "ray_q7_diagram.png",
+    "width": 673,
+    "height": 349,
+    "bbox": {
+      "left": 95,
+      "top": 115,
+      "width": 673,
+      "height": 349
+    }
+  },
+  {
+    "question_number": 12,
+    "page": 5,
+    "file": "ray_q12_diagram.png",
+    "width": 893,
+    "height": 419,
+    "bbox": {
+      "left": 107,
+      "top": 145,
+      "width": 893,
+      "height": 419
+    }
+  },
+  {
+    "question_number": 15,
+    "page": 7,
+    "file": "ray_q15_diagram.png",
+    "width": 1027,
+    "height": 287,
+    "bbox": {
+      "left": 107,
+      "top": 131,
+      "width": 1027,
+      "height": 287
+    }
+  },
+  {
+    "question_number": 23,
+    "page": 12,
+    "file": "ray_q23_diagram.png",
+    "width": 673,
+    "height": 369,
+    "bbox": {
+      "left": 111,
+      "top": 125,
+      "width": 673,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 27,
+    "page": 15,
+    "file": "ray_q27_diagram.png",
+    "width": 901,
+    "height": 349,
+    "bbox": {
+      "left": 109,
+      "top": 125,
+      "width": 901,
+      "height": 349
+    }
+  },
+  {
+    "question_number": 32,
+    "page": 20,
+    "file": "ray_q32_diagram.png",
+    "width": 415,
+    "height": 349,
+    "bbox": {
+      "left": 209,
+      "top": 115,
+      "width": 415,
+      "height": 349
+    }
+  },
+  {
+    "question_number": 35,
+    "page": 22,
+    "file": "ray_q35_diagram.png",
+    "width": 1035,
+    "height": 357,
+    "bbox": {
+      "left": 111,
+      "top": 137,
+      "width": 1035,
+      "height": 357
+    }
+  },
+  {
+    "question_number": 37,
+    "page": 24,
+    "file": "ray_q37_diagram.png",
+    "width": 993,
+    "height": 343,
+    "bbox": {
+      "left": 107,
+      "top": 151,
+      "width": 993,
+      "height": 343
+    }
+  },
+  {
+    "question_number": 44,
+    "page": 31,
+    "file": "ray_q44_diagram.png",
+    "width": 965,
+    "height": 359,
+    "bbox": {
+      "left": 113,
+      "top": 115,
+      "width": 965,
+      "height": 359
+    }
+  },
+  {
+    "question_number": 50,
+    "page": 36,
+    "file": "ray_q50_diagram.png",
+    "width": 555,
+    "height": 359,
+    "bbox": {
+      "left": 143,
+      "top": 135,
+      "width": 555,
+      "height": 359
+    }
+  },
+  {
+    "question_number": 53,
+    "page": 39,
+    "file": "ray_q53_diagram.png",
+    "width": 783,
+    "height": 369,
+    "bbox": {
+      "left": 133,
+      "top": 125,
+      "width": 783,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 55,
+    "page": 42,
+    "file": "ray_q55_diagram.png",
+    "width": 733,
+    "height": 369,
+    "bbox": {
+      "left": 109,
+      "top": 125,
+      "width": 733,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 58,
+    "page": 45,
+    "file": "ray_q58_diagram.png",
+    "width": 991,
+    "height": 359,
+    "bbox": {
+      "left": 111,
+      "top": 115,
+      "width": 991,
+      "height": 359
+    }
+  },
+  {
+    "question_number": 70,
+    "page": 56,
+    "file": "ray_q70_diagram.png",
+    "width": 681,
+    "height": 369,
+    "bbox": {
+      "left": 109,
+      "top": 125,
+      "width": 681,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 97,
+    "page": 80,
+    "file": "ray_q97_diagram.png",
+    "width": 927,
+    "height": 369,
+    "bbox": {
+      "left": 107,
+      "top": 125,
+      "width": 927,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 98,
+    "page": 82,
+    "file": "ray_q98_diagram.png",
+    "width": 1019,
+    "height": 359,
+    "bbox": {
+      "left": 111,
+      "top": 115,
+      "width": 1019,
+      "height": 359
+    }
+  },
+  {
+    "question_number": 132,
+    "page": 108,
+    "file": "ray_q132_diagram.png",
+    "width": 1039,
+    "height": 369,
+    "bbox": {
+      "left": 119,
+      "top": 125,
+      "width": 1039,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 147,
+    "page": 122,
+    "file": "ray_q147_diagram.png",
+    "width": 821,
+    "height": 369,
+    "bbox": {
+      "left": 117,
+      "top": 125,
+      "width": 821,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 170,
+    "page": 140,
+    "file": "ray_q170_diagram.png",
+    "width": 965,
+    "height": 369,
+    "bbox": {
+      "left": 119,
+      "top": 125,
+      "width": 965,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 173,
+    "page": 143,
+    "file": "ray_q173_diagram.png",
+    "width": 759,
+    "height": 369,
+    "bbox": {
+      "left": 119,
+      "top": 125,
+      "width": 759,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 189,
+    "page": 155,
+    "file": "ray_q189_diagram.png",
+    "width": 979,
+    "height": 369,
+    "bbox": {
+      "left": 121,
+      "top": 125,
+      "width": 979,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 193,
+    "page": 159,
+    "file": "ray_q193_diagram.png",
+    "width": 1017,
+    "height": 363,
+    "bbox": {
+      "left": 119,
+      "top": 131,
+      "width": 1017,
+      "height": 363
+    }
+  },
+  {
+    "question_number": 200,
+    "page": 165,
+    "file": "ray_q200_diagram.png",
+    "width": 815,
+    "height": 369,
+    "bbox": {
+      "left": 125,
+      "top": 125,
+      "width": 815,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 209,
+    "page": 174,
+    "file": "ray_q209_diagram.png",
+    "width": 825,
+    "height": 351,
+    "bbox": {
+      "left": 125,
+      "top": 143,
+      "width": 825,
+      "height": 351
+    }
+  },
+  {
+    "question_number": 225,
+    "page": 187,
+    "file": "ray_q225_diagram.png",
+    "width": 275,
+    "height": 341,
+    "bbox": {
+      "left": 183,
+      "top": 125,
+      "width": 275,
+      "height": 341
+    }
+  },
+  {
+    "question_number": 235,
+    "page": 195,
+    "file": "ray_q235_diagram.png",
+    "width": 609,
+    "height": 339,
+    "bbox": {
+      "left": 125,
+      "top": 139,
+      "width": 609,
+      "height": 339
+    }
+  },
+  {
+    "question_number": 238,
+    "page": 197,
+    "file": "ray_q238_diagram.png",
+    "width": 981,
+    "height": 331,
+    "bbox": {
+      "left": 125,
+      "top": 143,
+      "width": 981,
+      "height": 331
+    }
+  },
+  {
+    "question_number": 241,
+    "page": 199,
+    "file": "ray_q241_diagram.png",
+    "width": 1011,
+    "height": 359,
+    "bbox": {
+      "left": 121,
+      "top": 125,
+      "width": 1011,
+      "height": 359
+    }
+  },
+  {
+    "question_number": 244,
+    "page": 202,
+    "file": "ray_q244_diagram.png",
+    "width": 861,
+    "height": 369,
+    "bbox": {
+      "left": 125,
+      "top": 125,
+      "width": 861,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 245,
+    "page": 203,
+    "file": "ray_q245_diagram.png",
+    "width": 635,
+    "height": 369,
+    "bbox": {
+      "left": 145,
+      "top": 125,
+      "width": 635,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 260,
+    "page": 214,
+    "file": "ray_q260_diagram.png",
+    "width": 973,
+    "height": 369,
+    "bbox": {
+      "left": 125,
+      "top": 125,
+      "width": 973,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 266,
+    "page": 217,
+    "file": "ray_q266_diagram.png",
+    "width": 975,
+    "height": 369,
+    "bbox": {
+      "left": 157,
+      "top": 125,
+      "width": 975,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 275,
+    "page": 223,
+    "file": "ray_q275_diagram.png",
+    "width": 801,
+    "height": 349,
+    "bbox": {
+      "left": 123,
+      "top": 145,
+      "width": 801,
+      "height": 349
+    }
+  },
+  {
+    "question_number": 282,
+    "page": 228,
+    "file": "ray_q282_diagram.png",
+    "width": 993,
+    "height": 369,
+    "bbox": {
+      "left": 127,
+      "top": 125,
+      "width": 993,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 284,
+    "page": 230,
+    "file": "ray_q284_diagram.png",
+    "width": 619,
+    "height": 369,
+    "bbox": {
+      "left": 125,
+      "top": 125,
+      "width": 619,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 288,
+    "page": 235,
+    "file": "ray_q288_diagram.png",
+    "width": 937,
+    "height": 369,
+    "bbox": {
+      "left": 125,
+      "top": 125,
+      "width": 937,
+      "height": 369
+    }
+  },
+  {
+    "question_number": 297,
+    "page": 247,
+    "file": "ray_q297_diagram.png",
+    "width": 969,
+    "height": 369,
+    "bbox": {
+      "left": 149,
+      "top": 125,
+      "width": 969,
+      "height": 369
+    }
+  }
+]

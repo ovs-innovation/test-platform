@@ -1,10 +1,30 @@
-import { MOTION1D_PART1 } from './motion1d_pyq_part1.mjs';
-import { MOTION1D_OFFICIAL_ANSWERS } from './motion1d_official_answers.mjs';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-for (let i = 0; i < MOTION1D_PART1.length; i++) {
-  const q = MOTION1D_PART1[i];
-  console.log(`=== Q${q.qNum} (Official Ans: ${MOTION1D_OFFICIAL_ANSWERS[q.qNum]}) ===`);
-  console.log('Q:', q.question.replace(/\n/g, ' '));
-  console.log('Opts:', q.options);
-  console.log('Img:', q.image_url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const cache = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'atom_jee_ocr_cache.json'), 'utf8'));
+const bounds = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'atom_question_bounds.json'), 'utf8'));
+const officialKeys = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'atom_jee_official_keys.json'), 'utf8'));
+
+// Flatten all lines
+const lines = [];
+for (let p = 1; p <= 151; p++) {
+  const pLines = (cache[String(p)] || '').split('\n');
+  for (let l = 0; l < pLines.length; l++) {
+    lines.push({ page: p, text: pLines[l] });
+  }
 }
+
+let dump = '';
+for (let q = 1; q <= 60; q++) {
+  const b = bounds[q - 1];
+  const chunk = lines.slice(b.startLine, b.endLine).map(l => l.text).join('\n');
+  dump += `\n=================== Q${q} [Official Key: ${officialKeys[q]}] ===================\n`;
+  dump += chunk + '\n';
+}
+
+fs.writeFileSync(path.resolve(__dirname, 'part1_raw_dump.txt'), dump, 'utf8');
+console.log('Saved part1_raw_dump.txt');

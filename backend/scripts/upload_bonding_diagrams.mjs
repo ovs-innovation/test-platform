@@ -1,47 +1,42 @@
 import { v2 as cloudinary } from 'cloudinary';
-import dotenv from 'dotenv';
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config({ path: 'backend/.env' });
-if (!process.env.CLOUDINARY_CLOUD_NAME) {
-  dotenv.config({ path: '.env' });
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'fyxpnmdh',
-  api_key: process.env.CLOUDINARY_API_KEY || '519659357635739',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'Z7wFq9zH8b8bI2L-wN7v3u7k2d0'
+  cloud_name: 'fyxpnmdh',
+  api_key: '716642519429436',
+  api_secret: '69WgGypmzKl34WdRC_OLaKiaBRU'
 });
 
-async function main() {
-  const dir = 'uploads/bonding/diagrams';
-  const targetFiles = [
-    'q7_diagram.png',
-    'q47_diagram.png',
-    'q86_diagram.png',
-    'q98_diagram.png',
-    'q100_diagram.png',
-    'q115_diagram.png',
-    'q120_diagram.png',
-    'q278_diagram.png'
-  ];
+const DIAGRAMS_DIR = path.resolve(__dirname, 'bonding_diagrams');
+const OUT_FILE = path.resolve(__dirname, 'bonding_diagram_urls.json');
 
-  const map = {};
+async function uploadAll() {
+  const files = fs.readdirSync(DIAGRAMS_DIR).filter(f => f.endsWith('.png'));
+  console.log(`Uploading ${files.length} diagrams to Cloudinary folder "edvedum/bonding_chem_pyq"...`);
 
-  for (const f of targetFiles) {
-    const id = f.replace('.png', '');
-    console.log(`Uploading ${f}...`);
-    const res = await cloudinary.uploader.upload(`${dir}/${f}`, {
-      folder: 'edvedum_chemistry/bonding',
-      public_id: id
+  const urls = {};
+  for (const file of files) {
+    const id = file.replace('.png', '');
+    const filePath = path.join(DIAGRAMS_DIR, file);
+
+    const uploadRes = await cloudinary.uploader.upload(filePath, {
+      folder: 'edvedum/bonding_chem_pyq',
+      public_id: id,
+      overwrite: true,
+      resource_type: 'image'
     });
-    map[id] = res.secure_url;
-    console.log(`${id} -> ${res.secure_url}`);
+
+    urls[id] = uploadRes.secure_url;
+    console.log(`Uploaded ${id} -> ${uploadRes.secure_url}`);
   }
 
-  fs.writeFileSync('scripts/bonding_diagrams_map.json', JSON.stringify(map, null, 2));
-  console.log('Saved scripts/bonding_diagrams_map.json');
+  fs.writeFileSync(OUT_FILE, JSON.stringify(urls, null, 2));
+  console.log(`Saved ${Object.keys(urls).length} URLs to ${OUT_FILE}`);
 }
 
-main().catch(console.error);
-
+uploadAll().catch(console.error);

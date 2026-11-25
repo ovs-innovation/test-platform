@@ -1,0 +1,4995 @@
+[
+  {
+    "qNum": 176,
+    "page": 1,
+    "qTextLines": [
+      "176 previous-year questions, every one with the official answer and a worked solution.",
+      "Free to download, free to share with your batch, and free to print.",
+      "Practise these online — with timed tests, instant scoring and chapter analytics — at acadxl.com/resources/jee-pyqs",
+      "ACADXL - EDUCATION WITH DISCIPLINE",
+      "Capacitance — JEE Main PYQ Bank (Mixed)",
+      "Time: 264 minutes - Maximum marks: 704 - Questions: 176",
+      "1 Capacitance (in F') of a spherical conductor with radius 1 m is",
+      "(A) 11 10°10 ®) 19-5",
+      "© 9x 10-9 ©) 19-3"
+    ],
+    "optionsLines": [],
+    "marksLine": "{4 marks, -1for a wrong answer] - 2003",
+    "answer": "B",
+    "solLines": [
+      "4r €g R=1.1x10\"10",
+      "2. If there are n capacitors in parallel connected to V volt source, then the energy stored is equal to",
+      "(A) cy (8) 1ycv?",
+      "©) 2 (D) 1 ~y2",
+      "(6) HOV",
+      "1 1",
+      "E=Y 3;CV?=;3nCV?",
+      "3. A sheet of aluminium foil of negligible thickness is introduced between the plates of a capacitor. The",
+      "capacitance of the capacitor",
+      "(A) decreases (B) remains unchanged",
+      "(C) becomes infinite (D) increases",
+      "No Solution Available",
+      ""
+    ]
+  },
+  {
+    "qNum": 4,
+    "page": 2,
+    "qTextLines": [
+      "4. The work done in placing a charge of 8 x 10~'# coulomb on a condenser of capacity 100 micro-farad",
+      "is",
+      "(A) 16 x 10-2 joule B) 3.1 x 10° joule",
+      "(©) 4 x 10-1 joule (©) 35 5 10-32 joule"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] + 2003",
+    "answer": "D",
+    "solLines": [
+      "2 8x10 1%)° 3",
+      "Work done — 3T = fede), —32x10%2)",
+      ""
+    ]
+  },
+  {
+    "qNum": 5,
+    "page": 2,
+    "qTextLines": [
+      "5. A parallel plate capacitor is made by stacking n equally spaced plates connected alternatively. If the",
+      "capacitance between any two adjacent plates is C then the resultant capacitance is",
+      "A (n—1)C ®) (n+ 1)C",
+      "© ¢ 0) no"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] + 2005",
+    "answer": "A",
+    "solLines": [
+      "Ceq = (n — 1)C(.\" all capacitors are in parallel )",
+      ""
+    ]
+  },
+  {
+    "qNum": 6,
+    "page": 2,
+    "qTextLines": [
+      "6. A fully charged capacitor has a capacitance ' C ' it is discharged through a small coil of resistance wire",
+      "embedded in a thermally insulated block of specific heat capacity ' s ' and mass ' m \". If the",
+      "temperature of the block is raised by ' AT \". The potential difference V across the capacitance is",
+      "(A) ro oar (B) mcaT",
+      "",
+      "Vs s",
+      "(C) msaT (©) roar",
+      "¢ RS"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2005",
+    "answer": "D",
+    "solLines": [
+      "Dimensionally only 4! option is correct.",
+      ""
+    ]
+  },
+  {
+    "qNum": 7,
+    "page": 3,
+    "qTextLines": [
+      "7. A parallel plate condenser with a dielectric of dielectric constant K between the plates has a capacity C",
+      "and is charged to a potential V volts. The dielectric slab is slowly removed from between the plates",
+      "and then reinserted. The net work done by the system in this process is",
+      "(A) 1/9(K — 1)CV? B) ovi(K -1)/K",
+      "©) (K — nev? (D) zero"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] « 2007",
+    "answer": "D",
+    "solLines": [
+      "No Solution Available",
+      ""
+    ]
+  },
+  {
+    "qNum": 8,
+    "page": 3,
+    "qTextLines": [
+      "8. A battery is used to charge a parallel plate capacitor till the potential difference between the plates",
+      "becomes equal to the electromotive force of the battery. The ratio of the energy stored in the capacitor",
+      "and the work done by the battery will be",
+      "a ®) 5",
+      "© 1 (D) 1",
+      "",
+      "1 2"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2007",
+    "answer": "D",
+    "solLines": [
+      "dmi_ a",
+      "oR",
+      ""
+    ]
+  },
+  {
+    "qNum": 9,
+    "page": 3,
+    "qTextLines": [
+      "9. A parallel plate capacitor with air between the plates has a capacitance of 9pF. The separation",
+      "between its plates is ' d '. The space between the plates is now filled with two dielectrics. One of the",
+      "dielectrics has dielectric constant k; = 3 and thickness d while the other one has dielectric constant",
+      "ks = 6 and thickness zd, Capacitance of the capacitor is now",
+      "(A) 4 gpF ®) 45pF",
+      "(©) 40.5pF (0) 99 25pF"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, =1for a wrong answer] - 2008",
+    "answer": "C",
+    "solLines": [
+      "C=9PF",
+      "c= Ag od Aggy i. 184¢,",
+      "a $1",
+      "C' = 40.5PF",
+      ""
+    ]
+  },
+  {
+    "qNum": 10,
+    "page": 4,
+    "qTextLines": [
+      "10. | et C be the capacitance of a capacitor discharging through a resistor R. Suppose t, is the time taken",
+      "for the energy stored in the capacitor to reduce to half its initial value and ¢, is the time taken for the",
+      "charge to reduce to one-fourth its initial value. Then the ratio ¢, /t; will be",
+      "(A) 1 (B) 1",
+      "",
+      "3",
+      "(€) 1 (D) 2",
+      "i",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, =1for a wrong answer] + 2010",
+    "answer": "C",
+    "solLines": [
+      "",
+      "U=14% = 5 (we ¥/T)’ = fe 2/T (where r = CR)",
+      "",
+      "U=Ue 2",
+      "",
+      "iu, — Use IT",
+      "",
+      "t=eWMir5t, =Thn2",
+      "",
+      "Now gq = qe ¥/T",
+      "",
+      "1qo = gee t2T",
+      "",
+      "ty=Tlnd =2TIn2",
+      "",
+      "a pst",
+      ""
+    ]
+  },
+  {
+    "qNum": 11,
+    "page": 4,
+    "qTextLines": [
+      "M.A resistor 'R' and 2uF capacitor in series is connected through a switch to 200 V direct supply. Across",
+      "the capacitor is a neon bulb that lights up at 120 V. Calculate the value of R to make the bulb light up",
+      "5 s after the switch has been closed. (log; 2.5 = 0.4)",
+      "",
+      "(A) 1.7 x 10° B®) 2.7 x 1000",
+      "© 33x10 ©) 1.3 x 1040"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 201",
+    "answer": "B",
+    "solLines": [
+      "V.=E(1-¢e*F)",
+      "/Re 120 3",
+      "1—e=40=2",
+      "5 6",
+      "= R= gre =27x10°Q",
+      ""
+    ]
+  },
+  {
+    "qNum": 12,
+    "page": 5,
+    "qTextLines": [
+      "12. The figure shows an experimental plot for discharging of a capacitor in an R — C circuit. The time",
+      "bi",
+      "$ 2",
+      "§15",
+      "constant 7 of this circuit lies between: I 10.",
+      "t 5 yo",
+      "0 50 100 150 200 250",
+      "Time t in seconds —»",
+      "(A) 150 sec and 200 sec (B) 0 and 50 sec",
+      "(©) 50 sec and 100 sec (©) 100 sec and 150 sec"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2012 (Offline)",
+    "answer": "D",
+    "solLines": [
+      "For discharging of an RC circuit,",
+      "V = Ve tim",
+      "So, when",
+      "%",
+      "v==2%",
+      "Yo = Vee tir",
+      "mi=-tor=gs",
+      "From graph when V = Yt =100s ..7= oe = 144.3 sec",
+      ""
+    ]
+  },
+  {
+    "qNum": 13,
+    "page": 6,
+    "qTextLines": [
+      "13. Two circuits (a) and (b) have charged capacitors of capacitance C, 2C and 3C with open switches.",
+      "Charges on each of the capacitor are as shown in the figures. On closing the switches",
+      "Ly »S",
+      "Nl 0 Ii 20 Oo: Circuit (a) Circuit (b)",
+      "3C | C 2C 2C |",
+      "L R L R",
+      "(A) No charge flows in (a) but charge flows from R (8) Charges flow from L to R in both (a) and (b)",
+      "to Lin (b)",
+      "© Charges flow from R to L in (a) and from L to 0) no charge flows in (a) but charge flows from L",
+      "Rin (b) to Rin (b)"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2012 (07 May)",
+    "answer": "C",
+    "solLines": [
+      "Charge (or current) always flows from higher potential to lower potential.",
+      "Potential = Rd",
+      ""
+    ]
+  },
+  {
+    "qNum": 14,
+    "page": 7,
+    "qTextLines": [
+      "14. ” rie BE \" ” . .",
+      "A series combination of n; capacitors, each of capacity C_1is charged by source of potential",
+      "difference 4 V. When another parallel combination of na capacitors each of capacity C_2 is charged",
+      "by a source of potential difference V/, it has the same total energy stored in it as the first combination",
+      "has. The value of Cj in terms of C is then",
+      "(A) 1622, (B) 2c,",
+      "ny 1 ning",
+      "c) 220, (D) 16,",
+      "im"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] + 2012 (12 May)",
+    "answer": "D",
+    "solLines": [
+      "Equivalent capacitance of ny number of capacitors each of capacitance Cs in parallel = nyC, Equivalent",
+      "capacitance of n; number of capacitors each of capacitances C, in series. Capacitance of each is C) = a",
+      "According to question, total energy stored in both the combinations are same",
+      "1/C, 1",
+      "ie, = (—) AV) =< (naCoV?",
+      "3 (2) avy = 3 (mew?)",
+      "16Cy",
+      "5 Oh=——",
+      "ning"
+    ]
+  },
+  {
+    "qNum": 15,
+    "page": 7,
+    "qTextLines": [
+      "15. A resistance Rand a capacitance C' are connected in series to a battery of negligible internal",
+      "resistance through a key. The key is closed at ¢ = 0 . If after £ sec the voltage across the capacitance",
+      "was seven times the voltage across R, the value of t is",
+      "A) 3RCn2 B) 2RCn2",
+      "© 2rCIm7 ©) 3rCEn7"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] + 2012 (12 May)",
+    "answer": "A",
+    "solLines": [
+      "t=3RCIn2",
+      ""
+    ]
+  },
+  {
+    "qNum": 16,
+    "page": 8,
+    "qTextLines": [
+      "16. This question has Statement 1and Statement 2 . Of the four choices given after the Statements,",
+      "",
+      "choose the one that best describes the two Statements.",
+      "Statement 1: It is not possible to make a sphere of capacity 1farad using a conducting material.",
+      "Statement 2: It is possible for earth as its radius is 6.4 x 10° m.",
+      "(A) statement 1is true, Statement 2 is true, (B) Statement 1is false, Statement 2 is true.",
+      "Statement 2 is the correct explanation of",
+      "Statement 1.",
+      "(C) Statement 1is true, Statement 2 is true, (D) statement 1is true, Statement 2 is false.",
+      "Statement 2 is not the correct explanation of",
+      "Statement 1."
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -11or a wrong answer] - 2012 (26 May)",
+    "answer": "D",
+    "solLines": [
+      "Capacitance of sphere is given by:",
+      "C = dmepr",
+      "If, C = 1 F then radius of sphere needed:",
+      "= 1",
+      "T= Tre = ESOT",
+      "on r= Ze = 9x10°m",
+      "9 x 10” m is very large, it is not possible to obtain such a large sphere. Infact earth has radius 6.4 x 10° m only",
+      "and capacitance of earth is 711uF.",
+      ""
+    ]
+  },
+  {
+    "qNum": 17,
+    "page": 8,
+    "qTextLines": [
+      "17. The capacitor of an oscillatory circuit is enclosed in a container. When the container is evacuated, the",
+      "resonance frequency of the circuit is 10kHz. When the container is filled with a gas, the resonance",
+      "frequency changes by 50 Hz. The dielectric constant of the gas is",
+      "(A) 1.001 ®) 2.001",
+      "© 1.01 ©) 3.01"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2012 (26 May)",
+    "answer": "C",
+    "solLines": [
+      "The dielectric constant of the gas is 1.01",
+      ""
+    ]
+  },
+  {
+    "qNum": 18,
+    "page": 9,
+    "qTextLines": [
+      "18: Two capacitors C'1 and C are charged to 120 V and 200 V respectively. It is found that by",
+      "connecting them together the potential on each one can be made zero. Then:",
+      "(A) 30, +5C, =0 (B) 9C) = 4C»",
+      "© 5C1 =3C> (0) 3C, = 5C,",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2013 (07 Apr)",
+    "answer": "D",
+    "solLines": [
+      "CG",
+      "fn",
+      "+—>",
+      "G",
+      "—- +",
+      "+—>",
+      "For potential to be made zero, after connection 120C\", = 200C, = 3C, = 5C,",
+      ""
+    ]
+  },
+  {
+    "qNum": 19,
+    "page": 10,
+    "qTextLines": [
+      "19. |p an LCR circuit as shown below both switches are open initially. Now switch S, is closed, S, kept",
+      "open. (q is charge on the capacitor and 7 = RC is capacitive time constant). Which of the following",
+      "V",
+      "R Sy",
+      "statement is correct?",
+      "€",
+      "Ss",
+      "L",
+      "Al = B T",
+      "Watt = 27, q= CV (1-e?) Bre =T g=Cviiss)",
+      "2",
+      "(C) Work done by the battery is half of the energy (0) p44 — q=CV/2",
+      "dissipated in the resistor"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2013 (07 Apr)",
+    "answer": "A",
+    "solLines": [
+      "q=CV(1-¢'7)",
+      "Att = 27",
+      "q=CV(1-¢7?)"
+    ]
+  },
+  {
+    "qNum": 20,
+    "page": 10,
+    "qTextLines": [
+      "20; To establish an instantaneous current of 2 A through a 1uF capacitor ; the potential difference across",
+      "the capacitor plates should be changed at the rate of:",
+      "A 55 100 v/s ® 4 100V/s",
+      "© 5 100v/s ©) 4 104 v/s"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] + 2013 (22 Apr)",
+    "answer": "C",
+    "solLines": [
+      "As, C= 2 = x",
+      "oY Ls 3",
+      "Nh CAN Ea",
+      "=25610F Vis",
+      ""
+    ]
+  },
+  {
+    "qNum": 21,
+    "page": 11,
+    "qTextLines": [
+      "21. 5 parallel plate capacitor having a separation between the plates d, plate area A and material with",
+      "dielectric constant K has capacitance C,. Now one-third of the material is replaced by another",
+      "material with dielectric constant 2 K, so that effectively there are two capacitors one with area 3 A,",
+      "dielectric constant 2 K and another with area 2 A and dielectric constant K. If the capacitance of this",
+      "new capacitor is C then & is",
+      "(A) 1 (B) 4",
+      "©) 2 () 1",
+      "",
+      "3 3"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2013 (25 Apr)",
+    "answer": "B",
+    "solLines": [
+      "fo",
+      "keo2 2kca A 4kio A",
+      "C= + Zh — fled",
+      "A",
+      "CGT RLS TS",
+      ""
+    ]
+  },
+  {
+    "qNum": 22,
+    "page": 12,
+    "qTextLines": [
+      "22. A parallel plate capacitor is made of two circular plates separated by a distance of 5 mm and with a",
+      "dielectric of dielectric constant 2.2 between them. When the electric field in the dielectric is",
+      "3 x 10°V/m, the charge density of the positive plate will be close to :",
+      "",
+      "(A) § 5 10-7C /m? ®) 35 10-7C/m?",
+      "©) 3 x 10'C/m? ©) § x 10¢C/m?"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2014 (06 Apr)",
+    "answer": "A",
+    "solLines": [
+      "",
+      "E=3x10'V/m",
+      "",
+      "We know that",
+      "",
+      "Q=CV",
+      "",
+      "keoA",
+      "EELlgy NE",
+      "d",
+      "",
+      "= kegAE",
+      "",
+      "g = kB",
+      "",
+      "=22x885x10 2x3 x 10*",
+      "",
+      "=5841x 10°",
+      "",
+      "=5.84x107",
+      "",
+      "~ 6x 10 7C/m?",
+      ""
+    ]
+  },
+  {
+    "qNum": 23,
+    "page": 13,
+    "qTextLines": [
+      "23. Three capacitances, each of 3 uF, are provided. These cannot be combined to provide the resultant",
+      "capacitance of :",
+      "(A) 9 Ma (B) 6uF",
+      "©) 1.5uF (D) 1uF"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2014 (09 Apr)",
+    "answer": "8",
+    "solLines": [
+      "Equivalent capacitance will be maximum for parallel combination and Minimum for series combination .\",",
+      "Possibilities are 1) o| a = | C=1uF 2) & N C=9uF 3)",
+      "1 1 1 3",
+      "—==-+4+=-==..C=2uF4)",
+      "= | ©c-5%3",
+      "Cc 3 3",
+      "| C=5+0=3xC=5=164F",
+      ""
+    ]
+  },
+  {
+    "qNum": 24,
+    "page": 14,
+    "qTextLines": [
+      "24. 5 parallel plate capacitor is made of two plates of length 1, width w and separated by distance d. A",
+      "dielectric slab (dielectric constant K ) that fits exactly between the plates is held near the edge of the",
+      "plates. It is pulled into the capacitor by a force F —= -% where U is the energy of the capacitor when",
+      "dielectric is inside the capacitor up to distance x (See figure). If the charge on the capacitor is Q then",
+      "the force on the dielectric when it is near the edge is: 1 H H J",
+      "",
+      "Law— }",
+      "«~d->",
+      "(A) ga (B) g*w",
+      "ale, K ame, (K—1)",
+      "(€) qo’ 0 ¢",
+      "gure; (K -1) ars K"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2014 (11 Apr)",
+    "answer": "C",
+    "solLines": [
+      "No Solution Available",
+      ""
+    ]
+  },
+  {
+    "qNum": 25,
+    "page": 15,
+    "qTextLines": [
+      "25. The space between the plates of a parallel plate capacitor is filled with a 'dielectric' whose \"dielectric",
+      "constant’ varies with distance as per the relation: K(x) = K, + Ax(A = a constant ) The",
+      "capacitance C, of the capacitor, would be related to its vacuum capacitance C, for the relation :",
+      "(A) (8) A",
+      "",
+      "Ad C= C",
+      "Oma — = fx = or Ta C0",
+      "In (1+ Kod) 0 d In (1+ KyAd)",
+      "D",
+      "©) = Ad é (D) ” x ps",
+      "Sy cm se ST Cy",
+      "ay din(1+%",
+      "In (x + %) (+53)",
+      "K,"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2014 (12 Apr)",
+    "answer": "C",
+    "solLines": [
+      "The value of dielectric constant is given as",
+      "K = Ky + Az",
+      "Also,",
+      "V = [J Evax",
+      "V=[lgde",
+      "4 dr",
+      "Ve / K + Az",
+      "= In(Ko + Ma)l§",
+      "a Ky + Ad",
+      "=5( =<)",
+      "o Ad",
+      "“fm (1+ %)",
+      "Now, the capacitance of vacuum is COC_0. Thus,",
+      "c=%",
+      "aS",
+      "“ Zin (14:24",
+      "A Ky",
+      "= AS",
+      "=o",
+      "(145)",
+      "Since,",
+      "Cy = af",
+      "and in the given convention gy = 1",
+      "§ =dCy",
+      "Hence,",
+      ""
+    ]
+  },
+  {
+    "qNum": 26,
+    "page": 16,
+    "qTextLines": [
+      "26. The gap between the plates of a parallel plate capacitor of area A and distance between plates d, is",
+      "filled with a dielectric whose relative permittivity varies linearly from €; at one plate to €; at the other.",
+      "The capacitance of the capacitor is",
+      "(A) ¢(e;—€1)A (B) (cr +€1)A",
+      "[dn (€2/€,1)] 2d",
+      "©) ¢ (1 +65) A (D) eA",
+      "d [din (€2/€1))"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2014 (19 Apr)",
+    "answer": "A",
+    "solLines": [
+      "dz 1 1 1 d:",
+      "EN CER aT I A Pe",
+      "iC\" qed « ls + faze] A a+ (==) CoA (€2 — €1)",
+      "c= SAE)",
+      "In(&y/€1)-d",
+      "X",
+      ""
+    ]
+  },
+  {
+    "qNum": 27,
+    "page": 17,
+    "qTextLines": [
+      "27. Inthe given circuit, charge Q, on the 2uF' capacitor changes as C is varied from 1uF to 3uF. Q, as",
+      "a function of 'C' is given properly by: (figures are drawn schematically and are not to scale)",
+      "1 pF",
+      "(4 B",
+      "2 nF",
+      "E",
+      "(A) (8)",
+      "Charge Charge :",
+      "0, Ne 0, yd",
+      "H H c H H C",
+      "1 pF 3 pF 1 WF. 3 uF",
+      "(c) (D)",
+      "Charge Charge",
+      "0, yard 0, 4",
+      "H H c | : (6",
+      "1 pF 3uF 1WF 3uF"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] + 2015 (04 Apr)",
+    "answer": "C",
+    "solLines": [
+      ""
+    ]
+  },
+  {
+    "qNum": 28,
+    "page": 19,
+    "qTextLines": [
+      "28. | the given circuits (a) and (b), switches S; and S, are closed at t = ( and kept close for a long time.",
+      "The variation of currents in the two circuits for t > 0 are shown in the options. (Figures are schematic",
+      "C R R",
+      "and not drawn to scale.) #5) 2S,",
+      "E E",
+      "(a) (b)",
+      "(A) pe A Sa (B) FU —— 5",
+      "£ E",
+      "R (a) R (a) ©)",
+      "it it",
+      "©)",
+      "rr — I —",
+      "© PR rR ei (D) gry — a",
+      "R (b) R b)",
+      "it (@) it a)",
+      "Ir — I —"
+    ],
+    "optionsLines": [],
+    "marksLine": "4 marks, ~1 for a wrong answer] - 2015 (10 Apr)",
+    "answer": "B",
+    "solLines": [
+      "= = dq. OF) [ae",
+      "In C-R series circuit, q = —er = —eRO | c1=S59_ == [ARG",
+      "n series circuit, q = qq ( eT =+q=CE (1 e Jer I~ RC (+",
+      "B= : Coe —t E",
+      "I— FeRC — the urrent decays exponentially. In L — R series circuit, I=L(l-e7) =I = R",
+      ""
+    ]
+  },
+  {
+    "qNum": 29,
+    "page": 21,
+    "qTextLines": [
+      "29.",
+      "In the figure is shown a system of four capacitors connected across a 10V battery. The charge that",
+      "2pF ,  3uF",
+      "S",
+      "will flow from switch S when it is closed is:",
+      "3uF bo 2uF",
+      "10V",
+      "(A) zero ® 20uC fromato b",
+      "C| D]",
+      "© 5uC frombtoa o) 5uC fromatob"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2015 (11 Apr)",
+    "answer": "C",
+    "solLines": [
+      "5 ir i DN",
+      "/]",
+      "( a",
+      "\\ i!",
+      "+q x +q /q",
+      "1 QL 272 2",
+      "Sv——15v",
+      "Finally when switch is closed,",
+      "3 b",
+      "wr 2 pf",
+      "107",
+      "q1=2x5=10uC ga = 3 x 5 = 15uC The total charge on dotted region = gs — gq; = 15 — 10 = 5uC Charge",
+      "5uC flows from bto a",
+      ""
+    ]
+  },
+  {
+    "qNum": 30,
+    "page": 22,
+    "qTextLines": [
+      "30. A combination of capacitors is set up as shown in the figure. The magnitude of the electric field, due",
+      "to a point charge Q (having a charge equal to the sum of the charges on the 4uF and 9p F'",
+      "capacitors), at a point distant 30 m from it, would equal:",
+      "",
+      "3 uF",
+      "4 nF",
+      "9 WF",
+      "2 UF,",
+      "CL",
+      "8V",
+      "(A) 420 N/C (B) 480 N/C",
+      "(C) 240 N/C (D) 360 N/C"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2016 (03 Apr)",
+    "answer": "A",
+    "solLines": [
+      "+6uCy —6nC",
+      "£24nC, —24uC| 3 WF",
+      "a",
+      "+18uC 1 81 Ceq = 5uF Potentialof4pF = 6volt",
+      "+16pCy, —16uc MF",
+      "2 WF",
+      "8V",
+      ".-. chargeondpF (q,) = 24pC Potential of 9p F = 2volt .-. char geon9puF (qq) = 18uC",
+      ". 9 -6",
+      "Totalcharge(q) = 42uC pp — ka _ 9X10 X X10 _ 4050/0",
+      "2 900",
+      ""
+    ]
+  },
+  {
+    "qNum": 31,
+    "page": 23,
+    "qTextLines": [
+      "3% Three capacitors each of 4p. F are to be connected in such a way that the effective capacitance is",
+      "64F'. This can be done by connecting them",
+      "(A) all in series (B) all in parallel",
+      "(C) two in parallel and one in series (D) two in series and one in parallel"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] + 2016 (09 Apr)",
+    "answer": "D",
+    "solLines": [
+      "4 4",
+      "— 1 Lo. 1",
+      "For top branch, ram = 7 + 7 = Cy = 2uF For parallel combination,",
+      "w 4 4",
+      "4",
+      "Chet =2+4=6uF"
+    ]
+  },
+  {
+    "qNum": 32,
+    "page": 23,
+    "qTextLines": [
+      "32. Figure shows a network of capacitors where the number indicates capacitances in micro Farad. The",
+      "value of capacitance C if the equivalent capacitance between point A and B is to be 1uF is :",
+      "G 1",
+      "[i",
+      "2 2 12",
+      "B",
+      "(A) 39 (©) 31",
+      "—uF —uF",
+      "brig Pris",
+      "(C) 33 (D) 34",
+      "—uF —uF",
+      "23 23\""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2016 (10 Apr)",
+    "answer": "A",
+    "solLines": [
+      "C,q of circuit — 32 F (excludingC) Now 5 Fis in series with C so, La ge Ho 1u¢0= 32 F",
+      "A =i (ia Clg GI 32 = oat",
+      ""
+    ]
+  },
+  {
+    "qNum": 33,
+    "page": 24,
+    "qTextLines": [
+      "33. capacitance of 2uF is required in an electrical circuit across a potential difference of 1.0kV. A large",
+      "number of 1F' capacitors are available which can withstand a potential difference of not more than",
+      "300V. The minimum number of capacitors required to achieve this is:",
+      "",
+      "A) 39 (8) 5",
+      "© 16 (0) 94"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, 1 for a wrong answer] - 2017 (02 Apr)",
+    "answer": "A",
+    "solLines": [
+      "/ LF",
+      "A i —",
+      "L Sug, _",
+      "2 S50 AV A Let us assume that we connect n(whole",
+      "3",
+      "10V",
+      "number) capacitors in series such that the potential difference across the combination is 1000V. This means the",
+      "potential difference across each capacitor is Veapacitor™= =v <300V n= te = 3.333. nmin = 4 This",
+      "means we need to connect at least 4 capacitors in series to make sure that the potential across each one is less",
+      "than 300V. Coq = Zo =2uF 7 = 2 =m = 8 -, Minimum no. of capacitors = 8 x 4 = 32",
+      ""
+    ]
+  },
+  {
+    "qNum": 34,
+    "page": 25,
+    "qTextLines": [
+      "34. In the given circuit diagram, when the current reaches a steady-state in the circuit, the charge on the",
+      "r",
+      "capacitor of capacitance C' will be: ry",
+      "ry",
+      "(A) CE T1 (B) CE",
+      "(rit)",
+      "Cc r D! T",
+      "(9) CE\" (D) cE\"?",
+      "(ra+r) (r+rs)"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2017 (02 Apr)",
+    "answer": "D",
+    "solLines": [
+      "In steady state, current through capacitor will be zero, so current through r; will be zero.",
+      "Hence, the net current flowing in the circuit will be,",
+      "E",
+      "EE sv",
+      "r+ ry",
+      "The potential difference across the capacitor will be,",
+      "Er;",
+      "Vi=T —aa",
+      "7 Si 2",
+      "Therefore, charge on the capacitor plate will be,",
+      "CEr;y",
+      "=CV,= —=",
+      "¢ 2 rtm",
+      ""
+    ]
+  },
+  {
+    "qNum": 35,
+    "page": 26,
+    "qTextLines": [
+      "35. A combination of parallel plate capacitors is maintained at a certain potential difference.",
+      "Cc, C C, | (6",
+      "When a 3mm thick slab is introduced between all the plates, in order to maintain the same potential",
+      "difference, the distance between the plates is increased by 2.4mm. Find the dielectric constant of the",
+      "slab.",
+      "wg ® ,",
+      "Cc D.",
+      "©) 3 (D) 5"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] 2017 {09 Apr)",
+    "answer": "D",
+    "solLines": [
+      "Cc CG (63",
+      "47D 3 | B",
+      "C,",
+      "CG,",
+      "A B",
+      "G",
+      "keyA eA",
+      "Assume initial separation as 3rnm each capacitance C; = ad before C'; = Pt to get same",
+      "0- 0",
+      "“5 Tau",
+      "pod @A",
+      "«ld \"3 \"24 3 30",
+      "it —_—= 3Kk=2.4k+3 0.6k = = k=\"==5.",
+      "capacitance 3 rad ad +30.6k =3 =k 06 k 5 5",
+      "3 te",
+      ""
+    ]
+  },
+  {
+    "qNum": 36,
+    "page": 27,
+    "qTextLines": [
+      "36. 5 parallel plate capacitor of capacitance 90pF' is connected to a battery of EMF 20V. If a dielectric",
+      "material of dielectric constant i’ — : is inserted between the plates, the magnitude of the induced",
+      "charge will be:",
+      "",
+      "(A) o.9nC ® 1.2nC",
+      "© 0.3nC ©) 3 4nC"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2018 (08 Apr)",
+    "answer": "B",
+    "solLines": [
+      "Induced charge on the dielectric,",
+      "1; 3",
+      "Qinduced = KCV (1 - 2) = : x90 x 107** x 20 (1 - 3) =1.2nC.",
+      ""
+    ]
+  },
+  {
+    "qNum": 37,
+    "page": 28,
+    "qTextLines": [
+      "37. The equivalent capacitance between A and B in the circuit is given below.",
+      "a 2k",
+      "-",
+      "Suk LL 5 uF 4 uF",
+      "2uF",
+      "B",
+      "(A) 36,7 B) 2. 4uF",
+      "(©) 49 uF () 5 4 uF"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2018 (15 Apr)",
+    "answer": "B",
+    "solLines": [
+      "6 pi 2pF",
+      "4 D D E",
+      "Simplified circuit, Sur SUF \" 4 pF",
+      "E E LF",
+      "B",
+      "6 uF 2uF  . ,. ApF",
+      "D EE",
+      "A— ££ AN B",
+      "Suk 2ur",
+      "a",
+      "1 1 ds 1 5 12",
+      "Fon 6 aon ta 5 MF",
+      ""
+    ]
+  },
+  {
+    "qNum": 38,
+    "page": 29,
+    "qTextLines": [
+      "38. The equivalent capacitance between A and B in the circuit given below is:",
+      "6 uF 24F",
+      "Ra] nn oy",
+      "S uF SF 4p",
+      "2 pF T |",
+      "B",
+      "(A) 4.9, 8) 3 6uF",
+      "©) 5 4uF © 5 4,"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2018 (15 Apr, Shift 1)",
+    "answer": "D",
+    "solLines": [
+      "The simplified circuit of the circuit given in question as follows:",
+      "uF uF pg duF",
+      "e— Sil",
+      "2 The equivalent capacitance between C \\& D capacitors of",
+      "SpF 2uF",
+      "SuF",
+      "2uF,5uF and 5uF aren parallel. ©,  Ccp = 2 + 5 + 5 = 12uF(\". In parallel grouping",
+      "Ceq = C1 + Ca +... + C, ) Similarly equivalent capacitance between E &BCgp = 4 + 2 = 6uF Now",
+      "equivalent capacitance between A \\& B my = H + 3 r= i = 5 = Coq = = 2.4pF(.\" In series grouping,",
+      "1 1 1",
+      "CEG tg tet)",
+      ""
+    ]
+  },
+  {
+    "qNum": 39,
+    "page": 29,
+    "qTextLines": [
+      "39. 5 capacitor C; is charged up to a voltage V = 60 V by connecting it to battery B through switch (1),",
+      "Now C; is disconnected from battery and connected to a circuit consisting of two uncharged",
+      "capacitors Cy = 3.0uF and C3 = 6.0uF through a switch (2) as shown in the figure. The sum of final",
+      "",
+      "@-]",
+      "ON c",
+      "| =B 2",
+      "charges on C, and Cj is: T60 Vv T",
+      "| [ CG T Cs",
+      "A) 36,0 ® 5,0",
+      "c) 54uC (D) 40uC"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2018 (15 Apr, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "The sum of final charges on C; and Cs is 36 uC.",
+      ""
+    ]
+  },
+  {
+    "qNum": 40,
+    "page": 30,
+    "qTextLines": [
+      "40, A parallel plate capacitor with area 200 cm? and separation between the plates 1.5 cm, is connected",
+      "across a battery of emf V. If the force of attraction between the plates is 25 x 10% N, the value of V",
+      "is approximately: g, = 8.85 x 10712 <5",
+      "A 150 v ® 190 v",
+      "",
+      "C D]",
+      "© 250 V 0 300 V"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, =1 for a wrong answer] - 2018 (15 Apr, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "Given area of Parallel plate capacitor, A = 200 cm? Separation between the plates, d = 1.5 cm Force of attraction",
+      "between the plates, F =25 x 10 \"NF = QE F = pa (E due to parallel plate = 5 = %) But",
+      "d=15cm",
+      "Q=cv==4¥ | |",
+      "14",
+      "J po fodVY)",
+      "¥ &2 x 2Aeg",
+      "_ (ead)? x V2",
+      "Td? x 2 x (Ag)",
+      "_ (204) x Vv?",
+      "TNE RE",
+      "or, i",
+      "5 12 Hp?",
+      "25 x 10-6 — (8:85 x 101%)(200 x 10\" )V’",
+      "225x104 x2",
+      "2 25x10%x225x10 x 2",
+      "= Vi=— =",
+      "8.85 x 10712 x 200 x 10",
+      "V = 250V",
+      ""
+    ]
+  },
+  {
+    "qNum": 41,
+    "page": 31,
+    "qTextLines": [
+      "In the following circuit the switch Sis closed at t=0. The charge on the capacitor C as a function of",
+      "\" \" o _ GCs",
+      "time will be given by (Ca = £4)",
+      "B Co",
+      "SF oR",
+      "(A) (B)",
+      "CE [1-exp (-£)] t",
+      "[2 CegEexp [————",
+      ": a",
+      "©) (0) 3",
+      "CoE 1 — exp (-=)] CE [1- exp (-=)]"
+    ],
+    "optionsLines": [],
+    "marksLine": "14 marks, ~1 for a wrong answer] - 2018 (16 Apr)",
+    "answer": "C",
+    "solLines": [
+      "In given circuit capacitors C'; and C are connected in series , so equivalent capacitance will be",
+      "Lf Ja 1 SCq= CC at t=0, the switch is closed and capacitors start charged, at time t charge",
+      "& Gon OY GEG B ih J",
+      "on the capacitor is given by ¢ = qo [1 - Cabidl| where gq is the maximum charge on the capacitor at steady state",
+      "and 7 is the time constant. and go=C4E and 7 = RC, Then from the above equation g = C'oyE [1 — e~*/RCa]",
+      "5 g= 0B [t — exp (-==)]",
+      "Both capacitor will have same charge as they are connected in series",
+      "Ceq",
+      "E R",
+      ""
+    ]
+  },
+  {
+    "qNum": 42,
+    "page": 32,
+    "qTextLines": [
+      "42. 5 parallel plate capacitor is made of two square plates of side a, separated by a distance d (d < a).",
+      "The lower triangular portion filled with a dielectric of dielectric constant KX, as shown in the figure.",
+      "~1//",
+      "Capacit f thi itor i 7 ////, d",
+      "3 /",
+      "apacitance of this capacitor is: ATK // 1//,",
+      "«—a —>",
+      "(A) Kea? B) Kea? —_",
+      "2d(K +1) d(K -1)",
+      "©) Kea? 0) 1 Kea?",
+      "pat LI foil LL",
+      "d 2 d"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2019 (09 Jan, Shift 1)",
+    "answer": "B",
+    "solLines": [
+      "IA",
+      "arf Eiia",
+      "/ TE",
+      "4 TE SR Consider a small element at a distance x. It is a two",
+      "oT Al Ge",
+      "Fo",
+      "— / 1 tts dll GE LN K.adz",
+      "capacitors in series. dc = TET es Ph A Sode= “otan0(K ~1) + dk 1) + dk",
+      "Os eK .adzx \" ek.a —atanf (K — 1) + d.k Ka?",
+      "2C= fo mK —) TAF mab =D\" aK = T=",
+      ""
+    ]
+  },
+  {
+    "qNum": 43,
+    "page": 33,
+    "qTextLines": [
+      "43. A parallel plate capacitor with square plates is filled with four dielectrics of dielectric constants",
+      "Ki, K», K3, K4 arranged as shown in the figure. The effective dielectric constant K will be:",
+      "i",
+      "Ki Ky | L/2",
+      "RUARE Sm.",
+      "Ki Ke | ps2",
+      "«d/2+<d/2>",
+      "We K\\K> - K3.Ky Bo (Ky + Ky) (K3 + Ky)",
+      "Ki +K: K3+ Ka 2(K, + Ky + Kz + Ky)",
+      "[©] x Kit Ka) (Ks + Ky) 0) x Fit Ks) (Ks + Ka)",
+      "2(K1 + Kz + K3 + Ky) Ki + K+ K3+ Ky"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, =1for a wrong answer] - 2019 (09 Jan, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "k, k,",
+      "k |x |L2 c .",
+      "=5 1 2",
+      "k, | k, |L2 k, k,",
+      "6 C, C, and C, are in series.",
+      "Ch,",
+      "> ——",
+      "Cu",
+      "Cp",
+      "A",
+      "0g A KK.",
+      "The equivalent capacitance of C'y and Cy is C12 = TT = Ee CjandC are in series",
+      "2K, 2K»",
+      "c A",
+      "Pr",
+      "op ed Keka oo 6A ((KiKy | KK",
+      "SHS Tels mar Ker ons CSR ey, Cie",
+      "2K3 2K,",
+      "| _[ KiK> K3.Ky",
+      "Se Ee ee",
+      ""
+    ]
+  },
+  {
+    "qNum": 44,
+    "page": 34,
+    "qTextLines": [
+      "44. 5 parallel plate capacitor is of area 6cm? and a separation 3mm. The gap is filled with three dielectric",
+      "materials of equal thickness (see figure) with dielectric constant K; = 10, K, = 12 and K; = 14.",
+      "The dielectric constant of a material which when fully inserted in above capacitor, gives same",
+      "",
+      "fer rar «—m.",
+      "| | 1 1",
+      "[| [ | 1",
+      "} 1 ~ | . | 1",
+      "capacitancewouldbe: + Kj 1K + Ky 13mm",
+      "[| | | |",
+      "[| | 1 |",
+      "| | 1 |",
+      "SS E—",
+      "(A) 4 (B) 36",
+      "© 14 ©) 15"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2019 (10 Jan, Shift 1)",
+    "answer": "D",
+    "solLines": [
+      "_ cod",
+      "2 d",
+      "_KieA KC",
+      "Bis or 3",
+      "K>C",
+      "Cy = —",
+      "KC",
+      "Cs = =",
+      "[4",
+      "Cog =Ko C= 3 + Ky + K3)",
+      "_ K+ Ky + Ky 36",
+      "Ky=—————\"=5=12",
+      ""
+    ]
+  },
+  {
+    "qNum": 45,
+    "page": 35,
+    "qTextLines": [
+      "45. 5 parallel plate capacitor having capacitance 12pF is charged by a battery to a potential difference of",
+      "10V between its plates. The charging battery is now disconnected and a porcelain slab of dielectric",
+      "constant 6.5 is slipped between the plates. The work done by the capacitor on the slab is",
+      "A) 560p.7 ®) Gop.",
+      "© 508p. ©) 6992p.",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "{4 marks, -1 for a wrong answer] - 2019 (10 Jan, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "Initial energy of capacitor",
+      "1¢",
+      "Yis oe",
+      "1 120x120",
+      "SEXES gg 600pJ",
+      "Since battery is disconnected so charge remain same. Final energy of capacitor",
+      "1¢",
+      "Ur=3%",
+      "1 120x120",
+      "= 3 Twins TH",
+      "W+Up=U;",
+      "W = 508pJ"
+    ]
+  },
+  {
+    "qNum": 46,
+    "page": 35,
+    "qTextLines": [
+      "46. In the figure shown below, the charge on the left plate of the 10F capacitor is -30C. The charge on the",
+      "6 uF",
+      "right plate of the 6F capacitor is: — [",
+      "10 uF 24F",
+      "4pF",
+      "A) _19,c ® 19,0",
+      "© _18uc © | 18,C"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2019 (11 Jan, Shift 1)",
+    "answer": "D",
+    "solLines": [
+      "6uF",
+      "30uC",
+      "Ls",
+      "— = As given in the figure, 6uF and 4uF are in",
+      "==¥:bog =FiF =",
+      "10pF 2puF",
+      "4uF",
+      "parallel. Now using charge conservation Charge on 6y.F' capacitor = fe x 30 = 18uC Since charge is asked on",
+      "right plate therefore is +18uC'",
+      ""
+    ]
+  },
+  {
+    "qNum": 47,
+    "page": 36,
+    "qTextLines": [
+      "47. seven capacitors, each of capacitance 2uF, are to be connected in a configuration to obtain an",
+      "effective capacitance of (&) pF. Which of the combinations, shown in figures below, will achieve the",
+      "desired value?",
+      "",
+      "(A) (B)",
+      "",
+      "() (D) i A",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] + 2019 (11 Jan, Shift 2)",
+    "answer": "B",
+    "solLines": [
+      "As required equivalent capacitance should be Coq = SUF Therefore three capacitors must be in parallel and 4",
+      "must be in series with it. = =m] ta +tete+eCa= 4€ — BuF [as C = 2uF] So, desired",
+      "combination will be as below: Lr",
+      ""
+    ]
+  },
+  {
+    "qNum": 48,
+    "page": 37,
+    "qTextLines": [
+      "48. The figure shows a capacitor of capacitance C' connected to a battery via a switch, having a total",
+      "charge @ on it, in steady-state. When the switch S is turned from position A to position B, the energy",
+      "dissipated in the circuit is",
+      "",
+      "7 9",
+      "(A) 1 Q? (B) 3 Q?",
+      "3G 8C",
+      "©) 3? D) 52",
+      "ic 8C"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, 1 for a wrong answer] - 2019 (12 Jan, Shift 1)",
+    "answer": "B",
+    "solLines": [
+      "Qo = Ce",
+      "&_Zora-a",
+      "Do 3",
+      "=Qi= 1 iQ = 1",
+      "Energy dissipated,",
+      "p-198_ 101 163",
+      "2¢ 2C 23C",
+      "L(G sa",
+      "2C\\*\" 16 3x16",
+      "_ 9 4 3Q",
+      "“mcte-1-%=357",
+      ""
+    ]
+  },
+  {
+    "qNum": 49,
+    "page": 38,
+    "qTextLines": [
+      "49. | the circuit shown, find C if the effective capacitance of the whole circuit is to be 0.5 F. All values",
+      "( 2",
+      "AAT LL 1",
+      "2 2 1",
+      "in the circuit are in uF. TT",
+      "2",
+      "2 2",
+      "B",
+      "(A) 7 8) 4, Fp",
+      "— uP 2",
+      "0\"",
+      "© 7 (D) 6",
+      "—uF uF",
+      "Ei is"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2019 (12 Jan, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "Let us take the equivalent circuit one by one.",
+      "A —j",
+      "C 2 ul?",
+      "1 ul l ul =",
+      "I 2 uF H H",
+      "4 uF",
+      "B",
+      "Cc",
+      "— []",
+      "A",
+      "2 uF Co.",
+      "Ii 3 4E J STORE 713 4F",
+      "4 uF",
+      "8 8",
+      "C x",
+      "Ce en SR UY er",
+      "BPE ed Rae aT",
+      "3",
+      ""
+    ]
+  },
+  {
+    "qNum": 50,
+    "page": 39,
+    "qTextLines": [
+      "50. o parallel plate capacitor with plates of area 1m? each, are at a separation of 0.1m. If the electric field",
+      "between the plates is 100N /C, the magnitude of charge on each plate is:",
+      "c?",
+      "Take€) = 8.85 x 1072 ——",
+      "(Takee 107° 5)",
+      "(A) §.85210\"1°C B) 6.850107 1°C",
+      "© 9.85210 °C (0) 7.85010\" 0C"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] + 2019 (12 Jan, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "g_Q",
+      "B= _ = _g",
+      "« Ae rie",
+      "Q = 100 x Ae,",
+      "= Q=100x 1 x 8.85 x 10 2C",
+      "=8.85x 107°C"
+    ]
+  },
+  {
+    "qNum": 51,
+    "page": 39,
+    "qTextLines": [
+      "51. Voltage rating of a parallel plate capacitor is 500V. Its dielectric can withstand a maximum electric",
+      "field of 10°V /m. The plate area is 10\" *m? . What is the dielectric constant if the capacitance is 15pF",
+      "2;",
+      "(givene, = 8.86 x 10'*C2/Nm?)",
+      "(A) 38 (8) 85",
+      "© 45 (D) 6.2"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2019 (08 Apr, Shift 1)",
+    "answer": "B",
+    "solLines": [
+      "Electric field inside capacitor — 4",
+      "_ Vika VC ( ka _,",
+      "= d Ake, Ake \\' dd",
+      "10° = 500 x15 x 10 1",
+      "C10 x kx8.85x10",
+      "fo 185x500 75",
+      "© 885x107 x10° 885",
+      "k=847T~=85",
+      ""
+    ]
+  },
+  {
+    "qNum": 52,
+    "page": 40,
+    "qTextLines": [
+      "52. 5 parallel plate capacitor has 1uF capacitance. One of its two plates is given +2uC' charge and the",
+      "other plate, +-4uC charge. The potential difference developed across the capacitor is:",
+      "(A) 1 (B) oy",
+      "© gy 0) gy"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2019 (08 Apr, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "2uC 4uC fe",
+      "Hu A - ~",
+      "+3uC =1uC +3uC Charge inside capacitor = 1uC'",
+      "| =",
+      "po Q 1x07",
+      "TET asa"
+    ]
+  },
+  {
+    "qNum": 53,
+    "page": 40,
+    "qTextLines": [
+      "53. A capacitor with capacitance 5u.F is charged to 5uC . If the plates are pulled apart to reduce the",
+      "capacitance to 2uF, how much work is done?",
+      "(A) 6.25 x 10°67 B®) 9.55 x 10°",
+      "(©) 2.16 x 10° (0) 3.75 x 1007"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2019 (09 Apr, Shift 1)",
+    "answer": "D",
+    "solLines": [
+      "Ci",
+      "Uinitiat = 2C,",
+      "_@",
+      "U fina = 20,",
+      "Work done = U iar — Usinitiat",
+      "Q? Q?*",
+      "T2020:",
+      "~ (5x109° (5x10)",
+      "T2x2%x10°0  2%6%10°°",
+      "2% 5 @",
+      "= (3 - 2) x 10",
+      "= 2 x 107% = 3.75 x 107°J",
+      ""
+    ]
+  },
+  {
+    "qNum": 54,
+    "page": 41,
+    "qTextLines": [
+      "54. The parallel combination of two air filled parallel plate capacitors of capacitance C and nC' is",
+      "connected to a battery of voltage, V'. When the capacitors are fully charged, the battery is removed",
+      "and after that a dielectric material of dielectric constant K is placed the two plates of the first",
+      "capacitor. The new potential difference of the combined system is:",
+      "",
+      "(A) (n+1)V (B) nv",
+      "(K +n) K+n",
+      "© v (D)",
+      "K +n"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2019 (09 Apr, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "i) | 74 ind Ie 1 nC ii) Battery disconnected after full charge, Total charge of the",
+      "system, = CV +nCV = (n+ 1)CV cv 1 T nCv iii) Inserting dielectric of constant K'",
+      "7 IN a I. i = totalcharge - (n+1)CV a (n+1)V",
+      "KCH. C | SRmonpotintal, Ke: totalcapacitance KC +nC ~~ K +n",
+      ""
+    ]
+  },
+  {
+    "qNum": 55,
+    "page": 42,
+    "qTextLines": [
+      "55. Figure shows charge (q) versus voltage (V') graph for series and parallel combination of two given",
+      "A",
+      "q(rC)",
+      "capacitors. The capacitances are: 500 =o _B",
+      "80 pooont",
+      "CLEA",
+      "10V  V (Volt)",
+      "",
+      "(A) 60pF and 40uF (B) 50. F and 30uF",
+      "(© 20uF and 30uF (0) 40, F and 10pF"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] + 2019 (10 Apr, Shift 1)",
+    "answer": "D",
+    "solLines": [
+      "",
+      "Q=CV",
+      "",
+      "The slope of graph will give the equivalent capacitance of the combination.",
+      "",
+      "Fromgraph A: C) + Cy = a =50...0)",
+      "",
+      "LCC 80",
+      "",
+      "From graph B : GiG == 8 ...(i0)",
+      "",
+      "From equation (i) & (ii)",
+      "",
+      "CC = 400 ...(iii)",
+      "",
+      "Cit Go = 50 C1 50C, +400 =0",
+      "",
+      "1",
+      "a= 50 = v/2500 — 1600 50 + 30",
+      "Us 2 TiNZ",
+      "= 10uF, 40uF",
+      ""
+    ]
+  },
+  {
+    "qNum": 56,
+    "page": 43,
+    "qTextLines": [
+      "56. Two identical parallel plate capacitors, of capacitance C' each, have plates of area A, separated by a",
+      "distance d . The space between the plates of the two capacitors, is filled with three dielectrics, of",
+      "equal thickness and dielectric constants K, K; and K3 . The first capaciitor is filled as shown in",
+      "figure I, and the second one is filled as shown in figure I]. If these two modified capacitors are",
+      "charged by the same potential VV, the ratio of the energy stored in the two, would be (E refers to",
+      "capacitor (I) and E to capacitor (IT) ):",
+      "",
+      "7 : ¢ ¥",
+      "(I) (11)",
+      "(A) BE, 9K, KK, ® EB (BL KGKG) (KK + KKK + KK)",
+      "By (KiK2K3) (Ko Kp + K3K\\ Ky + Ki Ko) Ey K\\K>K3",
+      "© By (K\\KK;)(KKs + K3K\\ Ky + KB) By _ K\\K>K;",
+      "E, 9K Ky K 5 E, (K.\\K;K;)(K,K;+ K3;K,K,+K,K,)"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2019 (12 Apr, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "d",
+      "3",
+      "ATION, PB TE! d",
+      "Energy stored in a capacitor E = 5CV = 5-C ARALARERARANY | 3",
+      "[HITTHITTTTS",
+      "3",
+      "A",
+      "A EIT)",
+      "17 \\3akiA  3qdk:  3edks)  \\3de kik ks",
+      "inn, Jas",
+      "Bb ( d ) 1 fin + aks + _ H ALLA Al3",
+      "~ \\34e kikaks",
+      "THT]",
+      "DE —",
+      "d",
+      ""
+    ]
+  },
+  {
+    "qNum": 57,
+    "page": 44,
+    "qTextLines": [
+      "57.",
+      "uF",
+      "4uF",
+      "SuF",
+      "In the given circuit, the charge on 4u.F' capacitor will be:",
+      "3uF",
+      "10V",
+      "",
+      "(A) 9 6.0 ®) 5.4.0",
+      "© 24,c ©) 13.4"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2019 (12 Apr, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "",
+      "4uF 6uF",
+      "The given circuit can be redrawn as: Charge on 4,.F capacitor:",
+      "3uF",
+      "10V",
+      "Q= (2) x 10 @ = 24uC in series combination charge remains same. 50, Qu,r = Qgur = 24uC",
+      ""
+    ]
+  },
+  {
+    "qNum": 58,
+    "page": 45,
+    "qTextLines": [
+      "58.",
+      "| 7 | A parallel plate capacitor has plates of area A separated by distance d between",
+      "them. It is filled with a dielectric which has a dielectric constant that varies as K (x) = Kg (1 + az)",
+      "where z is the distance measured from one of the plates. If (ad) << 1, the total capacitance of the",
+      "system is best given by the expression:",
+      "“ AKoeo 1d ad ®&) AKoeg 1 ad)?",
+      "a 2 — \"7",
+      "©) Ax, 242 (D) AK qe",
+      "0€0 a 0€o",
+      "puinaicl iu BY fg (OF Ti —— (1+oad",
+      ": ( ie ) Th )"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2020 (07 Jan, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "Capacitance of element, dC’ — atti dl",
+      "1 d dx",
+      "I dc yon + az)",
+      "1 1",
+      "= C= Foghat ad)",
+      "Given ad < 1",
+      "Nn Pi",
+      "3 (i KyegAa br 2",
+      "1__d (| od",
+      "TCT Keel 2",
+      "_ KA ad",
+      "=*0= er 14 oT",
+      ""
+    ]
+  },
+  {
+    "qNum": 59,
+    "page": 46,
+    "qTextLines": [
+      "59. po 60pF capacitor is fully charged by a 20V\" supply. It is then disconnected from the supply and is",
+      "connected to another uncharged 60pF capacitor in parallel. The electrostatic energy that is lost in this",
+      "process by the time the charge is redistributed between thems (innJ)",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2020 (07 Jan, Shift 2)",
+    "answer": "6",
+    "solLines": [
+      "Vo ee Co 0",
+      "Vi = 20V Heatloss = U; — Uy",
+      "Vo/2 | 0",
+      "2 2 12 2",
+      "lon _q 1e(%) OV _ (60x07) 20)\" _ 6x10 = 6nJ",
+      "2 25 \\02 1 1",
+      ""
+    ]
+  },
+  {
+    "qNum": 60,
+    "page": 46,
+    "qTextLines": [
+      "60. Effective capacitance of parallel combination of two capacitors C; and C5 is 10uF. When these",
+      "capacitors are individually connected to a voltage source of 1V/, the energy stored in the capacitor C,",
+      "is 4 times that of (7. If these capacitors are connected in series, their effective capacitance will be:",
+      "A) your ®) 39,F",
+      "©) 1.6puF (D) 8.4uF"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, =1 for a wrong answer] - 2020 (08 Jan, Shift 1)",
+    "answer": "C",
+    "solLines": [
+      "©",
+      "Cz ) Cm Alt Lion",
+      "Given Cy + Ca = 10pF ...(1) 4 30 = 3CV = 4C; = C;...(ii) From",
+      "wv",
+      "Ne Co CiC",
+      "equation (i) and (ii) Cy = 2uF C, = 8uF If they are in series C., = Br 1.6puF",
+      "172",
+      ""
+    ]
+  },
+  {
+    "qNum": 61,
+    "page": 47,
+    "qTextLines": [
+      "61.",
+      "A capacitor is made of two square plates each of side ‘ a * making a very small angle a between them,",
+      "Vv,",
+      "a £. NN",
+      "as shown in figure. The capacitance will be close to: d i i",
+      "— a —>YV,",
+      "LY Soa? (1 a =) ® pa? aa",
+      "d 2d (1-2)",
+      "(c) oa? (1+ ng) (D) con? fo 3aa",
+      "d d d 2d",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2020 (08 Jan, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "",
+      "OL atanoexe",
+      "PR",
+      "X",
+      "dx",
+      "—",
+      "a",
+      "= pad",
+      "",
+      "d= d+ az",
+      "",
+      "= C= 24 [In(d + az);",
+      "",
+      "_ Soa aa\\ gpa’ (; Qa",
+      "",
+      "sg In(1+77)~ SE (1-3)",
+      ""
+    ]
+  },
+  {
+    "qNum": 62,
+    "page": 48,
+    "qTextLines": [
+      "62. Tyo identical capacitors A and B, charged to the same potential 5V are connected in two different",
+      "circuits as shown below at time ¢ = 0. If the charge on capacitors A and B attimet = CR is Q 4 and",
+      "Qp respectively, then (Here e is the base of natural logarithm)",
+      "",
+      "+ I- + [|-",
+      "+| Lo + |=",
+      "+] |- + |-",
+      "+| |- + |-",
+      "A B",
+      "R R",
+      "A B",
+      "Wie Yoh = B® o,=VvC,Qp=CV",
+      "e’ 2",
+      "© ve (D) cv ve",
+      "Q1=VC,Qp=— Qu=—\"1Qp=—",
+      "e 2 e"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2020 (09 Jan, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "Charge on capacitor after charging with a battery of potential V, Q = C'V' Now, capacitor A is connected as",
+      "+ -",
+      "+ A",
+      "+ —",
+      "shown in the figure. A\" —_ As diode is in reverse bias, so capacitor charge",
+      "R A",
+      "remains same after time ¢ = CR. \". Q4 = C'V In case B, capacitor is connected as shown in the figure.",
+      "‘ =",
+      "- -",
+      "+ =",
+      "+ - Here, diode is in forward bias, so capacitor discharges and its charge",
+      "R A",
+      "— RC",
+      "decays as 05=0Q- «RC where, t =",
+      ""
+    ]
+  },
+  {
+    "qNum": 63,
+    "page": 49,
+    "qTextLines": [
+      "63. 5 5uF capacitor is charged fully by a 220V supply. It is then disconnected from the supply and is",
+      "connected in series to another uncharged 2.5 F capacitor. If the energy change during the charge",
+      "EEN = ¥",
+      "",
+      "redistribution is TT then value of X to the nearest integer is :"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2020 (02 Sep, Shift 1)",
+    "answer": "4",
+    "solLines": [
+      "",
+      "Cy =5puFV, = 220Volt",
+      "",
+      "Cy =2.5uFVa=0",
+      "",
+      "Heat loss;",
+      "",
+      "1 CC: 2",
+      "AH=U; -U,=>=\"2(v, -",
+      "Salter a)",
+      "_ 1 5x25 ane",
+      "= Xr 28) RV",
+      "5",
+      "= >— x 22x 22x 100 x 10°",
+      "2x3",
+      "_Bx11x22 o, 55x22 Log",
+      "3 3",
+      "1210 gay = 1210 jo-s5— ax 102",
+      "3 3",
+      "",
+      "According to questions",
+      "",
+      "Z _4x107?",
+      "",
+      "100",
+      "",
+      "so, rz =4",
+      ""
+    ]
+  },
+  {
+    "qNum": 64,
+    "page": 49,
+    "qTextLines": [
+      "64. 5 10uF capacitor is fully charged to a potential difference of 501 After removing the source voltage it",
+      "",
+      "is connected to an uncharged capacitor in parallel. Now the potential difference across them becomes",
+      "20V. The capacitance of the second capacitor is :",
+      "A) 15uF (B) 30uF",
+      "©) 20uF (D) 10uF"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2020 (02 Sep, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "",
+      "y= CiV1t+CaVa",
+      "",
+      "C1 +C2",
+      "10 x 50 +0",
+      "N=\"3+c",
+      "C = 15uF",
+      ""
+    ]
+  },
+  {
+    "qNum": 95,
+    "page": 50,
+    "qTextLines": [
+      "95; In the circuit shown in the figure, the total charge is 750uC' and the voltage across capacitor Cz is",
+      "C,",
+      "C,=15 uF C",
+      "20V. Then the charge on capacitor Cs is : | C, =8 uF",
+      "\\",
+      "A) ys0uc ®) 590.c",
+      "© 160uc ©) g50uc"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2020 (03 Sep, Shift 1)",
+    "answer": "B",
+    "solLines": [
+      "G q,",
+      "C, = I5uF Q",
+      "Cy =8uF",
+      "a3",
+      "V, V,=20V",
+      "«> Cor",
+      "Applying Kirchoff's law we get, gz + gs = 750 g2+160=750 gs = 590uC",
+      ""
+    ]
+  },
+  {
+    "qNum": 66,
+    "page": 51,
+    "qTextLines": [
+      "66. 5 capacitor C' is fully charged with voltage V,. After disconnecting the voltage source, it is connected",
+      "in parallel with another uncharged capacitor of capacitance = The energy loss in the process after",
+      "the charge is distributed between the two capacitors is :",
+      "",
+      "(A) 1 (8) 1",
+      "SCV CVE",
+      "279 3770",
+      "",
+      "€) 1 (D) 1",
+      "~cvi ~CcVi",
+      "FR 6°",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2020 (04 Sep, Shift 2)",
+    "answer": "D",
+    "solLines": [
+      "Vo",
+      "— 7",
+      "C €",
+      "9 — Heat Loss is given by, H = tle - va)",
+      "— — Ly",
+      "0 5 C2",
+      "C2 o",
+      "o",
+      "V1 is initial voltage of capacitor C= Vy V3 is the initial voltage of capacitor v= 0",
+      "cx =",
+      "2 Cc",
+      "=——2-(Vo-0) = ViH = CoV}",
+      "2 @ + B) 6",
+      ""
+    ]
+  },
+  {
+    "qNum": 67,
+    "page": 52,
+    "qTextLines": [
+      "67.",
+      "Two capacitors of capacitances C' and 2C are charged to potential differences V and 2V/,",
+      "respectively. These are then connected in parallel in such a manner that the positive terminal of one is",
+      "connected to the negative terminal of the other. The final energy of this configuration is :",
+      "(A) 25 ® 3",
+      "“cov? 2 2",
+      "5 3 cv",
+      "(C) zero (D) g",
+      "“ov?",
+      "2"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2020 (05 Sep, Shift 1)",
+    "answer": "B",
+    "solLines": [
+      "Before",
+      "SV",
+      "- +",
+      "+ | - /",
+      "2C,2V",
+      "Charge on C = CV Charge on 2C=(2C) 2V'",
+      "CV",
+      "B B",
+      "+ ==",
+      "2€,2V.",
+      "From charge conservation, 2C(2V) — CV = (C + 2C)V Common potential, V Final energy, Us =",
+      "1 1 3",
+      "SOV = A PE 2",
+      "(ov +i5% 2CV )- 30V",
+      ""
+    ]
+  },
+  {
+    "qNum": 68,
+    "page": 53,
+    "qTextLines": [
+      "68. uf dF",
+      "In the circuit shown, charge on the 5, F' capacitor is : I,",
+      "ov O er",
+      "(A) 18.00C (8) 10.90uC",
+      "(©) 16.36pC ©) 5.45,C"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2020 (05 Sep, Shift 2)",
+    "answer": "D",
+    "solLines": [
+      "B *q 0 C *q 2 D",
+      "2uF, 4uF",
+      "H 0 k",
+      "Vig=6Ve=2Vp=6 = ~91492+93=0",
+      "oF A er",
+      "Vy=0",
+      "~2(6 — x) + 4(x — 6) + 5(z — 0) = 0-12 + 22 + dz — 24 + 52 = 0",
+      "36 36 180",
+      "Lali -va= igs =bae =H",
+      ""
+    ]
+  },
+  {
+    "qNum": 69,
+    "page": 54,
+    "qTextLines": [
+      "69. . \" n . X",
+      "A parallel plate capacitor has plate of length I, width w and separation of plates is d. It is connected to",
+      "a battery of emf V. A dielectric slab of the same thickness d and of dielectric constant K' = 4 is being",
+      "inserted between the plates of the capacitor. At what length of the slab inside plates, will the energy",
+      "stored in the capacitor be two times the initial energy stored?",
+      "wo ®",
+      "3 3",
+      "©, ©",
+      "1 2"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2020 (05 Sep, Shift 2)",
+    "answer": "B",
+    "solLines": [
+      "Given, Length of plate of parallel plate capacitor is I Width of plate is w Separation of plates is d. Emf of battery is",
+      "V Thickness of dielectric slab is d Dielectric constant of slab is K = 4 Capacitance of capacitor before the",
+      "p > \" N \" Ay wley i. ; . .",
+      "insertion of dielectric slab is Cy = & = rn ...(1) Energy stored in the capacitor before the insertion of",
+      ". UR 1 , fw, , a :",
+      "dielectrics is given by, Uy = 3GV = 2 ST Vv (2) Suppose that, the slab is inside the plate at y distance,",
+      "therefore, it becomes the combination of two capacitors one with air with length (I — y) and another with dielectric",
+      "with length y as shown in diagram. Now the capacitance of capacitor in parallel combination is given by, C=C; +C’",
+      "w(l—y)e wyKe 500 Fe 2h",
+      "...(3) Where, Cy = —~@ Ci= = Now energy stored in this combination of capacitor is",
+      "o 1 8 3 oi 1 2) 1",
+      "givenby U = 3(@ + C3) V2...(6) Now according to the given condition, 2Ug = U = 2 5 OV =",
+      "1 =",
+      "(Cr+CaV? = 200 = Cr + Cy» 2 UF) fou | awl) gy iy 41",
+      "{",
+      "=i de es EA",
+      ""
+    ]
+  },
+  {
+    "qNum": 70,
+    "page": 55,
+    "qTextLines": [
+      "70. For the given input voltage waveform Vy, (¢), the output voltage waveform V(t), across the capacitor",
+      "1ko",
+      "+5V",
+      "is correctly depicted by : 10MF il V, t)",
+      "a ls anes t oeeee |",
+      "5 us",
+      "0",
+      "(A) (B)",
+      "V,(® V, (1)",
+      "wo AN |",
+      "Sus 10ps 15ps Sus 10ps 15 pst",
+      "(©) (D)",
+      "V, (0) Vv, (0)",
+      "Sus 10 1s 15 ps t Sus 10ps 15pus  t"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2020 (06 Sep, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "Vv, (t)",
+      "EA Ba ta 5",
+      ") Vv i Vl When first pulse is applied the potential across capacitor",
+      "Sus 10pus 15ps  t",
+      "Eo",
+      "isgivenby V = V, ( —e RC When no pulse is applied, capacitor will discharge like V = Vet RC when",
+      "t",
+      "again, second pulse is applied V = V; (1 —e RC Using all three equations the correct graph is :",
+      ""
+    ]
+  },
+  {
+    "qNum": 71,
+    "page": 56,
+    "qTextLines": [
+      "71. Two equal capacitors are first connected in series and then in parallel. The ratio of the equivalent",
+      "capacities in the two cases will be:",
+      "[CUPIPY 8). 4",
+      "©, (D) 2:1"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] + 2021 (24 Feb, Shift 1)",
+    "answer": "B",
+    "solLines": [
+      "For series combination,",
+      "HF. HE",
+      "Cc Cc Coq",
+      "LAS cg — 94 lel combinati",
+      "Cn = Fel Cc eq = 2 or parallel combination,",
+      "Cc",
+      "= — —",
+      "( eq?",
+      "C",
+      "Cea _(C/2) 1",
+      "- = cL RT",
+      "Coy =C+C= Cy, =2C= Con 20 i",
+      ""
+    ]
+  },
+  {
+    "qNum": 72,
+    "page": 57,
+    "qTextLines": [
+      "72. Consider the combination of two capacitors Cy and Cs, with C, > C, when connected in parallel,",
+      "the equivalent capacitance is 10 times the equivalent capacitance of the same connected in series.",
+      "LC",
+      "Calculate the ratio of capacitors, ros",
+      "1",
+      "W415 B24 vis",
+      "©g © 15",
+      "4"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] + 2021 (26 Feb, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "When connected in parallel",
+      "Cyy=C1+C;",
+      "When in series",
+      "CiC2",
+      "(oid ut",
+      "“4 Ci+ Ca",
+      "CiCy",
+      "C1+Cy=10 ——F",
+      "1+ 0a-10 (2",
+      "(C1 + Ca)? =10C1Ca",
+      "C3+C3-8CCy=0",
+      "dividing by C?",
+      "C:\\' 8G",
+      "2) -=t1=0",
+      "(= ) Ci",
+      "Cs",
+      "Let — =",
+      "C1 £",
+      "2? -8z+1=0",
+      "so OEN0A=E st 405",
+      "This question was Bonus in JEE Main 2021 exam because of incorrect data in original question.",
+      ""
+    ]
+  },
+  {
+    "qNum": 73,
+    "page": 58,
+    "qTextLines": [
+      "73. For changing the capacitance of a given paralle plate capacitor, a dielectric material of dielectric",
+      "constant K is used, which has the same area as the plates of the capacitor. The thickness of the",
+      "dielectric slab is 2a where d is the separation between the plates of parallel plate capacitor. The new",
+      "capacitance C' in terms of original capacitance Cy is given by the following relation :",
+      "",
+      "A, 3+K B) , 4+K",
+      "C = ——C, C =——C",
+      "Kx 3",
+      "© 4K Do) 4",
+      "C=—=2C ¢=——0",
+      "K+3 3+ K"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, =1 for a wrong answer] - 2021 (16 Mar, Shift 1)",
+    "answer": "C",
+    "solLines": [
+      "py << >",
+      "ad) ool 111 (3/4) d/4",
+      "® Qu==3C = Cram Csinsenesie. 5 = mri 7 = eA SF agA",
+      "C, Gy",
+      "1d (3+K\\._ KC",
+      "C 4A \\ K (3+K)",
+      ""
+    ]
+  },
+  {
+    "qNum": 74,
+    "page": 59,
+    "qTextLines": [
+      "74. na parallel plate capacitor set up, the plate area of capacitor is 2m? and the plates are separated by",
+      "1m. If the space between the plates are filled with a dielectric material of thickness 0.5m and are 2m?",
+      "(see figure) the capacitance of the set-up will be g ______. (Dielectric constant of the material = 3.2)",
+      "(Round off to the Nearest Integer) i",
+      "",
+      ">",
+      "dl"
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, no negative marking] - 2021 (16 Mar, Shift 2)",
+    "answer": "3",
+    "solLines": [
+      "The given system can be considered as a series combination of two capacitors. The equivalent capacitance can be",
+      "given as,",
+      "d d",
+      "$3 01 1 3 3",
+      "Ee BO PRT YP I (0 OX",
+      "COG 0 KehliuA",
+      "A 26,4",
+      "SCE wf",
+      "ogi AN. YE",
+      "Tz KT",
+      "2x2, 4x32",
+      "ps Fo gy TR",
+      "3271",
+      "= 3.04¢",
+      ""
+    ]
+  },
+  {
+    "qNum": 75,
+    "page": 60,
+    "qTextLines": [
+      "75.",
+      "Four identical rectangular plates with length, [ = 2¢m and breadth, bh — Sem are arranged as shown",
+      "z€",
+      "in figure. The equivalent capacitance between A and C'is = The value of zis ___. (Round off to",
+      "A BC D",
+      "the Nearest Integer)",
+      "I",
+      "d d d"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2021 (17 Mar, Shift 1)",
+    "answer": "2",
+    "solLines": [
+      "2 3 3",
+      "A B fod D y= _20dc, Tox (2x3) =2(v4-1-2x])",
+      "Co ;",
+      "BD So",
+      "A [&",
+      "Cy",
+      ""
+    ]
+  },
+  {
+    "qNum": 76,
+    "page": 61,
+    "qTextLines": [
+      "76. 5 parallel plate capacitor whose capacitance C is 14pF is charged by a battery to a potential",
+      "difference V = 12V between its plates. The charging battery is now disconnected and a porcelain",
+      "plate with k = 7 is inserted between the plates, then the plate would oscillate back and forth between",
+      "the plates with a constant mechanical energy of ______pJ.",
+      "",
+      "(Assume no friction)",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2021 (17 Mar, Shift 1)",
+    "answer": "864",
+    "solLines": [
+      "Ui= : x 14 x 12 x 12pJ (wo = 3)",
+      "= 1008p",
+      "Uy = ep = 144pJ (- Cn = kCy)",
+      "Mechanical energy= AU",
+      "= 1008 — 144",
+      "= 864p.J",
+      ""
+    ]
+  },
+  {
+    "qNum": 77,
+    "page": 61,
+    "qTextLines": [
+      "77. pA 2uF capacitor C, is first charged to a potential difference of 10V using a battery. Then the battery",
+      "is removed and the capacitor is connected to an uncharged capacitor C'; of 8. F. The charge in C'; on",
+      "equilibrium condition is pC\". (Round off to the Nearest Integer)",
+      "",
+      "5) S",
+      "ET 2uF NUE",
+      "10V",
+      "C) S)"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2021 (17 Mar, Shift 2)",
+    "answer": "16",
+    "solLines": [
+      "20 = (C1 + C2) V = V = volt.",
+      "= Qa = C2V = 16uC",
+      "=16",
+      ""
+    ]
+  },
+  {
+    "qNum": 78,
+    "page": 62,
+    "qTextLines": [
+      "78. 5 parallel plate capacitor has plate area 100m? and plate separation of 10m. The space between the",
+      "plates is filled up to a thickness 5m with a material of dielectric constant of 1(). The resultant",
+      "capacitance of the system is zpF. The value of e; = 8.85 x 10™ Fm\". The value of z to the",
+      "nearest integeris ____.",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2021 (18 Mar, Shift 1)",
+    "answer": "161",
+    "solLines": [
+      "",
+      "— Here, Plate areaA = 100m? Using, Capacity of parallel plate capacitor is,",
+      "",
+      "——",
+      "",
+      "5m 5m",
+      "C= had, where d is separation between the plates and k is dielectric constant. The capacitance with dielectric",
+      "will be, Cy = ed = 200¢, The capacitance without dielectric or air will be, Cy = ain) = 20¢y C1&C",
+      "er CC 4000¢g -12",
+      "are in series $0, Ceqy. = ————— = —— = 160.9 x 10° ~ 161pF",
+      "™TCi+Cy 220 5",
+      ""
+    ]
+  },
+  {
+    "qNum": 79,
+    "page": 62,
+    "qTextLines": [
+      "79. The circuit shown in the figure consists of a charged capacitor of capacity 3uF and a charge of",
+      "",
+      "30uC. Attime t = 0, when the key is closed, the value of current flowing through the 5M resistor is",
+      "C=3uF  5MQ",
+      "| ¢=30uC",
+      "",
+      "zp A. The value of x to the nearest integer is"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2021 (18 Mar, Shift 1)",
+    "answer": "2",
+    "solLines": [
+      "",
+      "Vv 30/3 %",
+      "",
+      "ig =— = =2x10",
+      "",
+      "WERT ExI0P",
+      "",
+      "= 2.00",
+      ""
+    ]
+  },
+  {
+    "qNum": 80,
+    "page": 63,
+    "qTextLines": [
+      "80. 5 parallel plate capacitor with plate area 'A' and distance of separation 'd' is filled with a dielectric.",
+      "What is the capacity of the capacitor when permittivity of the dielectric varies as:",
+      "d",
+      "ez) =¢ + ka for (0<z< 5",
+      "d",
+      "e(z) =e + k(d—z), for 3 <z<d",
+      "(A) g kd 2/kA (B) kA",
+      "rier ln 2ey + kd",
+      "2€g",
+      "© go (D) f 4, 2€y",
+      "(EEG",
+      "2 (= — 5)",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2021 (25 Jul, Shift 1)",
+    "answer": "B",
+    "solLines": [
+      "",
+      "X",
+      "dx Taking an element of width dx at a distance z (x < d/2) from left plate",
+      "(eg + ka) A \" oo 1 dpl 1 4p dr",
+      "",
+      "de = er Capacitance of half of the capacitor c= ir 5 yl) iG",
+      "",
+      "Le Rl rina of scond aft wil b Cu=%- a",
+      "",
+      "Cc a FA n © -apacitance of second half will be same ain = )",
+      "",
+      "0",
+      ""
+    ]
+  },
+  {
+    "qNum": 81,
+    "page": 64,
+    "qTextLines": [
+      "81.",
+      "If gy is the free charge on the capacitor plates and gs is the bound charge on the dielectric slab of",
+      "dielectric constant k placed between the capacitor plates, then bound charge g» can be expressed as :",
+      "(A) 1 (B) (x 1 )",
+      "= (oa @=q(1--",
+      "wo ( VE ) k",
+      "(cc) 1 (0) 1",
+      "= 1+ — = 14 —",
+      "ab a +7) @ o( +2)"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] + 2021 (25 Jul, Shift 2)",
+    "answer": "B",
+    "solLines": [
+      "qr Ch",
+      "qy f E, Gy",
+      "2 1 E,/k",
+      "E=E,/K |= 2 Ii",
+      "—_ —:",
+      "When a dielectric is inserted in a capacitor, g;, = g; (1 - Ho)",
+      ""
+    ]
+  },
+  {
+    "qNum": 82,
+    "page": 64,
+    "qTextLines": [
+      "82. Tyo capacitors of capacities 2C and (' are joined in parallel and charged up to potential VV. The",
+      "battery is removed and the capacitor of capacity C is filled completely with a medium of dielectric",
+      "constant K. The potential difference across the capacitors will now be:",
+      "",
+      "A) Vv (B8) v",
+      "K +2 K",
+      "©) 3v () 3v",
+      "K+2 K"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2021 (27 Jul, Shift 1)",
+    "answer": "C",
+    "solLines": [
+      "> 2C v",
+      "+2CV | 122CV",
+      "C",
+      "2CV + CV 3V",
+      "Now, Ve=—rr=—",
+      "KC+2C K+2",
+      "cviier RA",
+      "| 4",
+      ""
+    ]
+  },
+  {
+    "qNum": 83,
+    "page": 65,
+    "qTextLines": [
+      "83. In the reported figure, a capacitor is formed by placing a compound dielectric between the plates of",
+      "parallel plate capacitor. The expression for the capacity of the said capacitor will be: (Given the area of",
+      "C; | yey",
+      "the plate = A)",
+      "K | 3K | 5K",
+      "CHI TIGT",
+      "d 2d” \"3d",
+      "(A) 15 Key A (B) 15 Keg A",
+      "34 d 6 d",
+      "(©) 25 Keg A 0D) 9 KegA",
+      "6 d 6 d"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] + 2021 (27 Jul, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "1d usd",
+      "C.; KegA \" 3KegA \"564A",
+      "15KegA",
+      "Gupp= ol",
+      "CATT",
+      ""
+    ]
+  },
+  {
+    "qNum": 84,
+    "page": 66,
+    "qTextLines": [
+      "84.",
+      "R=100Q",
+      "100 V I I =1 pf\" Acapacitor of capacitance C' = 1uF is",
+      "suddenly connected to a battery of 100V through a resistance R = 10052. The time taken for the",
+      "capacitor to be charged to get 50V is: (Take In 2 = 0.69)",
+      "(A) 1 44 x 10745 B) 333 x 1074s",
+      "© 0.69 x 10s ©) 0.30 x 10s"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2021 (27 Jul, Shift 1)",
+    "answer": "C",
+    "solLines": [
+      "LAs",
+      "V=V, ¢ —e w)",
+      "A",
+      "50 = 100 = we)",
+      "t=0.69 x 10 *sec.",
+      ""
+    ]
+  },
+  {
+    "qNum": 85,
+    "page": 67,
+    "qTextLines": [
+      "85. The material filled between the plates of a parallel plate capacitor has resistivity 20002m. The value of",
+      "capacitance of the capacitor is 2pF'. If a potential difference of 40V\" is applied across the plates of the",
+      "capacitor, then the value of leakage current flowing out of the capacitor is: (given the value of relative",
+      "permittivity of material is 50)",
+      "",
+      "(A) 0.9m B®) 9 oma",
+      "©) 9044 ©) 9.9.4"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2021 (26 Aug, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "A",
+      "_",
+      "7 p=200amK =500= KA _ 5102p p_ #4",
+      "d d A",
+      "40V",
+      "V AV V C 4 210°%",
+      "I=—=—=—-  —=—X———————— =09mA",
+      "BR pd 7p wk 200 \"8mx10%xs0 OM",
+      ""
+    ]
+  },
+  {
+    "qNum": 86,
+    "page": 68,
+    "qTextLines": [
+      "86. 5 parallel-plate capacitor with plate area A has separation d between the plates. Two dielectric slabs",
+      "of dielectric constant K; and K, of same area = and thickness : are inserted in the space between",
+      "T+ + +++ +] +0",
+      "“A",
+      "the plates. The capacitance of the capacitor will be given by : a",
+      "--—-——-—-\"1-90",
+      "(A) A (1 KK, B) A (1 2(K, +K,)",
+      "a YE 1K, a \\2t KK,",
+      "© ad (1 Ki+k Pad 1 KK:",
+      "d \\2 KK» d \\2 2(K)+K>)"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2021 (26 Aug, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "co _ Kae, Kg",
+      "4 (A/2)g, 2 dr == d",
+      "b6CH HD",
+      "oA Kae",
+      "3 d2 Td",
+      "KiAe 3 KiAey",
+      "_ C2Cy _ Ae d d",
+      "Gp = Ci C,+Cs Ca = 2d | Kade Kade",
+      "i a i]",
+      "d d",
+      "— dade (CGR NG Sa (1 RG",
+      "Ca=%g +7 [2 ~ 4 (+ ie)",
+      ""
+    ]
+  },
+  {
+    "qNum": 88,
+    "page": 70,
+    "qTextLines": [
+      "88.",
+      "Three capacitors C1 = 2uF, Cy = 6uF and C3 = 12uF are connected as shown in the figure. Find",
+      "the ratio of the charges on capacitors C1, C2 and C3 respectively.",
+      "i GG CG ’",
+      "",
+      "Wogia:a ® 5.3.3",
+      "©9.1:1 ©) y.9.9"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] « 2021 (27 Aug, Shift 2)",
+    "answer": "D",
+    "solLines": [
+      "",
+      "From the above circuit diagram, the equivalent capacitance of the combination of capacitors is,",
+      "",
+      "Qo CV 2x(6+12) 1",
+      "Cu=Cit 2% g — 24 8X2 pine oe TCC 7 6x12  2and",
+      "CyCy 6+ 12 ARE Ld NE 7",
+      "C+ Cs",
+      "Qc, = Qc, So, the ratio of charges are, 1 : 2: 2.",
+      ""
+    ]
+  },
+  {
+    "qNum": 89,
+    "page": 71,
+    "qTextLines": [
+      "89. 5 capacitor of 50uF is connected in a circuit as shown in figure. The charge on the upper plate of the",
+      "6V 2kQ",
+      "2kQ",
+      "capacitor is nC.",
+      "2kQ C=50 pF"
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, na negative marking] + 2021 (31 Aug, Shift 1)",
+    "answer": "100",
+    "solLines": [
+      "At steady state current through branch of capacitor is zero. Potential difference across capacitor is 2V'. So,",
+      "i",
+      "6V",
+      "= 50 x 2 = 100uC' i= 0 110 Amp Vis =",
+      "4=50%2=100p TE zr x10 Rai",
+      "A",
+      "B",
+      "potential across 50uF Vip =i x 2 x 10° = 1 x 10° x 2 x 10° = 2 volt Charge on 50uF",
+      "g=CV =50x10\"% x 2 = 100 x 10°°C = 100uC",
+      ""
+    ]
+  },
+  {
+    "qNum": 90,
+    "page": 72,
+    "qTextLines": [
+      "90. o parallel plate capacitor of capacitance 200uF is connected to a battery of 200V. A dielectric slab",
+      "of dielectric constant 2 is now inserted into the space between plates of capacitor while the battery",
+      "remain connected. The change in the electrostatic energy in the capacitor willbe ______ J,",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2021 (31 Aug, Shift 2)",
+    "answer": "4",
+    "solLines": [
+      "Initially",
+      "C = 200uF",
+      "",
+      "1 0 1 6 2",
+      "Ei = 5CV? = 5 x (200 x 10°°) x (200)",
+      "Finally",
+      "C' = KC = 400uF",
+      "",
+      "1m 1 ~6 2",
+      "Br =5CV =5% (400 x 10°) x (200)",
+      "AE = 3 x [(400 — 200) x 107°] x 4 x 10* = 4J",
+      ""
+    ]
+  },
+  {
+    "qNum": 10,
+    "page": 73,
+    "qTextLines": [
+      "10 x In io",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "",
+    "answer": "",
+    "solLines": []
+  },
+  {
+    "qNum": 92,
+    "page": 74,
+    "qTextLines": [
+      "92. p parallel plate capacitor is formed by two plates each of area 30wcm? separated by 1mm. A material",
+      "of dielectric strength 3.6 x 107Vm 1 is filled between the plates. If the maximum charge that can be",
+      "stored on the capacitor without causing any dielectric breakdown is 7 x 10°C, the value of dielectric",
+      "constant of the material is :",
+      "",
+      "1",
+      "[Use — = 9 x 10°Nm*C 2]",
+      "4re,",
+      "(A) 166 (®) 1.75",
+      "(© 9.95 (0) 533"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2022 (24 Jun, Shift 1)",
+    "answer": "D",
+    "solLines": [
+      "The dielectric strength given is 3.6 x 107V mn !.and the separation is 1mm. Therefore, maximum potential",
+      "difference that can be applied will be,",
+      "Vonia = 8:6/%107 x di",
+      "Now,",
+      "maz kegA 7x1077 d 7x10\"",
+      "Padme S00 CRM go & tA BEE",
+      "Vinaz d 36x10\" xd e@x30mrx10*\" 36x10\" xd",
+      ""
+    ]
+  },
+  {
+    "qNum": 93,
+    "page": 74,
+    "qTextLines": [
+      "93. If the charge on a capacitor is increased by 2C, the energy stored in it increases by 44. The original",
+      "charge on the capacitor is (in C)",
+      "",
+      "A 19 (®) 99",
+      "(© 39 (D) 49"
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, -1for a wrong answer] - 2022 (24 Jun, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "",
+      "Q?",
+      "Energy stored in a capacitor is given by gy — bol",
+      "Let initial charge be Qy.",
+      "Q) _ (@+2)°",
+      "Then, 1.44 ( —= | = ———H™—",
+      "(52 2C",
+      "=12Qy=Qp +2",
+      "2",
+      "Qo = TET 10C",
+      ""
+    ]
+  },
+  {
+    "qNum": 94,
+    "page": 75,
+    "qTextLines": [
+      "94. ’ . » \" . .",
+      "The equivalent capacitance between points A and B in below shown figure willbe ___ uF.",
+      "8 uF 8 nF |",
+      "A 8 UF |8 nF 8puF 8uF B"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2022 (25 Jun, Shift 1)",
+    "answer": "6",
+    "solLines": [
+      "1 3",
+      "A ! | Hifi B",
+      "Point 3 and 4 are at same potential, hence we can replace the capacitor with a wire.",
+      "Cc",
+      "Cc",
+      "42 cB",
+      "1,34",
+      "Ia",
+      "Capacitors between points A and 3 are in parallel combination as shown above and their combined capacitance",
+      "value will be 3C. This 3C capacitance is in series with C'. The equivalent capacitance of the system between",
+      "3CxC 3C 3",
+      "oints Aand Bis, Cup = ———— = — = Cup = = x 8uF = 6uF",
+      "R 0 EToyT RTA ad = 8 BT Od]",
+      ""
+    ]
+  },
+  {
+    "qNum": 95,
+    "page": 76,
+    "qTextLines": [
+      "95. ’ . \" ”",
+      "Two metallic plates form a parallel plate capacitor. The distance between the plate is 'd'. A metal sheet",
+      ". d _— »",
+      "of thickness 5 and of area equal to area of each plate is introduced between the plates. What will be",
+      "the ratio of the new capacitance to the original capacitance of the capacitor?",
+      "d",
+      "2",
+      "-—",
+      "d",
+      "W.9 Bhi",
+      "©7:4 © 4.1"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2022 (25 Jun, Shift 2)",
+    "answer": "B",
+    "solLines": [
+      "d Cc lo",
+      "Ll ; i",
+      "«> <> <> <>",
+      "d d d d d",
+      "4 2 4 4 4",
+      "Before the metal sheet is inserted, capacitance is given by C' = al. After the sheet is inserted, the system is",
+      "equivalent to two capacitors in series, each of capacitance C. The equivalent capacity is now + The ratio is ¢",
+      ""
+    ]
+  },
+  {
+    "qNum": 96,
+    "page": 77,
+    "qTextLines": [
+      "96. Tyo capacitors having capacitance C; and C', respectively are connected as shown in figure. Initially,",
+      "capacitor '; is charged to a potential difference V volt by a battery. The battery is then removed and",
+      "the charged capacitor C is now connected to uncharged capacitor C'; by closing the switch S. The",
+      "",
+      "[5°]",
+      "amount of charge on the capacitor Cy, after equilibrium, is (e C",
+      "TT",
+      "nw cc, vi ®) (¢, +Ca),",
+      "(C1 + Cy) CC;",
+      "© (Cc, +o)v © (c,- cy) v"
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, ~1 for a wrong answer] - 2022 (26 Jun, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "The initial charge on the capacitor C'; will be Q = CV. If after closing the switch the charge flown through the",
+      "circuit is g, the charge on Cy will be g and Cc, will be Q — g. The potential across the capacitors will be same.",
+      "Hence,",
+      "rq 4 CQ CiCs",
+      "x fol ag=— a g=—i2y",
+      "a GG lara Fara",
+      ""
+    ]
+  },
+  {
+    "qNum": 97,
+    "page": 78,
+    "qTextLines": [
+      "97.",
+      "The charge on capacitor of capacitance 15uF in the figure given below is",
+      "10 uF 15 WF 20 pF",
+      "13V",
+      "A 6ouc ®) 1304",
+      "C! D|",
+      "© 260uC 0) 585uC"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer) + 2022 (26 Jun, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "\"15 1",
+      "| 13V",
+      "As we know, @Q = C'V Here all capacitors are connected in series. Thus, equivalent capacitance is",
+      "1 =1",
+      "1 1 1 6+4+3 60 60",
+      "(2 2 LY ered SU Therefore, ch = — x 13 = 60pC. As th",
+      "Ce I + i + =) ( = ) hE erefore, charge 13 uC. As the",
+      "capacitors are connected in series, charge on each capacitor wil be same.",
+      ""
+    ]
+  },
+  {
+    "qNum": 98,
+    "page": 79,
+    "qTextLines": [
+      "98. 5 parallel plate capacitor with plate area A and plate separation d = 2m has a capacitance of 4uF.",
+      "The new capacitance of the system if half of the space between them is filled with a dielectric material",
+      "K=3",
+      "of dielectric constant KX = 3 (as shown in figure) will be",
+      ">>",
+      "d d",
+      "9) 2",
+      "",
+      "(A) 2uF (B) 32uF",
+      "© Ma D) g ma"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2022 (26 Jun, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "",
+      "X=3",
+      "This parallel plate capacitor can be divided into two capacitors.",
+      ">>",
+      "d d",
+      "2 2",
+      "One with dielectric (C';) and other without dielectric(C). The two capacitors will be in series. Initially",
+      "kegA 2x 3 x eA A 2x eA",
+      "C= al — 4uF Now, 1 SET de =24pF 4 C2= SAC le 84F Einany",
+      "2 2",
+      ",__CiCy  24x8 _",
+      "Cro mre",
+      ""
+    ]
+  },
+  {
+    "qNum": 99,
+    "page": 80,
+    "qTextLines": [
+      "99. . \"",
+      "A force of 10NV acts on a charged particle placed between two plates of a charged capacitor. If one",
+      "plate of capacitor is removed, then the force acting on that particle will be.",
+      "",
+      "(A) 5 (B) 10N",
+      "© 50n (D) Zero"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2022 (27 Jun, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "+0 0",
+      "9F=10",
+      "N a Q .",
+      "Electric field due to each plate, Ey = Ey, = — = —— Net electric field between the plates,",
+      "2 24g",
+      "Ep = EB, — i = LH",
+      "net = By + Ey = —— Force on charged particle between the plates, F'; = gE, = — = 10N",
+      "Aggy Aeg",
+      "[4 Q",
+      "Now, in second case, the net electric field, E = — = —— = 5 Force on charged particle,",
+      "2¢p 2A¢",
+      "Q _",
+      "Fy=qE = Cy PA 5N",
+      ""
+    ]
+  },
+  {
+    "qNum": 100,
+    "page": 81,
+    "qTextLines": [
+      "100. 5 capacitor of capacitance 50pF is charged by 100V\" source. It is then connected to another",
+      "uncharged identical capacitor. Electrostatic energy loss in the process is___n.J."
+    ],
+    "optionsLines": [],
+    "marksLine": "{4 marks, no negative marking] + 2022 (27 Jun, Shift 1)",
+    "answer": "125",
+    "solLines": [
+      "C,0=CV",
+      "| | Initial charge on first capacitor will be, Q = CV As the second",
+      "capacitor is identical to the first one, hence potential drop across both capacitor will be equal to 4 Now, loss of",
+      "Toying: v\\? PN |",
+      "energy, AH =U; — Uy = AH = 59V = (2C) x il) AH = 3CV - CV",
+      "lop 1 12 2 9",
+      "= AH =7CV?=2 x50 x10 x 100° = 125 x 10 \"J = 125nJ",
+      ""
+    ]
+  },
+  {
+    "qNum": 101,
+    "page": 82,
+    "qTextLines": [
+      "101. A parallel plate capacitor is made up of stair like structure with a plate area A of each stair and that is",
+      "connected with a wire of length b, as shown in the figure. The capacitance of the arrangement is",
+      "= wd The value of x is .",
+      "",
+      "15 b",
+      "A",
+      "ll,",
+      "A",
+      "a",
+      "Ped",
+      "A"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2022 (27 Jun, Shift 2)",
+    "answer": "23",
+    "solLines": [
+      "5b Ek $ b Here the system can be considered as three",
+      "£0 ! v oA eA eA aA E 1 1] 236A",
+      "capacitors in parallel. So, net capacitance is C = — + — + — C = — [= + = + = =—",
+      "& ° ° Sie A bl BE a",
+      ""
+    ]
+  },
+  {
+    "qNum": 102,
+    "page": 83,
+    "qTextLines": [
+      "102. 5 capacitor C; of capacitance 5u.F is charged to a potential of 30V using a battery. The battery is",
+      "then removed and the charged capacitor is connected to an uncharged capacitor C, of capacitance",
+      "10uF as shown in figure. When the switch is closed charge flows between the capacitors. At",
+      "",
+      "a",
+      "equilibrium, the charge on the capacitor C's is uC. K",
+      "10 uF |"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2022 (28 Jun, Shift 2)",
+    "answer": "100",
+    "solLines": [
+      "The initial charge on the 5 F capacitor will be ¢ = C'V = 150uC'. If the charge on the 10uF capacitor is g after",
+      "S uF",
+      "(150 - q)",
+      "the key is closed then, 100=4._ a = gq =100uC",
+      "5 10",
+      "10 pF",
+      "q",
+      ""
+    ]
+  },
+  {
+    "qNum": 103,
+    "page": 84,
+    "qTextLines": [
+      "103. parallel plate capacitor filled with a medium of dielectric constant 10, is connected across a battery",
+      "and is charged. The dielectric slab is replaced by another slab of dielectric constant 15. Then the",
+      "energy of capacitor will",
+      "(A) increase by 50 (B) decrease by 15",
+      "(2) increase by 25 (D) increase by 33"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2022 (29 Jun, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "When a dielectric of dielectric constant K is inserted between the plates of a capacitor Cy, the capacitance",
+      "becomes KC.",
+      "Energy stored in a capacitor is given by, U = Jove Now,",
+      "1 2 1 2",
+      "U,= 5 (K1Co) Vand UU, = = (KC) V",
+      "1",
+      "= AU =U; ~ Ui = 5 (Kz — Ki) CoV?",
+      "Percentage change in the energy will be,",
+      "1 2",
+      "=x 5x Cy",
+      "¥ x 100 = 2———— x 100 = 50",
+      "3 3x 10x cy?",
+      ""
+    ]
+  },
+  {
+    "qNum": 104,
+    "page": 85,
+    "qTextLines": [
+      "104. he displacement current of 4.425. A is developed in the space between the plates of parallel plate",
+      "capacitor when voltage is changing at a rate of 10°V s~!. The area of each plate of the capacitor is",
+      "40cm? The distance between each plate of the capacitor is 2 x 10~*m. The value of zis,",
+      "(Permittivity of free space, ep = 8.85 x 107 2C*N ‘m2 ___",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2022 (29 Jun, Shift 2)",
+    "answer": "8",
+    "solLines": [
+      "Displacement current is given by i, der",
+      "od ei",
+      "Ory = =r (EA), where E = i",
+      "3 d (qA dg d",
+      "Oi =g—=[—]|=—==—",
+      "Salmi (4 primi",
+      "dV «Adv",
+      "I=Cp =a dr",
+      "Putting the values, we have",
+      "~-12 4 6",
+      "dos 1-0 BB x10 x 40 x 10% x 10f",
+      "d",
+      "d=2x10\"°x10\"* x 10° x 40",
+      "d=80x10\"*=8x10\"*m",
+      "Hence, value of z = 8.",
+      ""
+    ]
+  },
+  {
+    "qNum": 105,
+    "page": 86,
+    "qTextLines": [
+      "105. 5 capacitor is discharging through a resistor R. Consider in time ¢,, the energy stored in the capacitor",
+      "reduces to half of its initial value and in time £,, the charge stored reduces to one eighth of its initial",
+      "Ct",
+      "value. The ratio = will be",
+      "2",
+      "(A) 1 (B) 1",
+      "2 3",
+      "©) 1 (D) 1",
+      "4 6"
+    ],
+    "optionsLines": [],
+    "marksLine": "{4 marks, -1for a wrong answer] - 2022 (29 Jun, Shift 2)",
+    "answer": "D",
+    "solLines": [
+      "‘We know that in the discharging circuit the charge is given by,",
+      "= t Q",
+      "— a _p(R",
+      "q=qeRC 7 RC ( q )",
+      "ao’ 1 4’",
+      "In time ¢; the energy stored reduces to half. Hence, — = = x — = — = V2. Therefore,",
+      "ace 2 a0 =a",
+      "ty 1",
+      "®G= In (v2) = 302",
+      ". 1th [a",
+      "In time ¢, the charge stored reduces to — of initial value. Hence, r= = 5 Therefore,",
+      "8 lo",
+      "2 _1n(8) = 32",
+      "RC BN &",
+      "Hence,",
+      "1",
+      "4 3m2",
+      "ty 32 6",
+      ""
+    ]
+  },
+  {
+    "qNum": 106,
+    "page": 87,
+    "qTextLines": [
+      "106. A condenser of 2uF capacitance is charged steadily from 0 to 5C'. Which of the following graph",
+      "represents correctly the variation of potential difference(V') across its plates with respect to the",
+      "charge (Q) on the condenser?",
+      "wo ®",
+      "",
+      "< - 5",
+      "— aa",
+      "© 5 S ]",
+      "= - i",
+      "x - i",
+      "SR = i",
+      "0 5—>0(C) 0 5 =0(0)",
+      "©) a (D) a",
+      "gr —",
+      "ER S 5",
+      "— H —_—",
+      "Xx H",
+      "R15 i 82.51",
+      "0 5—=0(0) 0 300)"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2022 (25 Jul, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "The charge on a condenser is given by Q = CV.",
+      "1",
+      "Seeilie= read",
+      "Since the capacitance depends on the construction of the condenser, it is constant. Therefore, the graph will be",
+      "1h : 1",
+      "traight | ith slope = —.",
+      "straight line with slope c",
+      "1 1",
+      "Slope = — = ———— = 5 x 10°",
+      "PE=C axe",
+      ""
+    ]
+  },
+  {
+    "qNum": 107,
+    "page": 88,
+    "qTextLines": [
+      "107. Capacitance of an isolated conducting sphere of radius R; becomes n times when it is enclosed by a",
+      "’ f . (Ra",
+      "concentric conducting sphere of radius R, connected to earth. The ratio of their radii is:",
+      "1",
+      "(A) n (B) 2n",
+      "n—1 2n +1",
+      "©) n+1 (D) 2n +1",
+      "n n"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2022 (25 Jul, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "Capacitance of isolated conducting sphere C' = 4meg Ry",
+      "By enclosing inside another sphere of radius R,, new capacitance Cc = Arcola",
+      "(Rx — Ry)",
+      "2 4megR1 Ry",
+      "Given: ———— = dre R",
+      "iven: (Bs — Ry) n x dmeg Ry",
+      "Ry",
+      "Ry Ry",
+      "ES = el =",
+      "(R:— Ri) B_)\"",
+      "Ry",
+      "Ry Ry Ry n",
+      "“RRR wo)",
+      ""
+    ]
+  },
+  {
+    "qNum": 108,
+    "page": 89,
+    "qTextLines": [
+      "108. Tyo parallel plate capacitors of capacity C' and 3C are connected in parallel combination and",
+      "charged to a potential difference 18V. The battery is then disconnected and the space between the",
+      "plates of the capacitor of capacity C' is completely filled with a material of dielectric constant 9. The",
+      "final potential difference across the combination of capacitors will be Ye"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2022 (25 Jul, Shift 2)",
+    "answer": "6",
+    "solLines": [
+      "(&4",
+      "The charge on the capacitor is given by ¢ = CV. Initial charge on",
+      "3C",
+      "18V",
+      "C = 18CV And initial charge on 3C = 54CV Let final common potential difference = V' When a dielectric of",
+      "dielectric constant k is introduced between the plates of the capacitor the capacitance becomes k times.",
+      "9C",
+      "| | Applying conservation of charge, 9CV' + 3CV' = 18CV + 54CV",
+      "3C",
+      "=12CV =720V = V' =6V",
+      ""
+    ]
+  },
+  {
+    "qNum": 109,
+    "page": 89,
+    "qTextLines": [
+      "109. The total charge on the system of capacitance Cy = 1uF,Cy = 2uF, C3 = 4uF and Cy = 3uF",
+      "connected in parallel is",
+      "(Assume a battery of 20V is connected to the combination)",
+      "",
+      "(A) 200uC (B) 200",
+      "",
+      "(©) 10uC 0) 19¢",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2022 (26 Jul, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "As the given capacitors are in parallel combination, therefore,C,, =(1+2+3+4)uF = 10uF",
+      "Hence, charge flown through the switch,:, Q = (20V) x (10uF) = 200uC",
+      ""
+    ]
+  },
+  {
+    "qNum": 10,
+    "page": 90,
+    "qTextLines": [
+      "10. A composite parallel plate capacitor is made up of two different dielectric materials with different",
+      "thickness (¢; and t3) as shown in figure. The two different dielectric material are separated by a",
+      "conducting foil F'. The voltage of the conducting foilis _V.",
+      "",
+      "gy =3:4 =0.5mm |",
+      "py =4;t, =1mm Jae"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2022 (26 Jul, Shift 1)",
+    "answer": "60",
+    "solLines": [
+      "ge, =3:4 =0.5mm |",
+      "|) ieee fh Capacitance of each capacitor",
+      "Ep =4;t, =1mm [x",
+      "_ A3e",
+      "C= T= 04% 404 Cy = Ady = 4 Ae Here, Ais area of plate. Equivalent capacitance is",
+      "5 1",
+      "CC; 6Aeg x4Aeg 24 ,",
+      "Cog = To +C, — 6Ae, + ade, Ta Now, net charge stored is",
+      "240A",
+      "qui = Ca (AVF= Tq (100) = 240 Aeg Potential drop across Cs is AV, = a = 60V Thus, voltage",
+      "0",
+      "of the conducting foil is V foi = 60V",
+      ""
+    ]
+  },
+  {
+    "qNum": 10,
+    "page": 91,
+    "qTextLines": [
+      "10 5",
+      "©) 5 (D) 5",
+      "13 26"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2022 (26 Jul, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      ".",
+      "(i) When the switch is closed C.,, = 2C Charge on each capacitor",
+      "“| (1 [© 2) 4d",
+      "willbe g = CV. Energy Ey = Ca¥ = 32¢ x V2 E; = CV2(ii) When the switch is opened charge on the",
+      "right capacitor remain C'V while the potential on the left capacitor remains the same. Dielectric k = 5 C' = kC'",
+      "i 1, ¢ 1 (cv) 50V: CV?",
+      "Cc = Now to calculate Ey, 1, — =. 2 4 = ERR = ST",
+      "5C 2 Ey CV +35 = Ba 36) V +360) = 2 0) + 0)",
+      "Fae 13CV? ~ By NG:",
+      "Fate E; 13",
+      ""
+    ]
+  },
+  {
+    "qNum": 10,
+    "page": 92,
+    "qTextLines": [
+      "10 10",
+      "Electrostatics energy of this system is = Cur = 3 (1.2) €9 (20) (20) = 240¢,",
+      "M3. As show in the figure, in steady state, the charge stored in the capacitor is X10:",
+      "E=10V",
+      "r=10Q",
+      "R=100Q",
+      "C=1.1uF",
+      "R'=200 Q",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2022 (27 Jul, Shift 2)",
+    "answer": "10",
+    "solLines": [
+      "",
+      "At the steady state, there will be no current through the capacitor. Therefore, potential difference across capacitor",
+      "",
+      "10 10 x 100 100",
+      "",
+      "Vos pret men. 1",
+      "",
+      "Charge on capacitor is ¢ = CV",
+      "",
+      "=(11x10°% 2)",
+      "",
+      "11",
+      "= q=10pC = 10 x 10 °C.",
+      ""
+    ]
+  },
+  {
+    "qNum": 6,
+    "page": 93,
+    "qTextLines": [
+      "6 C->KC",
+      "| | 7, When a dielectric is inserted between the sheets",
+      "of a capacitor, its capacitance becomes KC. Now the equivalent capacitance in series combination will be,",
+      "Cum gig > B= fEE > K~15",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "",
+    "answer": "",
+    "solLines": []
+  },
+  {
+    "qNum": 1,
+    "page": 94,
+    "qTextLines": [
+      "1 1 1 ak 1 d 3d 3 1 (d 3d 40 AK 4K Cy",
+      "— hem fm = =m +—=+ rl (8 C=—r—\"-—=3C=—",
+      "CLG 6 en Ta ile 1K W)=3 it £)= 163+ K) CET",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "",
+    "answer": "",
+    "solLines": []
+  },
+  {
+    "qNum": 5,
+    "page": 95,
+    "qTextLines": [
+      "5 3 = |B LE bgt 2 re a",
+      "Intensity of field due plate charged by gq; is |B = 5— = 5— (directed rightwards)",
+      "2¢0 260A",
+      "And Intensity of field due to plate charged by gs is",
+      "flog _ do",
+      "|| =% 2d (directed leftwards)",
+      "So, Net field is given by",
+      "E=E +E, =E=E -E,",
+      "cp. a (-g)",
+      "FeH= 264A 2A 2A ©)",
+      "i 6A",
+      "For parallel plate capacitor C' = = (2)",
+      "From above two equations",
+      "(91-2)",
+      "E=—\"24d..(3",
+      "Tel (3)",
+      "+ ‘Relation between intensity of field (E) and potential difference (V') between the plates is",
+      "14",
+      "E=—.(4",
+      "(4)",
+      "From equation (3) and (4)",
+      "CTD)",
+      "V=\"36",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "",
+    "answer": "",
+    "solLines": []
+  },
+  {
+    "qNum": 120,
+    "page": 98,
+    "qTextLines": [
+      "120. po capacitor of capacitance 900pF is charged by a 100V battery. The capacitor is disconnected from",
+      "the battery and connected to another uncharged identical capacitor such that one plate of uncharged",
+      "capacitor connected to positive plate and another plate of uncharged capacitor connected to",
+      "negative plate of the charged capacitor. The loss of energy in this process is measured as z x 10™2J",
+      ". The value of z is s"
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, no negative marking] + 2023 (30 Jan, Shift 1)",
+    "answer": "225",
+    "solLines": [
+      "When a charged capacitor is connected to an uncharged capacitor, then there is loss of energy in the form of heat",
+      "as charges flow from higher potential to lower potential.",
+      "1 CiC: 2",
+      "So, heat AH = —————(V, — V-",
+      "2C1+C: vi 2)",
+      "As the other capacitor is identical therefore charge is equally divided.",
+      "1c?",
+      "= =—(100 —- 0)?",
+      "2 3c! 0)",
+      "1900 x 10° 9",
+      "= ——————— x 10\" = - Joule",
+      "2 2 4",
+      "= 2.25 Joule.",
+      "Hence, the value of z = 225.",
+      ""
+    ]
+  },
+  {
+    "qNum": 121,
+    "page": 98,
+    "qTextLines": [
+      "121. Two parallel plate capacitors C', and C', each having capacitance of 10uF are individually charged",
+      "by a 100V D.C. source. Capacitor (; is kept connected to the source and a dielectric slab is inserted",
+      "between it plates. Capacitor C's is disconnected from the source and then a dielectric slab is inserted",
+      "in it. Afterwards the capacitor C'; is also disconnected from the source and the two capacitors are",
+      "finally connected in parallel combination. The common potential of the combination willbe __ V.",
+      "(Assuming Dielectric constant = 10)",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2023 (31 Jan, Shift 2)",
+    "answer": "55",
+    "solLines": [
+      "As source is connected in the process therefore, additional charge will be provided. Therefore, charge on",
+      "Ci=K (CV).",
+      "Since source is disconnected, so its charge will remain the same. Then, charge on Cy = CV.",
+      "New capacitance in both cases will become, KC.",
+      "When they are connected in parallel charge will be equally divided so charge on one capacitor is",
+      "K+1",
+      "q= (£2) CV.",
+      "2",
+      "So common potential,",
+      ". q K+1",
+      "V =—==——V=\"55V.",
+      "KC 2K",
+      ""
+    ]
+  },
+  {
+    "qNum": 122,
+    "page": 99,
+    "qTextLines": [
+      "122. Given below are two statements : One is labelled as Assertion A and the other is labelled as Reason R.",
+      "Assertion A : Two metallic spheres are charged to the same potential. One of them is hollow and",
+      "another is solid, and both have the same radii. Solid sphere will have lower charge than the hollow",
+      "one.",
+      "",
+      "Reason R : Capacitance of metallic spheres depend on the radii of spheres.",
+      "In the light of the above statements, choose the correct answer from the options given below.",
+      "(A) Ais false but R is true (B) Both A and R are true and Ris the correct",
+      "explanation of A",
+      "(C) Ais true but R is false (D) Both A and R are true but R is not the correct",
+      "explanation of A"
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, -1for a wrong answer] - 2023 (01 Feb, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "Potential of a conducting sphere is given by |/ — x0",
+      "As in case of metallic sphere either solid or hollow, the charge will reside on the surface of the sphere. Since both",
+      "spheres have same surface area, so they can hold equal charge.",
+      "LQi=Q",
+      "The capacitance of a metallic sphere depends only on its radius. It does not matter whether the sphere is hollow",
+      "or solid.",
+      "Hence, A is false but R is true.",
+      ""
+    ]
+  },
+  {
+    "qNum": 123,
+    "page": 100,
+    "qTextLines": [
+      "123. \" . , — \" . . .",
+      "A parallel plate capacitor with plate area A and plate separation d is filled with a dielectric material of",
+      "dielectric constant K' = 4. The thickness of the dielectric material is «, where z < d.",
+      "",
+      "I Plot - |",
+      "d Dielectric",
+      "x 7",
+      "7 Plate - 2",
+      "; 1 2d .",
+      "Let C, and C be the capacitance of the system for zz — 3d and z = re respectively. If Cy = 2uF",
+      ", the value of Cris pF."
+    ],
+    "optionsLines": [],
+    "marksLine": "4 marks, no negative marking] - 2023 (06 Apr, Shift 1)",
+    "answer": "3",
+    "solLines": [
+      "The formula to calculate the capacitance of a parallel plate capacitor having thickness d and with a dielectric of",
+      "c— aA 1",
+      "thickness x between the plates is given by = — T (1) Substitute the values of the parameters for",
+      "(d—z) + —",
+      "K",
+      "eA",
+      "Cy = a",
+      "first case into equation (1) to obtain the capacitance. 2d 5 3 Similarly, substitute the parameters",
+      "3 4",
+      "_ ded ®",
+      "5d",
+      "eA",
+      "CG: = —1",
+      "dial",
+      "into equation (1) for the second case to obtain the capacitance CY Vs Divide equation (3) by",
+      "0-",
+      "= aa”",
+      "200d",
+      "= —..(3",
+      "o=..0)",
+      "260A",
+      "Go d",
+      "Cc: dep A",
+      "equation (2) to obtain the capacitance in the second case. i Substitute the value of the",
+      "3 2",
+      "Cc; = 501-4)",
+      "capacitance in the first case into equation (4) to obtain the value of the capacitance in the second case.",
+      "3",
+      "Cy = 3X 2uF",
+      "= 3uF",
+      ""
+    ]
+  },
+  {
+    "qNum": 124,
+    "page": 101,
+    "qTextLines": [
+      "124. ’ \" . . — \"",
+      "As shown in the figure, two parallel plate capacitors having equal plate area of 200cm? are joined in",
+      "such a way that a # b. The equivalent capacitance of the combination is zeg F'. The value of z is",
+      "",
+      "| a",
+      "|-- 1 mm | d= 5mm",
+      "! b"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2023 (06 Apr, Shift 2)",
+    "answer": "§",
+    "solLines": [
+      "The given data is A = 200 x 10 *m2d = 5 x 10 *m The value of a + b = 4 x 10 3m The formula for a",
+      "parallel plate capacitor is C' = wo Let the capacitor with gap a be C'; and capacitor with gap b be C's",
+      "_ ad ad - band od aa b | MC",
+      "C= = = 3% The equivalent capacitance is Ca —= oA “ wd => Cog = ah Itis given that",
+      "A A 200 x 104",
+      "Coq = zegF So, 22. a cin or SE",
+      "SE DE APR New TPE Ro 1",
+      ""
+    ]
+  },
+  {
+    "qNum": 125,
+    "page": 102,
+    "qTextLines": [
+      "125. 5 600pF capacitor is charged by 200V supply. It is then disconnected from the supply and is",
+      "connected to another uncharged 600pF capacitor. Electrostatic energy lost in the process is ___ p.J"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2023 (08 Apr, Shift 2)",
+    "answer": "6",
+    "solLines": [
+      "The formula to calculate the initial energy stored in the first capacitor is given by",
+      "v,=Ltove.)",
+      "2",
+      "The formula to calculate the final energy stored when two capacitors are connected is given by",
+      "i a",
+      "Uy = 2¢ ( 4 x2",
+      "1",
+      "= =cVi.(2",
+      "Ae)",
+      "Subtract equation (2) from equation (1) to obtain the energy loss (AU).",
+      "1 1",
+      "AU = =CV*-=0V?",
+      "2 ov? 4",
+      "= < 3)",
+      "Substitute the values of the known parameters into equation (3) to calculate the required loss.",
+      "600 x 10°\"? x (200)?",
+      "A = SEIU XBW",
+      "4",
+      "= 6p",
+      ""
+    ]
+  },
+  {
+    "qNum": 126,
+    "page": 103,
+    "qTextLines": [
+      "126. The equivalent capacitance of the combination shown is",
+      "¢ c",
+      "(ef",
+      "Cc",
+      "A B",
+      "(A) 20 (B) 5 bs",
+      "3",
+      "©) c (D) 4c",
+      "2"
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, 1 for a wrong answer] - 2023 (10 Apr, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "¢ c",
+      "Cc",
+      "Cc",
+      "F H",
+      "The potential difference across the branches EF&G H is zero. So, the equivalent capacitance will be only due to",
+      "the combination of two capacitors in parallel. Cy = C + C' = Cy = 2C'",
+      ""
+    ]
+  },
+  {
+    "qNum": 127,
+    "page": 104,
+    "qTextLines": [
+      "127. ” W . n . Not .",
+      "The distance between two plates of a capacitor is d and its capacitance is C'1, when air is the medium",
+      "\" 2d —",
+      "between the plates. If a metal sheet of thickness 3 and of the same area as plate is introduced",
+      "; : Cy.",
+      "between the plates, the capacitance of the capacitor becomes C', . The ratio Cc. is",
+      "1",
+      "",
+      "A, ®,",
+      "C D.",
+      "© 4:1 ©) 1:1"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] « 2023 (10 Apr, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "",
+      "A",
+      "The formula of capacitance is C; = (2)",
+      "—>",
+      "The dielectric constant of metal sheet is K ss = oc The new value of capacitance is",
+      "A A",
+      "Ci= =\" _-30C, C2 3C,",
+      "[3 lear! a",
+      "d—t+ a-2 0 Cuearly, the atid, &- rea 3:1",
+      "Koetar 3",
+      ""
+    ]
+  },
+  {
+    "qNum": 128,
+    "page": 105,
+    "qTextLines": [
+      "128. n . ¢ \" .",
+      "A parallel plate capacitor of capacitance 2F is charged to a potential V. The energy stored in the",
+      "capacitor is E1. The capacitor is now connected to another uncharged identical capacitor in parallel",
+      "combination. The energy stored in the combination is E,. The ratio A is",
+      "",
+      "1",
+      "ay. ®y.,",
+      "(c) (D)",
+      "1:2 1:4"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -11for a wrong answer] + 2023 (11 Apr, Shift 1)",
+    "answer": "C",
+    "solLines": [
+      "The charge on the plates of the first capacitor when connected against the potential difference Vis given by",
+      "2F",
+      "a",
+      "Q = 6V",
+      "= 2V",
+      "a",
+      "2F",
+      "When both the capacitors are connected, from the conservation of charge, it can be written that",
+      "2V=2V",
+      "where, V' is the new potential difference across each capacitor.",
+      "The formula to calculate the energy stored in the first capacitor is given by",
+      "1 2",
+      "Ey, = -xCxV",
+      "2",
+      "1 q",
+      "= —x2xVy?",
+      "2",
+      "= =p)",
+      "For the second case, the energy stored in the combination of capacitors is given by",
+      "- 1 ”",
+      "BE = -nCV\"?",
+      "2",
+      "2",
+      "= 12x ¥ a",
+      "2 4",
+      "Vv?",
+      "= = «(2",
+      "7 ~@",
+      "Divide equation (2) by equation (1) to obtain the required ratio of the stored energy.",
+      "Vv?",
+      "8B _ 2",
+      "EV",
+      "1",
+      "T2",
+      ""
+    ]
+  },
+  {
+    "qNum": 129,
+    "page": 106,
+    "qTextLines": [
+      "129. 5 capacitor of capacitance C is charged to a potential V. The flux of the electric field through a",
+      "closed surface enclosing the positive plate of the capacitor is:",
+      "(A) cv (B) Zero",
+      "€",
+      "©) 2cv (Db) cv",
+      "€ 2¢p"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] + 2023 (11 Apr, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "icv i",
+      "— i - The charge enclosed is given by g;,,. = CV Gauss' law",
+      "states that the flux through any closed surface is equal to the charge enclosed by the surface. Using Gauss' law",
+      "3 \\4",
+      "the flux is, ¢ = Toe — (<4)",
+      "€ €",
+      ""
+    ]
+  },
+  {
+    "qNum": 130,
+    "page": 107,
+    "qTextLines": [
+      "130. |, the given circuit.Cy = 2uF, Cy = 0.2uF, Cy = 2uF, Cy = 4uF, Cy = 2uF, Cg = 2uF. The",
+      "G Cy",
+      "charge stored on capacitor Cyis uC. 10V I | Cs",
+      "Cs Cs"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2023 (11 Apr, Shift 2)",
+    "answer": "4",
+    "solLines": [
+      "From the diagram of the circuit, C's, Cy, C5 are in series, so the total capacitance is",
+      "Sod + 1 + L =3C'= 4 F C'&C, are parallel, the total capacitance is C\"' = i +0.2 | uF = 1uF",
+      "co 27172 = 2 ' =p fe =",
+      ": A 1 1k 1",
+      "C1, C\", Cg are in series. So the equivalent capacitance is, c.=32 +1+ 3 = Cy = 0.5uF Using",
+      "eq",
+      "C; Cs",
+      "Q",
+      "Q",
+      "Q=0C4,V. 10V Ii C, | C, The charge through the battery, Q",
+      "Cs Cs",
+      "1 \" 5uC x 0.8",
+      "= -= From the diagram above, Q' = ——— =",
+      "10 x 3 5uC gl Q 08702 4uC",
+      ""
+    ]
+  },
+  {
+    "qNum": 131,
+    "page": 108,
+    "qTextLines": [
+      "131. In the network shown below, the charge accumulated in the capacitor in steady state will be:",
+      "3v 40",
+      "2",
+      "60",
+      "4ur’",
+      "6Q",
+      "Al B",
+      "w 10.3uC ®) 4.8uC",
+      "©) (D)",
+      "12uC 7.2uC"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] + 2023 (13 Apr, Shift 2)",
+    "answer": "D",
+    "solLines": [
+      "In steady state, capacitor behaves as open circuit, so no current will flow. The total resistance of the circuit is,",
+      "R=(6+ 4) Q = 1052 The current flowing through the circuit is J — i“ Potential difference on 6£2 resistor V.",
+      "The charge on the capacitor is, Q = CV"
+    ]
+  },
+  {
+    "qNum": 132,
+    "page": 108,
+    "qTextLines": [
+      "132, pa ” —",
+      "In the circuit shown, the energy stored in the capacitor is nyu.J. The value of n is ;",
+      "3Q 40Q",
+      "12V",
+      "9Q 2Q"
+    ],
+    "optionsLines": [],
+    "marksLine": "14 marks, no negative marking] + 2023 (13 Apr, Shift 2)",
+    "answer": "75",
+    "solLines": [
+      "In steady state the capacitor carries no current (open circuit). The p.d. across it equals the difference of potentials",
+      "across the 32 and 4 Q resistors:",
+      "4 3",
+      "AV = (5x0 5x12) =8-3=5V",
+      "Energy stored: UJ = sCavy = : x 6uF x (5V)? = T5u",
+      "Hence n = 75.",
+      ""
+    ]
+  },
+  {
+    "qNum": 133,
+    "page": 109,
+    "qTextLines": [
+      "133. Inthe given figure the total charge stored in the combination of capacitors is 100uC'. The value of ‘z’",
+      "C=2uF",
+      "C= xUF",
+      "CP\" Lh",
+      "C= 3UF",
+      "V=10V —"
+    ],
+    "optionsLines": [],
+    "marksLine": "{4 marks, no negative marking] + 2023 (15 Apr, Shift 1)",
+    "answer": "5",
+    "solLines": [
+      "All the capacitors are in parallel combination and therefore potential drop across each capacitor would be the",
+      "same.",
+      "Charge on the capacitor can be written as, Q = CV.",
+      "The charge on Cy is Q; = 2 x 10 = 20uC",
+      "The charge on C3 is Q2 = z x 10 = 10zuC",
+      "The charge on Cy is Qs = 3 x 10 = 30uC",
+      "By the given data.",
+      "Cy + Cy + C3 = 100uC",
+      "=10(2 +a + 3) = 100",
+      "=>z=F5",
+      ""
+    ]
+  },
+  {
+    "qNum": 10,
+    "page": 110,
+    "qTextLines": [
+      "10 6Q",
+      "R, R,",
+      "C=150uF) - A B",
+      "10V",
+      "R, R,",
+      "2Q 4Q"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2024 (27 Jan, Shift 1)",
+    "answer": "400",
+    "solLines": [
+      "1A",
+      "10 N 60Q",
+      "R, R,",
+      "+",
+      "10V i o",
+      "R, R,"
+    ]
+  },
+  {
+    "qNum": 20,
+    "page": 110,
+    "qTextLines": [
+      "20 40",
+      "10",
+      "",
+      "Va+3(1)-6(1)=Vs",
+      "Va—Vp=6-—2 = Soot",
+      "Q=C(Vy—Vp)",
+      "=150 x 5 = 400 uC",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "",
+    "answer": "",
+    "solLines": []
+  },
+  {
+    "qNum": 9,
+    "page": 111,
+    "qTextLines": [
+      "9 9",
+      "Va—-Vp=L x8= xi8= ZV",
+      "SU=1xax8,y",
+      "2 4",
+      "SU=8,y",
+      "2",
+      "Sz=281",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "",
+    "answer": "",
+    "solLines": []
+  },
+  {
+    "qNum": 136,
+    "page": 112,
+    "qTextLines": [
+      "136.",
+      "In the given figure, the charge stored in 6 F' capacitor, when points A and B are joined by a",
+      "9V",
+      "6uF",
+      "60 e",
+      "connecting wireis ____uC'.",
+      "A B",
+      "3uF 3Q",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2024 (29 Jan, Shift 2)",
+    "answer": "36",
+    "solLines": [
+      "",
+      "At steady state, capacitor behaves as an open circuit and current flows in circuit as shown in the diagram.",
+      "",
+      "9V 9V",
+      "i",
+      "60 6uF 6Q 6uF",
+      "A B A B",
+      "=",
+      "3Q 3Q",
+      "3uF",
+      "Ry =90i= fe =1A4I AV = 1x 6 = 6V V 4 = 3V So, potential difference across 6u FF is 6V.V",
+      "Hence, Q = CAVQ = 6 x 6 x 107°C = 36uC",
+      ""
+    ]
+  },
+  {
+    "qNum": 137,
+    "page": 113,
+    "qTextLines": [
+      "137. 5 capacitor of capacitance C' and potential V has energy E. It is connected to another capacitor of",
+      "x",
+      "capacitance 2C and potential 2V. Then the loss of energy is 35 where zis ____."
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2024 (30 Jan, Shift 1)",
+    "answer": "2",
+    "solLines": [
+      "Given, E = ov",
+      "Required energy loss",
+      "1 CC: , 1Cx2C 5",
+      "=o ye go Le 4",
+      "Yea 1—Va) 30730\" )",
+      "2 2",
+      "=S0V3=%-E",
+      "id 3",
+      "SE=3"
+    ]
+  },
+  {
+    "qNum": 138,
+    "page": 113,
+    "qTextLines": [
+      "138. 5 parallel plate capacitor with plate separation 5mm is charged up by a battery. It is found that on",
+      "introducing a dielectric sheet of thickness 2mm, while keeping the battery connections intact, the",
+      "capacitor draws 25 more charge from the battery than before. The dielectric constant of the sheet is"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2024 (31 Jan, Shift 1)",
+    "answer": "2",
+    "solLines": [
+      "Without dielectric, capacitance will be ¢f = da,",
+      ". Acq",
+      "Therefore, charge on it, Q = =",
+      "oA",
+      "Now, with dielectric capacitance willbe =~ — 7S",
+      "d—t+—",
+      "K",
+      ". AqV",
+      "Hence, charge on it will be Q= t",
+      "d—t+—",
+      "K",
+      "Given:",
+      "A A",
+      "eV = (1.25) ol",
+      "d=t+—",
+      "tx",
+      "=1.25(3+ Ane 5",
+      ") K",
+      "=>K=2",
+      ""
+    ]
+  },
+  {
+    "qNum": 139,
+    "page": 114,
+    "qTextLines": [
+      "139. Tyo identical capacitors have same capacitance C. One of them is charged to the potential V and",
+      "other to the potential 2V\". The negative ends of both are connected together. When the positive ends",
+      "are also joined together, the decrease in energy of the combined system is :",
+      "(A) 1 (B) 2",
+      "",
+      "cv? 2CV",
+      "4",
+      "© 1 (D) 3",
+      "~CVv? ~cv?",
+      "2 4"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] + 2024 (01 Feb, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "The common potential after connection would be, Vr = Gat = CV +0(2v)",
+      "Chet 2C",
+      "3v",
+      "=Ve= 2",
+      "Therefore, loss of energy",
+      "1 1 1. avy",
+      "==0V2+=C(2V)*-z2¢( =",
+      "Adal i of 2 )",
+      "B (=",
+      "BRE]",
+      ""
+    ]
+  },
+  {
+    "qNum": 140,
+    "page": 115,
+    "qTextLines": [
+      "140. » ’ » \" ——\" » ’",
+      "A galvanometer (G) of 202 resistance is connected in the given circuit. The ratio of charge stored in",
+      "Ciand Cais:",
+      "",
+      "Cz",
+      "Ci",
+      "4FN/ 80",
+      "6V",
+      "Mn 5 ® 3",
+      "3 0)",
+      "(©) 1 (D) 1",
+      "2"
+    ],
+    "optionsLines": [],
+    "marksLine": "4 marks, ~1for a wrong answer] - 2024 (01 Feb, Shift 2)",
+    "answer": "D",
+    "solLines": [
+      "4Q C",
+      "2Q",
+      "C",
+      "6Q",
+      "|",
+      "Teg",
+      "6V",
+      "In steady state: R,, = 12Q2 Current through the branches with resistance, I = 2 = 0.5A Now, potential drop",
+      "across C'; = 3V and potential drop C's = 4V Charge on the first capacitor, g; = CV; = 12uC Charge on the",
+      "1",
+      "second capacitor, ga = CV = 24uC Therefore, =",
+      "2",
+      ""
+    ]
+  },
+  {
+    "qNum": 141,
+    "page": 116,
+    "qTextLines": [
+      "141. | an electrical circuit drawn below the amount of charge stored in the capacitoris _____ uC.",
+      "10V Ri 40",
+      "+! —-",
+      "Cc R,",
+      "10uF 50",
+      "Rs 60"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2024 (01 Feb, Shift 2)",
+    "answer": "60",
+    "solLines": [
+      "— R; =4Q",
+      "1 R,=5Q",
+      "In steady state there will be no current in branch of capacitor, so no",
+      "l, C=10uF",
+      "ls R,=6Q",
+      "voltage drop across Ry =5Q I, = 01; = [3 = 2 =1AVe =V + Vg (Vg, =0)=> LR; =V,",
+      "= V. =1 x 6 = 6 volt Therefore, charge on capacitor g. = CV, = 10 x 6 = 60uC",
+      ""
+    ]
+  },
+  {
+    "qNum": 142,
+    "page": 117,
+    "qTextLines": [
+      "142 A parallel plate capacitor of capacitance 12.5pF is charged by a battery connected between its",
+      "plates to potential difference of 12.0 V. The battery is now disconnected and a dielectric slab",
+      "(er = 6) is inserted between the plates. The change in its potential energy after inserting the",
+      "dielectric slabis ___ 10712 J.",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2024 (04 Apr, Shift 2)",
+    "answer": "750",
+    "solLines": [
+      "Before inserting the dielectric, the capacitance is",
+      "Co = 12.5pF",
+      "The charge on the capacitor is",
+      "Q=CGV",
+      "After inserting the dielectric, the capacitance becomes",
+      "Cr =6.Co",
+      "The change in the potential energy of the capacitor is",
+      "AE=E, -E;",
+      "4",
+      "2C; 2C;",
+      "lf",
+      "2G &",
+      "_ (Gv) ho 1",
+      "TT 2G &",
+      "if 1",
+      "-z6v (1- 2)",
+      "Using",
+      "Co = 12.5pF, V=12V, &=6",
+      "AB=1a25) x12 (1-1",
+      "i Lae 6",
+      "= J025) x12 x :",
+      "=750pJ",
+      "= 750 x 1072)",
+      ""
+    ]
+  },
+  {
+    "qNum": 143,
+    "page": 118,
+    "qTextLines": [
+      "143. 2 . ”",
+      "Three capacitors of capacitances 25uF, 30uF and 45uF are connected in parallel to a supply of",
+      "100 V. Energy stored in the above combination is E. When these capacitors are connected in series",
+      "to the same supply, the stored energy is IE. The value of zis __.",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2024 (05 Apr, Shift 1)",
+    "answer": "86",
+    "solLines": [
+      "In parallel combination, the potential difference is the same across all capacitors.",
+      "Energy = 4 (Cy + Cy + C3) V2",
+      "= $(25 + 30 + 45) x (100)* x 10° =0.5=E",
+      "In series combination, the charge is the same on all capacitors.",
+      "",
+      "Es GA",
+      "LeGtetE=wtn tn",
+      "1 _ 18415410 _ 43",
+      "Fog B00",
+      "",
+      "— 450",
+      "Coq=T5",
+      "2",
+      "Energy = = + Z ar =",
+      "2",
+      "",
+      "~$(&+d+4)",
+      "JI 17% S00 CO oY",
+      "ST Za Ra 3",
+      "_ (100? _ 450 -6",
+      "= 0) 80,99",
+      "4. 9",
+      "w=1E",
+      "2 x 0.5",
+      "x = 86.",
+      ""
+    ]
+  },
+  {
+    "qNum": 144,
+    "page": 118,
+    "qTextLines": [
+      "144. The electric field between the two parallel plates of a capacitor of 1.5uF capacitance drops to one",
+      "third of its initial value in 6.6. when the plates are connected by a thin wire.",
+      "The resistance of this wire is Q. (Given, log3 = 1.1)",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2024 (05 Apr, Shift 1)",
+    "answer": "4",
+    "solLines": [
+      "Ey Vy",
+      "E= TE =V = re",
+      "Vy -£",
+      "== Vie",
+      "t =7¢n3",
+      "6.6 x 10° =R (1.5 x 10°) (1.1)",
+      "R= 0 =40",
+      "15",
+      ""
+    ]
+  },
+  {
+    "qNum": 145,
+    "page": 119,
+    "qTextLines": [
+      "145. \" . P",
+      "A capacitor of 10pF capacitance whose plates are separated by 10 mm through air and each plate",
+      "has area 4 cm? is now filled equally with two dielectric media of K; = 2, Ky = 3 respectively as",
+      "shown in figure. If new force between the plates is 8 N. The supply voltage is x1074V.",
+      "i K;=2 | K;=3 (we modified language of question to make it correct)"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2024 (06 Apr, Shift 2)",
+    "answer": "93",
+    "solLines": [
+      "Vv T Cc “F ne CG",
+      "Cq=C1+ C2",
+      "260A",
+      "== — 104F",
+      "Cy 2d 0p",
+      "3A",
+      "= 2 —15uF",
+      "Cy oF 5 pl",
+      "Clq = 25 uF",
+      "Now the charge on",
+      "Qi =C\\V =10V uC",
+      "Q2= CoV = 15V uC",
+      "Now force between the plates",
+      "2",
+      "F=3",
+      "100V2 x 10-12 i 225V2 x 10-12 _g",
+      "2x2x10%, 2x2x10%",
+      "325V? =8x 4x10! x 8.85",
+      "ye 32x8.85x 10°!",
+      "325",
+      "283.2 x 104",
+      "“VY",
+      "V=093x10?",
+      ""
+    ]
+  },
+  {
+    "qNum": 148,
+    "page": 120,
+    "qTextLines": [
+      "148. A capacitor has air as dielectric medium and two conducting plates of area 12 cm? and they are",
+      "0.6 cm apart. When a slab of dielectric having area 12 cm? and 0.6 cm thickness is inserted",
+      "between the plates, one of the conducting plates has to be moved by (0.2 cm to keep the capacitance",
+      "same as in previous case. The dielectric constant of the slab is : (Given ¢; = 8.834 x 10°12 F/m)",
+      "4 (8) 1.33",
+      "© 66 ©) 4 59"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2024 (09 Apr, Shift 1)",
+    "answer": "B",
+    "solLines": [
+      "Aey As,",
+      "d  (02+9)",
+      "0.6",
+      "06=0.2+ E",
+      "3",
+      "=",
+      "147. A capacitor is made of a flat plate of area A and a second plate having a stair-like structure as shown",
+      "in figure. If the area of each stair is 4 and the height is d, the capacitance of the arrangement is :",
+      "a} LYE]",
+      "al [ar",
+      "af A/3",
+      "A",
+      "(A) 136.4 (B) 11c.A",
+      "17d 18d",
+      "(C) 18. (D) 1leA",
+      "1rd 20d",
+      "All capacitor are in parallel combination.",
+      "Also effective area is common area only",
+      "2 Cq=C1+Cy+ Cy",
+      "_ Ag Aggy Ago",
+      "= Ca = 33 \"304 * 360)",
+      "Ag, (11",
+      "= Coq = 3 ( =",
+      "114g",
+      "Cy = 18d",
+      ""
+    ]
+  },
+  {
+    "qNum": 148,
+    "page": 121,
+    "qTextLines": [
+      "148. 5 parallel-plate capacitor of capacitance 40u F is connected to a 100 V power supply. Now the",
+      "intermediate space between the plates is filled with a dielectric material of dielectric constant K = 2.",
+      "Due to the introduction of dielectric material, the extra charge and the change in the electrostatic",
+      "energy in the capacitor, respectively, are",
+      "(A) amc and 0.2 (B) 8mC and 2.0J",
+      "(C) 2mCand 0.4 J (D) 2mC and 0.2 J"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2025 (22 Jan, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "Aq = (KC —- C)V",
+      "=40 x 10° x 100",
+      "= 4000 x 10 * = 4mC",
+      "“loan lava Loo 2",
+      "AU= CV 2CV = 3(K 1)cv",
+      "1",
+      "—ZCV(2-",
+      "30Vi2-1)",
+      "= CV = 2x 40x10 © x 10000",
+      "=0.2J"
+    ]
+  },
+  {
+    "qNum": 149,
+    "page": 121,
+    "qTextLines": [
+      "149. |dentify the valid statements relevant to the given circuit at the instant when the key is closed.",
+      "R Key",
+      "- A A. There will be no current through resistor R.",
+      "air 5v",
+      "AAU AY",
+      "B. There will be maximum current in the connecting wires. C. Potential difference between the",
+      "capacitor plates A and B is minimum. D. Charge on the capacitor plates is minimum. Choose the",
+      "correct answer from the options given below:",
+      "(A) A, C Only (B) A, B, D Only",
+      "(C) ¢, D only (D) B, C, D Only"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2025 (23 Jan, Shift 1)",
+    "answer": "D",
+    "solLines": [
+      "Capacitor behaves like closed circuit at t = ( and charge is zero.",
+      "AX, BY,C/,DV",
+      ""
+    ]
+  },
+  {
+    "qNum": 150,
+    "page": 122,
+    "qTextLines": [
+      "150; At steady state the charge on the capacitor, as shown in the circuit below, is pC.",
+      "8 uF",
+      "100 15Q",
+      "5V"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2025 (23 Jan, Shift 2)",
+    "answer": "16",
+    "solLines": [
+      "8uF",
+      "10Q 150",
+      "5V",
+      ". 5",
+      "i=(=",
+      "(x)",
+      "Q=CV",
+      "_o\\ (5",
+      "Q= (8x10 ) (3 x10)",
+      "8x 5x10?",
+      "Q= (2 =16uC",
+      ""
+    ]
+  },
+  {
+    "qNum": 151,
+    "page": 123,
+    "qTextLines": [
+      "151. A time varying potential difference is applied between the plates of a parallel plate capacitor of",
+      "capacitance 2.5, F. The dielectric constant of the medium between the capacitor plates is 1. It",
+      "produces an instantaneous displacement current of 0.25 mA in the intervening space between the",
+      "capacitor plates, the magnitude of the rate of change of the potential difference will be vs L"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2025 (23 Jan, Shift 2)",
+    "answer": "100",
+    "solLines": [
+      "Cdv",
+      "",
+      "FT",
+      "av I",
+      "",
+      "dt  C",
+      "_025x10°",
+      "T 25x10°6",
+      "= 100",
+      ""
+    ]
+  },
+  {
+    "qNum": 152,
+    "page": 124,
+    "qTextLines": [
+      "152. 5 parallel plate capacitor was made with two rectangular plates, each with a length of I = 3 cm and",
+      "breath of bh = 1 cm. The distance between the plates is 3p m. Out of the following, which are the",
+      "ways to increase the capacitance by a factor of 10 ?",
+      "",
+      "Al=30cm,b=1cm, d=1ym",
+      "B.l=3em, b=1cm, d=30pm",
+      "C.l=6cm,b=5cm,d=3um",
+      "D.l=1lcm,b=1cm,d=10pm",
+      "El=5cm, b=2cm,d=1pm",
+      "Choose the correct answer from the options given below:",
+      "(A) A only (B) C only",
+      "(C) B and D only 0) cand E only"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2025 (24 Jan, Shift 1)",
+    "answer": "D",
+    "solLines": [
+      "&4",
+      "<",
+      "I We know C = 42 — 4 5 to increase the capacitance by 10 factor (4) has to",
+      "3cm",
+      "|",
+      "b—3 um —f",
+      "increase by 10 fator. For option (A) C' = YOiD = 30C For option (B)  C' = x4 = C For option (C)",
+      "C= Ee =10C For option (D) CC’ = Ci = & For option (E) C’ = {pe = 10C Clearly (C)",
+      "and (E) are the situation for 10 C",
+      ""
+    ]
+  },
+  {
+    "qNum": 153,
+    "page": 125,
+    "qTextLines": [
+      "153. Consider a parallel plate capacitor of area A (of each plate) and separation 'd' between the plates. If",
+      "E is the electric field and gy is the permittivity of free space between the plates, then potential",
+      "energy stored in the capacitor is",
+      "A) oE2Ad ©) LeE2Ad",
+      "(© 1eE2Ad 0) 3 E2Ad"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2025 {24 Jan, Shift 1)",
+    "answer": "B",
+    "solLines": [
+      "",
+      "We know energy density",
+      "",
+      "Pav = 360?",
+      "",
+      "So potential energy = p,,, x Volume",
+      "= PE. = je E?Ad",
+      ""
+    ]
+  },
+  {
+    "qNum": 154,
+    "page": 125,
+    "qTextLines": [
+      "154. Pp 3 3 <",
+      "Two capacitors Cy and C_2 are connected in parallel to a battery. Charge-time graph is shown below",
+      "for the two capacitors. The energy stored with them are U_1 and U,, respectively. Which of the given",
+      "",
+      "1%",
+      "statements is true? <;",
+      "t—>",
+      "(A) (B)",
+      "C;>C,U< Uy C1 > Co, Uy > U2",
+      "(c) (D)",
+      "Cy > Cy, Uy; < Uy Cy > Cy, Up > Uy"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] + 2025 (28 Jan, Shift 1)",
+    "answer": "D",
+    "solLines": [
+      "For a capacitor at steady state ¢ = C'V and U = $C'V? Since C1and C, are connected in parallel, V; = V,.",
+      "Also from graph q; < ga",
+      "= OW <GW",
+      "ie, Ci < Cor Cy > Cy",
+      "L_avi_G <1",
+      "Uy CVF OC",
+      ""
+    ]
+  },
+  {
+    "qNum": 155,
+    "page": 126,
+    "qTextLines": [
+      "155. A parallel plate capacitor of capacitance 1x F is charged to a potential difference of 20 V. The",
+      "distance between plates is 12 m. The energy density between plates of capacitor is.",
+      "(A) 3% 1074 J/m? (B) 1.8 x 10° J/m?",
+      "© 18 x 10° J/m® ©) 3 5 102 J/m?"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] + 2025 (28 Jan, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "Energy density = SeuB",
+      "_1 (vy",
+      "“274",
+      "1 oy a",
+      "= = (8. 10° —_—",
+      "5 (8.85 x 10%?) (2 :) J/m",
+      "~1.8 x 10° J/m*",
+      ""
+    ]
+  },
+  {
+    "qNum": 156,
+    "page": 126,
+    "qTextLines": [
+      "156. A parallel plate capacitor consisting of two circular plates of radius 10 cm is being charged by a",
+      "constant current of 0.15 A . If the rate of change of potential difference between the plates is",
+      "7 x 10% V/s then the integer value of the distance between the parallel plates is ( Take,",
+      "€=9Xx NE = a) pm.",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2025 (29 Jan, Shift 2)",
+    "answer": "1320",
+    "solLines": [
+      "Q=0v",
+      "",
+      "gs iE",
+      "v=% od",
+      "",
+      "d",
+      "",
+      "d==4(%)",
+      "Since,",
+      "A=ar?",
+      "Therefore,",
+      "d= ax (¥)",
+      "Putting the values,",
+      "d= 210 wo ls = (7 2 10%)",
+      "d = 1320 ym",
+      ""
+    ]
+  },
+  {
+    "qNum": 157,
+    "page": 127,
+    "qTextLines": [
+      "157. A capacitor, C; = 6p F is charged to a potential difference of Vj = 5 V using a 5 V battery. The",
+      "battery is removed and another capacitor, C, = 12u F is inserted in place of the battery. When the",
+      "switch 'S' is closed, the charge flows between the capacitors for some time until equilibrium condition",
+      "is reached. What are the charges (gq; and gy) on the capacitors Cy and C; when equilibrium",
+      "",
+      "S |",
+      "condition is reached.",
+      "a1 CG, |",
+      "A) g = 104C, gp = 204C ®) gq, = 304C, q = 15u4C",
+      "©) 4, = 204C, 2 = 104C ©) 4, = 15uC, q» = 304C"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2025 (29 Jan, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "t=0",
+      ", S",
+      "qf + 0 a} = 6 x 5 = 30uC Finally",
+      "C =6F 5V=V, ¢ C,=12pF",
+      "oT %",
+      "AL UY",
+      "S 6Ve+12V,=30+0",
+      "18Ve=30",
+      "= 30 5",
+      "q=6V_| + +[q=12V, Ve == = 2Volt",
+      "2 Cc 18 3",
+      "Ve 6x5",
+      "Vv “N =q = re 10uC",
+      "=6V, “lg =12V",
+      "q, c q, . PLL at",
+      ""
+    ]
+  },
+  {
+    "qNum": 158,
+    "page": 128,
+    "qTextLines": [
+      "158.",
+      "A parallel plate capacitor is filled equally (half) with two dielectrics of dielectric constant £1 and £2, as",
+      "shown in figures. The distance between the plates is d and area of each plate is A. If capacitance in",
+      "first configuration and second configuration are Cy and C, respectively, then “ Is:",
+      "First Configuration",
+      "wp",
+      "Second Configuration",
+      "77",
+      "a B) 4c,",
+      "aig) Toa,",
+      "Gite? Erte",
+      "©) cp, (D) ¢y(c, +21)",
+      "a1+e2 2"
+    ],
+    "optionsLines": [],
+    "marksLine": "4 marks, -1for a wrong answer] - 2025 (03 Apr, Shift 1]",
+    "answer": "B",
+    "solLines": [
+      ""
+    ]
+  },
+  {
+    "qNum": 159,
+    "page": 130,
+    "qTextLines": [
+      "159. Using a battery, a 100 pF capacitor is charged to 60 V and then the battery is removed. After that, a",
+      "second uncharged capacitor is connected to the first capacitor in parallel. If the final voltage across",
+      "the second capacitor is 20 V, its capacitance is : (in pF)",
+      "",
+      "(A) 600 (8) 200",
+      "© 400 (D) 100"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2025 (03 Apr, Shift 2)",
+    "answer": "B",
+    "solLines": [
+      "+CoVo —CoVo",
+      "C",
+      "3Cy Vo =Cy Vo + CVy",
+      "New potential = Fes = ¥2C, Vo =CVy",
+      "C=2C",
+      ""
+    ]
+  },
+  {
+    "qNum": 160,
+    "page": 130,
+    "qTextLines": [
+      "160. . . 3 3 .",
+      "",
+      "Four capacitor each of capacitance 164 F are connected as shown in the figure. The capacitance",
+      "",
+      "Cc",
+      "between points Aand Bis: ___ (in uF). Cc & Cc",
+      "A B"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2025 (04 Apr, Shift 1)",
+    "answer": "64",
+    "solLines": [
+      "B",
+      "Cc",
+      "A A B £",
+      "B B B Redrawing A Fo B Cq=4C=64",
+      "Cc",
+      "A",
+      ""
+    ]
+  },
+  {
+    "qNum": 161,
+    "page": 131,
+    "qTextLines": [
+      "161.",
+      "",
+      "Three parallel plate capacitors Cy, C; and Cj each of capacitance 5x F are connected as shown in",
+      "figure. The effective capacitance between points A and B, when the space between the parallel plates",
+      "of C capacitor is filled with a dielectric medium having dielectric constant of 4, is :",
+      "Cp G",
+      "TT",
+      "G",
+      "",
+      "® 9954 F ® 75uF",
+      "(©) 9uF (D) 304 F"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] + 2025 (04 Apr, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "",
+      "After dielectric... & C; =4C&Cy =4 x 5=20u F",
+      "",
+      "Cy = Cy =5uF",
+      "",
+      "C&C, are in series which is parallel to Cy",
+      "",
+      "CiCy",
+      "Coqy=—75 + 0s",
+      "“TC + Cr \\",
+      "RRC EL AR. of",
+      "RECT ma A",
+      "",
+      "&=4+5=9uF..",
+      "",
+      "Correct Option (3).",
+      ""
+    ]
+  },
+  {
+    "qNum": 162,
+    "page": 131,
+    "qTextLines": [
+      "162. p parallel plate capacitor has charge 5 x 10°C. A dielectric slab is inserted between the plates and",
+      "almost fills the space between the plates. If the induced charge on one face of the slab is 4 x 107°C",
+      "then the dielectric constant of the slabis"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2025 (07 Apr, Shift 2)",
+    "answer": "5",
+    "solLines": [
+      "5",
+      "Qu=Q (1 = x)",
+      "6 6 - 1",
+      "",
+      "4x10\" =5x10 (1 K",
+      "",
+      "1 4",
+      "Kat",
+      "K=5",
+      ""
+    ]
+  },
+  {
+    "qNum": 163,
+    "page": 132,
+    "qTextLines": [
+      "163.",
+      "7/878",
+      "“= EP EP £ Space between the plates of a parallel plate",
+      "BE aE",
+      "capacitor of plate area 4 cm? and separation of (d) 1.77 mm, is filled with uniform dielectric materials",
+      "with dielectric constants (3 and 5) as shown in figure. Another capacitor of capacitance 7.5 pF is",
+      "connected in parallel with it. The effective capacitance of this combinationis ___ pF. ( Given",
+      "£0 = 8.85 x 1072 F/m)"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2025 (08 Apr, Shift 2)",
+    "answer": "15",
+    "solLines": [
+      "TT, — T° 1",
+      "EErrnros | os ad = Ceq",
+      "5x4x107* x 8.85 x10\"",
+      "3x4x10%x 885x101? ~ .",
+      "Cy = — mx =12pF 7.5pF = Ceq 7.5pF Finally",
+      "Ci1Cy 12 x 20",
+      "Coq= ——++ =—— =T.5pF",
+      "CE CTT",
+      "equivalent capacitance (Ceq)g,; = 7-5 + 7.5 = 15pF",
+      ""
+    ]
+  },
+  {
+    "qNum": 164,
+    "page": 133,
+    "qTextLines": [
+      "164. o parallel plate capacitor has capacitance C, when there is vacuum within the parallel plates. A sheet",
+      "having thickness (HH of the separation between the plates and relative permittivity K is introduced",
+      "between the plates. The new capacitance of the system is :",
+      "",
+      "(A) akc (B) scx?",
+      "3K-1 TEI",
+      "(C) skC (D) cK",
+      "2K+1 2+K"
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, ~1for a wrong answer] - 2026 (21 Jan, Shift 1)",
+    "answer": "C",
+    "solLines": [
+      "Original capacitance: C' = ad",
+      "After inserting dielectric of thickness 4, system becomes two capacitors in series.",
+      "Vacuum region: C; = £4 = 3%",
+      "Dielectric region: Cs = &od =3KC",
+      "Equivalent capacitance: = = & + & = = + we pe",
+      "Crew = 3%",
+      ""
+    ]
+  },
+  {
+    "qNum": 165,
+    "page": 134,
+    "qTextLines": [
+      "165. . ’ . N—— .",
+      "The charge stored by the capacitor C' in the given circuit in the steady state is \\ \\ \\ \\_ uC.",
+      "25V 1Q",
+      "C=5uF 2Q",
+      "3.1L)",
+      "(A) 5 (8) 12.5",
+      "(€) 10 D) 75"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, =1for a wrong answer] - 2026 (21 Jan, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "In steady state:",
+      "i 25V 1Q",
+      "| Vv. |",
+      "4Q",
+      "i=25/6=05AV.=4x05V.=2V charge Q = CV. =5 x 2=10uC"
+    ]
+  },
+  {
+    "qNum": 166,
+    "page": 134,
+    "qTextLines": [
+      "166. 5 capacitor P with capacitance 10 x 10~° F is fully charged with a potential difference of 6.0 V and",
+      "disconnected from the battery. The charged capacitor P is connected across another capacitor Q",
+      "with capacitance 20 x 10% F. The charge on capacitor Q when equilibrium is established will be",
+      "a x 107°C (assume capacitor @ does not have any charge initially), the value of a is »"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] + 2026 (22 Jan, Shift 2)",
+    "answer": "4",
+    "solLines": [
+      "Capacitor P (10 x 10°F) is charged to 6.0 V.",
+      "Initial charge: Qp = 10 x 10% x 6 = 60 x 10°C.",
+      "When connected to uncharged capacitor Q (20 x 10° F), charge redistributes until both reach same potential.",
+      "Final voltage: V; = Gata = go; =2V.",
+      "Chargeon Q:Qp =20 x 10% x2=40x10%C=4x 10°C.",
+      "Thus a = 4.",
+      ""
+    ]
+  },
+  {
+    "qNum": 167,
+    "page": 135,
+    "qTextLines": [
+      "167. The space between the plates of a parallel plate capacitor of capacitance C (without any dielectric) is",
+      "now filled with three dielectric slabs of dielectric constants K; = 2, K; = 3 and K3 = 5 (as shown",
+      "in figure). If new capacitance is ac then the value of nis.",
+      "",
+      "+",
+      "d/|[¢———A—> I)",
+      "1%",
+      "75) A\\\\}",
+      "Ap—>"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2026 (23 Jan, Shift 1)",
+    "answer": "8",
+    "solLines": [
+      "The initial capacitance is C' = ad, From the figure, the capacitor is divided into three parts. The bottom half is",
+      "divided into two capacitors C_2 and Cj in parallel, each with area A/2 and thickness d/2.",
+      "Cy = Holy) — Kyot =3CC3 = Harola/2) = Ket = 5C The equivalent capacitance of the bottom part is",
+      "Cleg,bottom = C2 + C_3 = 3C + 5C = 8C. The top half is a single capacitor C with area A and thickness d/2.",
+      "C= Kind = 2K, 44 = 2(2)C = 4C. The total capacitance C is the series combination of C_1and Cty pottom-",
+      "& C Comparing with C, we getn = 8.",
+      ""
+    ]
+  },
+  {
+    "qNum": 168,
+    "page": 136,
+    "qTextLines": [
+      "168. A parallel plate capacitor with plate separation 5 mm is charged by a battery. On introducing a mica",
+      "sheet of 2 mm and maintaining the connections of the plates with the terminals of the battery, itis",
+      "found that it draws 25% more charge from the battery. The dielectric constant of micais",
+      "(A) 1.0 (B) 25",
+      "©) 20 (D) 15"
+    ],
+    "optionsLines": [],
+    "marksLine": "{4 marks, -1for a wrong answer] - 2026 (23 Jan, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "",
+      "Initial capacitor has plate separation 5 mm with capacitance Cy = ey A/5.",
+      "After inserting 2 mm mica sheet, the gap remaining is 3 mm of air. The effective separation becomes:",
+      "def = 3+ 2/k where k is the dielectric constant of mica.",
+      "",
+      "New capacitance: Cy, = 5",
+      "",
+      "Since battery remains connected, voltage is constant. The charge is: Q = CV",
+      "Ratio of charges: & = z = welt = rod",
+      "",
+      "Given that charge increases by 25%: Q; = 1.25Q;",
+      "",
+      "Tog =125",
+      "",
+      "5=1.25(3 + 2/k)",
+      "",
+      "5=375+25/k",
+      "",
+      "1.25 = 2.5/k",
+      "",
+      "k=2",
+      ""
+    ]
+  },
+  {
+    "qNum": 2,
+    "page": 137,
+    "qTextLines": [
+      "2 2 2",
+      "CHET rp htpE Egat",
+      "2 2 2 3 2 2",
+      "Weosch>0p B o> 05> 0a",
+      "Ch i> la > Ca OY Epi Gig Gi"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~11or a wrong answer] - 2026 (24 Jan, Shift 2)",
+    "answer": "C",
+    "solLines": [
+      "fs 5",
+      "K,C KC",
+      "For Cy ! [ [ !",
+      "AAC",
+      "B",
+      "wd. _ KC KC _ Ki + 2K,",
+      "beg =Cn C= Cs lim]",
+      "Fy",
+      "K,C K,C",
+      "For C_B",
+      "B",
+      "_ KC | K\\KC K, + 2K,",
+      "Ce= tt EE OC Es 25",
+      "ForCC",
+      ""
+    ]
+  },
+  {
+    "qNum": 170,
+    "page": 138,
+    "qTextLines": [
+      "170. Identify the correct statements :",
+      "",
+      "A. Effective capacitance of a series combination of capacitors is always smaller than the smallest",
+      "capacitance of the capacitor in the combination.",
+      "B. When a dielectric medium is placed between the charged plates of a capacitor, displacement of",
+      "charges cannot occur due to insulation property of dielectric.",
+      "C. Increasing of area of capacitor plate or decreasing of thickness of dielectric is an alternate method",
+      "to increase the capacitance.",
+      "D. For a point charge, concentric spherical shells centered at the location of the charge are",
+      "equipotential surfaces.",
+      "Choose the correct answer from the options given below :",
+      "(A) B and D Only (B) A, Band C Only",
+      "(C) C and D Only (D) A, Cand D Only"
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, ~1 for a wrong answer] + 2026 (28 Jan, Shift 2)",
+    "answer": "D",
+    "solLines": [
+      "",
+      "A. Effective capacitance of series combination is always smaller than the smallest capacitance - TRUE. For series:",
+      "tort = & + & +... therefore Cy < Crnin",
+      "",
+      "B. Dielectric prevents charge displacement - FALSE. A dielectric allows polarization (displacement of bound",
+      "charges) but prevents free charge movement. It does not prevent displacement of bound charges.",
+      "",
+      "C. Increasing area or decreasing thickness increases capacitance - TRUE. From C' = stad, increasing A or",
+      "decreasing d increases C.",
+      "",
+      "D. Concentric spherical shells centered at a point charge location are equipotential surfaces - TRUE. For a point",
+      "charge, the potential at distance ris V = kg, which depends only on distance, making concentric spheres",
+      "equipotential surfaces.",
+      "",
+      "Correct statements: A, C, D",
+      ""
+    ]
+  },
+  {
+    "qNum": 7,
+    "page": 139,
+    "qTextLines": [
+      "7. x , ” Gos \" a .",
+      "A parallel plate air capacitor has a capacitance C. When it is half filled as show in figure with a",
+      "dielectric constant K = 5, the percentage increase in the capacitance is 5",
+      "El",
+      "I x=s |!",
+      "2 =",
+      ">",
+      "A B",
+      "a) 33.34 8) 66.67",
+      "©) 200 (D) 400"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1 for a wrong answer] - 2026 (02 Apr, Shift 1)",
+    "answer": "8",
+    "solLines": [
+      "Initial capacitance of the air capacitor is given by: C' = od When the capacitor is half-filled with a dielectric of",
+      "thickness d/2, it can be considered as two capacitors connected in series. Capacitance of the dielectric-filled part:",
+      "C1= Se = Had = 2K C Capacitance of the air-filled part: Cy = 3 = fod = 2C The equivalent",
+      "capacitance Ce of the series combination is: Cy = A = Paddle = = Substituting K = 5",
+      "2(5) 10, 5 : . 3 . 5 2",
+      "3 = ——=(C = —C = = Theincrease in capacitance is: = —-C=zC-C=7=CThe",
+      ":Ceq 511° 5C 3¢ in cap: ISAC = Ce —-C 3C c 3¢",
+      "$ . 2 x rs AC 2",
+      "percentage increase in capacitance is: % increase = TX 100 = 3 x 100 = 66.67% Answer: 66.67",
+      ""
+    ]
+  },
+  {
+    "qNum": 172,
+    "page": 140,
+    "qTextLines": [
+      "172. po parallel plate air capacitor is connected to a battery. The plates are pulled apart at uniform speed v.",
+      "If x is the separation between the plates at any instant, then the time rate of change of electrostatic",
+      "energy of the capacitor is proportional to z*, where avis __.",
+      "wy ®",
+      "© 4 ©,",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "(4 marks, ~1 for a wrong answer] - 2026 (04 Apr, Shift 1)",
+    "answer": "A",
+    "solLines": [
+      "1",
+      "The electrostatic energy of a parallel plate capacitor is given by [J = 5CV-",
+      "For a parallel plate capacitor, the capacitance is C' = ad where z is the separation between the plates.",
+      "xT",
+      "Since the capacitor remains connected to the battery, the potential difference V' across the plates is constant.",
+      "Substituting C' into the energy equation gives:",
+      "v AV?",
+      "C2",
+      "Differentiating U with respect to time t to find the time rate of change of electrostatic energy:",
+      "dU d (eAV? AV? dx",
+      "dt dt 2z TT 222 dt",
+      "Given that the plates are pulled apart at a uniform speed v, we have u =v",
+      "dU _ AV?",
+      "dt 2x?",
+      "S—- du EC",
+      "From the above expression, it is clear that rs xz 4",
+      "Comparing this with 2%, we get a = —2.",
+      "Answer: —2",
+      ""
+    ]
+  },
+  {
+    "qNum": 173,
+    "page": 141,
+    "qTextLines": [
+      "173. , _— _— \" . . p .",
+      "Consider a circuit consisting of a capacitor (20 uF), resistor (100 £2) and two identical diodes as",
+      "shown in figure. The resistance of diode under forward biasing condition is 10 £2. The time constant",
+      "of the circuit is a x 107% s. The value of avis ___",
+      "C =20yF",
+      "R=100Q2",
+      "V",
+      "(A), 5 ®) 90",
+      "C D.",
+      "©) 21 (D) 24"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1 for a wrong answer] - 2026 (04 Apr, Shift1)",
+    "answer": "A",
+    "solLines": [
+      "From the given circuit diagram, the battery is connected such that its positive terminal is upwards. This means the",
+      "current will flow in the clockwise direction during the charging of the capacitor. In the parallel combination of the",
+      "two diodes, the left diode is pointing downwards (in the direction of the current) and will be forward-biased. The",
+      "right diode is pointing upwards (opposite to the current) and will be reverse-biased. The reverse-biased diode",
+      "offers infinite resistance and acts as an open circuit. The forward-biased diode offers a resistance of 10 €). The",
+      "total equivalent resistance of the circuit is the sum of the resistor R and the resistance of the forward-biased",
+      "diode: R.; = 100 © + 10 © = 110 Q The time constant r of the RC circuit is given by: + = R.,C",
+      "7=110 x20 x 10% 57 = 2200 x 10 ¢s = 2.2 x 10-3 s Comparing this with the given time constant",
+      "ax 107% s, we get: a = 2.2 Answer: 2.2",
+      ""
+    ]
+  },
+  {
+    "qNum": 174,
+    "page": 142,
+    "qTextLines": [
+      "174. Rv y \" \" A",
+      "From the circuit given below, the capacitance between terminals A and B shown in the circuitis _____",
+      "pF. (take Cy = C2 = C3 = 1and C4 = 2 pF)",
+      "",
+      "A oo |e co |B",
+      "chi | “2 ‘3",
+      "Cc",
+      "4",
+      "(A) (B)",
+      "2 7/2",
+      "©) (D)",
+      "7/3 5/2"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, -1for a wrong answer] - 2026 (04 Apr, Shift 2)",
+    "answer": "A",
+    "solLines": [
+      "Let the nodes in the circuit be labeled to identify the connections: - Let the input terminal be Node A. - Let the",
+      "junction between (C; and C_2 be Node X. - The top wire connects Node A to the junction between Cs and Cj.",
+      "Thus, this junction is also at the potential of Node A. - The bottom wire connects Node X to the output terminal",
+      "Node B, with capacitor C_4 in this path. Based on these nodes, the connections of each capacitor are as follows: -",
+      "C1 is connected between Node A and Node X. - Cy is connected between Node X and Node A. - C_3 is",
+      "connected between Node A and Node B. - C is connected between Node X and Node B. We can now simplify",
+      "the circuit step-by-step: Capacitors C; and C_2 are in parallel between nodes A and X. Their equivalent",
+      "capacitance is: Ca = Cy + Cy = 1 uF + 1 uF = 2 uF This equivalent capacitor Cy; is in series with C_4 (which",
+      "is connected between X and B). The equivalent capacitance of this branch is:",
+      "C2xCqy 2x2",
+      "C = ——— — — — 1 uF Finally, this branch is in parallel with Cy (which is connected directly",
+      "AXB=CntCi 242 © *",
+      "between A and B). The total equivalent capacitance between A and B is:",
+      "Cap = Caxp + Cs = 1 pF + 1 uF = 2 uF Answer: 2",
+      ""
+    ]
+  },
+  {
+    "qNum": 175,
+    "page": 143,
+    "qTextLines": [
+      "175. o sphere of capacitance 100 pF is charged to a potential of 100 V. Another identical uncharged metal",
+      "sphere is brought in contact with the charged sphere, then the change in the total energy stored on",
+      "these spheres, when they touch is a x 107 J. The value of «x is . (combined capacitance of",
+      "spheres is 200 pF)",
+      "",
+      "(A) 5 (B) 5",
+      "2",
+      "© 7 (D) 9",
+      "2 2"
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, ~1for a wrong answer] - 2026 (06 Apr, Shift 2)",
+    "answer": "B",
+    "solLines": [
+      "Initial energy of the charged sphere is given by:",
+      "1",
+      "Ui=50v?",
+      "1 -12 2 =7",
+      "Ui = 5 x 100 x 1072 x (100)? = 5 x 10°79",
+      "When the identical uncharged sphere is brought in contact, the charge is shared equally and the common",
+      "potential becomes:",
+      "\\4",
+      "V'i=—==50V",
+      ") 0",
+      "Final total energy of the two spheres is:",
+      "1pm 2",
+      "Up=2x 3CV =cV",
+      "Uy =100 x 102 x (50) =2.5 x 107 J",
+      "Change in energy is the loss of energy during charge sharing:",
+      "AU =U; -Us=5x10\"-25x107=25x10\"\"J",
+      "5",
+      "AU =3 x10 J",
+      "A v 5",
+      "Comparing witha x 10\" J, we get a = 5",
+      "Answer: 2",
+      "2",
+      ""
+    ]
+  },
+  {
+    "qNum": 176,
+    "page": 144,
+    "qTextLines": [
+      "176. 5 parallel plate capacitor is having separation between plates (0.885 mm. It has a capacitance of 1 uF",
+      "when the space between the plates is filled with an insulating material of resistivity 1 x 10'3 Om and",
+      "resistance 17.7 x 10! Q. Relative permittivity of the insulating material is ov x 107. The value of a is",
+      "(Take permittivity of free space — 8.85 x 10! F/m)",
+      ""
+    ],
+    "optionsLines": [],
+    "marksLine": "[4 marks, no negative marking] - 2026 (08 Apr, Shift 2)",
+    "answer": "2",
+    "solLines": [
+      "The resistance of the insulating material is given by R — a",
+      "The capacitance of the parallel plate capacitor is given by C' = wt",
+      "Multiplying the expressions for R and C, we get:",
+      "RC = pepe",
+      "Rearranging for relative permittivity ¢,:",
+      "RC",
+      "6 =—",
+      "PE",
+      "Substituting the given values:",
+      "_ 17.7 x 10% x 10-6",
+      "7 100 x 8.85 x10 12",
+      "_ 17.7% 108",
+      "7 885 x 100",
+      "&=2x107",
+      "Comparing this with the given expression €, = a x 107, we get:",
+      "a=2",
+      "Answer: 2",
+      ""
+    ]
+  }
+]

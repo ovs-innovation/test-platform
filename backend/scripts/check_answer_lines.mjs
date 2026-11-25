@@ -1,35 +1,20 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const raw = fs.readFileSync('./backend/scripts/vector_all_pages_ocr.json', 'utf8').replace(/^\uFEFF/, '');
-const pages = JSON.parse(raw);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-for (const p of pages) {
-  const ansOnPage = [];
-  for (let i = 0; i < p.lines.length; i++) {
-    const t = typeof p.lines[i] === 'string' ? p.lines[i] : p.lines[i].Text;
-    if (/ANSWER\s*:\s*[A-Z0-9\.\-]+/i.test(t)) {
-      ansOnPage.push({ lineIdx: i, text: t });
-    }
-  }
+const chunks = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'dual_nature_monotonic_chunks.json'), 'utf8'));
+const NUMERICAL_QUESTIONS = new Set([64, 71, 77, 78, 86, 96, 101, 103, 112, 117, 140, 190, 203, 207, 216]);
 
-  // Look for multiple ANSWERs on the same page and check spacing / marks
-  if (ansOnPage.length > 1) {
-    // Check if any two ANSWERs are close to each other without a question in between
-    for (let k = 0; k < ansOnPage.length; k++) {
-      // Check lines between k and k-1
-      if (k > 0) {
-        const gap = ansOnPage[k].lineIdx - ansOnPage[k - 1].lineIdx;
-        if (gap < 8) {
-          console.log(`Page ${p.page} has close answers: gap=${gap}`);
-          console.log(`  Ans 1 (line ${ansOnPage[k - 1].lineIdx}): ${ansOnPage[k - 1].text}`);
-          console.log(`  Ans 2 (line ${ansOnPage[k].lineIdx}): ${ansOnPage[k].text}`);
-          // Print lines between
-          for (let l = ansOnPage[k - 1].lineIdx; l <= ansOnPage[k].lineIdx; l++) {
-            const txt = typeof p.lines[l] === 'string' ? p.lines[l] : p.lines[l].Text;
-            console.log(`    line ${l}: ${txt}`);
-          }
-        }
-      }
-    }
+let hasAns = 0;
+for (let q = 1; q <= 217; q++) {
+  const c = chunks[q];
+  if (c.lines.some(l => /ANSWER\s*:\s*/i.test(l))) {
+    hasAns++;
+  } else {
+    console.log(`Q${q} has NO ANSWER line`);
   }
 }
+console.log(`Questions with ANSWER line: ${hasAns} / 217`);

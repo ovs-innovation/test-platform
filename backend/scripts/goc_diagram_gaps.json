@@ -1,0 +1,5028 @@
+[
+  {
+    "qNum": 2,
+    "pageNum": 2,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 750,
+        "yBottom": 1087,
+        "gap": 362,
+        "afterText": "The total number of aromatic c",
+        "beforeText": "(A) 6 (B) 4 (C) 3 (D) 5"
+      },
+      {
+        "yTop": 1112,
+        "yBottom": 1520,
+        "gap": 438,
+        "afterText": "(A) 6 (B) 4 (C) 3 (D) 5",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 3,
+    "pageNum": 3,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 263,
+        "yBottom": 515,
+        "gap": 278,
+        "afterText": "bonds.",
+        "beforeText": "The correct order of bond leng"
+      }
+    ]
+  },
+  {
+    "qNum": 5,
+    "pageNum": 3,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1392,
+        "yBottom": 1520,
+        "gap": 158,
+        "afterText": "(D) Statement I is incorrect b",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 7,
+    "pageNum": 4,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 725,
+        "yBottom": 928,
+        "gap": 228,
+        "afterText": "Consider the following molecul",
+        "beforeText": "The correct order of carbon-ox"
+      }
+    ]
+  },
+  {
+    "qNum": 8,
+    "pageNum": 4,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1100,
+        "yBottom": 1308,
+        "gap": 233,
+        "afterText": "The following structures are :",
+        "beforeText": "(A) enantiomers. (B) identical"
+      },
+      {
+        "yTop": 1370,
+        "yBottom": 1520,
+        "gap": 180,
+        "afterText": "(C) diastereomers. (D) meso co",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 9,
+    "pageNum": 5,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 607,
+        "gap": 399,
+        "afterText": "The descending order of acidit",
+        "beforeText": "Choose the correct answer from"
+      },
+      {
+        "yTop": 710,
+        "yBottom": 1520,
+        "gap": 840,
+        "afterText": "(C) (D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 10,
+    "pageNum": 6,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1161,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 12,
+    "pageNum": 7,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 263,
+        "yBottom": 640,
+        "gap": 402,
+        "afterText": "temperature is :",
+        "beforeText": "(A) 5 (B) 4 (C) 6 (D) 3"
+      }
+    ]
+  },
+  {
+    "qNum": 13,
+    "pageNum": 7,
+    "gapCount": 5,
+    "largeGaps": [
+      {
+        "yTop": 770,
+        "yBottom": 837,
+        "gap": 92,
+        "afterText": "Given below are two statements",
+        "beforeText": "Statement I : In , the carboca"
+      },
+      {
+        "yTop": 862,
+        "yBottom": 922,
+        "gap": 85,
+        "afterText": "Statement I : In , the carboca",
+        "beforeText": "stabilised by +R effect of –OC"
+      },
+      {
+        "yTop": 947,
+        "yBottom": 1013,
+        "gap": 91,
+        "afterText": "stabilised by +R effect of –OC",
+        "beforeText": "Statement II : In , the carban"
+      },
+      {
+        "yTop": 1038,
+        "yBottom": 1093,
+        "gap": 80,
+        "afterText": "Statement II : In , the carban",
+        "beforeText": "stabilised by –R effect of –NO"
+      },
+      {
+        "yTop": 1316,
+        "yBottom": 1520,
+        "gap": 234,
+        "afterText": "(D) Statement I is false but S",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 14,
+    "pageNum": 8,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 366,
+        "gap": 117,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 428,
+        "yBottom": 553,
+        "gap": 150,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      }
+    ]
+  },
+  {
+    "qNum": 15,
+    "pageNum": 8,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 683,
+        "yBottom": 978,
+        "gap": 320,
+        "afterText": "For the given molecule, \"x\", t",
+        "beforeText": "(A) Predominantly at \"r\" (B) \""
+      }
+    ]
+  },
+  {
+    "qNum": 16,
+    "pageNum": 8,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1426,
+        "yBottom": 1520,
+        "gap": 124,
+        "afterText": "(A) A and D Only (B) B and D O",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 17,
+    "pageNum": 9,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 607,
+        "gap": 399,
+        "afterText": "The cyclic cations having the ",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 18,
+    "pageNum": 9,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 777,
+        "yBottom": 856,
+        "gap": 104,
+        "afterText": "CORRECT order of stability for",
+        "beforeText": "(A)"
+      },
+      {
+        "yTop": 992,
+        "yBottom": 1520,
+        "gap": 558,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 19,
+    "pageNum": 10,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 272,
+        "yBottom": 488,
+        "gap": 242,
+        "afterText": "Statement I : There are severa",
+        "beforeText": "Statement II : As the dihedral"
+      }
+    ]
+  },
+  {
+    "qNum": 20,
+    "pageNum": 10,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1238,
+        "yBottom": 1520,
+        "gap": 312,
+        "afterText": "(A) A, D & E only (B) A, C & D",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 21,
+    "pageNum": 11,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 607,
+        "gap": 399,
+        "afterText": "Arrange the following carbanio",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 22,
+    "pageNum": 11,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1178,
+        "yBottom": 1520,
+        "gap": 372,
+        "afterText": "(D) Both Statement I and State",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 23,
+    "pageNum": 12,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 371,
+        "yBottom": 408,
+        "gap": 62,
+        "afterText": "of the above statements,",
+        "beforeText": "choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 24,
+    "pageNum": 12,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 690,
+        "yBottom": 1003,
+        "gap": 338,
+        "afterText": "The IUPAC name of the followin",
+        "beforeText": "(A) 2-bromo-5-methylhexylpropa"
+      },
+      {
+        "yTop": 1066,
+        "yBottom": 1520,
+        "gap": 484,
+        "afterText": "(C) n-propyl-2-bromo-5-methylh",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 26,
+    "pageNum": 13,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 852,
+        "yBottom": 1520,
+        "gap": 698,
+        "afterText": "(A) 46 (B) 40 (C) 52 (D) 56",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 27,
+    "pageNum": 14,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1161,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 30,
+    "pageNum": 15,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 677,
+        "yBottom": 971,
+        "gap": 320,
+        "afterText": "What is the correct IUPAC name",
+        "beforeText": "(A) 1-Ethylcyclopent-2-en-3-ol"
+      }
+    ]
+  },
+  {
+    "qNum": 31,
+    "pageNum": 15,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1169,
+        "yBottom": 1361,
+        "gap": 218,
+        "afterText": "compound is :",
+        "beforeText": "(A) 4 (B) 0 (C) 2 (D) 1"
+      },
+      {
+        "yTop": 1386,
+        "yBottom": 1520,
+        "gap": 164,
+        "afterText": "(A) 4 (B) 0 (C) 2 (D) 1",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 32,
+    "pageNum": 16,
+    "gapCount": 5,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 280,
+        "gap": 72,
+        "afterText": "Which of the following compoun",
+        "beforeText": "(A)"
+      },
+      {
+        "yTop": 305,
+        "yBottom": 502,
+        "gap": 222,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 527,
+        "yBottom": 724,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 749,
+        "yBottom": 946,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 971,
+        "yBottom": 1520,
+        "gap": 579,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 33,
+    "pageNum": 17,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 609,
+        "gap": 401,
+        "afterText": "Which of the following is the ",
+        "beforeText": "(A) 4-Bromo-3-methylbut-2-ene "
+      }
+    ]
+  },
+  {
+    "qNum": 34,
+    "pageNum": 17,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 776,
+        "yBottom": 919,
+        "gap": 168,
+        "afterText": "The IUPAC name of the followin",
+        "beforeText": "(A) 4-Hydroxyhept-6-en-1-yne ("
+      }
+    ]
+  },
+  {
+    "qNum": 35,
+    "pageNum": 17,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1085,
+        "yBottom": 1462,
+        "gap": 402,
+        "afterText": "In which pairs, the first ion ",
+        "beforeText": "(A) (A) & (B) only (B) (B) & ("
+      }
+    ]
+  },
+  {
+    "qNum": 36,
+    "pageNum": 18,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 478,
+        "gap": 270,
+        "afterText": "The correct order of basicity ",
+        "beforeText": "(A) R > P > Q (B) P > Q > R (C"
+      }
+    ]
+  },
+  {
+    "qNum": 37,
+    "pageNum": 18,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 607,
+        "yBottom": 810,
+        "gap": 228,
+        "afterText": "What is the correct IUPAC name",
+        "beforeText": "?"
+      },
+      {
+        "yTop": 835,
+        "yBottom": 1024,
+        "gap": 214,
+        "afterText": "?",
+        "beforeText": "(A) 3-Bromo-2-hydroxy-5-nitrob"
+      }
+    ]
+  },
+  {
+    "qNum": 39,
+    "pageNum": 19,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 595,
+        "gap": 387,
+        "afterText": "Identify the correct statement",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 40,
+    "pageNum": 19,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 767,
+        "yBottom": 905,
+        "gap": 164,
+        "afterText": "The least acidic compound, amo",
+        "beforeText": "(A) B (B) D (C) A (D) C"
+      }
+    ]
+  },
+  {
+    "qNum": 41,
+    "pageNum": 19,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1107,
+        "yBottom": 1520,
+        "gap": 443,
+        "afterText": "(A) (B) (C) (D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 42,
+    "pageNum": 20,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 513,
+        "gap": 305,
+        "afterText": "Consider the following compoun",
+        "beforeText": "The most stable and least stab"
+      }
+    ]
+  },
+  {
+    "qNum": 43,
+    "pageNum": 20,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 715,
+        "yBottom": 1092,
+        "gap": 402,
+        "afterText": "Designate whether each of the ",
+        "beforeText": "(A) aromatic and not aromatic "
+      },
+      {
+        "yTop": 1154,
+        "yBottom": 1520,
+        "gap": 396,
+        "afterText": "(C) aromatic and not aromatic ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 45,
+    "pageNum": 21,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 940,
+        "yBottom": 1520,
+        "gap": 610,
+        "afterText": "(D) Both Statement I and State",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 46,
+    "pageNum": 22,
+    "gapCount": 3,
+    "largeGaps": [
+      {
+        "yTop": 315,
+        "yBottom": 469,
+        "gap": 179,
+        "afterText": "(A) (I) 4-Methylpent-1-ene",
+        "beforeText": "(B) (CH ) C(C H ) (II) 3-Ethyl"
+      },
+      {
+        "yTop": 590,
+        "yBottom": 788,
+        "gap": 224,
+        "afterText": "Dimethylheptane",
+        "beforeText": "(D) (IV) 2-Methyl-1,3-"
+      },
+      {
+        "yTop": 842,
+        "yBottom": 1049,
+        "gap": 233,
+        "afterText": "pentadiene",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 47,
+    "pageNum": 22,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1259,
+        "yBottom": 1331,
+        "gap": 98,
+        "afterText": "Total number of nucleophiles f",
+        "beforeText": "(A) 4 (B) 6 (C) 5 (D) 7"
+      },
+      {
+        "yTop": 1356,
+        "yBottom": 1520,
+        "gap": 194,
+        "afterText": "(A) 4 (B) 6 (C) 5 (D) 7",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 48,
+    "pageNum": 23,
+    "gapCount": 5,
+    "largeGaps": [
+      {
+        "yTop": 272,
+        "yBottom": 737,
+        "gap": 490,
+        "afterText": "Statement I : and",
+        "beforeText": "are isomeric compounds."
+      },
+      {
+        "yTop": 762,
+        "yBottom": 966,
+        "gap": 228,
+        "afterText": "are isomeric compounds.",
+        "beforeText": "Statement II : and"
+      },
+      {
+        "yTop": 991,
+        "yBottom": 1123,
+        "gap": 157,
+        "afterText": "Statement II : and",
+        "beforeText": "are functional group isomers."
+      },
+      {
+        "yTop": 1148,
+        "yBottom": 1227,
+        "gap": 104,
+        "afterText": "are functional group isomers.",
+        "beforeText": "In the light of the above stat"
+      },
+      {
+        "yTop": 1405,
+        "yBottom": 1520,
+        "gap": 145,
+        "afterText": "(D) Both Statement I and State",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 49,
+    "pageNum": 24,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 279,
+        "yBottom": 312,
+        "gap": 58,
+        "afterText": "Solid Vapour Solid",
+        "beforeText": "(A) Extraction (B) Crystalliza"
+      }
+    ]
+  },
+  {
+    "qNum": 50,
+    "pageNum": 24,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 442,
+        "yBottom": 657,
+        "gap": 240,
+        "afterText": "The correct order of stability",
+        "beforeText": "(A) A > B > C > D (B) C > B > "
+      }
+    ]
+  },
+  {
+    "qNum": 51,
+    "pageNum": 24,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1099,
+        "yBottom": 1520,
+        "gap": 451,
+        "afterText": "(C) (A) and (C) only (D) (A) o",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 52,
+    "pageNum": 25,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1162,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 53,
+    "pageNum": 25,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1231,
+        "yBottom": 1437,
+        "gap": 231,
+        "afterText": "The correct stability order of",
+        "beforeText": "(A) (B) (C) (D)"
+      }
+    ]
+  },
+  {
+    "qNum": 54,
+    "pageNum": 26,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1161,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 55,
+    "pageNum": 26,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1230,
+        "yBottom": 1382,
+        "gap": 177,
+        "afterText": "How many different stereoisome",
+        "beforeText": "(A) 2 (B) 1 (C) 3 (D) 4"
+      },
+      {
+        "yTop": 1407,
+        "yBottom": 1520,
+        "gap": 143,
+        "afterText": "(A) 2 (B) 1 (C) 3 (D) 4",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 57,
+    "pageNum": 27,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 650,
+        "yBottom": 780,
+        "gap": 155,
+        "afterText": "The IUPAC name of the followin",
+        "beforeText": "(A) 5-Methoxycarbonyl-2-methyl"
+      }
+    ]
+  },
+  {
+    "qNum": 58,
+    "pageNum": 27,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 947,
+        "yBottom": 1052,
+        "gap": 130,
+        "afterText": "The correct stability order of",
+        "beforeText": "II III I II I III (A) (B)"
+      },
+      {
+        "yTop": 1114,
+        "yBottom": 1520,
+        "gap": 436,
+        "afterText": "(C) (D) III II I I II III",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 59,
+    "pageNum": 28,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 562,
+        "gap": 354,
+        "afterText": "Total number of stereo isomers",
+        "beforeText": "(A) 4 (B) 2 (C) 8 (D) 3"
+      }
+    ]
+  },
+  {
+    "qNum": 60,
+    "pageNum": 28,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 692,
+        "yBottom": 807,
+        "gap": 140,
+        "afterText": "Relative stability of the cont",
+        "beforeText": "(A) (II) > (I) > (III) (B) (II"
+      },
+      {
+        "yTop": 869,
+        "yBottom": 1520,
+        "gap": 681,
+        "afterText": "(C) (I) > (III) > (II) (D) (I)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 61,
+    "pageNum": 29,
+    "gapCount": 3,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 607,
+        "gap": 399,
+        "afterText": "Correct order of basic strengt",
+        "beforeText": ", Pyridine"
+      },
+      {
+        "yTop": 632,
+        "yBottom": 1006,
+        "gap": 399,
+        "afterText": ", Pyridine",
+        "beforeText": "and Piperidine"
+      },
+      {
+        "yTop": 1031,
+        "yBottom": 1403,
+        "gap": 398,
+        "afterText": "and Piperidine",
+        "beforeText": "is :"
+      }
+    ]
+  },
+  {
+    "qNum": 62,
+    "pageNum": 30,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 607,
+        "gap": 399,
+        "afterText": "For the given compounds, the c",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 64,
+    "pageNum": 30,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1073,
+        "yBottom": 1129,
+        "gap": 81,
+        "afterText": "The correct sequence of acidic",
+        "beforeText": "(A)"
+      },
+      {
+        "yTop": 1266,
+        "yBottom": 1520,
+        "gap": 284,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 65,
+    "pageNum": 31,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 355,
+        "gap": 147,
+        "afterText": "IUPAC name of following hydroc",
+        "beforeText": "(A) 2,5,6-Trimethyloctane (B) "
+      }
+    ]
+  },
+  {
+    "qNum": 66,
+    "pageNum": 31,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 521,
+        "yBottom": 898,
+        "gap": 402,
+        "afterText": "Which of the following are aro",
+        "beforeText": "(A) B and D only (B) A and C o"
+      },
+      {
+        "yTop": 923,
+        "yBottom": 1520,
+        "gap": 627,
+        "afterText": "(A) B and D only (B) A and C o",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 67,
+    "pageNum": 32,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 607,
+        "gap": 399,
+        "afterText": "Given below are two statements",
+        "beforeText": "In the light of the above stat"
+      }
+    ]
+  },
+  {
+    "qNum": 68,
+    "pageNum": 32,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 881,
+        "yBottom": 1035,
+        "gap": 179,
+        "afterText": "Q68. JEE Main 2024 (Online) 6t",
+        "beforeText": "The correct arrangement for de"
+      }
+    ]
+  },
+  {
+    "qNum": 69,
+    "pageNum": 32,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1427,
+        "yBottom": 1520,
+        "gap": 123,
+        "afterText": "(D) is an integral value.",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 71,
+    "pageNum": 33,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 570,
+        "yBottom": 767,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      }
+    ]
+  },
+  {
+    "qNum": 72,
+    "pageNum": 33,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1200,
+        "yBottom": 1520,
+        "gap": 350,
+        "afterText": "(A) A, C, D only (B) B, C, D o",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 73,
+    "pageNum": 34,
+    "gapCount": 5,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 511,
+        "gap": 303,
+        "afterText": "Which of the following is meta",
+        "beforeText": "(A)"
+      },
+      {
+        "yTop": 536,
+        "yBottom": 733,
+        "gap": 222,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 758,
+        "yBottom": 955,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 980,
+        "yBottom": 1177,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 1202,
+        "yBottom": 1520,
+        "gap": 348,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 74,
+    "pageNum": 35,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 483,
+        "gap": 275,
+        "afterText": "The correct nomenclature for t",
+        "beforeText": "(A) 2-carboxy-4-hydroxyhept-7-"
+      }
+    ]
+  },
+  {
+    "qNum": 76,
+    "pageNum": 35,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1412,
+        "yBottom": 1520,
+        "gap": 138,
+        "afterText": "(D) Both and are true but is N",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 77,
+    "pageNum": 36,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 446,
+        "gap": 239,
+        "afterText": "Correct order of stability of ",
+        "beforeText": "(A) d > c > b > a (B) c > b > "
+      }
+    ]
+  },
+  {
+    "qNum": 79,
+    "pageNum": 36,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 917,
+        "yBottom": 964,
+        "gap": 72,
+        "afterText": "What will be the decreasing or",
+        "beforeText": "(A)"
+      },
+      {
+        "yTop": 1101,
+        "yBottom": 1520,
+        "gap": 449,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 80,
+    "pageNum": 37,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 371,
+        "yBottom": 616,
+        "gap": 270,
+        "afterText": "effect",
+        "beforeText": "B. II. R"
+      },
+      {
+        "yTop": 668,
+        "yBottom": 805,
+        "gap": 162,
+        "afterText": "effect",
+        "beforeText": "C. III. E"
+      },
+      {
+        "yTop": 857,
+        "yBottom": 990,
+        "gap": 158,
+        "afterText": "effect",
+        "beforeText": "D. IV. R"
+      },
+      {
+        "yTop": 1042,
+        "yBottom": 1288,
+        "gap": 272,
+        "afterText": "effect",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 84,
+    "pageNum": 38,
+    "gapCount": 7,
+    "largeGaps": [
+      {
+        "yTop": 842,
+        "yBottom": 878,
+        "gap": 62,
+        "afterText": "Ionic reactions with organic c",
+        "beforeText": "(A) homolytic bond cleavage"
+      },
+      {
+        "yTop": 903,
+        "yBottom": 938,
+        "gap": 60,
+        "afterText": "(A) homolytic bond cleavage",
+        "beforeText": "(B) heterolytic bond cleavage"
+      },
+      {
+        "yTop": 963,
+        "yBottom": 1000,
+        "gap": 62,
+        "afterText": "(B) heterolytic bond cleavage",
+        "beforeText": "(C) free radical formation"
+      },
+      {
+        "yTop": 1025,
+        "yBottom": 1060,
+        "gap": 60,
+        "afterText": "(C) free radical formation",
+        "beforeText": "(D) primary free radical"
+      },
+      {
+        "yTop": 1085,
+        "yBottom": 1121,
+        "gap": 62,
+        "afterText": "(D) primary free radical",
+        "beforeText": "(E) secondary free radical"
+      },
+      {
+        "yTop": 1146,
+        "yBottom": 1183,
+        "gap": 62,
+        "afterText": "(E) secondary free radical",
+        "beforeText": "Choose the correct answer from"
+      },
+      {
+        "yTop": 1248,
+        "yBottom": 1520,
+        "gap": 302,
+        "afterText": "(A) (A) only (B) (B) only (C) ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 85,
+    "pageNum": 39,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 86,
+    "pageNum": 40,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 87,
+    "pageNum": 41,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 584,
+        "gap": 377,
+        "afterText": "The correct order of reactivit",
+        "beforeText": "(A) B > C > A > D (B) B > A > "
+      }
+    ]
+  },
+  {
+    "qNum": 90,
+    "pageNum": 41,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1374,
+        "yBottom": 1520,
+        "gap": 176,
+        "afterText": "(A) Chromatography (B) Sublima",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 92,
+    "pageNum": 42,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 731,
+        "yBottom": 897,
+        "gap": 191,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      }
+    ]
+  },
+  {
+    "qNum": 93,
+    "pageNum": 42,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1144,
+        "yBottom": 1520,
+        "gap": 406,
+        "afterText": "(C) Column Chromatography (D) ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 94,
+    "pageNum": 43,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 444,
+        "gap": 236,
+        "afterText": "IUPAC name of following compou",
+        "beforeText": "(A) 2-Aminobutanenitrile (B) 3"
+      }
+    ]
+  },
+  {
+    "qNum": 95,
+    "pageNum": 43,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 653,
+        "yBottom": 850,
+        "gap": 222,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 875,
+        "yBottom": 1072,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 1097,
+        "yBottom": 1294,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 1319,
+        "yBottom": 1520,
+        "gap": 231,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 96,
+    "pageNum": 44,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 97,
+    "pageNum": 45,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 607,
+        "gap": 399,
+        "afterText": "According to IUPAC system, the",
+        "beforeText": "is named as"
+      }
+    ]
+  },
+  {
+    "qNum": 98,
+    "pageNum": 45,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 815,
+        "yBottom": 982,
+        "gap": 192,
+        "afterText": "The ascending acidity order of",
+        "beforeText": "(A) A < B < D < C (B) A < B < "
+      }
+    ]
+  },
+  {
+    "qNum": 99,
+    "pageNum": 45,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1309,
+        "yBottom": 1520,
+        "gap": 241,
+        "afterText": "(A) B only (B) A only (C) A & ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 100,
+    "pageNum": 46,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1161,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 101,
+    "pageNum": 46,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1340,
+        "yBottom": 1520,
+        "gap": 210,
+        "afterText": "(C) Hyperconjugation (D) Induc",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 102,
+    "pageNum": 47,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 581,
+        "gap": 374,
+        "afterText": "The order of relative stabilit",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 103,
+    "pageNum": 47,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 906,
+        "yBottom": 1520,
+        "gap": 644,
+        "afterText": "(D) The conformations of ethan",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 104,
+    "pageNum": 48,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 105,
+    "pageNum": 49,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 106,
+    "pageNum": 50,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 107,
+    "pageNum": 51,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 607,
+        "gap": 399,
+        "afterText": "Cyclohexene",
+        "beforeText": "is ________ type of an organic"
+      }
+    ]
+  },
+  {
+    "qNum": 108,
+    "pageNum": 51,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 815,
+        "yBottom": 1192,
+        "gap": 402,
+        "afterText": "IUPAC name of following compou",
+        "beforeText": "(A) 1-Ethyl-5,5-dimethylcycloh"
+      },
+      {
+        "yTop": 1255,
+        "yBottom": 1520,
+        "gap": 295,
+        "afterText": "(C) 1-Ethyl-3,3-dimethylcycloh",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 110,
+    "pageNum": 52,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 791,
+        "yBottom": 1520,
+        "gap": 759,
+        "afterText": "(D) Both Statement I and State",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 111,
+    "pageNum": 53,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 112,
+    "pageNum": 54,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 532,
+        "gap": 324,
+        "afterText": "Correct statements for the giv",
+        "beforeText": "A. Compound ' ' is aromatic"
+      }
+    ]
+  },
+  {
+    "qNum": 113,
+    "pageNum": 54,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 858,
+        "yBottom": 1232,
+        "gap": 399,
+        "afterText": "Thin layer chromatography of a",
+        "beforeText": "The correct order of elution i"
+      },
+      {
+        "yTop": 1299,
+        "yBottom": 1520,
+        "gap": 251,
+        "afterText": "(A) B, A, C (B) C, A, B (C) A,",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 114,
+    "pageNum": 55,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 607,
+        "gap": 399,
+        "afterText": "The decreasing order of hydrid",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 116,
+    "pageNum": 55,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1002,
+        "yBottom": 1277,
+        "gap": 300,
+        "afterText": "The correct IUPAC nomenclature",
+        "beforeText": "(A) 2 - Formyl -5-methylhexan-"
+      },
+      {
+        "yTop": 1340,
+        "yBottom": 1520,
+        "gap": 210,
+        "afterText": "(C) 5-Formyl -2-methylhexanoic",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 118,
+    "pageNum": 56,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 650,
+        "yBottom": 1024,
+        "gap": 399,
+        "afterText": "From the figure of column chro",
+        "beforeText": "A. Compound 'c' is more polar "
+      },
+      {
+        "yTop": 1247,
+        "yBottom": 1520,
+        "gap": 303,
+        "afterText": "(A) B and D only (B) B, C and ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 119,
+    "pageNum": 57,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 395,
+        "gap": 188,
+        "afterText": "Resonance in carbonate ion is",
+        "beforeText": "Which of the following is true"
+      }
+    ]
+  },
+  {
+    "qNum": 120,
+    "pageNum": 57,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 803,
+        "yBottom": 1159,
+        "gap": 381,
+        "afterText": "B. ii. Differential solvent ex",
+        "beforeText": "C. Kerosene / Naphthalene iii."
+      },
+      {
+        "yTop": 1350,
+        "yBottom": 1520,
+        "gap": 200,
+        "afterText": "(C) A-(i), B-(iii), C-(ii), D-",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 122,
+    "pageNum": 58,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 628,
+        "yBottom": 1005,
+        "gap": 402,
+        "afterText": "What is the correct order of a",
+        "beforeText": "(A)"
+      }
+    ]
+  },
+  {
+    "qNum": 123,
+    "pageNum": 58,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1430,
+        "yBottom": 1520,
+        "gap": 120,
+        "afterText": "(D) 2 - Bromo - 2 - deuterobut",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 124,
+    "pageNum": 59,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 590,
+        "yBottom": 1520,
+        "gap": 960,
+        "afterText": "(C) A-II, B-III, C-I, D-IV (D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 125,
+    "pageNum": 60,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 127,
+    "pageNum": 61,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 638,
+        "yBottom": 748,
+        "gap": 135,
+        "afterText": "Which will undergo deprotonati",
+        "beforeText": "(A) a only (B) Both a and c (C"
+      }
+    ]
+  },
+  {
+    "qNum": 128,
+    "pageNum": 61,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 878,
+        "yBottom": 1252,
+        "gap": 399,
+        "afterText": "Increasing order of stability ",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 130,
+    "pageNum": 62,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 131,
+    "pageNum": 63,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 414,
+        "gap": 206,
+        "afterText": "Given below are two statements",
+        "beforeText": "Statement I : The compound is "
+      },
+      {
+        "yTop": 439,
+        "yBottom": 791,
+        "gap": 377,
+        "afterText": "Statement I : The compound is ",
+        "beforeText": "Statement II : is mirror image"
+      },
+      {
+        "yTop": 816,
+        "yBottom": 1000,
+        "gap": 209,
+        "afterText": "Statement II : is mirror image",
+        "beforeText": "In the light of the above stat"
+      },
+      {
+        "yTop": 1209,
+        "yBottom": 1520,
+        "gap": 341,
+        "afterText": "(D) Statement I is incorrect b",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 133,
+    "pageNum": 64,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 982,
+        "yBottom": 1520,
+        "gap": 568,
+        "afterText": "(D) A is false but R is true",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 134,
+    "pageNum": 65,
+    "gapCount": 3,
+    "largeGaps": [
+      {
+        "yTop": 315,
+        "yBottom": 671,
+        "gap": 381,
+        "afterText": "(A) (I) Spiro compound",
+        "beforeText": "(B) (II) Aromatic compound"
+      },
+      {
+        "yTop": 696,
+        "yBottom": 877,
+        "gap": 206,
+        "afterText": "(B) (II) Aromatic compound",
+        "beforeText": "(C) (III) Non-planar"
+      },
+      {
+        "yTop": 957,
+        "yBottom": 1520,
+        "gap": 593,
+        "afterText": "compound",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 135,
+    "pageNum": 67,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 137,
+    "pageNum": 68,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 869,
+        "yBottom": 1067,
+        "gap": 224,
+        "afterText": "aromatic and aromatic.",
+        "beforeText": "Reason R: Planarity is one of "
+      },
+      {
+        "yTop": 1314,
+        "yBottom": 1520,
+        "gap": 236,
+        "afterText": "(D) A is not correct but R is ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 138,
+    "pageNum": 69,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 379,
+        "yBottom": 480,
+        "gap": 126,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      }
+    ]
+  },
+  {
+    "qNum": 139,
+    "pageNum": 69,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 793,
+        "yBottom": 1520,
+        "gap": 757,
+        "afterText": "(D) Preparative TLC (Thin Laye",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 140,
+    "pageNum": 70,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 141,
+    "pageNum": 71,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 499,
+        "gap": 291,
+        "afterText": "Arrange the following in decre",
+        "beforeText": "(A) A > B > C > D (B) B > A > "
+      },
+      {
+        "yTop": 524,
+        "yBottom": 1520,
+        "gap": 1026,
+        "afterText": "(A) A > B > C > D (B) B > A > ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 142,
+    "pageNum": 72,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 143,
+    "pageNum": 73,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 505,
+        "gap": 297,
+        "afterText": "The correct IUPAC name of the ",
+        "beforeText": "(A) 4-methyl-2-nitro-5-oxohept"
+      }
+    ]
+  },
+  {
+    "qNum": 145,
+    "pageNum": 73,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 966,
+        "yBottom": 1172,
+        "gap": 231,
+        "afterText": "Which of the following structu",
+        "beforeText": "(A) A, B, C, and D (B) Only A "
+      },
+      {
+        "yTop": 1197,
+        "yBottom": 1520,
+        "gap": 353,
+        "afterText": "(A) A, B, C, and D (B) Only A ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 146,
+    "pageNum": 74,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 147,
+    "pageNum": 75,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 316,
+        "yBottom": 513,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 538,
+        "yBottom": 735,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D) NH > NH 3"
+      }
+    ]
+  },
+  {
+    "qNum": 149,
+    "pageNum": 75,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1445,
+        "yBottom": 1520,
+        "gap": 105,
+        "afterText": "(C) Steam distillation (D) Sub",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 150,
+    "pageNum": 76,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 305,
+        "yBottom": 502,
+        "gap": 222,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 527,
+        "yBottom": 724,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 749,
+        "yBottom": 946,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 971,
+        "yBottom": 1191,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 151,
+    "pageNum": 76,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1340,
+        "yBottom": 1520,
+        "gap": 210,
+        "afterText": "(C) 1,2-Dichloroethane (D) 1,1",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 152,
+    "pageNum": 77,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 456,
+        "gap": 248,
+        "afterText": "Arrange the following carbocat",
+        "beforeText": "(A) B > A > C (B) A > B > C (C"
+      }
+    ]
+  },
+  {
+    "qNum": 153,
+    "pageNum": 77,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 628,
+        "yBottom": 825,
+        "gap": 222,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 850,
+        "yBottom": 1047,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 1072,
+        "yBottom": 1269,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 1294,
+        "yBottom": 1520,
+        "gap": 256,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 154,
+    "pageNum": 78,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 263,
+        "yBottom": 481,
+        "gap": 243,
+        "afterText": "energy :",
+        "beforeText": "(A) II < III < IV < I (B) I < "
+      }
+    ]
+  },
+  {
+    "qNum": 155,
+    "pageNum": 78,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 648,
+        "yBottom": 862,
+        "gap": 239,
+        "afterText": "Choose the correct name for co",
+        "beforeText": "(A) (4E)-5-Bromo-hex-4-en-2-yn"
+      }
+    ]
+  },
+  {
+    "qNum": 156,
+    "pageNum": 78,
+    "gapCount": 3,
+    "largeGaps": [
+      {
+        "yTop": 1059,
+        "yBottom": 1096,
+        "gap": 62,
+        "afterText": "Reason (R) :",
+        "beforeText": "Assertion (A) : A simple disti"
+      },
+      {
+        "yTop": 1121,
+        "yBottom": 1157,
+        "gap": 62,
+        "afterText": "Assertion (A) : A simple disti",
+        "beforeText": "Reason (R) : Two liquids with "
+      },
+      {
+        "yTop": 1212,
+        "yBottom": 1247,
+        "gap": 60,
+        "afterText": "by simple distillations.",
+        "beforeText": "In the light of the above stat"
+      }
+    ]
+  },
+  {
+    "qNum": 157,
+    "pageNum": 79,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 485,
+        "gap": 278,
+        "afterText": "The compound/s which will show",
+        "beforeText": "(A) (b) only (B) (c) only (C) "
+      }
+    ]
+  },
+  {
+    "qNum": 158,
+    "pageNum": 79,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 657,
+        "yBottom": 820,
+        "gap": 188,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 845,
+        "yBottom": 1004,
+        "gap": 185,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 1029,
+        "yBottom": 1157,
+        "gap": 153,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 1182,
+        "yBottom": 1358,
+        "gap": 206,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 160,
+    "pageNum": 80,
+    "gapCount": 3,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 268,
+        "gap": 60,
+        "afterText": "Given below are two statements",
+        "beforeText": "Statement I : Hyperconjugation"
+      },
+      {
+        "yTop": 293,
+        "yBottom": 338,
+        "gap": 70,
+        "afterText": "Statement I : Hyperconjugation",
+        "beforeText": "Statement II : Hyperconjugatio"
+      },
+      {
+        "yTop": 406,
+        "yBottom": 442,
+        "gap": 62,
+        "afterText": "bond with empty 2p orbital of ",
+        "beforeText": "Choose the correct option :"
+      }
+    ]
+  },
+  {
+    "qNum": 162,
+    "pageNum": 80,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 853,
+        "yBottom": 1132,
+        "gap": 305,
+        "afterText": "Q162. JEE Main 2021 (Online) 2",
+        "beforeText": "The correct order of stability"
+      },
+      {
+        "yTop": 1198,
+        "yBottom": 1520,
+        "gap": 352,
+        "afterText": "(A) A > C > B > D (B) D > B > ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 163,
+    "pageNum": 81,
+    "gapCount": 3,
+    "largeGaps": [
+      {
+        "yTop": 311,
+        "yBottom": 437,
+        "gap": 152,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 462,
+        "yBottom": 548,
+        "gap": 111,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 573,
+        "yBottom": 714,
+        "gap": 171,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 164,
+    "pageNum": 81,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 825,
+        "yBottom": 970,
+        "gap": 170,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 995,
+        "yBottom": 1141,
+        "gap": 171,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 1166,
+        "yBottom": 1324,
+        "gap": 183,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 1349,
+        "yBottom": 1520,
+        "gap": 201,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 166,
+    "pageNum": 82,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 532,
+        "yBottom": 664,
+        "gap": 158,
+        "afterText": "(B)",
+        "beforeText": "(C) CH CH CH CONH 3 2 2 2"
+      }
+    ]
+  },
+  {
+    "qNum": 167,
+    "pageNum": 82,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 920,
+        "yBottom": 1520,
+        "gap": 630,
+        "afterText": "(C) 3-Ethylhex-3-ene (D) 4-Met",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 168,
+    "pageNum": 83,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 432,
+        "gap": 183,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 457,
+        "yBottom": 654,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 679,
+        "yBottom": 847,
+        "gap": 194,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 872,
+        "yBottom": 1028,
+        "gap": 186,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 169,
+    "pageNum": 83,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1058,
+        "yBottom": 1291,
+        "gap": 258,
+        "afterText": "Q169. JEE Main 2021 (Online) 2",
+        "beforeText": "Among the given species the Re"
+      },
+      {
+        "yTop": 1396,
+        "yBottom": 1520,
+        "gap": 154,
+        "afterText": "(C) (A) and (B) only (D) (A), ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 171,
+    "pageNum": 84,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 462,
+        "yBottom": 614,
+        "gap": 177,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 639,
+        "yBottom": 731,
+        "gap": 117,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 756,
+        "yBottom": 896,
+        "gap": 165,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 921,
+        "yBottom": 1094,
+        "gap": 203,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 172,
+    "pageNum": 84,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1241,
+        "yBottom": 1520,
+        "gap": 309,
+        "afterText": "(C) 2,4-Dimethyl pentan-3-one ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 173,
+    "pageNum": 85,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 415,
+        "gap": 167,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 440,
+        "yBottom": 606,
+        "gap": 191,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 631,
+        "yBottom": 771,
+        "gap": 165,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 796,
+        "yBottom": 961,
+        "gap": 195,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 174,
+    "pageNum": 85,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 1030,
+        "yBottom": 1065,
+        "gap": 60,
+        "afterText": "Given below are two statements",
+        "beforeText": "Statement I : Retardation fact"
+      },
+      {
+        "yTop": 1090,
+        "yBottom": 1131,
+        "gap": 66,
+        "afterText": "Statement I : Retardation fact",
+        "beforeText": "Statement II : R value of a co"
+      },
+      {
+        "yTop": 1156,
+        "yBottom": 1197,
+        "gap": 66,
+        "afterText": "Statement II : R value of a co",
+        "beforeText": "Choose the most appropriate an"
+      },
+      {
+        "yTop": 1376,
+        "yBottom": 1520,
+        "gap": 174,
+        "afterText": "(D) Both statement I and state",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 176,
+    "pageNum": 86,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 416,
+        "yBottom": 827,
+        "gap": 437,
+        "afterText": "Among the following, the aroma",
+        "beforeText": "Choose the correct answer from"
+      }
+    ]
+  },
+  {
+    "qNum": 177,
+    "pageNum": 86,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 1037,
+        "yBottom": 1072,
+        "gap": 60,
+        "afterText": "Given below are two statements",
+        "beforeText": "Statement I : A mixture of chl"
+      },
+      {
+        "yTop": 1097,
+        "yBottom": 1133,
+        "gap": 62,
+        "afterText": "Statement I : A mixture of chl",
+        "beforeText": "Statement II : When separating"
+      },
+      {
+        "yTop": 1188,
+        "yBottom": 1225,
+        "gap": 62,
+        "afterText": "aniline boils below its boilin",
+        "beforeText": "In the light of the above stat"
+      },
+      {
+        "yTop": 1433,
+        "yBottom": 1520,
+        "gap": 117,
+        "afterText": "(D) Statement I is false but S",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 178,
+    "pageNum": 87,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 505,
+        "gap": 297,
+        "afterText": "The correct order of acid char",
+        "beforeText": "(A) IV > III > II > I (B) III "
+      },
+      {
+        "yTop": 568,
+        "yBottom": 1520,
+        "gap": 982,
+        "afterText": "(C) II > III > IV > I (D) I > ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 179,
+    "pageNum": 88,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 180,
+    "pageNum": 89,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 566,
+        "gap": 359,
+        "afterText": "The IUPAC name of the followin",
+        "beforeText": "(A) 2-nitro-4-hydroxymethyl-5-"
+      }
+    ]
+  },
+  {
+    "qNum": 182,
+    "pageNum": 89,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 992,
+        "yBottom": 1327,
+        "gap": 360,
+        "afterText": "The increasing order of boilin",
+        "beforeText": "(A) I < III < IV < II (B) IV <"
+      },
+      {
+        "yTop": 1388,
+        "yBottom": 1520,
+        "gap": 162,
+        "afterText": "(C) I < IV < III < II (D) III ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 183,
+    "pageNum": 90,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 577,
+        "gap": 369,
+        "afterText": "The IUPAC name of the followin",
+        "beforeText": "(A) 3-Bromo-5-methylcyclopenta"
+      }
+    ]
+  },
+  {
+    "qNum": 184,
+    "pageNum": 90,
+    "gapCount": 3,
+    "largeGaps": [
+      {
+        "yTop": 904,
+        "yBottom": 1093,
+        "gap": 215,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 1118,
+        "yBottom": 1272,
+        "gap": 179,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 1297,
+        "yBottom": 1520,
+        "gap": 253,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 186,
+    "pageNum": 91,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 416,
+        "yBottom": 748,
+        "gap": 357,
+        "afterText": "The IUPAC name for the followi",
+        "beforeText": "(A) 2, 5-dimethyl-6-carboxy-he"
+      }
+    ]
+  },
+  {
+    "qNum": 187,
+    "pageNum": 91,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 958,
+        "yBottom": 1520,
+        "gap": 592,
+        "afterText": "(A) Cl–CH=CH–CH (B) Cl–CH=CH–N",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 188,
+    "pageNum": 92,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 1357,
+        "gap": 1149,
+        "afterText": "The increasing order of basici",
+        "beforeText": "(A) (iii) < (i) < (ii) < (iv) "
+      },
+      {
+        "yTop": 1419,
+        "yBottom": 1520,
+        "gap": 131,
+        "afterText": "(C) (v) < (i) < (iv) < (ii) < ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 189,
+    "pageNum": 93,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 317,
+        "yBottom": 354,
+        "gap": 62,
+        "afterText": "(B)",
+        "beforeText": "(C) C H NO 6 5 2"
+      }
+    ]
+  },
+  {
+    "qNum": 192,
+    "pageNum": 93,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1021,
+        "yBottom": 1404,
+        "gap": 408,
+        "afterText": "The increasing order of pK for",
+        "beforeText": "(A) (A) < (B) < (C) (B) (C) < "
+      },
+      {
+        "yTop": 1429,
+        "yBottom": 1520,
+        "gap": 121,
+        "afterText": "(A) (A) < (B) < (C) (B) (C) < ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 194,
+    "pageNum": 94,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 587,
+        "yBottom": 910,
+        "gap": 348,
+        "afterText": "In the following skew conforma",
+        "beforeText": "o o o o (A) (B) (C) (D) 120 58"
+      }
+    ]
+  },
+  {
+    "qNum": 195,
+    "pageNum": 94,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1049,
+        "yBottom": 1265,
+        "gap": 242,
+        "afterText": "The IUPAC name for the followi",
+        "beforeText": "(A) 3, 5-dimethyl-4-propylhept"
+      },
+      {
+        "yTop": 1403,
+        "yBottom": 1520,
+        "gap": 147,
+        "afterText": "(D) 3,5-dimethyl-4-propylhept-",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 196,
+    "pageNum": 95,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 615,
+        "gap": 407,
+        "afterText": "The increasing order of the pK",
+        "beforeText": "(A) (C) < (A) < (D) < (B) (B) "
+      }
+    ]
+  },
+  {
+    "qNum": 199,
+    "pageNum": 95,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1411,
+        "yBottom": 1520,
+        "gap": 139,
+        "afterText": "(C) (a) < (d) < (c) < (b) (D) ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 201,
+    "pageNum": 96,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 521,
+        "yBottom": 891,
+        "gap": 395,
+        "afterText": "substitution reactions is :",
+        "beforeText": "(A) III < II < I (B) III < I <"
+      }
+    ]
+  },
+  {
+    "qNum": 202,
+    "pageNum": 96,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1021,
+        "yBottom": 1398,
+        "gap": 402,
+        "afterText": "The correct IUPAC name of the ",
+        "beforeText": "(A) 2-methyl-5-nitro-1-chlorob"
+      }
+    ]
+  },
+  {
+    "qNum": 203,
+    "pageNum": 97,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 263,
+        "yBottom": 562,
+        "gap": 324,
+        "afterText": "substitution reaction is :",
+        "beforeText": "(A) A < B < C < D (B) D < A < "
+      }
+    ]
+  },
+  {
+    "qNum": 205,
+    "pageNum": 97,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 885,
+        "yBottom": 1094,
+        "gap": 234,
+        "afterText": "The IUPAC name of the followin",
+        "beforeText": "(A) 3-Hydroxy-4-methylpentanoi"
+      },
+      {
+        "yTop": 1157,
+        "yBottom": 1520,
+        "gap": 393,
+        "afterText": "(C) 2-Methyl-3-hydroxypentan-5",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 206,
+    "pageNum": 98,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 207,
+    "pageNum": 99,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 697,
+        "gap": 489,
+        "afterText": "In the following compound,",
+        "beforeText": "the favourable site/s for prot"
+      }
+    ]
+  },
+  {
+    "qNum": 208,
+    "pageNum": 99,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 869,
+        "yBottom": 918,
+        "gap": 74,
+        "afterText": "The correct match between item",
+        "beforeText": "Item-I (Mixture) Item-II (Sepe"
+      },
+      {
+        "yTop": 1202,
+        "yBottom": 1520,
+        "gap": 348,
+        "afterText": "(C) A (Q); (B) (P); (C) (R) (D",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 209,
+    "pageNum": 100,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 506,
+        "gap": 299,
+        "afterText": "Which compound (s) out of the ",
+        "beforeText": "(A) (A) and (C) (B) (C) and (D"
+      }
+    ]
+  },
+  {
+    "qNum": 210,
+    "pageNum": 100,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 636,
+        "yBottom": 1043,
+        "gap": 432,
+        "afterText": "What is the IUPAC name of the ",
+        "beforeText": "(A) 4–Bromo-3-methylpent-2-ene"
+      }
+    ]
+  },
+  {
+    "qNum": 211,
+    "pageNum": 100,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1415,
+        "yBottom": 1520,
+        "gap": 135,
+        "afterText": "(D) DCM and H O will be miscib",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 212,
+    "pageNum": 101,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 282,
+        "gap": 74,
+        "afterText": "The correct match between Item",
+        "beforeText": "Item - I Item - II"
+      },
+      {
+        "yTop": 587,
+        "yBottom": 1520,
+        "gap": 963,
+        "afterText": "(D) (A) (P); (B) (R); (C) (Q)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 213,
+    "pageNum": 102,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1161,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 214,
+    "pageNum": 102,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1230,
+        "yBottom": 1487,
+        "gap": 282,
+        "afterText": "The increasing basicity order ",
+        "beforeText": "(A) A < B < D < C (B) D < C < "
+      }
+    ]
+  },
+  {
+    "qNum": 218,
+    "pageNum": 103,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1019,
+        "yBottom": 1305,
+        "gap": 311,
+        "afterText": "cleavage is :",
+        "beforeText": "(A) C1 O2 (B) O2 C3 (C) C4 O5 "
+      },
+      {
+        "yTop": 1330,
+        "yBottom": 1520,
+        "gap": 220,
+        "afterText": "(A) C1 O2 (B) O2 C3 (C) C4 O5 ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 219,
+    "pageNum": 104,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 640,
+        "gap": 432,
+        "afterText": "The IUPAC name of the followin",
+        "beforeText": "(A) 4-methyl-3-ethylhex-4-ene "
+      }
+    ]
+  },
+  {
+    "qNum": 220,
+    "pageNum": 104,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 806,
+        "yBottom": 856,
+        "gap": 75,
+        "afterText": "The correct match between item",
+        "beforeText": "List - I List - II"
+      },
+      {
+        "yTop": 1183,
+        "yBottom": 1520,
+        "gap": 367,
+        "afterText": "(C) (A)-(R), (B)-(P), (C)-(Q),",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 221,
+    "pageNum": 105,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 222,
+    "pageNum": 106,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 618,
+        "gap": 410,
+        "afterText": "In the following structure, th",
+        "beforeText": "Geometrical isomerism is not p"
+      }
+    ]
+  },
+  {
+    "qNum": 223,
+    "pageNum": 106,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 790,
+        "yBottom": 1177,
+        "gap": 413,
+        "afterText": "Which of the following compoun",
+        "beforeText": "(A) (I) (B) (II) (C) (III) (D)"
+      }
+    ]
+  },
+  {
+    "qNum": 225,
+    "pageNum": 107,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 263,
+        "yBottom": 670,
+        "gap": 432,
+        "afterText": "goes to aqueous layer is :",
+        "beforeText": "(A) (I) (B) (II) (C) (III) (D)"
+      }
+    ]
+  },
+  {
+    "qNum": 226,
+    "pageNum": 107,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 800,
+        "yBottom": 1207,
+        "gap": 432,
+        "afterText": "The IUPAC name of the followin",
+        "beforeText": "(A) 1, 1-Dimethyl-2-ethylcyclo"
+      },
+      {
+        "yTop": 1270,
+        "yBottom": 1520,
+        "gap": 280,
+        "afterText": "(C) 1-Ethyl-2,2-dimethylcycloh",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 227,
+    "pageNum": 108,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1161,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 230,
+    "pageNum": 109,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 697,
+        "gap": 489,
+        "afterText": "The absolute configuration of",
+        "beforeText": "is :"
+      }
+    ]
+  },
+  {
+    "qNum": 231,
+    "pageNum": 109,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 916,
+        "yBottom": 1520,
+        "gap": 634,
+        "afterText": "(A) 3 (B) 4 (C) 5 (D) 6",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 232,
+    "pageNum": 110,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 404,
+        "gap": 156,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 429,
+        "yBottom": 616,
+        "gap": 212,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 641,
+        "yBottom": 833,
+        "gap": 218,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 858,
+        "yBottom": 1079,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 234,
+    "pageNum": 110,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1412,
+        "yBottom": 1520,
+        "gap": 138,
+        "afterText": "(C) 1,1-Diphenyl-1-propene (D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 236,
+    "pageNum": 111,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 410,
+        "yBottom": 669,
+        "gap": 284,
+        "afterText": "The correct IUPAC name of the ",
+        "beforeText": "is :"
+      }
+    ]
+  },
+  {
+    "qNum": 237,
+    "pageNum": 111,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 907,
+        "yBottom": 1117,
+        "gap": 236,
+        "afterText": "phenoxide ion ?",
+        "beforeText": "(A) CH (B) OCH (C) COCH (D) CH"
+      }
+    ]
+  },
+  {
+    "qNum": 240,
+    "pageNum": 112,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 412,
+        "gap": 164,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 437,
+        "yBottom": 567,
+        "gap": 155,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 592,
+        "yBottom": 733,
+        "gap": 167,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 758,
+        "yBottom": 880,
+        "gap": 152,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 241,
+    "pageNum": 112,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 991,
+        "yBottom": 1520,
+        "gap": 559,
+        "afterText": "(A) Ethers (B) Amines (C) Este",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 242,
+    "pageNum": 113,
+    "gapCount": 3,
+    "largeGaps": [
+      {
+        "yTop": 293,
+        "yBottom": 736,
+        "gap": 468,
+        "afterText": "I.",
+        "beforeText": "II."
+      },
+      {
+        "yTop": 761,
+        "yBottom": 1171,
+        "gap": 435,
+        "afterText": "II.",
+        "beforeText": "III."
+      },
+      {
+        "yTop": 1196,
+        "yBottom": 1520,
+        "gap": 354,
+        "afterText": "III.",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 243,
+    "pageNum": 115,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 244,
+    "pageNum": 116,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 520,
+        "gap": 312,
+        "afterText": "The order of stability of the ",
+        "beforeText": "(A) (B)"
+      }
+    ]
+  },
+  {
+    "qNum": 245,
+    "pageNum": 116,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 687,
+        "yBottom": 1007,
+        "gap": 345,
+        "afterText": "In the following compounds:",
+        "beforeText": "the order of basicity is as fo"
+      }
+    ]
+  },
+  {
+    "qNum": 246,
+    "pageNum": 116,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1259,
+        "yBottom": 1520,
+        "gap": 291,
+        "afterText": "(C) Tautomers (D) Geometrical ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 247,
+    "pageNum": 117,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 442,
+        "gap": 234,
+        "afterText": "Which of the following compoun",
+        "beforeText": "(A) (I) and (V) (B) (II) and ("
+      }
+    ]
+  },
+  {
+    "qNum": 248,
+    "pageNum": 117,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 533,
+        "yBottom": 843,
+        "gap": 335,
+        "afterText": "Q248. AIEEE 2012 (Online) 19th",
+        "beforeText": "The order of basicity of the c"
+      }
+    ]
+  },
+  {
+    "qNum": 249,
+    "pageNum": 117,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1012,
+        "yBottom": 1240,
+        "gap": 254,
+        "afterText": "Q249. AIEEE 2012 (Online) 19th",
+        "beforeText": "The IUPAC name of the followin"
+      },
+      {
+        "yTop": 1343,
+        "yBottom": 1520,
+        "gap": 207,
+        "afterText": "(C) (E)-5-hepten-3-yne (D) (Z)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 251,
+    "pageNum": 118,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 416,
+        "yBottom": 755,
+        "gap": 365,
+        "afterText": "The IUPAC name of the compound",
+        "beforeText": "is"
+      }
+    ]
+  },
+  {
+    "qNum": 254,
+    "pageNum": 118,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1340,
+        "yBottom": 1520,
+        "gap": 210,
+        "afterText": "(A) Lactic acid (B) 2-Pentanon",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 260,
+    "pageNum": 119,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1338,
+        "yBottom": 1520,
+        "gap": 212,
+        "afterText": "(A) 2 (B) 4 (C) 6 (D) 3",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 262,
+    "pageNum": 120,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 529,
+        "yBottom": 727,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 752,
+        "yBottom": 949,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 974,
+        "yBottom": 1171,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 1196,
+        "yBottom": 1520,
+        "gap": 354,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 263,
+    "pageNum": 121,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 545,
+        "gap": 338,
+        "afterText": "The absolute configuration of",
+        "beforeText": "(A) (B) (C) (D)"
+      }
+    ]
+  },
+  {
+    "qNum": 265,
+    "pageNum": 121,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 975,
+        "yBottom": 1520,
+        "gap": 575,
+        "afterText": "(A) Twist boat (B) Rigid (C) C",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 266,
+    "pageNum": 122,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1162,
+        "gap": 251,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 267,
+    "pageNum": 122,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1192,
+        "yBottom": 1351,
+        "gap": 185,
+        "afterText": "Q267. AIEEE 2007",
+        "beforeText": "(A) - ethyl - - dimethylheptan"
+      },
+      {
+        "yTop": 1414,
+        "yBottom": 1520,
+        "gap": 136,
+        "afterText": "(C) - dimethyl - - diethylpent",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 271,
+    "pageNum": 123,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 955,
+        "yBottom": 1248,
+        "gap": 318,
+        "afterText": "The name of the compound shown",
+        "beforeText": "(A) -bromo - -chlorocyclohexen"
+      }
+    ]
+  },
+  {
+    "qNum": 274,
+    "pageNum": 124,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 399,
+        "yBottom": 707,
+        "gap": 333,
+        "afterText": "The decreasing order of nucleo",
+        "beforeText": "(A) (B)"
+      }
+    ]
+  },
+  {
+    "qNum": 275,
+    "pageNum": 124,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 875,
+        "yBottom": 1144,
+        "gap": 294,
+        "afterText": "The reaction",
+        "beforeText": "is fastest when is"
+      }
+    ]
+  },
+  {
+    "qNum": 276,
+    "pageNum": 124,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1395,
+        "yBottom": 1520,
+        "gap": 155,
+        "afterText": "(C) 2,3-dichloropentane (D) 2,",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 278,
+    "pageNum": 125,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 664,
+        "yBottom": 1520,
+        "gap": 886,
+        "afterText": "(C) 1-chloro -2- methyl pentan",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 279,
+    "pageNum": 126,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 273,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 280,
+    "pageNum": 127,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 903,
+        "gap": 209,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 928,
+        "yBottom": 1520,
+        "gap": 622,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 281,
+    "pageNum": 128,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 519,
+        "gap": 311,
+        "afterText": "Rate of the reaction",
+        "beforeText": "is fastest when is"
+      }
+    ]
+  },
+  {
+    "qNum": 282,
+    "pageNum": 128,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 691,
+        "yBottom": 958,
+        "gap": 293,
+        "afterText": "The name of the compound is",
+        "beforeText": "(A) -dimethyl - - cyclohexanol"
+      }
+    ]
+  },
+  {
+    "qNum": 286,
+    "pageNum": 129,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 399,
+        "yBottom": 865,
+        "gap": 491,
+        "afterText": "Among the following four struc",
+        "beforeText": "it is true that"
+      }
+    ]
+  },
+  {
+    "qNum": 291,
+    "pageNum": 130,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 643,
+        "yBottom": 796,
+        "gap": 179,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 821,
+        "yBottom": 1018,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 1043,
+        "yBottom": 1231,
+        "gap": 213,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 1256,
+        "yBottom": 1520,
+        "gap": 294,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 292,
+    "pageNum": 131,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 565,
+        "gap": 357,
+        "afterText": "Following types of compounds (",
+        "beforeText": "are studied in terms of isomer"
+      },
+      {
+        "yTop": 670,
+        "yBottom": 724,
+        "gap": 80,
+        "afterText": "(C) conformers (D) stereoisome",
+        "beforeText": "Numerical 40 questions"
+      }
+    ]
+  },
+  {
+    "qNum": 295,
+    "pageNum": 131,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1192,
+        "yBottom": 1520,
+        "gap": 358,
+        "afterText": "The possible number of stereoi",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 296,
+    "pageNum": 132,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 194,
+        "yBottom": 568,
+        "gap": 399,
+        "afterText": "Q296. JEE Main 2024 (Online) 9",
+        "beforeText": "In the given TLC, the distance"
+      }
+    ]
+  },
+  {
+    "qNum": 297,
+    "pageNum": 132,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 797,
+        "yBottom": 1095,
+        "gap": 329,
+        "afterText": "hyperconjugation effects?",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 298,
+    "pageNum": 132,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1163,
+        "yBottom": 1520,
+        "gap": 387,
+        "afterText": "Total number of aromatic compo",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 299,
+    "pageNum": 133,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 413,
+        "gap": 210,
+        "afterText": "The number of optically active",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 300,
+    "pageNum": 133,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 482,
+        "yBottom": 886,
+        "gap": 434,
+        "afterText": "The number of optical isomers ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 301,
+    "pageNum": 133,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 955,
+        "yBottom": 1520,
+        "gap": 595,
+        "afterText": "Number of carbocations from th",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 302,
+    "pageNum": 134,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 263,
+        "yBottom": 668,
+        "gap": 435,
+        "afterText": "__________.",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 303,
+    "pageNum": 134,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 735,
+        "yBottom": 834,
+        "gap": 129,
+        "afterText": "The total number of 'sigma' an",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 304,
+    "pageNum": 134,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 903,
+        "yBottom": 1002,
+        "gap": 129,
+        "afterText": "The number of different chain ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 306,
+    "pageNum": 134,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1269,
+        "yBottom": 1520,
+        "gap": 281,
+        "afterText": "following is _______ .",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 307,
+    "pageNum": 135,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 331,
+        "gap": 128,
+        "afterText": "Number of optical isomers poss",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 309,
+    "pageNum": 135,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 568,
+        "yBottom": 971,
+        "gap": 434,
+        "afterText": "Number of geometrical isomers ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 311,
+    "pageNum": 135,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1246,
+        "yBottom": 1520,
+        "gap": 304,
+        "afterText": "moved by . The retardation fac",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 312,
+    "pageNum": 136,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 637,
+        "gap": 434,
+        "afterText": "Total number of compounds with",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 314,
+    "pageNum": 136,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 874,
+        "yBottom": 1277,
+        "gap": 434,
+        "afterText": "Among the given organic compou",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 315,
+    "pageNum": 136,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1346,
+        "yBottom": 1520,
+        "gap": 204,
+        "afterText": "Among the following, total num",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 316,
+    "pageNum": 137,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 293,
+        "yBottom": 698,
+        "gap": 435,
+        "afterText": "____________",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 317,
+    "pageNum": 137,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 767,
+        "yBottom": 1141,
+        "gap": 399,
+        "afterText": "Testosterone, which is a stero",
+        "beforeText": "The total number of asymmetric"
+      },
+      {
+        "yTop": 1166,
+        "yBottom": 1520,
+        "gap": 384,
+        "afterText": "The total number of asymmetric",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 318,
+    "pageNum": 138,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 637,
+        "gap": 434,
+        "afterText": "The total number of chiral com",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 319,
+    "pageNum": 138,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 736,
+        "yBottom": 1090,
+        "gap": 384,
+        "afterText": "Retardation factor of the comp",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 321,
+    "pageNum": 138,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1357,
+        "yBottom": 1520,
+        "gap": 193,
+        "afterText": "The optical purity is ________",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 325,
+    "pageNum": 139,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 739,
+        "yBottom": 894,
+        "gap": 180,
+        "afterText": "Observe structures of the foll",
+        "beforeText": "The total number of structures"
+      }
+    ]
+  },
+  {
+    "qNum": 326,
+    "pageNum": 139,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 1054,
+        "yBottom": 1520,
+        "gap": 496,
+        "afterText": "Total number of possible stere",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 327,
+    "pageNum": 140,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 636,
+        "gap": 434,
+        "afterText": "Number of electrophilic centre",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 330,
+    "pageNum": 140,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 1101,
+        "yBottom": 1138,
+        "gap": 62,
+        "afterText": "______________. (Nearest integ",
+        "beforeText": "[Atomic mass : Silver = 108, B"
+      },
+      {
+        "yTop": 1163,
+        "yBottom": 1520,
+        "gap": 387,
+        "afterText": "[Atomic mass : Silver = 108, B",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 331,
+    "pageNum": 141,
+    "gapCount": 2,
+    "largeGaps": [
+      {
+        "yTop": 233,
+        "yBottom": 664,
+        "gap": 456,
+        "afterText": "Using the provided information",
+        "beforeText": "Fig : Paper chromatography for"
+      },
+      {
+        "yTop": 689,
+        "yBottom": 720,
+        "gap": 56,
+        "afterText": "Fig : Paper chromatography for",
+        "beforeText": "-1 the calculated R value of A"
+      }
+    ]
+  },
+  {
+    "qNum": 332,
+    "pageNum": 141,
+    "gapCount": 1,
+    "largeGaps": [
+      {
+        "yTop": 863,
+        "yBottom": 1520,
+        "gap": 687,
+        "afterText": "The number of chiral carbons p",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 333,
+    "pageNum": 142,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 329,
+        "yBottom": 526,
+        "gap": 222,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 551,
+        "yBottom": 748,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 773,
+        "yBottom": 970,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 995,
+        "yBottom": 1520,
+        "gap": 555,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 334,
+    "pageNum": 143,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1520,
+        "gap": 609,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 335,
+    "pageNum": 144,
+    "gapCount": 5,
+    "largeGaps": [
+      {
+        "yTop": 274,
+        "yBottom": 472,
+        "gap": 224,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 497,
+        "yBottom": 694,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 719,
+        "yBottom": 916,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 941,
+        "yBottom": 1182,
+        "gap": 266,
+        "afterText": "(D)",
+        "beforeText": "Out of syllabus 2 questions"
+      },
+      {
+        "yTop": 1250,
+        "yBottom": 1520,
+        "gap": 300,
+        "afterText": "These questions are on topics ",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  },
+  {
+    "qNum": 337,
+    "pageNum": 145,
+    "gapCount": 4,
+    "largeGaps": [
+      {
+        "yTop": 638,
+        "yBottom": 835,
+        "gap": 222,
+        "afterText": "(A)",
+        "beforeText": "(B)"
+      },
+      {
+        "yTop": 860,
+        "yBottom": 1057,
+        "gap": 222,
+        "afterText": "(B)",
+        "beforeText": "(C)"
+      },
+      {
+        "yTop": 1082,
+        "yBottom": 1279,
+        "gap": 222,
+        "afterText": "(C)",
+        "beforeText": "(D)"
+      },
+      {
+        "yTop": 1304,
+        "yBottom": 1520,
+        "gap": 246,
+        "afterText": "(D)",
+        "beforeText": "[END OF Q]"
+      }
+    ]
+  }
+]

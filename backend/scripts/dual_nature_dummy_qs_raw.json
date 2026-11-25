@@ -1,0 +1,432 @@
+{
+  "19": {
+    "rawQuestion": "This question has statement 1 and statement 2. Of the four choices given after the statements, choose\nthe one that best describes the two statements\nStatement 1: Davisson - germer experiment established the wave nature of electrons.\nStatement 2 : If electrons have wave nature, they can interfere and show diffraction.\n(A) Statement 1 is false, Statement 2 is true ®) Statement 1 is true, Statement 2 is false\n(©) statement 1 is true, Statement 2 is the correct (0) statement 1 is true, Statement 2 is true,\nexplanation for statement 1 Statement 2 is not the correct explanation for\nstatement 1.\n[4 marks, -1 for a wrong answer] - 2012 {Offline}",
+    "rawSolution": "ANSWER: C\nDavison - Germer experiment showed that electron beams can undergo diffraction when passed through atomic\ncrystals. This shows the wave nature of electrons as waves can exhibit interference and diffraction.",
+    "key": "C"
+  },
+  "26": {
+    "rawQuestion": "p copper ball of radius 1 cm and work function 4.47 eV is irradiated with ultraviolet radiation of\nwavelength 2500 A. The effect of irradiation results in the emission of electrons from the ball. Further\nthe ball will acquire charge and due to this there will be a finite value of the potential on the ball. The\ncharge acquired by the ball is :\nWA 55x 10-3¢C ® 75x10 C\n© 45x10 2¢C ©) 25x 10-11 C\n[4 marks, -1for a wrong answer] - 2013 (25 Ape)",
+    "rawSolution": "ANSWER: A\nNo Solution Available",
+    "key": "A"
+  },
+  "28": {
+    "rawQuestion": "The radiation corresponding to 3 — 2 transition of hydrogen atom falls on a metal surface to produce\nphotoelectrons. These electrons are made to enter a magnetic field of 3 x 10 *T. If the radius of the\nlargest circular path followed by these electrons is 10.0 mm, the work function of the metal is close to :\n(A) 18 ev (B) 11ev\n(©) 0.8 ev (0) 16 ev\n[4 marks, ~1for a wrong answer) - 2014 (06 Apr)",
+    "rawSolution": "ANSWER: B\nWe know that\nReis\nBq\nom BE\nm\n1\nPRR = Zp?\n“ mv\n_ BiqR?\n© 2m\n=079eV\nNow from photoelectric equation\nE=¢+KE\ns¢=E—-KE\n=1.89-0.79\n=1lleV",
+    "key": "B"
+  },
+  "31": {
+    "rawQuestion": "A beam of light has two wavelengths of 40724 and 6216 A with a total intensity of 3.6 x 10~* Wm 2\nequally distributed among the two wavelengths. The beam falls normally on an area of 1 cm? of a clean\nmetallic surface of work function 2.3eV. Assume that there is no loss of light by reflection and that\neach capable photon ejects one electron. The number of photoelectrons liberated in 2 s is\napproximately:\n(A) 6 101 (B) 9 jou\n(©) 11 » 101 D) 15 « 1011\n4 marks, ~1 for a wrong answer] - 2014 12 Apr)",
+    "rawSolution": "ANSWER: B\nGiven, A; = 49724\nand A, = 62164\nandl = 3.6 x 10 *Wm *\nIntensity associated with each wavelength\n-3\n- Jot = 18x10 Wm?\nWork function ¢ = hv = %\n6.62 x 10%!) (3 x 10°\nNn A\n_ 124 x 0\nSAY\nfor different wavelengths\nea LE UL\n=3.984 x 10°]\nfr = 2400 _ DAP _ 1 gggey\nTo Z31sax10]\nWork function for metallic surface ¢ = 2.3 eV (given)\np<\nTherefore, ¢, will not contribute in this process.\nNow, no. of electrons per m? — s = no. of photons per m? — s\nno. of electrons per m? — s.\n1.8 x 10% ™\n“gesixi0m 0\n(Lem? = 107 m?) = 0.45 x 10\nSo, the number of photo electrons liberated\nin 2 sec.\n= 0.45 x 1012 x 2\n=90 x10\"",
+    "key": "B"
+  },
+  "33": {
+    "rawQuestion": "Match list-I (Fundamental Experiment) with List-ll (its conclusion) and select the correct option from\nthe choices given below the list:\nList-I List-Il A Franck-Hertz Experiment (i) Particle nature of light B Photo-electric experiment (ii)\nDiscrete energy levels of the atom C Davison-Germer Experiment (iii) Wave nature of electron (iv)\nStructure of atom\nA) A (iv); B — (iii); C — (i) ®) 4 (i); B — (iv); C — (iii)\n©) A (ii); B — (iv); C — (ii) ©) A _ (ii); B — (i); C — (iii)\n4 marks, ~1 for a wrong answer] + 2015 {04 Apr)",
+    "rawSolution": "ANSWER: D\nFrank-Hertz's experiment demonstrated the existence of excited states in mercury atoms helping to confirm the\nquantum theory which predicted that electrons occupied only discrete quantized energy states. The photo-electric\nexperiment demonstrated that photon is the particle of light, which can transfer momentum and energy due to\ncollision. Davidson-Germer's experiment shows the wave nature of electrons.",
+    "key": "D"
+  },
+  "41": {
+    "rawQuestion": "The maximum velocity of the photoelectrons emitted from the surface is v when light of frequency n\nfalls on a metal surface. If the incident frequency is increased to 3n, the maximum velocity of the\nejected photoelectrons will be:\n(A) more than v/3u (8) equal to v/3v\n©, (©) jess than v/3v\n[4 marks, 1 for a wrong answer) - 2017 (08 Apr)",
+    "rawSolution": "ANSWER: A\nAccording to Einstein's photoelectric effect,\nhe\nKE: = * -6\nThe incident energy of the photon is E; = Fmt =hn—¢..(1)\nIf incident frequency increased to 3n\n1 2\nEy = jmu} = 3hn —¢\n=3(hn—¢) +26\nEy =3E, +2¢\n1 $5\n= gm = gmv’ + 2¢\n> vi=32+ *\nm\nSvs v3",
+    "key": "A"
+  },
+  "42": {
+    "rawQuestion": "pjaser light of wavelength 660nm is used to weld Retina detachment. If a laser pulse of width 60ms\nand power 0.5kW is used, the approximate number of photons in the pulse are (Take Planck's\nConstant, h = 6.62 x 10” *Js)\n(A) 122 (8) 110\n(©) 120 [ET\n14 marks, ~1 for a wrong answer] - 2017 (09 Apr)",
+    "rawSolution": "ANSWER: C\nThe energy of photon is given by F — ke.\nE nhc\nPower(P) is given as, P = — — —\ntE) ka R=T=%\nPt\nFrom the sbove equation, the number of photons is n = —=\n05 00% x 660 x 10°* x 60 x 107°\n} 6.6 x 10°\" x 3 x 10°\nHence, number of photons in the pulse are= 100 x 10\" = 10%.",
+    "key": "C"
+  },
+  "43": {
+    "rawQuestion": "Two electrons are moving with non-relativistic speeds perpendicular to each other. If corresponding de\nbrogile wavelengths are A; and \\,, their de brogile wavelength in the frame of reference attached to\ntheir centre of mass is:\nWw 1 1 i 1 (8) By 2M102\nAe Mo A Ra V2 +a?\n© doy =A=X 0.4 _ Mth\n= era\n2\n14 marks, =11or a wrong answer] - 2018 (15 Apr)",
+    "rawSolution": "ANSWER: B\nhs ho.\nMomentum of each electron —tand— J\nAA\nVelocity of centre of mass\nBa. hs\nVem = Gonna’ Zmy\nVelocity of 1* particle about centre of mass\nhk h\nVows od mg?\nFOU SE Yt\nTm wo VAR\nVoto",
+    "key": "B"
+  },
+  "44": {
+    "rawQuestion": "Two electrons are moving with non-relativistic speeds perpendicular to each other. If corresponding de\nBroglie wavelengths are \\; and \\,, their de Broglie wavelength in the frame of reference attached to\ntheir centre of mass is:\n(A) (8)\nAm =A =X t=%+%\n©) _ aun (D) ra\ndom = AEs Aen =(*32)\n1a marks, -1for a wrong answer] - 2018 (15 Apr, Shift 1)",
+    "rawSolution": "ANSWER: C\nhi hi\nMomentum (p) of each electron j-iand ad\nRE TH TE (en\nVelocity of centre of mass Vow = piri + mid (2p =mv)\nVelocity of 1st particle about centre of mass Vi eu = reed — 3x)\n- = 24)\n1\n-s =4\n$ A=g",
+    "key": "C"
+  },
+  "45": {
+    "rawQuestion": "If the de Broglie wavelengths associated with a proton and an a-particle are equal, then the ratio of\nvelocities of the proton and the a-particle will be:\n(A). q ® 1.2\n© 4:1 ©3:1\n[4 marks, -1 for a wrong answer] - 2018 (15 Apr, Shift 2)",
+    "rawSolution": "ANSWER: C\nAccording to question, A, = A,\nUsing, A= & = 1\noh a\nMy XU Ma X Ua\nA\nUy, My. My\n(-.* mass of a-particle is 4 times of mass of proton)\nSo, = frie, 4:1",
+    "key": "C"
+  },
+  "46": {
+    "rawQuestion": "The de-Broglie wavelength (Ap) associated with the electron orbiting in the second excited state of\nhydrogen atom is related to that in the ground state (Ag) by:\nA Ap =3x¢ ©) zp =2x\n© zs =2g © ys =rg\n3 2\n4 marks, ~1 for a wrong answer] - 2018 (16 Apr)",
+    "rawSolution": "ANSWER: A\nWe know that wavelength is inversely proportional to momentum, let A; is de-Broglie Wavelength corresponds to\nmomentum Pp, similarly let A; is Wavelength at ground state corresponds to momentumPg,\nAn Ba ING oy) Voc where Th he stoic Flimbee; and 1 bia rikiberiol Orbe: here,\nXe Pp mug n\nnc = 1 (ground state) nis = 3 (second excited state). $6, 22 = 22 _ 3 3, 33g\nAe ng 1",
+    "key": "A"
+  },
+  "49": {
+    "rawQuestion": "In an electron microscope, the resolution that can be achieved is of the order of the wavelength of\nelectrons used. To resolve a width of 7.5 x 102m, the minimum electron energy required is close to:\n(A) 100kev 8) 25key\n© 1kev ©) 500kev\n4 marks, ~1for a wrong answer] - 2019 (10 Jan, Shift 1)",
+    "rawSolution": "ANSWER: B\n_ 150 o_ [T0\nA= v 75x10\" = V\n150 80\nVe textaxms 3%\nV = 25KeV",
+    "key": "B"
+  },
+  "51": {
+    "rawQuestion": "if the deBroglie wavelength of an electron is equal to 10 times the wavelength of a photon of\nfrequency 6 x 10 Hz, then the speed of electron is equal to :\n(Speed of light = 3 x 10° m/s)\nPlanck's constant = 6.63 x 10 J.s\nMass of electron = 9.1 x 10%! kg)\n(A) 1.1 5 10° m/s (B) 1.7 x 10° m/s\n(©) 1.8 x 105 m/s (D) 1.45 x 10° m/s\n14 marks, -1 for a wrong answer] - 2019 (11 Jan, Shift 1)",
+    "rawSolution": "ANSWER: D\nde-Broglie wavelength,\nh 5 (3x10%\\ rc\nA=ee=ll (3x15) [-2=3]\n6.63210 x6210\"\nVE ona Tago\nv=1a% 10 ma",
+    "key": "D"
+  },
+  "52": {
+    "rawQuestion": "na photoelectric experiment, the wavelength of the light incident on a metal is changed from 300nm\nto 400nm. The decrease in the stopping potential is close to :\nji.\n(& = 1240nm — V)\nWo5v ®y5v\n© q0v © 50y\n[4 marks, ~1 for a wrong answer] - 2019 (11 Jan, Shift 2)",
+    "rawSolution": "ANSWER: C\nLet ¢ = work function of the metal,\nLe =¢+eVy\nK—gteVs .....\n(ii)\nSutracting (i) from (i) we get\nhe(f—£) =e(Vi—Va)\n(4 J ) A; = 3000m\n=Vi-Va=\"t% (332) | A = 400nm\n“OLE  12400m-v\n= (12400m — v) (stone)\n=1,08V=1V",
+    "key": "C"
+  },
+  "53": {
+    "rawQuestion": "A particle A of mass m and charge q is accelerated by a potential difference of 50V. Another particle\nB of mass 4m and charge q is accelerated by a potential difference of 2500V\". The ratio of de-Broglie\nAa\nwavelengths — is close to:\nAp\n0.07 ® 10.00\n© 447 ©) 1414\n4 marks, ~1for a wrong answer] - 2019 (12 Jan, Shift)",
+    "rawSolution": "ANSWER: D\nh\nde-Broglie wavelength \\ = —\nP\ni\nV2meV\nMy _ [Am x 2500\nXs V mxs0\n=2x5/2\n=14.14",
+    "key": "D"
+  },
+  "54": {
+    "rawQuestion": "when a certain photosensitive surface is illuminated with a monochromatic light of frequency v, the\n. . Vo \"\nstopping potential of the photo current is — a\" When the surface is illuminated by monochromatic\nv\nlight of frequency 7 the stopping potential is —V/,. The threshold frequency for photoelectric\nemission is\n(A) 54 (8) 3p\n3 2\n©) 4 ©) 4,\n=v\n3\n[4 marks, ~1 for a wrong answer] - 2019 12 Jan, Shift 2)",
+    "rawSolution": "ANSWER: 8\nhy =W + Ye,\nYewivie\n3\nOn solving, we get, W = 3h\nwhy = hw\nlB\nv= 5v",
+    "key": "B"
+  },
+  "55": {
+    "rawQuestion": "Two particles move at right angle to each other. Their de Broglie wavelengths are A; and Ay\nrespectively. The particles suffer perfectly inelastic collision. The de Broglie wavelength A of the final\nparticle, is given by:\nwa 1 1 (B) Ap +X\nSe— Pe fut\nAa XR 2\n© x= VAR Ey A I\n¥RR\n[4 marks, ~1 for a wrong answer] - 2019 (08 Apr, Shift 1}",
+    "rawSolution": "ANSWER: D\noS Begs his\nLl\nER NE\nE=Firlamia od\n=) 1\nP| — as +=\n| NN\n[het\nWATE\n1 1.1\nPEARY BY",
+    "key": "D"
+  },
+  "56": {
+    "rawQuestion": "A nucleus A, with a finite de-broglie wavelength ) 4, undergoes spontaneous fission into two nuclei B\nand C of equal mass. B flies in the same direction as that of A, while C flies in the opposite direction\nwith a velocity equal to half of that of B. The de-Broglie wavelengths Ap and Ac of B and C are\nrespectively:\n(A) Ad (B) Ay\nAny SM\n©) 3,254 ©) 54,4\n[4 marks, =1for a wrong answer] - 2019 (08 Apr, Sift 2)",
+    "rawSolution": "ANSWER: B\nRh\nMA Ae\nAlso Ac = 2X ..ii)\nFrom equation (i) & (ii),\nSAE\nA A 2g\nA\nAp = hd = Ma",
+    "key": "B"
+  },
+  "58": {
+    "rawQuestion": "po particle’ P' is formed due to a completely inelastic collision of particles ‘z’ and 'y' having de-Broglie\nwavelengths XL and 51 respectively. If z and y were moving in opposite directions, then the de-\nBroglie wavelength of 'P' is:\n(Ay, — A (B) A)\nAz + Ay\n© a, LBW\n[Az =A\n[4 marks, -1 for a wrong answer] + 2019 (09 Apr, Shift 2)",
+    "rawSolution": "ANSWER: C\nLops] Ho\nS| Pea\npp = Jl\nSU PP\nNoddy\nAs =A",
+    "key": "C"
+  },
+  "60": {
+    "rawQuestion": "A 2mW laser operates at a wavelength of 500nm . The number of photons that will be emitted per\nsecond is:\n[Given Planck's constant h = 6.6 x 10 *'.Js, speed of light ¢ = 3.0 x 10*m/s]\n(A) 15 101 (8B) 5 10%\n©) 5, 1016 0) 10\n4 marks, ~1 for a wrong answer] - 2018 (10 Apr, Shift 2]",
+    "rawSolution": "ANSWER: B\nP =2mW\nA = 500nm\nNumber of photons will be emitted per second is,\nP 2x 107° x 500 x 10°\nN= r=\n%) 66x10 7 x3 x 10°\nA\n=5x10\"",
+    "key": "B"
+  },
+  "63": {
+    "rawQuestion": "Consider an electron in a hydrogen atom, revolving in its second excited state (having radius 4.654).\nThe de-Broglie wavelength of this electron is:\nA) 15.94 ® 6.64\n© 974 © 354\n(4 marks, ~1 for a wrong answer] - 2019 (12 Apr, Shift 2)",
+    "rawSolution": "ANSWER: C\nAccording to Bohr's atomic model\nnh\nmor = =\n2r\nAnd the de-Broglie wavelength\nNe LR\nmy\nFroen the Above two SUAIONs we can write; \\ m 22%\nn\nIn the 2nd excited state\n2x1\nNowe\n3\n2\nSA= Chas 4.65A = 9.7TA",
+    "key": "C"
+  },
+  "66": {
+    "rawQuestion": "When photon of energy 4.0eV strikes the surface of a metal A, the ejected photoelectrons have\nmaximum kinetic energy T' 4eV and de-Broglie wavelength A 4. The maximum kinetic energy of\nphotoelectrons liberated from another metal B by photon of energy 4.50eV is Tg = (Ty — 1.5) eV.\nIf the de-Broglie wavelength of these photoelectrons Ap = 2 4, then the work function of metal B is:\n(A) gop (8) oy\n(© 1.5¢v (©) ze\n[4 marks, ~1 for a wrong answer] + 2020 (08 Jan, Shift 1)",
+    "rawSolution": "ANSWER: A\nRelation between de-Broglie wavelength and K.E. is\nh 1\nAs —— —— SAX —\nV2(KE)m, x vKE\nMM _ VKEs\nAs VKE,\n1 Ty,—15\n»3= Vor 5 Ty =2V\n~.KEp=2-15=0.5eV\n8 =4.5—0.5=deV",
+    "key": "A"
+  },
+  "68": {
+    "rawQuestion": "5 particle moving with kinetic energy E has de Broglie wavelength )\\ . If energy AE is added to its\nA\nenergy, the wavelength become 2 Value of AE, is:\n(A) ® 4p\n© 35 © 5p\n[4 marks, ~11or a wrong answer] - 2020 (09 Jan, Shift 1)",
+    "rawSolution": "ANSWER: ©\nRr Wi\nV2(KE)m VKE\nA [KE\nx VEE\n2\n4KE, = KE;\n= AE = 4KE, —- KE, = 3KE = 3E",
+    "key": "C"
+  },
+  "70": {
+    "rawQuestion": "An electron of mass m and magnitude of charge e at rest, gets accelerated by a constant electric field\nE. The rate of change of de-Broglie wavelength of this electron at a time ¢ is (ignore relativistic effects)\n(Ady hk (B) dA 2h\ndt eEt dt eEt\n© dx 2h © dx kh\ndt —  eBf dt eEt\n(4 marks, -1 for a wrong answer] - 2020 {09 Jan, Shift 2)",
+    "rawSolution": "ANSWER: D\nThe acceleration of the electron is\neB\ni ee\nm\nThe velocity of the electron as a function of time is\nware eEy\nm\nThe de-Broglie wavelength is\nNome 3\nmy\nh\nEE)\nm(—|t\nm\nh\nAE\nah\ndt = eEt",
+    "key": "D"
+  },
+  "72": {
+    "rawQuestion": "5 particle is moving 5 times as fast as an electron. The ratio of the de-Broglie wavelength of the\nparticle to that of the electron is 1.878 x 10 4, The mass of the particle is close to :\n(A) 4.8 x 10-2Tkg (8) 9.1 x 10 kg\n(©) 1.2 x10 2kg D) 9.7 x 10 kg\n{4 marks, ~1 for a wong answer] - 2020 (02 Sep, Shift 2)",
+    "rawSolution": "ANSWER: D\nNS\nmu\nmw 11a -31\nTX Tams X10 x 9.1 x10\nm = 9.7 x10 %kg",
+    "key": "D"
+  },
+  "74": {
+    "rawQuestion": "m \" » \" 9 Pp\nParticle A of mass my = 2 moving along the x -axis with velocity v collides elastically with another\nm\nparticle B at rest having mass mpg = re If both the particles move along the x -axis after the collision,\nthe change A) in the wavelength of the particle A, in terms of its de-Broglie wavelength (\\,) before\nthe collision is:\n(A) 3 (8) 5\nAX = ZX AX =z\n27 2%\n© ax=2x © ax =ax\n[4 marks, ~1 for a wrong answer] - 2020 (04 Sep, Shift 1)",
+    "rawSolution": "ANSWER: D\nm V m m V m \\\n2 3 |=]2 1] 3 :\nrest\nmm\n——=]u h 2h\nSemel G-3) = 5 For particle 4, nial de-Brogle wavelength X= = Final de-\nG+3) G+3) 2\nNoho 10h\nBroglie wavelength after collision. \"1 = TT = 700 Ao Change in De-Broglie wavelength\n25\nAd=X— x =4)",
+    "key": "D"
+  },
+  "80": {
+    "rawQuestion": "Assuming the nitrogen molecule is moving with r.m.s. velocity at 400K, the de-Broglie wave length of\nnitrogen molecule is close to : (Given : nitrogen molecule weight : 4.64 x 10 kg, Boltzman constant :\n1.38 x 10\" 2*JK 1, Planck constant : 6.63 x 10™*.Js)\n(A) 0.244 ®) 9.204\n© 0.344 ©) 9.444\n4 marks, ~1 for a wrong answer] - 2020 (06 Sep, Shift 2)",
+    "rawSolution": "ANSWER: A\nNoh h __h\nV2mk 3 V3mkT\nmx tT\n6: fo\nN 6.63 x 10 0344\nV3 x 4.64 x 10% x 1.38 x 10% x 400",
+    "key": "A"
+  },
+  "83": {
+    "rawQuestion": "Ang particle and a proton are accelerated from rest by a potential difference of 200V. After this, their\n\" Ap\nde Broglie wavelengths are A, and Ap respectively. The ratio oy is:\na\n(A) g (®) 38\n© 5g © 78\n[4 marks, ~1 for a wrong answer] - 2021 {25 Feb, Shift 1)",
+    "rawSolution": "ANSWER: C\nahh\nPp V2mgV\nA Tala [Amy x2 3\n2 fee VB=2V3-\n» os Te VB=2V2-22\n+2 _2x14=28\nAa",
+    "key": "C"
+  },
+  "88": {
+    "rawQuestion": "The de-Broglie wavelength associated with an electron and a proton were calculated by accelerating\nthem through same potential of 100V. What should nearly be the ratio of their wavelengths ?\n(my = 1.00727u, m, = 0.00055u)\n(A) 1860: 1 ®) (1860)° : 1\n© 414:1 ©) 43.1\n[4 marks, -1for a wrong answer) - 2021 (16 Mar, Shift 2)",
+    "rawSolution": "ANSWER: D\nNoh _ hh\nmv mK  \\2mqV\nA [ma\nA Va\nx= [Bo igi - a0\nNx Vm",
+    "key": "D"
+  },
+  "91": {
+    "rawQuestion": "Anoil drop of the radius 2mm with a density 3g cm is held stationary under a constant electric field\n3.55 x 10°V'm in the Millikan's oil drop experiment. What is the number of excess electrons that the\noil drop will possess? (considerg = 9.81ms i\n(A) 48.8 x 10\" ©) 1.73 x 10°\n© 17.3 x 10\" 0) 1.73 x 101\n4 marks, -1 for a wrong answer] - 2021 (18 Mar, Shift 1)",
+    "rawSolution": "ANSWER: B\n4 3\n4E = Mg= neE =p (3m) xg\n1 5 3 4 -3)%\n=n x 16x10\" x 3.55 x 10°= 3 x 10° xg xmx (2x10 )” x 9.81\n=n = 173 x 100-9-5+19) 5 = 1.73 x 10%,",
+    "key": "B"
+  },
+  "92": {
+    "rawQuestion": "po particle is travelling 4 times as fast as an electron. Assuming the ratio of de-Broglie wavelength of a\nparticle to that of electron is 2 : 1, the mass of the particle is :-\n(A) 8) gy; =\n& times the mass of ¢~ 8 times the mass of e\nC) - D)\n(©) 16 times the mass of ¢ ( H times the mass of e~\n14 marks, 1 for a wrong answer) - 2021 {18 Mar, Shift 1)",
+    "rawSolution": "ANSWER: D\nNew 3\nP\ndp _ pe mvs\nAm my,\nm. Ye\n2 (&)\nm,\nGimp",
+    "key": "D"
+  },
+  "93": {
+    "rawQuestion": "The speed of electrons in a scanning electron microscope is 1 x 107ms 1. If the protons having the\nsame speed are used instead of electrons, then the resolving power of scanning proton microscope\nwill be changed by a factor of:\n(A) 1837 ® 1\n1837\n© yigsr 1)\n1837\n[4 marks, =1 for a wiong answer] - 2021 {18 Mar, Shift 2)",
+    "rawSolution": "ANSWER: A\nResolving power (RP) :\nh h\nfa a\nso, (RP) x Ee\nRP x P\nRP x mv\nRP xm",
+    "key": "A"
+  },
+  "94": {
+    "rawQuestion": "The radiation corresponding to 3 — 2 transition of a hydrogen atom falls on a gold surface to generate\nphotoelectrons. These electrons are passed through a magnetic field of 5 x 10 AT. Assume that the\nradius of the largest circular path followed by these electrons is 7mm, the work function of the metal\nis:\n(Mass of electron = 9.1 x 10~*kg)\n(A) 1.36eV (8) 1 88¢v\n© g.16ev (©) g.82¢1\n14 marks, ~1 for a wrong answer] - 2021 (20 Jul, Shift)",
+    "rawSolution": "ANSWER: D\n1.51 ——————n=3\nBf es J} = 3-52 = 1.89eV 5 x 10*Tr = Tmm\n13.6 —— nn =1\nmy P!  (RB)® (16x10 x7x10°x5x107%)°\nr=\" %mv=gqrB g-P _(RB? _( )\n4B TET am Tom 2% 9.1 x 10 \"Joule\n~52\na 3Bx0T 5 77 We know work function = energy Incident — (KE)easeen\n182x10 x 16x10\"\n¢ = 1.89 — 1.077 = 0.813eV",
+    "key": "D"
+  },
+  "95": {
+    "rawQuestion": "An electron having de-Broglie wavelength A is incident on a target in a X -ray tube. Cut-off wavelength\nof emitted X-ray is:\na (B) 2m?)\nh?\n(©) 2mex? D) he\nh me\n4 marks, ~1for a wrong answer] - 2021 (20 Jui, Shift 2)",
+    "rawSolution": "ANSWER: C\nLy\nmy\np? h* he\nKinet rm ee\ndabei 2m 2mA? A\n2mMc\nA=\"",
+    "key": "C"
+  },
+  "99": {
+    "rawQuestion": "hat should be the order of arrangement of de-Broglie wavelength of electron (,), an a-particle\n(Aa) and proton (A) given that all have the same kinetic energy ?\nAy =x =A Bx, << Aa\n©) Dy _\nAe >A >A A=X>A\n[4 marks, -11or a wrong answer] - 2021 (25 Juf, Shift 1)",
+    "rawSolution": "ANSWER: C\nh h 1\nAmmo —\nPp V2mE Vm\nm, > my, >m,\nSOA >A > Aa",
+    "key": "C"
+  },
+  "102": {
+    "rawQuestion": "\\When radiation of wavelength A is incident on a metallic surface, the stopping potential of ejected\nphotoelectrons is 4.8V. If the same surface is illuminated by radiation of double the previous\nwavelength, then the stopping potential becomes 1.6V. The threshold wavelength of the metal is:\n(A) 5 ®) 4)\n©) gy ©) gy\n14 marks, 1 for a wrong answer] - 2021 (25 Jul, Shift 2)",
+    "rawSolution": "ANSWER: B\nVs=hv—¢\nhe\n48= 6.00)\nhe 3\n16 = 7% — gp...\n6= 35 — li)\nUsing above equation (i) — (ii)\nhe he\n32= a\nhe i.\n3.2 = 5o i)\nhe\nb-\nPut in equation (ii)\n$=16\nhe 16\nAn\nhe\nM=15\nhe\n=(— 4=4)\n(2) ®",
+    "key": "B"
+  },
+  "105": {
+    "rawQuestion": "na photoelectric experiment, ultraviolet light of wavelength 280nm is used with lithium cathode\nhaving work function ¢ = 2.5¢V'. If the wavelength of incident light is switched to 400nm, find out\nthe change in the stopping potential.\n(h=6.63 x 10 *Js,c = 3 x 10°ms!)\nA 11v B®) o.6v\n© 13v © 1.9v\n4 marks, 1 for a wrong answer] - 2021 (26 Aug, Shift 1",
+    "rawSolution": "ANSWER: C\nFrom the photoelectric equation,\nhe\neVo= 5 —¢\nUsing this equation for the given two cases,\nhe\nVa = Soom\nhe\nV2 = om?\nOn subtracting,\n120\ne(Vi— Va) = 1240 (mom) =1.3eV\n= (Vy — Vy) = 13V",
+    "key": "C"
+  },
+  "106": {
+    "rawQuestion": "The de-Broglie wavelength of a particle having kinetic energy E is A. How much extra energy must be\ngiven to this particle so that the de-Broglie wavelength reduces to 75 of the initial value?\n(OF) ® 78\n9\n€) 16E (©) EB\n9 9\n[4 marks, ~1 for & wrong answer] - 2021 (26 Aug, Shift 2)",
+    "rawSolution": "ANSWER: B\nRecall the formula of de-Broglie wavelength, \\ — L here pis the linear momentum of the particle, now use the\nPp\nrelation between linear momentum and kinetic energy, p = v2Em = E x = E= &\n16k TE\nandE' = Fring AE = 5",
+    "key": "B"
+  },
+  "108": {
+    "rawQuestion": "A monochromatic neon lamp with wavelength of 670.5nm illuminates a photo-sensitive material\nwhich has a stopping voltage of 0.48. What will be the stopping voltage if the source light is\nchanged with another source of wavelength of 474.6nm ?\n(A) 94y ®) 157\n© 1.257 (©) 9.961\n{4 marks, -1 for a wrong answer] - 2021 (27 Aug, Shift 2)",
+    "rawSolution": "ANSWER: C\nhe\nWim =\nel x [3\n. 1 1\n(=v) =m(5-3)\nhe (1 1\nV== 63 - 3) Vv\nex a)\n=1240 Nh + 0.48 = 1.25¢V\nh 474 670 Ea",
+    "key": "C"
+  },
+  "113": {
+    "rawQuestion": "The light of two different frequencies whose photons have energies 3.8¢V and 1.4eV respectively,\nilluminate a metallic surface whose work function is 0.6eV' successively. The ratio of maximum\nspeeds of emitted electrons for the two frequencies respectively will be :\nW311 ® 4:1\n©. ©) :4\n[4 marks, -1 for a wrong answer] - 2022 {24 Jun, Shift 2)",
+    "rawSolution": "ANSWER: A\nExpression for maximum kinetic energy can be written as, (KE), ,,, = E — ¢\n(KE)pyey = Br — $= 38-06 =3.2eV, (KE), = E2 — ¢ = 14 - 0.6 = 0.8¢V\n1 2\nKE),.., 32 5m\nKB) oumis 8250 oy\n(KB),,., 08 Ta\ng 3med\n2\noh Lr\nSo f= =2s1",
+    "key": "A"
+  },
+  "115": {
+    "rawQuestion": "proton, a neutron, an electron and an a-particle have same energy. If A,,, A, A, and A, are the de\nBroglie's wavelengths of proton, neutron, electron and a particle respectively, then choose the correct\nrelation from the following\nBY = > > Ka Lp Pp a a\nOf <do=2%>% ew\n{4 marks, 1 for a wrong answer] - 2022 (25 Jun, Shift 2)",
+    "rawSolution": "ANSWER: B\nThe de-Brogli length A Ls\n'e de-Broglie wavelen = Tt\nalle wavelength 2 = am(K E.)\nwhere, hand KE. are constant\n1\nA —\noe\nm = Mass of the particle\nThus, with increasing mass of particle de-Broglie wavelength decreases.\nOrder of mass m, < m, <m, <m,\nOrder of de-Broglie wavelengthis A, < Ay < Ap < Ac",
+    "key": "B"
+  },
+  "124": {
+    "rawQuestion": "A metal exposed to light of wavelength 800nm and emits photoelectrons with a certain kinetic energy.\nThe maximum kinetic energy of photo-electron doubles when light of wavelength 500mm is used. The\nwork function of the metal is\n(Take he = 1230eV — nm).\nA) 1.537eV ©) 2.46ev\n© g.615¢v 0) 1.93ev\n[4 marks, ~1for a wrong answer] - 2022 (25 Jul, Shift 1)",
+    "rawSolution": "ANSWER: C\nAccording to Einstein's photoelectric equation\n12\nKner = 5 — 4\n1230\n= k= go = 6 (1)\n1230\nAnd => ky = on — 6\nSince, ky = 2k,\n1230\n= 2k = = — 6...(2)\nEliminating k; from (1) and (2) we get\n1230 1230\n0= S00 ~ wo +?\n= ¢ = 0.615eV",
+    "key": "C"
+  },
+  "126": {
+    "rawQuestion": "5 parallel beam of light of wavelength 900nm and intensity 100Wm 2 is incident on a surface\nperpendicular to the beam. The number of photons crossing 1¢m? area perpendicular to the beam in\none second is\n(A) 3, 106 (B) 45 101\n© 45x 107 ©) 45x 10%\n[4 marks, 1 for a wrong answer] - 2022 (26 Jul, Shift 1)",
+    "rawSolution": "ANSWER: B\nWavelength of incident beam A = 900 x 10 *m\nEnergy of a single photon E — ke\nIntensity is defined as power per unit area. Therefore,\nE\nIntensity of incident beam J = —-\n4 7\nIf the number of photons crossing the given area per second is 7, then\nne Bra 1X\nE singlephoton he\n4 -\nop (100) (1107) (900x107) Ly\n6.62 x 10 4 x 3 x 10°",
+    "key": "B"
+  },
+  "128": {
+    "rawQuestion": "An electron (mass m) with an initial velocity 7 = vi (vg > 0) is moving in an electric field\n2 2 ” \" h\nE = —Eqi (E, > 0) where Ej is constant. If at t = 0, de-Broglie wavelength is A = ——, then its\nmug\nde-Broglie wavelength after time ¢ is given by\n(A) (8) eEpt\n% % (x Fes )\nmuy\n(©) xt (D) Ao\neEyt\n(1 ¥ 5 )\nmuy\n[4 marks, -1 for a wrong answer] - 2022 (27 Ju, Shift 1",
+    "rawSolution": "ANSWER: D\nh z\nV, 0 Initial de-8roglie wavelength of electron, Jy = —— ..(} Force on electron in\n0\nelectric field, F = —eE = —e [Ed] = eEyi Acceleration of electron, q — FE _ eB Velocity of electron\nmm\nafter time t, v = voi + (=) t= (w + i =v (x + 11) i sesrogte wavelength associated\nm m muy\nh X\nwh Semmes J PAS Bo \\] Es\n= mvp (14 =2t THe\nmu, mu,",
+    "key": "D"
+  },
+  "130": {
+    "rawQuestion": "1.227 y : \"\nThe equation \\ = ———— nm can be used to find the de-Broglie wavelength of an electron. In this\nx\nequation x stands for :\nWhere,\nmm = mass of electron\nP = momentum of electron\nK = Kinetic energy of electron\nV = Accelerating potential in volts for electron\n(A) mK ® /p\n© x © sv\n(4 marks, ~1 for a wrong answer] - 2022 (28 Jul, Shift 1)",
+    "rawSolution": "ANSWER: D\nThe de-Broglie's wavelength is given by X = —'_, where, Is Planck's constant and v s velocity.\nmu\nUsing relation bet ientum and Kinet h mC\nii eka ate mpl nt Kindle: dary, We IVE) = re\nHere, kinetic energy of electron is stated as KE = ¢V.\nThen, we have A = —=2%\n3 pr\nPutting the values of m = 9.1 x 10 * kgandg = 1.62 x 10~**C of electron\nWe get, A = “22m\nA=\nSo, stand for /V/.",
+    "key": "D"
+  },
+  "132": {
+    "rawQuestion": "The kinetic energy of emitted electron is E when the light incident on the metal has wavelength A. To\ndouble the kinetic energy, the incident light must have wavelength:\n(A) he B) hex\nEX — he EX + he\n©) hx (©) hed\nEX + he EX — he\n[4 marks, ~1 for a wrong answer] - 2022 (28 Jul, Shift 1)",
+    "rawSolution": "ANSWER: B\nUsing Einstein's photoelectric equation, kinetic energy of an electron is E when the incident wavelength is A is\nhe\nE=——¢.(1\nTb.)\nhe\nWhen Kinetic energy doubles, then, 25 = <7 — ¢... (2)\nSubtracting (2) — (1), we have\n3 id\nRw hoa =\n(3-3)\n' hed\nAm\nTAT Bathe",
+    "key": "B"
+  },
+  "139": {
+    "rawQuestion": "The ratio of de-Broglie wavelength of an a-particle and a proton accelerated from rest by the same\n1 B\npotential is To , the value of m is:\nm\n(A) 4 ®) 16\n© g (© ,\n[4 marks, -1 for a wrong answer] - 2023 (28 Jan, Shift 2)",
+    "rawSolution": "ANSWER: C\n1\nAs we know, de Broglie wavelength in terms of energy of particle is given by, A = ——.\ngl gl gy of pa g Y, Ton\nEnergy gained by proton, E = qV.\nTherefore,\nSET I\nAa V2magaV\n> VRE.\nV2mya,V\nate x\n5 YE\n=m=8",
+    "key": "C"
+  },
+  "142": {
+    "rawQuestion": "An electron accelerated through a potential difference V| has a de-Broglie wavelength of A. When\n\" . . VY\nthe potential is changed to V5, its de-Broglie wavelength increases by 50. The value of CH is\n2\nequal to:\n5 ® 9\n1\n© 3 ©,\n2\n4 marks, 1 for a wrong answer] - 2023 (30 Jan, Shift 2)",
+    "rawSolution": "ANSWER: B\nLet initial wavelength be ), then after 50% increase wavelength will become 1.5). Now,\npa h\nKE—=_—=¢V, P=—\n2m A\na2\nLey B)\neV =\n2m\nG’\nA\neV) = \"a= a. x\ni= Be ...Eq(l)\n(x)\neVp = IL Eq(2)\n2m\nVi 9\n2=@52==2\nVa 4",
+    "key": "B"
+  },
+  "146": {
+    "rawQuestion": "5 proton moving with one tenth of velocity of light has a certain de Broglie wavelength of A. An alpha\nparticle having certain kinetic energy has the same de-Brogle wavelength A. The ratio of kinetic\nenergy of proton and that of alpha particle is :\n(A) 5. ® 4.\n© q.9 0.4\n(4 marks, ~1 for a wrong answer] - 2023 (01 Feb, Shift 1}",
+    "rawSolution": "ANSWER: B\nAs we know, de Broglie wavelength is given by,\nA=lh\n»\nNow kinetic energy can be written as,\n1 a\n= = me = —\nKom Sm am Bm\nTherefore,\nKat\nm\nHence, required ratio\nK, mm\ni BL JS a imp =4:1\nTein = mg im,",
+    "key": "B"
+  },
+  "149": {
+    "rawQuestion": "The work functions of Aluminium and Gold are 4.1¢V and 5.1eV’ respectively. The ratio of the slope\nof the stopping potential versus frequency plot for Gold to that of Aluminium is\n(A) 1 94 ®) 5\n©) y 0,5\n14 marks, -1 for a wrong answer] - 2023 (06 Apr, Shift 2)",
+    "rawSolution": "ANSWER: C\nThe data given is\nSu = 4.1eV\nPaw = 5.leV\nThe energy is given by\nhv=¢+KE = hv=g¢+eV,\nwhere V/; is the stopping potential and K = eV,\nThus, the above equation can be written as\neVo=hv—¢\naves\nee\nThe equation is of the form of y = mz + ¢. The slope is\nh\nm=-\ne\nSince the Planck constant h and charge of an electron is a constant e, the slope does not depend on the work\nfunction. Hence the ratio of the slope of the plot of stopping potential and frequency for both the given metals is 1.",
+    "key": "C"
+  },
+  "154": {
+    "rawQuestion": "A metallic surface is illuminated with radiation of wavelength ), the stopping potential is Vy. If the\nsame surface is illuminated with radiation of wavelength 2, the stopping potential becomes La The\nthreshold wavelength for this metallic surface will be\n(A) 5, (®) 4)\n© 3 (D)\nbec A\n2 4\n[4 marks, -1 for a wrong answer] - 2023 (11 Apr, Shift 1)",
+    "rawSolution": "ANSWER: A\nLet the threshold frequency be Ao.\nBy the equation of photoelectric effect, for wavelength ),\nVy = he (3 a x) 0)\nFor the wavelength 2),\neVo_, (1 1)\n=k (= = %) (id)\nDividing (i) by (ii)\nAo—2A\nMR 20-3)\n4= Sd=—\"——— 2 =6A= x =32\nhe Ag —2) Ao — 2X\n22",
+    "key": "A"
+  },
+  "156": {
+    "rawQuestion": "A proton and an a-particle are accelerated from rest by 2V and 4V potentials, respectively. The ratio\nof their de-Broglie wavelength is :\nWg. ®g:1\n94.1 © 16:1\n4 marks, -1 fot a wrong answer] - 2023 (12 Apr, Shift 1)",
+    "rawSolution": "ANSWER: C\nThe formula to calculate the de Broglie wavelength of the proton is given by\nh\nAp = ———...(1)\nV2myq,V.\nThe formula to calculate the de Broglie wavelength of the alpha particle is given by\nh\nAa = mmr (2)\nV2m,q,V\nDivide equation (1) by equation (2) and simplify to obtain the required ratio.\nA _ Via [ew\nAa ym | GV\nSubstitute the values of the known parameters into equation (3) to calculate the required ratio.\nJe | JE, [EXE\nAa g) 1x2\n= 4:1",
+    "key": "C"
+  },
+  "160": {
+    "rawQuestion": "The threshold frequency of a metal with work function 6.63eV is :\n(A) 16 x 10° Hz ©) 16 x 102Hz\n(© 16 x 10282 ©) 16 x 10° Hz\n(4 marks, ~1 for 2 wrang answer] - 2024 (27 Jan, Shift 2",
+    "rawSolution": "ANSWER: D\nThe formula to calculate the work function of the metal is given by\n@0 = hu... (1)\nFrom equation (1), it follows that\n116x107\"\n6.63 x 1.6 x 107 = 6.63 x 10 vp = vo = i = vy = 1.6 x 10 Hz",
+    "key": "D"
+  },
+  "162": {
+    "rawQuestion": "Two sources of light emit with a power of 2001. The ratio of number of photons of visible light\nemitted by each source having wavelengths 300nm and 500nm respectively, will be :\nWy. ® 3\n(© 5.4 3.5\n[4 marks, =1 for a wrong answer] - 2024 (29 Jan, Shift 2)",
+    "rawSolution": "ANSWER: D\nLet ny and 13 be the number of photons coming out from the first and the second source of light respectively per\nsecond.\nSo, for the first source,\nh\nmx % = 200... (1)\nAnd, for the second source,\nhe\nmx 5 = 200... (2)\nFrom equations (1) and (2), it implies that\nmM 800 8\nnm A 500 mp 5",
+    "key": "D"
+  },
+  "163": {
+    "rawQuestion": "The work function of a substance is 3.0eV. The longest wavelength of light that can cause the\nemission of photoelectrons from this substance is approximately:\nA) 2150m © 414nm\n©) 400nm ©) 200m\n14 marks, -1 for 3 wrong shswer] - 2024 (30 Jan, Shift 1)",
+    "rawSolution": "ANSWER: B\nFor longest wavelength, the emitted electron will have nearly zero kinetic energy.\nTherefore,\nhe\nAS\nLy 120mm ev\nRE 3eV\n= A = 413.33nm\n= Aue ~ 414nm",
+    "key": "B"
+  },
+  "165": {
+    "rawQuestion": "if the total energy transferred to a surface in time ¢ is 6.48 x 10°.J, then the magnitude of the total\nmomentum delivered to this surface for complete absorption will be :\n(A) 9.46 x 10 *kgms* (B) 516 x 10 *kgms\n(©) 1.58 x 10 *kgms 0) 4.33 % 10 *kgms!\n14 marks, -1 for a wrong answer] - 2024 (30 Jan, Shift 2)",
+    "rawSolution": "ANSWER: B\nAs we know,\np= E where cis velocity of light.\n[3\n6.48 x 10°\nTherefore, p = ———— = 2.16 x 10 *kgms~!\nPan * ne",
+    "key": "B"
+  },
+  "166": {
+    "rawQuestion": "\\When a metal surface is illuminated by light of wavelength A, the stopping potential is 8V. When the\nsame surface is illuminated by light of wavelength 3, stopping potential is 2V. The threshold\nwavelength for this surface is :\n(A) 5) (8) 35\n(€) gy (0) 45)\n[4 marks, -1 for a wong answer] - 2024 (31 Jan, Shift 1)",
+    "rawSolution": "ANSWER: C\nFrom photoelectric effect equation, we can write E = ¢ + K ue\nhe\nand work function can be written as ¢ = <=.\nAlso, maximum kinetic energy K as = eV\nFor first case:\nhe he\n8e = Nr\nFor second case:\nhe he\n2e = a Xn\nAfter using equation (ii) in (i), we get\nie SpE\n3A A AN\n=X =9)",
+    "key": "C"
+  },
+  "168": {
+    "rawQuestion": "The de Broglie wavelengths of a proton and an a particle are \\ and 2) respectively. The ratio of the\nvelocities of proton and a particle will be :\n(A) g:g ® 1:2\n© 4.9 © g.\n[4 marks, -1 for a wrong answer] - 2024 (01 Feb, Shift 1}",
+    "rawSolution": "ANSWER: D\nh h\nAs we know, de Broglie wavelength is given by, A = — = —\np mv\nSom\n© mA\nTherefore,\nBp _ Ma Aa\nva my Ap\n=4x2=8",
+    "key": "D"
+  },
+  "171": {
+    "rawQuestion": "Given below are two statements: one is labelled as Assertion A and the other is labelled as Reason R.\nAssertion A: Number of photons increases with increase in frequency of light.\nReason R: Maximum kinetic energy of emitted electrons increases with the frequency of incident\nradiation.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow:\n(A) Both A and R are correct and R is the correct (8) Both A and R are correct and R is NOT the\nexplanation of A. correct explanation of A.\n(©) A is not correct but R is correct. (D) 4 is correct but R is not correct.\n4 marks, ~1 for a wrong answer] - 2024 (04 Apr, Shift 2)",
+    "rawSolution": "ANSWER: C\nIntensity of light I = 2h\nHere 1 is no. of photons per unit time.\nn = 1 so on increasing frequency v, n decreases taking intensity constant.\nKunax = hv — 6\nSo on increasing v, kinetic energy increases.",
+    "key": "C"
+  },
+  "174": {
+    "rawQuestion": "Which of the following phenomena does not explain by wave nature of light.\nA. reflection\nB. diffraction\nC. photoelectric effect\nD. interference\nE. polarization\nChoose the most appropriate answer from the options given below:\n(A) E only (B) B, D only\n(©) c only (D) A, C only\n4 marks, ~1 for a wrong answer] - 2024 (06 Apr, Shift 1",
+    "rawSolution": "ANSWER: C\n(Theory)\nPhotoelectric effect prove particle nature of light.",
+    "key": "C"
+  },
+  "175": {
+    "rawQuestion": "1n photoelectric experiment energy of 2.48eV irradiates a photo sensitive material. The stopping\npotential was measured to be 0.5 V. Work function of the photo sensitive material is :\nA) 1 68ev ®) 3.48¢v\n©) 1 98ev ©) g5ev\n4 marks, -1 for a wrong answer] - 2024 (06 Apr, Shift 1)",
+    "rawSolution": "ANSWER: C\neVVy=hv—¢\n0.5V=248—¢\nwork function (¢) = 248 V —0.5V = 1.98 V",
+    "key": "C"
+  },
+  "176": {
+    "rawQuestion": "When UV light of wavelength 300 nm is incident on the metal surface having work function 2.13eV,\nelectron emission takes place. The stopping potential is:\n(Given he = 1240¢Vnm)\nRW 5v © 41v\n©) 5y 0) 4\n4 marks, ~1 for a wrong answer] - 2024 (06 Apr, Shift 2)",
+    "rawSolution": "ANSWER: C\nbe —¢=eV,\n1240\n= Soo ¢V —213eV = eVs\n= 4.13eV — 2.13eV = eVs.\n= So, V, = 2volt",
+    "key": "C"
+  },
+  "178": {
+    "rawQuestion": "Average force exerted on a non-reflecting surface at normal incidence is 2.4 x 10-4 N. If\n360 W/cm? is the light energy flux during span of 1 hour 30 minutes, Then the area of the surface is:\n(A) 9 2 (8) 90 1m?\n© 1m? ©) (02 m?\n[4 marks, ~1for a wrong answer] - 2024 (08 Apr, Shift 1)",
+    "rawSolution": "ANSWER: D\nER\nPressure = ret\n2 360 _24x10t\n101x3x105 A\n+A=2x10\"m’=0.02m’",
+    "key": "D"
+  },
+  "179": {
+    "rawQuestion": "5 proton and an electron have the same de Broglie wavelength. If K;, and K, be the kinetic energies\nof proton and electron respectively, then choose the correct relation :\nWg, > Kk, BK, <K.\n©, —K, ® Kg, —K.?\n[4 marks, -1 for a wrong answer] - 2024 (08 Apr, Shift 2)",
+    "rawSolution": "ANSWER: B\nDe Broglie wavelength of proton \\& electron — \\\na\nPp\n+“. Pproton = Pelectron\n2\nSKE =\nKE = Im\n+ KEproton < KEeteetron\n(Ky < KJ",
+    "key": "B"
+  },
+  "180": {
+    "rawQuestion": "A proton, an electron and an alpha particle have the same energies. Their de-Broglie wavelengths will\nbe compared as :\nA) x, < Ap < Ae B) x > 2 >A,\nCE Te ©), <A < Aa\n[4 marks, -1 for a wrong answer] - 2024 (09 Apr, Shift 1)",
+    "rawSolution": "ANSWER: A\nA h h\npp = = = —=—=\nPp V2mk\nshe\n=A < Ap <A",
+    "key": "A"
+  },
+  "181": {
+    "rawQuestion": "yy light of 4.13eV is incident on a photosensitive metal surface having work function 3.13eV. The\nmaximum kinetic energy of ejected photoelectrons will be:\nW) 413ev (B) 3.13ev\n© 1ev ©) 7.96ev\n4 marks, ~1 for a wrong answer] - 2024 (09 Apr, Shift 2)",
+    "rawSolution": "ANSWER: ©\nEphoton = ( work function ) + K - Ey\n413 = 313 +K- Epa\n2 Kuae = 1eV",
+    "key": "C"
+  },
+  "182": {
+    "rawQuestion": "An electron in the ground state of the hydrogen atom has the orbital radius of 5.3 x 10! m while\nthat for the electron in third excited state is 8.48 x 10 m. The ratio of the de Broglie wavelengths\nof electron in the excited state to that in the ground state is\n(A) 3 8) 18\n(9X) (D) 4\n[4 marks, =1 for a wrong answer] - 2025 (22 Jan, Shift 1)",
+    "rawSolution": "ANSWER: D\nAmd\nnh\nmur = —\n2m\nnh\nmv = —\n27r\n2nrh\npr Aes, hid\nnh\nr\nAx —\nn\nA mn 533x107 x4\nA mry  1x84.8x10-11\nA 1\nAs 4",
+    "key": "D"
+  },
+  "184": {
+    "rawQuestion": "A light source of wavelength A illuminates a metal surface and electrons are ejected with maximum\nkinetic energy of 2 eV . If the same surface is illuminated by a light source of wavelength 3 then the\nmaximum kinetic energy of ejected electrons will be (The work function of metal is 1eV)\n(A) 3ev (8) 2ev\n(€) sev (0) sev\n[4 marks, ~1 for a wrong answer] - 2025 {22 Jan, Shift 2)",
+    "rawSolution": "ANSWER: D\nhe\nKE=— -\nYH\nhe\n2eV=——-1eV\nA\nhe\n= —=3eV\nA\nhe\nKE = —— —d\n(A/2)\nhe\n| fri) Jp\nby 2\n6eV—1eV\n=5eV",
+    "key": "D"
+  },
+  "185": {
+    "rawQuestion": "A sub-atomic particle of mass 10% kg is moving with a velocity 2.21 x 10° m/s. Under the matter\nwave consideration, the particle will behave closely like (h=6.63 x 10% J.s)\n(A) visible radiation (B) Gamma rays\n(©) Infra-red radiation (D) X-rays\n{4 marks, ~1for a wrong answer) - 2025 (23 Jan, Shift 1)",
+    "rawSolution": "ANSWER: D\nA h 6.63 x 10°\np 107% x 2.21 x 10°\n=3%107\"m\nHence particle will behave as x-ray.",
+    "key": "D"
+  },
+  "186": {
+    "rawQuestion": "In photoelectric effect an em-wave is incident on a metal surface and electrons are ejected from the\nsurface. If the work function of the metal is 2.14 eV and stopping potential is 2 V , what is the\nwavelength of the em-wave ? (Given hc = 1242¢Vnm where h is the Planck's constant and c is the\nspeed of light in vaccum.)\n(A) 300 nm (8) 400 nm\n(€) 600 nm (D) 200 nm\n[4 marks, -1 for a wrong answer] - 2025 (23 Jan, Shift 2)",
+    "rawSolution": "ANSWER: A\n¢=2.14eV\nVs=2V\nUsing the photoelectric equation:\nhe\n— =¢+eVs\nNe\nhe\n= 2.14 +2=414eV\n1242\nA= — = 300 nm\n4.14",
+    "key": "A"
+  },
+  "187": {
+    "rawQuestion": "An electron of mass ' m ' with an initial velocity 3 = voi (vo > 0) enters an electric field E Fo Ek\nIf the initial de Broglie wavelength is \\, the value after time t would be\n(A) (8) FEE\n(c) ©)\nT= 26.22 %\n14 marks, ~1 for a wrong answer] - 2025 (24 Jan, Shift 1)",
+    "rawSolution": "ANSWER: A\nVv - 2\nm\nEe?\nP= ve +=\"\nh\nNy ———\nmvy\nNw a\nmvoy/1+ 558\ni\nVitae",
+    "key": "A"
+  },
+  "191": {
+    "rawQuestion": "A proton of mass ' my, ' has same energy as that of a photon of wavelength * \\ *. If the proton is\nmoving at non-relativistic speed, then ratio of its de Broglie wavelength to the wavelength of photon is.\nWw, rE ® VE\neV my cm\n©, /E [0]\n= me Ys\n4 marks, ~1 for a wrong answer] + 2025 (28 Jan, Shift 1)",
+    "rawSolution": "ANSWER: D\nEnergy of photon = = i — Wavelength of photon = X — 4 Energy of proton = E = jm? = ES ~ Linear\nmomentum of proton — P = ,/2m, EE Or de-Broglie wavelength of proton\npr. h\np= ST ———\nPp \\/2m,E\n> N h E\nRatio 2 = ——— x —\nA V2m,E he\n1 E\n“cl 2m,",
+    "key": "D"
+  },
+  "193": {
+    "rawQuestion": "Given below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason\n(R).\nAssertion (A) : Emission of electrons in photoelectric effect can be suppressed by applying a\nsufficiently negative electron potential to the photoemissive substance.\nReason (R) : A negative electric potential, which stops the emission of electrons from the surface of a\nphotoemissive substance, varies linearly with frequency of incident radiation.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow :\n(A) (a) is false but (R) is true (B) (A) is true but (R) is false\n(©) Both (A) and (R) are true and (R) isthe (©) Both (A) and (R) are true but (R) is not the\ncorrect explanation of (A) correct explanation of (A)\n[4 marks, ~1for a wrong answer] - 2025 (28 Jan, Shift 1",
+    "rawSolution": "ANSWER: D\nAssertion (A) is true because a sufficiently negative potential can repel and stop the emitted electrons from leaving\nthe surface.\nReason (R) is also true because the stopping potential V,,,, varies linearly with the frequency » of the incident\nlight (Van =ty— 2).\nHowever, (R) does not directly explain why a negative potential suppresses electron emission; it only shows how\nmuch potential is needed for different frequencies.\nTherefore, both (A) and (R) are true, but (R) is not the correct explanation of (A).",
+    "key": "D"
+  },
+  "195": {
+    "rawQuestion": "A monochromatic light is incident on a metallic plate having work function ¢. An electron, emitted\nnormally to the plate from a point A with maximum kinetic energy, enters a constant magnetic field,\nperpendicular to the initial velocity of electron. The electron passes through a curve and hits back the\nplate at a point B. The distance between Aand Bis :\n(Given : The magnitude of charge of an electron is e and mass is m, h is Planck's constant and c is\nvelocity of light. Take the magnetic field exists throughout the path of electron)\n(A) 3 (8)\nV2m( -¢)/eB Vm (i ~ 4) eB\n© (D)\n8m (% —¢)/eB 2y/ m (5 — ¢)/eB\n[4 marks, -1 for a wrong answer] - 2025 (02 Apr, Shift 1)",
+    "rawSolution": "ANSWER: C\nhe\nKBuax = 3 —¢\np= V2mKy.y\nhe\neon 5-4)\ndag =2R\n=2| 2\n2 [3]\na 22a) _ ou(¥-9)\nAB = eB B= eB",
+    "key": "C"
+  },
+  "198": {
+    "rawQuestion": "The radiation pressure exerted by a 450 W light source on a perfectly reflecting surface placed at 2 m\naway from it, is :\n(A) 15 x 10% Pascals (8) o\n(©) 6 x 10-5 Pascals ©) 5 10% Pascals\n[4 marks, -1 for a wrong answer] - 2025 (03 Apr, Shift 1)",
+    "rawSolution": "ANSWER: ©\n21\nPog = —\nc\n= Power 450\nArea 4m?\n_ 450 450\ndr x4 167\n2 x 450 150\neT\n167 x 3 x 10 8m x 10%\n= 5.97 x 10~° ~ 6 x 10° Pascals",
+    "key": "C"
+  },
+  "199": {
+    "rawQuestion": "A small mirror of mass m is suspended by a massless thread of length I. Then the small angle through\nwhich the thread will be deflected when a short pulse of laser of energy E falls normal on the mirror (\nc = speed of light in vacuum and g = acceleration due to gravity)\n(A) yg _ _3E ®,y_ _E\n0= Tmeygl 0= meyal\nCg _E (D) g_ _2E\n0= mm =m\n[4 marks, ~1for a wrong answer] - 2025 (04 Apr, Shift 1)",
+    "rawSolution": "ANSWER: D\n¢\nForce due to beam assuming complete reflection F — 2 — 24E; p is power So\nchange in momentum of mirror. m( V — 0) = [Fdt = 2 [dE = % Now using work energy theorem ...(1)\n0\\* 148?\nW, = Ak 2 (3) ai\nLog 2 2 m’c\n—mgé(1 — cosh) =0— ~ 2\n0 Hell] = cmp) 3™ as 0s small gl6* = CL\n9 [= mc?\nwe (2nd) - 3 Fs 2B\n© meygl",
+    "key": "D"
+  },
+  "200": {
+    "rawQuestion": "Given below are two statements: one is labelled as Assertion A and the other is labelled as Reason R\nAssertion A: In photoelectric effect, on increasing the intensity of incident light the stopping potential\nincreases.\nReason R : Increase in intensity of light increases the rate of photoelectrons emitted, provided the\nfrequency of incident light is greater than threshold frequency.\nIn the light of the above statements, choose the correct answer from the options given below\n(A) Both A and R are true but R is NOT the (B) 4 is false but R is true\ncorrect explanation of A\n(© A is true but R is false (D) Both A and R are true and R is the correct\nexplanation of A\n[4 marks, -1 for a wrong answer] - 2025 {04 Apr, Shift 1)",
+    "rawSolution": "ANSWER: B\nso stopping potential doesn't depend on Intensity\n1-3\nOn increasing intensity no. of photons per sec. n increases so the no. of electrons.",
+    "key": "B"
+  },
+  "201": {
+    "rawQuestion": "5 photo-emissive substance is illuminated with a radiation of wavelength ); so that it releases\nelectrons with de-Broglie wavelength ),. The longest wavelength of radiation that can emit\nphotoelectron is \\j. Expression for de-Broglie wavelength is given by :\n(1m : mass of the electron, h : Planck's constant and c : speed of light)\n(A) m (8) NES\n= / =f ha\nA 2me((f- 4 ) A Ime\nlea =YNE. WE © = yE\nVome(s 5) =\n4 marks, ~1 for a wrong answer] - 2025 {07 Apr, Shift 2)",
+    "rawSolution": "ANSWER: A\nKE-=E-W\nh he he\n= B=—=,W=x\nAGEN TN\nWhe he\n2m AN\nh\n(gpl\n2me (+ - 3)",
+    "key": "A"
+  },
+  "204": {
+    "rawQuestion": "ight is incident on a metallic plate having work function 110 x 10-2 J. If the produced\nphotoelectrons have zero kinetic energy then the angular frequency of the incident lightis\nradfs. (h = 6.63 x 10% J.s).\n(A) 1.04 x 101 (8) 1.04 x 10\n(©) 1.66 x 10% 0) 1.66 x 101%\n[4 marks, ~1 for a wrong answer] - 2026 (22 Jan, Shift 2)",
+    "rawSolution": "ANSWER: 8\nFrom Einstein's photoelectric equation, hv = W + KE.\nWith zero kinetic energy, hv = W.\nThe frequency is» = & — MeM0T 16.59 x 10\" Hz.\nThe angular frequency is w = 2mw = 27 x 16.59 x 10\n= 104.25 x 10\" = 1.04 x 10\" rad/s.",
+    "key": "B"
+  },
+  "205": {
+    "rawQuestion": "The de Broglie wavelength of an oxygen molecule at 27°C is z x 10-12 m. The value of z is (take\nPlanck's constant = 6.63 x 10 J.s, Boltzmann constant = 1.38 x 10~2* J/K, mass of oxygen\nmolecule = 5.31 x 102° kg)\n(A) 24 (8) 26\n(€) 30 (D) 20\n{4 marks, 1 for a wrong answer] - 2026 (23 Jan, Shift 1)",
+    "rawSolution": "ANSWER: B\nThe de Broglie wavelength is A = 2. For an ideal gas, vy. = V AL\nTherefore: A = Zot\nSubstituting values: A = ~All\nA= 6.63510 % _ 663x10\nT Veeax0® | ISAT\nA=258 x10\" m=258 x 10712 m, soz ~ 26",
+    "key": "B"
+  },
+  "206": {
+    "rawQuestion": "When a light of a given wavelength falls on a metallic surface the stopping potential for\nphotoelectrons is 3.2 V. If a second light having wavelength twice of first light is used, the stopping\npotential drops to 0.7 V. The wavelength of first light is m.\n(h=6.63 x 10% J.s,e = 1.6 x 10-C,c = 3 x 10° m/s)\n(A) 35 x 10-7 (8) 52 x 10-8\n© 31x10\" ©} 5.9 x 10-4\n[4 marks, -1 for a wrong answer) - 2026 (24 Jan, Shift 2)",
+    "rawSolution": "ANSWER: A\nUsing Einstein's photoelectric equation with stopping potentials:\nFor first light, hus = ¢ + eVar.\nFor second light with Az = 2A; (so v2 = 11/2): hi /2 = ¢ + eViz.\nFrom given values: hui — 3.2¢ = hu1/2 — 0.7e gives hui /2 = 2.5.\nThus A; = b= S80 M0t 95 10-7 m.",
+    "key": "A"
+  },
+  "208": {
+    "rawQuestion": "Number of photons of equal energy emitted per second by a 6 mW laser source operating at 663 nm\nis i.\n(Given: h = 6.63 x 10 * J.sandc = 3 x 10° m/s)\n(A) 5, qp16 (8) 10 x 1015\n©) 5, oi () 5 1916\n[4 marks, ~1 for a wrong answer) - 2026 {28 Jan, Shift 2)",
+    "rawSolution": "ANSWER: A\nPower of laser: P = 6 mW = 6 x 10% Jjs\nEnergy of a single photon at wavelength A = 663 nm:\nE=hy=%= Salo nxgaith\nB= 082 01073400 108 5 1017 = 3x 207\nNumber of photons emitted per second:\nW= Tel Beery pc sce =o 9x10",
+    "key": "A"
+  },
+  "210": {
+    "rawQuestion": "The graph shows variation of stopping potential V,, with the frequency v of the incident radiation for\nthree photosensitive metals X;, X, and X3. Which metal will give out electrons with greater kinetic\nXi Xo X,\nYo\nenergy, for the same wavelength of incident radiation?\n10 15 2 (x10 Hz)\nVor»\nWw x, ©) x,\n© x, (D) All the metals will give out photo electrons\nwith same kinetic energies.\n4 marks, ~1 for a wrong answer] - 2026 (04 Apr, Shift 1)",
+    "rawSolution": "ANSWER: A\nFrom Einstein's photoelectric equation, the maximum Kinetic energy of emitted photoelectrons is given by:\nhe\nKiunax = bu ®\nwhere ) is the wavelength of incident radiation and & is the work function of the metal.\nThe work function is related to the threshold frequency uy by ® = hu. From the given graph, the x-intercept\nrepresents the threshold frequency. We can observe that:\nw(X1) < w(Xa) < m(Xs)\nTherefore, the work functions of the metals follow the order:\nB(X,) < B(Xa) < D(X)\nFor the same wavelength \\ of incident radiation, the term ke is constant. Thus, the kinetic energy kK, will be\ngreatest for the metal with the smallest work function.\nSince metal X; has the minimum work function, it will emit electrons with the greatest kinetic energy.\nAnswer: X,",
+    "key": "A"
+  },
+  "213": {
+    "rawQuestion": "Light source having wavelength 331 nm is used to generate photo-electrons whose stopping potential\nis 0.2 V. The work function of the used metal in the experiment is a x 10% J. The value of avis ___.\n(h=16.62x10*Js,e=16x10\" Cand c=3x 10° m/s)\n(8) 365 ®) 4.68\n© 568 ©) 5 68\n14 marks, =1 for a wrong answer] - 2026 (0S Apr, Shift 1)",
+    "rawSolution": "ANSWER: ©\nUsing Einstein's photoelectric equation:\nbe =b+eVy\nThe energy of the incident photon is:\npo he 662x 107% x 3 x 10°\nTNT 331 x 10°\n19.86 x 10% 4,\n=== J\nB= gx \"8x10\nThe maximum kinetic energy of the photoelectrons is:\nKye = Vy = 16x 107° x 0.2 = 0.32 x 10 §\nThe work function & is:\n=F — Kya\n®=6x10\"\"—0.32x10\" =5.68 x10\"\nComparing with a x 107\" J, we get a = 5.68.\nAnswer: 5.68",
+    "key": "C"
+  },
+  "214": {
+    "rawQuestion": "pn electron is travelling with a velocity v in free space and when it enters a medium, its velocity is\nreduced by 20%. The de Broglie wavelength of electron in the medium is ag, where gis its de\nBroglie wavelength in free space. The value of avis _____.\n(A) 4 99 ®)\n© 125 ©) g.75\n14 marks, ~1for a wrong answer] - 2026 (05 Apr, Shift 2)",
+    "rawSolution": "ANSWER: C\nThe de Broglie wavelength of an electron in free space is given by \\, —\nmv\nWhen the electron enters the medium, its velocity Is reduced by 20%. The new velocity is\nv' =v —0.20v = 0.80v.\nh\nThe de Broglie wavelength In the medium is X' = ——.\nm\nh 1 h\nSubstituting v' = 0.80v, TY pep pet (uc\nfitsitutiog x) = 0.800 We of m(0.800) 0.80 (=)\n1 100\nSince — = — = 1.25 we have \\' = 1.25).\n0.80 80 %\nComparing this with ' = ay, we get a = 1.25.\nAnswer: 1.25",
+    "key": "C"
+  },
+  "217": {
+    "rawQuestion": "K, and K, be the maximum kinetic energies of photoelectrons emitted from a surface of a given\nmaterial for the light of wavelength A; and \\,, respectively. If A\\; = 2), then the work function of\nmaterial is given by:\nWK, + 2K; ©) 2k, — K;\n© fg, — 2K, © kg, — 26;\n4 marks, ~1 for a wrong answer] - 2026 (08 Apr, Shift 2)",
+    "rawSolution": "ANSWER: D\nUsing Einstein's photoelectric equation:\nhe\nBees\nhe\nKs = % ¢\nGiven A; = 2), the first equation becomes:\nhe\nK = ve ¢\nMultiplying by 2:\nhe\n2K; = i 26\nhe\nSubstituting += = Kj + ¢ from the second equation:\n2\n2K, = (Kz +6) — 20\n2K, = Ka—¢\n¢= Ky — 2K,\nAnswer: Ky — 2K;",
+    "key": "D"
+  }
+}

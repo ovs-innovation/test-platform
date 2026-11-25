@@ -1,0 +1,1396 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const diagramUrls = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'hydro_jee_diagram_urls.json'), 'utf8'));
+
+const part2Questions = [
+  {
+    qNum: 61,
+    exam: "JEE Main 2019 (12 Apr, Shift 1)",
+    question: "The major product(s) obtained in the following reaction is/are :\n$$\\text{1-bromocyclohexene} \\xrightarrow[(2)\\;\\text{O}_3 / \\text{Me}_2\\text{S}]{(1)\\;t\\text{-BuO}^- \\text{K}^+} ?$$",
+    options: [
+      "Product (A)",
+      "Product (B)",
+      "$\\text{OHC}-(\\text{CH}_2)_4-\\text{CHO}$ and $\\text{OHC}-\\text{CHO}$ (C)",
+      "$\\text{OHC}-(\\text{CH}_2)_3-\\text{CHO}$ (D)"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q61_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Treatment of 1-bromocyclohexene with a bulky non-nucleophilic base ($t\\text{-BuO}^-\\text{K}^+$) brings about dehydrobromination via an elimination mechanism to produce cyclohexa-1,3-diene.\n2. Subsequent reductive ozonolysis with $\\text{O}_3/\\text{Me}_2\\text{S}$ cleaves both conjugated $\\text{C}=\\text{C}$ double bonds, yielding adipaldehyde [hexanedial, $\\text{OHC}-(\\text{CH}_2)_4-\\text{CHO}$] and glyoxal ($\\text{OHC}-\\text{CHO}$). Hence, option (C) is correct."
+  },
+  {
+    qNum: 62,
+    exam: "JEE Main 2019 (12 Apr, Shift 2)",
+    question: "Heating of 2-chloro-1-phenylbutane with $\\text{EtOK} / \\text{EtOH}$ gives $X$ as the major product. Reaction $X$ with $\\text{Hg(OAc)}_2 / \\text{H}_2\\text{O}$ followed by $\\text{NaBH}_4$ gives $Y$ as the major product. $Y$ is :",
+    options: [
+      "1-phenylbutan-1-ol (A)",
+      "1-phenylbutane (B)",
+      "1-phenylbutan-2-ol (C)",
+      "2-phenylbutan-2-ol (D)"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q62_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Elimination of $\\text{HCl}$ from 2-chloro-1-phenylbutane using $\\text{EtOK}/\\text{EtOH}$ produces 1-phenylbut-1-ene ($X$) as the major product because the double bond is in conjugation with the aromatic phenyl ring (Saytzeff product with benzylic conjugation).\n2. Oxymercuration-demercuration of 1-phenylbut-1-ene [$\\text{Hg(OAc)}_2/\\text{H}_2\\text{O}$ followed by $\\text{NaBH}_4$] adds water across the double bond according to Markovnikov's rule. The $-\\text{OH}$ group adds to the more stable benzylic position (C-1), forming 1-phenylbutan-1-ol ($Y$). Hence, option (A) is correct."
+  },
+  {
+    qNum: 63,
+    exam: "JEE Main 2020 (07 Jan, Shift 1)",
+    question: "Consider the following reactions :\n(a) $(\\text{CH}_3)_3\\text{CCH(OH)CH}_3 \\xrightarrow{\\text{conc. }\\text{H}_2\\text{SO}_4}$\n(b) $(\\text{CH}_3)_2\\text{CHCH(Br)CH}_3 \\xrightarrow{\\text{alc. }\\text{KOH}}$\n(c) $(\\text{CH}_3)_2\\text{CHCH(Br)CH}_3 \\xrightarrow{(\\text{CH}_3)_3\\text{C}-\\text{O}^-\\text{K}^+}$\n(d) $(\\text{CH}_3)_2\\text{C(OH)}-\\text{CH}_2-\\text{CHO} \\xrightarrow{\\Delta}$\nWhich of the reaction(s) will not produce Saytzeff product ?",
+    options: [
+      "(a), (c) and (d)",
+      "(d) only",
+      "(c) only",
+      "(b) and (d)"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q63_diagram'] || null,
+    solution_image_url: null,
+    solution: "Reaction (c) utilizes potassium tert-butoxide [$(\\text{CH}_3)_3\\text{CO}^-\\text{K}^+$], which is a very bulky, sterically hindered base. Bulky bases abstract the more accessible, less hindered proton from the methyl group rather than the more substituted internal carbon, exclusively yielding the less-substituted Hofmann alkene (3-methylbut-1-ene) rather than the Saytzeff product. Reactions (a), (b), and (d) all yield more substituted, conjugated Saytzeff alkenes. Thus, (c) only will not produce the Saytzeff product. Hence, option (C) is correct."
+  },
+  {
+    qNum: 64,
+    exam: "JEE Main 2020 (08 Jan, Shift 2)",
+    question: "An unsaturated hydrocarbon $X$ absorbs two hydrogen molecules on catalytic hydrogenation, and also gives following reaction :\n$$X \\xrightarrow[\\text{(ii) Zn}/\\text{H}_2\\text{O}]{\\text{(i) }\\text{O}_3} A \\xrightarrow{[\\text{Ag}(\\text{NH}_3)_2]^+\\text{ (Tollens' reagent)}} B\\;\\text{(3-oxo-hexanedicarboxylic acid)}$$\n$X$ will be :",
+    options: [
+      "Cycloalkadiene derivative (A)",
+      "Cyclohexenone derivative (B)",
+      "4-methylenecyclohex-1-ene (C)",
+      "5-methylenecyclohept-1-ene (D)"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q64_diagram'] || null,
+    solution_image_url: null,
+    solution: "Since hydrocarbon $X$ absorbs 2 moles of $\\text{H}_2$, it contains two degrees of unsaturation from two double bonds. Ozonolysis followed by Tollens oxidation of aldehyde groups yields 3-oxo-hexanedicarboxylic acid [$\\text{HOOC}-\\text{CH}_2-\\text{CO}-\\text{CH}_2-\\text{CH}_2-\\text{COOH}$]. Reconstructing the precursor by joining the terminal carboxylic/aldehyde carbons and the ketone carbonyl to a formaldehyde unit confirms that $X$ has an endocyclic double bond and an exocyclic methylene group as represented in structure (C). Hence, option (C) is correct."
+  },
+  {
+    qNum: 65,
+    exam: "JEE Main 2020 (08 Jan, Shift 2)",
+    question: "Consider the following plots of rate constant versus $\\frac{1}{T}$ for four different reactions. Which of the following orders is correct for the activation energies of these reactions ?",
+    options: [
+      "$E_b > E_a > E_d > E_c$",
+      "$E_a > E_c > E_d > E_b$",
+      "$E_c > E_a > E_d > E_b$",
+      "$E_b > E_d > E_c > E_a$"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q65_diagram'] || null,
+    solution_image_url: null,
+    solution: "From the Arrhenius equation:\n$$\\ln k = \\ln A - \\frac{E_a}{RT} \\implies \\log k = \\log A - \\frac{E_a}{2.303 R}\\left(\\frac{1}{T}\\right)$$\nThe slope of the plot of $\\log k$ vs $1/T$ is $-\\frac{E_a}{2.303 R}$. The reaction with the steepest negative slope has the largest activation energy $E_a$. Comparing the magnitudes of the slopes from the given graph: $|\\text{slope}_c| > |\\text{slope}_a| > |\\text{slope}_d| > |\\text{slope}_b|$, so $E_c > E_a > E_d > E_b$. Hence, option (C) is correct."
+  },
+  {
+    qNum: 66,
+    exam: "JEE Main 2020 (08 Jan, Shift 2)",
+    question: "In the following sequence of reactions the maximum number of atoms present in molecule 'C' in one plane is ______.\n$$A \\xrightarrow{\\text{Red hot Cu tube}} B \\xrightarrow[\\text{anhydrous }\\text{AlCl}_3]{\\text{CH}_3\\text{Cl}\\,(1\\,\\text{eq.})} C$$\n($A$ is the lowest molecular weight alkyne)",
+    options: [
+      "11",
+      "12",
+      "13",
+      "14"
+    ],
+    correct_option: 2, // 13
+    numeric_answer: 13,
+    question_type: "numerical",
+    marks: 4,
+    negative_marks: 0,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q66_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. The lowest molecular weight alkyne is acetylene ($A = \\text{HC}\\equiv\\text{CH}$).\n2. Trimerization of acetylene in a red hot copper tube produces benzene ($B = \\text{C}_6\\text{H}_6$).\n3. Friedel-Crafts alkylation of benzene with $\\text{CH}_3\\text{Cl}$ (1 eq.) yields toluene ($C = \\text{C}_6\\text{H}_5\\text{CH}_3$).\n4. In toluene:\n- All 6 carbon atoms of the planar benzene ring are coplanar.\n- All 5 hydrogen atoms directly attached to the ring are coplanar.\n- The carbon atom of the methyl group ($-\\text{CH}_3$) lies in the benzene ring plane.\n- One of the hydrogen atoms of the $-\\text{CH}_3$ group can rotate into the plane of the ring.\nTherefore, the maximum number of coplanar atoms is: $6\\,(\\text{ring C}) + 5\\,(\\text{ring H}) + 1\\,(\\text{methyl C}) + 1\\,(\\text{methyl H}) = 13$. Answer: 13."
+  },
+  {
+    qNum: 67,
+    exam: "JEE Main 2020 (09 Jan, Shift 1)",
+    question: "The major product ($Y$) in the following reactions is :\n$$(\\text{CH}_3)_2\\text{CH}-\\text{C}\\equiv\\text{CH} \\xrightarrow{\\text{HgSO}_4, \\text{H}_2\\text{SO}_4 / \\text{H}_2\\text{O}} X \\xrightarrow[(2)\\;\\text{conc. }\\text{H}_2\\text{SO}_4 / \\Delta]{(1)\\;\\text{C}_2\\text{H}_5\\text{MgBr}, \\text{H}_2\\text{O}} Y$$",
+    options: [
+      "$\\text{CH}_3-\\text{CH(CH}_3)-\\text{C(CH}_3)=\\text{CH}-\\text{CH}_3$",
+      "$\\text{H}_3\\text{C}-\\text{C(CH}_3)_2-\\text{C(}=\\text{CH}_2)-\\text{CH}_3$",
+      "$\\text{CH}_3-\\text{CH(CH}_3)-\\text{C(}=\\text{CH}_2)-\\text{CH}_2\\text{CH}_3$",
+      "$\\text{CH}_3-\\text{C(CH}_3)=\\text{C(CH}_3)-\\text{CH}_2\\text{CH}_3$"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q67_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Oxymercuration-hydration of 3-methylbut-1-yne gives 3-methylbutan-2-one: $X = (\\text{CH}_3)_2\\text{CH}-\\text{CO}-\\text{CH}_3$.\n2. Addition of ethylmagnesium bromide ($\\text{C}_2\\text{H}_5\\text{MgBr}$) followed by hydrolysis yields the tertiary alcohol 2,3-dimethylpentan-2-ol: $(\\text{CH}_3)_2\\text{CH}-\\text{C(OH)}(\\text{CH}_3)-\\text{CH}_2\\text{CH}_3$.\n3. Dehydration with concentrated $\\text{H}_2\\text{SO}_4$ under heat protonates the $-\\text{OH}$ group to form a tertiary carbocation, which upon 1,2-hydride shift or direct elimination forms the tetra-substituted most stable Saytzeff alkene:\n$$\\text{CH}_3-\\text{C}(\\text{CH}_3)=\\text{C}(\\text{CH}_3)-\\text{CH}_2\\text{CH}_3\\;\\text{(2,3-dimethylpent-2-ene)}$$\nHence, option (D) is correct."
+  },
+  {
+    qNum: 68,
+    exam: "JEE Main 2020 (09 Jan, Shift 1)",
+    question: "The correct order of heat of combustion for following alkadienes is :\n(a) (E,E)-hexa-2,4-diene (trans, trans)\n(b) (2E,4Z)-hexa-2,4-diene (trans, cis)\n(c) (2Z,4Z)-hexa-2,4-diene (cis, cis)",
+    options: [
+      "(a) < (b) < (c)",
+      "(a) < (c) < (b)",
+      "(c) < (b) < (a)",
+      "(b) < (c) < (a)"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q68_diagram'] || null,
+    solution_image_url: null,
+    solution: "Heat of combustion (HOC) is inversely proportional to thermodynamic stability for isomeric hydrocarbons:\n$$\\text{Heat of Combustion} \\propto \\frac{1}{\\text{Stability}}$$\nTrans-alkenes are more stable than cis-alkenes because trans isomers avoid steric repulsion between alkyl substituents:\n- (trans, trans) is the most stable isomer $\\rightarrow$ lowest heat of combustion: (a)\n- (trans, cis) has intermediate stability: (b)\n- (cis, cis) is the least stable due to dual steric repulsions $\\rightarrow$ highest heat of combustion: (c)\nThus, the correct order is: (a) < (b) < (c). Hence, option (A) is correct."
+  },
+  {
+    qNum: 69,
+    exam: "JEE Main 2020 (09 Jan, Shift 2)",
+    question: "Which of the following reactions will not produce a racemic product ?",
+    options: [
+      "$\\text{CH}_3-\\text{C}(=\\text{O})-\\text{CH}_2\\text{CH}_3 \\xrightarrow{\\text{HCN}}$",
+      "$\\text{1-methylcyclohexene} \\xrightarrow{\\text{HCl}}$",
+      "$\\text{CH}_3\\text{CH}_2\\text{CH}=\\text{CH}_2 \\xrightarrow{\\text{HBr}}$",
+      "$(\\text{CH}_3)_2\\text{CH}-\\text{CH}=\\text{CH}_2 \\xrightarrow{\\text{HCl}}$"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q69_diagram'] || null,
+    solution_image_url: null,
+    solution: "In reaction (D), addition of $\\text{H}^+$ to 3-methylbut-1-ene produces a secondary carbocation $(\\text{CH}_3)_2\\text{CH}-\\text{CH}^+-\\text{CH}_3$. A rapid 1,2-hydride shift occurs to form the more stable tertiary carbocation $(\\text{CH}_3)_2\\text{C}^+-\\text{CH}_2\\text{CH}_3$. Attack of chloride ion gives 2-chloro-2-methylbutane:\n$$\\text{CH}_3-\\text{C(Cl)}(\\text{CH}_3)-\\text{CH}_2\\text{CH}_3$$\nThis molecule has no chiral carbon atom (achiral) and therefore cannot exist as a racemic mixture. Hence, option (D) is correct."
+  },
+  {
+    qNum: 70,
+    exam: "JEE Main 2020 (09 Jan, Shift 2)",
+    question: "The number of $sp^2$ hybrid orbitals in a molecule of benzene is :",
+    options: [
+      "24",
+      "6",
+      "18",
+      "12"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "In a benzene molecule ($\\text{C}_6\\text{H}_6$), all 6 carbon atoms are $sp^2$ hybridized. Each $sp^2$ hybridized carbon atom possesses 3 equivalent $sp^2$ hybrid orbitals (forming two $\\text{C}-\\text{C}$ $\\sigma$-bonds and one $\\text{C}-\\text{H}$ $\\sigma$-bond). Therefore, the total number of $sp^2$ hybrid orbitals in benzene is:\n$$6 \\times 3 = 18$$\nHence, option (C) is correct."
+  },
+  {
+    qNum: 71,
+    exam: "JEE Main 2020 (02 Sep, Shift 1)",
+    question: "The major product in the following reaction is :\n$$\\text{1-methyl-1-vinylcyclopentane} \\xrightarrow[\\text{Heat}]{\\text{H}_3\\text{O}^+} ?$$",
+    options: [
+      "1,2-dimethylcyclohex-1-ene (A)",
+      "1,2-dimethylcyclohex-1-ene (B)",
+      "1,2-dimethylcyclopentene derivative (C)",
+      "Cyclopentyl alcohol derivative (D)"
+    ],
+    correct_option: 1, // B
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q71_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Protonation of the vinyl double bond yields the secondary carbocation at the side-chain.\n2. Ring expansion of the 5-membered cyclopentyl ring relieved angle strain, forming a 6-membered cyclohexyl carbocation.\n3. A 1,2-hydride/methyl shift followed by loss of a proton generates the fully substituted, tetrasubstituted cyclohexene derivative: 1,2-dimethylcyclohex-1-ene (structure B) as the thermodynamically most stable product. Hence, option (B) is correct."
+  },
+  {
+    qNum: 72,
+    exam: "JEE Main 2020 (02 Sep, Shift 2)",
+    question: "The major product of the following reaction is :\n$$\\text{4-methyl-2-nitrophenol} \\xrightarrow{\\text{Conc. }\\text{HNO}_3 + \\text{Conc. }\\text{H}_2\\text{SO}_4} ?$$",
+    options: [
+      "4-methyl-2,6-dinitrophenol (A)",
+      "4-methyl-2,3-dinitrophenol (B)",
+      "4-methyl-2,6-dinitrophenol (C)",
+      "3,5-dinitro derivative (D)"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q72_diagram'] || null,
+    solution_image_url: null,
+    solution: "In 4-methyl-2-nitrophenol, the $-\\text{OH}$ group has a strong electron-donating $+M$ effect which strongly activates the ortho and para positions. The para position (C-4) is blocked by the methyl group. Between the two remaining positions ortho to $-\\text{OH}$, C-6 is open. Electrophilic aromatic nitration introduces a second nitro group at C-6, producing 4-methyl-2,6-dinitrophenol (structure C). Hence, option (C) is correct."
+  },
+  {
+    qNum: 73,
+    exam: "JEE Main 2020 (03 Sep, Shift 1)",
+    question: "The total number of monohalogenated organic products in the following (including stereoisomers) reaction is :\n$$A\\;(\\text{simplest optically active alkene}) \\xrightarrow[\\text{(ii) }\\text{X}_2 / \\Delta]{\\text{(i) }\\text{H}_2 / \\text{Ni} / \\Delta}$$",
+    options: [
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    correct_option: 2, // 8
+    numeric_answer: 8,
+    question_type: "numerical",
+    marks: 4,
+    negative_marks: 0,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q73_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. The simplest optically active alkene is 3-methylpent-1-ene [$\\text{CH}_3\\text{CH}_2\\text{CH}(\\text{CH}_3)\\text{CH}=\\text{CH}_2$].\n2. Hydrogenation gives 3-methylpentane [$\\text{CH}_3\\text{CH}_2\\text{CH}(\\text{CH}_3)\\text{CH}_2\\text{CH}_3$].\n3. Monohalogenation of 3-methylpentane gives 4 constitutional isomers:\n- 1-chloro-3-methylpentane: chiral C-3 $\\rightarrow 2$ enantiomers ($d + l$).\n- 2-chloro-3-methylpentane: two chiral carbons (C-2, C-3) $\\rightarrow 4$ stereoisomers (2 pairs of enantiomers).\n- 3-chloro-3-methylpentane: achiral $\\rightarrow 1$ isomer.\n- 1-chloro-2-ethylbutane: achiral $\\rightarrow 1$ isomer.\nTotal stereoisomers = $2 + 4 + 1 + 1 = 8$. Answer: 8."
+  },
+  {
+    qNum: 74,
+    exam: "JEE Main 2020 (03 Sep, Shift 1)",
+    question: "Which of the following compounds produces an optically inactive compound on hydrogenation ?",
+    options: [
+      "Alkene derivative (A)",
+      "Alkene derivative (B)",
+      "Alkene derivative (C)",
+      "Alkene derivative (D)"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q74_diagram'] || null,
+    solution_image_url: null,
+    solution: "In compound (D), the chiral carbon is bonded to $-\\text{H}$, $-\\text{CH}_3$, and two distinct groups. Upon catalytic hydrogenation of the isopropenyl group ($-\\text{C}(\\text{CH}_3)=\\text{CH}_2 \\rightarrow -\\text{CH}(\\text{CH}_3)_2$), the resulting compound now has two identical isopropyl groups attached to the former stereocenter. As a result, the plane of symmetry is restored, and the product is achiral (optically inactive). Hence, option (D) is correct."
+  },
+  {
+    qNum: 75,
+    exam: "JEE Main 2020 (05 Sep, Shift 1)",
+    question: "In the following reaction sequence the major products $A$ and $B$ are :\n$$\\text{o-Xylene} + \\text{Succinic anhydride} \\xrightarrow{\\text{Anhydrous }\\text{AlCl}_3} A \\xrightarrow[2.\\;\\text{H}_3\\text{PO}_4]{1.\\;\\text{Zn-Hg}/\\text{HCl}} B$$",
+    options: [
+      "Product pair (A)",
+      "Product pair (B)",
+      "Product pair (C)",
+      "Product pair (D)"
+    ],
+    correct_option: 1, // B
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q75_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Friedel-Crafts acylation of o-xylene with succinic anhydride in the presence of anhydrous $\\text{AlCl}_3$ occurs at C-4 (para to one methyl, meta to the other) to give 4-(3,4-dimethylphenyl)-4-oxobutanoic acid ($A$).\n2. Clemmensen reduction ($\\text{Zn-Hg}/\\text{HCl}$) reduces the ketone carbonyl to $-\\text{CH}_2-$, giving 4-(3,4-dimethylphenyl)butanoic acid.\n3. Intramolecular acylation catalyzed by polyphosphoric acid ($\\text{H}_3\\text{PO}_4$) effects cyclization to yield 6,7-dimethyl-3,4-dihydronaphthalen-1(2H)-one (product $B$). Hence, option (B) is correct."
+  },
+  {
+    qNum: 76,
+    exam: "JEE Main 2020 (05 Sep, Shift 1)",
+    question: "The minimum number of moles of $\\text{O}_2$ required for complete combustion of $1\\,\\text{mole}$ of propane and $2\\,\\text{moles}$ of butane is :",
+    options: [
+      "15",
+      "16",
+      "18",
+      "20"
+    ],
+    correct_option: 2, // 18
+    numeric_answer: 18,
+    question_type: "numerical",
+    marks: 4,
+    negative_marks: 0,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "1. Combustion of propane ($\\text{C}_3\\text{H}_8$):\n$$\\text{C}_3\\text{H}_8 + 5\\,\\text{O}_2 \\rightarrow 3\\,\\text{CO}_2 + 4\\,\\text{H}_2\\text{O}$$\nFor $1\\,\\text{mole}$ of propane, moles of $\\text{O}_2 = 5\\,\\text{moles}$.\n\n2. Combustion of butane ($\\text{C}_4\\text{H}_{10}$):\n$$\\text{C}_4\\text{H}_{10} + \\frac{13}{2}\\,\\text{O}_2 \\rightarrow 4\\,\\text{CO}_2 + 5\\,\\text{H}_2\\text{O}$$\nFor $2\\,\\text{moles}$ of butane, moles of $\\text{O}_2 = 2 \\times \\frac{13}{2} = 13\\,\\text{moles}$.\n\nTotal moles of $\\text{O}_2$ required = $5 + 13 = 18\\,\\text{moles}$. Answer: 18."
+  },
+  {
+    qNum: 77,
+    exam: "JEE Main 2020 (05 Sep, Shift 2)",
+    question: "The major product formed in the following reaction is :\n$$\\text{CH}_2=\\text{CH}-\\text{CH(CH}_3)_2 \\xrightarrow{\\text{HBr}} ?$$",
+    options: [
+      "$\\text{CH}_3\\text{CH}_2\\text{CH(Br)CH(CH}_3)_2$",
+      "$\\text{CH}_3\\text{CH(Br)CH}_2\\text{CH(CH}_3)_2$",
+      "$\\text{Br(CH}_2)_3\\text{CH(CH}_3)_2$",
+      "$\\text{CH}_3\\text{CH}_2\\text{C(Br)(CH}_3)_2$"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "1. Protonation of 3-methylbut-1-ene gives the secondary carbocation:\n$$\\text{CH}_2=\\text{CH}-\\text{CH(CH}_3)_2 + \\text{H}^+ \\rightarrow \\text{CH}_3-\\text{CH}^+-\\text{CH(CH}_3)_2$$\n2. A spontaneous 1,2-hydride shift occurs from the tertiary carbon to produce the much more stable tertiary carbocation:\n$$\\text{CH}_3-\\text{CH}_2-\\text{C}^+(\\text{CH}_3)_2$$\n3. Attack of $\\text{Br}^-$ at the tertiary carbocation yields 2-bromo-2-methylbutane [$\\text{CH}_3\\text{CH}_2\\text{C(Br)(CH}_3)_2$]. Hence, option (D) is correct."
+  },
+  {
+    qNum: 78,
+    exam: "JEE Main 2020 (05 Sep, Shift 2)",
+    question: "The final major product of the following reaction is :\n$$\\text{o-Toluidine} \\xrightarrow[\\text{(iii) OH}^-/\\Delta]{\\text{(i) Ac}_2\\text{O/Pyridine},\\;\\text{(ii) Br}_2, \\text{FeCl}_3} ?$$",
+    options: [
+      "3-bromo-2-methylaniline (A)",
+      "5-bromo-2-methylaniline (B)",
+      "6-bromo-2-methylaniline (C)",
+      "4-bromo-2-methylaniline (D)"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q78_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Protection of the amino group of o-toluidine with acetic anhydride in pyridine yields 2-methylacetanilide ($-\\text{NHCOCH}_3$).\n2. The acetamido group is a much stronger activating group than methyl ($+M \\gg +I$, hyperconjugation) and directs electrophilic bromination to its para position (C-4).\n3. Hydrolysis with base ($\\text{OH}^-/\\Delta$) removes the acetyl protecting group, giving 4-bromo-2-methylaniline as the final major product (structure D). Hence, option (D) is correct."
+  },
+  {
+    qNum: 79,
+    exam: "JEE Main 2020 (06 Sep, Shift 1)",
+    question: "The major products of the following reaction are :\n$$\\text{CH}_3-\\text{CH(CH}_3)-\\text{CH(OSO}_2\\text{CH}_3)-\\text{CH}_3 \\xrightarrow[(2)\\;\\text{O}_3 / \\text{H}_2\\text{O}_2]{(1)\\;\\text{KO}^t\\text{Bu} / \\Delta} ?$$",
+    options: [
+      "$\\text{CH}_3\\text{COCH}_3 + \\text{CH}_3\\text{CHO}$",
+      "$\\text{CH}_3\\text{COCH}_3 + \\text{CH}_3\\text{COOH}$",
+      "$(\\text{CH}_3)_2\\text{CHCHO} + \\text{HCHO}$",
+      "$(\\text{CH}_3)_2\\text{CHCOOH} + \\text{HCOOH}$"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q79_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. The bulky strong base potassium tert-butoxide ($\\text{KO}^t\\text{Bu}$) at high temperature undergoes an $E2$ elimination according to Hofmann's rule, abstracting the less hindered terminal $\\beta$-hydrogen to give 3-methylbut-1-ene [$(\\text{CH}_3)_2\\text{CH}-\\text{CH}=\\text{CH}_2$].\n2. Oxidative ozonolysis with $\\text{O}_3/\\text{H}_2\\text{O}_2$ cleaves the alkene: the $-\\text{CH}=$ carbon is oxidized to isobutyric acid [$(\\text{CH}_3)_2\\text{CHCOOH}$] and the terminal $=\\text{CH}_2$ is oxidized to formic acid ($\\text{HCOOH}$). Hence, option (D) is correct."
+  },
+  {
+    qNum: 80,
+    exam: "JEE Main 2020 (06 Sep, Shift 1)",
+    question: "The major product of the following reaction is :\n$$\\text{1-methyl-4-nitrocyclohexa-1,4-diene} \\xrightarrow{2\\,\\text{HBr}} ?$$",
+    options: [
+      "Product (A)",
+      "Product (B)",
+      "Product (C)",
+      "1,4-dibromo-1-methyl-4-nitrocyclohexane (D)"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q80_diagram'] || null,
+    solution_image_url: null,
+    solution: "Both additions of $\\text{HBr}$ follow Markovnikov's regioselectivity:\n1. The first $\\text{HBr}$ molecule adds across the double bond bearing the electron-donating methyl group, forming a stable tertiary carbocation at C-1 which traps $\\text{Br}^-$.\n2. The second $\\text{HBr}$ adds to the remaining double bond. Protonation occurs away from the strongly electron-withdrawing $-\\text{NO}_2$ group to place the positive charge at C-4, where $\\text{Br}^-$ subsequently attacks, yielding the trans/cis-1,4-dibromo product shown in (D). Hence, option (D) is correct."
+  },
+  {
+    qNum: 81,
+    exam: "JEE Main 2020 (06 Sep, Shift 1)",
+    question: "The major product obtained from the following reaction is :\n$$\\text{O}_2\\text{N}-\\text{C}_6\\text{H}_4-\\text{C}\\equiv\\text{C}-\\text{C}_6\\text{H}_4-\\text{OCH}_3 \\xrightarrow{\\text{Hg}^{2+}/\\text{H}^+, \\text{H}_2\\text{O}} ?$$",
+    options: [
+      "1-(4-methoxyphenyl)-2-(4-nitrophenyl)ethan-1-one (A)",
+      "2-(4-methoxyphenyl)-1-(4-nitrophenyl)ethan-1-one (B)",
+      "Alcohol derivative (C)",
+      "Diketo derivative (D)"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q81_diagram'] || null,
+    solution_image_url: null,
+    solution: "In the hydration of the unsymmetrical diarylalkyne, electrophilic attack by $\\text{Hg}^{2+}/\\text{H}^+$ generates a vinyl carbocation intermediate. The carbocation formed adjacent to the 4-methoxyphenyl ring is exceptionally stabilized by the powerful $+M$ electron-donating effect of the $-\\text{OCH}_3$ group. Water attacks this benzylic position, and tautomerization of the enol places the carbonyl group adjacent to the 4-methoxyphenyl ring:\n$$\\text{O}_2\\text{N}-\\text{C}_6\\text{H}_4-\\text{CH}_2-\\text{CO}-\\text{C}_6\\text{H}_4-\\text{OCH}_3$$\nHence, option (A) is correct."
+  },
+  {
+    qNum: 82,
+    exam: "JEE Main 2020 (06 Sep, Shift 1)",
+    question: "Consider the following reactions :\n$$A\\;(\\text{C}_7\\text{H}_{14}) \\xrightarrow{\\text{ozonolysis}} B + C$$\n$B \\xrightarrow{\\text{I}_2 + \\text{NaOH}} \\text{yellow ppt}$; $B \\xrightarrow{\\text{Ag}_2\\text{O}} \\text{silver mirror}$.\n$C \\xrightarrow{\\text{I}_2 + \\text{NaOH}} \\text{no yellow ppt}$; $C \\xrightarrow{\\text{LiAlH}_4} D \\xrightarrow{\\text{Lucas reagent}} \\text{turbidity within 5 minutes}$.\n'A' is :",
+    options: [
+      "2-methylhex-2-ene (A)",
+      "hept-2-ene (B)",
+      "3-methylhex-2-ene (C)",
+      "3-ethylpent-2-ene (D)"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q82_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Compound $B$ gives positive Iodoform and positive Tollen's test, which uniquely identifies $B$ as acetaldehyde ($\\text{CH}_3\\text{CHO}$).\n2. Compound $C$ gives negative Iodoform test. Reduction of $C$ with $\\text{LiAlH}_4$ gives an alcohol $D$ that gives turbidity with Lucas reagent within 5 minutes, meaning $D$ is a secondary alcohol. Thus, $C$ is a symmetrical ketone with no methyl ketone unit: 3-pentanone [$\\text{CH}_3\\text{CH}_2\\text{COCH}_2\\text{CH}_3$].\n3. Recombining $\\text{CH}_3\\text{CHO}$ and $(\\text{CH}_3\\text{CH}_2)_2\\text{C}=\\text{O}$ gives 3-ethylpent-2-ene ($A$). Hence, option (D) is correct."
+  },
+  {
+    qNum: 83,
+    exam: "JEE Main 2021 (24 Feb, Shift 1)",
+    question: "Identify products $A$ and $B$ in the given reaction :\n$$\\text{1-methylcyclopentene} \\xrightarrow[275\\,\\text{K}]{\\text{dil. }\\text{KMnO}_4} A \\xrightarrow{\\text{CrO}_3} B$$",
+    options: [
+      "Pair (A)",
+      "Pair (B)",
+      "A = 1-methylcyclopentane-1,2-diol, B = 2-hydroxy-2-methylcyclopentan-1-one (C)",
+      "Pair (D)"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q83_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Treatment of 1-methylcyclopentene with cold dilute alkaline $\\text{KMnO}_4$ (Baeyer's reagent) at $275\\,\\text{K}$ undergoes syn-dihydroxylation to form the cis-diol: 1-methylcyclopentane-1,2-diol ($A$).\n2. Oxidation with $\\text{CrO}_3$ selectively oxidizes the secondary alcohol group ($-\\text{CH(OH)}-$ at C-2) into a ketone carbonyl ($-\\text{C}(=\\text{O})-$), leaving the tertiary alcohol group at C-1 unaffected. The product $B$ is 2-hydroxy-2-methylcyclopentan-1-one (structure C). Hence, option (C) is correct."
+  },
+  {
+    qNum: 84,
+    exam: "JEE Main 2021 (24 Feb, Shift 1)",
+    question: "In the following reaction, the reason why meta-nitro product is also formed is :\n$$\\text{Aniline} \\xrightarrow[288\\,\\text{K}]{\\text{Conc. }\\text{HNO}_3 + \\text{Conc. }\\text{H}_2\\text{SO}_4} \\text{p-nitro (51\\%)} + \\text{m-nitro (47\\%)} + \\text{o-nitro (2\\%)}$$",
+    options: [
+      "Formation of anilinium ion",
+      "$-\\text{NH}_2$ group is highly meta-directive",
+      "$-\\text{NO}_2$ substitution always takes place at meta-position",
+      "Low temperature"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q84_diagram'] || null,
+    solution_image_url: null,
+    solution: "In strongly acidic conditions, aniline ($\\text{C}_6\\text{H}_5\\text{NH}_2$) is protonated by $\\text{H}_2\\text{SO}_4$ to form the anilinium ion ($\\text{C}_6\\text{H}_5\\text{NH}_3^+$). The positively charged $-\\text{NH}_3^+$ group has a powerful electron-withdrawing inductive effect ($-I$) which deactivates the ortho and para positions much more strongly than the meta position, directing incoming electrophiles ($\\text{NO}_2^+$) to the meta position. Hence, significant meta-nitroaniline ($47\\%$) is formed. Option (A) is correct."
+  },
+  {
+    qNum: 85,
+    exam: "JEE Main 2021 (24 Feb, Shift 2)",
+    question: "The correct order of the following compounds showing increasing tendency towards nucleophilic substitution reaction is :\n(i) Chlorobenzene, (ii) 4-chloronitrobenzene, (iii) 1-chloro-2,4-dinitrobenzene, (iv) 1-chloro-2,4,6-trinitrobenzene",
+    options: [
+      "(iv) < (i) < (ii) < (iii)",
+      "(i) < (ii) < (iii) < (iv)",
+      "(iv) < (i) < (iii) < (ii)",
+      "(iv) < (iii) < (ii) < (i)"
+    ],
+    correct_option: 1, // B
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q85_diagram'] || null,
+    solution_image_url: null,
+    solution: "Nucleophilic aromatic substitution ($S_N\\text{Ar}$) of aryl halides proceeds via a Meisenheimer carbanion complex. Electron-withdrawing nitro groups ($-\\text{NO}_2$) at ortho and para positions strongly stabilize the negative charge in the transition state and intermediate. Greater the number of ortho/para $-\\text{NO}_2$ groups, the faster the rate of reaction:\n$$\\text{Chlorobenzene (i)} < \\text{p-Nitrochlorobenzene (ii)} < \\text{2,4-Dinitrochlorobenzene (iii)} < \\text{Picryl chloride (iv)}$$\nHence, option (B) is correct."
+  },
+  {
+    qNum: 86,
+    exam: "JEE Main 2021 (24 Feb, Shift 2)",
+    question: "What is the correct sequence of reagents used for converting nitrobenzene into m-dibromobenzene ?",
+    options: [
+      "$\\text{Sn}/\\text{HCl} \\rightarrow \\text{KBr} \\rightarrow \\text{Br}_2 \\rightarrow \\text{H}^+$",
+      "$\\text{Br}_2/\\text{Fe} \\rightarrow \\text{Sn}/\\text{HCl} \\rightarrow \\text{NaNO}_2/\\text{HCl} \\rightarrow \\text{CuBr}/\\text{HBr}$",
+      "$\\text{NaNO}_2 \\rightarrow \\text{HCl} \\rightarrow \\text{KBr} \\rightarrow \\text{H}^+$",
+      "$\\text{Sn}/\\text{HCl} \\rightarrow \\text{Br}_2 \\rightarrow \\text{NaNO}_2 \\rightarrow \\text{NaBr}$"
+    ],
+    correct_option: 1, // B
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "1. $\\text{Br}_2/\\text{Fe}$: The $-\\text{NO}_2$ group in nitrobenzene is meta-directing, so bromination introduces Br at the meta position, giving 1-bromo-3-nitrobenzene.\n2. $\\text{Sn}/\\text{HCl}$: Reduces the nitro group to an amino group, giving 3-bromoaniline.\n3. $\\text{NaNO}_2/\\text{HCl}$ at $0-5^\\circ\\text{C}$: Diazotises 3-bromoaniline into 3-bromobenzenediazonium chloride.\n4. $\\text{CuBr}/\\text{HBr}$: Sandmeyer reaction replaces the diazonium group with bromine, producing m-dibromobenzene.\nHence, option (B) is correct."
+  },
+  {
+    qNum: 87,
+    exam: "JEE Main 2021 (25 Feb, Shift 1)",
+    question: "Consider the following chemical reaction :\n$$\\text{CH}\\equiv\\text{CH} \\xrightarrow[2)\\;\\text{CO},\\,\\text{HCl},\\,\\text{AlCl}_3]{1)\\;\\text{Red hot Fe tube},\\,873\\,\\text{K}} \\text{Product}$$\nThe number of $sp^2$ hybridized carbon atom(s) present in the product is ______.",
+    options: [
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    correct_option: 1, // 7
+    numeric_answer: 7,
+    question_type: "numerical",
+    marks: 4,
+    negative_marks: 0,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q87_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Cyclic polymerization of acetylene in a red hot iron tube at $873\\,\\text{K}$ gives benzene:\n$$3\\,\\text{CH}\\equiv\\text{CH} \\xrightarrow{\\text{Fe tube},\\,873\\,\\text{K}} \\text{C}_6\\text{H}_6$$\n2. Gattermann-Koch reaction with $\\text{CO} + \\text{HCl}$ in the presence of anhydrous $\\text{AlCl}_3$ introduces a formyl group ($-\\text{CHO}$) onto the benzene ring to yield benzaldehyde ($\\text{C}_6\\text{H}_5\\text{CHO}$).\n3. In benzaldehyde, all 6 aromatic ring carbons are $sp^2$ hybridized, and the carbonyl carbon of the $-\\text{CHO}$ group is also $sp^2$ hybridized ($3\\,\\sigma$ bonds).\nTotal number of $sp^2$ hybridized carbons = $6 + 1 = 7$. Answer: 7."
+  },
+  {
+    qNum: 88,
+    exam: "JEE Main 2021 (25 Feb, Shift 1)",
+    question: "Identify $A$ in the given chemical reaction :\n$$\\text{2,4-dimethylhexane} \\xrightarrow[773\\,\\text{K},\\,10-20\\,\\text{atm}]{\\text{Mo}_2\\text{O}_3} 'A'\\;\\text{(major product)}$$",
+    options: [
+      "Benzene",
+      "Methylcyclohexane",
+      "Cyclohexane",
+      "Toluene"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q88_diagram'] || null,
+    solution_image_url: null,
+    solution: "Heating alkanes having 6 to 8 carbon atoms with transition metal oxides like $\\text{Mo}_2\\text{O}_3$, $\\text{Cr}_2\\text{O}_3$, or $\\text{V}_2\\text{O}_5$ supported on alumina at $773\\,\\text{K}$ and $10-20\\,\\text{atm}$ brings about aromatization (dehydrogenation and cyclization). In 2,4-dimethylhexane, cyclization and aromatization with loss of alkyl side-chains / isomerization yields toluene as the major aromatic product. Hence, option (D) is correct."
+  },
+  {
+    qNum: 89,
+    exam: "JEE Main 2021 (25 Feb, Shift 1)",
+    question: "Identify $A$ and $B$ in the chemical reaction :\n$$\\text{1-methoxy-4-nitrocyclohex-1-ene} \\xrightarrow{\\text{HCl}} [A] \\xrightarrow{\\text{NaI} / \\text{dry acetone}} [B]\\;\\text{(major)}$$",
+    options: [
+      "Pair (A)",
+      "A = 1-chloro-1-methoxy-4-nitrocyclohexane, B = 1-iodo-1-methoxy-4-nitrocyclohexane (B)",
+      "Pair (C)",
+      "Pair (D)"
+    ],
+    correct_option: 1, // B
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q89_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Addition of $\\text{HCl}$ across the enol ether double bond protonates C-2 to generate the highly stabilized oxocarbenium-like carbocation at C-1 [$\\text{C}^+-\\text{OMe}$ stabilized by oxygen lone pair resonance]. Chloride ion then attacks C-1 to give 1-chloro-1-methoxy-4-nitrocyclohexane ($A$).\n2. Finkelstein reaction with $\\text{NaI}$ in dry acetone substitutes chloride with iodide via nucleophilic substitution, yielding 1-iodo-1-methoxy-4-nitrocyclohexane ($B$). Hence, option (B) is correct."
+  },
+  {
+    qNum: 90,
+    exam: "JEE Main 2021 (25 Feb, Shift 2)",
+    question: "The correct sequence of reagents used in the preparation of 4-bromo-2-nitroethylbenzene from benzene is :",
+    options: [
+      "$\\text{CH}_3\\text{COCl}/\\text{AlCl}_3,\\; \\text{Br}_2/\\text{AlBr}_3,\\; \\text{HNO}_3/\\text{H}_2\\text{SO}_4$",
+      "$\\text{CH}_3\\text{COCl}/\\text{AlCl}_3,\\; \\text{Zn-Hg}/\\text{HCl},\\; \\text{Br}_2/\\text{AlBr}_3,\\; \\text{HNO}_3/\\text{H}_2\\text{SO}_4$",
+      "$\\text{HNO}_3/\\text{H}_2\\text{SO}_4,\\; \\text{Br}_2/\\text{AlCl}_3,\\; \\text{CH}_3\\text{COCl}/\\text{AlCl}_3$",
+      "$\\text{Br}_2/\\text{AlBr}_3,\\; \\text{CH}_3\\text{COCl}/\\text{AlCl}_3,\\; \\text{HNO}_3/\\text{H}_2\\text{SO}_4,\\; \\text{Zn}/\\text{HCl}$"
+    ],
+    correct_option: 1, // B
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "1. Friedel-Crafts acylation of benzene with $\\text{CH}_3\\text{COCl}/\\text{AlCl}_3$ gives acetophenone.\n2. Clemmensen reduction ($\\text{Zn-Hg}/\\text{HCl}$) reduces the carbonyl group to give ethylbenzene.\n3. The ethyl group is ortho/para-directing with steric bulk favouring the para position. Bromination with $\\text{Br}_2/\\text{AlBr}_3$ yields 1-bromo-4-ethylbenzene (4-bromoethylbenzene).\n4. In 4-bromoethylbenzene, the ethyl group is a stronger activating group than bromine. Electrophilic nitration with $\\text{HNO}_3/\\text{H}_2\\text{SO}_4$ occurs ortho to the ethyl group, giving 4-bromo-2-nitroethylbenzene. Hence, option (B) is correct."
+  },
+  {
+    qNum: 91,
+    exam: "JEE Main 2021 (25 Feb, Shift 2)",
+    question: "The major product of the following reaction is :\n$$\\text{Benzene} + \\text{2-methylpropene} \\xrightarrow{\\text{H}_2\\text{SO}_4} ?$$",
+    options: [
+      "isobutylbenzene (A)",
+      "sec-butylbenzene (B)",
+      "tert-butylbenzene (C)",
+      "n-butylbenzene (D)"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q91_diagram'] || null,
+    solution_image_url: null,
+    solution: "Protonation of 2-methylpropene by concentrated $\\text{H}_2\\text{SO}_4$ generates the stable tertiary carbocation, the tert-butyl cation:\n$$\\text{CH}_2=\\text{C}(\\text{CH}_3)_2 + \\text{H}^+ \\rightarrow (\\text{CH}_3)_3\\text{C}^+$$\nElectrophilic aromatic substitution of benzene by the tert-butyl cation gives tert-butylbenzene (cumene analog) as the major product. Hence, option (C) is correct."
+  },
+  {
+    qNum: 92,
+    exam: "JEE Main 2021 (25 Feb, Shift 2)",
+    question: "In the nitration of aniline at $288\\,\\text{K}$:\n$$\\text{Aniline} \\xrightarrow[288\\,\\text{K}]{\\text{HNO}_3, \\text{H}_2\\text{SO}_4} \\text{p-nitroaniline (A, 51\\%)} + \\text{m-nitroaniline (B, 47\\%)} + \\text{o-nitroaniline (C, 2\\%)}$$\nCorrect statement about the given chemical reaction is :",
+    options: [
+      "Reaction is possible and compound (A) will be major product.",
+      "$-NH_2$ group is ortho and para directive, so product (B) is not possible.",
+      "Reaction is possible and compound (B) will be the major product.",
+      "The reaction will form sulphonated product instead of nitration."
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q92_diagram'] || null,
+    solution_image_url: null,
+    solution: "Direct nitration of aniline in concentrated $\\text{HNO}_3/\\text{H}_2\\text{SO}_4$ is feasible under controlled temperature ($288\\,\\text{K}$) and yields p-nitroaniline ($51\\%$, compound A) as the major product, along with a significant amount of m-nitroaniline ($47\\%$) due to anilinium ion formation, and $2\\%$ o-nitroaniline. Thus, statement (A) is correct."
+  },
+  {
+    qNum: 93,
+    exam: "JEE Main 2021 (26 Feb, Shift 2)",
+    question: "In $\\text{C}^1\\text{H}_2 = \\text{C}^2 = \\text{C}^3\\text{H}-\\text{C}^4\\text{H}_3$ molecule, the hybridization of carbon 1, 2, 3 and 4 respectively, are :",
+    options: [
+      "$sp^2, sp^3, sp^2, sp^3$",
+      "$sp^2, sp, sp^2, sp^3$",
+      "$sp^2, sp^2, sp^2, sp^3$",
+      "$sp^2, sp, sp^3, sp^3$"
+    ],
+    correct_option: 1, // B
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "For the buta-1,2-diene molecule:\n- C1 has $3\\,\\sigma$ bonds and $1\\,\\pi$ bond $\\rightarrow sp^2$\n- C2 has $2\\,\\sigma$ bonds and $2\\,\\pi$ bonds (allene central carbon) $\\rightarrow sp$\n- C3 has $3\\,\\sigma$ bonds and $1\\,\\pi$ bond $\\rightarrow sp^2$\n- C4 has $4\\,\\sigma$ bonds and $0\\,\\pi$ bond $\\rightarrow sp^3$\nTherefore, the hybridizations are: $sp^2, sp, sp^2, sp^3$. Hence, option (B) is correct."
+  },
+  {
+    qNum: 94,
+    exam: "JEE Main 2021 (16 Mar, Shift 1)",
+    question: "The product 'A' and 'B' formed in the following reactions are :\n$$\\text{1-methylcyclohexan-1-ol} \\xrightarrow[358\\,\\text{K}]{20\\%\\;\\text{H}_3\\text{PO}_4} A\\;\\text{(Major)}$$\n$$\\text{1-chloro-1-methylcyclohexane} \\xrightarrow{(\\text{CH}_3)_3\\text{CO}^-\\text{K}^+} B\\;\\text{(Major)}$$",
+    options: [
+      "A = methylenecyclohexane, B = methylenecyclohexane",
+      "A = 1-methylcyclohexene, B = 1-methylcyclohexene",
+      "A = 1-methylcyclohexene, B = methylenecyclohexane",
+      "A = methylenecyclohexane, B = 1-methylcyclohexene"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q94_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Acid-catalyzed dehydration of 1-methylcyclohexan-1-ol ($E1$ mechanism) forms the thermodynamically most stable, more substituted alkene according to Saytzeff's rule: $A = \\text{1-methylcyclohexene}$ (trisubstituted endocyclic double bond).\n2. Dehydrohalogenation of 1-chloro-1-methylcyclohexane with the bulky base potassium tert-butoxide ($(\\text{CH}_3)_3\\text{CO}^-\\text{K}^+$) follows Hofmann elimination, abstracting a proton from the less sterically hindered methyl group to yield $B = \\text{methylenecyclohexane}$ (exocyclic double bond). Hence, option (C) is correct."
+  },
+  {
+    qNum: 95,
+    exam: "JEE Main 2021 (16 Mar, Shift 1)",
+    question: "Which of the following is Lindlar catalyst ?",
+    options: [
+      "Zinc chloride and $\\text{HCl}$",
+      "Cold dilute solution of $\\text{KMnO}_4$",
+      "Sodium and Liquid $\\text{NH}_3$",
+      "Partially deactivated palladised charcoal"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "Lindlar's catalyst is palladised charcoal partially deactivated (poisoned) with substances like quinoline, sulfur, or calcium carbonate ($\\text{Pd}/\\text{CaCO}_3$ poisoned with lead salts or quinoline). It stereoselectively hydrogenates alkynes to cis-alkenes. Hence, option (D) is correct."
+  },
+  {
+    qNum: 96,
+    exam: "JEE Main 2021 (16 Mar, Shift 2)",
+    question: "An unsaturated hydrocarbon $X$ on ozonolysis gives $A$. Compound $A$ when warmed with ammoniacal silver nitrate forms a bright silver mirror along the sides of the test tube. The unsaturated hydrocarbon $X$ is :",
+    options: [
+      "$\\text{CH}_3-\\text{C}(\\text{CH}_3)=\\text{C}(\\text{CH}_3)-\\text{CH}_3$",
+      "methylenecyclopropane derivative",
+      "$\\text{HC}\\equiv\\text{C}-\\text{CH}_2-\\text{CH}_3$",
+      "$\\text{CH}_3-\\text{C}\\equiv\\text{C}-\\text{CH}_3$"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "A positive Tollens' test (bright silver mirror) indicates the presence of an aldehyde group or formic acid ($\\text{HCOOH}$). Ozonolysis of terminal alkyne but-1-yne ($\\text{HC}\\equiv\\text{C}-\\text{CH}_2\\text{CH}_3$) cleaves the triple bond to give propanoic acid ($\\text{CH}_3\\text{CH}_2\\text{COOH}$) and formic acid ($\\text{HCOOH}$). Formic acid contains a formyl group and readily reduces Tollens' reagent to metallic silver. Hence, option (C) is correct."
+  },
+  {
+    qNum: 97,
+    exam: "JEE Main 2021 (17 Mar, Shift 1)",
+    question: "The major product formed in the following reaction is :\n$$\\text{1-methyl-2-vinylcyclopentane} \\xrightarrow{\\text{HBr} / \\text{CCl}_4} A\\;\\text{(Major product)}$$",
+    options: [
+      "Product (A)",
+      "Product (B)",
+      "Product (C)",
+      "1-(2-bromopropan-2-yl)cyclopentane derivative (D)"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q97_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Addition of $\\text{H}^+$ to the vinyl double bond yields a secondary carbocation on the side chain.\n2. A 1,2-hydride shift occurs to form a more stable tertiary carbocation, followed by ring rearrangement/methyl shift to form a tertiary bromide with a expanded/stabilized framework as shown in structure (D). Attack of $\\text{Br}^-$ completes the reaction to give (D). Hence, option (D) is correct."
+  },
+  {
+    qNum: 98,
+    exam: "JEE Main 2021 (17 Mar, Shift 2)",
+    question: "Given below are two statements :\nStatement-I : 2-methylbutane on oxidation with $\\text{KMnO}_4$ gives 2-methylbutan-2-ol.\nStatement-II : n-alkanes can be easily oxidised to corresponding alcohol with $\\text{KMnO}_4$.\nChoose the correct option :",
+    options: [
+      "Both statement I and statement II are correct",
+      "Both statement I and statement II are incorrect",
+      "Statement I is correct but Statement II is incorrect",
+      "Statement I is incorrect but Statement II is correct"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "Alkanes are generally inert to oxidizing agents like $\\text{KMnO}_4$. However, alkanes containing a tertiary hydrogen atom (such as 2-methylbutane) can be oxidized by potassium permanganate to corresponding tertiary alcohols (2-methylbutan-2-ol). Normal straight-chain alkanes (n-alkanes) lack tertiary hydrogens and resist oxidation by $\\text{KMnO}_4$. Thus, Statement I is correct, but Statement II is incorrect. Hence, option (C) is correct."
+  },
+  {
+    qNum: 99,
+    exam: "JEE Main 2021 (17 Mar, Shift 2)",
+    question: "Choose the correct statement regarding the formation of carbocations A and B given :\n$$\\text{CH}_3-\\text{CH}_2-\\text{CH}=\\text{CH}_2 + \\text{HBr} \\rightarrow \\text{CH}_3-\\text{CH}_2-\\text{CH}_2-\\text{CH}_2^+\\,(\\text{\"A\"}) + \\text{CH}_3-\\text{CH}_2-\\text{CH}^+-\\text{CH}_3\\,(\\text{\"B\"})$$",
+    options: [
+      "Carbocation B is more stable and formed relatively at faster rate",
+      "Carbocation A is more stable and formed relatively at slow rate",
+      "Carbocation B is more stable and formed relatively at slow rate",
+      "Carbocation A is more stable and formed relatively at faster rate"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q99_diagram'] || null,
+    solution_image_url: null,
+    solution: "Carbocation B is a secondary carbocation ($\\text{CH}_3\\text{CH}_2\\text{CH}^+\\text{CH}_3$) stabilized by 5 hyperconjugative $\\alpha$-hydrogens, whereas carbocation A is an unstable primary carbocation (2 $\\alpha$-hydrogens). Because carbocation B is more stable, the activation energy for its formation is lower, meaning it is formed at a much faster rate. Hence, option (A) is correct."
+  },
+  {
+    qNum: 100,
+    exam: "JEE Main 2021 (18 Mar, Shift 2)",
+    question: "In the nitration of aniline at $288\\,\\text{K}$:\n$$\\text{Aniline} \\xrightarrow[288\\,\\text{K}]{\\text{HNO}_3, \\text{H}_2\\text{SO}_4} \\text{o-nitro (A)} + \\text{m-nitro (B)} + \\text{p-nitro (C)}$$\nThe correct order of percentage yield is :",
+    options: [
+      "C > A > B",
+      "B > C > A",
+      "A > C > B",
+      "C > B > A"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q100_diagram'] || null,
+    solution_image_url: null,
+    solution: "The experimental percentage yields for mono-nitration of aniline under strongly acidic conditions at $288\\,\\text{K}$ are:\n- p-nitroaniline (C) = $51\\%$\n- m-nitroaniline (B) = $47\\%$\n- o-nitroaniline (A) = $2\\%$\nThus, the correct decreasing order of percentage yield is: $\\text{C} > \\text{B} > \\text{A}$. Hence, option (D) is correct."
+  },
+  {
+    qNum: 101,
+    exam: "JEE Main 2021 (20 Jul, Shift 1)",
+    question: "Cyclohexene undergoes the following reactions :\n(1) $\\text{Cyclohexene} \\xrightarrow{\\text{KMnO}_4, \\text{H}_2\\text{SO}_4, \\Delta} 'A'\\;\\text{(major)}$\n(2) $\\text{Cyclohexene} \\xrightarrow{\\text{KMnO}_4, \\text{H}_2\\text{O}, 273\\,\\text{K}} 'B'\\;\\text{(major)}$\nIdentify the correct statement :",
+    options: [
+      "Both compound 'A' and compound 'B' are dicarboxylic acids",
+      "Both compound 'A' and compound 'B' are diols",
+      "Compound 'A' is diol and compound 'B' is dicarboxylic acid",
+      "Compound 'A' is dicarboxylic acid and compound 'B' is diol"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q101_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Hot acidic potassium permanganate ($\\text{KMnO}_4/\\text{H}_2\\text{SO}_4, \\Delta$) causes oxidative cleavage of the cyclohexene double bond, oxidizing both alkene carbons to carboxylic acid groups to yield adipic acid [hexanedioic acid, a dicarboxylic acid, 'A'].\n2. Cold alkaline/neutral $\\text{KMnO}_4$ at $273\\,\\text{K}$ (Baeyer's reagent) is a mild reagent that carries out syn-hydroxylation without cleaving the carbon skeleton, giving cis-cyclohexane-1,2-diol (a diol, 'B').\nThus, compound 'A' is a dicarboxylic acid and compound 'B' is a diol. Hence, option (D) is correct."
+  },
+  {
+    qNum: 102,
+    exam: "JEE Main 2021 (20 Jul, Shift 2)",
+    question: "The major product $P$ of the following reaction is :\n$$\\text{4-bromostyrene} \\xrightarrow[(2)\\;\\text{CoF}_2]{(1)\\;(\\text{C}_6\\text{H}_5\\text{CO})_2\\text{O}_2, \\text{HBr}} P\\;\\text{(major product)}$$",
+    options: [
+      "4-(1-fluorovinyl)bromobenzene (A)",
+      "4-(2-fluoroethyl)fluorobenzene (B)",
+      "4-(1-fluoroethyl)bromobenzene (C)",
+      "1-bromo-4-(2-fluoroethyl)benzene (D)"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "hard",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q102_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. In the presence of benzoyl peroxide, free radical addition of $\\text{HBr}$ across the styrene vinyl group follows anti-Markovnikov's rule, adding bromine to the terminal carbon to form 1-bromo-4-(2-bromoethyl)benzene.\n2. Swarts reaction using cobalt(II) fluoride ($\\text{CoF}_2$) selectively displaces the aliphatic primary bromide on the ethyl side chain with fluorine, while the aromatic $\\text{C}-\\text{Br}$ bond remains intact due to partial double bond character.\nThus, product $P$ is 1-bromo-4-(2-fluoroethyl)benzene (structure D). Hence, option (D) is correct."
+  },
+  {
+    qNum: 103,
+    exam: "JEE Main 2021 (20 Jul, Shift 2)",
+    question: "Benzene on nitration gives nitrobenzene in presence of $\\text{HNO}_3$ and $\\text{H}_2\\text{SO}_4$ mixture, where :",
+    options: [
+      "both $\\text{H}_2\\text{SO}_4$ and $\\text{HNO}_3$ act as a bases",
+      "$\\text{HNO}_3$ acts as an acid and $\\text{H}_2\\text{SO}_4$ acts as a base",
+      "both $\\text{H}_2\\text{SO}_4$ and $\\text{HNO}_3$ act as an acids",
+      "$\\text{HNO}_3$ acts as a base and $\\text{H}_2\\text{SO}_4$ acts as an acid"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "In the nitrating mixture, sulfuric acid is a stronger acid than nitric acid. $\\text{H}_2\\text{SO}_4$ protonates nitric acid, acting as a Brønsted-Lowry acid, while $\\text{HNO}_3$ accepts the proton and acts as a Brønsted-Lowry base:\n$$\\text{HNO}_3 + \\text{H}_2\\text{SO}_4 \\rightleftharpoons \\text{H}_2\\text{NO}_3^+ + \\text{HSO}_4^-$$\n$$\\text{H}_2\\text{NO}_3^+ \\rightarrow \\text{NO}_2^+ + \\text{H}_2\\text{O}$$\nHence, option (D) is correct."
+  },
+  {
+    qNum: 104,
+    exam: "JEE Main 2021 (22 Jul, Shift 1)",
+    question: "In the chemical reactions given :\n$$\\text{Benzenediazonium chloride} + A + \\text{H}_2\\text{O} \\rightarrow \\text{Benzene} \\xrightarrow[\\text{Anhyd. }\\text{AlCl}_3]{B} \\text{Ethylbenzene}$$\n$A$ and $B$ respectively are :",
+    options: [
+      "$\\text{H}_3\\text{PO}_2$ and $\\text{CH}_3\\text{CH}_2\\text{Cl}$",
+      "$\\text{CH}_3\\text{CH}_2\\text{OH}$ and $\\text{H}_3\\text{PO}_2$",
+      "$\\text{H}_3\\text{PO}_2$ and $\\text{CH}_3\\text{CH}_2\\text{OH}$",
+      "$\\text{CH}_3\\text{CH}_2\\text{Cl}$ and $\\text{H}_3\\text{PO}_2$"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "1. Benzenediazonium chloride is deaminated (reduced) to benzene by hypophosphorous acid ($A = \\text{H}_3\\text{PO}_2$):\n$$\\text{C}_6\\text{H}_5\\text{N}_2^+\\text{Cl}^- + \\text{H}_3\\text{PO}_2 + \\text{H}_2\\text{O} \\rightarrow \\text{C}_6\\text{H}_6 + \\text{N}_2 + \\text{H}_3\\text{PO}_3 + \\text{HCl}$$\n2. Benzene then undergoes Friedel-Crafts alkylation with ethyl chloride ($B = \\text{CH}_3\\text{CH}_2\\text{Cl}$) in the presence of anhydrous $\\text{AlCl}_3$ to yield ethylbenzene.\nHence, option (A) is correct."
+  },
+  {
+    qNum: 105,
+    exam: "JEE Main 2021 (25 Jul, Shift 1)",
+    question: "An organic compound 'A' $\\text{C}_4\\text{H}_8$ on treatment with $\\text{KMnO}_4 / \\text{H}^+$ yields compound 'B' $\\text{C}_3\\text{H}_6\\text{O}$. Compound 'A' also yields compound 'B' on ozonolysis. Compound 'A' is :",
+    options: [
+      "2-Methylpropene",
+      "1-Methylcyclopropane",
+      "But-2-ene",
+      "Cyclobutane"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "Compound 'B' is $\\text{C}_3\\text{H}_6\\text{O}$, which corresponds to acetone ($\\text{CH}_3\\text{COCH}_3$). Ozonolysis of an alkene yields a ketone when one of the double-bonded carbons has two alkyl substituents. 2-Methylpropene [$(\\text{CH}_3)_2\\text{C}=\\text{CH}_2$] undergoes both ozonolysis and acidic $\\text{KMnO}_4$ oxidation to yield acetone ($\\text{CH}_3\\text{COCH}_3$) and formic acid/$\\text{CO}_2$. Hence, compound 'A' is 2-methylpropene. Option (A) is correct."
+  },
+  {
+    qNum: 106,
+    exam: "JEE Main 2021 (25 Jul, Shift 1)",
+    question: "The number of sigma bonds in $\\text{H}_3\\text{C}-\\text{C}(\\text{H})=\\text{CH}-\\text{C}\\equiv\\text{C}-\\text{H}$ is ______.",
+    options: [
+      "8",
+      "9",
+      "10",
+      "11"
+    ],
+    correct_option: 2, // 10
+    numeric_answer: 10,
+    question_type: "numerical",
+    marks: 4,
+    negative_marks: 0,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "Count of bonds in pent-3-en-1-yne ($\\text{CH}_3-\\text{CH}=\\text{CH}-\\text{C}\\equiv\\text{CH}$):\n- $\\text{C}-\\text{C}$ single bonds: 2 $\\sigma$ bonds\n- $\\text{C}=\\text{C}$ double bond: 1 $\\sigma$ bond (and 1 $\\pi$)\n- $\\text{C}\\equiv\\text{C}$ triple bond: 1 $\\sigma$ bond (and 2 $\\pi$)\n- Total $\\text{C}-\\text{C}$ $\\sigma$ bonds = $2 + 1 + 1 = 4$\n- Total $\\text{C}-\\text{H}$ $\\sigma$ bonds = $3 + 1 + 1 + 1 = 6$\nTotal number of $\\sigma$ bonds = $4 + 6 = 10$. Answer: 10."
+  },
+  {
+    qNum: 107,
+    exam: "JEE Main 2021 (25 Jul, Shift 2)",
+    question: "Consider the chemical reaction :\n$$\\text{cis-but-2-ene} + \\text{Br}_2 \\xrightarrow{\\text{CCl}_4} \\text{Product \"P\"}$$\nThe total number of stereoisomers possible for Product \"P\" is ______.",
+    options: [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    correct_option: 1, // 2
+    numeric_answer: 2,
+    question_type: "numerical",
+    marks: 4,
+    negative_marks: 0,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q107_diagram'] || null,
+    solution_image_url: null,
+    solution: "Electrophilic bromination of an alkene proceeds through anti-addition via a cyclic bromonium ion. Addition of $\\text{Br}_2$ to a cis-alkene (cis-but-2-ene) produces a racemic pair of enantiomers [$(2R,3R)$-2,3-dibromobutane and $(2S,3S)$-2,3-dibromobutane]. Thus, exactly 2 stereoisomers (one pair of enantiomers) are formed. Answer: 2."
+  },
+  {
+    qNum: 108,
+    exam: "JEE Main 2021 (27 Jul, Shift 1)",
+    question: "Presence of which reagent will affect the reversibility of the following reaction, and change it to a irreversible reaction ?\n$$\\text{CH}_4 + \\text{I}_2 \\rightleftharpoons \\text{CH}_3\\text{I} + \\text{HI}$$",
+    options: [
+      "$\\text{HOCl}$",
+      "dilute $\\text{HNO}_2$",
+      "Liquid $\\text{NH}_3$",
+      "Concentrated $\\text{HIO}_3$"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "The iodination of alkanes is reversible because hydrogen iodide ($\\text{HI}$) formed in the reaction is a powerful reducing agent that reduces methyl iodide back to methane. To make the reaction irreversible and shift equilibrium forward, an oxidizing agent such as concentrated iodic acid ($\\text{HIO}_3$) or concentrated $\\text{HNO}_3$ is added to oxidize $\\text{HI}$ as soon as it is formed:\n$$5\\,\\text{HI} + \\text{HIO}_3 \\rightarrow 3\\,\\text{I}_2 + 3\\,\\text{H}_2\\text{O}$$\nHence, option (D) is correct."
+  },
+  {
+    qNum: 109,
+    exam: "JEE Main 2021 (27 Jul, Shift 2)",
+    question: "Consider the dehydration of 1-phenylpropan-1-ol with conc. $\\text{H}_2\\text{SO}_4$ forming stereoisomers $A$ (trans) and $B$ (cis). Choose the correct statement :",
+    options: [
+      "The reaction is not possible in acidic medium",
+      "Both compounds A and B are formed equally",
+      "Compound A will be the major product",
+      "Compound B will be the major product"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q109_diagram'] || null,
+    solution_image_url: null,
+    solution: "Acid-catalyzed dehydration of 1-phenylpropan-1-ol proceeds through a stable benzylic carbocation intermediate. Elimination of a proton yields 1-phenylprop-1-ene. The trans-isomer (compound A) minimizes steric repulsion between the bulky phenyl and methyl groups, making it thermodynamically more stable than the cis-isomer (compound B). Thus, compound A (trans) is the major product. Hence, option (C) is correct."
+  },
+  {
+    qNum: 110,
+    exam: "JEE Main 2021 (27 Jul, Shift 2)",
+    question: "The correct sequence of correct reagents for the transformation of nitrobenzene to 3-chlorophenol is :",
+    options: [
+      "(i) $\\text{Fe}, \\text{HCl}$; (ii) $\\text{Cl}_2, \\text{HCl}$; (iii) $\\text{NaNO}_2, \\text{HCl}, 0^\\circ\\text{C}$; (iv) $\\text{H}_2\\text{O}/\\text{H}^+$",
+      "(i) $\\text{Fe}, \\text{HCl}$; (ii) $\\text{NaNO}_2, \\text{HCl}, 0^\\circ\\text{C}$; (iii) $\\text{H}_2\\text{O}/\\text{H}^+$; (iv) $\\text{Cl}_2, \\text{FeCl}_3$",
+      "(i) $\\text{Cl}_2, \\text{FeCl}_3$; (ii) $\\text{Fe}, \\text{HCl}$; (iii) $\\text{NaNO}_2, \\text{HCl}, 0^\\circ\\text{C}$; (iv) $\\text{H}_2\\text{O}/\\text{H}^+$",
+      "(i) $\\text{Cl}_2, \\text{FeCl}_3$; (ii) $\\text{NaNO}_2, \\text{HCl}, 0^\\circ\\text{C}$; (iii) $\\text{Fe}, \\text{HCl}$; (iv) $\\text{H}_2\\text{O}/\\text{H}^+$"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q110_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. $\\text{Cl}_2/\\text{FeCl}_3$: The $-\\text{NO}_2$ group is meta-directing, so chlorination yields 1-chloro-3-nitrobenzene.\n2. $\\text{Fe}/\\text{HCl}$: Selectively reduces the nitro group to an amino group, giving 3-chloroaniline.\n3. $\\text{NaNO}_2/\\text{HCl}$ at $0-5^\\circ\\text{C}$: Diazotization yields 3-chlorobenzenediazonium chloride.\n4. $\\text{H}_2\\text{O}/\\text{H}^+$: Heating the diazonium salt with dilute acid hydrolyzes it to 3-chlorophenol.\nHence, option (C) is correct."
+  },
+  {
+    qNum: 111,
+    exam: "JEE Main 2021 (26 Aug, Shift 1)",
+    question: "Excess of isobutane on reaction with $\\text{Br}_2$ in presence of light at $125^\\circ\\text{C}$ gives which one of the following, as the major product ?",
+    options: [
+      "1,2-dibromo-2-methylpropane",
+      "1-bromo-2-methylpropane",
+      "2,2-dibromo-2-methylpropane",
+      "2-bromo-2-methylpropane (tert-butyl bromide)"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q111_diagram'] || null,
+    solution_image_url: null,
+    solution: "Free radical bromination is exceptionally regioselective. The relative reactivity for hydrogen abstraction by bromine radical is $3^\\circ : 2^\\circ : 1^\\circ \\approx 1600 : 82 : 1$. Isobutane possesses one tertiary hydrogen atom whose abstraction forms the stable tertiary radical $(\\text{CH}_3)_3\\text{C}^\\bullet$. Reaction with $\\text{Br}_2$ yields 2-bromo-2-methylpropane (tert-butyl bromide) as >99% major product. Hence, option (D) is correct."
+  },
+  {
+    qNum: 112,
+    exam: "JEE Main 2021 (26 Aug, Shift 1)",
+    question: "The major product formed in the following reaction is :\n$$\\text{2-methylbuta-1,3-diene} \\xrightarrow{\\text{HBr (excess)}} \\text{Major Product}$$",
+    options: [
+      "1,3-dibromo-3-methylbutane",
+      "2-bromo-2-methylbutane",
+      "1-bromo-3-methylbut-2-ene (C)",
+      "2,3-dibromo-2-methylbutane"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q112_diagram'] || null,
+    solution_image_url: null,
+    solution: "At room temperature ($25^\\circ\\text{C}$), 1,4-addition across the conjugated diene is thermodynamically controlled. Protonation of isoprene occurs at C-1 to form the resonance-stabilized allylic tertiary/primary carbocation. Attack of bromide ion at the less sterically hindered C-4 carbon produces 1-bromo-3-methylbut-2-ene (structure C), which has a more substituted, thermodynamically more stable double bond. Hence, option (C) is correct."
+  },
+  {
+    qNum: 113,
+    exam: "JEE Main 2021 (26 Aug, Shift 2)",
+    question: "Consider the given reaction, identify $X$ and $Y$ :\n$$\\text{3-methylbutanal} \\xrightarrow[\\text{HCN}, \\text{H}_2\\text{O}]{X} \\text{Cyanohydrin} \\xrightarrow[\\text{H}_3\\text{O}^+]{\\text{LiAlH}_4} Y\\;\\text{(Major Product)}$$",
+    options: [
+      "$X = \\text{NaOH},\\; Y = \\text{1-amino-4-methylpentan-2-ol}$",
+      "$X = \\text{NaOH},\\; Y = \\text{1-amino-3-methylbutan-2-ol}$",
+      "$X = \\text{HNO}_3,\\; Y = \\text{1-amino-4-methylpentan-2-ol}$",
+      "$X = \\text{HNO}_3,\\; Y = \\text{1-amino-3-methylbutan-2-ol}$"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q113_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Cyanohydrin formation is catalyzed by base ($X = \\text{NaOH}$) to generate the reactive nucleophile $\\text{CN}^-$, which attacks the carbonyl carbon of 3-methylbutanal to yield 2-hydroxy-4-methylpentanenitrile.\n2. Reduction of the nitrile group ($-\\text{C}\\equiv\\text{N}$) with lithium aluminium hydride ($\\text{LiAlH}_4$) followed by aqueous workup reduces it to a primary amine ($-\\text{CH}_2\\text{NH}_2$), producing 1-amino-4-methylpentan-2-ol ($Y$). Hence, option (A) is correct."
+  },
+  {
+    qNum: 114,
+    exam: "JEE Main 2021 (27 Aug, Shift 2)",
+    question: "The major product ($A$) formed in the reaction given below is :\n$$\\text{CH}_3-\\text{CH}_2-\\text{CH(C}_6\\text{H}_5)-\\text{CH}_2-\\text{Br} + \\text{CH}_3\\text{O}^- \\xrightarrow{\\text{CH}_3\\text{OH}} A\\;\\text{(Major Product)}$$",
+    options: [
+      "$\\text{CH}_3-\\text{CH}_2-\\text{C(C}_6\\text{H}_5)=\\text{CH}_2$",
+      "$\\text{CH}_3-\\text{CH}_2-\\text{CH(C}_6\\text{H}_5)-\\text{CH}_2-\\text{OCH}_3$",
+      "Ether derivative (C)",
+      "Alcohol derivative (D)"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q114_diagram'] || null,
+    solution_image_url: null,
+    solution: "Treatment of 1-bromo-2-phenylbutane with methoxide base in methanol brings about an $E2$ elimination. Abstraction of the benzylic proton is favored because the developing double bond is conjugated with the aromatic benzene ring, yielding 2-phenylbut-1-ene [$\\text{CH}_3\\text{CH}_2\\text{C(Ph)}=\\text{CH}_2$] as the thermodynamically most stable major product. Hence, option (A) is correct."
+  },
+  {
+    qNum: 115,
+    exam: "JEE Main 2021 (31 Aug, Shift 1)",
+    question: "Given below are two statements : one is labelled as Assertion (A) and the other is labelled as Reason (R).\nAssertion (A): Treatment of bromine water with propene yields 1-bromopropan-2-ol.\nReason (R): Attack of water on bromonium ion follows Markovnikov rule and results in 1-bromopropan-2-ol.\nIn the light of the above statements, choose the most appropriate answer :",
+    options: [
+      "Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+      "(A) is false but (R) is true",
+      "Both (A) and (R) are true and (R) is the correct explanation of (A)",
+      "(A) is true but (R) is false"
+    ],
+    correct_option: 2, // C
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "1. Reaction of propene with bromine water forms a cyclic bromonium ion intermediate.\n2. In the opening of the bromonium ring by water, the nucleophile attacks the more substituted secondary carbon atom because it bears greater partial positive charge (more stable transition state), leading to 1-bromopropan-2-ol (Markovnikov addition).\nThus, Assertion (A) is true, Reason (R) is true, and (R) correctly explains (A). Hence, option (C) is correct."
+  },
+  {
+    qNum: 116,
+    exam: "JEE Main 2021 (31 Aug, Shift 2)",
+    question: "For the following sequence of reactions, the correct products are :\n$$\\text{Benzene} \\xrightarrow{1.\\;\\text{Br}_2/\\text{Fe}/\\Delta} \\xrightarrow{2.\\;\\text{Mg/dry ether}} \\xrightarrow{3.\\;\\text{CH}_3\\text{OH}} \\text{Products}$$",
+    options: [
+      "$\\text{C}_6\\text{H}_5\\text{CH}_3 + \\text{Mg(OH)Br}$",
+      "$\\text{C}_6\\text{H}_5\\text{Br} + \\text{Mg(OCH}_3)\\text{H}$",
+      "$\\text{C}_6\\text{H}_5\\text{OCH}_3 + \\text{HMgBr}$",
+      "$\\text{C}_6\\text{H}_6 + \\text{Mg(OCH}_3)\\text{Br}$"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q116_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Electrophilic aromatic bromination of benzene with $\\text{Br}_2/\\text{Fe}/\\Delta$ gives bromobenzene ($\\text{C}_6\\text{H}_5\\text{Br}$).\n2. Reaction with magnesium in dry ether forms phenylmagnesium bromide (Grignard reagent: $\\text{C}_6\\text{H}_5\\text{MgBr}$).\n3. Phenylmagnesium bromide acts as a strong base and abstracts the acidic proton from methanol ($\\text{CH}_3\\text{OH}$), producing benzene ($\\text{C}_6\\text{H}_6$) and magnesium methoxide bromide [$\\text{Mg(OCH}_3)\\text{Br}$]. Hence, option (D) is correct."
+  },
+  {
+    qNum: 117,
+    exam: "JEE Main 2021 (31 Aug, Shift 2)",
+    question: "Identify correct $A$, $B$ and $C$ in the reaction sequence given below :\n$$\\text{Benzene} \\xrightarrow[\\Delta]{\\text{conc. }\\text{HNO}_3 + \\text{conc. }\\text{H}_2\\text{SO}_4} A \\xrightarrow{\\text{Cl}_2 / \\text{Anhyd. }\\text{AlCl}_3} B \\xrightarrow{\\text{Fe/HCl}} C$$",
+    options: [
+      "A = nitrobenzene, B = 4-chloronitrobenzene, C = 4-chloroaniline",
+      "A = nitrobenzene, B = 2-chloronitrobenzene, C = 2-chloroaniline",
+      "A = nitrobenzene, B = 3-chloronitrobenzene, C = 3-chlorophenol",
+      "A = nitrobenzene, B = 3-chloronitrobenzene, C = 3-chloroaniline"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q117_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Nitration of benzene gives nitrobenzene ($A = \\text{C}_6\\text{H}_5\\text{NO}_2$).\n2. The nitro group is strongly meta-directing; electrophilic chlorination with $\\text{Cl}_2/\\text{AlCl}_3$ gives 3-chloronitrobenzene ($B$).\n3. Reduction with $\\text{Fe}/\\text{HCl}$ selectively reduces the nitro group to an amino group, giving 3-chloroaniline ($C$). Hence, option (D) is correct."
+  },
+  {
+    qNum: 118,
+    exam: "JEE Main 2021 (01 Sep, Shift 2)",
+    question: "In the following sequence of reactions, $\\text{C}_3\\text{H}_6 \\xrightarrow{\\text{H}^+/\\text{H}_2\\text{O}} A \\xrightarrow{\\text{KIO} / \\text{dil. KOH}} B + C$. The compounds $B$ and $C$ respectively are :",
+    options: [
+      "$\\text{CI}_3\\text{COOK}, \\text{CH}_3\\text{I}$",
+      "$\\text{CH}_3\\text{I}, \\text{HCOOK}$",
+      "$\\text{CI}_3\\text{COOK}, \\text{HCOOH}$",
+      "$\\text{CHI}_3, \\text{CH}_3\\text{COOK}$"
+    ],
+    correct_option: 3, // D
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "1. Acid-catalyzed hydration of propene ($\\text{CH}_3\\text{CH}=\\text{CH}_2$) gives propan-2-ol ($A = \\text{CH}_3\\text{CH(OH)CH}_3$).\n2. Alkaline hypoiodite ($\\text{KIO}/\\text{dil. KOH}$) oxidizes propan-2-ol to acetone, which then undergoes the haloform reaction to yield iodoform ($B = \\text{CHI}_3$) and potassium acetate ($C = \\text{CH}_3\\text{COOK}$). Hence, option (D) is correct."
+  },
+  {
+    qNum: 119,
+    exam: "JEE Main 2021 (01 Sep, Shift 2)",
+    question: "The stereoisomers that are formed by electrophilic addition of bromine to trans-but-2-ene is/are :",
+    options: [
+      "1 identical mesomer",
+      "2 enantiomers",
+      "2 enantiomers and 2 mesomers",
+      "1 racemic and 2 enantiomers"
+    ],
+    correct_option: 0, // A
+    numeric_answer: null,
+    question_type: "mcq",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: null,
+    solution_image_url: null,
+    solution: "Addition of bromine to an alkene proceeds with anti-addition via a cyclic bromonium ion. For symmetrical trans-alkenes like trans-but-2-ene, anti-addition of two identical bromine atoms produces the meso-isomer (meso-2,3-dibromobutane), which has an internal plane of symmetry and is optically inactive. Thus, only 1 identical mesomer is formed. Hence, option (A) is correct."
+  },
+  {
+    qNum: 120,
+    exam: "JEE Main 2022 (24 Jun, Shift 1)",
+    question: "The major product 'A' of the following given reaction has $sp^2$ hybridized carbon atoms :\n$$\\text{2,7-Dimethyl-2,6-octadiene} \\xrightarrow{\\text{H}^+} A\\;\\text{(Major Product)}$$\nThe number of $sp^2$ hybridized carbon atoms is ______.",
+    options: [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    correct_option: 1, // 2
+    numeric_answer: 2,
+    question_type: "numerical",
+    marks: 4,
+    negative_marks: 0,
+    difficulty: "medium",
+    category: "Chemistry",
+    chapter: "Hydrocarbons",
+    exam_type: "JEE",
+    image_url: diagramUrls['q120_diagram'] || null,
+    solution_image_url: null,
+    solution: "1. Protonation of one of the double bonds generates a tertiary carbocation.\n2. Intramolecular electrophilic addition onto the remaining double bond results in cyclization to form a six-membered ring (cyclohexyl tertiary carbocation).\n3. Elimination of a proton yields 1,3,3-trimethylcyclohex-1-ene (or 1,5,5-trimethylcyclohexene) as the major cyclized product.\n4. In the final product, only the two doubly bonded ring carbons (C-1 and C-2) are $sp^2$ hybridized; all other carbons are $sp^3$ hybridized.\nTotal number of $sp^2$ hybridized carbon atoms = 2. Answer: 2."
+  }
+];
+
+const outPath = path.resolve(__dirname, 'clean_hydro_part2.mjs');
+const fileContent = `export const HYDRO_PART2 = ${JSON.stringify(part2Questions, null, 2)};\n`;
+fs.writeFileSync(outPath, fileContent, 'utf8');
+console.log(`Successfully generated clean_hydro_part2.mjs with ${part2Questions.length} questions!`);

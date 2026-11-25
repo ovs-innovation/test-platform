@@ -1,51 +1,42 @@
+import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
-import { v2 as cloudinary } from 'cloudinary';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: 'fyxpnmdh',
+  api_key: '716642519429436',
+  api_secret: '69WgGypmzKl34WdRC_OLaKiaBRU'
 });
 
-const srcDir = path.resolve(__dirname, 'atom_diagrams');
-const targetLocalDir = path.resolve(__dirname, '../../frontend/public/uploads/structure_of_atom');
-if (!fs.existsSync(targetLocalDir)) {
-  fs.mkdirSync(targetLocalDir, { recursive: true });
-}
+const DIAGRAMS_DIR = path.resolve(__dirname, 'atom_jee_diagrams');
+const OUT_FILE = path.resolve(__dirname, 'atom_jee_diagram_urls.json');
 
 async function uploadAll() {
-  const files = fs.readdirSync(srcDir).filter(f => f.endsWith('.png'));
-  const urlMap = {};
+  const files = fs.readdirSync(DIAGRAMS_DIR).filter(f => f.endsWith('.png'));
+  console.log(`Uploading ${files.length} diagrams to Cloudinary folder "edvedum/atom_jee_pyq"...`);
 
+  const urls = {};
   for (const file of files) {
-    const localSrc = path.join(srcDir, file);
-    const localDest = path.join(targetLocalDir, file);
-    fs.copyFileSync(localSrc, localDest);
+    const id = file.replace('.png', '');
+    const filePath = path.join(DIAGRAMS_DIR, file);
 
-    console.log(`Uploading ${file} to Cloudinary...`);
-    try {
-      const res = await cloudinary.uploader.upload(localSrc, {
-        folder: 'edvedum/structure_of_atom',
-        public_id: path.basename(file, '.png'),
-        overwrite: true
-      });
-      urlMap[file] = res.secure_url;
-      console.log(`Uploaded ${file} -> ${res.secure_url}`);
-    } catch (err) {
-      console.error(`Failed to upload ${file}:`, err.message);
-      urlMap[file] = `/uploads/structure_of_atom/${file}`;
-    }
+    const uploadRes = await cloudinary.uploader.upload(filePath, {
+      folder: 'edvedum/atom_jee_pyq',
+      public_id: id,
+      overwrite: true,
+      resource_type: 'image'
+    });
+
+    urls[id] = uploadRes.secure_url;
+    console.log(`Uploaded ${id} -> ${uploadRes.secure_url}`);
   }
 
-  fs.writeFileSync('backend/scripts/atom_diagram_urls.json', JSON.stringify(urlMap, null, 2), 'utf8');
-  console.log('Saved diagram URLs to atom_diagram_urls.json');
+  fs.writeFileSync(OUT_FILE, JSON.stringify(urls, null, 2));
+  console.log(`Saved ${Object.keys(urls).length} URLs to ${OUT_FILE}`);
 }
 
 uploadAll().catch(console.error);

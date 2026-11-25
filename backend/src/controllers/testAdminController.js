@@ -264,7 +264,7 @@ export async function syncFreeTestSeries(test) {
  * List all tests with optional filters & participation counts
  */
 export const listTests = asyncHandler(async (req, res) => {
-  const { test_type, is_published, search } = req.query;
+  const { test_type, is_published, search, class_level } = req.query;
 
   let whereClauses = [
     'COALESCE(t.is_deleted, FALSE) = FALSE',
@@ -289,6 +289,19 @@ export const listTests = asyncHandler(async (req, res) => {
   if (is_published !== undefined) {
     whereClauses.push(`t.is_published = $${paramIdx++}`);
     params.push(is_published === 'true');
+  }
+
+  if (class_level && class_level !== 'All') {
+    if (class_level === 'Repeater' || class_level.toLowerCase().includes('dropper')) {
+      whereClauses.push(`(t.class_level ILIKE '%repeater%' OR t.class_level ILIKE '%dropper%' OR t.class_level ILIKE '%pass%')`);
+    } else if (class_level === 'Class 11') {
+      whereClauses.push(`(t.class_level ILIKE '%11%' AND t.class_level NOT ILIKE '%12%')`);
+    } else if (class_level === 'Class 12') {
+      whereClauses.push(`(t.class_level ILIKE '%12%' AND t.class_level NOT ILIKE '%repeater%' AND t.class_level NOT ILIKE '%dropper%')`);
+    } else {
+      whereClauses.push(`t.class_level = $${paramIdx++}`);
+      params.push(class_level);
+    }
   }
 
   if (search) {
@@ -412,6 +425,7 @@ export const createTest = asyncHandler(async (req, res) => {
   const {
     test_name,
     test_type,
+    class_level,
     test_date,
     start_time,
     end_time,
@@ -441,15 +455,16 @@ export const createTest = asyncHandler(async (req, res) => {
     const resolvedIsLive = req.body.is_live !== undefined ? Boolean(req.body.is_live) : false;
     const result = await client.query(
       `INSERT INTO tests (
-        test_name, title, test_type, test_date, start_time, end_time,
+        test_name, title, test_type, class_level, test_date, start_time, end_time,
         duration_minutes, syllabus, max_marks, is_published, status,
         result_publish_time, solution_pdf_url, recommended_ebook_id,
         available_from, available_until, is_live
-      ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+      ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
       RETURNING *`,
       [
         test_name,
         test_type,
+        class_level || null,
         test_date,
         start_time,
         end_time,
@@ -509,13 +524,14 @@ export const createTest = asyncHandler(async (req, res) => {
     await client.query(
       `INSERT INTO assessments (
         id, title, description, instructions, duration_minutes, passing_marks, max_violations,
-        result_visible, is_published, available_from, available_until, created_by, test_type
-      ) VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, $10, true, $6, $7, $8, $9, $11)
+        result_visible, is_published, available_from, available_until, created_by, test_type, class_level
+      ) VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, $10, true, $6, $7, $8, $9, $11, $12)
       ON CONFLICT (id) DO UPDATE SET
         title = EXCLUDED.title,
         duration_minutes = EXCLUDED.duration_minutes,
         max_violations = EXCLUDED.max_violations,
         test_type = EXCLUDED.test_type,
+        class_level = EXCLUDED.class_level,
         is_published = EXCLUDED.is_published,
         updated_at = NOW()`,
       [
@@ -530,6 +546,7 @@ export const createTest = asyncHandler(async (req, res) => {
         req.user?.id || null,
         cleanMaxViolations,
         createdTest.test_type || 'AIETS',
+        class_level || null,
       ]
     ).catch((err) => {
       console.warn('[createTest] sync assessment warning:', err.message);
@@ -602,6 +619,7 @@ export const updateTest = asyncHandler(async (req, res) => {
   const {
     test_name,
     test_type,
+    class_level,
     test_date,
     start_time,
     end_time,
@@ -646,6 +664,7 @@ export const updateTest = asyncHandler(async (req, res) => {
       available_from = $16,
       available_until = $17,
       is_live = COALESCE($18, is_live),
+      class_level = COALESCE($19, class_level),
       updated_at = NOW()
     WHERE id = $1
     RETURNING *`,
@@ -667,7 +686,8 @@ export const updateTest = asyncHandler(async (req, res) => {
       recommended_ebook_id ? parseInt(recommended_ebook_id, 10) : null,
       available_from || null,
       available_until || null,
-      req.body.is_live !== undefined ? Boolean(req.body.is_live) : null
+      req.body.is_live !== undefined ? Boolean(req.body.is_live) : null,
+      class_level !== undefined ? class_level : null
     ]
   );
 
@@ -686,9 +706,10 @@ export const updateTest = asyncHandler(async (req, res) => {
          test_type = COALESCE($4, test_type),
          is_published = COALESCE($5, is_published),
          max_violations = COALESCE($6, max_violations),
+         class_level = COALESCE($7, class_level),
          updated_at = NOW()
      WHERE id = $1`,
-    [id, test_name || null, cleanDuration, test_type || null, is_published !== undefined ? Boolean(is_published) : null, updateViolations]
+    [id, test_name || null, cleanDuration, test_type || null, is_published !== undefined ? Boolean(is_published) : null, updateViolations, class_level !== undefined ? class_level : null]
   ).catch(() => {});
 
   syncFreeTestSeries(result.rows[0]).catch(() => { });

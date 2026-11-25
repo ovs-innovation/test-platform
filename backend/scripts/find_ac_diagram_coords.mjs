@@ -1,0 +1,54 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { createCanvas, loadImage } from '@napi-rs/canvas';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const OUT_DIR = path.resolve(__dirname, 'ac_clean_diagrams');
+if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
+
+// Specification for all 34 diagram questions in Alternating Current
+export const AC_DIAGRAM_SPECS = [
+  { q: 16, p: 6, sx: 150, sy: 100, sw: 900, sh: 350 },
+  { q: 17, p: 6, sx: 150, sy: 550, sw: 900, sh: 350 },
+  { q: 19, p: 7, sx: 150, sy: 150, sw: 900, sh: 450 },
+  { q: 20, p: 8, sx: 100, sy: 40, sw: 1024, sh: 500 },
+  { q: 25, p: 12, sx: 100, sy: 40, sw: 1024, sh: 700 },
+  { q: 27, p: 14, sx: 600, sy: 80, sw: 550, sh: 300 },
+  { q: 29, p: 16, sx: 100, sy: 120, sw: 1024, sh: 450 },
+  { q: 37, p: 23, sx: 150, sy: 20, sw: 900, sh: 320 },
+  { q: 51, p: 33, sx: 150, sy: 80, sw: 900, sh: 320 },
+  { q: 56, p: 36, sx: 150, sy: 40, sw: 900, sh: 350 },
+  { q: 58, p: 37, sx: 100, sy: 460, sw: 1024, sh: 450 },
+  { q: 59, p: 38, sx: 100, sy: 50, sw: 1024, sh: 300 },
+  { q: 71, p: 46, sx: 100, sy: 60, sw: 1024, sh: 800 },
+  { q: 74, p: 48, sx: 100, sy: 60, sw: 1024, sh: 300 },
+  { q: 78, p: 51, sx: 150, sy: 80, sw: 900, sh: 350 },
+  { q: 82, p: 53, sx: 100, sy: 350, sw: 1024, sh: 350 },
+  { q: 83, p: 54, sx: 100, sy: 150, sw: 900, sh: 300 },
+  { q: 89, p: 57, sx: 150, sy: 120, sw: 900, sh: 300 },
+  { q: 90, p: 58, sx: 150, sy: 80, sw: 900, sh: 300 },
+  { q: 93, p: 60, sx: 150, sy: 150, sw: 900, sh: 450 },
+  { q: 94, p: 61, sx: 100, sy: 250, sw: 900, sh: 350 },
+  { q: 95, p: 62, sx: 500, sy: 20, sw: 600, sh: 300 },
+  { q: 100, p: 64, sx: 150, sy: 40, sw: 900, sh: 350 },
+  { q: 111, p: 72, sx: 100, sy: 40, sw: 1024, sh: 450 },
+  { q: 116, p: 75, sx: 100, sy: 40, sw: 1024, sh: 300 },
+  { q: 118, p: 77, sx: 100, sy: 40, sw: 1024, sh: 300 },
+  { q: 129, p: 83, sx: 100, sy: 20, sw: 1024, sh: 350 },
+  { q: 137, p: 88, sx: 150, sy: 120, sw: 900, sh: 300 },
+  { q: 146, p: 93, sx: 100, sy: 40, sw: 1024, sh: 550 },
+  { q: 147, p: 94, sx: 150, sy: 40, sw: 900, sh: 200 },
+  { q: 166, p: 104, sx: 150, sy: 90, sw: 900, sh: 300 },
+  { q: 169, p: 105, sx: 150, sy: 520, sw: 900, sh: 250 },
+  { q: 170, p: 106, sx: 150, sy: 40, sw: 900, sh: 350 },
+  { q: 173, p: 108, sx: 100, sy: 100, sw: 1024, sh: 350 }
+];
+
+fs.writeFileSync(
+  path.resolve(__dirname, 'ac_diagram_specs.json'),
+  JSON.stringify(AC_DIAGRAM_SPECS, null, 2)
+);
+console.log(`Saved ${AC_DIAGRAM_SPECS.length} diagram specs to ac_diagram_specs.json`);

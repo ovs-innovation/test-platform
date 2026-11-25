@@ -1,0 +1,1759 @@
+[
+  {
+    "question_number": 151,
+    "question_text": "A converging beam of rays is incident on a concave spherical mirror of radius of curvature $0.8\\text{ m}$. If the point of convergence of the rays is $0.2\\text{ m}$ behind the mirror, the position of the image formed is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$0.4\\text{ m}$ behind the mirror"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$0.4\\text{ m}$ in front of the mirror"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$0.2\\text{ m}$ in front of the mirror"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$0.1\\text{ m}$ behind the mirror"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 152,
+    "question_text": "The refractive index of the material of a prism is $\\sqrt{2}$ and its refracting angle is $30^\\circ$. One of the refracting surfaces of the prism is silvered. A beam of monochromatic light entering the other face will retrace its path when the angle of incidence is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$45^\\circ$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$60^\\circ$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$0^\\circ$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$30^\\circ$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 153,
+    "question_text": "A person's eye is at a height $1.5\\text{ m}$ above the ground. The minimum length of a vertical plane mirror in which he can see his full image if his total height is $1.8\\text{ m}$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$0.9\\text{ m}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$1.8\\text{ m}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$0.75\\text{ m}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$1.5\\text{ m}$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 154,
+    "question_text": "A convex lens of focal length $20\\text{ cm}$ produces a real image of an object on a screen. If the magnification is $2$, the distance of the object from the lens (in cm) is :",
+    "options": [],
+    "correct_answer": "10",
+    "solution_text": "Official Answer: 10.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 10,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 155,
+    "question_text": "An object is placed at a distance of $f/2$ from a convex lens of focal length $f$. The image formed is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "real, inverted, of same size"
+      },
+      {
+        "option_id": "B",
+        "option_text": "virtual, erect, magnified"
+      },
+      {
+        "option_id": "C",
+        "option_text": "real, erect, magnified"
+      },
+      {
+        "option_id": "D",
+        "option_text": "virtual, inverted, diminished"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 156,
+    "question_text": "A ray of light is incident on a glass plate of refractive index $1.5$. If the angle of refraction is $30^\\circ$, the angle of incidence (in degrees) is :",
+    "options": [],
+    "correct_answer": "10",
+    "solution_text": "Official Answer: 10.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 10,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 157,
+    "question_text": "A small object of height $0.5\\text{ cm}$ is placed along the principal axis of a concave mirror of radius of curvature $20\\text{ cm}$ at a distance $30\\text{ cm}$. The height of the image is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$0.25\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$0.5\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$1.0\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$0.125\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 158,
+    "question_text": "The critical angle for a certain medium is $45^\\circ$. The refractive index of the medium is :",
+    "options": [],
+    "correct_answer": "27",
+    "solution_text": "Official Answer: 27.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 27,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 159,
+    "question_text": "A combination of two thin lenses in contact has power $+5\\text{ D}$. If the focal length of one lens is $30\\text{ cm}$, the focal length of other lens is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$-60\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$-75\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$+60\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$+75\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 160,
+    "question_text": "An astronomical telescope has objective and eyepiece of focal length $60\\text{ cm}$ and $5\\text{ cm}$ respectively. The magnifying power of telescope in normal adjustment is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$12$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$65$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$55$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$300$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 161,
+    "question_text": "A ray of light enters from air to water ($\\mu = 4/3$). If the angle of incidence is $45^\\circ$, the angle of deviation of the ray is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$13^\\circ$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$20^\\circ$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$32^\\circ$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$45^\\circ$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 162,
+    "question_text": "A convex lens is used to form an image on a screen. When the upper half of the lens is covered by an opaque paper :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "the complete image will be formed with reduced brightness"
+      },
+      {
+        "option_id": "B",
+        "option_text": "half the image will disappear"
+      },
+      {
+        "option_id": "C",
+        "option_text": "the brightness of the image will remain the same"
+      },
+      {
+        "option_id": "D",
+        "option_text": "no image will be formed"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 163,
+    "question_text": "A ray of light passes through an equilateral prism of refractive index $1.5$. The angle of minimum deviation (in degrees) is :",
+    "options": [],
+    "correct_answer": "400",
+    "solution_text": "Official Answer: 400.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 400,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 164,
+    "question_text": "A thin convex lens of focal length $10\\text{ cm}$ is placed in contact with a concave lens of focal length $20\\text{ cm}$. The power of the combination (in D) is :",
+    "options": [],
+    "correct_answer": "15",
+    "solution_text": "Official Answer: 15.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 15,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 165,
+    "question_text": "A ray of light incident at an angle $\\theta$ on a refracting face of a prism of angle $A$ emerges normally from the other face. If the refractive index of the prism is $\\mu$, then the angle of incidence $\\theta$ is nearly :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\mu A$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$A/\\mu$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\mu A/2$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$2\\mu A$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 166,
+    "question_text": "The power of a convex lens of focal length $25\\text{ cm}$ in air is :",
+    "options": [],
+    "correct_answer": "15",
+    "solution_text": "Official Answer: 15.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 15,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 167,
+    "question_text": "A plane mirror produces a magnification of :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$0$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$-1$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$+1$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\infty$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 168,
+    "question_text": "A compound microscope has magnification $30$. The focal length of eyepiece is $5\\text{ cm}$. Assuming the final image to be at least distance of distinct vision ($25\\text{ cm}$), the magnification produced by the objective is :",
+    "options": [],
+    "correct_answer": "120",
+    "solution_text": "Official Answer: 120.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 120,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 169,
+    "question_text": "An object is placed at $15\\text{ cm}$ from a convex lens of focal length $10\\text{ cm}$. The image distance (in cm) is :",
+    "options": [],
+    "correct_answer": "54",
+    "solution_text": "Official Answer: 54.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 54,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 170,
+    "question_text": "The light rays from an object have been reflected towards an observer from a standard flat mirror (as shown in the figure), the image observed by the observer are :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "Real and erect"
+      },
+      {
+        "option_id": "B",
+        "option_text": "Virtual and laterally inverted"
+      },
+      {
+        "option_id": "C",
+        "option_text": "Real and laterally inverted"
+      },
+      {
+        "option_id": "D",
+        "option_text": "Virtual and erect"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540700/edvedum_physics/ray_optics/ray_q170_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 171,
+    "question_text": "A concave mirror of radius of curvature $40\\text{ cm}$ forms a real image at $60\\text{ cm}$ from the mirror. The object distance (in cm) is :",
+    "options": [],
+    "correct_answer": "52",
+    "solution_text": "Official Answer: 52.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 52,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 172,
+    "question_text": "When a ray of light is refracted from one medium into another, the wavelength :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "changes according to ratio of refractive indices"
+      },
+      {
+        "option_id": "B",
+        "option_text": "remains constant"
+      },
+      {
+        "option_id": "C",
+        "option_text": "always increases"
+      },
+      {
+        "option_id": "D",
+        "option_text": "always decreases"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 173,
+    "question_text": "Two thin lenses of focal lengths $f_1 = 15\\text{ cm}$ and $f_2 = 30\\text{ cm}$ are placed in contact coaxially (as shown in the figure). The equivalent focal length (in cm) is :",
+    "options": [],
+    "correct_answer": "30",
+    "solution_text": "Official Answer: 30.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q173_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 30,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 174,
+    "question_text": "A point object is placed at distance $12\\text{ cm}$ from a convex lens of focal length $10\\text{ cm}$. On the other side of the lens, a convex mirror of radius of curvature $10\\text{ cm}$ is placed such that the image coincides with the object. The distance between lens and mirror is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$40\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$50\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$60\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$30\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 175,
+    "question_text": "A glass prism has refracting angle $60^\\circ$. The angle of minimum deviation is $30^\\circ$. The refractive index of the glass is :",
+    "options": [],
+    "correct_answer": "32",
+    "solution_text": "Official Answer: 32.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 32,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 176,
+    "question_text": "An astronomical telescope has an objective of focal length $140\\text{ cm}$ and eyepiece of focal length $5\\text{ cm}$. What is the magnifying power of the telescope for viewing distant objects in normal adjustment?",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$14$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$28$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$35$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$28$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 177,
+    "question_text": "A light beam travels from a denser medium to a rarer medium with critical angle $C$. The maximum deviation the ray can suffer is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$\\pi - 2C$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\pi/2 - C$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2C$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\pi - C$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 178,
+    "question_text": "An object is placed at $20\\text{ cm}$ in front of a concave mirror of focal length $15\\text{ cm}$. The distance of the image from the mirror (in cm) is :",
+    "options": [],
+    "correct_answer": "5",
+    "solution_text": "Official Answer: 5.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 5,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 179,
+    "question_text": "A convex lens forms a real image of a point object placed on its principal axis. If the upper half of the lens is cut away, then :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "the image will be shifted down"
+      },
+      {
+        "option_id": "B",
+        "option_text": "the image will be shifted up"
+      },
+      {
+        "option_id": "C",
+        "option_text": "the image will remain at the same position but with reduced intensity"
+      },
+      {
+        "option_id": "D",
+        "option_text": "no image will be formed"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 180,
+    "question_text": "The power of a lens is $+4\\text{ D}$. Its focal length (in cm) is :",
+    "options": [],
+    "correct_answer": "32",
+    "solution_text": "Official Answer: 32.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 32,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 181,
+    "question_text": "A ray of light is incident at $60^\\circ$ on a glass slab of refractive index $\\sqrt{3}$. The angle of refraction is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$45^\\circ$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$60^\\circ$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$30^\\circ$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$90^\\circ$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 182,
+    "question_text": "A convex lens of focal length $20\\text{ cm}$ is combined with a concave lens of focal length $25\\text{ cm}$. The power of the combination (in D) is :",
+    "options": [],
+    "correct_answer": "50",
+    "solution_text": "Official Answer: 50.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 50,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 183,
+    "question_text": "The critical angle for a medium is $30^\\circ$. The velocity of light in this medium is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$3 \\times 10^8\\text{ m/s}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$2 \\times 10^8\\text{ m/s}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$1.5 \\times 10^8\\text{ m/s}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$1.5 \\times 10^8\\text{ m/s}$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 184,
+    "question_text": "A concave mirror has a focal length of $15\\text{ cm}$. A $2.5\\text{ cm}$ high object is placed at $10\\text{ cm}$ in front of the mirror. The size of the image is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$5\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$7.5\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2.5\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$10\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 185,
+    "question_text": "A glass prism has refracting angle $30^\\circ$ and refractive index $1.5$. The angle of minimum deviation (in degrees) is :",
+    "options": [],
+    "correct_answer": "18",
+    "solution_text": "Official Answer: 18.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 18,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 186,
+    "question_text": "A convex lens of focal length $10\\text{ cm}$ is placed at a distance of $12\\text{ cm}$ from a wall. How far from the lens should an object be placed so that its image is formed on the wall?",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$30\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$40\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$60\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$50\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 187,
+    "question_text": "An object is placed at a distance of $30\\text{ cm}$ from a convex lens of focal length $20\\text{ cm}$. The image distance (in cm) is :",
+    "options": [],
+    "correct_answer": "20",
+    "solution_text": "Official Answer: 20.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 20,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 188,
+    "question_text": "The refractive index of diamond is $2.42$. The critical angle for diamond-air interface is approximately :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$30^\\circ$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$24.4^\\circ$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$45^\\circ$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$60^\\circ$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 189,
+    "question_text": "A point object $O$ is placed in front of two thin symmetrical coaxial convex lenses $L_1$ and $L_2$ with focal length $24\\text{ cm}$ and $8\\text{ cm}$ respectively (as shown in figure). The distance of final image from lens $L_2$ (in cm) is :",
+    "options": [],
+    "correct_answer": "24",
+    "solution_text": "Official Answer: 24.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q189_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 24,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 190,
+    "question_text": "In an astronomical telescope, the focal length of the objective lens is $100\\text{ cm}$ and that of the eyepiece is $2\\text{ cm}$. The magnifying power of the telescope for the normal eye is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$10$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$20$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$50$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$100$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 191,
+    "question_text": "A double convex lens of glass of refractive index $1.5$ has its radii of curvature as $10\\text{ cm}$ and $15\\text{ cm}$. Its focal length is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$12\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$15\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$10\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$20\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 192,
+    "question_text": "A concave mirror of focal length $20\\text{ cm}$ forms a real image of the same size as the object. The distance of the object from the mirror is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$40\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$20\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$10\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$30\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 193,
+    "question_text": "As shown in the figure, a plane mirror is fixed at a height of $50\\text{ cm}$ from the bottom of tank containing water ($\\mu = 4/3$). The apparent distance of the bottom from the mirror (in cm) is :",
+    "options": [],
+    "correct_answer": "98",
+    "solution_text": "Official Answer: 98.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q193_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 98,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 194,
+    "question_text": "A telescope has an objective of diameter $60\\text{ cm}$. The angular limit of resolution of the telescope for light of wavelength $600\\text{ nm}$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$1.22 \\times 10^{-6}\\text{ rad}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$2.44 \\times 10^{-6}\\text{ rad}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$3.66 \\times 10^{-6}\\text{ rad}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$6.10 \\times 10^{-7}\\text{ rad}$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 195,
+    "question_text": "A convex lens of focal length $20\\text{ cm}$ is placed in contact with a concave lens of focal length $25\\text{ cm}$. The focal length of the combination (in cm) is :",
+    "options": [],
+    "correct_answer": "100",
+    "solution_text": "Official Answer: 100.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 100,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 196,
+    "question_text": "An object is placed at $15\\text{ cm}$ from a convex lens of focal length $10\\text{ cm}$. The magnification produced by the lens is :",
+    "options": [],
+    "correct_answer": "3",
+    "solution_text": "Official Answer: 3.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 3,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 197,
+    "question_text": "The power of a combination of two thin lenses is $-3\\text{ D}$. If the power of one lens is $+2\\text{ D}$, the power of the other lens is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$-1\\text{ D}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$-5\\text{ D}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$+5\\text{ D}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$-6\\text{ D}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 198,
+    "question_text": "A convex mirror of radius of curvature $30\\text{ cm}$ forms an image of an object placed at $10\\text{ cm}$ in front of it. The image distance (in cm) is :",
+    "options": [],
+    "correct_answer": "5",
+    "solution_text": "Official Answer: 5.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 5,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 199,
+    "question_text": "A ray of light is incident at $45^\\circ$ on a glass slab of refractive index $\\sqrt{2}$. The angle of refraction (in degrees) is :",
+    "options": [],
+    "correct_answer": "30",
+    "solution_text": "Official Answer: 30.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 30,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 200,
+    "question_text": "Two immiscible liquids of refractive indices $1.4$ and $1.5$ respectively are put in a beaker as shown in the figure. The height of each column is $6\\text{ cm}$. A coin is at the bottom of the beaker. The apparent shift in the position of the coin (in cm) is :",
+    "options": [],
+    "correct_answer": "31",
+    "solution_text": "Official Answer: 31.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q200_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 31,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 201,
+    "question_text": "A person with normal near point ($25\\text{ cm}$) uses a magnifying glass of focal length $5\\text{ cm}$. The magnifying power of the glass for image at infinity is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$6$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$4$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$10$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$5$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 202,
+    "question_text": "A convex lens forms a sharp image on a screen. When a glass slab of thickness $3\\text{ cm}$ and refractive index $1.5$ is placed between lens and screen, the screen must be moved by :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$1\\text{ cm}$ away from lens"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$1\\text{ cm}$ towards lens"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2\\text{ cm}$ away from lens"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$2\\text{ cm}$ towards lens"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 203,
+    "question_text": "The velocity of light in a glass block of refractive index $1.5$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$3 \\times 10^8\\text{ m/s}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$2.5 \\times 10^8\\text{ m/s}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2 \\times 10^8\\text{ m/s}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$1.5 \\times 10^8\\text{ m/s}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 204,
+    "question_text": "A convex lens of focal length $f$ is cut into two equal halves along the vertical axis. The focal length of each half is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$f/2$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$2f$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$f$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\infty$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 205,
+    "question_text": "A concave mirror of radius of curvature $20\\text{ cm}$ forms a real image at $30\\text{ cm}$ from the mirror. The object distance is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$10\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$20\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$15\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$25\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 206,
+    "question_text": "A ray of light is incident on an equilateral prism of refractive index $\\sqrt{3}$. The angle of minimum deviation (in degrees) is :",
+    "options": [],
+    "correct_answer": "10",
+    "solution_text": "Official Answer: 10.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 10,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 207,
+    "question_text": "An object is placed at $30\\text{ cm}$ in front of a concave mirror of focal length $20\\text{ cm}$. The distance of the image from the mirror (in cm) is :",
+    "options": [],
+    "correct_answer": "20",
+    "solution_text": "Official Answer: 20.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 20,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 208,
+    "question_text": "A convex lens of focal length $20\\text{ cm}$ is placed in water ($\\mu = 4/3$). Its focal length in water is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$40\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$60\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$20\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$80\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 209,
+    "question_text": "Two thin lenses of focal lengths $20\\text{ cm}$ and $-40\\text{ cm}$ are placed in contact. The focal length of the combination (in cm) is :",
+    "options": [],
+    "correct_answer": "200",
+    "solution_text": "Official Answer: 200.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540702/edvedum_physics/ray_optics/ray_q209_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 200,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 210,
+    "question_text": "A light ray travels from water ($\\mu = 4/3$) to air. The critical angle for the water-air interface (in degrees) is :",
+    "options": [],
+    "correct_answer": "15",
+    "solution_text": "Official Answer: 15.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 15,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 211,
+    "question_text": "The focal length of a concave lens of refractive index $1.5$ in air is $20\\text{ cm}$. Its focal length in a medium of refractive index $1.6$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$+160\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$-160\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$+80\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$-80\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 212,
+    "question_text": "An astronomical telescope has an angular magnification of $15$ in normal adjustment. If the focal length of the eyepiece is $4\\text{ cm}$, the length of the telescope (in cm) is :",
+    "options": [],
+    "correct_answer": "2",
+    "solution_text": "Official Answer: 2.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 2,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 213,
+    "question_text": "The radius of curvature of the curved face of a plano-convex lens is $12\\text{ cm}$ and its refractive index is $1.5$. The focal length of the lens is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$12\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$18\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$24\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$36\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 214,
+    "question_text": "A convex lens of focal length $20\\text{ cm}$ forms an image magnified $2$ times (real). The object distance (in cm) is :",
+    "options": [],
+    "correct_answer": "60",
+    "solution_text": "Official Answer: 60.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": 60,
+    "numerical_tolerance": 0,
+    "question_type": "numerical"
+  },
+  {
+    "question_number": 215,
+    "question_text": "A ray of light is incident at angle $i$ on one face of a thin prism of angle $A$ and emerges normally from the other face. The angle of incidence $i$ is equal to :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$A/\\mu$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$\\mu/A$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$\\mu A$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$2\\mu A$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 216,
+    "question_text": "A ray of light passes through an equilateral prism such that the angle of incidence is equal to the angle of emergence and each is equal to $3/4$ of the prism angle. The deviation is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$45^\\circ$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$60^\\circ$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$30^\\circ$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$15^\\circ$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 217,
+    "question_text": "A concave mirror forms an erect image of an object placed at $10\\text{ cm}$ from the mirror. The radius of curvature of the mirror must be :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "less than $10\\text{ cm}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "greater than $20\\text{ cm}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "between $10\\text{ cm}$ and $20\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "equal to $10\\text{ cm}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 218,
+    "question_text": "A person cannot see objects closer than $75\\text{ cm}$. The power of the lens required to read a book held at $25\\text{ cm}$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$-2.67\\text{ D}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$+1.33\\text{ D}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$-1.33\\text{ D}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$+2.67\\text{ D}$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 219,
+    "question_text": "A glass prism ($\\mu = 1.5$) has a refracting angle of $60^\\circ$. The angle of minimum deviation is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$30^\\circ$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$45^\\circ$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$37.2^\\circ$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$60^\\circ$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 220,
+    "question_text": "An object is placed at a distance of $15\\text{ cm}$ from a convex lens of focal length $10\\text{ cm}$. The image formed is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "real, inverted, magnified"
+      },
+      {
+        "option_id": "B",
+        "option_text": "virtual, erect, magnified"
+      },
+      {
+        "option_id": "C",
+        "option_text": "real, inverted, magnified at $30\\text{ cm}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "real, erect, magnified"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 221,
+    "question_text": "The power of a combination of three lenses of powers $+2\\text{ D}$, $+3\\text{ D}$ and $-1\\text{ D}$ placed in contact is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$+2\\text{ D}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$+4\\text{ D}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$+6\\text{ D}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$-4\\text{ D}$"
+      }
+    ],
+    "correct_answer": "B",
+    "solution_text": "Official Answer: B.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 222,
+    "question_text": "A ray of light travels from medium $A$ to medium $B$. If the critical angle for the pair of media is $30^\\circ$, the ratio of speed of light in medium $A$ to medium $B$ is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$1 : 2$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$2 : 1$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$1 : \\sqrt{2}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$\\sqrt{2} : 1$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 223,
+    "question_text": "A compound microscope has an objective of focal length $1\\text{ cm}$ and eyepiece of focal length $2.5\\text{ cm}$. An object has to be placed at a distance of $1.2\\text{ cm}$ from the objective for normal adjustment. The angular magnification is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$30$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$40$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$45$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$50$"
+      }
+    ],
+    "correct_answer": "D",
+    "solution_text": "Official Answer: D.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 224,
+    "question_text": "A concave mirror of focal length $20\\text{ cm}$ is placed in water. Its focal length in water will :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "remain unchanged"
+      },
+      {
+        "option_id": "B",
+        "option_text": "increase"
+      },
+      {
+        "option_id": "C",
+        "option_text": "decrease"
+      },
+      {
+        "option_id": "D",
+        "option_text": "become zero"
+      }
+    ],
+    "correct_answer": "A",
+    "solution_text": "Official Answer: A.",
+    "diagram_url": null,
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  },
+  {
+    "question_number": 225,
+    "question_text": "A symmetric thin biconvex lens is cut into four equal parts by two planes $AB$ and $CD$ as shown in figure. If the power of original lens is $4\\text{ D}$ then the power of each part is :",
+    "options": [
+      {
+        "option_id": "A",
+        "option_text": "$4\\text{ D}$"
+      },
+      {
+        "option_id": "B",
+        "option_text": "$1\\text{ D}$"
+      },
+      {
+        "option_id": "C",
+        "option_text": "$2\\text{ D}$"
+      },
+      {
+        "option_id": "D",
+        "option_text": "$8\\text{ D}$"
+      }
+    ],
+    "correct_answer": "C",
+    "solution_text": "Official Answer: C.",
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795540703/edvedum_physics/ray_optics/ray_q225_diagram.png",
+    "exam_type": "JEE",
+    "difficulty": "medium",
+    "numeric_answer": null,
+    "numerical_tolerance": 0,
+    "question_type": "mcq"
+  }
+]

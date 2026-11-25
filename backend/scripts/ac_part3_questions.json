@@ -1,0 +1,567 @@
+[
+  {
+    "question_number": 101,
+    "question": "In a series LR circuit $X_L = R$ and power factor of the circuit is $P_1$. When capacitor with capacitance $C$ such that $X_L = X_C$ is put in series, the power factor becomes $P_2$. The ratio $\\frac{P_1}{P_2}$ is :",
+    "options": [
+      "$\\frac{1}{2}$",
+      "$\\frac{1}{\\sqrt{2}}$",
+      "$\\frac{\\sqrt{3}}{\\sqrt{2}}$",
+      "$2 : 1$"
+    ],
+    "correct_answer": "B",
+    "explanation": "In case of LL — R circuit\nZ = v/X 1? + R? Therefore, power factor\nPy =cos¢p = 3\nAsX;=R=Z=+2R\nR 1\n>Pi=—==P1=—\n1 V2R 1 2\nIn case of L — C — R circuit\nZ=\\/R+(Xr-Xc)\nAccording to the question X;, = Xo = Z = R= Py = cos = z =1\nRTE\nPp, V2",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 102,
+    "question": "A direct current of $4\\text{ A}$ and an alternating current of peak value $4\\text{ A}$ flow through resistances of $3\\,\\Omega$ and $2\\,\\Omega$ respectively. The ratio of heat produced in the two resistances in same interval of time will be :",
+    "options": [
+      "$5 : 3$",
+      "$3 : 1$",
+      "$5 : 4$",
+      "$4 : 3$"
+    ],
+    "correct_answer": "B",
+    "explanation": "3Q 2Q\n—MA— > AN—\nRE Heat produced in resistor when direct current flows is Hy = i>R;t\n4A iy = 44 1 1\nDC AC\nHy =4%(3)t = 16 (3) t Heat produced in resistor when alternating current flows is\nHy =i Rot{ im, = do Hy= pt Hy = £ x (2)t = 16t Thus, the ratio is Hy : Hy =3: 1\nv2 2 2",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 103,
+    "question": "To light, a $50\\text{ W}, 100\\text{ V}$ lamp is connected in series with a capacitor of capacitance $\\frac{50}{\\pi\\sqrt{x}}\\,\\mu\\text{F}$ with $200\\text{ V}, 50\\text{ Hz}$ AC source. The value of $x$ will be ______.",
+    "options": [],
+    "correct_answer": "3",
+    "explanation": "Vg) (Vo)\n2000 |X,\n: —— Vv? v2 gi o\nElectrical power is given by p — i Be o Resistance of lamp is\n200V, 50 Hz\n| >100\nVv\nR= dm = R = 200§Let V and Vj; be the voltage across capacitor and resistor. Here,\n2 2 2 ein 100: 2 2 2\nV% + Vi = V? Current through lamp is i = io 34 = (100)\" + VZ = (200)\n= VZ = 30000 = V = 100y/3V We know that, V =i x X Then, X = 200/3Q = —- So, capacitance\nwi\n_— 1 50 x 10°\nof capacitoris € = ———— = ————— /7 = 50 x 107% x 100 x 2004/3 Thus, value of z = 3.\n20 x 50 x 20v3 vz AF eS",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 3,
+    "diagram_url": null
+  },
+  {
+    "question_number": 104,
+    "question": "A series LCR circuit has $L = 0.01\\text{ H}$, $R = 10\\,\\Omega$ and $C = 1\\,\\mu\\text{F}$ and it is connected to ac voltage of amplitude ($V_m$) $50\\text{ V}$. At frequency $60\\%$ lower than resonant frequency, the amplitude of current will be approximately :",
+    "options": [
+      "$466\\text{ mA}$",
+      "$312\\text{ mA}$",
+      "$238\\text{ mA}$",
+      "$196\\text{ mA}$"
+    ],
+    "correct_answer": "C",
+    "explanation": "For an LCR circuit. the resonant angular frequency is given by, wy = “= = 10%rads!\nThe given frequency is 60 lower than resonant frequency. Therefore,\nw = 0.4 x 10\" = 4000rads *\nReactance of the capacitor at given frequency,\nXe = (we) ~~ 2500\nReactance of the inductor at given frequency,\nXi = («/L) = 00\nNow the amplitude of the current in the given circuit will be,\npl a0 = 238mA\nVER + (Xp —X7,)* 4/102 + (250 — 40)°",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 105,
+    "question": "The equation of current in a purely inductive circuit is $5\\sin(49\\pi t - 30^\\circ)\\text{ A}$. If the inductance is $30\\text{ mH}$, then the equation for the voltage across the inductor will be :",
+    "options": [
+      "$1.47\\sin(49\\pi t - 30^\\circ)\\text{ V}$",
+      "$1.47\\sin(49\\pi t + 60^\\circ)\\text{ V}$",
+      "$23.1\\sin(49\\pi t - 30^\\circ)\\text{ V}$",
+      "$23.1\\sin(49\\pi t + 60^\\circ)\\text{ V}$"
+    ],
+    "correct_answer": "D",
+    "explanation": "In inductive circuit, the voltage leads the current by 90°. Therefore,\nov — dor = 90° = dov = 60°\nFrom the given equation 5 sin (497¢ — 307), angular frequency w = 497rads™ L\nThe amplitude of the voltage across the inductor will be,\nVo=1ioX,\n= Vo =ig (wL)\n= Vo = (5) (497) (30 x 10~°)= 23.1\n= V = 23.1sin (497 + 60°)",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 106,
+    "question": "The frequencies at which the current amplitude in an LCR series circuit becomes $\\frac{1}{\\sqrt{2}}$ times its maximum value, are $212\\text{ rad s}^{-1}$ and $232\\text{ rad s}^{-1}$. The value of resistance in the circuit is $R = 5\\,\\Omega$. The self inductance in the circuit is ______ mH.",
+    "options": [],
+    "correct_answer": "250",
+    "explanation": ": ao R\nBandwidth of RLC circuitis BW = fa — fi= —\n2rL\nR\nor BW = ws —wy = io\nBW —232-212- %\nL\nThus, self inductance in the circuitis L = - = 250mH",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 250,
+    "diagram_url": null
+  },
+  {
+    "question_number": 107,
+    "question": "A transformer operating at primary voltage $8\\text{ kV}$ and secondary voltage $160\\text{ V}$ serves a load of $80\\text{ kW}$. Assuming the transformer to be ideal with purely resistive load and working on unity power factor, the loads in the primary and secondary circuit would be :",
+    "options": [
+      "$800\\,\\Omega$ and $1.06\\,\\Omega$",
+      "$10\\,\\Omega$ and $500\\,\\Omega$",
+      "$800\\,\\Omega$ and $0.32\\,\\Omega$",
+      "$1.06\\,\\Omega$ and $500\\,\\Omega$"
+    ],
+    "correct_answer": "C",
+    "explanation": "Since the transformer is assumed to be purely resistive, the power of the transformer can be calculated with\nv2\nP = —. Therefore,\nR\nFor the primary coil,\n312\npo 8X19) opm\nRp\n= Rp = 800Q\nFor the secondary coil,\n2\nP= {160)¢ =80 x 10*°W\nRs\n= Rs =0.32Q",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 108,
+    "question": "In an LC oscillator, if values of inductance and capacitance become twice and eight times, respectively, of their initial values, then the new resonant frequency of the circuit becomes $x$ times of its initial resonant frequency $\\omega_0$. The value of $x$ is :",
+    "options": [
+      "$\\frac{1}{4}$",
+      "16",
+      "$\\frac{1}{16}$",
+      "4"
+    ],
+    "correct_answer": "C",
+    "explanation": "Given that 7 — 440 sin 1007t, L = V2\nm™\nAngular frequency of the source is w = 100rrads *.\nNow the reactance of the inductor will be,\nXp iil = 1007 Y2 — 100y/202\nEy 440 =\nTherefore, the peak current Ij = — = ——— = 2.2y/24\nP \"TX. 100v2\nAC ammeter reads RMS value therefore reading will be I,\nI\nToi= % =224",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 109,
+    "question": "An alternating voltage $V(t) = 12\\sin(100\\pi t)\\text{ V}$ is applied across an inductor of $L = 800\\text{ mH}$. The value of displacement current at $t = \\frac{1}{600}\\text{ s}$ is $\\frac{\\sqrt{x}}{100}\\text{ A}$. The value of $x$ is ______.",
+    "options": [],
+    "correct_answer": "10",
+    "explanation": "Energy stored in capacitor\n1 1\nE=-CV?= 2500 x 10° x 10*\n2 2\n5\nSE=xJ\n2\nCurrent will be maximum when whole energy of capacitor becomes energy of inductor.\n1 5\nBl gf i sng\n= FL! )\n[5 / 5\nSI=4/==/——==104\nL 50 x 103",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 10,
+    "diagram_url": null
+  },
+  {
+    "question_number": 110,
+    "question": "In a series LCR circuit, the inductance is $25\\text{ mH}$, capacitance is $100\\,\\mu\\text{F}$ and resistance is $10\\,\\Omega$. The AC voltage is $V = 100\\sin(100\\pi t)\\text{ V}$. The power factor of the circuit is :",
+    "options": [
+      "0.8",
+      "0.6",
+      "1.0",
+      "0.5"
+    ],
+    "correct_answer": "D",
+    "explanation": "2 . : Fears Vy _ 100\nAs current is in phase with the applied voltage, element X should be resistive with R = 5 = or = 209.\n[4\no + i Vo 100\nAs current lags behind voltage by 90°, element Y\" should be inductive with X ; = Err 200\n0\nWhen X and Y are connector in series,\nImpedance, Z = \\/X7 + R? = v/20° + 20° = 20/20\nVo 100 5\nNow, peak current, Ij = — = —— = — A\nE TZ nv V2\nThus, the rms value of current is I,,,, = Tol = 54\n3 m= Tg",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 111,
+    "question": "A circuit contains an inductor and capacitor in series connected across an AC supply. The current in the circuit is maximum when frequency of source is $100\\text{ Hz}$. If capacitor is replaced by another capacitor of capacitance 4 times the initial value, the new resonant frequency will be ______ Hz.",
+    "options": [],
+    "correct_answer": "10",
+    "explanation": "10 Q\n230 < : HE ro\n3.0H\np=\nan LCR circuit, Bandwidth — R = 0. For an LCR circuit quality factor — vais = Sys = 100\nL 3 RVC 10x 27x10 3\nTherefore, required ratio — 10.",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 10,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531209/edvedum_physics/alternating_current/ac_q111_diagram.png"
+  },
+  {
+    "question_number": 112,
+    "question": "A $220\\text{ V}, 50\\text{ Hz}$ AC source is connected across a resistor of $100\\,\\Omega$. The value of peak voltage is $\\sqrt{x} \\times 110\\text{ V}$. The value of $x$ is ______.",
+    "options": [],
+    "correct_answer": "100",
+    "explanation": "Given here, f = 2kHz = 2000Hz,C' = 62.5nF = 62.5 x 10 9FandR = 500\nR fi (amplitude of th t will b i in thi ) is given by f 1 here, Li\nlesonance frequency (amplitude of )e current will be maximum in this case) is given = ———=—==, here, Is\neq y pl g y onVIC\nthe inductance.\nPutting the values,\n1\n2000Hz = —F—=———\n2rVL x 625 x 107°\n1\nL=——a—————— = 0.1H = 100mH\n17% % 2000° x 62.5 x 10° \"",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 100,
+    "diagram_url": null
+  },
+  {
+    "question_number": 113,
+    "question": "In an LC oscillation circuit, if inductance and capacitance become twice and eight times respectively of their initial values, the new resonant frequency becomes $x$ times the initial resonant frequency $\\omega_0$. The value of $x$ is :",
+    "options": [
+      "$\\frac{1}{4}$",
+      "16",
+      "$\\frac{1}{16}$",
+      "4"
+    ],
+    "correct_answer": "A",
+    "explanation": "Resonance frequency of an LC oscillations circuit is stated as\n1\nwg = ——=, here, LandC represents inductance and capacitance of circuit.\nVIC 2 :\nNow, when inductance and capacitance changes, i.e., L'=2Land C' =8C\nThy t fi i ! !\nen, resonant frequency IS W = —F———mm = —7rs\nfanichidd VL <8C  4/IC\n=\ni=\n1\nThus, the value of z = +",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 114,
+    "question": "A series LCR circuit is connected to an AC source of $220\\text{ V}, 50\\text{ Hz}$. The circuit contains a resistance $R = 80\\,\\Omega$, an inductor of inductive reactance $X_L = 70\\,\\Omega$, and a capacitor of capacitive reactance $X_C = 130\\,\\Omega$. The power factor of circuit is $\\frac{x}{10}$. The value of $x$ is :",
+    "options": [],
+    "correct_answer": "8",
+    "explanation": "Power factor in LCR circuit is given by,\ncos = z where, Z is the total impedance of the circuit.\nR\nSo, C08¢ = EE\nVER + (Xe — Xi)\nPutting the values, we have\n= cos = __ 8%\nV/(80) + (60)?\ncong B08\nc= 100 ~ 10\nThus, the value of z = 8.",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 8,
+    "diagram_url": null
+  },
+  {
+    "question_number": 115,
+    "question": "An inductor of inductance $2\\,\\mu\\text{H}$ is connected in series with a resistance, a variable capacitor and an AC source of frequency $7\\text{ kHz}$. The value of capacitance for which maximum current is drawn into the circuit is $\\frac{1}{x}\\text{ F}$, where the value of $x$ is : [Take $\\pi = 22/7$]",
+    "options": [],
+    "correct_answer": "3872",
+    "explanation": "For maximum current in series LCR circuit,\n1\nXe=Xy= ——= =2rfL\nc=Xi= ojo =f\n1 1\nBf  —— —————\n4m’ f?L 4x72 x49x10°x2x 10°\n1\n=C=—F\n3872\nTherefore, z = 3872.",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 3872,
+    "diagram_url": null
+  },
+  {
+    "question_number": 116,
+    "question": "For the given figures, choose the correct option :",
+    "options": [
+      "The rms current in circuit (b) can never be larger than that in (a)",
+      "The rms current in figure (a) is always equal to that in figure (b)",
+      "The rms current in circuit (b) can be larger than that in (a)",
+      "At resonance, current in (b) is less than that in (a)"
+    ],
+    "correct_answer": "A",
+    "explanation": "40 Q\n220V 50 Hz\nFor the circuit(a), Z = R = 40QZ. Hence, [,,,, = = =55A4\n40 Q 50 mH 0.5 uF\n220V 50 Hz\np 1 1\n= = = == = For th\nXp =2nfL = 2m x 50 x 50 x 10 15.70 and X¢ fC ~ Zr x 50% 05% 10° 636952 For the\ncireuit(b),\nZ = /R* + (Xr — Xc)? > 4002\nas X is not equal to X ¢. So rms current in (b) can never be larger than (a)",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531210/edvedum_physics/alternating_current/ac_q116_diagram.png"
+  },
+  {
+    "question_number": 117,
+    "question": "In a series LR circuit with $X_L = R$, power factor is $P_1$. If a capacitor of capacitance $C$ with $X_C = X_L$ is added to the circuit the power factor becomes $P_2$. The ratio of $P_1$ to $P_2$ will be :",
+    "options": [
+      "$1 : 3$",
+      "$1 : \\sqrt{2}$",
+      "$1 : 1$",
+      "$2 : 1$"
+    ],
+    "correct_answer": "B",
+    "explanation": "In case of LR circuit:\nL R\nPy =cos¢p = R Sa FO L\nGiven: Xp; =R\"1~ =z- = Al f LCR circuit:\niven: Xp Zz VR + (x0) 2 Incase o circui\nR R\nPy=cos¢p== = 1 erator, L107 . 2\nZ_ lr os —Bxa)? CAS",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 118,
+    "question": "In the given circuit, rms value of current ($I_{rms}$) through the resistor $R$ is :",
+    "options": [
+      "$2\\text{ A}$",
+      "$\\frac{1}{\\sqrt{2}}\\text{ A}$",
+      "$2\\sqrt{2}\\text{ A}$",
+      "$1.5\\text{ A}$"
+    ],
+    "correct_answer": "A",
+    "explanation": "X,=2000, Xc=1000Q\n| R=1000Q |\nVis = 200V2V\nImpedance of the given LCR circuit will be,\nRao 2\nZ=\\R+(X; — Xc)' = Z = /100% + (200 — 100)? = 100/202\nTherefore, RMS current can be written as,\nVv 200v2\n== =24\nTome ==2\"= = Toov2",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531209/edvedum_physics/alternating_current/ac_q118_diagram.png"
+  },
+  {
+    "question_number": 119,
+    "question": "An inductor of $0.5\\text{ mH}$, a capacitor of $20\\,\\mu\\text{F}$ and resistance of $20\\,\\Omega$ are connected in series with a $220\\text{ V}$ ac source. If the current is in phase with the emf, the amplitude of current of the circuit is $\\sqrt{x}\\text{ A}$. The value of $x$ is ______.",
+    "options": [],
+    "correct_answer": "242",
+    "explanation": "Here, emf and current are in phase, so the circuit is either pure resistive circuit or case of resonance,\nX.=Xc\nThus, the impedance of circuitis 7 — VR + (XL — Xc)’ =R=200\nNow, rms value of current is 4,,,, = = =114\nUsing the relation between peak and rms value of current, we have peak value iy_i,.v/2 = 11v/2 = 1/2424.\nHence, the value of z = 242.",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 242,
+    "diagram_url": null
+  },
+  {
+    "question_number": 120,
+    "question": "A series LCR circuit consists of $R = 80\\,\\Omega$, $X_L = 100\\,\\Omega$, and $X_C = 40\\,\\Omega$. The input voltage is $2500\\cos(100\\pi t)\\text{ V}$. The amplitude of current, in the circuit, is ______ A.",
+    "options": [],
+    "correct_answer": "25",
+    "explanation": "Comparing input voltage with standard expression, V = V cos (wt), we get w = 1007.\nNow, impedance 7 — +/R? + (Xo 4 Xe)?\n= /80% + (100 — 40)*\n= 10092\nTherefore, peak current\nVo 2500\nf= LD = onl\n“ZZ 100",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 25,
+    "diagram_url": null
+  },
+  {
+    "question_number": 121,
+    "question": "An alternating voltage source $V = 260\\sin(628t)\\text{ V}$ is connected across a pure inductor of $5\\text{ mH}$. Inductive reactance in the circuit is :",
+    "options": [
+      "$3.14\\,\\Omega$",
+      "$6.28\\,\\Omega$",
+      "$0.5\\,\\Omega$",
+      "$3.18\\,\\Omega$"
+    ],
+    "correct_answer": "A",
+    "explanation": "Comparing the given equation of AC voltage with standard expression, V = V sin (wt), we get w = 628rads *.\nInductive reactance is given by, X = wL.\n=628 x (5x 107%)\n= 3.149",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 122,
+    "question": "A series LCR circuit is connected to an ac source of $220\\text{ V}, 50\\text{ Hz}$. The circuit contains a resistance $R = 100\\,\\Omega$ and an inductor of inductive reactance $X_L = 79.6\\,\\Omega$. The capacitance of the capacitor needed to maximize the average rate at which energy is supplied will be ______ $\\mu\\text{F}$.",
+    "options": [],
+    "correct_answer": "40",
+    "explanation": "The average rate at which energy supplied i.e. power delivered is maximum in case of the resonance, therefore\nXc=X1\n1\n= oi 79.60\n1 1 1:\n2C0=—— = = —JOuF\nC= 53796 ~ 3nf x 796 ~ 100m x 795 ~ OK\nHence, C' = 40uF.",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 40,
+    "diagram_url": null
+  },
+  {
+    "question_number": 123,
+    "question": "Match List-I with List-II.\n\nList-I:\nA. AC generator\nB. Transformer\nC. Resonance phenomenon to occur\nD. Sharpness of resonance\n\nList-II:\nI. Presence of both L and C\nII. Electromagnetic Induction\nIII. Quality factor\nIV. Mutual Inductance\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "A-IV, B-II, C-I, D-III",
+      "A-II, B-I, C-III, D-IV",
+      "A-II, B-IV, C-I, D-III",
+      "A-IV, B-III, C-I, D-II"
+    ],
+    "correct_answer": "C",
+    "explanation": "I —(A) An AC generator works on the electromagnetic induction principle. So, Il —(B) The transformer works on\nthe principle of mutual induction. So, — IV (C) Resonance occurs when the value of inductive and capacitive\nreactance have equal magnitude but a phase difference of 180°. So, (D) The sharpness of resonance is defined\nusing the quality factor which explains how fast energy decay in an oscillating system. — IIT",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 124,
+    "question": "An ideal transformer with purely resistive load operates at $12\\text{ kV}$ on the primary side. It supplies electrical energy to a number of nearby houses at $120\\text{ V}$. The average rate of energy consumption in the houses served by the transformer is $60\\text{ kW}$. The value of resistive load ($R_s$) required in the secondary circuit will be ______ $\\text{m}\\Omega$.",
+    "options": [],
+    "correct_answer": "240",
+    "explanation": "The given data is P = 60 x 10°WP V, = 120V A transformer has a primary coil and a secondary coil. The\nve\nformula for the power delivered is given by p — Sw\ns\n= 60 x 10° = ik Re\nR, 60 x 10°",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 240,
+    "diagram_url": null
+  },
+  {
+    "question_number": 125,
+    "question": "A capacitor of capacitance $150.0\\,\\mu\\text{F}$ is connected to an alternating source of emf given by $E = 36\\sin(120\\pi t)\\text{ V}$. The maximum value of current in the circuit is approximately equal to :",
+    "options": [
+      "$2\\text{ A}$",
+      "$\\sqrt{2}\\text{ A}$",
+      "$2\\sqrt{2}\\text{ A}$",
+      "$\\frac{1}{\\sqrt{2}}\\text{ A}$"
+    ],
+    "correct_answer": "A",
+    "explanation": "The formula for maximum current is given by\nTosa =O: ld)\nThe given data is\nw= 1207\nV,. = 36VC = 150uF\nSubstituting the values in equation (i)\nLax = (1207) x (150 x 107%) x 36\n= 2.0364\n~24",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 126,
+    "question": "An oscillating LC circuit consists of a $75\\text{ mH}$ inductor and a $1.2\\,\\mu\\text{F}$ capacitor. If the maximum charge on the capacitor is $2.7\\,\\mu\\text{C}$, the maximum current in the circuit will be ______ mA.",
+    "options": [],
+    "correct_answer": "9",
+    "explanation": "When the capacitor is fully discharged, the current is maximum and all the energy resides in the inductor. Hence,\n2 2\nthe energy of the capacitor is equal to the energy of the inductor. be = Lei where i, is the maximum\ncurrent and @,,, is the maximum charge. The given values are\nQu =2.7x 10 °CL = 75 x 10 *HC = 1.2 x 10\" *F The maximum current is found from equation (i)\n[1 2.7x10°°\nim=\\ 50m = p= ——————— = 9mA\n\"VLC TT x10 x 12x 10°",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 9,
+    "diagram_url": null
+  },
+  {
+    "question_number": 127,
+    "question": "A series combination of resistor of resistance $100\\,\\Omega$, inductor of inductance $1\\text{ H}$ and capacitor of capacitance $6.25\\,\\mu\\text{F}$ is connected to an ac source. The quality factor of the circuit will be ______.",
+    "options": [],
+    "correct_answer": "4",
+    "explanation": "The formula to calculate the quality factor of an LCR circuit is given by\n1 /L\n= =yl=e (1\nQ=zyz-M\nSubstitute the values of the known parameters into equation (1) to calculate the required quality factor of the\ncircuit.\n6 = LT\n- 100 525 x 107°\n1 1000\n= Eo\n100 2.5\n= 4",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 4,
+    "diagram_url": null
+  },
+  {
+    "question_number": 128,
+    "question": "An alternating voltage $V(t) = 220\\sin 100\\pi t\\text{ volt}$ is applied to a purely resistive load of $50\\,\\Omega$. The time taken for the current to rise from half of the peak value to the peak value is :",
+    "options": [
+      "$5\\text{ ms}$",
+      "$3.3\\text{ ms}$",
+      "$7.2\\text{ ms}$",
+      "$2.2\\text{ ms}$"
+    ],
+    "correct_answer": "B",
+    "explanation": "The formula for impedance is given by\nZ=\\R+ (XL -Xc)\nAt resonance, X1, = X¢. 50, Zin = R\nPower will be maximum when impedance is minimum. Thus the maximum power occurs in a purely resistive\ncircuit.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 129,
+    "question": "In the circuit shown, the energy stored in the capacitor is $n \\times 10^{-4}\\text{ J}$. The value of $n$ is :",
+    "options": [
+      "$12$",
+      "$24$",
+      "$36$",
+      "$48$"
+    ],
+    "correct_answer": "D",
+    "explanation": "The formula to calculate the inductive reactance is X; = wL... (1) As can be seen from equation (1), the\ninductive reactance varies directly with the frequency and equation (2) indicates that capacitive reactance varies\ninversely with the frequency. Hence, curve AA represents the capacitive reactance and curve BB represents the\ninductive reactance.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531209/edvedum_physics/alternating_current/ac_q129_diagram.png"
+  },
+  {
+    "question_number": 130,
+    "question": "An AC source is connected to an inductance $L$ and a capacitance $C$ in series. If the frequency of source is varied, the current in circuit becomes maximum at frequency :",
+    "options": [
+      "$f = \\frac{1}{2\\pi \\sqrt{LC}}$",
+      "$f = 2\\pi \\sqrt{LC}$",
+      "$f = \\frac{1}{\\sqrt{LC}}$",
+      "$f = \\sqrt{LC}$"
+    ],
+    "correct_answer": "C",
+    "explanation": "When an a.c. voltage is applied in a series LCR circuit, the current is increased first, attains a maximum and then\ndecreases.\nThe formula to calculate the power factor is given by\nR\nC08 = ——onvo-o-—o—.. (1)\nVR + (X22 - XP)\nAt resonance, X; = X¢, Hence,\n08 Dresonance = 1\nThus, both the statements are true.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 131,
+    "question": "In a series LR circuit, the power factor is $0.5$. If the frequency of AC source is doubled, the new power factor will be :",
+    "options": [
+      "$\\frac{1}{\\sqrt{13}}$",
+      "$\\frac{1}{\\sqrt{7}}$",
+      "$\\frac{1}{\\sqrt{5}}$",
+      "$\\frac{1}{\\sqrt{3}}$"
+    ],
+    "correct_answer": "C",
+    "explanation": "For resonance to occur the condition is X = X¢.\nSo, both inductor and capacitor is required.\nThe power factor is given by cos ¢.\nFor an inductor the power factor is zero-lagging, cos 90° = 0. The angle between the voltage and current is 90°.\nFor a capacitor the power factor is zero-leading.\nHence, both statements are false.",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 132,
+    "question": "In a series LCR circuit, $R = 10\\,\\Omega$, $L = \\frac{100}{\\pi}\\text{ mH}$, and $C = \\frac{10^{-3}}{\\pi}\\text{ F}$. The circuit is connected to an AC source of $220\\text{ V}, 50\\text{ Hz}$. The power factor of the circuit is ______.",
+    "options": [],
+    "correct_answer": "1",
+    "explanation": "The capacitive reactance of the circuit is given by,\n1\nxX. = —\n< pre\nT 2rx50x10°\n= 10Q\nThe inductive reactance of the circuit is given by,\nX; = wL\n100\n= 2mx50x —=x10 3\n= 1092\nFrom above calculations, it is clear that\nXc = Xr\n.\". Power factor — L2 = & =1\nZ R",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 1,
+    "diagram_url": null
+  },
+  {
+    "question_number": 133,
+    "question": "The primary side of a transformer is connected to $230\\text{ V}, 50\\text{ Hz}$ supply. The turn ratio of primary to secondary winding is $10 : 1$. Load resistance connected to the secondary side is $46\\,\\Omega$. The power consumed in it is :",
+    "options": [
+      "$12.5\\text{ W}$",
+      "$10.0\\text{ W}$",
+      "$11.5\\text{ W}$",
+      "$12.0\\text{ W}$"
+    ],
+    "correct_answer": "C",
+    "explanation": "The voltages associated with the primary and the secondary side of the transformer are related to the turn ratio as\nfollows:\nVi_ Ny\n—_—=—..(1\nvio @\nFrom equation (1), it follows that\n20 _10\nVa 1\nVa=23V\nHence, the power consumed can be calculated as follows\n#r 4\nnlx\nC46\n= 11.5W",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 134,
+    "question": "A capacitor of capacitance $100\\,\\mu\\text{F}$ is charged to a potential of $12\\text{ V}$ and connected to a $6.4\\text{ mH}$ inductor to produce oscillations. The maximum current in the circuit would be :",
+    "options": [
+      "$3.2\\text{ A}$",
+      "$1.5\\text{ A}$",
+      "$3.0\\text{ A}$",
+      "$1.2\\text{ A}$"
+    ],
+    "correct_answer": "B",
+    "explanation": "By energy conservation, it follows that\nlove lip\nOVE = Lhe (1)\nEquation (1) implies that\nCc\nIe = VZV\n6\nJ Jloxiol\n6.4 x 10\n= x\n- 8\n= 1.54",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 135,
+    "question": "In an a.c. circuit, voltage and current are given by: $V = 100\\sin(100t)\\text{ V}$ and $I = 100\\sin(100t + \\pi/3)\\text{ mA}$ respectively. The average power dissipated in one cycle is :",
+    "options": [
+      "$5\\text{ W}$",
+      "$10\\text{ W}$",
+      "$2.5\\text{ W}$",
+      "$0.5\\text{ W}$"
+    ],
+    "correct_answer": "C",
+    "explanation": "Standard expression of voltage is given by, V = V sin (wt) and for current is given by, I = I sin (wt + ¢).\nClearly, ¢ is the phase difference here. From the given expression, ¢ = z.\nAverage power dissipated in one cycle is given by,\nPag = VrmsIrms cos(¢)\n100 100 x 10°* ©)\nES Cp I: Sms’ 30 OO | ==\nvz V2 3\n10* so\n== x 107\" x 3\n10\n=—=25W\n4",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 136,
+    "question": "A series LR circuit connected with an ac source $E = (25\\sin 1000t)\\text{ V}$ has a power factor of $\\frac{1}{\\sqrt{2}}$. If the source of emf is changed to $E = (20\\sin 2000t)\\text{ V}$, the new power factor of the circuit will be :",
+    "options": [
+      "$\\frac{1}{\\sqrt{2}}$",
+      "$\\frac{1}{\\sqrt{3}}$",
+      "$\\frac{1}{\\sqrt{5}}$",
+      "$\\frac{1}{\\sqrt{7}}$"
+    ],
+    "correct_answer": "C",
+    "explanation": "cok R 1\nFor LR circuit, ose\n/( xX 1)’ +R? v2\n= R=Xy\nNow, ww = 2w\nTherefore, (X;) = w'L = 2wL = 2X\ncos ¢ a gy = ==\nHence, fox)? + 2 TR NG",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 137,
+    "question": "Primary coil of a transformer is connected to $220\\text{ V}$ AC. Primary and secondary turns of the transformer are 100 and 10 respectively. Secondary coil of transformer is connected to two series resistances as shown in figure. The output voltage ($V_0$) across the $7\\text{ k}\\Omega$ resistor is :",
+    "options": [
+      "$7\\text{ V}$",
+      "$15\\text{ V}$",
+      "$24\\text{ V}$",
+      "$22\\text{ V}$"
+    ],
+    "correct_answer": "A",
+    "explanation": "15kQ\nCo) V,\n<) 0\n-\nO CX 7kQ\n200 V -)\n-\nRati : \" & Np 100 . a\ntio of EMF developed will be given by, -£ — No = ST = €, = 22V Therefore, current in secondary circuit\n€s 5\nwillbe I = os = 1mAl Hence, potential drop across TkQk will be Vig = I x TkQ = TV\nx",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1795531211/edvedum_physics/alternating_current/ac_q137_diagram.png"
+  },
+  {
+    "question_number": 138,
+    "question": "An alternating voltage $V(t) = 220\\sin 100\\pi t\\text{ volt}$ is applied to a purely resistive load of $50\\,\\Omega$. The time taken for the current to rise from half of the peak value to the peak value is :",
+    "options": [
+      "$5\\text{ ms}$",
+      "$3.3\\text{ ms}$",
+      "$7.2\\text{ ms}$",
+      "$3.9\\text{ ms}$"
+    ],
+    "correct_answer": "B",
+    "explanation": "Time taken to change current value from half of the peak value to the peak value is,\ni i of\n6\nSE x_n 1 — 3.33\nTow 3w 300m 300",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  },
+  {
+    "question_number": 139,
+    "question": "A power transmission line feeds input power at $2.3\\text{ kV}$ to a step down transformer with its primary winding having $3000\\text{ turns}$. The output power is delivered at $230\\text{ V}$ by the transformer. The current in the primary of the transformer is $5\\text{ A}$ and its efficiency is $90\\%$. The output current of transformer is ______ A.",
+    "options": [],
+    "correct_answer": "45",
+    "explanation": "Given:\nInput power, P; = 2300 x Swatt\nOutput power, Py = 2300 x 5 x 0.9\nPos _ Vsls\nNow, we can write 1) = —— = ———\nT= RP, ~ Val\n2301s\n=09= 2300 x5 1s = 454.",
+    "question_type": "numerical",
+    "numerical_tolerance": 0,
+    "numeric_answer": 45,
+    "diagram_url": null
+  },
+  {
+    "question_number": 140,
+    "question": "An ac voltage $V = 20\\sin 200\\pi t$ is applied to a series LCR circuit which drives a current $I = 10\\sin(200\\pi t - \\pi/3)$. The average power dissipated is :",
+    "options": [
+      "$21.6\\text{ W}$",
+      "$200\\text{ W}$",
+      "$173.2\\text{ W}$",
+      "$50\\text{ W}$"
+    ],
+    "correct_answer": "D",
+    "explanation": "The average power dissipated is, < P >= IV cos ¢\n= = x = x cos 60°\n= 50W",
+    "question_type": "multiple_choice",
+    "numerical_tolerance": null,
+    "numeric_answer": null,
+    "diagram_url": null
+  }
+]
