@@ -517,34 +517,58 @@ export const createTest = asyncHandler(async (req, res) => {
 
   const test = await withTransaction(async (client) => {
     const resolvedIsLive = req.body.is_live !== undefined ? Boolean(req.body.is_live) : false;
-    const result = await client.query(
-      `INSERT INTO tests (
-        test_name, title, test_type, class_level, test_date, start_time, end_time,
-        duration_minutes, syllabus, max_marks, is_published, status,
-        result_publish_time, solution_pdf_url, recommended_ebook_id,
-        available_from, available_until, is_live
-      ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
-      RETURNING *`,
-      [
-        test_name,
-        test_type,
-        class_level || null,
-        cleanDate,
-        cleanStartTime,
-        cleanEndTime,
-        cleanDuration,
-        syllabus || null,
-        resolvedMaxMarks,
-        Boolean(is_published),
-        is_published ? 'published' : 'draft',
-        cleanResultPublishTime,
-        solution_pdf_url || null,
-        cleanEbookId,
-        cleanAvailableFrom,
-        cleanAvailableUntil,
-        resolvedIsLive
-      ]
-    );
+    const insertParams = [
+      test_name,
+      test_type,
+      class_level || null,
+      cleanDate,
+      cleanStartTime,
+      cleanEndTime,
+      cleanDuration,
+      syllabus || null,
+      resolvedMaxMarks,
+      Boolean(is_published),
+      is_published ? 'published' : 'draft',
+      cleanResultPublishTime,
+      solution_pdf_url || null,
+      cleanEbookId,
+      cleanAvailableFrom,
+      cleanAvailableUntil,
+      resolvedIsLive
+    ];
+    let result;
+    try {
+      result = await client.query(
+        `INSERT INTO tests (
+          test_name, title, test_type, class_level, test_date, start_time, end_time,
+          duration_minutes, syllabus, max_marks, is_published, status,
+          result_publish_time, solution_pdf_url, recommended_ebook_id,
+          available_from, available_until, is_live
+        ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+        RETURNING *`,
+        insertParams
+      );
+    } catch (err) {
+      if (err && (err.code === '42703' || String(err.message).includes('class_level'))) {
+        console.warn('[createTest] Missing class_level column detected. Auto-healing schema...');
+        await client.query(`
+          ALTER TABLE tests ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
+          ALTER TABLE assessments ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
+        `).catch(() => {});
+        result = await client.query(
+          `INSERT INTO tests (
+            test_name, title, test_type, class_level, test_date, start_time, end_time,
+            duration_minutes, syllabus, max_marks, is_published, status,
+            result_publish_time, solution_pdf_url, recommended_ebook_id,
+            available_from, available_until, is_live
+          ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+          RETURNING *`,
+          insertParams
+        );
+      } else {
+        throw err;
+      }
+    }
 
     const createdTest = result.rows[0];
 
@@ -713,53 +737,70 @@ export const updateTest = asyncHandler(async (req, res) => {
   const cleanAvailableFrom = sanitizeTimestamp(available_from);
   const cleanAvailableUntil = sanitizeTimestamp(available_until);
 
-  const result = await query(
-    `UPDATE tests SET
-      test_name = COALESCE($2, test_name),
-      title = COALESCE($2, title),
-      test_type = COALESCE($3, test_type),
-      test_date = COALESCE($4, test_date),
-      start_time = COALESCE($5, start_time),
-      end_time = COALESCE($6, end_time),
-      duration_minutes = COALESCE($7, duration_minutes),
-      syllabus = COALESCE($8, syllabus),
-      max_marks = COALESCE($9, max_marks),
-      is_published = COALESCE($10, is_published),
-      status = CASE WHEN $10 IS NULL THEN status WHEN $10 = true THEN 'published' ELSE 'draft' END,
-      result_publish_time = $11,
-      solution_pdf_url = COALESCE($12, solution_pdf_url),
-      question_paper_url = COALESCE($13, question_paper_url),
-      answer_key_url = COALESCE($14, answer_key_url),
-      recommended_ebook_id = $15,
-      available_from = $16,
-      available_until = $17,
-      is_live = COALESCE($18, is_live),
-      class_level = COALESCE($19, class_level),
-      updated_at = NOW()
-    WHERE id = $1
-    RETURNING *`,
-    [
-      id,
-      test_name || null,
-      test_type || null,
-      cleanDate,
-      cleanStartTime,
-      cleanEndTime,
-      cleanDuration,
-      syllabus !== undefined ? syllabus : null,
-      cleanMarks,
-      is_published !== undefined ? Boolean(is_published) : null,
-      cleanResultPublishTime,
-      solution_pdf_url !== undefined ? solution_pdf_url : null,
-      question_paper_url !== undefined ? question_paper_url : null,
-      answer_key_url !== undefined ? answer_key_url : null,
-      cleanEbookId,
-      cleanAvailableFrom,
-      cleanAvailableUntil,
-      req.body.is_live !== undefined ? Boolean(req.body.is_live) : null,
-      class_level !== undefined && class_level !== '' ? class_level : null
-    ]
-  );
+  const queryParams = [
+    id,
+    test_name || null,
+    test_type || null,
+    cleanDate,
+    cleanStartTime,
+    cleanEndTime,
+    cleanDuration,
+    syllabus !== undefined ? syllabus : null,
+    cleanMarks,
+    is_published !== undefined ? Boolean(is_published) : null,
+    cleanResultPublishTime,
+    solution_pdf_url !== undefined ? solution_pdf_url : null,
+    question_paper_url !== undefined ? question_paper_url : null,
+    answer_key_url !== undefined ? answer_key_url : null,
+    cleanEbookId,
+    cleanAvailableFrom,
+    cleanAvailableUntil,
+    req.body.is_live !== undefined ? Boolean(req.body.is_live) : null,
+    class_level !== undefined && class_level !== '' ? class_level : null
+  ];
+
+  const updateSql = `UPDATE tests SET
+    test_name = COALESCE($2, test_name),
+    title = COALESCE($2, title),
+    test_type = COALESCE($3, test_type),
+    test_date = COALESCE($4, test_date),
+    start_time = COALESCE($5, start_time),
+    end_time = COALESCE($6, end_time),
+    duration_minutes = COALESCE($7, duration_minutes),
+    syllabus = COALESCE($8, syllabus),
+    max_marks = COALESCE($9, max_marks),
+    is_published = COALESCE($10, is_published),
+    status = CASE WHEN $10 IS NULL THEN status WHEN $10 = true THEN 'published' ELSE 'draft' END,
+    result_publish_time = $11,
+    solution_pdf_url = COALESCE($12, solution_pdf_url),
+    question_paper_url = COALESCE($13, question_paper_url),
+    answer_key_url = COALESCE($14, answer_key_url),
+    recommended_ebook_id = $15,
+    available_from = COALESCE($16, available_from),
+    available_until = COALESCE($17, available_until),
+    is_live = COALESCE($18, is_live),
+    class_level = COALESCE($19, class_level),
+    updated_at = NOW()
+  WHERE id = $1
+  RETURNING *`;
+
+  let result;
+  try {
+    result = await query(updateSql, queryParams);
+  } catch (err) {
+    if (err && (err.code === '42703' || String(err.message).includes('class_level'))) {
+      console.warn('[updateTest] Missing class_level column detected. Auto-healing schema...');
+      await query(`
+        ALTER TABLE tests ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
+        ALTER TABLE assessments ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
+        CREATE INDEX IF NOT EXISTS idx_tests_class_level ON tests(class_level);
+        CREATE INDEX IF NOT EXISTS idx_assessments_class_level ON assessments(class_level);
+      `).catch(() => {});
+      result = await query(updateSql, queryParams);
+    } else {
+      throw err;
+    }
+  }
 
   if (result.rowCount !== 1 || !result.rows[0]) {
     throw ApiError.notFound('Test not found');

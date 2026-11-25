@@ -290,8 +290,8 @@ export default function AdminAssessments() {
         max_violations: testForm.max_violations !== '' && testForm.max_violations !== null && !isNaN(Number(testForm.max_violations))
           ? Number(testForm.max_violations)
           : 3,
-        start_time: testForm.start_time.length === 5 ? `${testForm.start_time}:00` : testForm.start_time,
-        end_time: testForm.end_time.length === 5 ? `${testForm.end_time}:00` : testForm.end_time,
+        start_time: testForm.start_time ? (String(testForm.start_time).length === 5 ? `${testForm.start_time}:00` : String(testForm.start_time).slice(0, 8)) : '09:00:00',
+        end_time: testForm.end_time ? (String(testForm.end_time).length === 5 ? `${testForm.end_time}:00` : String(testForm.end_time).slice(0, 8)) : '12:00:00',
       };
       if (editingTest) {
         await adminService.updateTest(editingTest.id, payload);
@@ -315,7 +315,7 @@ export default function AdminAssessments() {
       setTestModalOpen(false);
       loadData();
     } catch (err) {
-      toast.error(err.message || 'Action failed');
+      toast.error(err.response?.data?.message || err.message || 'Action failed');
     }
   };
 

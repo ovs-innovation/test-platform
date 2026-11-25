@@ -123,6 +123,10 @@ const start = async () => {
       CREATE INDEX IF NOT EXISTS idx_question_bank_exam_type ON question_bank(exam_type);
       UPDATE question_bank SET marks = 4 WHERE marks != 4 OR marks IS NULL;
       UPDATE questions SET marks = 4 WHERE marks != 4 OR marks IS NULL;
+      ALTER TABLE tests ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
+      ALTER TABLE assessments ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
+      CREATE INDEX IF NOT EXISTS idx_tests_class_level ON tests(class_level);
+      CREATE INDEX IF NOT EXISTS idx_assessments_class_level ON assessments(class_level);
     `).catch(() => {});
   }
 
