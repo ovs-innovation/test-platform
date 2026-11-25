@@ -66,9 +66,13 @@ async function main() {
         numericAnswer = Number(q.numeric_answer ?? (parseFloat(q.correct_answer) || 0));
         tolerance = 0;
       } else {
-        const letter = String(q.correct_answer || 'A').toUpperCase().trim();
         const mapLetter = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
-        correctIndex = mapLetter[letter] !== undefined ? mapLetter[letter] : 0;
+        if (q.correct_index !== undefined && q.correct_index !== null) {
+          correctIndex = q.correct_index;
+        } else {
+          const letter = String(q.correct_answer || 'A').toUpperCase().trim();
+          correctIndex = mapLetter[letter] !== undefined ? mapLetter[letter] : 0;
+        }
         correctIndicesJson = JSON.stringify([correctIndex]);
         numericAnswer = null;
         tolerance = null;
