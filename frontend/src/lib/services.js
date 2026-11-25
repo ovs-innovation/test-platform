@@ -307,7 +307,7 @@ const getQbCacheKey = (category, extraParams = {}) => {
         sorted[k] = String(v).toLowerCase();
       }
     });
-  return `qb_v3_by_cat_${normCat}_${JSON.stringify(sorted)}`;
+  return `qb_v5_by_cat_${normCat}_${JSON.stringify(sorted)}`;
 };
 
 export const questionBankService = {
@@ -327,7 +327,7 @@ export const questionBankService = {
     // If first argument is boolean (legacy call like categories(true)), handle gracefully
     let normalizedExamType = typeof examType === 'string' ? examType : null;
     let shouldRefresh = typeof examType === 'boolean' ? examType : forceRefresh;
-    const key = `qb_categories_${(normalizedExamType || 'all').toLowerCase()}`;
+    const key = `qb_categories_v5_${(normalizedExamType || 'all').toLowerCase()}`;
     if (shouldRefresh) clearCache(key);
     return withCache(
       key,
@@ -337,18 +337,18 @@ export const questionBankService = {
           ...(shouldRefresh ? { refresh: 'true' } : {}),
         }
       }).then((r) => r.data.categories),
-      86400000,
-      600000
+      300000,
+      120000
     );
   },
   list: (category, forceRefresh = false) => {
-    const key = `qb_list_${(category || 'all').toLowerCase()}`;
+    const key = `qb_list_v5_${(category || 'all').toLowerCase()}`;
     if (forceRefresh) clearCache(key);
     return withCache(
       key,
       () => api.get('/question-bank', { params: { ...(category ? { category } : {}), ...(forceRefresh ? { refresh: 'true' } : {}) } }).then((r) => r.data.questions),
-      86400000,
-      600000
+      300000,
+      120000
     );
   },
   byCategory: async (category, extraParams = {}, forceRefresh = false) => {
@@ -373,7 +373,7 @@ export const questionBankService = {
       .then((r) => {
         const questions = r.data.questions || [];
         if (questions.length > 0) {
-          persistentCache.set(key, questions, 86400000);
+          persistentCache.set(key, questions, 300000);
         }
         return questions;
       })

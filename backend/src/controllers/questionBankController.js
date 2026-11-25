@@ -28,7 +28,7 @@ export const listCategories = asyncHandler(async (req, res) => {
   const { exam_type, skip_cache, refresh } = req.query;
   const isBypass = skip_cache === 'true' || refresh === 'true';
   const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
-  const cacheKey = `cache:qb:categories:${normExamType || 'all'}`;
+  const cacheKey = `cache:qb:categories:v5:${normExamType || 'all'}`;
 
   const fetchCategories = async () => {
     let sql = `SELECT category, COUNT(*)::int AS count FROM question_bank`;
@@ -91,7 +91,7 @@ export const listCategories = asyncHandler(async (req, res) => {
   if (isBypass) {
     const payload = await fetchCategories();
     if (payload?.categories?.length > 0) {
-      await setCache(cacheKey, payload, 86400);
+      await setCache(cacheKey, payload, 300);
     }
     return res.json(payload);
   }
@@ -103,7 +103,7 @@ export const listCategories = asyncHandler(async (req, res) => {
 
   const payload = await fetchCategories();
   if (payload?.categories?.length > 0) {
-    await setCache(cacheKey, payload, 86400);
+    await setCache(cacheKey, payload, 300);
   }
   res.json(payload);
 });
@@ -121,7 +121,7 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     res.setHeader('Cache-Control', 'private, no-cache, must-revalidate');
   }
   const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
-  const cacheKey = `cache:qb:list:${(normExamType || 'all').toLowerCase()}:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
+  const cacheKey = `cache:qb:list:v5:${(normExamType || 'all').toLowerCase()}:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
 
   const fetchQuestions = async () => {
     let sql = `
@@ -239,7 +239,7 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
   if (isBypass) {
     const payload = await fetchQuestions();
     if (payload?.questions?.length > 0) {
-      await setCache(cacheKey, payload, 86400);
+      await setCache(cacheKey, payload, 300);
     }
     return res.json(payload);
   }
@@ -251,7 +251,7 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
 
   const payload = await fetchQuestions();
   if (payload?.questions?.length > 0) {
-    await setCache(cacheKey, payload, 86400);
+    await setCache(cacheKey, payload, 300);
   }
   res.json(payload);
 });

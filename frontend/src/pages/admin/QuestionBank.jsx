@@ -453,6 +453,7 @@ export default function AdminQuestionBank() {
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
       if (/oscillat/i.test(trimmed)) return 'Oscillations';
       if (/heat\s*and\s*thermo/i.test(trimmed) || /thermodyna/i.test(trimmed)) return 'Heat and Thermodynamics';
+      if (/^\s*atomic\b/i.test(trimmed) || /^\s*atoms?\b/i.test(trimmed)) return 'Atomic';
     }
 
     if (activeSubj === 'mathematics') {
@@ -981,6 +982,11 @@ export default function AdminQuestionBank() {
         chId === 114 ||
         /semiconductor/i.test(raw)
       ) return 'Semiconductor';
+
+      if (
+        /^\s*atomic\b/i.test(raw) ||
+        /^\s*atoms?\b/i.test(raw)
+      ) return 'Atomic';
 
       if (/magnetism\s*(&|and)\s*electromagnetic induction/i.test(raw)) {
         const text = `${q.topic || ''} ${q.question_text || ''}`;
