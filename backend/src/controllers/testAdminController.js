@@ -570,7 +570,7 @@ export const createTest = asyncHandler(async (req, res) => {
       test_name,
       test_type,
       cleanExamType,
-      class_level || 'Class 12',
+      cleanExamType === 'Battleground' ? 'All' : (class_level || 'Class 12'),
       cleanDate,
       cleanStartTime,
       cleanEndTime,
@@ -688,7 +688,7 @@ export const createTest = asyncHandler(async (req, res) => {
         cleanMaxViolations,
         createdTest.test_type || 'AIETS',
         cleanExamType,
-        class_level || 'Class 12',
+        cleanExamType === 'Battleground' ? 'All' : (class_level || 'Class 12'),
       ]
     ).catch((err) => {
       console.warn('[createTest] sync assessment warning:', err.message);
@@ -814,7 +814,7 @@ export const updateTest = asyncHandler(async (req, res) => {
     cleanAvailableFrom,
     cleanAvailableUntil,
     req.body.is_live !== undefined ? Boolean(req.body.is_live) : null,
-    class_level !== undefined && class_level !== '' ? class_level : null,
+    cleanExamType === 'Battleground' ? 'All' : (class_level !== undefined && class_level !== '' ? class_level : null),
     cleanExamType
   ];
 
@@ -885,7 +885,7 @@ export const updateTest = asyncHandler(async (req, res) => {
          exam_type = COALESCE($8, exam_type),
          updated_at = NOW()
      WHERE id = $1`,
-    [id, test_name || null, cleanDuration, test_type || null, is_published !== undefined ? Boolean(is_published) : null, updateViolations, class_level !== undefined && class_level !== '' ? class_level : null, cleanExamType]
+    [id, test_name || null, cleanDuration, test_type || null, is_published !== undefined ? Boolean(is_published) : null, updateViolations, cleanExamType === 'Battleground' ? 'All' : (class_level !== undefined && class_level !== '' ? class_level : null), cleanExamType]
   ).catch(() => {});
 
   syncFreeTestSeries(result.rows[0]).catch(() => { });
