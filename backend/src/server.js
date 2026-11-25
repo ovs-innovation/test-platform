@@ -127,6 +127,10 @@ const start = async () => {
       ALTER TABLE assessments ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
       CREATE INDEX IF NOT EXISTS idx_tests_class_level ON tests(class_level);
       CREATE INDEX IF NOT EXISTS idx_assessments_class_level ON assessments(class_level);
+      ALTER TABLE tests ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+      ALTER TABLE assessments ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+      CREATE INDEX IF NOT EXISTS idx_tests_exam_type ON tests(exam_type);
+      CREATE INDEX IF NOT EXISTS idx_assessments_exam_type ON assessments(exam_type);
     `).catch(() => {});
   }
 

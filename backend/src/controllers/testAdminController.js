@@ -264,7 +264,19 @@ export async function syncFreeTestSeries(test) {
  * List all tests with optional filters & participation counts
  */
 export const listTests = asyncHandler(async (req, res) => {
-  const { test_type, is_published, search, class_level } = req.query;
+  const { test_type, is_published, search, class_level, exam_type, category } = req.query;
+
+  let resolvedExamType = exam_type;
+  let resolvedClassLevel = class_level;
+
+  if (category && category !== 'All') {
+    if (category.toUpperCase().includes('NEET')) resolvedExamType = 'NEET';
+    else if (category.toUpperCase().includes('JEE')) resolvedExamType = 'JEE';
+
+    if (category.includes('11')) resolvedClassLevel = 'Class 11';
+    else if (category.includes('12')) resolvedClassLevel = 'Class 12';
+    else if (category.toLowerCase().includes('repeater')) resolvedClassLevel = 'Repeater';
+  }
 
   let whereClauses = [
     'COALESCE(t.is_deleted, FALSE) = FALSE',
@@ -291,16 +303,36 @@ export const listTests = asyncHandler(async (req, res) => {
     params.push(is_published === 'true');
   }
 
-  if (class_level && class_level !== 'All') {
-    if (class_level === 'Repeater' || class_level.toLowerCase().includes('dropper')) {
+  if (resolvedExamType && resolvedExamType !== 'All') {
+    if (resolvedExamType === 'JEE') {
+      whereClauses.push(`(
+        UPPER(COALESCE(t.exam_type, '')) = 'JEE'
+        OR t.test_name ILIKE '%jee%'
+        OR t.title ILIKE '%jee%'
+        OR t.test_name ILIKE '%math%'
+        OR t.title ILIKE '%math%'
+        OR t.subject ILIKE '%math%'
+      )`);
+    } else if (resolvedExamType === 'NEET') {
+      whereClauses.push(`(
+        (UPPER(COALESCE(t.exam_type, 'NEET')) = 'NEET' OR t.exam_type IS NULL)
+        AND t.test_name NOT ILIKE '%jee%'
+        AND t.title NOT ILIKE '%jee%'
+        AND (t.subject IS NULL OR t.subject NOT ILIKE '%math%')
+      )`);
+    }
+  }
+
+  if (resolvedClassLevel && resolvedClassLevel !== 'All') {
+    if (resolvedClassLevel === 'Repeater' || resolvedClassLevel.toLowerCase().includes('dropper')) {
       whereClauses.push(`(t.class_level ILIKE '%repeater%' OR t.class_level ILIKE '%dropper%' OR t.class_level ILIKE '%pass%')`);
-    } else if (class_level === 'Class 11') {
+    } else if (resolvedClassLevel === 'Class 11') {
       whereClauses.push(`(t.class_level ILIKE '%11%' AND t.class_level NOT ILIKE '%12%')`);
-    } else if (class_level === 'Class 12') {
+    } else if (resolvedClassLevel === 'Class 12') {
       whereClauses.push(`(t.class_level ILIKE '%12%' AND t.class_level NOT ILIKE '%repeater%' AND t.class_level NOT ILIKE '%dropper%')`);
     } else {
       whereClauses.push(`t.class_level = $${paramIdx++}`);
-      params.push(class_level);
+      params.push(resolvedClassLevel);
     }
   }
 
@@ -480,6 +512,7 @@ export const createTest = asyncHandler(async (req, res) => {
   const {
     test_name,
     test_type,
+    exam_type,
     class_level,
     test_date,
     start_time,
@@ -501,6 +534,9 @@ export const createTest = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('Missing required test fields (test_name, test_type, test_date, start_time, end_time, duration_minutes)');
   }
 
+  const cleanExamType = exam_type
+    ? (String(exam_type).toUpperCase().includes('JEE') ? 'JEE' : 'NEET')
+    : (String(test_type || '').toUpperCase().includes('JEE') || String(test_name || '').toUpperCase().includes('JEE') ? 'JEE' : 'NEET');
   const cleanDate = sanitizeDate(test_date) || String(test_date).split('T')[0];
   const cleanStartTime = sanitizeTime(start_time, '09:00:00');
   const cleanEndTime = sanitizeTime(end_time, '12:00:00');
@@ -513,14 +549,15 @@ export const createTest = asyncHandler(async (req, res) => {
   // In JEE/NEET CBT exams, max marks are optional and automatically determined by questions or default standard patterns (720 for NEET, 300 for JEE)
   const resolvedMaxMarks = (max_marks !== undefined && max_marks !== null && max_marks !== '' && !isNaN(Number(max_marks)) && Number(max_marks) > 0)
     ? Number(max_marks)
-    : (String(test_type || '').toUpperCase().includes('NEET') ? 720 : 300);
+    : (cleanExamType === 'NEET' ? 720 : 300);
 
   const test = await withTransaction(async (client) => {
     const resolvedIsLive = req.body.is_live !== undefined ? Boolean(req.body.is_live) : false;
     const insertParams = [
       test_name,
       test_type,
-      class_level || null,
+      cleanExamType,
+      class_level || 'Class 12',
       cleanDate,
       cleanStartTime,
       cleanEndTime,
@@ -540,28 +577,30 @@ export const createTest = asyncHandler(async (req, res) => {
     try {
       result = await client.query(
         `INSERT INTO tests (
-          test_name, title, test_type, class_level, test_date, start_time, end_time,
+          test_name, title, test_type, exam_type, class_level, test_date, start_time, end_time,
           duration_minutes, syllabus, max_marks, is_published, status,
           result_publish_time, solution_pdf_url, recommended_ebook_id,
           available_from, available_until, is_live
-        ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+        ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
         RETURNING *`,
         insertParams
       );
     } catch (err) {
-      if (err && (err.code === '42703' || String(err.message).includes('class_level'))) {
-        console.warn('[createTest] Missing class_level column detected. Auto-healing schema...');
+      if (err && (err.code === '42703' || String(err.message).includes('class_level') || String(err.message).includes('exam_type'))) {
+        console.warn('[createTest] Missing column detected. Auto-healing schema...');
         await client.query(`
           ALTER TABLE tests ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
           ALTER TABLE assessments ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
+          ALTER TABLE tests ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+          ALTER TABLE assessments ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
         `).catch(() => {});
         result = await client.query(
           `INSERT INTO tests (
-            test_name, title, test_type, class_level, test_date, start_time, end_time,
+            test_name, title, test_type, exam_type, class_level, test_date, start_time, end_time,
             duration_minutes, syllabus, max_marks, is_published, status,
             result_publish_time, solution_pdf_url, recommended_ebook_id,
             available_from, available_until, is_live
-          ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+          ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
           RETURNING *`,
           insertParams
         );
@@ -612,13 +651,14 @@ export const createTest = asyncHandler(async (req, res) => {
     await client.query(
       `INSERT INTO assessments (
         id, title, description, instructions, duration_minutes, passing_marks, max_violations,
-        result_visible, is_published, available_from, available_until, created_by, test_type, class_level
-      ) VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, $10, true, $6, $7, $8, $9, $11, $12)
+        result_visible, is_published, available_from, available_until, created_by, test_type, exam_type, class_level
+      ) VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, $10, true, $6, $7, $8, $9, $11, $12, $13)
       ON CONFLICT (id) DO UPDATE SET
         title = EXCLUDED.title,
         duration_minutes = EXCLUDED.duration_minutes,
         max_violations = EXCLUDED.max_violations,
         test_type = EXCLUDED.test_type,
+        exam_type = EXCLUDED.exam_type,
         class_level = EXCLUDED.class_level,
         is_published = EXCLUDED.is_published,
         updated_at = NOW()`,
@@ -634,7 +674,8 @@ export const createTest = asyncHandler(async (req, res) => {
         req.user?.id || null,
         cleanMaxViolations,
         createdTest.test_type || 'AIETS',
-        class_level || null,
+        cleanExamType,
+        class_level || 'Class 12',
       ]
     ).catch((err) => {
       console.warn('[createTest] sync assessment warning:', err.message);
@@ -707,6 +748,7 @@ export const updateTest = asyncHandler(async (req, res) => {
   const {
     test_name,
     test_type,
+    exam_type,
     class_level,
     test_date,
     start_time,
@@ -727,6 +769,9 @@ export const updateTest = asyncHandler(async (req, res) => {
   const check = await query('SELECT id, recommended_ebook_id, test_name, title FROM tests WHERE id = $1 AND COALESCE(is_deleted, FALSE) = FALSE', [id]);
   if (check.rowCount === 0) throw ApiError.notFound('Test not found');
 
+  const cleanExamType = exam_type !== undefined && exam_type !== null && exam_type !== ''
+    ? (String(exam_type).toUpperCase().includes('JEE') ? 'JEE' : 'NEET')
+    : null;
   const cleanDate = sanitizeDate(test_date);
   const cleanStartTime = start_time ? sanitizeTime(start_time) : null;
   const cleanEndTime = end_time ? sanitizeTime(end_time) : null;
@@ -756,7 +801,8 @@ export const updateTest = asyncHandler(async (req, res) => {
     cleanAvailableFrom,
     cleanAvailableUntil,
     req.body.is_live !== undefined ? Boolean(req.body.is_live) : null,
-    class_level !== undefined && class_level !== '' ? class_level : null
+    class_level !== undefined && class_level !== '' ? class_level : null,
+    cleanExamType
   ];
 
   const updateSql = `UPDATE tests SET
@@ -780,6 +826,7 @@ export const updateTest = asyncHandler(async (req, res) => {
     available_until = COALESCE($17, available_until),
     is_live = COALESCE($18, is_live),
     class_level = COALESCE($19, class_level),
+    exam_type = COALESCE($20, exam_type),
     updated_at = NOW()
   WHERE id = $1
   RETURNING *`;
@@ -788,13 +835,17 @@ export const updateTest = asyncHandler(async (req, res) => {
   try {
     result = await query(updateSql, queryParams);
   } catch (err) {
-    if (err && (err.code === '42703' || String(err.message).includes('class_level'))) {
-      console.warn('[updateTest] Missing class_level column detected. Auto-healing schema...');
+    if (err && (err.code === '42703' || String(err.message).includes('class_level') || String(err.message).includes('exam_type'))) {
+      console.warn('[updateTest] Missing column detected. Auto-healing schema...');
       await query(`
         ALTER TABLE tests ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
         ALTER TABLE assessments ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
         CREATE INDEX IF NOT EXISTS idx_tests_class_level ON tests(class_level);
         CREATE INDEX IF NOT EXISTS idx_assessments_class_level ON assessments(class_level);
+        ALTER TABLE tests ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+        ALTER TABLE assessments ADD COLUMN IF NOT EXISTS exam_type VARCHAR(50) DEFAULT 'NEET';
+        CREATE INDEX IF NOT EXISTS idx_tests_exam_type ON tests(exam_type);
+        CREATE INDEX IF NOT EXISTS idx_assessments_exam_type ON assessments(exam_type);
       `).catch(() => {});
       result = await query(updateSql, queryParams);
     } else {
@@ -818,9 +869,10 @@ export const updateTest = asyncHandler(async (req, res) => {
          is_published = COALESCE($5, is_published),
          max_violations = COALESCE($6, max_violations),
          class_level = COALESCE($7, class_level),
+         exam_type = COALESCE($8, exam_type),
          updated_at = NOW()
      WHERE id = $1`,
-    [id, test_name || null, cleanDuration, test_type || null, is_published !== undefined ? Boolean(is_published) : null, updateViolations, class_level !== undefined && class_level !== '' ? class_level : null]
+    [id, test_name || null, cleanDuration, test_type || null, is_published !== undefined ? Boolean(is_published) : null, updateViolations, class_level !== undefined && class_level !== '' ? class_level : null, cleanExamType]
   ).catch(() => {});
 
   syncFreeTestSeries(result.rows[0]).catch(() => { });

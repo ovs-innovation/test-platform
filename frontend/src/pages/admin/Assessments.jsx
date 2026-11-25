@@ -34,15 +34,31 @@ import {
   Eye,
   Radio,
   Mail,
-  GraduationCap
+  GraduationCap,
+  Layers,
+  Stethoscope,
+  Compass
 } from 'lucide-react';
 import { isTestLive } from '../../lib/testStatus.js';
 
 const TEST_TYPES = ['AIETS', 'EDVEDUM Battleground', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
-const CLASS_LEVELS = ['All', 'Class 11', 'Class 12', 'Repeater'];
+const EXAM_SECTIONS = ['All', 'NEET', 'JEE'];
+const CLASS_LEVELS = ['Class 11', 'Class 12', 'Repeater'];
+
+export const resolveTestExam = (t) => {
+  if (!t) return 'NEET';
+  if (t.exam_type) {
+    const et = String(t.exam_type).toUpperCase();
+    if (et.includes('JEE')) return 'JEE';
+    if (et.includes('NEET')) return 'NEET';
+  }
+  const text = `${t.test_name || ''} ${t.title || ''} ${t.test_type || ''} ${t.subject || ''} ${t.syllabus || ''}`.toLowerCase();
+  if (/\b(jee|math|mathematics|iit|advanced|mains)\b/i.test(text)) return 'JEE';
+  return 'NEET';
+};
 
 export const resolveTestClass = (t) => {
-  if (!t) return null;
+  if (!t) return 'Class 12';
   if (t.class_level) {
     const cl = String(t.class_level).toLowerCase();
     if (cl.includes('repeater') || cl.includes('dropper') || cl.includes('pass')) return 'Repeater';
@@ -60,7 +76,13 @@ export const resolveTestClass = (t) => {
   if (/\b(repeater|repeaters|dropper|droppers|12th\s*pass|passed\s*12)\b/i.test(text)) return 'Repeater';
   if (/\b(class\s*11|11th)\b/i.test(text)) return 'Class 11';
   if (/\b(class\s*12|12th)\b/i.test(text)) return 'Class 12';
-  return null;
+  return 'Class 12';
+};
+
+export const resolveTestCategory = (t) => {
+  const exam = resolveTestExam(t);
+  const cl = resolveTestClass(t) || 'Class 12';
+  return `${exam} ${cl}`;
 };
 
 export const isPersonalStudentTest = (t) => {
@@ -94,7 +116,8 @@ export default function AdminAssessments() {
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('All');
-  const [selectedClass, setSelectedClass] = useState('All');
+  const [selectedSection, setSelectedSection] = useState('All'); // 'All' | 'NEET' | 'JEE'
+  const [selectedCategory, setSelectedCategory] = useState('All'); // 'All' | 'NEET_ALL' | 'NEET Class 11' | 'NEET Class 12' | 'NEET Repeater' | 'JEE_ALL' | 'JEE Class 11' | 'JEE Class 12' | 'JEE Repeater'
 
   // Modals
   const [testModalOpen, setTestModalOpen] = useState(false);
@@ -187,34 +210,52 @@ export default function AdminAssessments() {
     loadData();
   }, []);
 
-  const classCounts = useMemo(() => {
+  const categoryCounts = useMemo(() => {
     let all = 0;
-    let class11 = 0;
-    let class12 = 0;
-    let repeater = 0;
+    const neet = { total: 0, class11: 0, class12: 0, repeater: 0 };
+    const jee = { total: 0, class11: 0, class12: 0, repeater: 0 };
+
     tests.forEach((t) => {
       if (isPersonalStudentTest(t)) return;
       all++;
-      const cl = resolveTestClass(t);
-      if (cl === 'Class 11') class11++;
-      else if (cl === 'Class 12') class12++;
-      else if (cl === 'Repeater') repeater++;
-      else class12++;
+      const exam = resolveTestExam(t);
+      const cl = resolveTestClass(t) || 'Class 12';
+
+      if (exam === 'JEE') {
+        jee.total++;
+        if (cl === 'Class 11') jee.class11++;
+        else if (cl === 'Class 12') jee.class12++;
+        else if (cl === 'Repeater') jee.repeater++;
+        else jee.class12++;
+      } else {
+        neet.total++;
+        if (cl === 'Class 11') neet.class11++;
+        else if (cl === 'Class 12') neet.class12++;
+        else if (cl === 'Repeater') neet.repeater++;
+        else neet.class12++;
+      }
     });
-    return { all, class11, class12, repeater };
+
+    return { all, neet, jee };
   }, [tests]);
 
   const openCreateModal = () => {
     setEditingTest(null);
+    const initialExam = selectedSection === 'JEE' || selectedCategory.startsWith('JEE') ? 'JEE' : 'NEET';
+    let initialClass = 'Class 12';
+    if (selectedCategory.includes('11')) initialClass = 'Class 11';
+    else if (selectedCategory.toLowerCase().includes('repeater')) initialClass = 'Repeater';
+
     setTestForm({
       test_name: '',
       test_type: 'AIETS',
-      class_level: selectedClass !== 'All' ? selectedClass : 'Class 12',
+      exam_type: initialExam,
+      class_level: initialClass,
       test_date: new Date().toISOString().split('T')[0],
       start_time: '09:00:00',
       end_time: '12:00:00',
       duration_minutes: 180,
-      max_marks: '',
+      max_marks: initialExam === 'JEE' ? 300 : 720,
       max_violations: 3,
       assigned_to_type: 'all',
       assigned_to_id: '',
@@ -247,10 +288,13 @@ export default function AdminAssessments() {
 
   const openEditModal = (t) => {
     setEditingTest(t);
+    const resolvedExam = resolveTestExam(t);
+    const resolvedCl = resolveTestClass(t) || 'Class 12';
     setTestForm({
       test_name: t.test_name || t.title || '',
       test_type: t.test_type || 'AIETS',
-      class_level: t.class_level || resolveTestClass(t) || 'Class 12',
+      exam_type: t.exam_type || resolvedExam,
+      class_level: t.class_level || resolvedCl,
       test_date: formatDateForInput(t.test_date),
       start_time: t.start_time ? String(t.start_time).slice(0, 8) : '09:00:00',
       end_time: t.end_time ? String(t.end_time).slice(0, 8) : '12:00:00',
@@ -275,7 +319,8 @@ export default function AdminAssessments() {
       const payload = {
         ...testForm,
         test_date: formatDateForInput(testForm.test_date),
-        class_level: testForm.class_level || null,
+        exam_type: testForm.exam_type || 'NEET',
+        class_level: testForm.class_level || 'Class 12',
         recommended_ebook_id: testForm.recommended_ebook_id && !isNaN(Number(testForm.recommended_ebook_id)) && Number(testForm.recommended_ebook_id) > 0
           ? Number(testForm.recommended_ebook_id)
           : null,
@@ -725,20 +770,40 @@ export default function AdminAssessments() {
     }
   };
 
-  const filteredTests = tests.filter((t) => {
-    if (isPersonalStudentTest(t)) return false;
-    const matchesSearch = (t.test_name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          (t.syllabus && t.syllabus.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesType = selectedType === 'All' || (selectedType === 'EDVEDUM Battleground' ? (t.test_type === 'EDVEDUM Battleground' || t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') : t.test_type === selectedType);
-    
-    let matchesClass = true;
-    if (selectedClass !== 'All') {
-      const cl = resolveTestClass(t) || 'Class 12';
-      matchesClass = cl === selectedClass;
-    }
+  const filteredTests = useMemo(() => {
+    return tests.filter((t) => {
+      if (isPersonalStudentTest(t)) return false;
 
-    return matchesSearch && matchesType && matchesClass;
-  });
+      const exam = resolveTestExam(t);
+      const cl = resolveTestClass(t) || 'Class 12';
+      const cat = `${exam} ${cl}`;
+
+      // Section filtering (NEET vs JEE vs All)
+      if (selectedSection === 'NEET' && exam !== 'NEET') return false;
+      if (selectedSection === 'JEE' && exam !== 'JEE') return false;
+
+      // Category filtering
+      if (selectedCategory === 'NEET_ALL' && exam !== 'NEET') return false;
+      if (selectedCategory === 'JEE_ALL' && exam !== 'JEE') return false;
+      if (selectedCategory === 'NEET Class 11' && cat !== 'NEET Class 11') return false;
+      if (selectedCategory === 'NEET Class 12' && cat !== 'NEET Class 12') return false;
+      if (selectedCategory === 'NEET Repeater' && cat !== 'NEET Repeater') return false;
+      if (selectedCategory === 'JEE Class 11' && cat !== 'JEE Class 11') return false;
+      if (selectedCategory === 'JEE Class 12' && cat !== 'JEE Class 12') return false;
+      if (selectedCategory === 'JEE Repeater' && cat !== 'JEE Repeater') return false;
+
+      const matchesSearch = (t.test_name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            (t.syllabus && t.syllabus.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                            (t.subject && t.subject.toLowerCase().includes(searchQuery.toLowerCase()));
+      const matchesType = selectedType === 'All' || (
+        selectedType === 'EDVEDUM Battleground'
+          ? (t.test_type === 'EDVEDUM Battleground' || t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test')
+          : t.test_type === selectedType
+      );
+
+      return matchesSearch && matchesType;
+    });
+  }, [tests, selectedSection, selectedCategory, selectedType, searchQuery]);
 
   return (
     <div className="space-y-6 w-full max-w-full pb-12">
@@ -821,44 +886,245 @@ export default function AdminAssessments() {
           {/* TAB 1: TESTS LIST */}
           {activeTab === 'tests' && (
             <div className="space-y-4">
-              {/* Class Quick-Filter Pills & Search/Type Filters */}
+              {/* Sections & Categories Controller */}
               <div className="space-y-3">
-                {/* Class Filter Pills */}
+                {/* 1. Primary Section Switcher: NEET vs JEE vs All */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white dark:bg-[#111827] p-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                  <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-900/90 rounded-xl border border-slate-200/70 dark:border-slate-800 flex-wrap sm:flex-nowrap">
+                    {/* ALL SECTIONS */}
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedSection('All'); setSelectedCategory('All'); }}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-black transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                        selectedSection === 'All'
+                          ? 'bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-sm'
+                          : 'text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      <Layers className="h-3.5 w-3.5" />
+                      <span>All Tests</span>
+                      <span className="text-[10px] px-1.5 py-0.2 rounded-full font-black bg-slate-200/80 dark:bg-slate-700 text-slate-800 dark:text-slate-200">
+                        {categoryCounts.all}
+                      </span>
+                    </button>
+
+                    {/* 1. NEET SECTION */}
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedSection('NEET'); setSelectedCategory('NEET_ALL'); }}
+                      className={`px-3.5 py-1.5 rounded-lg text-xs font-black transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                        selectedSection === 'NEET'
+                          ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-600/30 ring-2 ring-emerald-500/20'
+                          : 'text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
+                      }`}
+                    >
+                      <Stethoscope className="h-3.5 w-3.5 text-emerald-300" />
+                      <span>NEET Section</span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                        selectedSection === 'NEET' ? 'bg-emerald-700 text-emerald-100' : 'bg-emerald-100 dark:bg-emerald-900/80 text-emerald-800 dark:text-emerald-200'
+                      }`}>
+                        {categoryCounts.neet.total}
+                      </span>
+                    </button>
+
+                    {/* 2. JEE SECTION */}
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedSection('JEE'); setSelectedCategory('JEE_ALL'); }}
+                      className={`px-3.5 py-1.5 rounded-lg text-xs font-black transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                        selectedSection === 'JEE'
+                          ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30 ring-2 ring-indigo-500/20'
+                          : 'text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-indigo-950/40'
+                      }`}
+                    >
+                      <Compass className="h-3.5 w-3.5 text-indigo-300" />
+                      <span>JEE Section</span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                        selectedSection === 'JEE' ? 'bg-indigo-700 text-indigo-100' : 'bg-indigo-100 dark:bg-indigo-900/80 text-indigo-800 dark:text-indigo-200'
+                      }`}>
+                        {categoryCounts.jee.total}
+                      </span>
+                    </button>
+                  </div>
+
+                  {/* Section Descriptor Tag */}
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 px-2">
+                    <span className="hidden sm:inline">Active Section:</span>
+                    <span className="font-extrabold text-slate-900 dark:text-white flex items-center gap-1">
+                      {selectedSection === 'NEET' && (
+                        <span className="text-emerald-600 dark:text-emerald-400 font-black">NEET Medical (Class 11, Class 12, Repeater)</span>
+                      )}
+                      {selectedSection === 'JEE' && (
+                        <span className="text-indigo-600 dark:text-indigo-400 font-black">JEE Engineering (Class 11, Class 12, Repeater)</span>
+                      )}
+                      {selectedSection === 'All' && (
+                        <span>All Entrance Exams (NEET & JEE)</span>
+                      )}
+                    </span>
+                  </div>
+                </div>
+
+                {/* 2. Three Categories Under Active Section */}
                 <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
                   <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 mr-1 flex items-center gap-1 shrink-0">
-                    <GraduationCap className="h-3.5 w-3.5" /> Class Filter:
+                    <GraduationCap className="h-3.5 w-3.5" />
+                    {selectedSection === 'NEET' ? 'NEET Categories:' : selectedSection === 'JEE' ? 'JEE Categories:' : 'Active Category:'}
                   </span>
-                  {[
-                    { id: 'All', label: 'All Classes', count: classCounts.all },
-                    { id: 'Class 11', label: 'Class 11', count: classCounts.class11 },
-                    { id: 'Class 12', label: 'Class 12', count: classCounts.class12 },
-                    { id: 'Repeater', label: 'Repeater', count: classCounts.repeater },
-                  ].map((tab) => {
-                    const active = selectedClass === tab.id;
-                    return (
-                      <button
-                        key={tab.id}
-                        type="button"
-                        onClick={() => setSelectedClass(tab.id)}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
-                          active
-                            ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/25'
-                            : 'bg-white dark:bg-[#111827] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/80'
-                        }`}
-                      >
-                        <span>{tab.label}</span>
-                        <span
-                          className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
-                            active
-                              ? 'bg-blue-700 text-blue-100'
-                              : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+
+                  {/* NEET Categories */}
+                  {(selectedSection === 'NEET' || selectedSection === 'All') && (
+                    <>
+                      {selectedSection === 'NEET' && (
+                        <button
+                          type="button"
+                          onClick={() => setSelectedCategory('NEET_ALL')}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                            selectedCategory === 'NEET_ALL'
+                              ? 'bg-emerald-600 text-white shadow-xs'
+                              : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
                           }`}
                         >
-                          {tab.count}
+                          <span>All NEET</span>
+                          <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                            selectedCategory === 'NEET_ALL' ? 'bg-emerald-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                          }`}>
+                            {categoryCounts.neet.total}
+                          </span>
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSection('NEET'); setSelectedCategory('NEET Class 11'); }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          selectedCategory === 'NEET Class 11'
+                            ? 'bg-emerald-600 text-white shadow-xs ring-1 ring-emerald-500'
+                            : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
+                        }`}
+                      >
+                        <span>1. NEET Class 11</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                          selectedCategory === 'NEET Class 11' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400'
+                        }`}>
+                          {categoryCounts.neet.class11}
                         </span>
                       </button>
-                    );
-                  })}
+
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSection('NEET'); setSelectedCategory('NEET Class 12'); }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          selectedCategory === 'NEET Class 12'
+                            ? 'bg-emerald-600 text-white shadow-xs ring-1 ring-emerald-500'
+                            : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
+                        }`}
+                      >
+                        <span>2. NEET Class 12</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                          selectedCategory === 'NEET Class 12' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400'
+                        }`}>
+                          {categoryCounts.neet.class12}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSection('NEET'); setSelectedCategory('NEET Repeater'); }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          selectedCategory === 'NEET Repeater'
+                            ? 'bg-emerald-600 text-white shadow-xs ring-1 ring-emerald-500'
+                            : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
+                        }`}
+                      >
+                        <span>3. NEET Repeater</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                          selectedCategory === 'NEET Repeater' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400'
+                        }`}>
+                          {categoryCounts.neet.repeater}
+                        </span>
+                      </button>
+                    </>
+                  )}
+
+                  {/* Section Divider if viewing All */}
+                  {selectedSection === 'All' && (
+                    <span className="h-4 w-px bg-slate-300 dark:bg-slate-700 mx-1 shrink-0" />
+                  )}
+
+                  {/* JEE Categories */}
+                  {(selectedSection === 'JEE' || selectedSection === 'All') && (
+                    <>
+                      {selectedSection === 'JEE' && (
+                        <button
+                          type="button"
+                          onClick={() => setSelectedCategory('JEE_ALL')}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                            selectedCategory === 'JEE_ALL'
+                              ? 'bg-indigo-600 text-white shadow-xs'
+                              : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/40'
+                          }`}
+                        >
+                          <span>All JEE</span>
+                          <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                            selectedCategory === 'JEE_ALL' ? 'bg-indigo-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                          }`}>
+                            {categoryCounts.jee.total}
+                          </span>
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSection('JEE'); setSelectedCategory('JEE Class 11'); }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          selectedCategory === 'JEE Class 11'
+                            ? 'bg-indigo-600 text-white shadow-xs ring-1 ring-indigo-500'
+                            : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/40'
+                        }`}
+                      >
+                        <span>1. JEE Class 11</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                          selectedCategory === 'JEE Class 11' ? 'bg-indigo-700 text-white' : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400'
+                        }`}>
+                          {categoryCounts.jee.class11}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSection('JEE'); setSelectedCategory('JEE Class 12'); }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          selectedCategory === 'JEE Class 12'
+                            ? 'bg-indigo-600 text-white shadow-xs ring-1 ring-indigo-500'
+                            : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/40'
+                        }`}
+                      >
+                        <span>2. JEE Class 12</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                          selectedCategory === 'JEE Class 12' ? 'bg-indigo-700 text-white' : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400'
+                        }`}>
+                          {categoryCounts.jee.class12}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedSection('JEE'); setSelectedCategory('JEE Repeater'); }}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap cursor-pointer text-xs ${
+                          selectedCategory === 'JEE Repeater'
+                            ? 'bg-indigo-600 text-white shadow-xs ring-1 ring-indigo-500'
+                            : 'bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/40'
+                        }`}
+                      >
+                        <span>3. JEE Repeater</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                          selectedCategory === 'JEE Repeater' ? 'bg-indigo-700 text-white' : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400'
+                        }`}>
+                          {categoryCounts.jee.repeater}
+                        </span>
+                      </button>
+                    </>
+                  )}
                 </div>
 
                 {/* Search & Select Dropdowns */}
@@ -875,17 +1141,32 @@ export default function AdminAssessments() {
                   </div>
 
                   <div className="flex items-center gap-3 w-full sm:w-auto flex-wrap sm:flex-nowrap">
-                    {/* Class Dropdown */}
+                    {/* Section & Category Dropdown */}
                     <div className="flex items-center gap-1.5 w-full sm:w-auto">
                       <select
-                        value={selectedClass}
-                        onChange={(e) => setSelectedClass(e.target.value)}
+                        value={selectedCategory}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setSelectedCategory(val);
+                          if (val.startsWith('NEET')) setSelectedSection('NEET');
+                          else if (val.startsWith('JEE')) setSelectedSection('JEE');
+                          else if (val === 'All') setSelectedSection('All');
+                        }}
                         className="rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none w-full sm:w-auto"
                       >
-                        <option value="All">All Classes ({classCounts.all})</option>
-                        <option value="Class 11">Class 11 ({classCounts.class11})</option>
-                        <option value="Class 12">Class 12 ({classCounts.class12})</option>
-                        <option value="Repeater">Repeater ({classCounts.repeater})</option>
+                        <option value="All">All Tests & Exams ({categoryCounts.all})</option>
+                        <optgroup label="── NEET Section ──">
+                          <option value="NEET_ALL">All NEET Tests ({categoryCounts.neet.total})</option>
+                          <option value="NEET Class 11">1. NEET Class 11 ({categoryCounts.neet.class11})</option>
+                          <option value="NEET Class 12">2. NEET Class 12 ({categoryCounts.neet.class12})</option>
+                          <option value="NEET Repeater">3. NEET Repeater ({categoryCounts.neet.repeater})</option>
+                        </optgroup>
+                        <optgroup label="── JEE Section ──">
+                          <option value="JEE_ALL">All JEE Tests ({categoryCounts.jee.total})</option>
+                          <option value="JEE Class 11">1. JEE Class 11 ({categoryCounts.jee.class11})</option>
+                          <option value="JEE Class 12">2. JEE Class 12 ({categoryCounts.jee.class12})</option>
+                          <option value="JEE Repeater">3. JEE Repeater ({categoryCounts.jee.repeater})</option>
+                        </optgroup>
                       </select>
                     </div>
 
@@ -952,19 +1233,16 @@ export default function AdminAssessments() {
                                   <span className="bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-bold border border-blue-200 dark:border-blue-800">
                                     {(t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') ? 'EDVEDUM Battleground' : t.test_type}
                                   </span>
-                                  {resolveTestClass(t) && (
-                                    <span
-                                      className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
-                                        resolveTestClass(t) === 'Class 11'
-                                          ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
-                                          : resolveTestClass(t) === 'Class 12'
-                                          ? 'bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-300 border-sky-200 dark:border-sky-800'
-                                          : 'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300 border-amber-200 dark:border-amber-800'
-                                      }`}
-                                    >
-                                      {resolveTestClass(t)}
-                                    </span>
-                                  )}
+                                  {/* Section & Category Badge */}
+                                  <span
+                                    className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
+                                      resolveTestExam(t) === 'JEE'
+                                        ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+                                        : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                                    }`}
+                                  >
+                                    {resolveTestExam(t)} • {resolveTestClass(t)}
+                                  </span>
                                   <Link
                                     to={`/admin/simulator/${t.id}`}
                                     target="_blank"
@@ -1129,19 +1407,16 @@ export default function AdminAssessments() {
                             <span className="bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-extrabold border border-blue-200 dark:border-blue-800">
                               {(t.test_type === 'EDVEDUM Booster Test' || t.test_type === 'Booster Test') ? 'EDVEDUM Battleground' : t.test_type}
                             </span>
-                            {resolveTestClass(t) && (
-                              <span
-                                className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
-                                  resolveTestClass(t) === 'Class 11'
-                                    ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
-                                    : resolveTestClass(t) === 'Class 12'
-                                    ? 'bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-300 border-sky-200 dark:border-sky-800'
-                                    : 'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300 border-amber-200 dark:border-amber-800'
-                                }`}
-                              >
-                                {resolveTestClass(t)}
-                              </span>
-                            )}
+                            {/* Section & Category Badge */}
+                            <span
+                              className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${
+                                resolveTestExam(t) === 'JEE'
+                                  ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+                                  : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                              }`}
+                            >
+                              {resolveTestExam(t)} • {resolveTestClass(t)}
+                            </span>
                             {t.solution_pdf_url && (
                               <span className="text-[10px] font-extrabold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-200">
                                 Solution Uploaded
@@ -1447,22 +1722,41 @@ export default function AdminAssessments() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div>
-                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Target Class / Level *</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Exam Section *</label>
                   <select
-                    value={testForm.class_level || 'Class 12'}
-                    onChange={(e) => setTestForm({ ...testForm, class_level: e.target.value })}
-                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                    value={testForm.exam_type || 'NEET'}
+                    onChange={(e) => {
+                      const newExam = e.target.value;
+                      const updates = { exam_type: newExam };
+                      if (!testForm.max_marks || testForm.max_marks === 720 || testForm.max_marks === 300) {
+                        updates.max_marks = newExam === 'JEE' ? 300 : 720;
+                      }
+                      setTestForm({ ...testForm, ...updates });
+                    }}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold text-slate-900 dark:text-white"
                   >
-                    <option value="Class 11">Class 11</option>
-                    <option value="Class 12">Class 12</option>
-                    <option value="Repeater">Repeater</option>
+                    <option value="NEET">NEET Section</option>
+                    <option value="JEE">JEE Section</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Test Category *</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Category / Class *</label>
+                  <select
+                    value={testForm.class_level || 'Class 12'}
+                    onChange={(e) => setTestForm({ ...testForm, class_level: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold text-slate-900 dark:text-white"
+                  >
+                    <option value="Class 11">{testForm.exam_type === 'JEE' ? '1. JEE Class 11' : '1. NEET Class 11'}</option>
+                    <option value="Class 12">{testForm.exam_type === 'JEE' ? '2. JEE Class 12' : '2. NEET Class 12'}</option>
+                    <option value="Repeater">{testForm.exam_type === 'JEE' ? '3. JEE Repeater' : '3. NEET Repeater'}</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Test Type / Pattern *</label>
                   <select
                     value={testForm.test_type}
                     onChange={(e) => {
@@ -1473,7 +1767,7 @@ export default function AdminAssessments() {
                       }
                       setTestForm({ ...testForm, ...updates });
                     }}
-                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold text-slate-900 dark:text-white"
                   >
                     {TEST_TYPES.map((t) => (
                       <option key={t} value={t}>{t}</option>
@@ -1482,13 +1776,13 @@ export default function AdminAssessments() {
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Scheduled Date (YYYY-MM-DD) *</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Scheduled Date *</label>
                   <input
                     type="date"
                     required
                     value={testForm.test_date}
                     onChange={(e) => setTestForm({ ...testForm, test_date: e.target.value })}
-                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
