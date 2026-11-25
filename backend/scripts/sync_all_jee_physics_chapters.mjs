@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { pool } from '../src/config/db.js';
 import { delCache } from '../src/config/redis.js';
 import { ALL_MOTION_PYQ_QUESTIONS } from './motion_pyq_questions_data.mjs';
@@ -10,11 +13,22 @@ import { ALL_COM_PYQ_QUESTIONS } from './com_pyq_questions_data.mjs';
 import { ALL_FLUIDS_PYQ_QUESTIONS } from './fluids_pyq_questions_data.mjs';
 import { ALL_ATOMIC_QUESTIONS } from './atomic_jee_questions_data.mjs';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const ALL_NUCLEAR_QUESTIONS = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'nuclear_jee_final_170.json'), 'utf8')
+);
+
 const CHAPTERS_DATA = [
   {
     name: 'Atomic',
     aliases: ['atomic', 'atomic physics', 'atoms', 'atom'],
     questions: ALL_ATOMIC_QUESTIONS,
+  },
+  {
+    name: 'Nuclear',
+    aliases: ['nuclear', 'nuclear physics', 'nuclei', 'nucleus'],
+    questions: ALL_NUCLEAR_QUESTIONS,
   },
   {
     name: 'Motion in two dimension',
@@ -139,24 +153,48 @@ export async function syncAllJeePhysicsChapters(clientOrPool = pool) {
           optionsJson = '[]';
           correctIndex = null;
           correctIndicesJson = '[]';
-          numericAnswer = Number(q.numeric_answer ?? 0);
+          numericAnswer = Number(q.numeric_answer ?? (parseFloat(q.correct_answer) || 0));
           tolerance = 0;
         } else {
-          const formattedOpts = (q.options || []).map((text, idx) => ({
-            id: ['A', 'B', 'C', 'D'][idx] || String(idx),
-            text: String(text).trim(),
-          }));
+          const formattedOpts = (q.options || []).map((opt, idx) => {
+            const defaultKey = ['A', 'B', 'C', 'D'][idx] || String(idx);
+            if (typeof opt === 'object' && opt !== null) {
+              return {
+                id: opt.id || opt.key || defaultKey,
+                key: opt.key || opt.id || defaultKey,
+                text: String(opt.text ?? opt.option_text ?? '').trim(),
+                image_url: opt.image_url || ''
+              };
+            }
+            return {
+              id: defaultKey,
+              key: defaultKey,
+              text: String(opt ?? '').trim(),
+              image_url: ''
+            };
+          });
           optionsJson = JSON.stringify(formattedOpts);
-          correctIndex = Number(q.correct_option ?? 0);
+
+          if (q.correct_index !== null && q.correct_index !== undefined) {
+            correctIndex = Number(q.correct_index);
+          } else if (q.correct_option !== null && q.correct_option !== undefined) {
+            correctIndex = Number(q.correct_option);
+          } else {
+            correctIndex = 0;
+          }
           correctIndicesJson = JSON.stringify([correctIndex]);
           numericAnswer = null;
           tolerance = null;
         }
 
+        const questionText = String(q.question_text || q.question || '').trim();
+        const imgUrl = q.image_url || null;
+        const solImgUrl = q.solution_image_url || null;
+
         values.push(
           'Physics',                           // $1: category (strictly 'Physics' in JEE)
           isNum ? 'numerical' : 'mcq',         // $2: question_type
-          q.question,                          // $3: question_text
+          questionText,                        // $3: question_text
           optionsJson,                         // $4: options
           correctIndex,                        // $5: correct_index
           correctIndicesJson,                  // $6: correct_indices
@@ -169,8 +207,8 @@ export async function syncAllJeePhysicsChapters(clientOrPool = pool) {
           subjectId,                           // $13: subject_id
           chapterId,                           // $14: chapter_id
           q.difficulty || 'medium',            // $15: difficulty
-          q.image_url || null,                 // $16: image_url
-          null,                                // $17: solution_image_url
+          imgUrl,                              // $16: image_url
+          solImgUrl,                           // $17: solution_image_url
           chData.name,                         // $18: chapter
           chData.name,                         // $19: topic
           subjectName,                         // $20: subject
