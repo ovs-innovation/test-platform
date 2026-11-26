@@ -24,6 +24,9 @@ describe('Phase 8: Admin Question Review and Approval System', () => {
   const mockAdminId = 1;
 
   beforeAll(async () => {
+    // 0. Clean any leftover test rows from question_bank
+    await query("DELETE FROM question_bank WHERE question_text LIKE '%barrier potential $V_0$ opposes%' OR question_text LIKE '%Current through resistor%'");
+
     // 1. Create a staging draft batch for review testing
     const draft = await createDraft({
       title: 'Review System Integration Batch',
@@ -327,5 +330,12 @@ describe('Phase 8: Admin Question Review and Approval System', () => {
 
       expect(q3Check.rows[0].count).toBe(0);
     });
+  });
+
+  afterAll(async () => {
+    if (testDraftId) {
+      await deleteDraft(testDraftId).catch(() => {});
+    }
+    await query("DELETE FROM question_bank WHERE question_text LIKE '%barrier potential $V_0$ opposes%' OR question_text LIKE '%Current through resistor%'").catch(() => {});
   });
 });
