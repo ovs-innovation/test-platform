@@ -1,23 +1,43 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const cache = JSON.parse(fs.readFileSync('backend/scripts/electrochem_tsv_cache.json', 'utf8'));
 
-const pages = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'wave_optics_ocr_cache.json'), 'utf8'));
-
-// List of candidate pages to inspect
-const candidatePages = [
-  8, 10, 11, 15, 17, 21, 22, 28, 30, 33, 36, 39, 50, 54, 64, 69, 70, 71, 73, 78, 79, 87, 91, 94, 100, 106, 119, 126
+const diagramQuestions = [
+  { qNum: 20, page: 4 },
+  { qNum: 78, page: 27 },
+  { qNum: 79, page: 27 },
+  { qNum: 91, page: 32 },
+  { qNum: 94, page: 33 },
+  { qNum: 116, page: 42 },
+  { qNum: 137, page: 48 },
+  { qNum: 138, page: 49 },
+  { qNum: 142, page: 52 },
+  { qNum: 146, page: 54 },
+  { qNum: 164, page: 62 },
+  { qNum: 167, page: 64 },
+  { qNum: 189, page: 70 },
+  { qNum: 194, page: 72 },
+  { qNum: 195, page: 72 },
+  { qNum: 199, page: 73 },
+  { qNum: 203, page: 75 },
+  { qNum: 207, page: 76 },
+  { qNum: 209, page: 77 },
+  { qNum: 214, page: 79 },
+  { qNum: 217, page: 80 },
+  { qNum: 223, page: 83 },
+  { qNum: 228, page: 86 },
+  { qNum: 233, page: 88 },
+  { qNum: 240, page: 95 }
 ];
 
-for (const p of candidatePages) {
-  console.log(`\n=================== PAGE ${p} ===================`);
-  const lines = (pages[p] || '').split('\n').map(l => l.trim()).filter(Boolean);
+console.log('Inspecting lines for diagram questions:');
+for (const dq of diagramQuestions) {
+  const lines = cache[dq.page]?.lines || [];
+  console.log(`\n=== Q${dq.qNum} (Page ${dq.page}) ===`);
   lines.forEach(l => {
-    if (l.match(/^(\d{1,3}[\.:\s]|ANSWER:|\[4\s*marks|\(A\)|\(1\)|Q\.?\s*\d+)/i) || l.toLowerCase().includes('figure') || l.toLowerCase().includes('diagram') || l.toLowerCase().includes('shown')) {
-      console.log('  ', l.substring(0, 90));
+    if (l.text.includes(String(dq.qNum)) || l.text.includes('ANSWER') || l.text.includes('marks') || l.text.includes('(A)') || l.text.includes('Fig') || l.text.includes('List') || l.text.includes('Graph')) {
+      console.log(`  top: ${l.top}, left: ${l.left}, height: ${l.height} | ${l.text.slice(0, 70)}`);
     }
   });
 }
