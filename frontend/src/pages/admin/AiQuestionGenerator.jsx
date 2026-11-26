@@ -188,21 +188,7 @@ const STANDARD_CURRICULUM = {
 };
 
 const BLUEPRINT_PRESETS = [
-  {
-    id: 'neet-standard-200',
-    title: 'NEET UG Full Blueprint (200 Qs)',
-    exam_type: 'NEET',
-    class_level: 'Class 11+12',
-    total_questions: 200,
-    duration_minutes: 200,
-    marks_per_question: 4,
-    negative_marking: 1,
-    subjects: { Physics: 50, Chemistry: 50, Botany: 50, Zoology: 50 },
-    has_sections: true,
-    section_config: { sectionA: 35, sectionB: 15, sectionBChoice: 10 },
-    difficulty: { easy: 25, medium: 55, hard: 20 },
-    types: { mcq: 200 },
-  },
+
   {
     id: 'neet-core-180',
     title: 'NEET UG Standard Test (180 Qs)',
@@ -218,21 +204,6 @@ const BLUEPRINT_PRESETS = [
     types: { mcq: 180 },
   },
   {
-    id: 'jee-main-90',
-    title: 'JEE Main Full Blueprint (90 Qs)',
-    exam_type: 'JEE',
-    class_level: 'Class 11+12',
-    total_questions: 90,
-    duration_minutes: 180,
-    marks_per_question: 4,
-    negative_marking: 1,
-    subjects: { Physics: 30, Chemistry: 30, Mathematics: 30 },
-    has_sections: true,
-    section_config: { sectionA: 20, sectionB: 10, sectionBChoice: 5 },
-    difficulty: { easy: 20, medium: 60, hard: 20 },
-    types: { mcq: 60, numerical: 30 },
-  },
-  {
     id: 'jee-main-75',
     title: 'JEE Main Strict 75 Qs Test',
     exam_type: 'JEE',
@@ -245,21 +216,7 @@ const BLUEPRINT_PRESETS = [
     has_sections: false,
     difficulty: { easy: 20, medium: 55, hard: 25 },
     types: { mcq: 60, numerical: 15 },
-  },
-  {
-    id: 'jee-advanced-p1',
-    title: 'JEE Advanced Mock Paper 1',
-    exam_type: 'JEE',
-    class_level: 'Class 11+12',
-    total_questions: 54,
-    duration_minutes: 180,
-    marks_per_question: 4,
-    negative_marking: 2,
-    subjects: { Physics: 18, Chemistry: 18, Mathematics: 18 },
-    has_sections: true,
-    difficulty: { easy: 10, medium: 45, hard: 45 },
-    types: { mcq: 18, multi_select: 18, numerical: 12, match: 6 },
-  },
+  }
 ];
 
 export default function AiQuestionGenerator() {
@@ -599,9 +556,8 @@ export default function AiQuestionGenerator() {
         setGenerationProgress(100);
         showToast(
           res?.message ||
-            `Successfully dispatched request for ${qForm.count} questions. Saved to ${
-              qForm.target_destination === 'bank' ? 'Question Bank' : 'Staging Drafts'
-            }.`,
+          `Successfully dispatched request for ${qForm.count} questions. Saved to ${qForm.target_destination === 'bank' ? 'Question Bank' : 'Staging Drafts'
+          }.`,
           'success'
         );
       } else {
@@ -638,7 +594,7 @@ export default function AiQuestionGenerator() {
         setGenerationProgress(100);
         showToast(
           res?.message ||
-            `Successfully initiated generation for "${testForm.title}". Test will appear in Assessment Manager once processing finishes.`,
+          `Successfully initiated generation for "${testForm.title}". Test will appear in Assessment Manager once processing finishes.`,
           'success'
         );
       }
@@ -785,11 +741,10 @@ export default function AiQuestionGenerator() {
             <button
               type="button"
               onClick={() => setActiveTab('drafts')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                activeTab === 'drafts'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-500'
-              }`}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'drafts'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-500'
+                }`}
             >
               <BookmarkCheck className="h-4 w-4 text-blue-500" />
               <span>Staging Drafts & History</span>
@@ -832,11 +787,10 @@ export default function AiQuestionGenerator() {
         <button
           type="button"
           onClick={() => setActiveTab('question-generator')}
-          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
-            activeTab === 'question-generator'
-              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
-              : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
-          }`}
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${activeTab === 'question-generator'
+            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
+            : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
+            }`}
         >
           <Sparkles className="h-4 w-4" />
           <span>1. AI Question Generator (Repository Bank)</span>
@@ -845,11 +799,10 @@ export default function AiQuestionGenerator() {
         <button
           type="button"
           onClick={() => setActiveTab('test-generator')}
-          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
-            activeTab === 'test-generator'
-              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
-              : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
-          }`}
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${activeTab === 'test-generator'
+            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
+            : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
+            }`}
         >
           <Layers className="h-4 w-4" />
           <span>2. AI Test Generator (Full Assessment Paper)</span>
@@ -858,11 +811,10 @@ export default function AiQuestionGenerator() {
         <button
           type="button"
           onClick={() => setActiveTab('diagram-engine')}
-          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
-            activeTab === 'diagram-engine'
-              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
-              : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
-          }`}
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${activeTab === 'diagram-engine'
+            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
+            : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
+            }`}
         >
           <ImageIcon className="h-4 w-4" />
           <span>3. AI Diagram Engine & Studio</span>
@@ -871,11 +823,10 @@ export default function AiQuestionGenerator() {
         <button
           type="button"
           onClick={() => setActiveTab('drafts')}
-          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
-            activeTab === 'drafts'
-              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
-              : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
-          }`}
+          className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${activeTab === 'drafts'
+            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
+            : 'bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
+            }`}
         >
           <Clock className="h-4 w-4" />
           <span>Generation Queue & Drafts</span>
@@ -909,11 +860,10 @@ export default function AiQuestionGenerator() {
                             key={exam}
                             type="button"
                             onClick={() => setQForm((prev) => ({ ...prev, exam_type: exam }))}
-                            className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-black transition-all cursor-pointer border ${
-                              isSelected
-                                ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-500 text-blue-600 dark:text-blue-400 shadow-xs'
-                                : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
-                            }`}
+                            className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-black transition-all cursor-pointer border ${isSelected
+                              ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-500 text-blue-600 dark:text-blue-400 shadow-xs'
+                              : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                              }`}
                           >
                             <GraduationCap className="h-4 w-4 shrink-0" />
                             <span>{exam}</span>
@@ -940,11 +890,10 @@ export default function AiQuestionGenerator() {
                             key={cls.id}
                             type="button"
                             onClick={() => setQForm((prev) => ({ ...prev, class_level: cls.id }))}
-                            className={`py-2.5 px-2 rounded-xl text-xs font-black transition-all cursor-pointer border text-center ${
-                              isSelected
-                                ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-500 text-blue-600 dark:text-blue-400 shadow-xs'
-                                : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
-                            }`}
+                            className={`py-2.5 px-2 rounded-xl text-xs font-black transition-all cursor-pointer border text-center ${isSelected
+                              ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-500 text-blue-600 dark:text-blue-400 shadow-xs'
+                              : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                              }`}
                           >
                             {cls.label}
                           </button>
@@ -967,11 +916,10 @@ export default function AiQuestionGenerator() {
                           key={sub}
                           type="button"
                           onClick={() => setQForm((prev) => ({ ...prev, subject: sub, chapters: [] }))}
-                          className={`py-2.5 px-3 rounded-xl text-xs font-black transition-all cursor-pointer border text-center ${
-                            isSelected
-                              ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                              : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
-                          }`}
+                          className={`py-2.5 px-3 rounded-xl text-xs font-black transition-all cursor-pointer border text-center ${isSelected
+                            ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                            : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-400'
+                            }`}
                         >
                           {sub}
                         </button>
@@ -1034,11 +982,10 @@ export default function AiQuestionGenerator() {
                           key={ch}
                           type="button"
                           onClick={() => toggleChapterSelection(ch)}
-                          className={`text-left text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition-all cursor-pointer border ${
-                            isSelected
-                              ? 'bg-blue-500 text-white border-blue-500 shadow-2xs'
-                              : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-blue-400'
-                          }`}
+                          className={`text-left text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition-all cursor-pointer border ${isSelected
+                            ? 'bg-blue-500 text-white border-blue-500 shadow-2xs'
+                            : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-blue-400'
+                            }`}
                         >
                           {isSelected ? '✓ ' : '+ '}
                           {ch}
@@ -1101,11 +1048,10 @@ export default function AiQuestionGenerator() {
                             key={diff}
                             type="button"
                             onClick={() => setQForm((prev) => ({ ...prev, difficulty: diff }))}
-                            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all cursor-pointer text-center border ${
-                              isSelected
-                                ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                                : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
-                            }`}
+                            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all cursor-pointer text-center border ${isSelected
+                              ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                              : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                              }`}
                           >
                             {diff}
                           </button>
@@ -1135,11 +1081,10 @@ export default function AiQuestionGenerator() {
                           key={type.id}
                           type="button"
                           onClick={() => toggleQuestionType(type.id)}
-                          className={`flex items-center gap-2 p-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer border text-left ${
-                            isSelected
-                              ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-500 text-blue-700 dark:text-blue-300'
-                              : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-300'
-                          }`}
+                          className={`flex items-center gap-2 p-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer border text-left ${isSelected
+                            ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-500 text-blue-700 dark:text-blue-300'
+                            : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                            }`}
                         >
                           {isSelected ? (
                             <CheckSquare className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
@@ -1172,11 +1117,10 @@ export default function AiQuestionGenerator() {
                             key={item.id}
                             type="button"
                             onClick={() => setQForm((prev) => ({ ...prev, diagram_req: item.id }))}
-                            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all cursor-pointer text-center border ${
-                              isSelected
-                                ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                                : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
-                            }`}
+                            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all cursor-pointer text-center border ${isSelected
+                              ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                              : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300'
+                              }`}
                           >
                             {item.label}
                           </button>
@@ -1187,8 +1131,8 @@ export default function AiQuestionGenerator() {
                       {qForm.diagram_req === 'Required'
                         ? 'Generates SVG with neutral reference markers ($P, Q, \\theta$) strictly omitting answers.'
                         : qForm.diagram_req === 'None'
-                        ? 'Pure text & equation based questions only.'
-                        : 'AI includes diagram only when standard physics/chemistry warrants it.'}
+                          ? 'Pure text & equation based questions only.'
+                          : 'AI includes diagram only when standard physics/chemistry warrants it.'}
                     </p>
                   </div>
 
@@ -1250,11 +1194,10 @@ export default function AiQuestionGenerator() {
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <label
-                      className={`flex items-start gap-3 p-3 rounded-xl border transition-all cursor-pointer ${
-                        qForm.target_destination === 'draft'
-                          ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/30'
-                          : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900'
-                      }`}
+                      className={`flex items-start gap-3 p-3 rounded-xl border transition-all cursor-pointer ${qForm.target_destination === 'draft'
+                        ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/30'
+                        : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900'
+                        }`}
                     >
                       <input
                         type="radio"
@@ -1275,11 +1218,10 @@ export default function AiQuestionGenerator() {
                     </label>
 
                     <label
-                      className={`flex items-start gap-3 p-3 rounded-xl border transition-all cursor-pointer ${
-                        qForm.target_destination === 'bank'
-                          ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/30'
-                          : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900'
-                      }`}
+                      className={`flex items-start gap-3 p-3 rounded-xl border transition-all cursor-pointer ${qForm.target_destination === 'bank'
+                        ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/30'
+                        : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900'
+                        }`}
                     >
                       <input
                         type="radio"
@@ -1512,11 +1454,10 @@ export default function AiQuestionGenerator() {
               subtitle={`Total must equal ${testForm.total_questions} questions.`}
               action={
                 <span
-                  className={`text-xs font-extrabold px-2.5 py-1 rounded-md ${
-                    testSubjectSum === Number(testForm.total_questions)
-                      ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                      : 'bg-rose-500/10 text-rose-600 dark:text-rose-400'
-                  }`}
+                  className={`text-xs font-extrabold px-2.5 py-1 rounded-md ${testSubjectSum === Number(testForm.total_questions)
+                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                    : 'bg-rose-500/10 text-rose-600 dark:text-rose-400'
+                    }`}
                 >
                   Sum: {testSubjectSum} / {testForm.total_questions}
                 </span>
@@ -1553,11 +1494,10 @@ export default function AiQuestionGenerator() {
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Format Allocations</span>
                     <span
-                      className={`text-xs font-extrabold px-2 py-0.5 rounded ${
-                        testTypeSum === Number(testForm.total_questions)
-                          ? 'bg-emerald-500/10 text-emerald-600'
-                          : 'bg-amber-500/10 text-amber-600'
-                      }`}
+                      className={`text-xs font-extrabold px-2 py-0.5 rounded ${testTypeSum === Number(testForm.total_questions)
+                        ? 'bg-emerald-500/10 text-emerald-600'
+                        : 'bg-amber-500/10 text-amber-600'
+                        }`}
                     >
                       Types Total: {testTypeSum} / {testForm.total_questions}
                     </span>
@@ -1598,9 +1538,8 @@ export default function AiQuestionGenerator() {
                       Difficulty Distribution (%)
                     </span>
                     <span
-                      className={`text-xs font-extrabold ${
-                        testDifficultySum === 100 ? 'text-emerald-600' : 'text-amber-600'
-                      }`}
+                      className={`text-xs font-extrabold ${testDifficultySum === 100 ? 'text-emerald-600' : 'text-amber-600'
+                        }`}
                     >
                       Sum: {testDifficultySum}% {testDifficultySum !== 100 && '(Must equal 100%)'}
                     </span>
@@ -1731,11 +1670,10 @@ export default function AiQuestionGenerator() {
                 {/* Validation Status */}
                 <div className="space-y-1.5 text-xs">
                   <div
-                    className={`flex items-center gap-2 ${
-                      testSubjectSum === Number(testForm.total_questions)
-                        ? 'text-emerald-600 dark:text-emerald-400'
-                        : 'text-rose-600 dark:text-rose-400'
-                    }`}
+                    className={`flex items-center gap-2 ${testSubjectSum === Number(testForm.total_questions)
+                      ? 'text-emerald-600 dark:text-emerald-400'
+                      : 'text-rose-600 dark:text-rose-400'
+                      }`}
                   >
                     {testSubjectSum === Number(testForm.total_questions) ? (
                       <CheckCircle2 className="h-4 w-4 shrink-0" />
@@ -1748,11 +1686,10 @@ export default function AiQuestionGenerator() {
                   </div>
 
                   <div
-                    className={`flex items-center gap-2 ${
-                      testDifficultySum === 100
-                        ? 'text-emerald-600 dark:text-emerald-400'
-                        : 'text-amber-600 dark:text-amber-400'
-                    }`}
+                    className={`flex items-center gap-2 ${testDifficultySum === 100
+                      ? 'text-emerald-600 dark:text-emerald-400'
+                      : 'text-amber-600 dark:text-amber-400'
+                      }`}
                   >
                     {testDifficultySum === 100 ? (
                       <CheckCircle2 className="h-4 w-4 shrink-0" />
@@ -2033,13 +1970,12 @@ export default function AiQuestionGenerator() {
 
                     <div className="flex items-center gap-2">
                       <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                          activeDiagram.review_status === 'approved'
-                            ? 'bg-emerald-500/10 text-emerald-600'
-                            : activeDiagram.review_status === 'flagged_for_review'
+                        className={`px-2 py-0.5 rounded text-[10px] font-bold ${activeDiagram.review_status === 'approved'
+                          ? 'bg-emerald-500/10 text-emerald-600'
+                          : activeDiagram.review_status === 'flagged_for_review'
                             ? 'bg-amber-500/10 text-amber-600'
                             : 'bg-blue-500/10 text-blue-600'
-                        }`}
+                          }`}
                       >
                         Status: {activeDiagram.review_status}
                       </span>
@@ -2135,11 +2071,10 @@ export default function AiQuestionGenerator() {
                     <div
                       key={idx}
                       onClick={() => setActiveDiagram(item)}
-                      className={`py-2.5 px-2 flex items-center justify-between rounded-lg cursor-pointer transition-colors ${
-                        activeDiagram?.asset_id === item.asset_id
-                          ? 'bg-blue-500/10 border-l-2 border-blue-600'
-                          : 'hover:bg-slate-50 dark:hover:bg-slate-900'
-                      }`}
+                      className={`py-2.5 px-2 flex items-center justify-between rounded-lg cursor-pointer transition-colors ${activeDiagram?.asset_id === item.asset_id
+                        ? 'bg-blue-500/10 border-l-2 border-blue-600'
+                        : 'hover:bg-slate-50 dark:hover:bg-slate-900'
+                        }`}
                     >
                       <div>
                         <p className="text-xs font-bold text-slate-800 dark:text-slate-200">
@@ -2150,11 +2085,10 @@ export default function AiQuestionGenerator() {
                         </span>
                       </div>
                       <span
-                        className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
-                          item.review_status === 'approved'
-                            ? 'bg-emerald-500/10 text-emerald-600'
-                            : 'bg-amber-500/10 text-amber-600'
-                        }`}
+                        className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${item.review_status === 'approved'
+                          ? 'bg-emerald-500/10 text-emerald-600'
+                          : 'bg-amber-500/10 text-amber-600'
+                          }`}
                       >
                         {item.review_status}
                       </span>

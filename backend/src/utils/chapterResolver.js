@@ -2438,7 +2438,7 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/^\s*atomic\b/i.test(rawChapter) || /^\s*atoms?\b/i.test(rawChapter) || /^\s*atomic\b/i.test(rawTopic) || /^\s*atoms?\b/i.test(rawTopic)) {
       return 'Atomic';
     }
-    if (/^\s*nucle(ar|i)\b/i.test(rawChapter) || /^\s*nucle(ar|i)\b/i.test(rawTopic)) {
+    if (/^\s*nucle(ar|i)\b/i.test(rawChapter) || /^\s*nucle(ar|i)\b/i.test(rawTopic) || /nucle(ar|i)/i.test(rawChapter) || /nucle(ar|i)/i.test(rawTopic)) {
       return 'Nuclear';
     }
     if (/semiconductor/i.test(rawChapter) || /semiconductor/i.test(rawTopic)) {
