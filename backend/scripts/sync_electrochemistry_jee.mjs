@@ -156,7 +156,12 @@ async function syncElectrochemistry() {
   }
 }
 
-syncElectrochemistry().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+syncElectrochemistry()
+  .then(() => {
+    console.log('Electrochemistry sync complete.');
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
