@@ -37,7 +37,7 @@ import {
   Image as ImageIcon,
 } from 'lucide-react';
 import { adminService, aiGeneratorService } from '../../lib/services.js';
-import { AdminHeader, AdminCard, AdminMetricRail } from '../../components/admin/AdminUI.jsx';
+import { AdminHeader, AdminCard } from '../../components/admin/AdminUI.jsx';
 import { Spinner } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
@@ -771,35 +771,6 @@ export default function AiQuestionGenerator() {
             </button>
           </div>
         }
-      />
-
-      {/* Metric Rail */}
-      <AdminMetricRail
-        items={[
-          {
-            label: 'AI Model Engine',
-            value: 'Gemini 3.8 Flash',
-            badge: 'Structured Output',
-            subtext: 'Official Google GenAI SDK',
-          },
-          {
-            label: 'Supported Exam Streams',
-            value: 'NEET & JEE',
-            subtext: 'Class 11, 12 & Repeater',
-          },
-          {
-            label: 'Question Types',
-            value: '8 Formats',
-            badge: 'LaTeX + Diagrams',
-            subtext: 'MCQ, Multi, AR, Num, Match, Passage',
-          },
-          {
-            label: 'Answer Isolation Guarantee',
-            value: '100% Unlabeled',
-            badge: 'Protected',
-            subtext: 'Question SVGs contain zero answers',
-          },
-        ]}
       />
 
       {/* Main Module Switcher Tabs */}
