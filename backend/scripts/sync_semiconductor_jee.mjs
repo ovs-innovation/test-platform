@@ -1,16 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import pg from 'pg';
-import dotenv from 'dotenv';
+import { pool } from '../src/config/db.js';
 import { delCache } from '../src/config/redis.js';
-
-dotenv.config({ path: 'backend/.env' });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 const ALL_SEMICONDUCTOR_QUESTIONS = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'semiconductor_jee_final_251.json'), 'utf8')
@@ -161,4 +156,9 @@ async function syncSemiconductor() {
   }
 }
 
-syncSemiconductor().catch(console.error);
+syncSemiconductor()
+  .then(() => process.exit(0))
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });

@@ -499,7 +499,6 @@ jobs:
             docker compose exec -T backend node scripts/import_amines_chemistry.mjs || true
             docker compose exec -T backend node scripts/import_units_measurements_physics.mjs || true
             docker compose exec -T backend node scripts/sync_nuclear_jee.mjs || true
-            docker compose exec -T backend node scripts/sync_semiconductor_jee.mjs || true
             docker compose exec -T backend node scripts/sync_all_jee_physics_chapters.mjs || true
 
             # Restart frontend container to refresh Docker internal DNS mapping

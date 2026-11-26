@@ -192,9 +192,9 @@ export async function syncNuclear() {
   }
 }
 
-const isMain = process.argv[1] && process.argv[1].endsWith('sync_nuclear_jee.mjs');
-if (isMain) {
-  syncNuclear()
-    .then(() => process.exit(0))
-    .catch(() => process.exit(1));
-}
+syncNuclear()
+  .then(() => process.exit(0))
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });

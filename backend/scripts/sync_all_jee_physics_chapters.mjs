@@ -279,15 +279,12 @@ export async function syncAllJeePhysicsChapters(clientOrPool = pool) {
 }
 
 // Auto-run if executed directly as script
-const isMain = process.argv[1] && process.argv[1].endsWith('sync_all_jee_physics_chapters.mjs');
-if (isMain) {
-  syncAllJeePhysicsChapters()
-    .then((count) => {
-      console.log(`Sync completed successfully. Total: ${count} questions.`);
-      process.exit(0);
-    })
-    .catch((err) => {
-      console.error('Fatal error during sync:', err);
-      process.exit(1);
-    });
-}
+syncAllJeePhysicsChapters()
+  .then((count) => {
+    console.log(`Sync completed successfully. Total: ${count} questions.`);
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error('Fatal error during sync:', err);
+    process.exit(1);
+  });
