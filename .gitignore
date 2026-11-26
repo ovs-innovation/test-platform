@@ -54,3 +54,13 @@ backend/scripts/thermo_ocr_cols/
 backend/scripts/live_token.json
 check_live_subjects.mjs
 check_schema.mjs
+uploads/
+backend/scripts/electrochem*
+backend/scripts/analyze_electrochem*
+backend/scripts/inspect_electrochem*
+backend/scripts/inspect_failing_lines.mjs
+backend/scripts/match_old_to_241.mjs
+backend/scripts/test_extract_slice.mjs
+backend/scripts/test_improved_splitter.mjs
+backend/scripts/test_tesseract.mjs
+backend/scripts/parse_all_241_electrochem.mjs

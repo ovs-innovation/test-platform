@@ -10,6 +10,7 @@ import {
   AiQuestionValidationEngine,
   QUESTION_STATUSES,
 } from './validation/index.js';
+import { diagramAssetService } from './diagram/diagramAssetService.js';
 
 let tablesInitialized = false;
 
@@ -105,16 +106,24 @@ export async function ensureStagingTables() {
     ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS duplicate_of_id BIGINT;
     ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS similarity_score NUMERIC(5,2) DEFAULT 0;
     ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS normalized_signature VARCHAR(255);
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS bank_question_id BIGINT;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS approved_by INT;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS approved_at TIMESTAMPTZ;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS modified_by INT;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS rejection_reason TEXT;
 
     ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS validation_passed_count INT DEFAULT 0;
     ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS needs_correction_count INT DEFAULT 0;
     ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS rejected_count INT DEFAULT 0;
     ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS manual_review_count INT DEFAULT 0;
+    ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS approved_by INT;
+    ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS approved_at TIMESTAMPTZ;
 
     CREATE INDEX IF NOT EXISTS idx_ai_draft_questions_draft_id ON ai_draft_questions(draft_id);
     CREATE INDEX IF NOT EXISTS idx_ai_draft_questions_batch ON ai_draft_questions(batch_id);
     CREATE INDEX IF NOT EXISTS idx_ai_generation_drafts_status ON ai_generation_drafts(status);
     CREATE INDEX IF NOT EXISTS idx_ai_draft_questions_validation_status ON ai_draft_questions(validation_status);
+    CREATE INDEX IF NOT EXISTS idx_ai_draft_questions_bank_qid ON ai_draft_questions(bank_question_id);
   `;
 
   try {
@@ -404,7 +413,7 @@ export async function getDraftById(draftId) {
 /**
  * Updates a single draft question (inline editing in review workspace)
  */
-export async function updateDraftQuestion(draftId, questionId, patchData = {}) {
+export async function updateDraftQuestion(draftId, questionId, patchData = {}, userId = null) {
   await ensureStagingTables();
 
   const allowedFields = [
@@ -417,11 +426,17 @@ export async function updateDraftQuestion(draftId, questionId, patchData = {}) {
     'assertion_text',
     'reason_text',
     'match_pairs',
+    'passage_title',
+    'passage_text',
     'solution',
     'difficulty',
+    'subject',
+    'chapter',
+    'topic',
     'review_status',
     'validation_status',
     'admin_notes',
+    'rejection_reason',
     'marks',
     'negative_marks',
   ];
@@ -439,6 +454,11 @@ export async function updateDraftQuestion(draftId, questionId, patchData = {}) {
       updates.push(`${field} = $${pIdx++}`);
       params.push(val);
     }
+  }
+
+  if (userId) {
+    updates.push(`modified_by = $${pIdx++}`);
+    params.push(userId);
   }
 
   if (!updates.length) {
@@ -716,11 +736,13 @@ export async function updateDraftQuestionValidationStatus(draftId, questionId, s
 
 /**
  * Approves draft questions and publishes them into the production Question Bank
+ * Includes duplicate approval protection, audit tracking (approved_by, approved_at),
+ * and relational subject_id & chapter_id resolution.
  */
-export async function approveDraftToQuestionBank(draftId, questionIds = null) {
+export async function approveDraftToQuestionBank(draftId, questionIds = null, userId = null) {
   await ensureStagingTables();
 
-  let qSql = `SELECT * FROM ai_draft_questions WHERE draft_id = $1 AND review_status != 'rejected'`;
+  let qSql = `SELECT * FROM ai_draft_questions WHERE draft_id = $1 AND review_status != 'rejected' AND bank_question_id IS NULL AND review_status != 'approved'`;
   const qParams = [draftId];
 
   if (Array.isArray(questionIds) && questionIds.length > 0) {
@@ -728,11 +750,28 @@ export async function approveDraftToQuestionBank(draftId, questionIds = null) {
     qParams.push(questionIds);
   }
 
+  qSql += ` ORDER BY question_number ASC, id ASC`;
+
   const qRes = await query(qSql, qParams);
   const draftQuestions = qRes.rows;
 
   if (!draftQuestions.length) {
-    return { count: 0, inserted: [] };
+    // Check if questions were already approved
+    if (Array.isArray(questionIds) && questionIds.length > 0) {
+      const alreadyApprovedRes = await query(
+        `SELECT id, bank_question_id FROM ai_draft_questions WHERE draft_id = $1 AND id = ANY($2::bigint[]) AND (bank_question_id IS NOT NULL OR review_status = 'approved')`,
+        [draftId, questionIds]
+      );
+      if (alreadyApprovedRes.rows.length > 0) {
+        return {
+          count: 0,
+          alreadyApprovedCount: alreadyApprovedRes.rows.length,
+          insertedIds: alreadyApprovedRes.rows.map((r) => r.bank_question_id).filter(Boolean),
+          message: 'Selected questions have already been approved into the Question Bank.',
+        };
+      }
+    }
+    return { count: 0, insertedIds: [], message: 'No pending questions to approve.' };
   }
 
   // Resolve draft metadata for category / stream
@@ -744,25 +783,65 @@ export async function approveDraftToQuestionBank(draftId, questionIds = null) {
 
   for (const q of draftQuestions) {
     const category = q.subject || draftMeta.subject || 'Physics';
+    const chapterName = q.chapter || draftMeta.chapter || '';
+
+    // Match subject_id and chapter_id for relational integrity
+    let subjectId = null;
+    let chapterId = null;
+    try {
+      const subjRes = await query(
+        `SELECT id FROM subjects WHERE LOWER(name) = LOWER($1) AND (exam_type IS NULL OR exam_type = $2) LIMIT 1`,
+        [category, examType]
+      );
+      if (subjRes.rows.length) {
+        subjectId = subjRes.rows[0].id;
+        const chapRes = await query(
+          `SELECT id FROM chapters WHERE subject_id = $1 AND (LOWER(name) = LOWER($2) OR name ILIKE $3) LIMIT 1`,
+          [subjectId, chapterName, `%${chapterName}%`]
+        );
+        if (chapRes.rows.length) {
+          chapterId = chapRes.rows[0].id;
+        }
+      }
+    } catch (lookupErr) {
+      console.warn('[AiDraftService] Subject/Chapter lookup note:', lookupErr.message);
+    }
 
     const insertSql = `
       INSERT INTO question_bank (
-        category, question_type, question_text, options,
+        category, subject, subject_id, chapter, chapter_id, topic,
+        question_type, question_text, options,
         correct_index, correct_indices, numeric_answer, numerical_tolerance,
         assertion_text, reason_text, match_pairs, passage_title, passage_text,
-        solution, chapter, topic, difficulty, exam_type,
+        solution, image_url, difficulty, marks, exam_type,
         status, is_ai_generated, ai_metadata
       ) VALUES (
-        $1, $2, $3, $4,
-        $5, $6, $7, $8,
-        $9, $10, $11, $12, $13,
+        $1, $2, $3, $4, $5, $6,
+        $7, $8, $9,
+        $10, $11, $12, $13,
         $14, $15, $16, $17, $18,
-        'available', true, $19
+        $19, $20, $21, $22, $23,
+        'available', true, $24
       ) RETURNING id;
     `;
 
+    const aiMetadata = {
+      draft_id: draftId,
+      draft_question_id: q.id,
+      batch_id: q.batch_id,
+      approved_by: userId,
+      approved_at: new Date().toISOString(),
+      validation_score: q.validation_score,
+      diagram_type: q.diagram_type,
+    };
+
     const values = [
       category,
+      category,
+      subjectId,
+      chapterName,
+      chapterId,
+      q.topic || '',
       q.question_type,
       q.question_text,
       typeof q.options === 'string' ? q.options : JSON.stringify(q.options || []),
@@ -776,27 +855,54 @@ export async function approveDraftToQuestionBank(draftId, questionIds = null) {
       q.passage_title,
       q.passage_text,
       q.solution,
-      q.chapter || draftMeta.chapter || '',
-      q.topic || '',
+      q.image_url || null,
       q.difficulty || 'Medium',
+      q.marks || 4,
       examType,
-      JSON.stringify({ draft_id: draftId, draft_question_id: q.id, batch_id: q.batch_id }),
+      JSON.stringify(aiMetadata),
     ];
 
     const insRes = await query(insertSql, values);
-    inserted.push(insRes.rows[0].id);
+    const newBankId = insRes.rows[0].id;
+    inserted.push(newBankId);
 
-    // Mark question as approved
-    await query(`UPDATE ai_draft_questions SET review_status = 'approved', validation_status = 'approved', updated_at = NOW() WHERE id = $1`, [q.id]);
+    // Mark question as approved in ai_draft_questions and track audit metadata
+    await query(
+      `UPDATE ai_draft_questions 
+       SET 
+         bank_question_id = $1,
+         review_status = 'approved', 
+         validation_status = 'approved',
+         approved_by = $2,
+         approved_at = NOW(),
+         updated_at = NOW() 
+       WHERE id = $3`,
+      [newBankId, userId, q.id]
+    );
+
+    // Update diagram asset linkage if present
+    try {
+      await query(
+        `UPDATE ai_diagram_assets 
+         SET bank_question_id = $1, review_status = 'approved', updated_at = NOW() 
+         WHERE draft_question_id = $2`,
+        [newBankId, q.id]
+      );
+    } catch (_) {}
   }
 
-  // Check if all questions in draft are now approved
+  // Check if all questions in draft are now approved or rejected
   const pendingCountRes = await query(
     `SELECT COUNT(*)::int AS pending FROM ai_draft_questions WHERE draft_id = $1 AND validation_status NOT IN ('approved', 'rejected')`,
     [draftId]
   );
   if (pendingCountRes.rows[0]?.pending === 0) {
-    await query(`UPDATE ai_generation_drafts SET status = 'approved', updated_at = NOW() WHERE id = $1`, [draftId]);
+    await query(
+      `UPDATE ai_generation_drafts 
+       SET status = 'approved', approved_by = $1, approved_at = NOW(), updated_at = NOW() 
+       WHERE id = $2`,
+      [userId, draftId]
+    );
   }
 
   // Clear Redis question bank cache so newly approved questions appear immediately
@@ -804,6 +910,99 @@ export async function approveDraftToQuestionBank(draftId, questionIds = null) {
   await delCache('qb*');
 
   return { count: inserted.length, insertedIds: inserted };
+}
+
+/**
+ * Rejects a single draft question with reason and audit tracking
+ */
+export async function rejectDraftQuestion(draftId, questionId, reason = '', userId = null) {
+  await ensureStagingTables();
+
+  const res = await query(
+    `UPDATE ai_draft_questions
+     SET 
+       review_status = 'rejected',
+       validation_status = 'rejected',
+       rejection_reason = $1,
+       modified_by = $2,
+       updated_at = NOW()
+     WHERE draft_id = $3 AND id = $4
+     RETURNING *`,
+    [reason, userId, draftId, questionId]
+  );
+
+  if (!res.rows.length) return null;
+
+  // Update summary counts
+  await query(`
+    UPDATE ai_generation_drafts
+    SET
+      validation_passed_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'validation_passed'),
+      needs_correction_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'needs_correction'),
+      rejected_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'rejected'),
+      manual_review_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND requires_manual_review = true),
+      updated_at = NOW()
+    WHERE id = $1
+  `, [draftId]);
+
+  return res.rows[0];
+}
+
+/**
+ * Regenerates the diagram for an individual draft question
+ */
+export async function regenerateDraftQuestionDiagram(
+  draftId,
+  questionId,
+  { prompt = '', markers = null, method = 'programmatic' } = {},
+  userId = null
+) {
+  await ensureStagingTables();
+
+  const qRes = await query('SELECT * FROM ai_draft_questions WHERE draft_id = $1 AND id = $2', [draftId, questionId]);
+  if (!qRes.rows.length) {
+    throw new Error(`Question #${questionId} in draft #${draftId} not found`);
+  }
+  const q = qRes.rows[0];
+
+  const dRes = await query('SELECT * FROM ai_generation_drafts WHERE id = $1', [draftId]);
+  const draftMeta = dRes.rows[0] || {};
+
+  const diagramAsset = await diagramAssetService.generateDiagram({
+    subject: q.subject || draftMeta.subject || 'Physics',
+    chapter: q.chapter || draftMeta.chapter || '',
+    topic: q.topic || 'Diagram Topic',
+    customPrompt: prompt || q.diagram_description || q.question_text,
+    markers: markers || ['A', 'B', 'C', 'D'],
+    draftId,
+    draftQuestionId: questionId,
+    method,
+  });
+
+  // Re-run validation on question with the newly generated diagram
+  const updatedQ = await query('SELECT * FROM ai_draft_questions WHERE id = $1', [questionId]);
+  const revalRes = await AiQuestionValidationEngine.validateQuestion(updatedQ.rows[0], {
+    subject: q.subject || draftMeta.subject,
+    chapter: q.chapter || draftMeta.chapter,
+    examType: draftMeta.exam_type,
+  });
+
+  await query(`
+    UPDATE ai_draft_questions
+    SET
+      validation_status = $2,
+      validation_score = $3,
+      validation_report = $4,
+      modified_by = $5,
+      updated_at = NOW()
+    WHERE id = $1
+  `, [questionId, revalRes.status, revalRes.score, JSON.stringify(revalRes), userId]);
+
+  const finalQ = await query('SELECT * FROM ai_draft_questions WHERE id = $1', [questionId]);
+  return {
+    question: finalQ.rows[0],
+    diagramAsset,
+  };
 }
 
 /**

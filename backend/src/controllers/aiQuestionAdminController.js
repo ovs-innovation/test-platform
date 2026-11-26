@@ -15,6 +15,8 @@ import {
   deleteDraft,
   validateDraftQuestionsInDb,
   updateDraftQuestionValidationStatus,
+  rejectDraftQuestion,
+  regenerateDraftQuestionDiagram,
 } from '../services/ai/aiDraftService.js';
 import { diagramAssetService } from '../services/ai/diagram/diagramAssetService.js';
 import { extractDiagramFromImage } from '../services/ai/diagram/pdfDiagramExtractor.js';
@@ -130,7 +132,7 @@ export const getDraftDetail = asyncHandler(async (req, res) => {
  */
 export const editDraftQuestion = asyncHandler(async (req, res) => {
   const { draftId, questionId } = req.params;
-  const updated = await updateDraftQuestion(draftId, questionId, req.body);
+  const updated = await updateDraftQuestion(draftId, questionId, req.body, req.user?.id);
   if (!updated) {
     throw ApiError.notFound(`Question #${questionId} in draft #${draftId} not found or no valid fields provided`);
   }
@@ -161,12 +163,108 @@ export const approveDraft = asyncHandler(async (req, res) => {
   const { draftId } = req.params;
   const { question_ids = null, target = 'bank' } = req.body;
 
-  const result = await approveDraftToQuestionBank(draftId, question_ids);
+  const result = await approveDraftToQuestionBank(draftId, question_ids, req.user?.id);
   res.json({
     success: true,
     message: `Successfully approved ${result.count} questions into the ${target === 'bank' ? 'Question Bank' : 'Assessment'}.`,
     approved_count: result.count,
     inserted_ids: result.insertedIds,
+    already_approved_count: result.alreadyApprovedCount || 0,
+  });
+});
+
+/**
+ * POST /api/admin/ai/drafts/:draftId/questions/:questionId/approve
+ * Approves a single draft question into the production Question Bank.
+ */
+export const approveSingleDraftQuestion = asyncHandler(async (req, res) => {
+  const { draftId, questionId } = req.params;
+  const result = await approveDraftToQuestionBank(draftId, [questionId], req.user?.id);
+
+  if (result.count === 0 && result.alreadyApprovedCount > 0) {
+    return res.json({
+      success: true,
+      message: 'Question has already been approved.',
+      approved_count: 0,
+      already_approved: true,
+      inserted_ids: result.insertedIds,
+    });
+  }
+
+  if (result.count === 0) {
+    throw ApiError.badRequest(`Could not approve question #${questionId}. It may be rejected or missing.`);
+  }
+
+  res.json({
+    success: true,
+    message: `Question #${questionId} approved into Question Bank.`,
+    approved_count: result.count,
+    bank_question_id: result.insertedIds[0],
+  });
+});
+
+/**
+ * POST /api/admin/ai/drafts/:draftId/questions/approve-selected
+ * Approves multiple selected draft questions into the Question Bank.
+ */
+export const approveSelectedDraftQuestions = asyncHandler(async (req, res) => {
+  const { draftId } = req.params;
+  const { question_ids = [] } = req.body;
+
+  if (!Array.isArray(question_ids) || question_ids.length === 0) {
+    throw ApiError.badRequest('Field "question_ids" array is required');
+  }
+
+  const result = await approveDraftToQuestionBank(draftId, question_ids, req.user?.id);
+  res.json({
+    success: true,
+    message: `Successfully approved ${result.count} selected questions into the Question Bank.`,
+    approved_count: result.count,
+    inserted_ids: result.insertedIds,
+    already_approved_count: result.alreadyApprovedCount || 0,
+  });
+});
+
+/**
+ * POST /api/admin/ai/drafts/:draftId/questions/:questionId/reject
+ * Rejects an individual draft question with audit reason.
+ */
+export const rejectSingleDraftQuestion = asyncHandler(async (req, res) => {
+  const { draftId, questionId } = req.params;
+  const { reason = '' } = req.body;
+
+  const rejected = await rejectDraftQuestion(draftId, questionId, reason, req.user?.id);
+  if (!rejected) {
+    throw ApiError.notFound(`Question #${questionId} in draft #${draftId} not found`);
+  }
+
+  res.json({
+    success: true,
+    message: `Question #${questionId} marked as rejected.`,
+    question: rejected,
+  });
+});
+
+/**
+ * POST /api/admin/ai/drafts/:draftId/questions/:questionId/regenerate-diagram
+ * Regenerates the diagram for a specific question within a draft.
+ */
+export const regenerateQuestionDiagram = asyncHandler(async (req, res) => {
+  const { draftId, questionId } = req.params;
+  const { prompt, markers, method } = req.body;
+
+  const result = await regenerateDraftQuestionDiagram(
+    draftId,
+    questionId,
+    { prompt, markers, method },
+    req.user?.id
+  );
+
+  res.json({
+    success: true,
+    message: `Diagram for question #${questionId} successfully regenerated.`,
+    question: result.question,
+    diagram_asset: result.diagramAsset,
   });
 });
 

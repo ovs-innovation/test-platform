@@ -12,6 +12,10 @@ import {
   editDraftQuestion,
   regenerateQuestion,
   approveDraft,
+  approveSingleDraftQuestion,
+  approveSelectedDraftQuestions,
+  rejectSingleDraftQuestion,
+  regenerateQuestionDiagram,
   removeDraft,
   validateDraft,
   validateDraftQuestion,
@@ -36,6 +40,10 @@ router.get('/drafts/:id', getDraftDetail);
 router.patch('/drafts/:draftId/questions/:questionId', editDraftQuestion);
 router.post('/drafts/:draftId/regenerate/:questionId', regenerateQuestion);
 router.post('/drafts/:draftId/approve', approveDraft);
+router.post('/drafts/:draftId/questions/approve-selected', approveSelectedDraftQuestions);
+router.post('/drafts/:draftId/questions/:questionId/approve', approveSingleDraftQuestion);
+router.post('/drafts/:draftId/questions/:questionId/reject', rejectSingleDraftQuestion);
+router.post('/drafts/:draftId/questions/:questionId/regenerate-diagram', regenerateQuestionDiagram);
 router.delete('/drafts/:draftId', removeDraft);
 
 // AI Question Validation Engine

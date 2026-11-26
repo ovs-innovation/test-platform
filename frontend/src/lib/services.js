@@ -1239,6 +1239,50 @@ export const aiGeneratorService = {
   },
 
   /**
+   * Approve a single draft question into the Question Bank
+   */
+  approveSingleQuestion: (draftId, questionId) => {
+    clearCache('qb');
+    return api.post(`/admin/ai/drafts/${draftId}/questions/${questionId}/approve`).then((r) => r.data);
+  },
+
+  /**
+   * Approve multiple selected questions into the Question Bank
+   */
+  approveSelectedQuestions: (draftId, questionIds = []) => {
+    clearCache('qb');
+    return api.post(`/admin/ai/drafts/${draftId}/questions/approve-selected`, { question_ids: questionIds }).then((r) => r.data);
+  },
+
+  /**
+   * Reject a single draft question with reason
+   */
+  rejectQuestion: (draftId, questionId, reason = '') => {
+    return api.post(`/admin/ai/drafts/${draftId}/questions/${questionId}/reject`, { reason }).then((r) => r.data);
+  },
+
+  /**
+   * Regenerate a single question in a draft
+   */
+  regenerateDraftQuestion: (draftId, questionId, critique = '') => {
+    return api.post(`/admin/ai/drafts/${draftId}/regenerate/${questionId}`, { critique }).then((r) => r.data);
+  },
+
+  /**
+   * Regenerate diagram for a specific question in a draft
+   */
+  regenerateQuestionDiagram: (draftId, questionId, payload = {}) => {
+    return api.post(`/admin/ai/drafts/${draftId}/questions/${questionId}/regenerate-diagram`, payload).then((r) => r.data);
+  },
+
+  /**
+   * Delete an entire draft batch
+   */
+  deleteDraft: (draftId) => {
+    return api.delete(`/admin/ai/drafts/${draftId}`).then((r) => r.data);
+  },
+
+  /**
    * Upload optional reference PDF for question context
    */
   uploadReferencePdf: (file) => {

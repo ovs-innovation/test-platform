@@ -41,6 +41,7 @@ import { AdminHeader, AdminCard, AdminMetricRail } from '../../components/admin/
 import { Spinner } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
+import AiQuestionReviewWorkspace from '../../components/admin/AiQuestionReviewWorkspace.jsx';
 
 // -----------------------------------------------------------------------------
 // STANDARD CURRICULUM DATA DEFAULTS (NEET & JEE)
@@ -224,6 +225,7 @@ export default function AiQuestionGenerator() {
 
   // Active Top Tab
   const [activeTab, setActiveTab] = useState('question-generator'); // 'question-generator' | 'test-generator' | 'drafts'
+  const [selectedDraftId, setSelectedDraftId] = useState(null);
 
   // Loading & Generation states
   const [isGenerating, setIsGenerating] = useState(false);
@@ -560,6 +562,11 @@ export default function AiQuestionGenerator() {
           }.`,
           'success'
         );
+
+        if (res?.draft_id && qForm.target_destination !== 'bank') {
+          setSelectedDraftId(res.draft_id);
+          setActiveTab('drafts');
+        }
       } else {
         // Test generation flow
         setGenerationStep('Verifying exam blueprint & section distributions...');
@@ -626,6 +633,19 @@ export default function AiQuestionGenerator() {
       setRecentDrafts([]);
     } finally {
       setLoadingDrafts(false);
+    }
+  };
+
+  const handleDeleteDraft = async (draftId) => {
+    if (!window.confirm(`Are you sure you want to delete draft #${draftId}? This will remove all staged questions in this batch.`)) {
+      return;
+    }
+    try {
+      await aiGeneratorService.deleteDraft(draftId);
+      showToast('Draft batch deleted successfully', 'info');
+      fetchDrafts();
+    } catch (err) {
+      showToast(err.response?.data?.message || err.message || 'Failed to delete draft', 'error');
     }
   };
 
@@ -1720,52 +1740,149 @@ export default function AiQuestionGenerator() {
       {/* TAB 3: GENERATION QUEUE & DRAFTS                                      */}
       {/* ===================================================================== */}
       {activeTab === 'drafts' && (
-        <AdminCard
-          title="AI Generation Staging & History"
-          subtitle="Recent generation requests, staging drafts, and batches ready for administrative approval."
-          action={
-            <button
-              type="button"
-              onClick={fetchDrafts}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
-            >
-              <RefreshCw className={`h-3.5 w-3.5 ${loadingDrafts ? 'animate-spin' : ''}`} />
-              <span>Refresh</span>
-            </button>
-          }
-        >
-          {loadingDrafts ? (
-            <div className="py-12 flex flex-col items-center justify-center text-slate-400">
-              <Spinner className="h-8 w-8 text-blue-600 mb-2" />
-              <p className="text-xs font-bold">Querying AI Staging Queue...</p>
-            </div>
-          ) : recentDrafts.length === 0 ? (
-            <div className="py-12 text-center">
-              <div className="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-3">
-                <BookmarkCheck className="h-6 w-6" />
+        selectedDraftId ? (
+          <AiQuestionReviewWorkspace
+            draftId={selectedDraftId}
+            onBack={() => {
+              setSelectedDraftId(null);
+              fetchDrafts();
+            }}
+            onDraftUpdated={fetchDrafts}
+          />
+        ) : (
+          <AdminCard
+            title="AI Generation Staging & History"
+            subtitle="Recent generation requests, staging drafts, and batches ready for administrative review & approval into Question Bank."
+            action={
+              <button
+                type="button"
+                onClick={fetchDrafts}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
+              >
+                <RefreshCw className={`h-3.5 w-3.5 ${loadingDrafts ? 'animate-spin' : ''}`} />
+                <span>Refresh Queue</span>
+              </button>
+            }
+          >
+            {loadingDrafts ? (
+              <div className="py-16 flex flex-col items-center justify-center text-slate-400">
+                <Spinner className="h-8 w-8 text-blue-600 mb-2" />
+                <p className="text-xs font-bold">Querying AI Staging Queue...</p>
               </div>
-              <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">No Drafts in Queue</h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1">
-                Generated question batches will appear here for preview, inline KaTeX math editing, and batch
-                approval.
-              </p>
-            </div>
-          ) : (
-            <div className="divide-y divide-slate-200 dark:divide-slate-800">
-              {recentDrafts.map((d, idx) => (
-                <div key={idx} className="py-3 flex items-center justify-between">
-                  <div>
-                    <span className="text-xs font-bold text-slate-800 dark:text-slate-200">{d.batch_id}</span>
-                    <p className="text-[11px] text-slate-500">{d.subject} • {d.total_questions} Questions</p>
-                  </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-600">
-                    {d.status || 'Draft'}
-                  </span>
+            ) : recentDrafts.length === 0 ? (
+              <div className="py-16 text-center">
+                <div className="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-3">
+                  <BookmarkCheck className="h-6 w-6" />
                 </div>
-              ))}
-            </div>
-          )}
-        </AdminCard>
+                <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">No Drafts in Queue</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1">
+                  Generated question batches will appear here for preview, KaTeX formula inspection, diagram verification, and batch approval.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('question-generator')}
+                  className="mt-4 px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+                >
+                  Generate First Batch
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3 pt-2">
+                {recentDrafts.map((d, idx) => {
+                  const isApproved = d.status === 'approved' || (d.approved_count > 0 && d.approved_count === d.question_count);
+                  const isProcessing = d.status === 'processing';
+
+                  return (
+                    <div
+                      key={d.id || idx}
+                      className="p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:border-blue-500/40 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs"
+                    >
+                      <div className="space-y-1.5 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-sm font-black text-slate-900 dark:text-white">
+                            {d.title || `${d.exam_type} ${d.subject} Staged Questions`}
+                          </span>
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-500/10 text-blue-600 border border-blue-500/20">
+                            {d.exam_type}
+                          </span>
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-purple-500/10 text-purple-600 border border-purple-500/20">
+                            {d.subject}
+                          </span>
+                          {d.chapter && (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                              {d.chapter}
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 flex-wrap">
+                          <span>Batch: <code className="font-mono text-slate-700 dark:text-slate-300">{d.batch_id}</code></span>
+                          <span>•</span>
+                          <span>{d.question_count || d.total_generated || 0} Questions Staged</span>
+                          <span>•</span>
+                          <span>Created {new Date(d.created_at).toLocaleString()}</span>
+                        </div>
+
+                        {/* Validation Summary Pills */}
+                        <div className="flex items-center gap-2 pt-1 flex-wrap">
+                          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                            Passed: {d.validation_passed_count || 0}
+                          </span>
+                          {(d.needs_correction_count > 0 || d.manual_review_count > 0) && (
+                            <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">
+                              Needs Review: {(d.needs_correction_count || 0) + (d.manual_review_count || 0)}
+                            </span>
+                          )}
+                          {d.rejected_count > 0 && (
+                            <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">
+                              Rejected: {d.rejected_count}
+                            </span>
+                          )}
+                          {d.approved_count > 0 && (
+                            <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-500/10 text-indigo-600 border border-indigo-500/20">
+                              Approved into Bank: {d.approved_count}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Right Status & Actions */}
+                      <div className="flex items-center gap-2.5 shrink-0 self-end md:self-center">
+                        <span className={`px-2.5 py-1 rounded-xl text-xs font-black uppercase tracking-wider ${
+                          isApproved
+                            ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'
+                            : isProcessing
+                            ? 'bg-amber-500/10 text-amber-600 border border-amber-500/20'
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                        }`}>
+                          {d.status || 'Draft'}
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={() => setSelectedDraftId(d.id)}
+                          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-black text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-all cursor-pointer"
+                        >
+                          <span>Review & Approve</span>
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteDraft(d.id)}
+                          className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-rose-600 hover:border-rose-500/30 transition-colors cursor-pointer"
+                          title="Delete Draft"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </AdminCard>
+        )
       )}
 
       {/* ===================================================================== */}
