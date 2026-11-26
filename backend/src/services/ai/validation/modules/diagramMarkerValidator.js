@@ -6,7 +6,7 @@
  * - Markers are neutral pointers and DO NOT leak solutions or highlight answers
  */
 
-import { FORBIDDEN_ANSWER_PATTERNS } from '../diagram/diagramConfig.js';
+import { FORBIDDEN_ANSWER_PATTERNS } from '../../diagram/diagramConfig.js';
 
 export function extractExpectedMarkersFromText(text = '') {
   const markers = new Set();

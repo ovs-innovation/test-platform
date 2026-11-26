@@ -4,7 +4,7 @@
  * the official NEET / JEE competitive examination curriculum.
  */
 
-import { resolveStandardChapter } from '../../../utils/chapterResolver.js';
+import { resolveStandardChapter } from '../../../../utils/chapterResolver.js';
 
 const VALID_SUBJECTS = {
   neet: ['physics', 'chemistry', 'biology', 'botany', 'zoology'],
