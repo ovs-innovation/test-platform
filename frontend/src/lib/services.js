@@ -307,7 +307,7 @@ const getQbCacheKey = (category, extraParams = {}) => {
         sorted[k] = String(v).toLowerCase();
       }
     });
-  return `qb_v6_by_cat_${normCat}_${JSON.stringify(sorted)}`;
+  return `qb_v7_by_cat_${normCat}_${JSON.stringify(sorted)}`;
 };
 
 export const questionBankService = {
@@ -327,7 +327,7 @@ export const questionBankService = {
     // If first argument is boolean (legacy call like categories(true)), handle gracefully
     let normalizedExamType = typeof examType === 'string' ? examType : null;
     let shouldRefresh = typeof examType === 'boolean' ? examType : forceRefresh;
-    const key = `qb_categories_v5_${(normalizedExamType || 'all').toLowerCase()}`;
+    const key = `qb_categories_v6_${(normalizedExamType || 'all').toLowerCase()}`;
     if (shouldRefresh) clearCache(key);
     return withCache(
       key,
@@ -1170,3 +1170,111 @@ export const enquiryService = {
   updateEnquiry: (id, data) => api.patch(`/admin/enquiries/${id}`, data).then((r) => r.data),
   deleteEnquiry: (id) => api.delete(`/admin/enquiries/${id}`).then((r) => r.data),
 };
+
+export const aiGeneratorService = {
+  /**
+   * Generates single or batch questions for Question Bank
+   * @param {Object} payload - { exam_type, class_level, subject, chapter, topic, count, difficulty, question_types, diagram_req, explanation_req, reference_file_url }
+   */
+  generateQuestions: (payload) => {
+    return api.post('/admin/ai/generate-questions', payload).then((r) => r.data);
+  },
+
+  /**
+   * Generates a complete blueprint-based test (NEET / JEE)
+   * @param {Object} payload - { title, exam_type, class_level, total_questions, duration_minutes, subject_distribution, chapter_distribution, type_distribution, difficulty_distribution, marking_scheme, section_config }
+   */
+  generateTest: (payload) => {
+    return api.post('/admin/ai/generate-test', payload).then((r) => r.data);
+  },
+
+  /**
+   * List AI generation staging drafts
+   */
+  getDrafts: (params = {}) => {
+    return api.get('/admin/ai/drafts', { params }).then((r) => r.data);
+  },
+
+  /**
+   * Get single draft details
+   */
+  getDraft: (id) => {
+    return api.get(`/admin/ai/drafts/${id}`).then((r) => r.data);
+  },
+
+  /**
+   * Update or edit an individual question inside a draft
+   */
+  updateDraftQuestion: (draftId, questionId, data) => {
+    return api.patch(`/admin/ai/drafts/${draftId}/questions/${questionId}`, data).then((r) => r.data);
+  },
+
+  /**
+   * Approve draft questions into Question Bank or active Assessment
+   */
+  approveDraft: (draftId, target = 'bank', options = {}) => {
+    clearCache('qb');
+    return api.post(`/admin/ai/drafts/${draftId}/approve`, { target, ...options }).then((r) => r.data);
+  },
+
+  /**
+   * Upload optional reference PDF for question context
+   */
+  uploadReferencePdf: (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post('/admin/ai/upload-reference', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then((r) => r.data);
+  },
+
+  /**
+   * Fetch standard competitive exam blueprints
+   */
+  getBlueprints: () => {
+    return withCache('ai_exam_blueprints', () => api.get('/admin/ai/blueprints').then((r) => r.data), 300000);
+  },
+
+  /**
+   * Generate an examination diagram (SVG / illustration)
+   */
+  generateDiagram: (payload) => {
+    return api.post('/admin/ai/diagrams/generate', payload).then((r) => r.data);
+  },
+
+  /**
+   * Regenerate a diagram with refined prompt or markers
+   */
+  regenerateDiagram: (assetId, payload) => {
+    return api.post(`/admin/ai/diagrams/${assetId}/regenerate`, payload).then((r) => r.data);
+  },
+
+  /**
+   * Review approval/rejection of a diagram
+   */
+  reviewDiagram: (assetId, payload) => {
+    return api.patch(`/admin/ai/diagrams/${assetId}/review`, payload).then((r) => r.data);
+  },
+
+  /**
+   * Get diagram asset details
+   */
+  getDiagram: (assetId) => {
+    return api.get(`/admin/ai/diagrams/${assetId}`).then((r) => r.data);
+  },
+
+  /**
+   * List diagram assets
+   */
+  listDiagrams: (params = {}) => {
+    return api.get('/admin/ai/diagrams', { params }).then((r) => r.data);
+  },
+
+  /**
+   * Extract diagram from PDF
+   */
+  extractDiagramFromPdf: (payload) => {
+    return api.post('/admin/ai/diagrams/extract-pdf', payload).then((r) => r.data);
+  },
+};
+

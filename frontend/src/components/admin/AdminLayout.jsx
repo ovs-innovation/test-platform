@@ -33,6 +33,12 @@ const ADMIN_NAV_GROUPS = [
     ],
   },
   {
+    groupTitle: 'AI TOOLS',
+    items: [
+      { to: '/admin/ai-generator', label: 'Question & Test Generator', icon: 'sparkles' },
+    ],
+  },
+  {
     groupTitle: 'PAYMENTS & CONTENT',
     items: [
       { to: '/admin/payments', label: 'Payments', icon: 'wallet' },

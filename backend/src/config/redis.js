@@ -220,4 +220,6 @@ export async function rememberCache(key, ttlSeconds, fetcherFn) {
   return result;
 }
 
+export const clearCache = delCache;
+
 export { redisClient, isRedisConnected };

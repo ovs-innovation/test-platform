@@ -79,6 +79,7 @@ const AdminSchoolDetail = lazy(() => import('./pages/admin/SchoolDetail.jsx'));
 const AdminDiscussionHub = lazy(() => import('./pages/admin/AdminDiscussionHub.jsx'));
 const AdminAdmissionManager = lazy(() => import('./pages/admin/AdmissionManager.jsx'));
 const AdminEnquiries = lazy(() => import('./pages/admin/Enquiries.jsx'));
+const AdminAiGenerator = lazy(() => import('./pages/admin/AiQuestionGenerator.jsx'));
 
 // Lazy-loaded Home and Institution Portal pages
 const Home = lazy(() => import('./pages/public/Home.jsx'));
@@ -259,6 +260,7 @@ export default function App() {
         <Route path="/admin/assessments/:assessmentId" element={<ProtectedRoute role="admin"><AdminLayout><AdminAssessmentEditor /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/test-series" element={<ProtectedRoute role="admin"><AdminLayout><AdminTestSeries /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/question-bank" element={<ProtectedRoute role="admin"><AdminLayout><AdminQuestionBank /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/ai-generator" element={<ProtectedRoute role="admin"><AdminLayout><AdminAiGenerator /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/subjects" element={<ProtectedRoute role="admin"><AdminLayout><AdminSubjects /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/coupons" element={<ProtectedRoute role="admin"><AdminLayout><AdminCoupons /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/offers-achievements" element={<ProtectedRoute role="admin"><AdminLayout><AdminOffersAchievements /></AdminLayout></ProtectedRoute>} />

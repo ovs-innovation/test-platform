@@ -5,9 +5,18 @@
  * and reducing page loading time to 0-10ms (Instant Load).
  */
 
-const DB_NAME = 'edvedum_qb_cache_v2';
+const DB_NAME = 'edvedum_qb_cache_v4';
 const STORE_NAME = 'qb_cache';
 const MEMORY_CACHE = new Map();
+
+// Automatically purge stale legacy caches from user browsers to guarantee fresh synchronization
+if (typeof window !== 'undefined' && window.indexedDB) {
+  try {
+    window.indexedDB.deleteDatabase('edvedum_qb_cache_v1');
+    window.indexedDB.deleteDatabase('edvedum_qb_cache_v2');
+    window.indexedDB.deleteDatabase('edvedum_qb_cache_v3');
+  } catch (_) {}
+}
 
 function openDb() {
   if (typeof window === 'undefined' || !window.indexedDB) return null;
@@ -109,7 +118,7 @@ export const persistentCache = {
       const tx = db.transaction(STORE_NAME, 'readwrite');
       const store = tx.objectStore(STORE_NAME);
       store.put(item, key);
-    } catch (_) {}
+    } catch (_) { }
   },
 
   /**
@@ -141,7 +150,7 @@ export const persistentCache = {
           }
         });
       };
-    } catch (_) {}
+    } catch (_) { }
   },
 
   /**
@@ -155,7 +164,7 @@ export const persistentCache = {
       const tx = db.transaction(STORE_NAME, 'readwrite');
       const store = tx.objectStore(STORE_NAME);
       store.clear();
-    } catch (_) {}
+    } catch (_) { }
   }
 };
 

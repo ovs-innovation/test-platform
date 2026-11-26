@@ -34,6 +34,7 @@ import institutionRoutes from './routes/institutionRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import ebookRoutes from './routes/ebookRoutes.js';
 import aiTestRoutes from './routes/aiTestRoutes.js';
+import aiAdminRoutes from './routes/aiAdminRoutes.js';
 
 const app = express();
 
@@ -148,6 +149,7 @@ app.use('/api/questions', questionRoutes);
 app.use('/api/sections', sectionRoutes);
 app.use('/api/attempts', noCache, attemptRoutes);
 app.use('/api/question-bank', questionBankRoutes);
+app.use('/api/admin/ai', aiAdminRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/payments', noCache, paymentRoutes);
 app.use('/api/notifications', notificationRoutes);

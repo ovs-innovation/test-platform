@@ -18,8 +18,16 @@ const __dirname = path.dirname(__filename);
 const ALL_NUCLEAR_QUESTIONS = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'nuclear_jee_final_170.json'), 'utf8')
 );
+const ALL_SEMICONDUCTOR_QUESTIONS = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'semiconductor_jee_final_251.json'), 'utf8')
+);
 
 const CHAPTERS_DATA = [
+  {
+    name: 'Semiconductor',
+    aliases: ['semiconductor', 'semiconductors', 'semiconductor electronics', 'semiconductor devices', 'electronic devices'],
+    questions: ALL_SEMICONDUCTOR_QUESTIONS,
+  },
   {
     name: 'Atomic',
     aliases: ['atomic', 'atomic physics', 'atoms', 'atom'],
