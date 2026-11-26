@@ -9,7 +9,8 @@ async function verify() {
       COUNT(*) FILTER (WHERE question_type = 'mcq') as mcqs,
       COUNT(*) FILTER (WHERE question_type = 'numerical') as numericals,
       COUNT(*) FILTER (WHERE image_url IS NOT NULL) as with_diagrams,
-      COUNT(*) FILTER (WHERE status = 'available') as available
+      COUNT(*) FILTER (WHERE status = 'available') as available,
+      COUNT(*) FILTER (WHERE options::text LIKE '%Option (B)%' OR options::text LIKE '%Option (C)%') as with_placeholders
     FROM question_bank
     WHERE exam_type = 'JEE' AND (chapter_id = 21 OR LOWER(chapter) = 'chemical kinetics')
   `);
