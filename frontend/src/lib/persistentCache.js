@@ -5,7 +5,7 @@
  * and reducing page loading time to 0-10ms (Instant Load).
  */
 
-const DB_NAME = 'edvedum_qb_cache_v4';
+const DB_NAME = 'edvedum_qb_cache_v5';
 const STORE_NAME = 'qb_cache';
 const MEMORY_CACHE = new Map();
 
@@ -15,7 +15,8 @@ if (typeof window !== 'undefined' && window.indexedDB) {
     window.indexedDB.deleteDatabase('edvedum_qb_cache_v1');
     window.indexedDB.deleteDatabase('edvedum_qb_cache_v2');
     window.indexedDB.deleteDatabase('edvedum_qb_cache_v3');
-  } catch (_) {}
+    window.indexedDB.deleteDatabase('edvedum_qb_cache_v4');
+  } catch (_) { }
 }
 
 function openDb() {
