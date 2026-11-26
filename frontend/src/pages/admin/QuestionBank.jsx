@@ -958,8 +958,18 @@ export default function AdminQuestionBank() {
       ) return 'Alternating Current';
 
       if (
-        chId === 31 ||
         chId === 201 ||
+        chId === 147 ||
+        chId === 108 ||
+        chId === 70 ||
+        /^\s*nucle(ar|i)\b/i.test(raw) ||
+        /nucle(ar|i)/i.test(raw) ||
+        /nucle(ar|i)/i.test(q.chapter || '') ||
+        /nucle(ar|i)/i.test(q.topic || '')
+      ) return 'Nuclear';
+
+      if (
+        chId === 31 ||
         /wave optics/i.test(raw)
       ) return 'Wave Optics';
 
@@ -985,19 +995,10 @@ export default function AdminQuestionBank() {
       ) return 'Semiconductor';
 
       if (
+        chId === 199 ||
         /^\s*atomic\b/i.test(raw) ||
         /^\s*atoms?\b/i.test(raw)
       ) return 'Atomic';
-
-      if (
-        chId === 147 ||
-        chId === 108 ||
-        chId === 70 ||
-        /^\s*nucle(ar|i)\b/i.test(raw) ||
-        /nucle(ar|i)/i.test(raw) ||
-        /nucle(ar|i)/i.test(q.chapter || '') ||
-        /nucle(ar|i)/i.test(q.topic || '')
-      ) return 'Nuclear';
 
       if (/magnetism\s*(&|and)\s*electromagnetic induction/i.test(raw)) {
         const text = `${q.topic || ''} ${q.question_text || ''}`;

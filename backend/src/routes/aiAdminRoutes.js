@@ -13,6 +13,9 @@ import {
   regenerateQuestion,
   approveDraft,
   removeDraft,
+  validateDraft,
+  validateDraftQuestion,
+  updateQuestionValidationStatus,
   generateDiagramAsset,
   regenerateDiagramAsset,
   reviewDiagramAsset,
@@ -34,6 +37,11 @@ router.patch('/drafts/:draftId/questions/:questionId', editDraftQuestion);
 router.post('/drafts/:draftId/regenerate/:questionId', regenerateQuestion);
 router.post('/drafts/:draftId/approve', approveDraft);
 router.delete('/drafts/:draftId', removeDraft);
+
+// AI Question Validation Engine
+router.post('/drafts/:draftId/validate', validateDraft);
+router.post('/drafts/:draftId/questions/:questionId/validate', validateDraftQuestion);
+router.patch('/drafts/:draftId/questions/:questionId/status', updateQuestionValidationStatus);
 
 // AI Diagram Generation, Regeneration & Review
 router.post('/diagrams/generate', generateDiagramAsset);

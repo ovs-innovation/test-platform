@@ -28,7 +28,7 @@ export const listCategories = asyncHandler(async (req, res) => {
   const { exam_type, skip_cache, refresh } = req.query;
   const isBypass = skip_cache === 'true' || refresh === 'true';
   const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
-  const cacheKey = `cache:qb:categories:v8:${normExamType || 'all'}`;
+  const cacheKey = `cache:qb:categories:v9:${normExamType || 'all'}`;
 
   const fetchCategories = async () => {
     let sql = `SELECT category, COUNT(*)::int AS count FROM question_bank`;
@@ -121,7 +121,7 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     res.setHeader('Cache-Control', 'private, no-cache, must-revalidate');
   }
   const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
-  const cacheKey = `cache:qb:list:v8:${(normExamType || 'all').toLowerCase()}:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
+  const cacheKey = `cache:qb:list:v9:${(normExamType || 'all').toLowerCase()}:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
 
   const fetchQuestions = async () => {
     let sql = `

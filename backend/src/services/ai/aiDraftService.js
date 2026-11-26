@@ -6,6 +6,10 @@
 
 import { query } from '../../config/db.js';
 import { delCache } from '../../config/redis.js';
+import {
+  AiQuestionValidationEngine,
+  QUESTION_STATUSES,
+} from './validation/index.js';
 
 let tablesInitialized = false;
 
@@ -33,6 +37,10 @@ export async function ensureStagingTables() {
       target_destination VARCHAR(50) DEFAULT 'draft',
       requested_count INT DEFAULT 10,
       total_generated INT DEFAULT 0,
+      validation_passed_count INT DEFAULT 0,
+      needs_correction_count INT DEFAULT 0,
+      rejected_count INT DEFAULT 0,
+      manual_review_count INT DEFAULT 0,
       status VARCHAR(50) DEFAULT 'draft',
       progress_percent INT DEFAULT 0,
       error_message TEXT,
@@ -73,15 +81,40 @@ export async function ensureStagingTables() {
       image_url TEXT,
       solution_image_url TEXT,
       review_status VARCHAR(50) DEFAULT 'pending',
+      validation_status VARCHAR(50) DEFAULT 'validation_pending',
+      validation_score INT DEFAULT 0,
+      validation_report JSONB DEFAULT '{}'::jsonb,
+      requires_manual_review BOOLEAN DEFAULT false,
+      manual_review_reasons JSONB DEFAULT '[]'::jsonb,
+      is_duplicate BOOLEAN DEFAULT false,
+      duplicate_of_id BIGINT,
+      similarity_score NUMERIC(5,2) DEFAULT 0,
+      normalized_signature VARCHAR(255),
       admin_notes TEXT,
       validation_errors JSONB DEFAULT '[]'::jsonb,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW()
     );
 
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS validation_status VARCHAR(50) DEFAULT 'validation_pending';
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS validation_score INT DEFAULT 0;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS validation_report JSONB DEFAULT '{}'::jsonb;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS requires_manual_review BOOLEAN DEFAULT false;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS manual_review_reasons JSONB DEFAULT '[]'::jsonb;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS is_duplicate BOOLEAN DEFAULT false;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS duplicate_of_id BIGINT;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS similarity_score NUMERIC(5,2) DEFAULT 0;
+    ALTER TABLE ai_draft_questions ADD COLUMN IF NOT EXISTS normalized_signature VARCHAR(255);
+
+    ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS validation_passed_count INT DEFAULT 0;
+    ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS needs_correction_count INT DEFAULT 0;
+    ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS rejected_count INT DEFAULT 0;
+    ALTER TABLE ai_generation_drafts ADD COLUMN IF NOT EXISTS manual_review_count INT DEFAULT 0;
+
     CREATE INDEX IF NOT EXISTS idx_ai_draft_questions_draft_id ON ai_draft_questions(draft_id);
     CREATE INDEX IF NOT EXISTS idx_ai_draft_questions_batch ON ai_draft_questions(batch_id);
     CREATE INDEX IF NOT EXISTS idx_ai_generation_drafts_status ON ai_generation_drafts(status);
+    CREATE INDEX IF NOT EXISTS idx_ai_draft_questions_validation_status ON ai_draft_questions(validation_status);
   `;
 
   try {
@@ -174,26 +207,41 @@ export async function saveDraftQuestions(draftId, batchId, questions = []) {
   await ensureStagingTables();
   if (!questions.length) return [];
 
+  // 1. Fetch draft metadata for validation context
+  const dRes = await query('SELECT exam_type, subject, chapter FROM ai_generation_drafts WHERE id = $1', [draftId]);
+  const draftMeta = dRes.rows[0] || {};
+
+  // 2. Run All 12 Validation Modules via AiQuestionValidationEngine
+  const validationSummary = await AiQuestionValidationEngine.validateBatch(questions, {
+    draftId,
+    subject: draftMeta.subject,
+    chapter: draftMeta.chapter,
+    examType: draftMeta.exam_type,
+  });
+
   const savedQuestions = [];
-  const seenSignatures = new Set();
 
   for (let i = 0; i < questions.length; i++) {
     const q = questions[i];
-    // Deduplication key
-    const sig = String(q.question_text || '')
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, '')
-      .slice(0, 100);
-
-    if (sig && seenSignatures.has(sig)) {
-      console.warn(`[AiDraftService] Skipping duplicate question in batch: "${q.question_text.slice(0, 40)}..."`);
-      continue;
-    }
-    seenSignatures.add(sig);
+    const valRes = validationSummary.results[i] || {
+      status: QUESTION_STATUSES.VALIDATION_PENDING,
+      score: 50,
+      requiresManualReview: false,
+      manualReviewReasons: [],
+      errors: [],
+      warnings: [],
+      isDuplicate: false,
+      similarityScore: 0,
+      normalizedSignature: '',
+    };
 
     const hasDiagram = Boolean(q.diagram_metadata?.has_diagram || q.content_type === 'diagram' || q.content_type === 'graph');
     const diagramType = q.diagram_metadata?.diagram_type || (hasDiagram ? 'geometry' : 'none');
     const diagramDesc = q.diagram_metadata?.diagram_description || '';
+
+    const reviewStatus = valRes.status === QUESTION_STATUSES.VALIDATION_PASSED
+      ? 'validated'
+      : (valRes.status === QUESTION_STATUSES.REJECTED ? 'rejected' : 'pending');
 
     const sql = `
       INSERT INTO ai_draft_questions (
@@ -202,14 +250,20 @@ export async function saveDraftQuestions(draftId, batchId, questions = []) {
         correct_index, correct_indices, numeric_answer, numerical_tolerance,
         assertion_text, reason_text, match_pairs, passage_title, passage_text,
         solution, marks, negative_marks, content_type, has_diagram,
-        diagram_type, diagram_description, diagram_svg, review_status
+        diagram_type, diagram_description, diagram_svg, review_status,
+        validation_status, validation_score, validation_report,
+        requires_manual_review, manual_review_reasons, is_duplicate,
+        duplicate_of_id, similarity_score, normalized_signature, validation_errors
       ) VALUES (
         $1, $2, $3, $4, $5,
         $6, $7, $8, $9, $10,
         $11, $12, $13, $14,
         $15, $16, $17, $18, $19,
         $20, $21, $22, $23, $24,
-        $25, $26, $27, 'pending'
+        $25, $26, $27, $28,
+        $29, $30, $31,
+        $32, $33, $34,
+        $35, $36, $37, $38
       ) RETURNING *;
     `;
 
@@ -218,8 +272,8 @@ export async function saveDraftQuestions(draftId, batchId, questions = []) {
       batchId,
       q.question_number || i + 1,
       q.question_type || 'single_choice',
-      q.subject || 'Physics',
-      q.chapter || 'General',
+      q.subject || draftMeta.subject || 'Physics',
+      q.chapter || draftMeta.chapter || 'General',
       q.topic || 'General',
       q.difficulty || 'Medium',
       q.question_text,
@@ -241,15 +295,34 @@ export async function saveDraftQuestions(draftId, batchId, questions = []) {
       diagramType,
       diagramDesc,
       q.diagram_metadata?.diagram_svg || null,
+      reviewStatus,
+      valRes.status,
+      valRes.score,
+      JSON.stringify(valRes),
+      valRes.requiresManualReview,
+      JSON.stringify(valRes.manualReviewReasons || []),
+      Boolean(valRes.isDuplicate),
+      valRes.duplicateOfId || null,
+      valRes.similarityScore || 0,
+      valRes.normalizedSignature || '',
+      JSON.stringify(valRes.errors || []),
     ];
 
     const res = await query(sql, values);
     savedQuestions.push(res.rows[0]);
   }
 
-  // Update total_generated count on draft
+  // Update total_generated count and validation summary counters on draft
   await query(
-    `UPDATE ai_generation_drafts SET total_generated = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1), updated_at = NOW() WHERE id = $1`,
+    `UPDATE ai_generation_drafts
+     SET
+       total_generated = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1),
+       validation_passed_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'validation_passed'),
+       needs_correction_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'needs_correction'),
+       rejected_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'rejected'),
+       manual_review_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND requires_manual_review = true),
+       updated_at = NOW()
+     WHERE id = $1`,
     [draftId]
   );
 
@@ -347,6 +420,7 @@ export async function updateDraftQuestion(draftId, questionId, patchData = {}) {
     'solution',
     'difficulty',
     'review_status',
+    'validation_status',
     'admin_notes',
     'marks',
     'negative_marks',
@@ -381,7 +455,64 @@ export async function updateDraftQuestion(draftId, questionId, patchData = {}) {
   `;
 
   const res = await query(sql, params);
-  return res.rows[0] || null;
+  const updatedRow = res.rows[0];
+  if (!updatedRow) return null;
+
+  // Re-run validation on the updated row to immediately reflect status changes
+  try {
+    const dRes = await query('SELECT exam_type, subject, chapter FROM ai_generation_drafts WHERE id = $1', [draftId]);
+    const draftMeta = dRes.rows[0] || {};
+    const valRes = await AiQuestionValidationEngine.validateQuestion(updatedRow, {
+      subject: draftMeta.subject,
+      chapter: draftMeta.chapter,
+      examType: draftMeta.exam_type,
+    });
+
+    const finalValStatus = patchData.validation_status || valRes.status;
+    const finalReviewStatus = patchData.review_status || (finalValStatus === QUESTION_STATUSES.VALIDATION_PASSED ? 'validated' : (finalValStatus === QUESTION_STATUSES.REJECTED ? 'rejected' : 'pending'));
+
+    const revalRes = await query(`
+      UPDATE ai_draft_questions
+      SET
+        validation_status = $3,
+        validation_score = $4,
+        validation_report = $5,
+        requires_manual_review = $6,
+        manual_review_reasons = $7,
+        validation_errors = $8,
+        review_status = $9,
+        updated_at = NOW()
+      WHERE draft_id = $1 AND id = $2
+      RETURNING *;
+    `, [
+      draftId,
+      questionId,
+      finalValStatus,
+      valRes.score,
+      JSON.stringify(valRes),
+      valRes.requiresManualReview,
+      JSON.stringify(valRes.manualReviewReasons || []),
+      JSON.stringify(valRes.errors || []),
+      finalReviewStatus,
+    ]);
+
+    // Update draft summary counters
+    await query(`
+      UPDATE ai_generation_drafts
+      SET
+        validation_passed_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'validation_passed'),
+        needs_correction_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'needs_correction'),
+        rejected_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'rejected'),
+        manual_review_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND requires_manual_review = true),
+        updated_at = NOW()
+      WHERE id = $1
+    `, [draftId]);
+
+    return revalRes.rows[0];
+  } catch (revalErr) {
+    console.warn('[AiDraftService] Re-validation notice:', revalErr.message);
+    return updatedRow;
+  }
 }
 
 /**
@@ -389,6 +520,15 @@ export async function updateDraftQuestion(draftId, questionId, patchData = {}) {
  */
 export async function replaceDraftQuestion(draftId, questionId, newQ = {}) {
   await ensureStagingTables();
+
+  // Validate the new regenerated question
+  const dRes = await query('SELECT exam_type, subject, chapter FROM ai_generation_drafts WHERE id = $1', [draftId]);
+  const draftMeta = dRes.rows[0] || {};
+  const valRes = await AiQuestionValidationEngine.validateQuestion(newQ, {
+    subject: draftMeta.subject,
+    chapter: draftMeta.chapter,
+    examType: draftMeta.exam_type,
+  });
 
   const sql = `
     UPDATE ai_draft_questions
@@ -406,7 +546,12 @@ export async function replaceDraftQuestion(draftId, questionId, newQ = {}) {
       solution = $13,
       difficulty = $14,
       review_status = 'regenerated',
-      validation_errors = '[]'::jsonb,
+      validation_status = $15,
+      validation_score = $16,
+      validation_report = $17,
+      requires_manual_review = $18,
+      manual_review_reasons = $19,
+      validation_errors = $20,
       updated_at = NOW()
     WHERE draft_id = $1 AND id = $2
     RETURNING *;
@@ -427,9 +572,145 @@ export async function replaceDraftQuestion(draftId, questionId, newQ = {}) {
     JSON.stringify(newQ.match_pairs || { column_a: [], column_b: [] }),
     newQ.solution || 'Detailed step-by-step solution.',
     newQ.difficulty || 'Medium',
+    valRes.status,
+    valRes.score,
+    JSON.stringify(valRes),
+    valRes.requiresManualReview,
+    JSON.stringify(valRes.manualReviewReasons || []),
+    JSON.stringify(valRes.errors || []),
   ];
 
   const res = await query(sql, values);
+
+  // Update summary counts
+  await query(`
+    UPDATE ai_generation_drafts
+    SET
+      validation_passed_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'validation_passed'),
+      needs_correction_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'needs_correction'),
+      rejected_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'rejected'),
+      manual_review_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND requires_manual_review = true),
+      updated_at = NOW()
+    WHERE id = $1
+  `, [draftId]);
+
+  return res.rows[0] || null;
+}
+
+/**
+ * Re-runs full validation on draft questions currently in database
+ */
+export async function validateDraftQuestionsInDb(draftId, questionId = null) {
+  await ensureStagingTables();
+  const draftRes = await query('SELECT * FROM ai_generation_drafts WHERE id = $1', [draftId]);
+  if (!draftRes.rows.length) return null;
+  const draftMeta = draftRes.rows[0];
+
+  let qSql = 'SELECT * FROM ai_draft_questions WHERE draft_id = $1';
+  const qParams = [draftId];
+  if (questionId) {
+    qSql += ' AND id = $2';
+    qParams.push(questionId);
+  }
+  qSql += ' ORDER BY question_number ASC, id ASC';
+
+  const qRes = await query(qSql, qParams);
+  const questions = qRes.rows;
+  if (!questions.length) return { total: 0, results: [] };
+
+  const batchVal = await AiQuestionValidationEngine.validateBatch(questions, {
+    draftId,
+    subject: draftMeta.subject,
+    chapter: draftMeta.chapter,
+    examType: draftMeta.exam_type,
+  });
+
+  for (let i = 0; i < questions.length; i++) {
+    const qRow = questions[i];
+    const valRes = batchVal.results[i];
+
+    await query(`
+      UPDATE ai_draft_questions
+      SET
+        validation_status = $2,
+        validation_score = $3,
+        validation_report = $4,
+        requires_manual_review = $5,
+        manual_review_reasons = $6,
+        is_duplicate = $7,
+        duplicate_of_id = $8,
+        similarity_score = $9,
+        validation_errors = $10,
+        updated_at = NOW()
+      WHERE id = $1
+    `, [
+      qRow.id,
+      valRes.status,
+      valRes.score,
+      JSON.stringify(valRes),
+      valRes.requiresManualReview,
+      JSON.stringify(valRes.manualReviewReasons || []),
+      valRes.isDuplicate,
+      valRes.duplicateOfId || null,
+      valRes.similarityScore || 0,
+      JSON.stringify(valRes.errors || []),
+    ]);
+  }
+
+  // Update summary counts on draft
+  await query(`
+    UPDATE ai_generation_drafts
+    SET
+      validation_passed_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'validation_passed'),
+      needs_correction_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'needs_correction'),
+      rejected_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'rejected'),
+      manual_review_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND requires_manual_review = true),
+      updated_at = NOW()
+    WHERE id = $1
+  `, [draftId]);
+
+  return batchVal;
+}
+
+/**
+ * Updates validation status explicitly (admin action)
+ */
+export async function updateDraftQuestionValidationStatus(draftId, questionId, status, adminNotes = null) {
+  await ensureStagingTables();
+  const validStatuses = Object.values(QUESTION_STATUSES);
+  if (!validStatuses.includes(status)) {
+    throw new Error(`Invalid status "${status}". Allowed: ${validStatuses.join(', ')}`);
+  }
+
+  const updates = ['validation_status = $3', 'review_status = $3', 'updated_at = NOW()'];
+  const params = [draftId, questionId, status];
+
+  if (adminNotes !== null && adminNotes !== undefined) {
+    updates.push('admin_notes = $4');
+    params.push(adminNotes);
+  }
+
+  const sql = `
+    UPDATE ai_draft_questions
+    SET ${updates.join(', ')}
+    WHERE draft_id = $1 AND id = $2
+    RETURNING *;
+  `;
+
+  const res = await query(sql, params);
+
+  // Update summary counts
+  await query(`
+    UPDATE ai_generation_drafts
+    SET
+      validation_passed_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'validation_passed'),
+      needs_correction_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'needs_correction'),
+      rejected_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND validation_status = 'rejected'),
+      manual_review_count = (SELECT COUNT(*)::int FROM ai_draft_questions WHERE draft_id = $1 AND requires_manual_review = true),
+      updated_at = NOW()
+    WHERE id = $1
+  `, [draftId]);
+
   return res.rows[0] || null;
 }
 
@@ -506,12 +787,12 @@ export async function approveDraftToQuestionBank(draftId, questionIds = null) {
     inserted.push(insRes.rows[0].id);
 
     // Mark question as approved
-    await query(`UPDATE ai_draft_questions SET review_status = 'approved', updated_at = NOW() WHERE id = $1`, [q.id]);
+    await query(`UPDATE ai_draft_questions SET review_status = 'approved', validation_status = 'approved', updated_at = NOW() WHERE id = $1`, [q.id]);
   }
 
   // Check if all questions in draft are now approved
   const pendingCountRes = await query(
-    `SELECT COUNT(*)::int AS pending FROM ai_draft_questions WHERE draft_id = $1 AND review_status = 'pending'`,
+    `SELECT COUNT(*)::int AS pending FROM ai_draft_questions WHERE draft_id = $1 AND validation_status NOT IN ('approved', 'rejected')`,
     [draftId]
   );
   if (pendingCountRes.rows[0]?.pending === 0) {

@@ -1,30 +1,26 @@
 import pg from 'pg';
 import dotenv from 'dotenv';
-dotenv.config({ path: 'backend/.env' });
+import path from 'path';
+
+dotenv.config({ path: path.resolve('backend/.env') });
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-async function run() {
-  const r = await pool.query(`
-    SELECT DISTINCT chapter, count(*) as cnt 
-    FROM question_bank 
-    WHERE category = 'Physics' AND exam_type = 'JEE' 
-    GROUP BY chapter 
-    ORDER BY chapter
-  `);
-  console.log('Current JEE Physics chapters in Neon:');
-  let total = 0;
-  for (const row of r.rows) {
-    console.log(` - ${row.chapter}: ${row.cnt}`);
-    total += parseInt(row.cnt);
+async function check() {
+  const client = await pool.connect();
+  try {
+    const totalRes = await client.query("SELECT count(*) FROM question_bank WHERE exam_type = 'JEE' AND LOWER(category) = 'physics'");
+    console.log('Total JEE Physics questions in DB:', totalRes.rows[0].count);
+
+    const chRes = await client.query("SELECT DISTINCT chapter, count(*) as cnt FROM question_bank WHERE exam_type = 'JEE' AND LOWER(category) = 'physics' GROUP BY chapter ORDER BY chapter");
+    console.log('Total chapters in DB:', chRes.rows.length);
+    chRes.rows.forEach(r => console.log(' - ' + r.chapter + ': ' + r.cnt));
+
+    const dbNameRes = await client.query("SELECT current_database(), current_user, inet_server_addr()");
+    console.log('DB Info:', dbNameRes.rows[0]);
+  } finally {
+    client.release();
+    await pool.end();
   }
-  console.log('Total JEE Physics questions:', total);
-
-  const ch = await pool.query("SELECT id, name, subject_id FROM chapters WHERE name ILIKE '%gravitat%'");
-  console.log('Chapters matching gravitation in Neon:', ch.rows);
-
-  const subj = await pool.query("SELECT id, name FROM subjects WHERE name ILIKE '%physic%'");
-  console.log('Physics subjects in Neon:', subj.rows);
 }
-
-run().then(() => pool.end()).catch(console.error);
+check().catch(console.error);

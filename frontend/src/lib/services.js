@@ -307,7 +307,7 @@ const getQbCacheKey = (category, extraParams = {}) => {
         sorted[k] = String(v).toLowerCase();
       }
     });
-  return `qb_v8_by_cat_${normCat}_${JSON.stringify(sorted)}`;
+  return `qb_v9_by_cat_${normCat}_${JSON.stringify(sorted)}`;
 };
 
 export const questionBankService = {
@@ -327,7 +327,7 @@ export const questionBankService = {
     // If first argument is boolean (legacy call like categories(true)), handle gracefully
     let normalizedExamType = typeof examType === 'string' ? examType : null;
     let shouldRefresh = typeof examType === 'boolean' ? examType : forceRefresh;
-    const key = `qb_categories_v7_${(normalizedExamType || 'all').toLowerCase()}`;
+    const key = `qb_categories_v9_${(normalizedExamType || 'all').toLowerCase()}`;
     if (shouldRefresh) clearCache(key);
     return withCache(
       key,
@@ -1207,6 +1207,27 @@ export const aiGeneratorService = {
    */
   updateDraftQuestion: (draftId, questionId, data) => {
     return api.patch(`/admin/ai/drafts/${draftId}/questions/${questionId}`, data).then((r) => r.data);
+  },
+
+  /**
+   * Re-validate all questions in a draft batch
+   */
+  validateDraft: (draftId) => {
+    return api.post(`/admin/ai/drafts/${draftId}/validate`).then((r) => r.data);
+  },
+
+  /**
+   * Re-validate a single question in a draft batch
+   */
+  validateDraftQuestion: (draftId, questionId) => {
+    return api.post(`/admin/ai/drafts/${draftId}/questions/${questionId}/validate`).then((r) => r.data);
+  },
+
+  /**
+   * Update validation and review status for a question (approved, rejected, needs_correction)
+   */
+  updateQuestionValidationStatus: (draftId, questionId, status, admin_notes) => {
+    return api.patch(`/admin/ai/drafts/${draftId}/questions/${questionId}/status`, { status, admin_notes }).then((r) => r.data);
   },
 
   /**

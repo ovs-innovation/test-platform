@@ -13,6 +13,8 @@ import {
   updateDraftQuestion,
   approveDraftToQuestionBank,
   deleteDraft,
+  validateDraftQuestionsInDb,
+  updateDraftQuestionValidationStatus,
 } from '../services/ai/aiDraftService.js';
 import { diagramAssetService } from '../services/ai/diagram/diagramAssetService.js';
 import { extractDiagramFromImage } from '../services/ai/diagram/pdfDiagramExtractor.js';
@@ -179,6 +181,63 @@ export const removeDraft = asyncHandler(async (req, res) => {
     throw ApiError.notFound(`Draft #${draftId} not found`);
   }
   res.json({ success: true, message: `Draft #${draftId} successfully deleted.` });
+});
+
+/**
+ * POST /api/admin/ai/drafts/:draftId/validate
+ * Triggers full validation on all questions in a draft batch.
+ */
+export const validateDraft = asyncHandler(async (req, res) => {
+  const { draftId } = req.params;
+  const result = await validateDraftQuestionsInDb(draftId);
+  if (!result) {
+    throw ApiError.notFound(`Draft #${draftId} not found`);
+  }
+  res.json({
+    success: true,
+    message: `Validation complete for draft #${draftId}. Passed: ${result.passedCount}, Needs Correction: ${result.needsCorrectionCount}, Rejected: ${result.rejectedCount}.`,
+    ...result,
+  });
+});
+
+/**
+ * POST /api/admin/ai/drafts/:draftId/questions/:questionId/validate
+ * Triggers full validation on a single question in a draft.
+ */
+export const validateDraftQuestion = asyncHandler(async (req, res) => {
+  const { draftId, questionId } = req.params;
+  const result = await validateDraftQuestionsInDb(draftId, questionId);
+  if (!result || !result.results?.length) {
+    throw ApiError.notFound(`Question #${questionId} in draft #${draftId} not found`);
+  }
+  res.json({
+    success: true,
+    message: `Validation complete for question #${questionId}.`,
+    validation: result.results[0],
+  });
+});
+
+/**
+ * PATCH /api/admin/ai/drafts/:draftId/questions/:questionId/status
+ * Manually updates validation and review status (e.g. approve, reject, flag for correction).
+ */
+export const updateQuestionValidationStatus = asyncHandler(async (req, res) => {
+  const { draftId, questionId } = req.params;
+  const { status, admin_notes } = req.body;
+  if (!status) {
+    throw ApiError.badRequest('Field "status" is required');
+  }
+
+  const updated = await updateDraftQuestionValidationStatus(draftId, questionId, status, admin_notes);
+  if (!updated) {
+    throw ApiError.notFound(`Question #${questionId} in draft #${draftId} not found`);
+  }
+
+  res.json({
+    success: true,
+    message: `Status of question #${questionId} updated to "${status}".`,
+    question: updated,
+  });
 });
 
 /**
