@@ -1588,6 +1588,7 @@ export default function AiQuestionGenerator() {
                   </div>
                 </div>
 
+
                 {/* Section Structure & Marking Scheme */}
                 <div className="border-t border-slate-200 dark:border-slate-800 pt-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -1704,6 +1705,7 @@ export default function AiQuestionGenerator() {
               </div>
             </AdminCard>
           </div>
+
         </div>
       )}
 

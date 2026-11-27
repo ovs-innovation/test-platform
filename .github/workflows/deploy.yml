@@ -502,6 +502,10 @@ jobs:
             docker compose exec -T backend node scripts/sync_all_jee_physics_chapters.mjs || true
             docker compose exec -T backend node scripts/sync_chemical_kinetics_jee.mjs || true
             docker compose exec -T backend node scripts/sync_electrochemistry_jee.mjs || true
+            docker compose exec -T backend node scripts/sync_coordination_compounds_jee.mjs || true
+            docker compose exec -T backend node scripts/sync_p_block_jee.mjs || true
+            docker compose exec -T backend node scripts/sync_solutions_jee.mjs || true
+            docker compose exec -T backend node scripts/sync_alcohols_jee_to_db.mjs || true
             docker compose exec -T redis redis-cli flushall || true
 
             # Restart frontend container to refresh Docker internal DNS mapping

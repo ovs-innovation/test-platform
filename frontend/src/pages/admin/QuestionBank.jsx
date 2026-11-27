@@ -763,6 +763,8 @@ export default function AdminQuestionBank() {
       ) return 'The d- and f-Block Elements';
       if (
         Number(q.chapter_id) === 209 ||
+        Number(q.chapter_id) === 72 ||
+        Number(q.chapter_id) === 88 ||
         /coordination\s*compounds?/i.test(raw)
       ) return 'Coordination Compounds';
       if (

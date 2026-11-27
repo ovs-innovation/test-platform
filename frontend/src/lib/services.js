@@ -307,7 +307,7 @@ const getQbCacheKey = (category, extraParams = {}) => {
         sorted[k] = String(v).toLowerCase();
       }
     });
-  return `qb_v11_by_cat_${normCat}_${JSON.stringify(sorted)}`;
+  return `qb_v13_by_cat_${normCat}_${JSON.stringify(sorted)}`;
 };
 
 export const questionBankService = {
@@ -327,7 +327,7 @@ export const questionBankService = {
     // If first argument is boolean (legacy call like categories(true)), handle gracefully
     let normalizedExamType = typeof examType === 'string' ? examType : null;
     let shouldRefresh = typeof examType === 'boolean' ? examType : forceRefresh;
-    const key = `qb_categories_v11_${(normalizedExamType || 'all').toLowerCase()}`;
+    const key = `qb_categories_v13_${(normalizedExamType || 'all').toLowerCase()}`;
     if (shouldRefresh) clearCache(key);
     return withCache(
       key,
@@ -342,7 +342,7 @@ export const questionBankService = {
     );
   },
   list: (category, forceRefresh = false) => {
-    const key = `qb_list_v11_${(category || 'all').toLowerCase()}`;
+    const key = `qb_list_v13_${(category || 'all').toLowerCase()}`;
     if (forceRefresh) clearCache(key);
     return withCache(
       key,
@@ -1239,6 +1239,21 @@ export const aiGeneratorService = {
   },
 
   /**
+   * Commits an assembled test paper draft into production Edvedum assessments
+   */
+  approveTestDraft: (draftId, options = {}) => {
+    clearCache();
+    return api.post(`/admin/ai/drafts/${draftId}/approve-test`, options).then((r) => r.data);
+  },
+
+  /**
+   * Retrieves full structured preview of an assembled test draft
+   */
+  getTestDraftPreview: (draftId) => {
+    return api.get(`/admin/ai/drafts/${draftId}/preview-test`).then((r) => r.data);
+  },
+
+  /**
    * Approve a single draft question into the Question Bank
    */
   approveSingleQuestion: (draftId, questionId) => {
@@ -1342,4 +1357,33 @@ export const aiGeneratorService = {
     return api.post('/admin/ai/diagrams/extract-pdf', payload).then((r) => r.data);
   },
 };
+
+/**
+ * Exam Blueprint Management Service
+ * Supports listing, creating, updating, duplicating, and validating blueprints.
+ */
+export const blueprintService = {
+  list: (params = {}) => {
+    return api.get('/admin/blueprints', { params }).then((r) => r.data);
+  },
+  get: (id) => {
+    return api.get(`/admin/blueprints/${id}`).then((r) => r.data);
+  },
+  create: (payload) => {
+    return api.post('/admin/blueprints', payload).then((r) => r.data);
+  },
+  update: (id, payload) => {
+    return api.put(`/admin/blueprints/${id}`, payload).then((r) => r.data);
+  },
+  duplicate: (id, payload = {}) => {
+    return api.post(`/admin/blueprints/${id}/duplicate`, payload).then((r) => r.data);
+  },
+  remove: (id, params = {}) => {
+    return api.delete(`/admin/blueprints/${id}`, { params }).then((r) => r.data);
+  },
+  validate: (payload) => {
+    return api.post('/admin/blueprints/validate', payload).then((r) => r.data);
+  },
+};
+
 
