@@ -158,7 +158,10 @@ async function syncPBlock() {
   }
 }
 
-syncPBlock().catch(err => {
+syncPBlock().then(() => {
+  console.log('Sync finished successfully.');
+  process.exit(0);
+}).catch(err => {
   console.error(err);
   process.exit(1);
 });
