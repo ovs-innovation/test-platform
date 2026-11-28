@@ -176,4 +176,12 @@ async function syncAldehydesKetones() {
   }
 }
 
-syncAldehydesKetones().catch(console.error);
+syncAldehydesKetones()
+  .then(() => {
+    console.log('Aldehydes and Ketones sync complete.');
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error('Fatal sync error:', err);
+    process.exit(1);
+  });

@@ -3,7 +3,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import pg from 'pg';
 import dotenv from 'dotenv';
-import { delCache } from '../src/config/redis.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -156,12 +155,6 @@ async function syncHaloJEE() {
     console.log('With Question Diagrams:', vRes.rows[0].with_question_diagrams);
     console.log('With Solution Diagrams:', vRes.rows[0].with_solution_diagrams);
 
-    // Invalidate Redis / server caches
-    await delCache('cache:qb:*');
-    await delCache('cache:qb:list:*');
-    await delCache('cache:qb:categories:*');
-    console.log('Cache invalidated successfully.');
-
   } catch (err) {
     await client.query('ROLLBACK');
     console.error('SYNC FAILED, ROLLED BACK:', err);
@@ -172,4 +165,12 @@ async function syncHaloJEE() {
   }
 }
 
-syncHaloJEE().catch(console.error);
+syncHaloJEE()
+  .then(() => {
+    console.log('Haloalkanes and Haloarenes sync complete.');
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error('Fatal sync error:', err);
+    process.exit(1);
+  });
