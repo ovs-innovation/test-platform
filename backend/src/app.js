@@ -35,6 +35,7 @@ import uploadRoutes from './routes/uploadRoutes.js';
 import ebookRoutes from './routes/ebookRoutes.js';
 import aiTestRoutes from './routes/aiTestRoutes.js';
 import aiAdminRoutes from './routes/aiAdminRoutes.js';
+import blueprintRoutes from './routes/blueprintRoutes.js';
 
 const app = express();
 
@@ -150,6 +151,7 @@ app.use('/api/sections', sectionRoutes);
 app.use('/api/attempts', noCache, attemptRoutes);
 app.use('/api/question-bank', questionBankRoutes);
 app.use('/api/admin/ai', aiAdminRoutes);
+app.use('/api/admin/blueprints', blueprintRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/payments', noCache, paymentRoutes);
 app.use('/api/notifications', notificationRoutes);

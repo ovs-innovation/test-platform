@@ -2,7 +2,9 @@ import './polyfills.js';
 import { createRequire } from 'module';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { extractQuestionsWithGeminiVision } from './geminiVisionExtractor.js';
-import { stripHeadersAndFooters } from './questionFormatter.js';
+import { stripHeadersAndFooters, formatQuestionStructure, ensureLatexDelimiters } from './questionFormatter.js';
+import { formatChemicalFormulas } from './chemistryFormatter.js';
+import { extractChemistryQuestionsFromPdf, parseMcqOptions } from '../services/chemistryPdfExtractor.js';
 import { env } from '../config/env.js';
 
 const require = createRequire(import.meta.url);
@@ -253,69 +255,65 @@ function parseBlock(block, answerKey) {
       continue;
     }
 
-    // Check for multiple options on the same line, e.g. "(A) 3  (B) 18  (C) 9  (D) 6"
-    const multiOptMatches = [...line.matchAll(/(?:\(|\[|^|\s{2,}|\t)([A-Da-d])(?:\)|\]|\.|\:)\s+([^(\n]+?)(?=(?:\s{2,}|\t|\s+(?=[A-Da-d][\.\)\:\-–—]|\([A-Da-d]\)|\[[A-Da-d]\])|$))/g)];
-    if (multiOptMatches.length >= 2) {
-      for (const m of multiOptMatches) {
-        const rawOpt = m[2].trim();
-        const cleanOpt = stripHeadersAndFooters(rawOpt) || rawOpt;
-        if (cleanOpt) options.push(cleanOpt);
-      }
-      continue;
-    }
-
-    const opt = line.match(OPTION_LINE);
-    if (opt) {
-      const rawOpt = opt[3].trim();
-      const cleanOpt = stripHeadersAndFooters(rawOpt) || rawOpt;
-      if (cleanOpt) options.push(cleanOpt);
-      continue;
-    }
-
     questionLines.push(line);
   }
 
-  // Fallback: If fewer than 2 options found, search questionLines for embedded/inline options
-  if (options.length < 2) {
-    const fullQText = questionLines.join('\n');
-    const inlineMatches = [...fullQText.matchAll(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d])(?:\)|\]|\.|\:)\s*([^\n\(\)\[\]]+)/g)];
-    if (inlineMatches.length >= 2) {
-      options.length = 0;
-      const firstOptIndex = fullQText.search(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d])(?:\)|\]|\.|\:)\s*/);
-      if (firstOptIndex !== -1) {
-        questionLines.length = 0;
-        questionLines.push(fullQText.substring(0, firstOptIndex).trim());
-      }
-      for (const m of inlineMatches) {
-        const rawOpt = m[2].trim();
-        const cleanOpt = stripHeadersAndFooters(rawOpt) || rawOpt;
-        if (cleanOpt && !options.includes(cleanOpt)) {
-          options.push(cleanOpt);
+  const rawFullContent = questionLines.join('\n');
+  const canonicalParse = parseMcqOptions(rawFullContent);
+
+  let rawQuestionText = '';
+  let finalOptions = [];
+  let question_type = 'mcq';
+
+  if (canonicalParse && canonicalParse.options && canonicalParse.options.length >= 2) {
+    rawQuestionText = canonicalParse.statement || rawFullContent;
+    finalOptions = canonicalParse.options.map((o) => formatChemicalFormulas(stripHeadersAndFooters(o)));
+    question_type = 'mcq';
+  } else {
+    // Fallback: Check for line-by-line options or multi-option matches
+    for (const line of questionLines) {
+      const multiOptMatches = [...line.matchAll(/(?:\(|\[|^|\s{2,}|\t)([A-Da-d])(?:\)|\]|\.|\:)\s+([^(\n]+?)(?=(?:\s{2,}|\t|\s+(?=[A-Da-d][\.\)\:\-–—]|\([A-Da-d]\)|\[[A-Da-d]\])|$))/g)];
+      if (multiOptMatches.length >= 2) {
+        for (const m of multiOptMatches) {
+          const rawOpt = m[2].trim();
+          const cleanOpt = stripHeadersAndFooters(rawOpt) || rawOpt;
+          if (cleanOpt) options.push(formatChemicalFormulas(cleanOpt));
         }
+        continue;
+      }
+
+      const opt = line.match(OPTION_LINE);
+      if (opt) {
+        const rawOpt = opt[3].trim();
+        const cleanOpt = stripHeadersAndFooters(rawOpt) || rawOpt;
+        if (cleanOpt) options.push(formatChemicalFormulas(cleanOpt));
+        continue;
       }
     }
+
+    rawQuestionText = questionLines.join(' ').replace(/\s+/g, ' ').trim();
+    if (!rawQuestionText) {
+      rawQuestionText = block.lines.filter((l) => l.trim()).join(' ').trim() || `Question ${block.num}`;
+    }
+
+    const hasValidOptions = options.length >= 2;
+    const isLikelyIntegerStem = /(?:is\s*_{2,}|equal\s*to\s*_{2,}|value\s*of\s*.*is\s*_{2,}|will\s*be\s*_{2,}\s*[a-zA-Z%°\/]*\.?$|nearest\s*integer|find\s+the\s+number\s+of)/i.test(rawQuestionText);
+    const isInteger = options.length === 0 && isLikelyIntegerStem;
+
+    finalOptions = isInteger ? [] : [...options];
+    question_type = isInteger ? 'integer' : 'mcq';
   }
 
-  let rawQuestionText = questionLines.join(' ').replace(/\s+/g, ' ').trim();
-  if (!rawQuestionText) {
-    rawQuestionText = block.lines.filter((l) => l.trim()).join(' ').trim() || `Question ${block.num}`;
-  }
-  const question_text = stripHeadersAndFooters(rawQuestionText) || rawQuestionText;
-
-  // Determine question type without fabricating fake placeholder options
-  const hasValidOptions = options.length >= 2;
-  const isLikelyIntegerStem = /(?:is\s*_{2,}|equal\s*to\s*_{2,}|value\s*of\s*.*is\s*_{2,}|will\s*be\s*_{2,}\s*[a-zA-Z%°\/]*\.?$)/i.test(question_text);
-  const isInteger = options.length === 0 && isLikelyIntegerStem;
-  const needsReview = !isInteger && !hasValidOptions;
-
-  // Preserve real options intact; do NOT inject '[Needs Review] Option A-D' placeholders
-  const finalOptions = isInteger ? [] : [...options];
+  const cleanedQText = stripHeadersAndFooters(rawQuestionText) || rawQuestionText;
+  const question_text = formatChemicalFormulas(formatQuestionStructure(cleanedQText));
 
   const isMultiText = /one\s*or\s*more\s*options?|more\s*than\s*one\s*correct|multiple\s*correct/i.test(question_text);
   const isMultiKey = correct_indices.length > 1;
   const isMulti = isMultiText || isMultiKey;
 
-  const question_type = isInteger ? 'integer' : (isMulti ? 'multi_select' : 'mcq');
+  if (isMulti && question_type !== 'integer') {
+    question_type = 'multi_select';
+  }
 
   if (isMulti && correct_indices.length === 0) {
     correct_indices = [correct_index];
@@ -333,7 +331,10 @@ function parseBlock(block, answerKey) {
   }
   const cleanQuestionText = question_text.replace(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/g, '').trim() || question_text;
 
-  const solutionText = explanationLines.join(' ').replace(/\s+/g, ' ').trim();
+  const rawSolution = explanationLines.join(' ').replace(/\s+/g, ' ').trim();
+  const solutionText = rawSolution ? formatChemicalFormulas(stripHeadersAndFooters(rawSolution)) : '';
+  const isInteger = question_type === 'integer';
+  const needsReview = !isInteger && finalOptions.length < 2;
 
   return {
     line: block.num,
@@ -378,6 +379,34 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
   const includeAnswers = options.includeAnswers !== false;
   const expectedQuestionCount = options.expectedQuestionCount ? parseInt(options.expectedQuestionCount, 10) : null;
   const examType = options.examType || null;
+
+  // Check if deterministic code-based Chemistry / JEE extraction should be used
+  const categoryStr = String(options.category || options.bank_category || '').toLowerCase();
+  const subjectStr = String(options.subject || '').toLowerCase();
+  const chapterStr = String(options.chapter || '').toLowerCase();
+  const isChemistry = categoryStr.includes('chem') || subjectStr.includes('chem') || chapterStr.includes('chem');
+  const isJee = (examType && examType.toUpperCase() === 'JEE') || (options.exam_type && options.exam_type.toUpperCase() === 'JEE');
+  const forceCodeBased = Boolean(options.useCodeParser || options.use_code_parser || options.useAi === false || options.deterministic);
+
+  if (forceCodeBased || (isChemistry && isJee) || isChemistry) {
+    console.log(`[pdfQuestions] Invoking 100% deterministic code-based Chemistry extraction engine (forceCodeBased: ${forceCodeBased}, isChemistry: ${isChemistry}, isJee: ${isJee})...`);
+    try {
+      const chemResult = await extractChemistryQuestionsFromPdf(buffer, {
+        ...options,
+        includeAnswers,
+        expectedQuestionCount,
+        subject: options.subject || 'Chemistry',
+        examType: examType || 'JEE',
+      });
+      if (chemResult.rows && chemResult.rows.length > 0) {
+        console.log(`[pdfQuestions] Code-based Chemistry engine extracted ${chemResult.rows.length} questions.`);
+        return chemResult;
+      }
+    } catch (chemErr) {
+      console.warn('[pdfQuestions] Deterministic Chemistry code extractor error:', chemErr.message, '- proceeding to fallback');
+    }
+  }
+
   const apiKey = env.geminiApiKey || process.env.GEMINI_API_KEY;
   let visionBypassReason = null;
   let visionErrorStatusCode = null;

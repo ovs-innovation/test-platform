@@ -42,6 +42,7 @@ import { Spinner } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
 import AiQuestionReviewWorkspace from '../../components/admin/AiQuestionReviewWorkspace.jsx';
+import TestPaperPreviewModal from '../../components/admin/TestPaperPreviewModal.jsx';
 
 // -----------------------------------------------------------------------------
 // STANDARD CURRICULUM DATA DEFAULTS (NEET & JEE)
@@ -234,6 +235,9 @@ export default function AiQuestionGenerator() {
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
   const [recentDrafts, setRecentDrafts] = useState([]);
   const [loadingDrafts, setLoadingDrafts] = useState(false);
+  const [testPreviewData, setTestPreviewData] = useState(null);
+  const [testPreviewOpen, setTestPreviewOpen] = useState(false);
+  const [isApprovingTest, setIsApprovingTest] = useState(false);
 
   // ---------------------------------------------------------------------------
   // MODULE 1: AI QUESTION GENERATOR FORM STATE
@@ -592,31 +596,71 @@ export default function AiQuestionGenerator() {
           auto_publish: testForm.auto_publish,
         };
 
-        setGenerationStep('Assembling assessment sections via Gemini 3.8 Flash...');
-        setGenerationProgress(80);
+        setGenerationStep('Validating blueprint, checking Question Bank & batch generating...');
+        setGenerationProgress(50);
 
-        // Call structured API placeholder
         const res = await aiGeneratorService.generateTest(payload);
 
         setGenerationProgress(100);
-        showToast(
-          res?.message ||
-          `Successfully initiated generation for "${testForm.title}". Test will appear in Assessment Manager once processing finishes.`,
-          'success'
-        );
+        if (res?.draft_id) {
+          setTestPreviewData(res);
+          setTestPreviewOpen(true);
+          showToast(
+            res?.message ||
+              `Test paper "${testForm.title}" assembled! ${res.total_questions} questions verified and ready for review.`,
+            'success'
+          );
+          fetchDrafts();
+        } else {
+          showToast(
+            res?.message || `Successfully generated test for "${testForm.title}".`,
+            'success'
+          );
+        }
       }
     } catch (err) {
       console.error('[AiGenerator] Generation request error:', err);
-      // Give clean, user-friendly error message
       const errMsg =
         err?.response?.data?.message ||
         err?.message ||
-        'Endpoint is ready for backend connection in Phase 3. Form payload validated successfully.';
+        'Failed to generate test. Please verify blueprint configuration.';
       showToast(errMsg, 'error');
     } finally {
       setIsGenerating(false);
       setGenerationStep('');
       setGenerationProgress(0);
+    }
+  };
+
+  const handleApproveTestDraft = async (isPublished = false) => {
+    if (!testPreviewData?.draft_id) return;
+    setIsApprovingTest(true);
+    try {
+      const res = await aiGeneratorService.approveTestDraft(testPreviewData.draft_id, {
+        is_published: isPublished,
+      });
+      showToast(
+        res.message || `Assessment #${res.assessment_id} published successfully!`,
+        'success'
+      );
+      setTestPreviewOpen(false);
+      setTestPreviewData(null);
+      fetchDrafts();
+    } catch (err) {
+      console.error('[AiGenerator] Approval error:', err);
+      showToast(err?.response?.data?.message || err?.message || 'Failed to approve test', 'error');
+    } finally {
+      setIsApprovingTest(false);
+    }
+  };
+
+  const handleOpenTestDraftPreview = async (draftId) => {
+    try {
+      const preview = await aiGeneratorService.getTestDraftPreview(draftId);
+      setTestPreviewData(preview);
+      setTestPreviewOpen(true);
+    } catch (err) {
+      showToast(err?.response?.data?.message || err?.message || 'Failed to load test preview', 'error');
     }
   };
 
@@ -1830,14 +1874,25 @@ export default function AiQuestionGenerator() {
                           {d.status || 'Draft'}
                         </span>
 
-                        <button
-                          type="button"
-                          onClick={() => setSelectedDraftId(d.id)}
-                          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-black text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-all cursor-pointer"
-                        >
-                          <span>Review & Approve</span>
-                          <ChevronRight className="h-4 w-4" />
-                        </button>
+                        {d.target_destination === 'assessment' ? (
+                          <button
+                            type="button"
+                            onClick={() => handleOpenTestDraftPreview(d.id)}
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-black text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm transition-all cursor-pointer"
+                          >
+                            <Eye className="h-4 w-4" />
+                            <span>Preview & Commit Test</span>
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => setSelectedDraftId(d.id)}
+                            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-black text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-all cursor-pointer"
+                          >
+                            <span>Review & Approve</span>
+                            <ChevronRight className="h-4 w-4" />
+                          </button>
+                        )}
 
                         <button
                           type="button"
@@ -2355,6 +2410,16 @@ export default function AiQuestionGenerator() {
           </div>
         </div>
       )}
+      {/* ===================================================================== */}
+      {/* ASSEMBLED ASSESSMENT PAPER PREVIEW MODAL                              */}
+      {/* ===================================================================== */}
+      <TestPaperPreviewModal
+        isOpen={testPreviewOpen}
+        onClose={() => setTestPreviewOpen(false)}
+        previewData={testPreviewData}
+        onApprove={handleApproveTestDraft}
+        isApproving={isApprovingTest}
+      />
     </div>
   );
 }

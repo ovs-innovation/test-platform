@@ -7,6 +7,7 @@
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { AiQuestionGeneratorService } from '../services/ai/aiQuestionGeneratorService.js';
+import { AiTestGenerationEngine } from '../services/ai/aiTestGenerationEngine.js';
 import {
   listDrafts,
   getDraftById,
@@ -20,6 +21,12 @@ import {
 } from '../services/ai/aiDraftService.js';
 import { diagramAssetService } from '../services/ai/diagram/diagramAssetService.js';
 import { extractDiagramFromImage } from '../services/ai/diagram/pdfDiagramExtractor.js';
+import { pool } from '../config/db.js';
+import {
+  validateBlueprintPayload,
+  validateGeneratedQuestionsAgainstBlueprint,
+  buildAiBlueprintPromptContext,
+} from '../services/blueprintValidatorService.js';
 
 /**
  * POST /api/admin/ai/generate-questions
@@ -98,6 +105,110 @@ export const generateQuestions = asyncHandler(async (req, res) => {
 });
 
 /**
+ * POST /api/admin/ai/generate-test
+ * Generates an assessment paper strictly driven by an Exam Blueprint.
+ * 1. Resolves and validates blueprint against strict rules.
+ * 2. Retrieves available approved questions from question_bank.
+ * 3. Detects deficit and generates missing questions in controlled batches (5-10 Qs).
+ * 4. Validates all generated questions with AiQuestionValidationEngine.
+ * 5. Assembles assessment across sections, marks, positions, and blueprints.
+ * 6. Verifies total count, subject distribution, type distribution, difficulty.
+ * 7. Returns full test preview staged in drafts, awaiting admin approval.
+ */
+export const generateTest = asyncHandler(async (req, res) => {
+  const result = await AiTestGenerationEngine.assembleTestPaper(req.body, req.user?.id);
+
+  let publicationResult = null;
+  if (req.body.auto_publish) {
+    publicationResult = await AiTestGenerationEngine.approveTestDraftToAssessment(
+      result.draft_id,
+      { is_published: true },
+      req.user?.id
+    );
+  }
+
+  res.status(201).json({
+    ...result,
+    auto_published: Boolean(publicationResult),
+    published_assessment: publicationResult,
+  });
+});
+
+/**
+ * POST /api/admin/ai/drafts/:draftId/approve-test
+ * Explicitly approves an assembled test draft into production Edvedum assessment creation services.
+ */
+export const approveTestDraft = asyncHandler(async (req, res) => {
+  const { draftId } = req.params;
+  const result = await AiTestGenerationEngine.approveTestDraftToAssessment(
+    draftId,
+    req.body || {},
+    req.user?.id
+  );
+  res.json(result);
+});
+
+/**
+ * GET /api/admin/ai/drafts/:draftId/preview-test
+ * Retrieves the complete staged test paper preview for an assembled draft.
+ */
+export const getTestDraftPreview = asyncHandler(async (req, res) => {
+  const { draftId } = req.params;
+  const draftRes = await pool.query('SELECT * FROM ai_generation_drafts WHERE id = $1', [draftId]);
+  if (draftRes.rows.length === 0) {
+    throw ApiError.notFound(`Test draft #${draftId} not found.`);
+  }
+  const draft = draftRes.rows[0];
+
+  const qRes = await pool.query(
+    'SELECT * FROM ai_draft_questions WHERE draft_id = $1 ORDER BY question_number ASC, id ASC',
+    [draftId]
+  );
+
+  let stagingMeta = {};
+  try {
+    stagingMeta = JSON.parse(draft.additional_instructions || '{}');
+  } catch {
+    stagingMeta = {};
+  }
+
+  res.json({
+    success: true,
+    draft_id: draft.id,
+    batch_id: draft.batch_id,
+    title: draft.title,
+    exam_type: draft.exam_type,
+    class_level: draft.class_level,
+    status: draft.status,
+    total_questions: qRes.rows.length,
+    staging_meta: stagingMeta,
+    verification: stagingMeta.verification || null,
+    sections: stagingMeta.sections || [],
+    source_summary: stagingMeta.source_summary || null,
+    questions: qRes.rows.map((q) => ({
+      id: q.id,
+      position: q.question_number,
+      subject: q.subject,
+      chapter: q.chapter,
+      topic: q.topic,
+      question_text: q.question_text,
+      question_type: q.question_type,
+      options: typeof q.options === 'string' ? JSON.parse(q.options) : q.options,
+      correct_index: q.correct_index,
+      numeric_answer: q.numeric_answer,
+      marks: q.marks,
+      negative_marks: q.negative_marks,
+      solution: q.solution,
+      source: q.source || (q.bank_question_id ? 'bank' : 'ai_generated'),
+      image_url: q.image_url,
+      diagram_svg: q.diagram_svg,
+      validation_status: q.validation_status,
+      review_status: q.review_status,
+    })),
+  });
+});
+
+/**
  * GET /api/admin/ai/drafts
  * Lists staged question generation drafts.
  */
@@ -157,16 +268,25 @@ export const regenerateQuestion = asyncHandler(async (req, res) => {
 
 /**
  * POST /api/admin/ai/drafts/:draftId/approve
- * Approves draft questions into the production Question Bank.
+ * Approves draft questions into the production Question Bank or creates an Assessment.
  */
 export const approveDraft = asyncHandler(async (req, res) => {
   const { draftId } = req.params;
-  const { question_ids = null, target = 'bank' } = req.body;
+  const { question_ids = null, target = 'bank', is_published = false, target_series_id = null } = req.body;
+
+  if (target === 'assessment') {
+    const result = await AiTestGenerationEngine.approveTestDraftToAssessment(
+      draftId,
+      { is_published, target_series_id },
+      req.user?.id
+    );
+    return res.json(result);
+  }
 
   const result = await approveDraftToQuestionBank(draftId, question_ids, req.user?.id);
   res.json({
     success: true,
-    message: `Successfully approved ${result.count} questions into the ${target === 'bank' ? 'Question Bank' : 'Assessment'}.`,
+    message: `Successfully approved ${result.count} questions into the Question Bank.`,
     approved_count: result.count,
     inserted_ids: result.insertedIds,
     already_approved_count: result.alreadyApprovedCount || 0,

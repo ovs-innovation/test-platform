@@ -7,6 +7,9 @@ import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth.js';
 import {
   generateQuestions,
+  generateTest,
+  approveTestDraft,
+  getTestDraftPreview,
   getDraftsList,
   getDraftDetail,
   editDraftQuestion,
@@ -35,11 +38,14 @@ router.use(authenticate, authorize('admin'));
 
 // AI Question Generation & Staging
 router.post('/generate-questions', generateQuestions);
+router.post('/generate-test', generateTest);
 router.get('/drafts', getDraftsList);
 router.get('/drafts/:id', getDraftDetail);
+router.get('/drafts/:draftId/preview-test', getTestDraftPreview);
 router.patch('/drafts/:draftId/questions/:questionId', editDraftQuestion);
 router.post('/drafts/:draftId/regenerate/:questionId', regenerateQuestion);
 router.post('/drafts/:draftId/approve', approveDraft);
+router.post('/drafts/:draftId/approve-test', approveTestDraft);
 router.post('/drafts/:draftId/questions/approve-selected', approveSelectedDraftQuestions);
 router.post('/drafts/:draftId/questions/:questionId/approve', approveSingleDraftQuestion);
 router.post('/drafts/:draftId/questions/:questionId/reject', rejectSingleDraftQuestion);
