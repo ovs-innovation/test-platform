@@ -491,24 +491,9 @@ jobs:
               execute_rollback
             fi
 
-            # Execute NEET 180 questions reordering and section alignment on production database
-            log "Executing NEET 180 questions reorder and section synchronization..."
+            # Execute database migrations and clear server cache (do NOT run destructive chapter seeders on every push)
+            log "Executing database migrations and clearing server cache..."
             docker compose exec -T backend node src/db/migrate.js || true
-            docker compose exec -T backend node scripts/upload_assessment_43.mjs || true
-            docker compose exec -T backend node scripts/import_biomolecules_chemistry.mjs || true
-            docker compose exec -T backend node scripts/import_amines_chemistry.mjs || true
-            docker compose exec -T backend node scripts/import_units_measurements_physics.mjs || true
-            docker compose exec -T backend node scripts/sync_nuclear_jee.mjs || true
-            docker compose exec -T backend node scripts/sync_all_jee_physics_chapters.mjs || true
-            docker compose exec -T backend node scripts/sync_chemical_kinetics_jee.mjs || true
-            docker compose exec -T backend node scripts/sync_electrochemistry_jee.mjs || true
-            docker compose exec -T backend node scripts/sync_coordination_compounds_jee.mjs || true
-            docker compose exec -T backend node scripts/sync_p_block_jee.mjs || true
-            docker compose exec -T backend node scripts/sync_solutions_jee.mjs || true
-            docker compose exec -T backend node scripts/sync_df_block_jee.mjs || true
-            docker compose exec -T backend node scripts/sync_alcohols_jee_to_db.mjs || true
-            docker compose exec -T backend node scripts/sync_aldehydes_ketones_jee.mjs || true
-            docker compose exec -T backend node scripts/sync_halo_jee.mjs || true
             docker compose exec -T redis redis-cli flushall || true
 
             # Restart frontend container to refresh Docker internal DNS mapping

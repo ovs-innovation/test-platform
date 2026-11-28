@@ -307,7 +307,7 @@ const getQbCacheKey = (category, extraParams = {}) => {
         sorted[k] = String(v).toLowerCase();
       }
     });
-  return `qb_v16_by_cat_${normCat}_${JSON.stringify(sorted)}`;
+  return `qb_v17_by_cat_${normCat}_${JSON.stringify(sorted)}`;
 };
 
 export const questionBankService = {
@@ -327,7 +327,7 @@ export const questionBankService = {
     // If first argument is boolean (legacy call like categories(true)), handle gracefully
     let normalizedExamType = typeof examType === 'string' ? examType : null;
     let shouldRefresh = typeof examType === 'boolean' ? examType : forceRefresh;
-    const key = `qb_categories_v16_${(normalizedExamType || 'all').toLowerCase()}`;
+    const key = `qb_categories_v17_${(normalizedExamType || 'all').toLowerCase()}`;
     if (shouldRefresh) clearCache(key);
     return withCache(
       key,
@@ -342,7 +342,7 @@ export const questionBankService = {
     );
   },
   list: (category, forceRefresh = false) => {
-    const key = `qb_list_v16_${(category || 'all').toLowerCase()}`;
+    const key = `qb_list_v17_${(category || 'all').toLowerCase()}`;
     if (forceRefresh) clearCache(key);
     return withCache(
       key,
