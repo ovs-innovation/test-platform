@@ -295,7 +295,6 @@ export default function AdminQuestionBank() {
     'Alcohols, Phenols and Ethers',
     'Aldehydes, Ketones and Carboxylic Acids',
     'Amines',
-    'Organic Compounds Containing Nitrogen',
     'Biomolecules'
   ], []);
 
@@ -365,8 +364,8 @@ export default function AdminQuestionBank() {
       if (/haloalkane/i.test(trimmed)) return 'Haloalkanes and Haloarenes';
       if (/alcohol/i.test(trimmed)) return 'Alcohols, Phenols and Ethers';
       if (/aldehyde|ketone|carboxylic/i.test(trimmed)) return 'Aldehydes, Ketones and Carboxylic Acids';
-      if (/nitrogen/i.test(trimmed)) return 'Organic Compounds Containing Nitrogen';
-      if (/amine/i.test(trimmed)) return 'Organic Compounds Containing Nitrogen';
+      if (/nitrogen/i.test(trimmed)) return 'Amines';
+      if (/amine/i.test(trimmed)) return 'Amines';
       if (/animal\s*kingdom.*non.*chordate|non.*chordate/i.test(trimmed)) return 'Animal Kingdom and Non-Chordates';
       if (/biomolecule/i.test(trimmed)) return 'Biomolecules';
       if (/solution/i.test(trimmed)) return 'Solutions';
