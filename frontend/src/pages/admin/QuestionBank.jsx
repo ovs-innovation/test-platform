@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Pencil, Trash2, ChevronDown, ChevronLeft, ChevronRight, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus, ExternalLink, BookmarkCheck, RotateCcw, ZoomIn, SlidersHorizontal, AlertCircle, CheckSquare, Layers, HelpCircle, Eye } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
+import { persistentCache } from '../../lib/persistentCache.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import ActionDropdown from '../../components/ActionDropdown.jsx';
