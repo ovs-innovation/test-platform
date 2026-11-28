@@ -507,6 +507,7 @@ jobs:
             docker compose exec -T backend node scripts/sync_solutions_jee.mjs || true
             docker compose exec -T backend node scripts/sync_df_block_jee.mjs || true
             docker compose exec -T backend node scripts/sync_alcohols_jee_to_db.mjs || true
+            docker compose exec -T backend node scripts/sync_aldehydes_ketones_jee.mjs || true
             docker compose exec -T redis redis-cli flushall || true
 
             # Restart frontend container to refresh Docker internal DNS mapping
