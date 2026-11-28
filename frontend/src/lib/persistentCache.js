@@ -5,14 +5,14 @@
  * and reducing page loading time to 0-10ms (Instant Load).
  */
 
-const DB_NAME = 'edvedum_qb_cache_v13';
+const DB_NAME = 'edvedum_qb_cache_v14';
 const STORE_NAME = 'qb_cache';
 const MEMORY_CACHE = new Map();
 
 // Automatically purge stale legacy caches from user browsers to guarantee fresh synchronization
 if (typeof window !== 'undefined' && window.indexedDB) {
   try {
-    for (let v = 1; v <= 12; v++) {
+    for (let v = 1; v <= 13; v++) {
       window.indexedDB.deleteDatabase(`edvedum_qb_cache_v${v}`);
     }
   } catch (_) { }

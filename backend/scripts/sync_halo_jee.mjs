@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import pg from 'pg';
 import dotenv from 'dotenv';
+import { delCache } from '../src/config/redis.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -109,7 +110,7 @@ async function syncHaloJEE() {
           chapterName,                       // $18: chapter
           chapterName,                       // $19: topic
           'JEE',                             // $20: exam_type
-          'available'                        // $21: status
+          'normal'                           // $21: status
         );
 
         const rowPlaceholders = [];
@@ -154,6 +155,12 @@ async function syncHaloJEE() {
     console.log('Numericals:', vRes.rows[0].numerical_count);
     console.log('With Question Diagrams:', vRes.rows[0].with_question_diagrams);
     console.log('With Solution Diagrams:', vRes.rows[0].with_solution_diagrams);
+
+    // Invalidate Redis / server caches
+    await delCache('cache:qb:*');
+    await delCache('cache:qb:list:*');
+    await delCache('cache:qb:categories:*');
+    console.log('Cache invalidated successfully.');
 
   } catch (err) {
     await client.query('ROLLBACK');
