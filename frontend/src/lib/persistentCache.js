@@ -5,29 +5,21 @@
  * and reducing page loading time to 0-10ms (Instant Load).
  */
 
-const DB_NAME = 'edvedum_qb_cache_v12';
+const DB_NAME = 'edvedum_qb_cache_v13';
 const STORE_NAME = 'qb_cache';
 const MEMORY_CACHE = new Map();
 
 // Automatically purge stale legacy caches from user browsers to guarantee fresh synchronization
 if (typeof window !== 'undefined' && window.indexedDB) {
   try {
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v1');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v2');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v3');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v4');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v5');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v6');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v7');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v8');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v9');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v10');
-    window.indexedDB.deleteDatabase('edvedum_qb_cache_v11');
+    for (let v = 1; v <= 12; v++) {
+      window.indexedDB.deleteDatabase(`edvedum_qb_cache_v${v}`);
+    }
   } catch (_) { }
 }
 
 function openDb() {
-  if (typeof window === 'undefined' || !window.indexedDB) return null;
+  if (typeof window === 'undefined' || !window.indexedDB) return Promise.resolve(null);
   return new Promise((resolve) => {
     try {
       const req = window.indexedDB.open(DB_NAME, 1);
@@ -74,30 +66,34 @@ export const persistentCache = {
       if (!db) return null;
 
       return new Promise((resolve) => {
-        const tx = db.transaction(STORE_NAME, 'readonly');
-        const store = tx.objectStore(STORE_NAME);
-        const req = store.get(key);
+        try {
+          const tx = db.transaction(STORE_NAME, 'readonly');
+          const store = tx.objectStore(STORE_NAME);
+          const req = store.get(key);
 
-        req.onsuccess = () => {
-          const item = req.result;
-          if (!item) {
-            resolve(null);
-            return;
-          }
+          req.onsuccess = () => {
+            const item = req.result;
+            if (!item) {
+              resolve(null);
+              return;
+            }
 
-          const now = Date.now();
-          if (item.expiresAt && item.expiresAt <= now) {
-            persistentCache.delete(key);
-            resolve(null);
-            return;
-          }
+            const now = Date.now();
+            if (item.expiresAt && item.expiresAt <= now) {
+              persistentCache.delete(key);
+              resolve(null);
+              return;
+            }
 
-          // Hydrate memory cache for subsequent sync lookups
-          MEMORY_CACHE.set(key, item);
-          resolve(item.data);
-        };
+            // Hydrate memory cache for subsequent sync lookups
+            MEMORY_CACHE.set(key, item);
+            resolve(item.data);
+          };
 
-        req.onerror = () => resolve(null);
+          req.onerror = () => resolve(null);
+        } catch (_) {
+          resolve(null);
+        }
       });
     } catch (_) {
       return null;
@@ -123,20 +119,30 @@ export const persistentCache = {
     try {
       const db = await openDb();
       if (!db) return;
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
-      store.put(item, key);
+      return new Promise((resolve) => {
+        try {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          const store = tx.objectStore(STORE_NAME);
+          store.put(item, key);
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => resolve();
+          tx.onabort = () => resolve();
+        } catch (_) {
+          resolve();
+        }
+      });
     } catch (_) { }
   },
 
   /**
    * Deletes a key or all keys matching a prefix.
+   * Properly awaits IndexedDB deletion before resolving.
    */
   async delete(keyOrPrefix) {
     if (!keyOrPrefix) return;
 
     // Delete from memory
-    for (const k of MEMORY_CACHE.keys()) {
+    for (const k of Array.from(MEMORY_CACHE.keys())) {
       if (k === keyOrPrefix || k.startsWith(keyOrPrefix) || (keyOrPrefix === 'qb' && (k.startsWith('qb_') || k.includes('qb')))) {
         MEMORY_CACHE.delete(k);
       }
@@ -146,18 +152,28 @@ export const persistentCache = {
     try {
       const db = await openDb();
       if (!db) return;
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
+      return new Promise((resolve) => {
+        try {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          const store = tx.objectStore(STORE_NAME);
 
-      const req = store.getAllKeys();
-      req.onsuccess = () => {
-        const keys = req.result || [];
-        keys.forEach((k) => {
-          if (k === keyOrPrefix || k.startsWith(keyOrPrefix) || (keyOrPrefix === 'qb' && (k.startsWith('qb_') || k.includes('qb')))) {
-            store.delete(k);
-          }
-        });
-      };
+          const req = store.getAllKeys();
+          req.onsuccess = () => {
+            const keys = req.result || [];
+            keys.forEach((k) => {
+              if (k === keyOrPrefix || k.startsWith(keyOrPrefix) || (keyOrPrefix === 'qb' && (k.startsWith('qb_') || k.includes('qb')))) {
+                store.delete(k);
+              }
+            });
+          };
+          req.onerror = () => resolve();
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => resolve();
+          tx.onabort = () => resolve();
+        } catch (_) {
+          resolve();
+        }
+      });
     } catch (_) { }
   },
 
@@ -169,10 +185,87 @@ export const persistentCache = {
     try {
       const db = await openDb();
       if (!db) return;
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
-      store.clear();
+      return new Promise((resolve) => {
+        try {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          const store = tx.objectStore(STORE_NAME);
+          store.clear();
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => resolve();
+          tx.onabort = () => resolve();
+        } catch (_) {
+          resolve();
+        }
+      });
+    } catch (_) { }
+  },
+
+  /**
+   * In-place mutates a question across any cached question lists in memory and IndexedDB.
+   * This guarantees that even before or during background revalidation, any read from cache
+   * immediately renders the edited text, diagram, options, and solution.
+   */
+  async updateQuestionItem(questionId, updatedFields) {
+    if (!questionId || !updatedFields) return;
+    const numId = Number(questionId);
+
+    // 1. In-place update in memory cache
+    for (const [k, item] of MEMORY_CACHE.entries()) {
+      if (item && Array.isArray(item.data)) {
+        let changed = false;
+        const newData = item.data.map((q) => {
+          if (Number(q.id) === numId) {
+            changed = true;
+            return { ...q, ...updatedFields };
+          }
+          return q;
+        });
+        if (changed) {
+          MEMORY_CACHE.set(k, { ...item, data: newData });
+        }
+      }
+    }
+
+    // 2. In-place update in IndexedDB
+    try {
+      const db = await openDb();
+      if (!db) return;
+      return new Promise((resolve) => {
+        try {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          const store = tx.objectStore(STORE_NAME);
+          const req = store.getAllKeys();
+          req.onsuccess = () => {
+            const keys = req.result || [];
+            keys.forEach((key) => {
+              if (typeof key === 'string' && key.startsWith('qb_')) {
+                const getReq = store.get(key);
+                getReq.onsuccess = () => {
+                  const item = getReq.result;
+                  if (item && Array.isArray(item.data)) {
+                    let changed = false;
+                    const newData = item.data.map((q) => {
+                      if (Number(q.id) === numId) {
+                        changed = true;
+                        return { ...q, ...updatedFields };
+                      }
+                      return q;
+                    });
+                    if (changed) {
+                      store.put({ ...item, data: newData }, key);
+                    }
+                  }
+                };
+              }
+            });
+          };
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => resolve();
+          tx.onabort = () => resolve();
+        } catch (_) {
+          resolve();
+        }
+      });
     } catch (_) { }
   }
 };
-

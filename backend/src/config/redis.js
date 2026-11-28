@@ -180,9 +180,26 @@ export async function delCache(keyOrPattern) {
   if (isRedisConnected && redisClient) {
     try {
       if (keyOrPattern.includes('*')) {
-        const keys = await redisClient.keys(keyOrPattern);
-        if (keys.length > 0) {
-          await redisClient.del(...keys);
+        let matchedKeys = [];
+        let cursor = '0';
+        try {
+          do {
+            const [nextCursor, batch] = await redisClient.scan(cursor, 'MATCH', keyOrPattern, 'COUNT', 200);
+            cursor = nextCursor;
+            if (batch && batch.length > 0) {
+              matchedKeys.push(...batch);
+            }
+          } while (cursor !== '0');
+        } catch (_) {
+          // Fallback to keys() command if scan fails
+          matchedKeys = await redisClient.keys(keyOrPattern);
+        }
+
+        if (matchedKeys.length > 0) {
+          for (let i = 0; i < matchedKeys.length; i += 100) {
+            const chunk = matchedKeys.slice(i, i + 100);
+            await redisClient.del(...chunk);
+          }
         }
       } else {
         await redisClient.del(keyOrPattern);
@@ -195,8 +212,10 @@ export async function delCache(keyOrPattern) {
   // Fallback to in-memory map
   if (keyOrPattern.includes('*')) {
     const prefix = keyOrPattern.replace('*', '');
-    for (const k of inMemoryFallbackCache.keys()) {
-      if (k.startsWith(prefix)) inMemoryFallbackCache.delete(k);
+    for (const k of Array.from(inMemoryFallbackCache.keys())) {
+      if (k.startsWith(prefix) || (prefix.endsWith(':') && k.startsWith(prefix.slice(0, -1)))) {
+        inMemoryFallbackCache.delete(k);
+      }
     }
   } else {
     inMemoryFallbackCache.delete(keyOrPattern);

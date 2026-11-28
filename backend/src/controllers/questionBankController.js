@@ -7,7 +7,8 @@ import { rememberCache, delCache, setCache, getCache } from '../config/redis.js'
 import { normalizeQuestionBankPayload } from '../utils/questionBankPayload.js';
 import { env } from '../config/env.js';
 import { verifyPdfMagicBytes, cleanupUploadedFiles } from '../middleware/pdfUpload.js';
-import { stripHeadersAndFooters } from '../utils/questionFormatter.js';
+import { stripHeadersAndFooters, formatQuestionStructure } from '../utils/questionFormatter.js';
+import { formatChemicalFormulas } from '../utils/chemistryFormatter.js';
 import { resolveStandardChapter } from '../utils/chapterResolver.js';
 import { invalidateExamPaperCache, invalidateQuestionMeta } from '../services/examCacheService.js';
 
@@ -28,7 +29,7 @@ export const listCategories = asyncHandler(async (req, res) => {
   const { exam_type, skip_cache, refresh } = req.query;
   const isBypass = skip_cache === 'true' || refresh === 'true';
   const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
-  const cacheKey = `cache:qb:categories:v11:${normExamType || 'all'}`;
+  const cacheKey = `cache:qb:categories:v13:${normExamType || 'all'}`;
 
   const fetchCategories = async () => {
     let sql = `SELECT category, COUNT(*)::int AS count FROM question_bank`;
@@ -121,7 +122,7 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     res.setHeader('Cache-Control', 'private, no-cache, must-revalidate');
   }
   const normExamType = (exam_type && exam_type !== 'all' && exam_type !== 'All') ? exam_type.toUpperCase() : null;
-  const cacheKey = `cache:qb:list:v11:${(normExamType || 'all').toLowerCase()}:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
+  const cacheKey = `cache:qb:list:v13:${(normExamType || 'all').toLowerCase()}:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
 
   const fetchQuestions = async () => {
     let sql = `
@@ -342,6 +343,8 @@ export const importToAssessment = asyncHandler(async (req, res) => {
   );
   await query("UPDATE question_bank SET status = 'already_chosen' WHERE id = $1", [id]).catch(() => {});
   await delCache('cache:qb:*');
+  await delCache('cache:qb:list:*');
+  await delCache('cache:qb:categories:*');
   res.status(201).json({ question: result.rows[0] });
 });
 
@@ -424,6 +427,8 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
     ]
   );
   await delCache('cache:qb:*');
+  await delCache('cache:qb:list:*');
+  await delCache('cache:qb:categories:*');
   res.status(201).json({ question: result.rows[0] });
 });
 
@@ -632,6 +637,8 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
     await query('UPDATE questions SET bank_question_id = NULL WHERE bank_question_id = $1', [id]);
   }
   await delCache('cache:qb:*');
+  await delCache('cache:qb:list:*');
+  await delCache('cache:qb:categories:*');
   if (effectiveCategory) await delCache(`cache:qb:questions:${effectiveCategory}`);
   await delCache('cache:qb:questions:all');
   await delCache('cache:qb:categories');
@@ -682,6 +689,8 @@ export const toggleBankQuestionStatus = asyncHandler(async (req, res) => {
     [nextStatus, id]
   );
   await delCache('cache:qb:*');
+  await delCache('cache:qb:list:*');
+  await delCache('cache:qb:categories:*');
   const cat = result.rows[0]?.category;
   if (cat) await delCache(`cache:qb:questions:${cat}`);
   await delCache('cache:qb:questions:all');
@@ -705,6 +714,8 @@ export const deleteBankQuestion = asyncHandler(async (req, res) => {
   const result = await query('DELETE FROM question_bank WHERE id = $1 RETURNING id', [id]);
   if (!result.rowCount) throw ApiError.notFound('Question not found');
   await delCache('cache:qb:*');
+  await delCache('cache:qb:list:*');
+  await delCache('cache:qb:categories:*');
   res.json({ message: 'Deleted' });
 });
 
@@ -726,6 +737,8 @@ export const deleteAllBankQuestions = asyncHandler(async (req, res) => {
   }
   const result = await query(sql, params);
   await delCache('cache:qb:*');
+  await delCache('cache:qb:list:*');
+  await delCache('cache:qb:categories:*');
   res.json({
     message: 'Questions deleted successfully',
     count: result.rowCount,
@@ -806,6 +819,8 @@ export const bulkUploadBankQuestions = asyncHandler(async (req, res) => {
   }
 
   await delCache('cache:qb:*');
+  await delCache('cache:qb:list:*');
+  await delCache('cache:qb:categories:*');
   res.status(201).json({ created: created.length, questions: created, errors });
 });
 
@@ -1119,6 +1134,8 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
   await delCache(`cache:exam:${assessmentId}`);
   await delCache('cache:exam:*');
   await delCache('cache:qb:*');
+  await delCache('cache:qb:list:*');
+  await delCache('cache:qb:categories:*');
 
   await query('UPDATE assessments SET updated_at = NOW() WHERE id = $1', [assessmentId]).catch(() => {});
   await query('UPDATE tests SET updated_at = NOW() WHERE id = $1', [assessmentId]).catch(() => {});
@@ -1149,6 +1166,7 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
       subject_id: bodySubjectId,
       subject: bodySubject,
       exam_type: bodyExamType = 'NEET',
+      use_code_parser: bodyUseCodeParser,
     } = req.body;
 
     const maxBytes = env.maxPdfUploadBytes || 100 * 1024 * 1024;
@@ -1233,9 +1251,22 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
 
     console.log(`[uploadPdfToQuestionBank] Parsing questions from PDF (${fileName}, pageRange: ${page_range || pageRange || 'all'})...`);
     const shouldIncludeAnswers = include_answers !== false && include_answers !== 'false';
+    const isChemistry = (category && category.toLowerCase().includes('chem')) ||
+                        (bodySubject && bodySubject.toLowerCase().includes('chem')) ||
+                        (bodyChapter && bodyChapter.toLowerCase().includes('chem')) ||
+                        (fileName && fileName.toLowerCase().includes('chem'));
+    const isJee = String(bodyExamType).toUpperCase() === 'JEE';
+    const forceCodeParser = bodyUseCodeParser === true || bodyUseCodeParser === 'true' || isChemistry || (isChemistry && isJee);
+
     const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, {
       includeAnswers: shouldIncludeAnswers,
       pageRange: page_range || pageRange,
+      category,
+      subject: bodySubject || (isChemistry ? 'Chemistry' : undefined),
+      chapter: bodyChapter,
+      examType: bodyExamType,
+      useCodeParser: forceCodeParser,
+      fileName,
     });
     let extractedQs = pdfExtraction.rows || [];
 
@@ -1521,15 +1552,19 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
         try {
           const { categoryName, subjectName, subjectId } = resolveSubject(q.subject || q.bank_category, category, bodySubject);
 
-          const qText = (q.question_text || q.questionText || q.question?.text || '').trim();
-          if (!qText) return;
+          const rawQText = (q.question_text || q.questionText || q.question?.text || '').trim();
+          if (!rawQText) return;
+          const qText = formatChemicalFormulas(formatQuestionStructure(rawQText));
 
           const qType = q.question_type || q.questionType || (q.numeric_answer != null ? 'integer' : 'mcq');
           const isInteger = qType === 'integer' || qType === 'numerical';
 
           const options = isInteger
             ? []
-            : (q.options || []).map((o) => (typeof o === 'object' && o.text ? o.text : String(o)));
+            : (q.options || []).map((o) => {
+                const s = typeof o === 'object' && o.text ? o.text : String(o);
+                return formatChemicalFormulas(stripHeadersAndFooters(s));
+              });
 
           let correctIndex = (q.correct_index != null && q.correct_index !== '') ? Number(q.correct_index) : null;
           if (isInteger) correctIndex = null;
@@ -1537,7 +1572,8 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
 
           const numericAnswer = isInteger && q.numeric_answer != null ? Number(q.numeric_answer) : null;
           const marks = Number(q.marks || default_marks || 4);
-          const solution = (q.solution || q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : '') || '').trim();
+          const rawSolution = (q.solution || q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : '') || '').trim();
+          const solution = rawSolution ? formatChemicalFormulas(stripHeadersAndFooters(rawSolution)) : '';
           const imageUrl = q.image_url || (q.media && q.media[0] ? q.media[0].url : '') || '';
           
           const rawChapter = (q.chapter || '').trim();
@@ -1623,6 +1659,8 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
     }
 
     await delCache('cache:qb:*');
+  await delCache('cache:qb:list:*');
+  await delCache('cache:qb:categories:*');
 
     res.status(201).json({
       success: true,

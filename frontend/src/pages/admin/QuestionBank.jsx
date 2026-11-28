@@ -1882,8 +1882,9 @@ export default function AdminQuestionBank() {
       if (pdfPageRange && pdfPageRange.trim()) {
         formData.append('page_range', pdfPageRange.trim());
       }
+      formData.append('use_code_parser', true);
 
-      setPdfProgressStatus('Analyzing PDF with AI Vision, extracting questions, options, & answers...');
+      setPdfProgressStatus('Extracting questions, options, chemical formulas & diagrams with precision engine...');
 
       const res = await questionBankService.uploadPdf(formData);
       if (!res?.created || res.created === 0) {
@@ -1964,7 +1965,7 @@ export default function AdminQuestionBank() {
 
     try {
       const [data, subjects, serverCategories] = await Promise.all([
-        questionBankService.byCategory(category, extraParams, forceRefresh),
+        questionBankService.byCategory(category, extraParams, true),
         adminService.subjects().catch(() => []),
         questionBankService.categories(examType, forceRefresh).catch(() => []),
       ]);
@@ -2196,9 +2197,12 @@ export default function AdminQuestionBank() {
     try {
       await questionBankService.remove(targetId);
       setQuestions((prev) => prev.filter((q) => q.id !== targetId));
+      await persistentCache.delete('qb');
+      clearCache('qb');
+      clearCache();
       toast.success('Question deleted from bank');
       setDeleteQuestionId(null);
-      load(true);
+      await load(true);
       setSelectedChapter('all');
       setChapterSearch('');
       if (chapterSliderRef.current) {
@@ -2216,6 +2220,8 @@ export default function AdminQuestionBank() {
     try {
       const res = await questionBankService.deleteAll(category, deleteAllScope, examType);
       setQuestions([]);
+      await persistentCache.clear();
+      clearCache();
       toast.success(
         deleteAllScope === 'all'
           ? `Deleted all questions in ${examType} question bank (${res.count ?? 0} removed)`
@@ -2323,21 +2329,24 @@ export default function AdminQuestionBank() {
         const updated = res?.question || res;
         toast.success('Question updated in bank');
         if (updated?.id) {
+          const mergedFields = {
+            ...updated,
+            image_url: payload.image_url ?? updated.image_url,
+            solution_image_url: payload.solution_image_url ?? updated.solution_image_url,
+            question_text: cleanQText,
+            options: payload.options ?? updated.options,
+            solution: payload.solution ?? updated.solution,
+            status: updated.status || payload.status,
+            marks: payload.marks ?? updated.marks,
+            chapter: updated.chapter || payload.chapter,
+            topic: payload.topic ?? updated.topic,
+            test_count: (updated.status || payload.status) === 'normal' ? 0 : (updated.test_count ?? 0),
+            used_in_tests: (updated.status || payload.status) === 'normal' ? [] : (updated.used_in_tests ?? []),
+          };
           setQuestions((prev) =>
-            prev.map((item) =>
-              item.id === updated.id
-                ? {
-                  ...item,
-                  ...updated,
-                  image_url: payload.image_url ?? updated.image_url,
-                  question_text: cleanQText,
-                  status: updated.status || payload.status || item.status,
-                  test_count: (updated.status || payload.status) === 'normal' ? 0 : (updated.test_count ?? item.test_count),
-                  used_in_tests: (updated.status || payload.status) === 'normal' ? [] : (updated.used_in_tests ?? item.used_in_tests),
-                }
-                : item
-            )
+            prev.map((item) => item.id === updated.id ? { ...item, ...mergedFields } : item)
           );
+          await persistentCache.updateQuestionItem(updated.id, mergedFields);
         }
       } else {
         const res = await questionBankService.create(payload);
@@ -2349,6 +2358,9 @@ export default function AdminQuestionBank() {
       }
       setModalOpen(false);
       setEditing(null);
+      await persistentCache.delete('qb');
+      clearCache('qb');
+      clearCache();
       await load(true);
     } catch (err) {
       toast.error(err.message || 'Save failed');
@@ -2391,6 +2403,14 @@ export default function AdminQuestionBank() {
 
     try {
       await questionBankService.updateStatus(q.id, newStatus);
+      await persistentCache.updateQuestionItem(q.id, {
+        status: newStatus,
+        test_count: newStatus === 'normal' ? 0 : q.test_count,
+        used_in_tests: newStatus === 'normal' ? [] : q.used_in_tests,
+      });
+      await persistentCache.delete('qb');
+      clearCache('qb');
+      clearCache();
       toast.success(
         newStatus === 'already_chosen'
           ? `Question #${q.serialNumber || q.id} marked as Selected for Test`
@@ -2498,6 +2518,14 @@ export default function AdminQuestionBank() {
         difficulty: q.difficulty || 'medium',
       });
       const letter = ['A', 'B', 'C', 'D', 'E'][optionIndex] || (optionIndex + 1);
+      await persistentCache.updateQuestionItem(q.id, {
+        correct_index: optionIndex,
+        correct_indices: [optionIndex],
+        options: updatedOpts
+      });
+      await persistentCache.delete('qb');
+      clearCache('qb');
+      clearCache();
       toast.success(`Option ${letter} set as correct answer key for Question #${q.serialNumber || q.id}`);
     } catch {
       toast.error('Failed to update answer key');

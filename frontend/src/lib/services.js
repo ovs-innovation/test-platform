@@ -391,9 +391,10 @@ export const questionBankService = {
     inFlight.set(key, promise);
     return promise;
   },
-  clearQuestionBankCache: () => {
-    persistentCache.delete('qb');
+  clearQuestionBankCache: async () => {
+    await persistentCache.delete('qb');
     clearCache('qb');
+    clearCache();
   },
   create: async (data) => {
     const res = await api.post('/question-bank', data);
@@ -404,29 +405,45 @@ export const questionBankService = {
   },
   update: async (id, data) => {
     const res = await api.put(`/question-bank/${id}`, data);
+    const updated = res.data.question;
+    if (updated?.id) {
+      await persistentCache.updateQuestionItem(updated.id, updated);
+    }
     await persistentCache.delete('qb');
     clearCache('qb');
     clearCache();
-    return res.data.question;
+    return updated;
   },
-  updateStatus: (id, status) => {
+  updateStatus: async (id, status) => {
+    const res = await api.patch(`/question-bank/${id}/status`, { status });
+    await persistentCache.updateQuestionItem(id, {
+      status,
+      test_count: status === 'normal' ? 0 : undefined,
+      used_in_tests: status === 'normal' ? [] : undefined,
+    });
+    await persistentCache.delete('qb');
     clearCache('qb');
     clearCache();
-    return api.patch(`/question-bank/${id}/status`, { status }).then((r) => r.data);
+    return res.data;
   },
-  remove: (id) => {
+  remove: async (id) => {
+    const res = await api.delete(`/question-bank/${id}`);
+    await persistentCache.delete('qb');
     clearCache('qb');
     clearCache();
-    return api.delete(`/question-bank/${id}`).then((r) => r.data);
+    return res.data;
   },
-  delete: (id) => {
+  delete: async (id) => {
+    const res = await api.delete(`/question-bank/${id}`);
+    await persistentCache.delete('qb');
     clearCache('qb');
     clearCache();
-    return api.delete(`/question-bank/${id}`).then((r) => r.data);
+    return res.data;
   },
-  deleteAll: (category, scope = 'category', examType) => {
+  deleteAll: async (category, scope = 'category', examType) => {
     clearCache('qb');
     clearCache();
+    await persistentCache.clear();
     const params = scope === 'all'
       ? { scope: 'all', ...(examType ? { exam_type: examType } : {}) }
       : { category, ...(examType ? { exam_type: examType } : {}) };
